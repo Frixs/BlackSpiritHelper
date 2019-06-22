@@ -13,5 +13,8 @@ namespace BlackSpiritTimerApp
     /// </summary>
     public partial class App : Application
     {
+        public const string LogFileLocation = "Log/";
+        public const string LogFileName = "Log.txt";
+        public const string LogFilePath = LogFileLocation + LogFileName;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlackSpiritTimerApp.Utilities;
+using System;
 using System.Windows;
 
 namespace BlackSpiritTimerApp.Windows
@@ -8,10 +9,19 @@ namespace BlackSpiritTimerApp.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Log manager instance.
+        /// </summary>
+        private Logger logger;
+
+        /// <summary>
+        /// Currently active overlay window instance.
+        /// </summary>
         private OverlayWindow overlayWindow = null;
 
         public MainWindow()
         {
+            logger = new Logger(this.GetType().ToString());
             InitializeComponent();
         }
 

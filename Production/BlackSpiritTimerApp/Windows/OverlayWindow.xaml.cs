@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Forms;
+using BlackSpiritTimerApp.Utilities;
 
 namespace BlackSpiritTimerApp.Windows
 {
@@ -13,9 +14,19 @@ namespace BlackSpiritTimerApp.Windows
     /// </summary>
     public partial class OverlayWindow : Window
     {
-        /** Target window name. */
+        /// <summary>
+        /// Log manager instance.
+        /// </summary>
+        private Logger logger;
+
+        /// <summary>
+        /// Target window name.
+        /// </summary>
         private const string WindowName = "Calculator"; // TODO.
 
+        /// <summary>
+        /// Says if the overlay window is ok to show.
+        /// </summary>
         private bool isOverlayOk = true;
 
         //[DllImport("user32.dll")]
@@ -30,6 +41,7 @@ namespace BlackSpiritTimerApp.Windows
 
         public OverlayWindow()
         {
+            logger = new Logger(this.GetType().ToString());
             InitializeComponent();
         }
 
@@ -41,7 +53,7 @@ namespace BlackSpiritTimerApp.Windows
         targetWindowHandle = FindWindow(null, WindowName);
             if (targetWindowHandle.Equals(IntPtr.Zero))
             {
-                Console.WriteLine("Target window not found!"); // TODO - logger.
+                logger.Warn("Target window not found!");
                 isOverlayOk = false;
                 return;
             }
@@ -68,9 +80,11 @@ namespace BlackSpiritTimerApp.Windows
             this.WindowState = WindowState.Maximized;
         }
 
-        /**
-         * Create overlay window on the position of target window.
-         */
+        /// <summary>
+        /// Create overlay window on the position of target window.
+        /// </summary>
+        /// <param name="overlayWindowHandle">Overlay window handle.</param>
+        /// <param name="targetWindowHandle">Target window handle.</param>
         private void SetOverlayPosition(IntPtr overlayWindowHandle, IntPtr targetWindowHandle)
         {
             //WindowCornerPosition rectWindow;
@@ -88,9 +102,9 @@ namespace BlackSpiritTimerApp.Windows
             this.Height = screen.WorkingArea.Height;
         }
 
-        /** 
-         * Inner struct to hold data about target window corner positions. 
-         */
+        ///// <summary>
+        ///// Inner struct to hold data about target window corner positions. 
+        ///// </summary>
         //public struct WindowCornerPosition
         //{
         //    public int left, top, right, bottom;
