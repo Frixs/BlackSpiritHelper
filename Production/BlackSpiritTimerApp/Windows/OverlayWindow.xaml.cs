@@ -20,9 +20,14 @@ namespace BlackSpiritTimerApp.Windows
         private Logger logger;
 
         /// <summary>
-        /// Target window name.
+        /// Target window handle where to open overlay window.
         /// </summary>
-        private const string WindowName = "Calculator"; // TODO.
+        private IntPtr targetWindowHandle;
+
+        ///// <summary>
+        ///// Target window name.
+        ///// </summary>
+        //private const string WindowName = "Calculator";
 
         /// <summary>
         /// Says if the overlay window is ok to show.
@@ -36,21 +41,21 @@ namespace BlackSpiritTimerApp.Windows
         //[DllImport("user32.dll")]
         //[return: MarshalAs(UnmanagedType.Bool)]
         //private static extern bool GetWindowRect(IntPtr hwd, out WindowCornerPosition lpRect);
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+        //[DllImport("user32.dll", SetLastError = true)]
+        //private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
-        public OverlayWindow()
+        public OverlayWindow(IntPtr targetWindowReference)
         {
             logger = new Logger(this.GetType().ToString());
+            this.targetWindowHandle = targetWindowReference;
             InitializeComponent();
         }
 
         private void Window_Initialized(object sender, EventArgs e)
         {
             IntPtr overlayWindowHandle = new WindowInteropHelper(this).Handle;
-            IntPtr targetWindowHandle;
 
-        targetWindowHandle = FindWindow(null, WindowName);
+            //targetWindowHandle = FindWindow(null, WindowName);
             if (targetWindowHandle.Equals(IntPtr.Zero))
             {
                 logger.Warn("Target window not found!");
@@ -60,6 +65,7 @@ namespace BlackSpiritTimerApp.Windows
 
             //this.Background = new SolidColorBrush(Colors.LightGray); // For DEBUG.
             this.ResizeMode = ResizeMode.NoResize;
+            this.ShowInTaskbar = false;
             this.Topmost = true;
 
             //// Set transparency for mouse events.
