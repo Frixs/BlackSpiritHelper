@@ -1,4 +1,5 @@
 ﻿using BlackSpiritTimerApp.Utilities;
+using BlackSpiritTimerApp.ViewModels;
 using System;
 using System.Windows;
 using System.Windows.Interop;
@@ -23,7 +24,10 @@ namespace BlackSpiritTimerApp.Windows
         public MainWindow()
         {
             logger = new Logger(this.GetType().ToString());
+
             InitializeComponent();
+
+            this.DataContext = new WindowViewModel(this);
         }
 
         /// <summary>
