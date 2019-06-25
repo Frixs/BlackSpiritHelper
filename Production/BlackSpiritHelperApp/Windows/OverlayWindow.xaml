@@ -1,0 +1,15 @@
+﻿<Window x:Class="BlackSpiritHelperApp.OverlayWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlackSpiritHelperApp"
+        mc:Ignorable="d"
+        Title="Black Spirit Helper - Overlay" WindowStartupLocation="Manual" Initialized="Window_Initialized" AllowsTransparency="True" WindowStyle="None" Background="Transparent" d:DesignWidth="1059.853" d:DesignHeight="540.955">
+    <Grid Margin="0,0,0,0">
+        <Label Content="TEXT" HorizontalAlignment="Left" Margin="44,45,0,0" VerticalAlignment="Top" FontSize="36"/>
+        <DockPanel LastChildFill="False" Background="Red" Margin="0" Height="50" VerticalAlignment="Top"/>
+        <DockPanel LastChildFill="False" Background="Red" Margin="0" Height="50" VerticalAlignment="Bottom" Loaded="DockPanel_Loaded"/>
+
+    </Grid>
+</Window>

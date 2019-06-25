@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="BlackSpiritHelperApp.SideMenuContentControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BlackSpiritHelperApp"
+             xmlns:vm="clr-namespace:BlackSpiritHelperApp.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="175">
+
+    <UserControl.Template>
+        <ControlTemplate TargetType="UserControl">
+            
+            <Grid Grid.Column="0" Panel.ZIndex="2" DataContext="{x:Static vm:SideMenuDesignModel.Instance}" Background="{StaticResource SideMenuBackgroundBrushKey}">
+
+                <Grid.RowDefinitions>
+                    <!-- Icon -->
+                    <RowDefinition Height="112" />
+                    <!-- Menu -->
+                    <RowDefinition Height="*" />
+
+                </Grid.RowDefinitions>
+
+                <!-- Icon -->
+                <Grid Grid.Row="0" Panel.ZIndex="1">
+                    <Button Style="{StaticResource ApplcationButton}">
+                        <Image Source="/BlackSpiritHelper;component/Resources/Images/Logo/logo_red_512.png" />
+                    </Button>
+                </Grid>
+
+                <!-- Menu -->
+                <StackPanel Grid.Row="1">
+                    <ItemsControl ItemsSource="{Binding MenuItems}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Content="{Binding Title}" Padding="10" Margin="10" FontSize="16" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Grid>
+
+        </ControlTemplate>
+    </UserControl.Template>
+    
+</UserControl>
