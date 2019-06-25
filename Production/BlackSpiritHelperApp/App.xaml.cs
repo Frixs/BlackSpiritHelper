@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Navigation;
 
-namespace BlackSpiritHelperApp
+namespace BlackSpiritHelper
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -39,7 +39,7 @@ namespace BlackSpiritHelperApp
             {
                 return;
             }
-
+            
             // Dialog window.
             string messageBoxText = "New version of " + title + " is available!\r\nDo you want to download it now?";
             string caption = title + " - New version available!";

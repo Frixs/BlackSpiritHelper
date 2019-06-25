@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlackSpiritHelperApp.ViewModels.Base
+namespace BlackSpiritHelper.ViewModels.Base
 {
     /// <summary>
     /// A base view model that fires Property Changed events as needed.

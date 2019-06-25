@@ -5,9 +5,9 @@ using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Forms;
-using BlackSpiritHelperApp.Utilities;
+using BlackSpiritHelper.Utilities;
 
-namespace BlackSpiritHelperApp
+namespace BlackSpiritHelper
 {
     /// <summary>
     /// Interaction logic for OverlayWindow.xaml

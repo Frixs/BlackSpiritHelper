@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 
-namespace BlackSpiritHelperApp.Utilities
+namespace BlackSpiritHelper.Utilities
 {
     /// <summary>
     /// The dock position of the window.

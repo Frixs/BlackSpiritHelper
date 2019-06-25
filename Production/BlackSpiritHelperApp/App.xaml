@@ -1,7 +1,7 @@
-﻿<Application x:Class="BlackSpiritHelperApp.App"
+﻿<Application x:Class="BlackSpiritHelper.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:BlackSpiritHelperApp"
+             xmlns:local="clr-namespace:BlackSpiritHelper"
              StartupUri="Windows/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>

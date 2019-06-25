@@ -1,11 +1,11 @@
-﻿using BlackSpiritHelperApp.DataModels;
+﻿using BlackSpiritHelper.DataModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlackSpiritHelperApp.ViewModels
+namespace BlackSpiritHelper.ViewModels
 {
     class SideMenuItemViewModel
     {

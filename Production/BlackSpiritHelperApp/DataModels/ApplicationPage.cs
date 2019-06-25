@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlackSpiritHelperApp.DataModels
+namespace BlackSpiritHelper.DataModels
 {
     /// <summary>
     /// <see langword="abstract"/>page of the application.

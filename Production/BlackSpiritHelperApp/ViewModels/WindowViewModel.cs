@@ -1,6 +1,6 @@
-﻿using BlackSpiritHelperApp.DataModels;
-using BlackSpiritHelperApp.Utilities;
-using BlackSpiritHelperApp.ViewModels.Base;
+﻿using BlackSpiritHelper.DataModels;
+using BlackSpiritHelper.Utilities;
+using BlackSpiritHelper.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace BlackSpiritHelperApp.ViewModels
+namespace BlackSpiritHelper.ViewModels
 {
     /// <summary>
     /// The View Model for the custom flat window.

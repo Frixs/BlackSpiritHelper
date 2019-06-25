@@ -1,10 +1,10 @@
-﻿using BlackSpiritHelperApp.Utilities;
-using BlackSpiritHelperApp.ViewModels;
+﻿using BlackSpiritHelper.Utilities;
+using BlackSpiritHelper.ViewModels;
 using System;
 using System.Windows;
 using System.Windows.Interop;
 
-namespace BlackSpiritHelperApp
+namespace BlackSpiritHelper
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

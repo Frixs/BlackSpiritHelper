@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace BlackSpiritHelperApp
+namespace BlackSpiritHelper
 {
     /// <summary>
     /// A base value converter that allows direct XAML usage.
