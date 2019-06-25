@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BlackSpiritTimerApp.Windows"
+        xmlns:local="clr-namespace:BlackSpiritTimerApp"
         mc:Ignorable="d"
         Title="Black Spirit Timer - Overlay" WindowStartupLocation="Manual" Initialized="Window_Initialized" AllowsTransparency="True" WindowStyle="None" Background="Transparent" d:DesignWidth="1059.853" d:DesignHeight="540.955">
     <Grid Margin="0,0,0,0">

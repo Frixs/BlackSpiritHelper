@@ -26,7 +26,9 @@
     <!-- System Icon Button -->
     <Style TargetType="{x:Type Button}" x:Key="SystemIconButton" BasedOn="{StaticResource Hoverless}">
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-        <Setter Property="Padding" Value="10" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Height" Value="8" />
+        <Setter Property="Background" Value="Transparent" />
     </Style>
 
     <!-- Windows Control Button -->
@@ -69,6 +71,12 @@
                 <Setter Property="Foreground" Value="{StaticResource TextNormalBrushKey}" />
             </Trigger>
         </Style.Triggers>
+    </Style>
+
+    <!-- Application Button -->
+    <Style TargetType="{x:Type Button}" x:Key="ApplcationButton" BasedOn="{StaticResource Hoverless}">
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+        <Setter Property="Padding" Value="10" />
     </Style>
 
 </ResourceDictionary>

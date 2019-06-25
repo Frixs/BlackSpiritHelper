@@ -65,6 +65,9 @@
     <Compile Include="Utilities\WindowResizer.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
+    <Compile Include="ViewModels\Menu\Design\WindowMenuDesignModel.cs" />
+    <Compile Include="ViewModels\Menu\WindowMenuItemViewModel.cs" />
+    <Compile Include="ViewModels\Menu\WindowMenuViewModel.cs" />
     <Compile Include="ViewModels\WindowViewModel.cs" />
     <Compile Include="Windows\OverlayWindow.xaml.cs">
       <DependentUpon>OverlayWindow.xaml</DependentUpon>
@@ -152,9 +155,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Controls\" />
     <Folder Include="DataTypes\" />
     <Folder Include="Models\" />
-    <Folder Include="UserControls\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Fonts\Lato\OFL.txt" />

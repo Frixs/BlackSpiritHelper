@@ -14,20 +14,25 @@ namespace BlackSpiritTimerApp.Windows
         /// <summary>
         /// Log manager instance.
         /// </summary>
-        private Logger logger;
+        private Logger mLogger;
 
         /// <summary>
         /// Currently active overlay window instance.
         /// </summary>
-        private OverlayWindow overlayWindow = null;
+        private OverlayWindow mOverlayWindow = null;
+
+        /// <summary>
+        /// Window view model instance of the current window.
+        /// </summary>
+        private WindowViewModel mWindowViewModel = null;
 
         public MainWindow()
         {
-            logger = new Logger(this.GetType().ToString());
+            mLogger = new Logger(this.GetType().ToString());
 
             InitializeComponent();
 
-            this.DataContext = new WindowViewModel(this);
+            this.DataContext = mWindowViewModel = new WindowViewModel(this);
         }
 
         /// <summary>
@@ -44,8 +49,8 @@ namespace BlackSpiritTimerApp.Windows
         /// </summary>
         private void openOverlay()
         {
-            overlayWindow = new OverlayWindow(getHandle());
-            overlayWindow.Show();
+            mOverlayWindow = new OverlayWindow(getHandle());
+            mOverlayWindow.Show();
         }
 
         /// <summary>
@@ -53,8 +58,8 @@ namespace BlackSpiritTimerApp.Windows
         /// </summary>
         private void closeOverlay()
         {
-            overlayWindow.Close();
-            overlayWindow = null;
+            mOverlayWindow.Close();
+            mOverlayWindow = null;
 
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -69,6 +74,11 @@ namespace BlackSpiritTimerApp.Windows
         private void ShowOverlayCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             closeOverlay();
+        }
+
+        private void TestMethod(object sender, RoutedEventArgs e)
+        {
+            mWindowViewModel.TitlePostfixOnly = "Combat";
         }
     }
 }

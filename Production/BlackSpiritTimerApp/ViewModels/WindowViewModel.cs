@@ -47,6 +47,21 @@ namespace BlackSpiritTimerApp.ViewModels
         /// </summary>
         private int mWindowRadius = 0;
 
+        /// <summary>
+        /// Window title.
+        /// </summary>
+        private string mTitle;
+
+        /// <summary>
+        /// Window title default.
+        /// </summary>
+        private string mTitleDefault;
+
+        /// <summary>
+        /// Side menu width.
+        /// </summary>
+        private int mSideMenuWidth = 175;
+
         #endregion
 
         #region Public Properties
@@ -114,7 +129,21 @@ namespace BlackSpiritTimerApp.ViewModels
         /// <summary>
         /// The height of the space bar of the window.
         /// </summary>
-        public int SpaceBarHeight { get { return mSpaceBarHeight; } set { mSpaceBarHeight = value; } }
+        public int SpaceBarHeight
+        {
+            get
+            {
+                return mSpaceBarHeight;
+            }
+            set
+            {
+                mSpaceBarHeight = value;
+                OnPropertyChanged(nameof(SpaceBarHeight));
+                OnPropertyChanged(nameof(SpaceBarHeightGridLength));
+                OnPropertyChanged(nameof(CaptionHeight));
+                OnPropertyChanged(nameof(CaptionOverlayHeight));
+            }
+        }
 
         /// <summary>
         /// The height of the space bar of the window.
@@ -125,6 +154,55 @@ namespace BlackSpiritTimerApp.ViewModels
         /// The height of the caption of the window - draggable part of the window.
         /// </summary>
         public int CaptionHeight { get { return mTitleBarHeight + mSpaceBarHeight - ResizeBorderSize; } }
+
+        /// <summary>
+        /// Overlay to ignore Caption Height.
+        /// </summary>
+        public int CaptionOverlayHeight { get { return CaptionHeight + 1; } }
+
+        /// <summary>
+        /// Window title.
+        /// </summary>
+        public string Title
+        {
+            get
+            {
+                return mTitle;
+            }
+            set
+            {
+                mTitle = value;
+                OnPropertyChanged(nameof(Title));
+            }
+        }
+
+        /// <summary>
+        /// Window title change only postfix.
+        /// </summary>
+        public string TitlePostfixOnly
+        {
+            set
+            {
+                mTitle = mTitleDefault + " : " + value;
+                OnPropertyChanged(nameof(Title));
+            }
+        }
+
+        /// <summary>
+        /// Side menu width.
+        /// </summary>
+        public int SideMenuWidth
+        {
+            get
+            {
+                return mSideMenuWidth;
+            }
+            set
+            {
+                mSideMenuWidth = value;
+                OnPropertyChanged(nameof(SideMenuWidth));
+            }
+        }
 
         #endregion
 
@@ -160,6 +238,8 @@ namespace BlackSpiritTimerApp.ViewModels
         public WindowViewModel(Window window)
         {
             mWindow = window;
+            mTitleDefault = mWindow.Title;
+            mTitle = mTitleDefault;
 
             // Listen out for the window resizing.
             mWindow.StateChanged += (sender, e) =>
