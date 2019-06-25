@@ -61,17 +61,44 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\SideMenuContentControl.xaml.cs">
+      <DependentUpon>SideMenuContentControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\ApplicationPage.cs" />
+    <Compile Include="Pages\HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\Logger.cs" />
     <Compile Include="Utilities\WindowResizer.cs" />
+    <Compile Include="ValueConverters\ApplicationPageValueConverter.cs" />
+    <Compile Include="ValueConverters\BaseValueConverter.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
-    <Compile Include="ViewModels\Menu\Design\WindowMenuDesignModel.cs" />
-    <Compile Include="ViewModels\Menu\WindowMenuItemViewModel.cs" />
-    <Compile Include="ViewModels\Menu\WindowMenuViewModel.cs" />
+    <Compile Include="ViewModels\SideMenu\Design\SideMenuDesignModel.cs" />
+    <Compile Include="ViewModels\SideMenu\SideMenuItemViewModel.cs" />
+    <Compile Include="ViewModels\SideMenu\SideMenuViewModel.cs" />
     <Compile Include="ViewModels\WindowViewModel.cs" />
     <Compile Include="Windows\OverlayWindow.xaml.cs">
       <DependentUpon>OverlayWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\SideMenuContentControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\Buttons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -113,11 +140,6 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -126,6 +148,10 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -155,19 +181,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controls\" />
-    <Folder Include="DataTypes\" />
-    <Folder Include="Models\" />
+    <Resource Include="Resources\Images\Logo\logo_red_512.png" />
+    <Resource Include="Resources\Images\Logo\logo_white.ico" />
+    <Resource Include="Resources\Images\Logo\logo_white_512.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Fonts\Lato\OFL.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Logo\logo_white.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Logo\logo_red_512.png" />
-    <Resource Include="Resources\Images\Logo\logo_white_512.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

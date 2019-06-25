@@ -4,7 +4,7 @@ using System;
 using System.Windows;
 using System.Windows.Interop;
 
-namespace BlackSpiritTimerApp.Windows
+namespace BlackSpiritTimerApp
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -74,11 +74,6 @@ namespace BlackSpiritTimerApp.Windows
         private void ShowOverlayCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             closeOverlay();
-        }
-
-        private void TestMethod(object sender, RoutedEventArgs e)
-        {
-            mWindowViewModel.TitlePostfixOnly = "Combat";
         }
     }
 }

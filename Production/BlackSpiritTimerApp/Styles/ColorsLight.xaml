@@ -10,6 +10,9 @@
     <Color x:Key="WindowBorder">#FF000000</Color>
     <SolidColorBrush x:Key="WindowBorderBrushKey" Color="{StaticResource WindowBorder}" />
 
+    <Color x:Key="WindowTitleBarDropShadowLine">#FF222222</Color>
+    <SolidColorBrush x:Key="WindowTitleBarDropShadowLineBrushKey" Color="{StaticResource WindowTitleBarDropShadowLine}" />
+    
     <Color x:Key="WindowTitleBarDropShadow">#FFF8F8F8</Color>
     <SolidColorBrush x:Key="WindowTitleBarDropShadowBrushKey" Color="{StaticResource WindowTitleBarDropShadow}" />
 

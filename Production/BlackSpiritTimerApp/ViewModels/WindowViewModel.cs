@@ -1,4 +1,5 @@
-﻿using BlackSpiritTimerApp.Utilities;
+﻿using BlackSpiritTimerApp.DataModels;
+using BlackSpiritTimerApp.Utilities;
 using BlackSpiritTimerApp.ViewModels.Base;
 using System;
 using System.Collections.Generic;
@@ -69,7 +70,7 @@ namespace BlackSpiritTimerApp.ViewModels
         /// <summary>
         /// The size of the resize border around the window.
         /// </summary>
-        public int ResizeBorderSize { get { return mResizeBorderSize; } set { mResizeBorderSize = value; } }
+        public int ResizeBorderSize { get { return mWindow.WindowState == WindowState.Maximized ? 0 : mResizeBorderSize; } set { mResizeBorderSize = value; } }
 
         /// <summary>
         /// The thickness of the resize border around the window, taking into account the outer margin.
@@ -203,6 +204,11 @@ namespace BlackSpiritTimerApp.ViewModels
                 OnPropertyChanged(nameof(SideMenuWidth));
             }
         }
+
+        /// <summary>
+        /// The current page of the application.
+        /// </summary>
+        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.Home;
 
         #endregion
 

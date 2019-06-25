@@ -7,7 +7,7 @@ using System.Windows.Media;
 using System.Windows.Forms;
 using BlackSpiritTimerApp.Utilities;
 
-namespace BlackSpiritTimerApp.Windows
+namespace BlackSpiritTimerApp
 {
     /// <summary>
     /// Interaction logic for OverlayWindow.xaml
