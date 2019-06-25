@@ -9,12 +9,20 @@ namespace BlackSpiritTimerApp.Utilities
 {
     class Logger
     {
+        #region Private Members
+
         private string loggerClassName;
+
+        #endregion
+
+        #region Constructor
 
         public Logger(string loggerClassName)
         {
             this.loggerClassName = loggerClassName;
         }
+
+        #endregion
 
         /// <summary>
         /// Designates finer-grained informational events than the DEBUG.

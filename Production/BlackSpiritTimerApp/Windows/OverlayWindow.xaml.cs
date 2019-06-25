@@ -14,15 +14,17 @@ namespace BlackSpiritTimerApp.Windows
     /// </summary>
     public partial class OverlayWindow : Window
     {
+        #region Private Members
+
         /// <summary>
         /// Log manager instance.
         /// </summary>
-        private Logger logger;
+        private Logger mLogger;
 
         /// <summary>
         /// Target window handle where to open overlay window.
         /// </summary>
-        private IntPtr targetWindowHandle;
+        private IntPtr mTargetWindowHandle;
 
         ///// <summary>
         ///// Target window name.
@@ -32,34 +34,29 @@ namespace BlackSpiritTimerApp.Windows
         /// <summary>
         /// Says if the overlay window is ok to show.
         /// </summary>
-        private bool isOverlayOk = true;
+        private bool mIsOverlayOk = true;
 
-        //[DllImport("user32.dll")]
-        //private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
-        //[DllImport("user32.dll", SetLastError = true)]
-        //private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
-        //[DllImport("user32.dll")]
-        //[return: MarshalAs(UnmanagedType.Bool)]
-        //private static extern bool GetWindowRect(IntPtr hwd, out WindowCornerPosition lpRect);
-        //[DllImport("user32.dll", SetLastError = true)]
-        //private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+        #endregion
+
+        #region Constructor
 
         public OverlayWindow(IntPtr targetWindowReference)
         {
-            logger = new Logger(this.GetType().ToString());
-            this.targetWindowHandle = targetWindowReference;
+            mLogger = new Logger(this.GetType().ToString());
+            this.mTargetWindowHandle = targetWindowReference;
             InitializeComponent();
         }
+
+        #endregion
 
         private void Window_Initialized(object sender, EventArgs e)
         {
             IntPtr overlayWindowHandle = new WindowInteropHelper(this).Handle;
 
-            //targetWindowHandle = FindWindow(null, WindowName);
-            if (targetWindowHandle.Equals(IntPtr.Zero))
+            if (mTargetWindowHandle.Equals(IntPtr.Zero))
             {
-                logger.Warn("Target window not found!");
-                isOverlayOk = false;
+                mLogger.Warn("Target window not found!");
+                mIsOverlayOk = false;
                 return;
             }
 
@@ -68,16 +65,12 @@ namespace BlackSpiritTimerApp.Windows
             this.ShowInTaskbar = false;
             this.Topmost = true;
 
-            //// Set transparency for mouse events.
-            //int initialStyle = GetWindowLong(overlayWindowHandle, -20);
-            //SetWindowLong(overlayWindowHandle, -20, initialStyle | 0x80000 | 0x20);
-
-            SetOverlayPosition(overlayWindowHandle, targetWindowHandle);
+            SetOverlayPosition(overlayWindowHandle, mTargetWindowHandle);
         }
 
         private void DockPanel_Loaded(object sender, RoutedEventArgs e)
         {
-            if (!isOverlayOk)
+            if (!mIsOverlayOk)
             {
                 this.Close();
                 return;
@@ -93,10 +86,7 @@ namespace BlackSpiritTimerApp.Windows
         /// <param name="targetWindowHandle">Target window handle.</param>
         private void SetOverlayPosition(IntPtr overlayWindowHandle, IntPtr targetWindowHandle)
         {
-            //WindowCornerPosition rectWindow;
             Screen screen = null;
-
-            //GetWindowRect(targetWindowHandle, out rectWindow);
 
             screen = Screen.FromHandle(targetWindowHandle);
 
@@ -107,13 +97,5 @@ namespace BlackSpiritTimerApp.Windows
             this.Width = screen.WorkingArea.Width;
             this.Height = screen.WorkingArea.Height;
         }
-
-        ///// <summary>
-        ///// Inner struct to hold data about target window corner positions. 
-        ///// </summary>
-        //public struct WindowCornerPosition
-        //{
-        //    public int left, top, right, bottom;
-        //}
     }
 }
