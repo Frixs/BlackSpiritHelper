@@ -1,3 +1,0 @@
-[BlackSpiritHelper.OverlayWindow] - WARN: Test! [16:57:40 PM]
-[BlackSpiritHelper.Core.SideMenuDesignModel] - WARN: Test Core [16:59:11 PM]
-[BlackSpiritHelper.Core.SideMenuDesignModel] - WARN: Test Core [16:59:11 PM]
