@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using PropertyChanged;
+using System.ComponentModel;
 
 namespace BlackSpiritHelper.Core
 {

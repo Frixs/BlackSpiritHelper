@@ -1,4 +1,8 @@
-﻿namespace BlackSpiritHelper.Core
+﻿using System;
+using System.Threading.Tasks;
+using System.Windows.Input;
+
+namespace BlackSpiritHelper.Core
 {
     /// <summary>
     /// The View Model for the custom flat window.
@@ -15,6 +19,12 @@
         #endregion
 
         #region Commands
+
+        /// <summary>
+        /// The command to switch the page to Combat.
+        /// </summary>
+        public ICommand CombatCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -35,6 +45,14 @@
         /// </summary>
         private void CreateCommands()
         {
+            CombatCommand = new RelayCommand(async () => await CombatAsync());
+        }
+
+        private async Task CombatAsync()
+        {
+            IoC.Get<ApplicationViewModel>().CurrentPage = ApplicationPage.Combat;
+
+            await Task.Delay(1);
         }
     }
 }

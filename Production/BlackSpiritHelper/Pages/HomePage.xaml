@@ -10,6 +10,6 @@
       Title="HomePage">
 
     <Border>
-        <Button Content="HomePage" />
+        <Button Content="HomePage" Command="{Binding CombatCommand}" />
     </Border>
 </local:BasePage>

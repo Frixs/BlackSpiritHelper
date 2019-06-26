@@ -198,11 +198,6 @@ namespace BlackSpiritHelper
             }
         }
 
-        /// <summary>
-        /// The current page of the application.
-        /// </summary>
-        public ApplicationPage CurrentPage { get; set; } = Properties.Settings.Default.LastOpenedPage > 0 ? (ApplicationPage)Properties.Settings.Default.LastOpenedPage : ApplicationPage.Home;
-
         #endregion
 
         #region Commands
@@ -274,9 +269,9 @@ namespace BlackSpiritHelper
             // Close.
             CloseCommand = new RelayCommand(() =>
             {
-                // Save settings.
-                Properties.Settings.Default.LastOpenedPage = (byte) this.CurrentPage;
-                Properties.Settings.Default.Save();
+                // Save settings. TODO
+                //Properties.Settings.Default.LastOpenedPage = (byte) ApplicationViewModel.CurrentPage;
+                //Properties.Settings.Default.Save();
 
                 // Close all windows.
                 for (int intCounter = App.Current.Windows.Count - 1; intCounter >= 0; intCounter--)

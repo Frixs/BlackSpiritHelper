@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BlackSpiritHelper"
         xmlns:core="clr-namespace:BlackSpiritHelper.Core;assembly=BlackSpiritHelper.Core"
         mc:Ignorable="d"
-        x:Name="MainWindowApp"
+        x:Name="AppMainWindow"
         WindowStyle="None"
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
@@ -153,7 +153,8 @@
     </WindowChrome.WindowChrome>
 
     <Grid Background="{StaticResource WindowBackgroundBrushKey}">
-        <Frame x:Name="MainFrame" Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}" />
+        <Frame x:Name="MainFrame" 
+               Content="{Binding ApplicationViewModel.CurrentPage, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:ApplicationPageValueConverter}}" />
 
         <CheckBox x:Name="showOverlayCheckBox" Content="CheckBox" HorizontalAlignment="Left" Margin="398,182,0,0" VerticalAlignment="Top" Checked="ShowOverlayCheckBox_Checked" Unchecked="ShowOverlayCheckBox_Unchecked"/>
     </Grid>

@@ -76,3 +76,5 @@ C:\Users\This\Documents\WORKSPACE\desktop\BlackSpiritHelper\Production\BlackSpir
 C:\Users\This\Documents\WORKSPACE\desktop\BlackSpiritHelper\Production\BlackSpiritHelper\obj\Debug\BlackSpiritHelper.csproj.GenerateResource.cache
 C:\Users\This\Documents\WORKSPACE\desktop\BlackSpiritHelper\Production\BlackSpiritHelper\obj\Debug\BlackSpiritHelper.csproj.CoreCompileInputs.cache
 C:\Users\This\Documents\WORKSPACE\desktop\BlackSpiritHelper\Production\BlackSpiritHelper\obj\Debug\BlackSpiritHelper.csproj.CopyComplete
+C:\Users\This\Documents\WORKSPACE\desktop\BlackSpiritHelper\Production\BlackSpiritHelper\bin\Debug\Ninject.dll
+C:\Users\This\Documents\WORKSPACE\desktop\BlackSpiritHelper\Production\BlackSpiritHelper\bin\Debug\Ninject.xml

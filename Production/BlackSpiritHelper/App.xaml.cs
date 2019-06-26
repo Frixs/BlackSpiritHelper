@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
+﻿using BlackSpiritHelper.Core;
+using System;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Navigation;
 
 namespace BlackSpiritHelper
 {
@@ -15,11 +10,24 @@ namespace BlackSpiritHelper
     /// </summary>
     public partial class App : Application
     {
+        /// <summary>
+        /// Custom startup so we load our IoC immediately before anything else.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnStartup(StartupEventArgs e)
         {
+            // Let the base application do what it needs.
             base.OnStartup(e);
 
+            // Setup IoC.
+            IoC.Setup();
+
+            // Check for application available updates.
             checkForUpdates();
+
+            // Show the main window.
+            Current.MainWindow = new MainWindow();
+            Current.MainWindow.Show();
         }
 
         /// <summary>

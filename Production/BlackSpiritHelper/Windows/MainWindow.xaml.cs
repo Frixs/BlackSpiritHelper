@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlackSpiritHelper.Core;
+using System;
 using System.Windows;
 using System.Windows.Interop;
 
@@ -9,17 +10,29 @@ namespace BlackSpiritHelper
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Private Members
+
         /// <summary>
         /// Currently active overlay window instance.
         /// </summary>
         private OverlayWindow mOverlayWindow = null;
 
+        #endregion
+
+        #region Public Properties
+
+        #endregion
+
+        #region Constructor
+
         public MainWindow()
         {
             InitializeComponent();
 
-            this.DataContext = new WindowViewModel(this);
+            DataContext = new WindowViewModel(this);
         }
+
+        #endregion
 
         /// <summary>
         /// Get handle to this window.
