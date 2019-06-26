@@ -1,0 +1,6 @@
+C:\Users\This\Documents\WORKSPACE\desktop\BlackSpiritHelper\Production\BlackSpiritHelper.Core\obj\Debug\BlackSpiritHelper.Core.csprojAssemblyReference.cache
+C:\Users\This\Documents\WORKSPACE\desktop\BlackSpiritHelper\Production\BlackSpiritHelper.Core\obj\Debug\BlackSpiritHelper.Core.csproj.CoreCompileInputs.cache
+C:\Users\This\Documents\WORKSPACE\desktop\BlackSpiritHelper\Production\BlackSpiritHelper.Core\bin\Debug\BlackSpiritHelper.Core.dll
+C:\Users\This\Documents\WORKSPACE\desktop\BlackSpiritHelper\Production\BlackSpiritHelper.Core\bin\Debug\BlackSpiritHelper.Core.pdb
+C:\Users\This\Documents\WORKSPACE\desktop\BlackSpiritHelper\Production\BlackSpiritHelper.Core\obj\Debug\BlackSpiritHelper.Core.dll
+C:\Users\This\Documents\WORKSPACE\desktop\BlackSpiritHelper\Production\BlackSpiritHelper.Core\obj\Debug\BlackSpiritHelper.Core.pdb
