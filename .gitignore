@@ -1,10 +1,5 @@
 /.vs/*
 
-/Production/BlackSpiritHelper/.vs/*
-/Production/BlackSpiritHelper/bin/*
-/Production/BlackSpiritHelper/obj/*
-/Production/BlackSpiritHelper/Debug/*
-
 /Production/BlackSpiritHelper*/.vs/*
 /Production/BlackSpiritHelper*/bin/*
 /Production/BlackSpiritHelper*/obj/*
