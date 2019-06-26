@@ -26,12 +26,12 @@ namespace BlackSpiritHelper.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int AnotherVal {
+        public byte LastOpenedPage {
             get {
-                return ((int)(this["AnotherVal"]));
+                return ((byte)(this["LastOpenedPage"]));
             }
             set {
-                this["AnotherVal"] = value;
+                this["LastOpenedPage"] = value;
             }
         }
     }

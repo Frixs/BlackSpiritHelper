@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BlackSpiritHelper.Utilities
 {
-    class Logger
+    public class Logger
     {
         #region Private Members
 

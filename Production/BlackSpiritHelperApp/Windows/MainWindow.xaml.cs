@@ -21,18 +21,13 @@ namespace BlackSpiritHelper
         /// </summary>
         private OverlayWindow mOverlayWindow = null;
 
-        /// <summary>
-        /// Window view model instance of the current window.
-        /// </summary>
-        private WindowViewModel mWindowViewModel = null;
-
         public MainWindow()
         {
             mLogger = new Logger(this.GetType().ToString());
 
             InitializeComponent();
 
-            this.DataContext = mWindowViewModel = new WindowViewModel(this);
+            this.DataContext = new WindowViewModel(this);
         }
 
         /// <summary>

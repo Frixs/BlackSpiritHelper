@@ -9,7 +9,7 @@ namespace BlackSpiritHelper.DataModels
     /// <summary>
     /// <see langword="abstract"/>page of the application.
     /// </summary>
-    enum ApplicationPage
+    public enum ApplicationPage
     {
         /// <summary>
         /// The home page with applcation description and welcome.

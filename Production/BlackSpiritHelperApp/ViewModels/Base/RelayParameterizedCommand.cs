@@ -7,14 +7,17 @@ using System.Windows.Input;
 
 namespace BlackSpiritHelper.ViewModels.Base
 {
-    public class RelayCommand : ICommand
+    /// <summary>
+    /// Execute a command based on input parameter.
+    /// </summary>
+    public class RelayParameterizedCommand : ICommand
     {
         #region Private Members
 
         /// <summary>
         /// The action to run.
         /// </summary>
-        private Action mAction;
+        private Action<object> mAction;
 
         #endregion
 
@@ -32,7 +35,7 @@ namespace BlackSpiritHelper.ViewModels.Base
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public RelayCommand(Action action)
+        public RelayParameterizedCommand(Action<object> action)
         {
             mAction = action;
         }
@@ -57,7 +60,7 @@ namespace BlackSpiritHelper.ViewModels.Base
         /// <param name="parameter"></param>
         public void Execute(object parameter)
         {
-            mAction();
+            mAction(parameter);
         }
 
         #endregion

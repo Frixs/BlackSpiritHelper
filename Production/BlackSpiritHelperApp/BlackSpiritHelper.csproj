@@ -61,12 +61,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Animations\PageAnimation.cs" />
+    <Compile Include="Animations\PageAnimations.cs" />
+    <Compile Include="Animations\StoryboardHelpers.cs" />
     <Compile Include="Controls\SideMenuContentControl.xaml.cs">
       <DependentUpon>SideMenuContentControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataModels\ApplicationPage.cs" />
+    <Compile Include="Pages\BasePage.cs" />
+    <Compile Include="Pages\BossPage.xaml.cs">
+      <DependentUpon>BossPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CombatPage.xaml.cs">
+      <DependentUpon>CombatPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\LifeskillPage.xaml.cs">
+      <DependentUpon>LifeskillPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -83,10 +96,12 @@
     <Compile Include="ValueConverters\ApplicationPageValueConverter.cs" />
     <Compile Include="ValueConverters\BaseValueConverter.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
+    <Compile Include="ViewModels\Base\RelayParameterizedCommand.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
     <Compile Include="ViewModels\SideMenu\Design\SideMenuDesignModel.cs" />
     <Compile Include="ViewModels\SideMenu\SideMenuItemViewModel.cs" />
     <Compile Include="ViewModels\SideMenu\SideMenuViewModel.cs" />
+    <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\WindowViewModel.cs" />
     <Compile Include="Windows\OverlayWindow.xaml.cs">
       <DependentUpon>OverlayWindow.xaml</DependentUpon>
@@ -95,7 +110,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\BossPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CombatPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\LifeskillPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

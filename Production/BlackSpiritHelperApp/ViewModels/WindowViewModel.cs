@@ -14,7 +14,7 @@ namespace BlackSpiritHelper.ViewModels
     /// <summary>
     /// The View Model for the custom flat window.
     /// </summary>
-    class WindowViewModel : BaseViewModel
+    public class WindowViewModel : BaseViewModel
     {
         #region Private Members
 
@@ -208,7 +208,7 @@ namespace BlackSpiritHelper.ViewModels
         /// <summary>
         /// The current page of the application.
         /// </summary>
-        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.Home;
+        public ApplicationPage CurrentPage { get; set; } = Properties.Settings.Default.LastOpenedPage > 0 ? (ApplicationPage)Properties.Settings.Default.LastOpenedPage : ApplicationPage.Home;
 
         #endregion
 
@@ -259,16 +259,42 @@ namespace BlackSpiritHelper.ViewModels
             };
 
             // Create commands.
-            MinimizeCommand = new RelayCommand(() => mWindow.WindowState = WindowState.Minimized);
-            MaximizeCommand = new RelayCommand(() => mWindow.WindowState ^= WindowState.Maximized);
-            CloseCommand = new RelayCommand(() => mWindow.Close());
-            MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()));
+            CreateCommands();
 
             // Fix window resize issue.
             var resizer = new WindowResizer(mWindow);
         }
 
         #endregion
+
+        /// <summary>
+        /// Create Windows commands.
+        /// </summary>
+        private void CreateCommands()
+        {
+            // Minimize.
+            MinimizeCommand = new RelayCommand(() => mWindow.WindowState = WindowState.Minimized);
+
+            // Maximize.
+            MaximizeCommand = new RelayCommand(() => mWindow.WindowState ^= WindowState.Maximized);
+
+            // Close.
+            CloseCommand = new RelayCommand(() =>
+            {
+                // Save settings.
+                Properties.Settings.Default.LastOpenedPage = (byte) this.CurrentPage;
+                Properties.Settings.Default.Save();
+
+                // Close all windows.
+                for (int intCounter = App.Current.Windows.Count - 1; intCounter >= 0; intCounter--)
+                {
+                    App.Current.Windows[intCounter].Close();
+                }
+            });
+
+            // Menu.
+            MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()));
+        }
 
         #region Private Helpers
 

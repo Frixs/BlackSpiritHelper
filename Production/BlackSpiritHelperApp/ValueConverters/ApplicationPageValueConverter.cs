@@ -12,7 +12,7 @@ namespace BlackSpiritHelper
     /// <summary>
     /// Converts the <see cref="ApplicationPage"/> to an actual view/page.
     /// </summary>
-    class ApplicationPageValueConverter : BaseValueConverter<ApplicationPageValueConverter>
+    public class ApplicationPageValueConverter : BaseValueConverter<ApplicationPageValueConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

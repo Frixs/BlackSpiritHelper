@@ -13,7 +13,7 @@ namespace BlackSpiritHelper
     /// A base value converter that allows direct XAML usage.
     /// </summary>
     /// <typeparam name="T">The type of this value converter.</typeparam>
-    abstract class BaseValueConverter<T> : MarkupExtension, IValueConverter
+    public abstract class BaseValueConverter<T> : MarkupExtension, IValueConverter
         where T : class, new()
     {
         #region Private Members

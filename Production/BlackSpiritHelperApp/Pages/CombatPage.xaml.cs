@@ -1,6 +1,4 @@
-﻿
-using BlackSpiritHelper.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,11 +16,11 @@ using System.Windows.Shapes;
 namespace BlackSpiritHelper
 {
     /// <summary>
-    /// Interaction logic for HomePage.xaml
+    /// Interaction logic for CombatPage.xaml
     /// </summary>
-    public partial class HomePage : BasePage<HomeViewModel>
+    public partial class CombatPage : Page
     {
-        public HomePage()
+        public CombatPage()
         {
             InitializeComponent();
         }

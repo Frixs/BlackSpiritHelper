@@ -61,10 +61,10 @@
                                     <Grid Grid.Column="0" Panel.ZIndex="1" Height="{Binding CaptionOverlayHeight, FallbackValue=57}" Background="Transparent" VerticalAlignment="Top" WindowChrome.IsHitTestVisibleInChrome="True"></Grid>
 
                                     <!-- Side Menu Column -->
-                                    <local:SideMenuContentControl />
+                                    <local:SideMenuContentControl Grid.Column="0" Panel.ZIndex="2" />
 
                                     <!-- Content Column -->
-                                    <Grid Grid.Column="1" Panel.ZIndex="2">
+                                    <Grid Grid.Column="1" Panel.ZIndex="0">
 
                                         <Grid.RowDefinitions>
                                             <!-- Space Bar (Decoration) -->
