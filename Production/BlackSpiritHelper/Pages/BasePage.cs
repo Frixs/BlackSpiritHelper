@@ -26,7 +26,7 @@ namespace BlackSpiritHelper
         /// <summary>
         /// Distance of slide animation.
         /// </summary>
-        public int SlideDistance { get; set; } = 10; //this.WindowHeight;
+        public int SlideDistance { get; set; } = 25; //this.WindowHeight;
 
         /// <summary>
         /// The time any slide animation takes to complete.
@@ -119,7 +119,7 @@ namespace BlackSpiritHelper
                 case PageAnimation.SlideAndFadeInFromBottom:
 
                     // Start the animation.
-                    await this.SlideAndFadeInFromBottom(SlideSeconds, SlideDistance);
+                    await this.SlideAndFadeInFromBottom(SlideDistance, SlideSeconds);
 
                     break;
             }
@@ -142,7 +142,7 @@ namespace BlackSpiritHelper
                 case PageAnimation.SlideAndFadeOutToBottom:
 
                     // Start the animation.
-                    await this.SlideAndFadeOutToBottom(SlideSeconds, SlideDistance);
+                    await this.SlideAndFadeOutToBottom(SlideDistance, SlideSeconds);
 
                     break;
             }

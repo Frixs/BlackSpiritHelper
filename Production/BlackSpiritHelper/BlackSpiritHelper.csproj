@@ -65,10 +65,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Animations\PageAnimation.cs" />
-    <Compile Include="Animations\PageAnimations.cs" />
+    <Compile Include="Animations\FrameworkElementAnimations.cs" />
     <Compile Include="Animations\StoryboardHelpers.cs" />
-    <Compile Include="Controls\SideMenuContentControl.xaml.cs">
-      <DependentUpon>SideMenuContentControl.xaml</DependentUpon>
+    <Compile Include="AttachedProperties\BaseAttachedProperty.cs" />
+    <Compile Include="AttachedProperties\FrameworkElementAnimationAttachedProperties.cs" />
+    <Compile Include="Controls\SideMenuControl.xaml.cs">
+      <DependentUpon>SideMenuControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Pages\BossPage.xaml.cs">
@@ -92,7 +94,7 @@
     <Compile Include="Windows\OverlayWindow.xaml.cs">
       <DependentUpon>OverlayWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="Controls\SideMenuContentControl.xaml">
+    <Page Include="Controls\SideMenuControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

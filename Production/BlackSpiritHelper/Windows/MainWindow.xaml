@@ -19,8 +19,8 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Window}">
                         <!-- Outer border with the dropshadow margin - set BG color for debug -->
-                        <Border Padding="{Binding OuterMarginThickness, FallbackValue=10}"
-                                Margin="0" SnapsToDevicePixels="True" UseLayoutRounding="True">
+                        <Border Margin="{Binding OuterMarginThickness, FallbackValue=10}"
+                                SnapsToDevicePixels="True" UseLayoutRounding="True">
 
                             <!-- Main window outline - set BG color for debug -->
                             <Grid>
@@ -50,7 +50,7 @@
 
                                     <Grid.ColumnDefinitions>
                                         <!-- Side Menu Column -->
-                                        <ColumnDefinition Width="{Binding SideMenuWidth, FallbackValue=175}" />
+                                        <ColumnDefinition Width="Auto" />
                                         <!-- Content Column -->
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
@@ -59,9 +59,14 @@
                                     <Button Grid.Column="0" Panel.ZIndex="3" Command="{Binding MenuCommand}" Style="{StaticResource SystemIconButton}"></Button>
                                     <!-- Caption Overlay -->
                                     <Grid Grid.Column="0" Panel.ZIndex="1" Height="{Binding CaptionOverlayHeight, FallbackValue=57}" Background="Transparent" VerticalAlignment="Top" WindowChrome.IsHitTestVisibleInChrome="True"></Grid>
-
+                                    <!-- Side Menu Background (Default) -->
+                                    <Border Grid.Column="0" Panel.ZIndex="0" Background="{StaticResource SideMenuBackgroundBrushKey}" />
                                     <!-- Side Menu Column -->
-                                    <local:SideMenuContentControl Grid.Column="0" Panel.ZIndex="2" />
+                                    <local:SideMenuControl Grid.Column="0" Panel.ZIndex="2"
+                                                           Width="{Binding SideMenuWidth, FallbackValue=175}"
+                                                           local:AnimateSideMenuSlideIn.Value="True">
+                                        
+                                    </local:SideMenuControl>
 
                                     <!-- Content Column -->
                                     <Grid Grid.Column="1" Panel.ZIndex="0">
@@ -126,7 +131,7 @@
                                         </Border>
 
                                         <!-- Window Content -->
-                                        <Border Grid.Row="3" Padding="10">
+                                        <Border Grid.Row="3" Padding="10" ClipToBounds="True">
                                             <ContentPresenter Content="{TemplateBinding Content}" />
                                         </Border>
 

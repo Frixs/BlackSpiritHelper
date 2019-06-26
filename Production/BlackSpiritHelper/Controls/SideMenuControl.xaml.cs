@@ -5,9 +5,9 @@ using System.Windows.Input;
 namespace BlackSpiritHelper
 {
     /// <summary>
-    /// Interaction logic for SideMenuContentControl.xaml
+    /// Interaction logic for SideMenuControl.xaml
     /// </summary>
-    public partial class SideMenuContentControl : UserControl
+    public partial class SideMenuControl : UserControl
     {
         #region Commands
 
@@ -35,7 +35,7 @@ namespace BlackSpiritHelper
 
         #region Constructor
 
-        public SideMenuContentControl()
+        public SideMenuControl()
         {
             InitializeComponent();
 
