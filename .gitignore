@@ -1,5 +1,11 @@
 /.vs/*
-/Production/BlackSpiritHelperApp/.vs/*
-/Production/BlackSpiritHelperApp/bin/*
-/Production/BlackSpiritHelperApp/obj/*
-/Production/BlackSpiritHelperApp/Debug/*
+
+/Production/BlackSpiritHelper/.vs/*
+/Production/BlackSpiritHelper/bin/*
+/Production/BlackSpiritHelper/obj/*
+/Production/BlackSpiritHelper/Debug/*
+
+/Production/BlackSpiritHelper*/.vs/*
+/Production/BlackSpiritHelper*/bin/*
+/Production/BlackSpiritHelper*/obj/*
+/Production/BlackSpiritHelper*/Debug/*

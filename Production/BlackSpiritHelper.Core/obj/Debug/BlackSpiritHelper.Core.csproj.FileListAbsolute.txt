@@ -8,3 +8,4 @@ C:\Users\This\Documents\WORKSPACE\desktop\BlackSpiritHelper\Production\BlackSpir
 C:\Users\This\Documents\WORKSPACE\desktop\BlackSpiritHelper\Production\BlackSpiritHelper.Core\bin\Debug\Ninject.xml
 C:\Users\This\Documents\WORKSPACE\desktop\BlackSpiritHelper\Production\BlackSpiritHelper.Core\obj\Debug\BlackSpiritHelper.Core.csproj.CopyComplete
 C:\Users\This\Documents\WORKSPACE\desktop\BlackSpiritHelper\Production\BlackSpiritHelper.Core\obj\Debug\BlackSpiritHelper.Core.csproj.Fody.CopyLocal.cache
+C:\Users\This\Documents\WORKSPACE\desktop\BlackSpiritHelper\Production\BlackSpiritHelper.Core\bin\Debug\BlackSpiritHelper.Core.dll.config
