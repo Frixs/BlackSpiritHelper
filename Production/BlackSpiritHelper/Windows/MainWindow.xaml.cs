@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlackSpiritHelper.Core;
+using System;
 using System.Windows;
 using System.Windows.Interop;
 
@@ -10,6 +11,8 @@ namespace BlackSpiritHelper
     public partial class MainWindow : Window
     {
         #region Private Members
+
+        private Logger mLogger = new Logger();
 
         /// <summary>
         /// Currently active overlay window instance.

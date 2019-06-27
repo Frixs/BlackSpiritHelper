@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 
@@ -6,9 +7,17 @@ namespace BlackSpiritHelper.Core
 {
     public class Logger
     {
+        #region Singleton
+
+        /// <summary>
+        /// Singleton instance for the logger.
+        /// </summary>
+        public static Logger Instance { get; private set; } = new Logger();
+
+        #endregion
+
         #region Private Members
 
-        private string mLoggerClassName;
         private const string mLogFileLocation = "Log/";
         private const string mLogFileName = "Log.txt";
         private const string mLogFilePath = mLogFileLocation + mLogFileName;
@@ -17,9 +26,8 @@ namespace BlackSpiritHelper.Core
 
         #region Constructor
 
-        public Logger(string loggerClassName)
+        public Logger()
         {
-            this.mLoggerClassName = loggerClassName;
         }
 
         #endregion
@@ -30,8 +38,7 @@ namespace BlackSpiritHelper.Core
         /// <param name="message">Log message.</param>
         public void Trace(string message)
         {
-            string prefix = string.Format("[{0}] - TRACE: ", mLoggerClassName);
-            Console.WriteLine(prefix + message);
+            Console.WriteLine(GetMessagePrefix() + message);
         }
 
         /// <summary>
@@ -40,8 +47,7 @@ namespace BlackSpiritHelper.Core
         /// <param name="message">Log message.</param>
         public void Debug(string message)
         {
-            string prefix = string.Format("[{0}] - DEBUG: ", mLoggerClassName);
-            Console.WriteLine(prefix + message);
+            Console.WriteLine(GetMessagePrefix() + message);
         }
 
         /// <summary>
@@ -50,8 +56,7 @@ namespace BlackSpiritHelper.Core
         /// <param name="message">Log message.</param>
         public void Info(string message)
         {
-            string prefix = string.Format("[{0}] - INFO: ", mLoggerClassName);
-            Console.WriteLine(prefix + message);
+            Console.WriteLine(GetMessagePrefix() + message);
         }
 
         /// <summary>
@@ -60,8 +65,7 @@ namespace BlackSpiritHelper.Core
         /// <param name="message">Log message.</param>
         public void Warn(string message)
         {
-            string prefix = string.Format("[{0}] - WARN: ", mLoggerClassName);
-            WriteToLogFile(prefix + message);
+            WriteToLogFile(GetMessagePrefix() + message);
         }
 
         /// <summary>
@@ -70,8 +74,7 @@ namespace BlackSpiritHelper.Core
         /// <param name="message">Log message.</param>
         public void Error(string message)
         {
-            string prefix = string.Format("[{0}] - ERROR: ", mLoggerClassName);
-            WriteToLogFile(prefix + message);
+            WriteToLogFile(GetMessagePrefix() + message);
         }
 
         /// <summary>
@@ -80,9 +83,10 @@ namespace BlackSpiritHelper.Core
         /// <param name="message">Log message.</param>
         public void Fatal(string message)
         {
-            string prefix = string.Format("[{0}] - FATAL: ", mLoggerClassName);
-            WriteToLogFile(prefix + message);
+            WriteToLogFile(GetMessagePrefix() + message);
         }
+
+        #region Helpers
 
         private void WriteToLogFile(string message)
         {
@@ -102,5 +106,21 @@ namespace BlackSpiritHelper.Core
 
             Console.WriteLine(message);
         }
+
+        /// <summary>
+        /// Get prefix for the log message.
+        /// </summary>
+        /// <returns></returns>
+        private string GetMessagePrefix()
+        {
+            var st = new StackTrace();
+
+            return string.Format(
+                "[{0}] - " + st.GetFrame(1).GetMethod().Name + ": ",
+                st.GetFrame(2).GetMethod().ReflectedType.FullName + ":" + st.GetFrame(2).GetMethod().Name
+                );
+        }
+
+        #endregion
     }
 }

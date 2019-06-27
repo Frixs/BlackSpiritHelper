@@ -1,5 +1,6 @@
 ﻿using Ninject;
 using System;
+using System.Diagnostics;
 
 namespace BlackSpiritHelper.Core
 {
@@ -25,8 +26,12 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public static void Setup()
         {
+            Logger.Instance.Debug("IoC setup starting.");
+
             // Bind all required view models.
             BindViewModels();
+
+            Logger.Instance.Info("IoC set.");
         }
 
         /// <summary>

@@ -14,11 +14,6 @@ namespace BlackSpiritHelper
         #region Private Members
 
         /// <summary>
-        /// Log manager instance.
-        /// </summary>
-        private Logger mLogger;
-
-        /// <summary>
         /// Target window handle where to open overlay window.
         /// </summary>
         private IntPtr mTargetWindowHandle;
@@ -39,7 +34,6 @@ namespace BlackSpiritHelper
 
         public OverlayWindow(IntPtr targetWindowReference)
         {
-            mLogger = new Logger(this.GetType().ToString());
             this.mTargetWindowHandle = targetWindowReference;
             InitializeComponent();
         }
@@ -52,7 +46,7 @@ namespace BlackSpiritHelper
             
             if (mTargetWindowHandle.Equals(IntPtr.Zero))
             {
-                mLogger.Warn("Target window not found!");
+                Logger.Instance.Warn("Target window not found!");
                 mIsOverlayOk = false;
                 return;
             }
