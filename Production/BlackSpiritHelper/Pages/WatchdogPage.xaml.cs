@@ -3,11 +3,11 @@
 namespace BlackSpiritHelper
 {
     /// <summary>
-    /// Interaction logic for BossPage.xaml
+    /// Interaction logic for WatchdogPage.xaml
     /// </summary>
-    public partial class BossPage : BasePage<BossViewModel>
+    public partial class WatchdogPage : BasePage<WatchdogViewModel>
     {
-        public BossPage()
+        public WatchdogPage()
         {
             InitializeComponent();
         }

@@ -1,4 +1,7 @@
-﻿namespace BlackSpiritHelper.Core
+﻿using System.Threading.Tasks;
+using System.Windows.Input;
+
+namespace BlackSpiritHelper.Core
 {
     public class SideMenuListItemViewModel : BaseViewModel
     {
@@ -21,13 +24,42 @@
 
         #endregion
 
+        #region Commands
+
+        /// <summary>
+        /// The command to open a new page.
+        /// </summary>
+        public ICommand OpenPageCommand { get; set; }
+
+        #endregion
+
         #region Constructor
 
         public SideMenuListItemViewModel()
         {
-
+            // Create commands.
+            CreateCommands();
         }
 
         #endregion
+
+        /// <summary>
+        /// Create commands.
+        /// </summary>
+        private void CreateCommands()
+        {
+            OpenPageCommand = new RelayCommand(async () => await OpenPageAsync());
+        }
+
+        /// <summary>
+        /// Command helper, open page async.
+        /// </summary>
+        /// <returns></returns>
+        private async Task OpenPageAsync()
+        {
+            IoC.Get<ApplicationViewModel>().GoToPage(PageEnum);
+
+            await Task.Delay(1);
+        }
     }
 }

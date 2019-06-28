@@ -27,7 +27,8 @@
 
                 <!-- Icon -->
                 <Grid Grid.Row="0" Panel.ZIndex="1">
-                    <Button Style="{StaticResource ApplcationButton}">
+                    <Button Style="{StaticResource ApplcationButton}"
+                            Command="{Binding OpenHomePageCommand}">
                         <Image Source="/BlackSpiritHelper;component/Resources/Images/Logo/logo_red_512.png" />
                     </Button>
                 </Grid>

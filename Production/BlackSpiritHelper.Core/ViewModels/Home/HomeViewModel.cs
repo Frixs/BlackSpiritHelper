@@ -41,7 +41,7 @@ namespace BlackSpiritHelper.Core
         #endregion
 
         /// <summary>
-        /// Create Windows commands.
+        /// Create commands.
         /// </summary>
         private void CreateCommands()
         {

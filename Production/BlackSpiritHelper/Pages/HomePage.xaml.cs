@@ -1,5 +1,4 @@
-﻿
-using BlackSpiritHelper.Core;
+﻿using BlackSpiritHelper.Core;
 
 namespace BlackSpiritHelper
 {

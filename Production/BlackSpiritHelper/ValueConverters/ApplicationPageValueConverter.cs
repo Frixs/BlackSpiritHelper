@@ -21,6 +21,12 @@ namespace BlackSpiritHelper
                 case ApplicationPage.Timer:
                     return new TimerPage();
 
+                case ApplicationPage.Watchdog:
+                    return new WatchdogPage();
+
+                case ApplicationPage.Boss:
+                    return new BossPage();
+
                 default:
                     Debugger.Break();
                     return null;

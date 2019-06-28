@@ -12,6 +12,9 @@
 
         public SideMenuListItemDesignModel()
         {
+            Title = "PLACEHOLDER";
+            PageEnum = ApplicationPage.Home;
+            IsActive = true;
         }
 
         #endregion

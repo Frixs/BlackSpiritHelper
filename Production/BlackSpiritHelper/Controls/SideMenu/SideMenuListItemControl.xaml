@@ -6,8 +6,24 @@
              xmlns:local="clr-namespace:BlackSpiritHelper"
              xmlns:core="clr-namespace:BlackSpiritHelper.Core;assembly=BlackSpiritHelper.Core"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+             d:DesignHeight="65" d:DesignWidth="200">
+
+    <UserControl.Resources>
+        <Style x:Key="ContentStyle" TargetType="{x:Type ContentControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ContentControl}">
+                        
+                        <!-- Content -->
+                        <Button Content="{Binding Title}" Padding="10" Margin="10" FontSize="16"
+                                Command="{Binding OpenPageCommand}" />
+                        
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    
+    <ContentControl d:DataContext="{x:Static core:SideMenuListItemDesignModel.Instance}"
+                    Style="{StaticResource ContentStyle}" />
 </UserControl>
