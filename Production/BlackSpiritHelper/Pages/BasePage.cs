@@ -7,20 +7,10 @@ using System.Windows.Controls;
 namespace BlackSpiritHelper
 {
     /// <summary>
-    /// A base page for all pages to gain base functionality.
+    /// The Base page for all pages to gain base functionality.
     /// </summary>
-    public class BasePage<VM> : Page
-        where VM : BaseViewModel, new()
+    public class BasePage : Page
     {
-        #region Private Members
-
-        /// <summary>
-        /// The View Model associated with this page.
-        /// </summary>
-        private VM mViewModel;
-
-        #endregion
-
         #region Public Properties
 
         /// <summary>
@@ -44,26 +34,10 @@ namespace BlackSpiritHelper
         public PageAnimation PageUnloadAnimation { get; set; } = PageAnimation.SlideAndFadeOutToBottom;
 
         /// <summary>
-        /// The View Model associated with this page.
+        /// A flag to indicate if this page should animate out on load.
+        /// Useful for when we are moving the page to another frame.
         /// </summary>
-        public VM ViewModel
-        {
-            get
-            {
-                return mViewModel;
-            }
-            set
-            {
-                // If nothing has changed, return.
-                if (mViewModel == value)
-                    return;
-
-                mViewModel = value;
-
-                // Set the data context for this page.
-                this.DataContext = mViewModel;
-            }
-        }
+        public bool ShouldAnimateOut { get; set; }
 
         #endregion
 
@@ -75,16 +49,13 @@ namespace BlackSpiritHelper
         public BasePage()
         {
             // If we are animation in, hide to begin with.
-            if (this.PageLoadAnimation != PageAnimation.None)
+            if (PageLoadAnimation != PageAnimation.None)
             {
-                this.Visibility = Visibility.Collapsed;
+                Visibility = Visibility.Collapsed;
             }
 
             // Listen out for the page loading.
-            this.Loaded += BasePage_LoadedAsync;
-
-            // Create a default view model.
-            this.ViewModel = new VM();
+            Loaded += BasePage_LoadedAsync;
         }
 
         #endregion
@@ -98,8 +69,18 @@ namespace BlackSpiritHelper
         /// <param name="e"></param>
         private async void BasePage_LoadedAsync(object sender, RoutedEventArgs e)
         {
-            // animate the page in.
-            await AnimateInAsync();
+            // If we are setup to animate out on load.
+            if (ShouldAnimateOut)
+            {
+                // Animate out the page.
+                await AnimateOutAsync();
+            }
+            // Otherwise...
+            else
+            {
+                // animate the page in.
+                await AnimateInAsync();
+            }
         }
 
         /// <summary>
@@ -137,7 +118,7 @@ namespace BlackSpiritHelper
                 return;
             }
 
-            switch (PageLoadAnimation)
+            switch (PageUnloadAnimation)
             {
                 case PageAnimation.SlideAndFadeOutToBottom:
 
@@ -146,6 +127,61 @@ namespace BlackSpiritHelper
 
                     break;
             }
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// A base page for all pages to gain base functionality.
+    /// </summary>
+    public class BasePage<VM> : BasePage
+        where VM : BaseViewModel, new()
+    {
+        #region Private Members
+
+        /// <summary>
+        /// The View Model associated with this page.
+        /// </summary>
+        private VM mViewModel;
+
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        /// The View Model associated with this page.
+        /// </summary>
+        public VM ViewModel
+        {
+            get
+            {
+                return mViewModel;
+            }
+            set
+            {
+                // If nothing has changed, return.
+                if (mViewModel == value)
+                    return;
+
+                mViewModel = value;
+
+                // Set the data context for this page.
+                this.DataContext = mViewModel;
+            }
+        }
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public BasePage() : base()
+        {
+            // Create a default view model.
+            this.ViewModel = new VM();
         }
 
         #endregion

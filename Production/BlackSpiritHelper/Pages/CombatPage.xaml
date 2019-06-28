@@ -10,6 +10,6 @@
       Title="CombatPage">
 
     <Grid>
-        <Button Content="CombatPage" />
+        <Button Content="CombatPage" Width="100" HorizontalAlignment="Left" />
     </Grid>
 </local:BasePage>

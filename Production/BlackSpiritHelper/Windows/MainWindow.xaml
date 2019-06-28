@@ -65,7 +65,7 @@
                                     <local:SideMenuControl Grid.Column="0" Panel.ZIndex="2"
                                                            Width="{Binding SideMenuWidth, FallbackValue=175}"
                                                            local:AnimateSideMenuSlideIn.Value="True">
-                                        
+
                                     </local:SideMenuControl>
 
                                     <!-- Content Column -->
@@ -158,8 +158,12 @@
     </WindowChrome.WindowChrome>
 
     <Grid Background="{StaticResource WindowBackgroundBrushKey}">
-        <Frame x:Name="MainFrame" 
-               Content="{Binding ApplicationViewModel.CurrentPage, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:ApplicationPageValueConverter}}" />
+        <local:PageHost
+               d:DataContext=""
+               DataContext="{Binding ApplicationViewModel.CurrentPage, 
+                                     Source={x:Static local:ViewModelLocator.Instance}, 
+                                     Converter={local:ApplicationPageValueConverter}}"
+               CurrentPage="{Binding}" />
 
         <CheckBox x:Name="showOverlayCheckBox" Content="CheckBox" HorizontalAlignment="Left" Margin="398,182,0,0" VerticalAlignment="Top" Checked="ShowOverlayCheckBox_Checked" Unchecked="ShowOverlayCheckBox_Unchecked"/>
     </Grid>

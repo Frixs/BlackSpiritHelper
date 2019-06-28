@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace BlackSpiritHelper
 {
     /// <summary>
-    /// Locates view models from the OiC for use in binding in Xaml files.
+    /// Locates view models from the IoC for use in binding in Xaml files.
     /// </summary>
     public class ViewModelLocator
     {
