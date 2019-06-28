@@ -229,9 +229,9 @@ namespace BlackSpiritHelper
             // Close.
             CloseCommand = new RelayCommand(() =>
             {
-                // Save settings. TODO
-                //Properties.Settings.Default.LastOpenedPage = (byte) ApplicationViewModel.CurrentPage;
-                //Properties.Settings.Default.Save();
+                // Save settings.
+                Core.Properties.Settings.Default.LastOpenedPage = (byte)IoC.Get<ApplicationViewModel>().CurrentPage;
+                Core.Properties.Settings.Default.Save();
 
                 // Close all windows.
                 for (int intCounter = App.Current.Windows.Count - 1; intCounter >= 0; intCounter--)

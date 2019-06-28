@@ -62,7 +62,7 @@ namespace BlackSpiritHelper.Core
         public ApplicationViewModel()
         {
             WindowTitleDefault = ApplicationName;
-            WindowTitle = WindowTitleDefault;
+            SetWindowTitlePostfixOnly = CurrentPage > 0 ? CurrentPage.ToString() : "";
         }
 
         #endregion
