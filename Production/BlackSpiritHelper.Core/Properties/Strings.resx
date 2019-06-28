@@ -121,10 +121,10 @@
     <value>Home</value>
   </data>
   <data name="PageTitle1" xml:space="preserve">
-    <value>Combat</value>
+    <value>Timer</value>
   </data>
   <data name="PageTitle2" xml:space="preserve">
-    <value>Lifeskill</value>
+    <value>Watchdog</value>
   </data>
   <data name="PageTitle3" xml:space="preserve">
     <value>Boss</value>

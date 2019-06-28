@@ -19,12 +19,12 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// The Combat page.
         /// </summary>
-        Combat = 1,
+        Timer = 1,
 
         /// <summary>
         /// The Lifeskill page.
         /// </summary>
-        Lifeskill = 2,
+        Watchdog = 2,
 
         /// <summary>
         /// The Boss page.

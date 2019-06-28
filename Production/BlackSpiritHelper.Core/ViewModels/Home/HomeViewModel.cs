@@ -50,7 +50,7 @@ namespace BlackSpiritHelper.Core
 
         private async Task CombatAsync()
         {
-            IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.Combat);
+            IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.Timer);
 
             await Task.Delay(1);
         }

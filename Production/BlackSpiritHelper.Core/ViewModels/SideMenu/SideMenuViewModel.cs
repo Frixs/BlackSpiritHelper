@@ -1,12 +1,25 @@
-﻿using System.Collections.Generic;
-
-namespace BlackSpiritHelper.Core
+﻿namespace BlackSpiritHelper.Core
 {
     public class SideMenuViewModel : BaseViewModel
     {
+        #region Constructor
+
         /// <summary>
-        /// Menu items.
+        /// Default constructor.
         /// </summary>
-        public List<SideMenuItemViewModel> MenuItems { get; set; }
+        public SideMenuViewModel()
+        {
+            // Create commands.
+            CreateCommands();
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Create Windows commands.
+        /// </summary>
+        private void CreateCommands()
+        {
+        }
     }
 }

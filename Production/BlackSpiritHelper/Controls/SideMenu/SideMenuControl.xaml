@@ -18,6 +18,10 @@
                     <RowDefinition Height="112" />
                     <!-- Menu -->
                     <RowDefinition Height="*" />
+                    <!-- Overlay Management -->
+                    <RowDefinition Height="Auto" />
+                    <!-- Footer -->
+                    <RowDefinition Height="50" />
 
                 </Grid.RowDefinitions>
 
@@ -29,15 +33,22 @@
                 </Grid>
 
                 <!-- Menu -->
-                <StackPanel Grid.Row="1">
-                    <ItemsControl ItemsSource="{Binding MenuItems}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Button Content="{Binding Title}" Padding="10" Margin="10" FontSize="16" />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </StackPanel>
+                <Border Grid.Row="1">
+                    <ContentPresenter />
+                </Border>
+
+                <!-- Overlay Management -->
+                <Border Grid.Row="2" Padding="10">
+                    <CheckBox Content="Overlay" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                              Checked="ShowOverlayCheckBox_Checked" 
+                              Unchecked="ShowOverlayCheckBox_Unchecked"/>
+                </Border>
+
+                <!-- Footer -->
+                <Border Grid.Row="3" Padding="10">
+                    
+                </Border>
+                
             </Grid>
 
         </ControlTemplate>

@@ -1,13 +1,14 @@
 ﻿using BlackSpiritHelper.Core;
+using System.Windows.Controls;
 
 namespace BlackSpiritHelper
 {
     /// <summary>
-    /// Interaction logic for CombatPage.xaml
+    /// Interaction logic for TimerPage.xaml
     /// </summary>
-    public partial class CombatPage : BasePage<CombatViewModel>
+    public partial class TimerPage : BasePage<TimerViewModel>
     {
-        public CombatPage()
+        public TimerPage()
         {
             InitializeComponent();
         }

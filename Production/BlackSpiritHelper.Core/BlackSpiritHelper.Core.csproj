@@ -69,10 +69,13 @@
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
     <Compile Include="ViewModels\Base\RelayParameterizedCommand.cs" />
-    <Compile Include="ViewModels\Combat\CombatViewModel.cs" />
+    <Compile Include="ViewModels\SideMenu\Design\SideMenuListItemDesignModel.cs" />
+    <Compile Include="ViewModels\SideMenu\Design\SideMenuListDesignModel.cs" />
+    <Compile Include="ViewModels\SideMenu\SideMenuListViewModel.cs" />
+    <Compile Include="ViewModels\Timer\TimerViewModel.cs" />
     <Compile Include="ViewModels\Home\HomeViewModel.cs" />
     <Compile Include="ViewModels\SideMenu\Design\SideMenuDesignModel.cs" />
-    <Compile Include="ViewModels\SideMenu\SideMenuItemViewModel.cs" />
+    <Compile Include="ViewModels\SideMenu\SideMenuListItemViewModel.cs" />
     <Compile Include="ViewModels\SideMenu\SideMenuViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

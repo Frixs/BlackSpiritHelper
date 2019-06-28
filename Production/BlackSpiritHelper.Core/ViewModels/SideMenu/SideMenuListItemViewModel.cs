@@ -1,6 +1,6 @@
 ﻿namespace BlackSpiritHelper.Core
 {
-    public class SideMenuItemViewModel
+    public class SideMenuListItemViewModel : BaseViewModel
     {
         #region Public Properties
 
@@ -17,13 +17,13 @@
         /// <summary>
         /// Says, if any Helper is running in the page.
         /// </summary>
-        public bool IsPaused { get; set; }
+        public bool IsActive { get; set; }
 
         #endregion
 
         #region Constructor
 
-        public SideMenuItemViewModel()
+        public SideMenuListItemViewModel()
         {
 
         }

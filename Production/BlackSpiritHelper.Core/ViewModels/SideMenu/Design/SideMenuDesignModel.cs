@@ -14,27 +14,6 @@ namespace BlackSpiritHelper.Core
 
         public SideMenuDesignModel()
         {
-            MenuItems = new List<SideMenuItemViewModel>
-            {
-                new SideMenuItemViewModel
-                {
-                    Title = Properties.Strings.PageTitle1,
-                    PageEnum = ApplicationPage.Combat,
-                    IsPaused = true,
-                },
-                new SideMenuItemViewModel
-                {
-                    Title = Properties.Strings.PageTitle2,
-                    PageEnum = ApplicationPage.Lifeskill,
-                    IsPaused = true,
-                },
-                new SideMenuItemViewModel
-                {
-                    Title = Properties.Strings.PageTitle3,
-                    PageEnum = ApplicationPage.Boss,
-                    IsPaused = true,
-                },
-            };
         }
 
         #endregion

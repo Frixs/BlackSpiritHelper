@@ -70,7 +70,7 @@ namespace BlackSpiritHelper.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Combat.
+        ///   Looks up a localized string similar to Timer.
         /// </summary>
         public static string PageTitle1 {
             get {
@@ -79,7 +79,7 @@ namespace BlackSpiritHelper.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lifeskill.
+        ///   Looks up a localized string similar to Watchdog.
         /// </summary>
         public static string PageTitle2 {
             get {

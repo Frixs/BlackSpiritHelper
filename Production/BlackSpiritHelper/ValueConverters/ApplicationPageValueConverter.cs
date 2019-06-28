@@ -18,8 +18,8 @@ namespace BlackSpiritHelper
                 case ApplicationPage.Home:
                     return new HomePage();
 
-                case ApplicationPage.Combat:
-                    return new CombatPage();
+                case ApplicationPage.Timer:
+                    return new TimerPage();
 
                 default:
                     Debugger.Break();

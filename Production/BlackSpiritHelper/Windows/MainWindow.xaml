@@ -19,7 +19,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Window}">
                         <!-- Outer border with the dropshadow margin - set BG color for debug -->
-                        <Border Margin="{Binding OuterMarginThickness, FallbackValue=10}"
+                        <Border Padding="{Binding OuterMarginThickness, FallbackValue=10}"
                                 SnapsToDevicePixels="True" UseLayoutRounding="True">
 
                             <!-- Main window outline - set BG color for debug -->
@@ -65,7 +65,7 @@
                                     <local:SideMenuControl Grid.Column="0" Panel.ZIndex="2"
                                                            Width="{Binding SideMenuWidth, FallbackValue=175}"
                                                            local:AnimateSideMenuSlideIn.Value="True">
-
+                                        <local:SideMenuListControl />
                                     </local:SideMenuControl>
 
                                     <!-- Content Column -->
@@ -164,7 +164,5 @@
                                      Source={x:Static local:ViewModelLocator.Instance}, 
                                      Converter={local:ApplicationPageValueConverter}}"
                CurrentPage="{Binding}" />
-
-        <CheckBox x:Name="showOverlayCheckBox" Content="CheckBox" HorizontalAlignment="Left" Margin="398,182,0,0" VerticalAlignment="Top" Checked="ShowOverlayCheckBox_Checked" Unchecked="ShowOverlayCheckBox_Unchecked"/>
     </Grid>
 </Window>

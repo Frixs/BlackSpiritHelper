@@ -73,21 +73,24 @@
     <Compile Include="Controls\PageHost.xaml.cs">
       <DependentUpon>PageHost.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\SideMenuControl.xaml.cs">
+    <Compile Include="Controls\SideMenu\SideMenuControl.xaml.cs">
       <DependentUpon>SideMenuControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SideMenu\SideMenuListControl.xaml.cs">
+      <DependentUpon>SideMenuListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SideMenu\SideMenuListItemControl.xaml.cs">
+      <DependentUpon>SideMenuListItemControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Pages\BossPage.xaml.cs">
       <DependentUpon>BossPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\CombatPage.xaml.cs">
-      <DependentUpon>CombatPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\LifeskillPage.xaml.cs">
-      <DependentUpon>LifeskillPage.xaml</DependentUpon>
+    <Compile Include="Pages\TimerPage.xaml.cs">
+      <DependentUpon>TimerPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ValueConverters\IoCConverter.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
@@ -102,7 +105,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\SideMenuControl.xaml">
+    <Page Include="Controls\SideMenu\SideMenuControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SideMenu\SideMenuListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SideMenu\SideMenuListItemControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -110,15 +121,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\CombatPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\LifeskillPage.xaml">
+    <Page Include="Pages\TimerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
