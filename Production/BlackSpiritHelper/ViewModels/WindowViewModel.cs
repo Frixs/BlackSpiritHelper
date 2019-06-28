@@ -42,16 +42,6 @@ namespace BlackSpiritHelper
         private int mWindowRadius = 0;
 
         /// <summary>
-        /// Window title.
-        /// </summary>
-        private string mTitle;
-
-        /// <summary>
-        /// Window title default.
-        /// </summary>
-        private string mTitleDefault;
-
-        /// <summary>
         /// Side menu width.
         /// </summary>
         private int mSideMenuWidth = 175;
@@ -155,34 +145,6 @@ namespace BlackSpiritHelper
         public int CaptionOverlayHeight { get { return CaptionHeight + 1; } }
 
         /// <summary>
-        /// Window title.
-        /// </summary>
-        public string Title
-        {
-            get
-            {
-                return mTitle;
-            }
-            set
-            {
-                mTitle = value;
-                OnPropertyChanged(nameof(Title));
-            }
-        }
-
-        /// <summary>
-        /// Window title change only postfix.
-        /// </summary>
-        public string TitlePostfixOnly
-        {
-            set
-            {
-                mTitle = mTitleDefault + " : " + value;
-                OnPropertyChanged(nameof(Title));
-            }
-        }
-
-        /// <summary>
         /// Side menu width.
         /// </summary>
         public int SideMenuWidth
@@ -232,8 +194,6 @@ namespace BlackSpiritHelper
         public WindowViewModel(Window window)
         {
             mWindow = window;
-            mTitleDefault = mWindow.Title;
-            mTitle = mTitleDefault;
 
             // Listen out for the window resizing.
             mWindow.StateChanged += (sender, e) =>

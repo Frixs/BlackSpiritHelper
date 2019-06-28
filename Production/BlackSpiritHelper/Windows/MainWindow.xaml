@@ -11,7 +11,8 @@
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
         Icon="/BlackSpiritHelper;component/Resources/Images/Logo/logo_white.ico"
-        Title="Black Spirit Helper" Height="450" Width="800" MinHeight="450" MinWidth="800">
+        Title="{Binding ApplicationViewModel.ApplicationName, Source={x:Static local:ViewModelLocator.Instance}, FallbackValue='Title Placeholder'}" 
+        Height="450" Width="800" MinHeight="450" MinWidth="800">
 
     <Window.Resources>
         <Style TargetType="{x:Type local:MainWindow}">
@@ -72,66 +73,81 @@
                                     <Grid Grid.Column="1" Panel.ZIndex="0">
 
                                         <Grid.RowDefinitions>
-                                            <!-- Space Bar (Decoration) -->
-                                            <RowDefinition Height="{Binding SpaceBarHeightGridLength, FallbackValue=8}" />
-                                            <!-- Title Bar -->
-                                            <RowDefinition Height="{Binding TitleBarHeightGridLength, FallbackValue=48}" />
-                                            <!-- Title Bar's Drop Shadow -->
+                                            <!-- Window Bar -->
                                             <RowDefinition Height="Auto" />
-                                            <!-- Window Content -->
+                                            <!-- Page Content -->
                                             <RowDefinition Height="*" />
 
                                         </Grid.RowDefinitions>
 
-                                        <!-- Space Bar (Decoration) -->
-                                        <Grid Background="{StaticResource RedBrushKey}" Grid.Row="0" RenderOptions.EdgeMode="Aliased">
+                                        <!-- Window Bar -->
+                                        <Grid Grid.Row="0" Panel.ZIndex="2">
+                                            
+                                            <Grid.RowDefinitions>
+                                                <!-- Space Bar (Decoration) -->
+                                                <RowDefinition Height="{Binding SpaceBarHeightGridLength, FallbackValue=8}" />
+                                                <!-- Title Bar -->
+                                                <RowDefinition Height="{Binding TitleBarHeightGridLength, FallbackValue=48}" />
+                                                <!-- Title Bar's Drop Shadow -->
+                                                <RowDefinition Height="Auto" />
+
+                                            </Grid.RowDefinitions>
+
+                                            <!-- Space Bar (Decoration) -->
+                                            <Grid Background="{StaticResource RedBrushKey}" Grid.Row="0">
+                                            </Grid>
+
+                                            <!-- Title Bar -->
+                                            <Grid Grid.Row="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <!-- Title -->
+                                                    <ColumnDefinition Width="*" />
+                                                    <!-- Windows Buttons -->
+                                                    <ColumnDefinition Width="Auto" />
+
+                                                </Grid.ColumnDefinitions>
+
+                                                <!-- Title Text -->
+                                                <Viewbox Grid.Column="0" Margin="0" HorizontalAlignment="Left">
+                                                    <TextBlock Style="{StaticResource TitleBarText}" 
+                                                               Text="{Binding ApplicationViewModel.WindowTitle, 
+                                                                              Source={x:Static local:ViewModelLocator.Instance}, 
+                                                                              FallbackValue='Title Placeholder'}" />
+                                                </Viewbox>
+
+                                                <!-- Window Buttons -->
+                                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                                    <Button Style="{StaticResource WindowsControlButton}" Command="{Binding MinimizeCommand}" Content="_" />
+                                                    <Button Style="{StaticResource WindowsControlButton}" Command="{Binding MaximizeCommand}" Content="[ ]" />
+                                                    <Button Style="{StaticResource WindowsCloseButton}" Command="{Binding CloseCommand}" Content="X" />
+                                                </StackPanel>
+
+                                            </Grid>
+
+                                            <!-- Title Bar's Drop Shadow -->
+                                            <Border Grid.Row="2" Height="6" BorderThickness="0 0.2 0 0" 
+                                                    SnapsToDevicePixels="False" UseLayoutRounding="False">
+                                                <!-- Underline -->
+                                                <Border.BorderBrush>
+                                                    <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 0">
+                                                        <GradientStop Color="{StaticResource WindowTitleBarDropShadowLine}" Offset="0.0" />
+                                                        <GradientStop Color="{StaticResource WindowBackground}" Offset="1.0" />
+                                                    </LinearGradientBrush>
+                                                </Border.BorderBrush>
+
+                                                <!-- Drop Shadow -->
+                                                <Border.Background>
+                                                    <LinearGradientBrush StartPoint="0, 0" EndPoint="0, 1">
+                                                        <GradientStop Color="{StaticResource WindowTitleBarDropShadow}" Offset="0.0" />
+                                                        <GradientStop Color="{StaticResource WindowBackground}" Offset="1.0" />
+                                                    </LinearGradientBrush>
+                                                </Border.Background>
+                                            </Border>
+
                                         </Grid>
 
-                                        <!-- Title Bar -->
-                                        <Grid Grid.Row="1">
-                                            <Grid.ColumnDefinitions>
-                                                <!-- Title -->
-                                                <ColumnDefinition Width="*" />
-                                                <!-- Windows Buttons -->
-                                                <ColumnDefinition Width="Auto" />
-
-                                            </Grid.ColumnDefinitions>
-
-                                            <!-- Title Text -->
-                                            <Viewbox Grid.Column="0" Margin="0" HorizontalAlignment="Left">
-                                                <TextBlock Style="{StaticResource TitleBarText}" Text="{Binding Title, FallbackValue='Title Placeholder'}" />
-                                            </Viewbox>
-
-                                            <!-- Window Buttons -->
-                                            <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                                <Button Style="{StaticResource WindowsControlButton}" Command="{Binding MinimizeCommand}" Content="_" />
-                                                <Button Style="{StaticResource WindowsControlButton}" Command="{Binding MaximizeCommand}" Content="[ ]" />
-                                                <Button Style="{StaticResource WindowsCloseButton}" Command="{Binding CloseCommand}" Content="X" />
-                                            </StackPanel>
-
-                                        </Grid>
-
-                                        <!-- Title Bar's Drop Shadow -->
-                                        <Border Grid.Row="2" Height="6" BorderThickness="0 0.2 0 0">
-                                            <!-- Underline -->
-                                            <Border.BorderBrush>
-                                                <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 0">
-                                                    <GradientStop Color="{StaticResource WindowTitleBarDropShadowLine}" Offset="0.0" />
-                                                    <GradientStop Color="{StaticResource WindowBackground}" Offset="1.0" />
-                                                </LinearGradientBrush>
-                                            </Border.BorderBrush>
-
-                                            <!-- Drop Shadow -->
-                                            <Border.Background>
-                                                <LinearGradientBrush StartPoint="0, 0" EndPoint="0, 1">
-                                                    <GradientStop Color="{StaticResource WindowTitleBarDropShadow}" Offset="0.0" />
-                                                    <GradientStop Color="{StaticResource WindowBackground}" Offset="1.0" />
-                                                </LinearGradientBrush>
-                                            </Border.Background>
-                                        </Border>
-
-                                        <!-- Window Content -->
-                                        <Border Grid.Row="3" Padding="10" ClipToBounds="True">
+                                        <!-- Page Content -->
+                                        <Border Grid.Row="1" Panel.ZIndex="1" Padding="10" ClipToBounds="True">
                                             <ContentPresenter Content="{TemplateBinding Content}" />
                                         </Border>
 
