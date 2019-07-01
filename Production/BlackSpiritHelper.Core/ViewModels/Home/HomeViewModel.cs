@@ -20,11 +20,6 @@ namespace BlackSpiritHelper.Core
 
         #region Commands
 
-        /// <summary>
-        /// The command to switch the page to Combat.
-        /// </summary>
-        public ICommand CombatCommand { get; set; }
-
         #endregion
 
         #region Constructor
@@ -45,14 +40,6 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void CreateCommands()
         {
-            CombatCommand = new RelayCommand(async () => await CombatAsync());
-        }
-
-        private async Task CombatAsync()
-        {
-            IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.Timer);
-
-            await Task.Delay(1);
         }
     }
 }

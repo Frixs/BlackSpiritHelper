@@ -10,6 +10,6 @@
       Title="BossPage">
 
     <Grid>
-        <Button Content="BossPage" Command="{Binding CombatCommand}" Width="100" HorizontalAlignment="Center" />
+        <Button Content="BossPage" Width="100" HorizontalAlignment="Center" />
     </Grid>
 </local:BasePage>

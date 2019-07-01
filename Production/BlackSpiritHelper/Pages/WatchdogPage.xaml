@@ -10,6 +10,6 @@
       Title="WatchdogPage">
 
     <Grid>
-        <Button Content="WatchdogPage" Command="{Binding CombatCommand}" Width="300" HorizontalAlignment="Center" />
+        <Button Content="WatchdogPage" Width="300" HorizontalAlignment="Center" />
     </Grid>
 </local:BasePage>

@@ -10,6 +10,6 @@
       Title="HomePage">
 
     <Border>
-        <Button Content="HomePage" Command="{Binding CombatCommand}" Width="100" HorizontalAlignment="Right" />
+        <Button Content="HomePage" Width="100" HorizontalAlignment="Right" />
     </Border>
 </local:BasePage>
