@@ -73,6 +73,14 @@
     <Compile Include="ViewModels\SideMenu\Design\SideMenuListItemDesignModel.cs" />
     <Compile Include="ViewModels\SideMenu\Design\SideMenuListDesignModel.cs" />
     <Compile Include="ViewModels\SideMenu\SideMenuListViewModel.cs" />
+    <Compile Include="ViewModels\Timer\Design\TimerGroupMenuDesignModel.cs" />
+    <Compile Include="ViewModels\Timer\Design\TimerGroupMenuItemDesignModel.cs" />
+    <Compile Include="ViewModels\Timer\Design\TimerListDesignModel.cs" />
+    <Compile Include="ViewModels\Timer\Design\TimerListItemDesignModel.cs" />
+    <Compile Include="ViewModels\Timer\TimerGroupMenuItemViewModel.cs" />
+    <Compile Include="ViewModels\Timer\TimerGroupMenuViewModel.cs" />
+    <Compile Include="ViewModels\Timer\TimerListItemViewModel.cs" />
+    <Compile Include="ViewModels\Timer\TimerListViewModel.cs" />
     <Compile Include="ViewModels\Timer\TimerViewModel.cs" />
     <Compile Include="ViewModels\Home\HomeViewModel.cs" />
     <Compile Include="ViewModels\SideMenu\Design\SideMenuDesignModel.cs" />

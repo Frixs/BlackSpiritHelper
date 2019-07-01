@@ -4,6 +4,7 @@
     <Color x:Key="Red">#ffec1e24</Color>
     <SolidColorBrush x:Key="RedBrushKey" Color="{StaticResource Red}" />
 
+    <!-- Window -->
     <Color x:Key="WindowBackground">#FFFFFFFF</Color>
     <SolidColorBrush x:Key="WindowBackgroundBrushKey" Color="{StaticResource WindowBackground}" />
 
@@ -16,10 +17,25 @@
     <Color x:Key="WindowTitleBarDropShadow">#FFF8F8F8</Color>
     <SolidColorBrush x:Key="WindowTitleBarDropShadowBrushKey" Color="{StaticResource WindowTitleBarDropShadow}" />
 
+    <!-- Texts -->
+    <Color x:Key="TextNormal">#FF000000</Color>
+    <SolidColorBrush x:Key="TextNormalBrushKey" Color="{StaticResource TextNormal}" />
+
+    <!-- Side Menu -->
     <Color x:Key="SideMenuBackground">#FF36393f</Color>
     <SolidColorBrush x:Key="SideMenuBackgroundBrushKey" Color="{StaticResource SideMenuBackground}" />
     
-    <Color x:Key="TextNormal">#FF000000</Color>
-    <SolidColorBrush x:Key="TextNormalBrushKey" Color="{StaticResource TextNormal}" />
+    <!-- Timer -->
+    <Color x:Key="TimerGroupMenuBackground">#f0f0f0</Color>
+    <SolidColorBrush x:Key="TimerGroupMenuBackgroundBrushKey" Color="{StaticResource TimerGroupMenuBackground}" />
+
+    <Color x:Key="TimerGroupMenuDropShadowBackground">#000000</Color>
+    <SolidColorBrush x:Key="TimerGroupMenuDropShadowBackgroundBrushKey" Color="{StaticResource TimerGroupMenuDropShadowBackground}" />
+
+    <Color x:Key="TimerGroupListMenuBackground">#b1b3b6</Color>
+    <SolidColorBrush x:Key="TimerGroupListMenuBackgroundBrushKey" Color="{StaticResource TimerGroupListMenuBackground}" />
+
+    <Color x:Key="TimerGroupListBackground">#dededf</Color>
+    <SolidColorBrush x:Key="TimerGroupListBackgroundBrushKey" Color="{StaticResource TimerGroupListBackground}" />
 
 </ResourceDictionary>

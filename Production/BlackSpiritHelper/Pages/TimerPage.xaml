@@ -10,6 +10,8 @@
       Title="TimerPage">
 
     <Grid>
-        
+        <local:TimerGroupMenuControl>
+            <local:TimerListControl Margin="0 10 0 0" />
+        </local:TimerGroupMenuControl>
     </Grid>
 </local:BasePage>

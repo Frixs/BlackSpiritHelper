@@ -57,13 +57,13 @@
                                     </Grid.ColumnDefinitions>
 
                                     <!-- System Menu Button -->
-                                    <Button Grid.Column="0" Panel.ZIndex="3" Command="{Binding MenuCommand}" Style="{StaticResource SystemIconButton}"></Button>
+                                    <Button Grid.Column="0" Panel.ZIndex="4" Command="{Binding MenuCommand}" Style="{StaticResource SystemIconButton}"></Button>
                                     <!-- Caption Overlay -->
-                                    <Grid Grid.Column="0" Panel.ZIndex="1" Height="{Binding CaptionOverlayHeight, FallbackValue=57}" Background="Transparent" VerticalAlignment="Top" WindowChrome.IsHitTestVisibleInChrome="True"></Grid>
+                                    <Grid Grid.Column="0" Panel.ZIndex="2" Height="{Binding CaptionOverlayHeight, FallbackValue=57}" Background="Transparent" VerticalAlignment="Top" WindowChrome.IsHitTestVisibleInChrome="True"></Grid>
                                     <!-- Side Menu Background (Default) -->
-                                    <Border Grid.Column="0" Panel.ZIndex="0" Background="{StaticResource SideMenuBackgroundBrushKey}" />
+                                    <Border Grid.Column="0" Panel.ZIndex="1" Background="{StaticResource SideMenuBackgroundBrushKey}" />
                                     <!-- Side Menu Column -->
-                                    <local:SideMenuControl Grid.Column="0" Panel.ZIndex="2"
+                                    <local:SideMenuControl Grid.Column="0" Panel.ZIndex="3"
                                                            Width="{Binding SideMenuWidth, FallbackValue=175}"
                                                            local:AnimateSideMenuSlideIn.Value="True">
                                         <local:SideMenuListControl />
@@ -147,7 +147,7 @@
                                         </Grid>
 
                                         <!-- Page Content -->
-                                        <Border Grid.Row="1" Panel.ZIndex="1" Padding="10" ClipToBounds="True">
+                                        <Border Grid.Row="1" Panel.ZIndex="1" ClipToBounds="True">
                                             <ContentPresenter Content="{TemplateBinding Content}" />
                                         </Border>
 

@@ -21,7 +21,7 @@ namespace BlackSpiritHelper
         /// <summary>
         /// The time any slide animation takes to complete.
         /// </summary>
-        public float SlideSeconds { get; set; } = 0.3f;
+        public float SlideSeconds { get; set; } = 0.2f;
 
         /// <summary>
         /// The animation to play when the page is first loaded.

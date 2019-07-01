@@ -82,6 +82,18 @@
     <Compile Include="Controls\SideMenu\SideMenuListItemControl.xaml.cs">
       <DependentUpon>SideMenuListItemControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Timer\TimerGroupMenuControl.xaml.cs">
+      <DependentUpon>TimerGroupMenuControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Timer\TimerGroupMenuItemControl.xaml.cs">
+      <DependentUpon>TimerGroupMenuItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Timer\TimerListControl.xaml.cs">
+      <DependentUpon>TimerListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Timer\TimerListItemControl.xaml.cs">
+      <DependentUpon>TimerListItemControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Pages\BossPage.xaml.cs">
       <DependentUpon>BossPage.xaml</DependentUpon>
@@ -95,6 +107,7 @@
     <Compile Include="Pages\WatchdogPage.xaml.cs">
       <DependentUpon>WatchdogPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ValueConverters\ScrollOnTopValueConverter.cs" />
     <Compile Include="ValueConverters\IoCConverter.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Window\WindowResizer.cs" />
@@ -117,6 +130,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\SideMenu\SideMenuListItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Timer\TimerGroupMenuControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Timer\TimerGroupMenuItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Timer\TimerListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Timer\TimerListItemControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -178,6 +207,9 @@
       <SubType>Code</SubType>
     </Compile>
     <None Include="packages.config" />
+    <Resource Include="Resources\Fonts\FontAwesome\fa-brands-400.ttf" />
+    <Resource Include="Resources\Fonts\FontAwesome\fa-regular-400.ttf" />
+    <Resource Include="Resources\Fonts\FontAwesome\fa-solid-900.ttf" />
     <Resource Include="Resources\Fonts\Lato\Lato-Black.ttf" />
     <Resource Include="Resources\Fonts\Lato\Lato-BlackItalic.ttf" />
     <Resource Include="Resources\Fonts\Lato\Lato-Bold.ttf" />

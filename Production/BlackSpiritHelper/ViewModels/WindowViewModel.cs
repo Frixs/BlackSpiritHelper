@@ -29,7 +29,7 @@ namespace BlackSpiritHelper
         /// <summary>
         /// The size of the resize border around the window.
         /// </summary>
-        private int mResizeBorderSize = 2;
+        private int mResizeBorderSize = 4;
 
         /// <summary>
         /// The margin around the window to allow for a drop shadow.
