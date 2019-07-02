@@ -19,8 +19,11 @@ namespace BlackSpiritHelper
             // Let the base application do what it needs.
             base.OnStartup(e);
 
-            // Setup IoC.
-            IoC.Setup();
+            // Configuration.
+            ApplicationSetup();
+
+            // Log it.
+            IoC.Logger.Log("Application starting up...", LogLevel.Debug);
 
             // Check for application available updates.
             checkForUpdates();
@@ -28,6 +31,28 @@ namespace BlackSpiritHelper
             // Show the main window.
             Current.MainWindow = new MainWindow();
             Current.MainWindow.Show();
+        }
+
+        /// <summary>
+        /// Configures our application read for use.
+        /// </summary>
+        private void ApplicationSetup()
+        {
+            // Setup IoC.
+            IoC.Setup();
+
+            // Bind Logger.
+            IoC.Kernel.Bind<ILogFactory>().ToConstant(new BaseLogFactory(new[] 
+            {
+                // TODO: log path
+                new FileLogger("Log/Log.txt"),
+            }));
+
+            // Bind task manager.
+            IoC.Kernel.Bind<ITaskManager>().ToConstant(new TaskManager());
+
+            // Bind file manager.
+            IoC.Kernel.Bind<IFileManager>().ToConstant(new FileManager());
         }
 
         /// <summary>

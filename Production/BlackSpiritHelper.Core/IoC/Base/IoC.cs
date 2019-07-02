@@ -16,6 +16,21 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public static IKernel Kernel { get; private set; } = new StandardKernel();
 
+        /// <summary>
+        /// A shortcut to access the <see cref="ILogFactory"/>.
+        /// </summary>
+        public static ILogFactory Logger => IoC.Get<ILogFactory>();
+
+        /// <summary>
+        /// A shortcut to access the <see cref="IFileManager"/>.
+        /// </summary>
+        public static IFileManager File => IoC.Get<IFileManager>();
+
+        /// <summary>
+        /// A shortcut to access the <see cref="ITaskManager"/>.
+        /// </summary>
+        public static ITaskManager Task => IoC.Get<ITaskManager>();
+
         #endregion
 
         #region Construction
@@ -26,12 +41,8 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public static void Setup()
         {
-            Logger.Instance.Debug("IoC setup starting.");
-
             // Bind all required view models.
             BindViewModels();
-
-            Logger.Instance.Info("IoC set.");
         }
 
         /// <summary>
