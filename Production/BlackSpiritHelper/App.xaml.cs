@@ -1,6 +1,7 @@
 ﻿using BlackSpiritHelper.Core;
 using System;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace BlackSpiritHelper
@@ -10,6 +11,22 @@ namespace BlackSpiritHelper
     /// </summary>
     public partial class App : Application
     {
+        #region Dispatcher Unhandled Exception
+
+        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            // Log error.
+            if (IoC.Logger != null)
+            {
+                IoC.Logger.Log($"An unhandled exception occurred: {e.Exception.Message}", LogLevel.Fatal);
+            }
+            MessageBox.Show($"An unhandled exception just occurred: {e.Exception.Message}. {Environment.NewLine}Please, contact the developers to be able to fix that issue.", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+            e.Handled = true;
+        }
+
+        #endregion
+
         /// <summary>
         /// Custom startup so we load our IoC immediately before anything else.
         /// </summary>
@@ -27,7 +44,7 @@ namespace BlackSpiritHelper
 
             // Check for application available updates.
             checkForUpdates();
-
+            
             // Show the main window.
             Current.MainWindow = new MainWindow();
             Current.MainWindow.Show();
