@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:BlackSpiritHelper"
              xmlns:core="clr-namespace:BlackSpiritHelper.Core;assembly=BlackSpiritHelper.Core"
              mc:Ignorable="d" 
-             d:DesignHeight="120" d:DesignWidth="250">
+             d:DesignHeight="140" d:DesignWidth="270">
     
     <UserControl.Resources>
         <Style x:Key="ContentStyle" TargetType="{x:Type ContentControl}">
@@ -17,26 +17,157 @@
                         <!-- Content -->
                         <Grid>
 
-                            <Grid Background="Gray"
-                                    Margin="10">
-                                <Grid>
-                                    <TextBlock Text="Title Placeholder" />
-                                </Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20" />
+                                <RowDefinition Height="60" />
+                                <RowDefinition Height="60" />
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0" Background="{StaticResource TimerListItemBackgroundBrushKey}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                
+                                <TextBlock Grid.Column="0"
+                                           Text="Title placeholder"
+                                           Foreground="{StaticResource TimerListItemTitleForegroundBrushKey}"
+                                           FontFamily="{StaticResource LatoHeavy}"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Left"
+                                           Padding="5 2"/>
+
+                                <Button Grid.Column="2"
+                                        Content="{StaticResource FontAwesomeCogIcon}"
+                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                        Style="{StaticResource RegularButtonNoColor}"
+                                        Margin="0"
+                                        Width="20"
+                                        Height="20"
+                                        VerticalAlignment="Bottom"
+                                        FontSize="10">
+                                </Button>
                             </Grid>
 
-                            <Border Background="Black"
-                                    Height="50"
-                                    VerticalAlignment="Top"
-                                    Margin="0 28 0 0"
-                                    Padding="10">
-                                <Grid>
+                            <Grid Grid.Row="1" Background="{StaticResource TimerListItemBackground2BrushKey}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Icon -->
+                                <Border Grid.Column="0"
+                                        Height="50"
+                                        Width="50"
+                                        BorderBrush="{StaticResource TimerListItemIconBorderColorBrushKey}"
+                                        BorderThickness="3"
+                                        Background="DarkCyan"
+                                        Margin="5">
+                                    <Viewbox>
+                                        <TextBlock Text="ABC"
+                                                   FontFamily="{StaticResource LatoHeavy}"
+                                                   FontSize="22"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"
+                                                   Margin="5"/>
+                                    </Viewbox>
+                                </Border>
+
+                                <!-- Middle wrapper -->
+                                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <!-- Plus Button -->
+                                        <Button Grid.Row="0"
+                                                Content="{StaticResource FontAwesomePlusIcon}"
+                                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                                Style="{StaticResource RegularButtonBlue}"
+                                                Margin="5 5 5 0"
+                                                Width="25"
+                                                Height="25"
+                                                VerticalAlignment="Bottom"
+                                                FontSize="12">
+                                        </Button>
+                                        <!-- Minus Button -->
+                                        <Button Grid.Row="1" 
+                                                Content="{StaticResource FontAwesomeMinusIcon}"
+                                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                                Style="{StaticResource RegularButtonBlue}"
+                                                Margin="5 0 5 0"
+                                                Width="25"
+                                                Height="25"
+                                                VerticalAlignment="Bottom"
+                                                FontSize="12">
+                                        </Button>
+                                    </Grid>
+
+                                    <!-- Countdown -->
                                     <TextBlock Text="00:00:00" 
-                                           Foreground="White"
-                                           FontSize="32"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Right" />
+                                               FontFamily="{StaticResource LatoRegular}"
+                                               Foreground="{StaticResource TimerListItemCountdownForegroundBrushKey}"
+                                               FontSize="32"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Right"
+                                               Margin="0 0 5 0"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- Foot panel -->
+                            <Grid Grid.Row="2" Background="{StaticResource TimerListItemBackgroundBrushKey}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                    <!-- Reset button -->
+                                    <Button Content="{StaticResource FontAwesomeRestartIcon}"
+                                            FontFamily="{StaticResource FontAwesomeSolid}"
+                                            Style="{StaticResource RegularButtonRed}"
+                                            Margin="5"
+                                            Width="25"
+                                            Height="25"
+                                            VerticalAlignment="Bottom"
+                                            FontSize="12">
+                                    </Button>
+                                </StackPanel>
+
+                                <Grid Grid.Column="1">
+                                    <!-- Loop indicator -->
+                                    <TextBlock Text="{StaticResource FontAwesomeRetweetIcon}"
+                                               FontFamily="{StaticResource FontAwesomeSolid}"
+                                               Foreground="{StaticResource TimerListItemLoopIndicatorForegroundBrushKey}"
+                                               FontSize="16"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               Padding="0 5 5 5" />
                                 </Grid>
-                            </Border>
+                                
+                                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                    <!-- Sync Button -->
+                                    <Button Content="{StaticResource FontAwesomeSyncIcon}"
+                                            FontFamily="{StaticResource FontAwesomeSolid}"
+                                            Style="{StaticResource RegularButtonYellow}"
+                                            Margin="0 5 5 5"
+                                            Width="50"
+                                            Height="50">
+                                    </Button>
+                                    <!-- Play/Pause Button -->
+                                    <Button Content="{StaticResource FontAwesomePlayIcon}"
+                                            FontFamily="{StaticResource FontAwesomeSolid}"
+                                            Style="{StaticResource RegularButton}"
+                                            Margin="0 5 5 5"
+                                            Width="50"
+                                            Height="50">
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
 
                         </Grid>
 

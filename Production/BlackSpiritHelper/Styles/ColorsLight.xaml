@@ -25,7 +25,7 @@
     <Color x:Key="SideMenuBackground">#FF36393f</Color>
     <SolidColorBrush x:Key="SideMenuBackgroundBrushKey" Color="{StaticResource SideMenuBackground}" />
     
-    <!-- Timer -->
+    <!-- Timer - Group -->
     <Color x:Key="TimerGroupMenuBackground">#f0f0f0</Color>
     <SolidColorBrush x:Key="TimerGroupMenuBackgroundBrushKey" Color="{StaticResource TimerGroupMenuBackground}" />
 
@@ -35,7 +35,91 @@
     <Color x:Key="TimerGroupListMenuBackground">#b1b3b6</Color>
     <SolidColorBrush x:Key="TimerGroupListMenuBackgroundBrushKey" Color="{StaticResource TimerGroupListMenuBackground}" />
 
-    <Color x:Key="TimerGroupListBackground">#dededf</Color>
+    <Color x:Key="TimerGroupListBackground">#F1F1F1</Color>
     <SolidColorBrush x:Key="TimerGroupListBackgroundBrushKey" Color="{StaticResource TimerGroupListBackground}" />
 
+    <!-- Timer - List Item -->
+    <Color x:Key="TimerListItemBackground">#c7c7c7</Color>
+    <SolidColorBrush x:Key="TimerListItemBackgroundBrushKey" Color="{StaticResource TimerListItemBackground}" />
+
+    <Color x:Key="TimerListItemBackground2">#7f838e</Color>
+    <SolidColorBrush x:Key="TimerListItemBackground2BrushKey" Color="{StaticResource TimerListItemBackground2}" />
+
+    <Color x:Key="TimerListItemTitleForeground">#7f838e</Color>
+    <SolidColorBrush x:Key="TimerListItemTitleForegroundBrushKey" Color="{StaticResource TimerListItemTitleForeground}" />
+
+    <Color x:Key="TimerListItemCountdownForeground">#15151a</Color>
+    <SolidColorBrush x:Key="TimerListItemCountdownForegroundBrushKey" Color="{StaticResource TimerListItemCountdownForeground}" />
+
+    <Color x:Key="TimerListItemIconBorderColor">#24242b</Color>
+    <SolidColorBrush x:Key="TimerListItemIconBorderColorBrushKey" Color="{StaticResource TimerListItemIconBorderColor}" />
+
+    <Color x:Key="TimerListItemLoopIndicatorForeground">#222222</Color>
+    <SolidColorBrush x:Key="TimerListItemLoopIndicatorForegroundBrushKey" Color="{StaticResource TimerListItemLoopIndicatorForeground}" />
+
+    <Color x:Key="TimerListItemWarningColor">#ec1e24</Color>
+    <SolidColorBrush x:Key="TimerListItemWarningColorBrushKey" Color="{StaticResource TimerListItemWarningColor}" />
+
+    <!-- Regular Button (Gray) -->
+    <Color x:Key="RegularButtonBackground">#acacac</Color>
+    <SolidColorBrush x:Key="RegularButtonBackgroundBrushKey" Color="{StaticResource RegularButtonBackground}" />
+
+    <Color x:Key="RegularButtonForeground">#222222</Color>
+    <SolidColorBrush x:Key="RegularButtonForegroundBrushKey" Color="{StaticResource RegularButtonForeground}" />
+
+    <Color x:Key="RegularButtonHover">#A0A0A0</Color>
+    <SolidColorBrush x:Key="RegularButtonHoverBrushKey" Color="{StaticResource RegularButtonHover}" />
+
+    <Color x:Key="RegularButtonAction">#8F8F8F</Color>
+    <SolidColorBrush x:Key="RegularButtonActionBrushKey" Color="{StaticResource RegularButtonAction}" />
+
+    <!-- Regular Button - NoColor -->
+    <Color x:Key="RegularNoColorButtonForeground">#7f838e</Color>
+    <SolidColorBrush x:Key="RegularNoColorButtonForegroundBrushKey" Color="{StaticResource RegularNoColorButtonForeground}" />
+
+    <Color x:Key="RegularNoColorButtonHover">#000000</Color>
+    <SolidColorBrush x:Key="RegularNoColorButtonHoverBrushKey" Color="{StaticResource RegularNoColorButtonHover}" />
+
+    <Color x:Key="RegularNoColorButtonAction">#ec1e24</Color>
+    <SolidColorBrush x:Key="RegularNoColorButtonActionBrushKey" Color="{StaticResource RegularNoColorButtonAction}" />
+
+    <!-- Regular Button - Blue -->
+    <Color x:Key="RegularBlueButtonBackground">#6E717D</Color>
+    <SolidColorBrush x:Key="RegularBlueButtonBackgroundBrushKey" Color="{StaticResource RegularBlueButtonBackground}" />
+
+    <Color x:Key="RegularBlueButtonForeground">#E5E6EF</Color>
+    <SolidColorBrush x:Key="RegularBlueButtonForegroundBrushKey" Color="{StaticResource RegularBlueButtonForeground}" />
+
+    <Color x:Key="RegularBlueButtonHover">#5B5E6A</Color>
+    <SolidColorBrush x:Key="RegularBlueButtonHoverBrushKey" Color="{StaticResource RegularBlueButtonHover}" />
+
+    <Color x:Key="RegularBlueButtonAction">#555864</Color>
+    <SolidColorBrush x:Key="RegularBlueButtonActionBrushKey" Color="{StaticResource RegularBlueButtonAction}" />
+
+    <!-- Regular Button - Yellow -->
+    <Color x:Key="RegularYellowButtonBackground">#f5be29</Color>
+    <SolidColorBrush x:Key="RegularYellowButtonBackgroundBrushKey" Color="{StaticResource RegularYellowButtonBackground}" />
+
+    <Color x:Key="RegularYellowButtonForeground">#5C4300</Color>
+    <SolidColorBrush x:Key="RegularYellowButtonForegroundBrushKey" Color="{StaticResource RegularYellowButtonForeground}" />
+
+    <Color x:Key="RegularYellowButtonHover">#E9B423</Color>
+    <SolidColorBrush x:Key="RegularYellowButtonHoverBrushKey" Color="{StaticResource RegularYellowButtonHover}" />
+
+    <Color x:Key="RegularYellowButtonAction">#D6A727</Color>
+    <SolidColorBrush x:Key="RegularYellowButtonActionBrushKey" Color="{StaticResource RegularYellowButtonAction}" />
+    
+    <!-- Regular Button - Red -->
+    <Color x:Key="RegularRedButtonBackground">#acacac</Color>
+    <SolidColorBrush x:Key="RegularRedButtonBackgroundBrushKey" Color="{StaticResource RegularRedButtonBackground}" />
+
+    <Color x:Key="RegularRedButtonForeground">#000000</Color>
+    <SolidColorBrush x:Key="RegularRedButtonForegroundBrushKey" Color="{StaticResource RegularRedButtonForeground}" />
+
+    <Color x:Key="RegularRedButtonHover">#B6898B</Color>
+    <SolidColorBrush x:Key="RegularRedButtonHoverBrushKey" Color="{StaticResource RegularRedButtonHover}" />
+
+    <Color x:Key="RegularRedButtonAction">#AE7173</Color>
+    <SolidColorBrush x:Key="RegularRedButtonActionBrushKey" Color="{StaticResource RegularRedButtonAction}" />
+    
 </ResourceDictionary>

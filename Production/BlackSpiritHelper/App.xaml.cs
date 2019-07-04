@@ -61,8 +61,7 @@ namespace BlackSpiritHelper
             // Bind Logger.
             IoC.Kernel.Bind<ILogFactory>().ToConstant(new BaseLogFactory(new[] 
             {
-                // TODO: log path
-                new FileLogger("Log/Log.txt"),
+                new FileLogger(IoC.Get<ApplicationViewModel>().ApplicationName.Replace(' ', '_').ToLower() + "_log.txt"),
             }));
 
             // Bind task manager.

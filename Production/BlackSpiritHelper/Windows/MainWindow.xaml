@@ -12,7 +12,7 @@
         WindowStartupLocation="CenterScreen"
         Icon="/BlackSpiritHelper;component/Resources/Images/Logo/logo_white.ico"
         Title="{Binding ApplicationViewModel.ApplicationName, Source={x:Static local:ViewModelLocator.Instance}, FallbackValue='Title Placeholder'}" 
-        Height="450" Width="800" MinHeight="450" MinWidth="800">
+        Height="450" Width="803" MinHeight="450" MinWidth="803">
 
     <Window.Resources>
         <Style TargetType="{x:Type local:MainWindow}">
