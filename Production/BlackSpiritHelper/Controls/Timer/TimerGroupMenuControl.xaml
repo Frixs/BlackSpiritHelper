@@ -4,16 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BlackSpiritHelper"
+             xmlns:core="clr-namespace:BlackSpiritHelper.Core;assembly=BlackSpiritHelper.Core"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     
     <UserControl.Template>
         <ControlTemplate TargetType="UserControl">
 
-            <Grid>
+            <Grid DataContext="{x:Static core:TimerGroupMenuDesignModel.Instance}">
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="100" />
+                    <RowDefinition Height="110" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
@@ -56,7 +57,44 @@
                         </Style>
                     </Border.Style>
 
-                    <!-- Group Menu Content -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <!-- Group Menu Content -->
+                        <ItemsControl ItemsSource="{Binding Groups}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Grid.Column="0" Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+
+                                    <!-- Group list ITEM -->
+                                    <local:TimerGroupMenuItemControl 
+                                        Width="60" 
+                                        Height="90"
+                                        Margin="0 0 10 0" />
+
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <!-- Add Button -->
+                        <Button Grid.Column="1" 
+                                Content="{StaticResource FontAwesomePlusIcon}"
+                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                Style="{StaticResource RegularButtonNoColor}"
+                                Margin="0"
+                                Width="60"
+                                Height="90"
+                                VerticalAlignment="Center"
+                                FontSize="18" />
+                    </Grid>
                     
                 </Border>
 

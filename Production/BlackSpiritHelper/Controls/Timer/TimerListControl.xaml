@@ -32,7 +32,57 @@
                                         <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>
 
-                                    <Button Grid.Row="0" Content="{Binding /GroupID}" />
+                                    <Grid Grid.Row="0"
+                                          Background="{StaticResource TimerGroupListMenuBackgroundBrushKey}">
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                            <!-- Group Play Button -->
+                                            <Button Content="{StaticResource FontAwesomePlayIcon}"
+                                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                                    Style="{StaticResource RegularButton}" 
+                                                    FontSize="10"
+                                                    Width="30"
+                                                    Height="30"
+                                                    Margin="10" />
+                                            
+                                            <!-- Group Name -->
+                                            <TextBlock Text="Placeholder" 
+                                                       Foreground="{StaticResource TimerGroupListMenuTitleForegroundBrushKey}"
+                                                       FontFamily="{StaticResource LatoHeavy}"
+                                                       FontSize="18"
+                                                       VerticalAlignment="Center"/>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                            <!-- Add Button -->
+                                            <Button Content="{StaticResource FontAwesomePlusIcon}"
+                                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                                    Style="{StaticResource RegularButton}"
+                                                    Margin="0 10 10 10"
+                                                    Width="30"
+                                                    Height="30"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="10" />
+                                            
+                                            <!-- Group Settings Button -->
+                                            <Button Content="{StaticResource FontAwesomeCogIcon}"
+                                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                                    Style="{StaticResource RegularButton}"
+                                                    Margin="0 10 10 10"
+                                                    Width="30"
+                                                    Height="30"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="10" />
+                                        </StackPanel>
+                                        
+                                        <!-- <Button Content="{Binding /GroupID}" /> -->
+                                    </Grid>
                                     
                                     <ItemsPresenter Grid.Row="1" Margin="0 5" />
                                 </Grid>

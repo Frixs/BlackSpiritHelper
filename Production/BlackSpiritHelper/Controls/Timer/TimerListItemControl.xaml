@@ -38,6 +38,7 @@
                                            HorizontalAlignment="Left"
                                            Padding="5 2"/>
 
+                                <!-- Settings Button -->
                                 <Button Grid.Column="2"
                                         Content="{StaticResource FontAwesomeCogIcon}"
                                         FontFamily="{StaticResource FontAwesomeSolid}"
