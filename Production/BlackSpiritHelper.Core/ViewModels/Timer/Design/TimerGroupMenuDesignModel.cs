@@ -14,13 +14,8 @@ namespace BlackSpiritHelper.Core
 
         public TimerGroupMenuDesignModel()
         {
-            Groups = new List<TimerGroupMenuItemViewModel>
-            {
-                new TimerGroupMenuItemViewModel
-                {
-                    GroupID = 0,
-                },
-            };
+            AddGroup("Default");
+            AddGroup("Test Group");
         }
 
         #endregion

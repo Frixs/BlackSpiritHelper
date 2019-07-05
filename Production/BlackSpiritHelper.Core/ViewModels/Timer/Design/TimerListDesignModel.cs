@@ -14,37 +14,31 @@ namespace BlackSpiritHelper.Core
 
         public TimerListDesignModel()
         {
-            Items = new List<List<TimerListItemViewModel>>
+            AddItem(0, new TimerListItemViewModel
             {
-                new List<TimerListItemViewModel> {
-                    new TimerListItemViewModel
-                    {
-                        GroupID = 0,
-                    },
-                    new TimerListItemViewModel
-                    {
-                        GroupID = 0,
-                    },
-                },
-                new List<TimerListItemViewModel> {
-                    new TimerListItemViewModel
-                    {
-                        GroupID = 1,
-                    },
-                    new TimerListItemViewModel
-                    {
-                        GroupID = 1,
-                    },
-                    new TimerListItemViewModel
-                    {
-                        GroupID = 1,
-                    },
-                    new TimerListItemViewModel
-                    {
-                        GroupID = 1,
-                    },
-                },
-            };
+                GroupID = 0,
+            });
+            AddItem(0, new TimerListItemViewModel
+            {
+                GroupID = 0,
+            });
+
+            AddItem(1, new TimerListItemViewModel
+            {
+                GroupID = 1,
+            });
+            AddItem(1, new TimerListItemViewModel
+            {
+                GroupID = 1,
+            });
+            AddItem(1, new TimerListItemViewModel
+            {
+                GroupID = 1,
+            });
+            AddItem(1, new TimerListItemViewModel
+            {
+                GroupID = 1,
+            });
         }
 
         #endregion

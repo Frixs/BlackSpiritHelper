@@ -18,9 +18,9 @@
             </Grid.RowDefinitions>
         
             <!-- Group Title -->
-            <Viewbox Grid.Row="0">
+            <Viewbox Grid.Row="0" MaxHeight="11">
                 <TextBlock Text="Placeholder"
-                           FontFamily="{StaticResource LatoBold}"/>
+                           FontFamily="{StaticResource LatoBold}" />
             </Viewbox>
 
             <Grid Grid.Row="1">

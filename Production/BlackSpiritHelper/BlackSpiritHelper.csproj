@@ -107,6 +107,9 @@
     <Compile Include="Pages\WatchdogPage.xaml.cs">
       <DependentUpon>WatchdogPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ValueConverters\BooleanToContentConverter.cs" />
+    <Compile Include="ValueConverters\BooleanToVisibilityGoneConverter.cs" />
+    <Compile Include="ValueConverters\BooleanToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\ScrollOnTopValueConverter.cs" />
     <Compile Include="ValueConverters\IoCConverter.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />

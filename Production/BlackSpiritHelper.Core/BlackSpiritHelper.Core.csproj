@@ -48,10 +48,12 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Async\AsyncAwaiter.cs" />
     <Compile Include="DataModels\ApplicationPage.cs" />
+    <Compile Include="DataModels\TimerState.cs" />
     <Compile Include="Expressions\ExpressionHelpers.cs" />
     <Compile Include="File\FileManager.cs" />
     <Compile Include="IoC\Base\IoC.cs" />
