@@ -63,6 +63,6 @@
         </Style>
     </UserControl.Resources>
 
-    <ContentControl d:DataContext="{x:Static core:TimerGroupMenuItemDesignModel.Instance}"
+    <ContentControl d:DataContext="{x:Static core:TimerGroupDesignModel.Instance}"
                     Style="{StaticResource ContentStyle}" />
 </UserControl>

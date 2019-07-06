@@ -178,6 +178,6 @@
         </Style>
     </UserControl.Resources>
 
-    <ContentControl d:DataContext="{x:Static core:TimerListItemDesignModel.Instance}"
+    <ContentControl d:DataContext="{x:Static core:TimerItemDesignModel.Instance}"
                     Style="{StaticResource ContentStyle}" />
 </UserControl>

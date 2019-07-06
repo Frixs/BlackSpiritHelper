@@ -3,7 +3,10 @@ using System.Windows.Threading;
 
 namespace BlackSpiritHelper.Core
 {
-    public class TimerListItemViewModel : BaseViewModel
+    /// <summary>
+    /// View model that represents timer.
+    /// </summary>
+    public class TimerItemViewModel : BaseViewModel
     {
         #region Private Members
 
@@ -72,7 +75,7 @@ namespace BlackSpiritHelper.Core
 
         #region Constructor
 
-        public TimerListItemViewModel()
+        public TimerItemViewModel()
         {
             mTimer = new DispatcherTimer();
         }

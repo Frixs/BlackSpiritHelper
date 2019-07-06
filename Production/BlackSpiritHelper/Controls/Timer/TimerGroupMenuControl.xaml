@@ -11,7 +11,7 @@
     <UserControl.Template>
         <ControlTemplate TargetType="UserControl">
 
-            <Grid DataContext="{x:Static core:TimerGroupMenuDesignModel.Instance}">
+            <Grid DataContext="{x:Static core:TimerGroupListDesignModel.Instance}">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="110" />
@@ -64,7 +64,7 @@
                         </Grid.ColumnDefinitions>
                         
                         <!-- Group Menu Content -->
-                        <ItemsControl ItemsSource="{Binding Groups}">
+                        <ItemsControl ItemsSource="{Binding GroupList}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel Grid.Column="0" Orientation="Horizontal" />

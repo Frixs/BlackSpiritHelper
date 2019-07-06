@@ -1,19 +1,21 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace BlackSpiritHelper.Core
 {
-    #region Public Properties
-
-    public class TimerGroupMenuViewModel : BaseViewModel
+    /// <summary>
+    /// View model that represents list of groups.
+    /// </summary>
+    public class TimerGroupListViewModel : BaseViewModel
     {
+        #region Public Properties
+
         /// <summary>
         /// List of timer groups.
         /// </summary>
-        public ObservableCollection<TimerGroupMenuItemViewModel> Groups { get; set; }
+        public ObservableCollection<TimerGroupViewModel> GroupList { get; set; }
 
         /// <summary>
         /// Max number of groups that can be created.
@@ -23,7 +25,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Says if you can create a new item. Limit check.
         /// </summary>
-        public bool CanCreateNewItem { get; private set; }
+        public bool CanCreateNewGroup { get; private set; }
 
         #endregion
 
@@ -41,9 +43,9 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Default Constructor.
         /// </summary>
-        public TimerGroupMenuViewModel()
+        public TimerGroupListViewModel()
         {
-            Groups = new ObservableCollection<TimerGroupMenuItemViewModel>();
+            GroupList = new ObservableCollection<TimerGroupViewModel>();
 
             // Create commands.
             CreateCommands();
@@ -81,39 +83,48 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         /// <param name="itemTitle">The group item title.</param>
         /// <returns></returns>
-        public bool AddGroup(string itemTitle)
+        public TimerGroupViewModel AddGroup(string itemTitle)
         {
             IoC.Logger.Log($"Trying to add Timer Group '{itemTitle}'...", LogLevel.Debug);
 
             //TODO conditions.
-            //if (itemTitle.Trim().Length <= 0)
-            //    return false;
+            if (itemTitle.Trim().Length <= 0)
+                return null;
 
-            //if (Groups.Count + 1 > MaxNoOfGroups)
-            //    return false;
+            // Check limits.
+            if (GroupList.Count + 1 > MaxNoOfGroups)
+            {
+                CanCreateNewGroup = false;
+                return null;
+            }
 
-            //// Sort Groups by ID.
-            //Groups.OrderBy(o => o.ID);
+            // Sort Groups by ID.
+            GroupList.OrderBy(o => o.ID);
 
-            //// Create a new item.
-            //TimerGroupMenuItemViewModel item = new TimerGroupMenuItemViewModel
-            //{
-            //    ID = (byte)FindNewID(0, Groups.Count - 1),
-            //    Title = itemTitle,
-            //    IsRunning = false,
-            //};
+            // Create a new item.
+            TimerGroupViewModel item = new TimerGroupViewModel
+            {
+                ID = (byte)FindNewID(0, GroupList.Count - 1),
+                Title = itemTitle,
+                IsRunning = false,
+            };
 
-            ////TODO oslve sync.
-            //Groups.Add(item);
+            // TODO: Test Timers.
+            item.AddTimer(new TimerItemViewModel
+            {
+                GroupID = 0,
+                Title = "My Timer",
+            });
+            item.AddTimer(new TimerItemViewModel
+            {
+                GroupID = 0,
+                Title = "Another One",
+            });
 
-            //// Create a new key in the timer dictionary.
-            //TimerListDesignModel.Instance.TimerDictionary.Add(item, new List<TimerListItemViewModel>());
-
-            //// Sort dictionary.
-            //TimerListDesignModel.Instance.TimerDictionary.OrderBy(o => o.Key);
+            GroupList.Add(item);
 
             IoC.Logger.Log($"Timer Group '{itemTitle}' added!", LogLevel.Info);
-            return true;
+            return item;
         }
 
         #endregion
@@ -131,13 +142,13 @@ namespace BlackSpiritHelper.Core
             if (start > end)
                 return end + 1;
 
-            if (start != Groups[start].ID)
+            if (start != GroupList[start].ID)
                 return start;
 
             int mid = (start + end) / 2;
 
             // Left half has all elements from 0 to mid 
-            if (Groups[mid].ID == mid)
+            if (GroupList[mid].ID == mid)
                 return FindNewID(mid + 1, end);
 
             return FindNewID(start, mid);

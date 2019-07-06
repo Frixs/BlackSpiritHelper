@@ -1,16 +1,16 @@
 ﻿namespace BlackSpiritHelper.Core
 {
-    public class TimerGroupMenuItemDesignModel : TimerGroupMenuItemViewModel
+    public class TimerGroupDesignModel : TimerGroupViewModel
     {
         #region Singleton
 
-        public static TimerGroupMenuItemDesignModel Instance => new TimerGroupMenuItemDesignModel();
+        public static TimerGroupDesignModel Instance => new TimerGroupDesignModel();
 
         #endregion
 
         #region Constructor
 
-        public TimerGroupMenuItemDesignModel()
+        public TimerGroupDesignModel()
         {
             ID = 0;
             Title = "GroupName";
