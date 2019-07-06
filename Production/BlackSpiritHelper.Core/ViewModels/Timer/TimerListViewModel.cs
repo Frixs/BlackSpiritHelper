@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace BlackSpiritHelper.Core
 {
@@ -45,21 +45,21 @@ namespace BlackSpiritHelper.Core
         /// <param name="item">The item.</param>
         public bool AddItem(byte groupId, TimerListItemViewModel item)
         {
-            if (item == null)
-                return false;
+            //if (item == null)
+            //    return false;
 
-            TimerGroupMenuItemViewModel g = TimerGroupMenuDesignModel.Instance.Groups.Find(o => o.ID == groupId);
-            if (g == null)
-                return false;
+            //TimerGroupMenuItemViewModel g = (TimerGroupMenuItemViewModel)TimerGroupMenuDesignModel.Instance.Groups.Where(o => o.ID == groupId);
+            //if (g == null)
+            //    return false;
 
-            // TODO: sync handle.
-            TimerDictionary[g].Add(item);
+            //// TODO: sync handle.
+            //TimerDictionary[g].Add(item);
 
-            // Solve limits.
-            if (TimerDictionary[g].Count >= MaxNoOfItems)
-                CanCreateNewItem = false;
-            else
-                CanCreateNewItem = true;
+            //// Solve limits.
+            //if (TimerDictionary[g].Count >= MaxNoOfItems)
+            //    CanCreateNewItem = false;
+            //else
+            //    CanCreateNewItem = true;
 
             return true;
         }

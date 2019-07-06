@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace BlackSpiritHelper.Core
 {
@@ -10,7 +13,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// List of timer groups.
         /// </summary>
-        public List<TimerGroupMenuItemViewModel> Groups { get; set; }
+        public ObservableCollection<TimerGroupMenuItemViewModel> Groups { get; set; }
 
         /// <summary>
         /// Max number of groups that can be created.
@@ -24,6 +27,15 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
+        #region Commands
+
+        /// <summary>
+        /// The command to add a new group.
+        /// </summary>
+        public ICommand AddGroupCommand { get; set; }
+
+        #endregion
+
         #region Constructor
 
         /// <summary>
@@ -31,7 +43,33 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public TimerGroupMenuViewModel()
         {
-            Groups = new List<TimerGroupMenuItemViewModel>();
+            Groups = new ObservableCollection<TimerGroupMenuItemViewModel>();
+
+            // Create commands.
+            CreateCommands();
+        }
+
+        #endregion
+
+        #region Command Methods
+
+        /// <summary>
+        /// Create commands.
+        /// </summary>
+        private void CreateCommands()
+        {
+            AddGroupCommand = new RelayCommand(async () => await AddGroupAsync());
+        }
+
+        /// <summary>
+        /// Command helper.
+        /// </summary>
+        /// <returns></returns>
+        private async Task AddGroupAsync()
+        {
+            AddGroup("hey2");
+
+            await Task.Delay(1);
         }
 
         #endregion
@@ -45,33 +83,36 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         public bool AddGroup(string itemTitle)
         {
+            IoC.Logger.Log($"Trying to add Timer Group '{itemTitle}'...", LogLevel.Debug);
+
             //TODO conditions.
-            if (itemTitle.Length <= 0)
-                return false;
+            //if (itemTitle.Trim().Length <= 0)
+            //    return false;
 
-            if (Groups.Count + 1 > MaxNoOfGroups)
-                return false;
+            //if (Groups.Count + 1 > MaxNoOfGroups)
+            //    return false;
 
-            // Sort Groups by ID.
-            Groups.Sort((a, b) => a.ID.CompareTo(b.ID));
+            //// Sort Groups by ID.
+            //Groups.OrderBy(o => o.ID);
 
-            // Create a new item.
-            TimerGroupMenuItemViewModel item = new TimerGroupMenuItemViewModel
-            {
-                ID = (byte)FindNewID(0, Groups.Count - 1),
-                Title = itemTitle,
-                IsRunning = false,
-            };
+            //// Create a new item.
+            //TimerGroupMenuItemViewModel item = new TimerGroupMenuItemViewModel
+            //{
+            //    ID = (byte)FindNewID(0, Groups.Count - 1),
+            //    Title = itemTitle,
+            //    IsRunning = false,
+            //};
 
-            //TODO oslve sync.
-            Groups.Add(item);
+            ////TODO oslve sync.
+            //Groups.Add(item);
 
-            // Create a new key in the timer dictionary.
-            TimerListDesignModel.Instance.TimerDictionary.Add(item, new List<TimerListItemViewModel>());
+            //// Create a new key in the timer dictionary.
+            //TimerListDesignModel.Instance.TimerDictionary.Add(item, new List<TimerListItemViewModel>());
 
-            // Sort dictionary.
-            TimerListDesignModel.Instance.TimerDictionary.OrderBy(o => o.Key);
+            //// Sort dictionary.
+            //TimerListDesignModel.Instance.TimerDictionary.OrderBy(o => o.Key);
 
+            IoC.Logger.Log($"Timer Group '{itemTitle}' added!", LogLevel.Info);
             return true;
         }
 

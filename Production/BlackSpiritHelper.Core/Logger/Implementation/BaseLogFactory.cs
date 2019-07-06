@@ -123,7 +123,7 @@ namespace BlackSpiritHelper.Core
             // If the user wants to know where the log originated from...
             if (IncludeLogOriginDetails)
             {
-                message = $"[{Path.GetFileName(filePath)} > {origin}() > Line {lineNumber}] {message}"; // {Environment.NewLine}
+                message = $"[{level.ToString().ToUpper()}] [{Path.GetFileName(filePath)} > {origin}() > Line {lineNumber}] {message}";
             }
 
             // Log to all loggers.

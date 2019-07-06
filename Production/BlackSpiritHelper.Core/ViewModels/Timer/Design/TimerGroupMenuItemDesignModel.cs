@@ -12,6 +12,9 @@
 
         public TimerGroupMenuItemDesignModel()
         {
+            ID = 0;
+            Title = "GroupName";
+            IsRunning = false;
         }
 
         #endregion

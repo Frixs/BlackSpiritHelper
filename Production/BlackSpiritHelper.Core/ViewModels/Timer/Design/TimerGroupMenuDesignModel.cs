@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace BlackSpiritHelper.Core
+﻿namespace BlackSpiritHelper.Core
 {
     public class TimerGroupMenuDesignModel : TimerGroupMenuViewModel
     {
