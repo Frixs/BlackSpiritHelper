@@ -56,6 +56,7 @@
     <Compile Include="DataModels\TimerState.cs" />
     <Compile Include="Expressions\ExpressionHelpers.cs" />
     <Compile Include="File\FileManager.cs" />
+    <Compile Include="IoC\Base\ApplicationDataContent.cs" />
     <Compile Include="IoC\Base\IoC.cs" />
     <Compile Include="IoC\Interfaces\IFileManager.cs" />
     <Compile Include="IoC\Interfaces\ILogFactory.cs" />
@@ -78,7 +79,7 @@
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Include="Task\TaskManager.cs" />
-    <Compile Include="ViewModels\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Application\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
     <Compile Include="ViewModels\Base\RelayParameterizedCommand.cs" />
@@ -86,11 +87,15 @@
     <Compile Include="ViewModels\SideMenu\Design\SideMenuListItemDesignModel.cs" />
     <Compile Include="ViewModels\SideMenu\Design\SideMenuListDesignModel.cs" />
     <Compile Include="ViewModels\SideMenu\SideMenuListViewModel.cs" />
-    <Compile Include="ViewModels\Timer\Design\TimerGroupListDesignModel.cs" />
+    <Compile Include="ViewModels\Application\DataContent\Timer\Design\TimerGroupListDesignModel.cs" />
     <Compile Include="ViewModels\Timer\Design\TimerGroupDesignModel.cs" />
+    <Compile Include="ViewModels\Timer\Design\TimerListDesignModel.cs" />
+    <Compile Include="ViewModels\Timer\Design\TimerGroupMenuDesignModel.cs" />
     <Compile Include="ViewModels\Timer\Design\TimerItemDesignModel.cs" />
+    <Compile Include="ViewModels\Timer\TimerListViewModel.cs" />
+    <Compile Include="ViewModels\Timer\TimerGroupMenuViewModel.cs" />
     <Compile Include="ViewModels\Timer\TimerGroupViewModel.cs" />
-    <Compile Include="ViewModels\Timer\TimerGroupListViewModel.cs" />
+    <Compile Include="ViewModels\Application\DataContent\Timer\TimerGroupListViewModel.cs" />
     <Compile Include="ViewModels\Timer\TimerItemViewModel.cs" />
     <Compile Include="ViewModels\Timer\TimerViewModel.cs" />
     <Compile Include="ViewModels\Home\HomeViewModel.cs" />

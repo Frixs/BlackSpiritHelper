@@ -1,7 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace BlackSpiritHelper.Core
 {
@@ -29,15 +28,6 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
-        #region Commands
-
-        /// <summary>
-        /// The command to add a new group.
-        /// </summary>
-        public ICommand AddGroupCommand { get; set; }
-
-        #endregion
-
         #region Constructor
 
         /// <summary>
@@ -46,32 +36,6 @@ namespace BlackSpiritHelper.Core
         public TimerGroupListViewModel()
         {
             GroupList = new ObservableCollection<TimerGroupViewModel>();
-
-            // Create commands.
-            CreateCommands();
-        }
-
-        #endregion
-
-        #region Command Methods
-
-        /// <summary>
-        /// Create commands.
-        /// </summary>
-        private void CreateCommands()
-        {
-            AddGroupCommand = new RelayCommand(async () => await AddGroupAsync());
-        }
-
-        /// <summary>
-        /// Command helper.
-        /// </summary>
-        /// <returns></returns>
-        private async Task AddGroupAsync()
-        {
-            AddGroup("hey2");
-
-            await Task.Delay(1);
         }
 
         #endregion
@@ -114,11 +78,27 @@ namespace BlackSpiritHelper.Core
             {
                 GroupID = 0,
                 Title = "My Timer",
+                IconTitleShortcut = "NT",
+                IconBackgroundHEX = "FA2C9B",
+                TimeFormat = "00:02:30",
+                CountdownDuration = TimeSpan.FromSeconds(3),
+                State = TimerState.Ready,
+                IsRunning = false,
+                IsLoopActive = false,
+                IsWarningTime = false,
             });
             item.AddTimer(new TimerItemViewModel
             {
                 GroupID = 0,
                 Title = "Another One",
+                IconTitleShortcut = "AnO",
+                IconBackgroundHEX = "002F0B",
+                TimeFormat = "01:15:21",
+                CountdownDuration = TimeSpan.FromSeconds(0),
+                State = TimerState.Ready,
+                IsRunning = false,
+                IsLoopActive = true,
+                IsWarningTime = false,
             });
 
             GroupList.Add(item);

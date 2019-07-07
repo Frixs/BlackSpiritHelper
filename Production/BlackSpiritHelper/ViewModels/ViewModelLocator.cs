@@ -24,6 +24,11 @@ namespace BlackSpiritHelper
         /// </summary>
         public static ApplicationViewModel ApplicationViewModel => IoC.Get<ApplicationViewModel>();
 
+        /// <summary>
+        /// The application data content.
+        /// </summary>
+        public static ApplicationDataContent ApplicationDataContent => IoC.DataContent;
+
         #endregion
     }
 }

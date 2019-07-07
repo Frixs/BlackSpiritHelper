@@ -31,6 +31,11 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public static ITaskManager Task => IoC.Get<ITaskManager>();
 
+        /// <summary>
+        /// A shortcut to access the <see cref="ApplicationDataContent"/>.
+        /// </summary>
+        public static ApplicationDataContent DataContent => IoC.Get<ApplicationDataContent>();
+
         #endregion
 
         #region Construction

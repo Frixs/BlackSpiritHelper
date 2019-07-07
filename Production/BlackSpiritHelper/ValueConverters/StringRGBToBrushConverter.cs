@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Globalization;
-using System.Windows;
+using System.Windows.Media;
 
 namespace BlackSpiritHelper
 {
     /// <summary>
-    /// Converts boolean to content that will be displayed according to paramter.
-    /// Parameter is separated into 2 values with '|'.
-    /// True = 1st parameter, False = 2nd parameter.
+    /// A converter that takes in an RGB string such as FF00FF and converts it to a WPF brush.
     /// </summary>
-    public class BooleanToContentConverter : BaseValueConverter<BooleanToContentConverter>
+    public class StringRGBToBrushConverter : BaseValueConverter<StringRGBToBrushConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string[] parameters = (parameter as string).Split('|');
+            if (String.IsNullOrEmpty((string)value))
+                return (SolidColorBrush)(new BrushConverter().ConvertFrom("#ffffff"));
 
-            return (bool)value ? parameters[0] : parameters[1];
+            return (SolidColorBrush)(new BrushConverter().ConvertFrom($"#{value}"));
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

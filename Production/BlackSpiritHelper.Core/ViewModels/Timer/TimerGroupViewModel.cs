@@ -1,11 +1,12 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace BlackSpiritHelper.Core
 {
     /// <summary>
-    /// View model that represents timer group.
+    /// View model that represents timer group. ViewModel for TimerGroupMenuItemControl.
     /// </summary>
     public class TimerGroupViewModel : BaseViewModel
     {

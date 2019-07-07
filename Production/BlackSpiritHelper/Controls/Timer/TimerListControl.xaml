@@ -8,8 +8,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <Border DataContext="{x:Static core:TimerGroupListDesignModel.Instance}">
-        <ItemsControl ItemsSource="{Binding GroupList}">
+    <Border DataContext="{x:Static core:TimerListDesignModel.Instance}">
+        <ItemsControl ItemsSource="{Binding TimerGroupListDesignModel.GroupList}">
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
@@ -52,7 +52,7 @@
                                                     Margin="10" />
                                             
                                             <!-- Group Name -->
-                                            <TextBlock Text="Placeholder" 
+                                            <TextBlock Text="{Binding Title}" 
                                                        Foreground="{StaticResource TimerGroupListMenuTitleForegroundBrushKey}"
                                                        FontFamily="{StaticResource LatoHeavy}"
                                                        FontSize="18"

@@ -69,6 +69,9 @@ namespace BlackSpiritHelper
 
             // Bind file manager.
             IoC.Kernel.Bind<IFileManager>().ToConstant(new FileManager());
+
+            // Bind Application data.
+            IoC.Kernel.Bind<ApplicationDataContent>().ToConstant(new ApplicationDataContent());
         }
 
         /// <summary>

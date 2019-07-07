@@ -31,7 +31,7 @@
                                 </Grid.ColumnDefinitions>
                                 
                                 <TextBlock Grid.Column="0"
-                                           Text="Title placeholder"
+                                           Text="{Binding Title}"
                                            Foreground="{StaticResource TimerListItemTitleForegroundBrushKey}"
                                            FontFamily="{StaticResource LatoHeavy}"
                                            VerticalAlignment="Top"
@@ -64,15 +64,18 @@
                                         Width="50"
                                         BorderBrush="{StaticResource TimerListItemIconBorderColorBrushKey}"
                                         BorderThickness="3"
-                                        Background="DarkCyan"
+                                        Background="{Binding IconBackgroundHEX, Converter={local:StringRGBToBrushConverter}}"
                                         Margin="5">
                                     <Viewbox>
-                                        <TextBlock Text="ABC"
+                                        <TextBlock Text="{Binding IconTitleShortcut}"
+                                                   Foreground="{Binding IconBackgroundHEX, 
+                                                                Converter={local:StringRGBToLightOrDarkBrushConverter},
+                                                                ConverterParameter='FFFFFF|000000'}"
                                                    FontFamily="{StaticResource LatoHeavy}"
                                                    FontSize="22"
                                                    VerticalAlignment="Center"
                                                    HorizontalAlignment="Center"
-                                                   Margin="5"/>
+                                                   Margin="5" />
                                     </Viewbox>
                                 </Border>
 
@@ -108,7 +111,7 @@
                                     </Grid>
 
                                     <!-- Countdown -->
-                                    <TextBlock Text="00:00:00" 
+                                    <TextBlock Text="{Binding TimeFormat}" 
                                                FontFamily="{StaticResource LatoRegular}"
                                                Foreground="{StaticResource TimerListItemCountdownForegroundBrushKey}"
                                                FontSize="32"
@@ -142,6 +145,8 @@
                                 <Grid Grid.Column="1">
                                     <!-- Loop indicator -->
                                     <TextBlock Text="{StaticResource FontAwesomeRetweetIcon}"
+                                               Visibility="{Binding IsLoopActive,
+                                                            Converter={local:BooleanToVisibilityGoneConverter}}"
                                                FontFamily="{StaticResource FontAwesomeSolid}"
                                                Foreground="{StaticResource TimerListItemLoopIndicatorForegroundBrushKey}"
                                                FontSize="16"

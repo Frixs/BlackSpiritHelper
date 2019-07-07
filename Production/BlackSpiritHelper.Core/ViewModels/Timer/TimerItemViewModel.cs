@@ -4,7 +4,7 @@ using System.Windows.Threading;
 namespace BlackSpiritHelper.Core
 {
     /// <summary>
-    /// View model that represents timer.
+    /// View model that represents timer. ViewModel for TimerListItemControl.
     /// </summary>
     public class TimerItemViewModel : BaseViewModel
     {
@@ -44,7 +44,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Formatted time output.
         /// </summary>
-        public string CountdownTimeFormat { get; private set; }
+        public string TimeFormat { get; set; }
 
         /// <summary>
         /// Countdown before timer starts.
@@ -59,7 +59,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Says, the timer is currently playing (True) or it is another state (False).
         /// </summary>
-        public bool IsRunning { get; private set; }
+        public bool IsRunning { get; set; }
 
         /// <summary>
         /// Says, if the timer is in infinite loop.

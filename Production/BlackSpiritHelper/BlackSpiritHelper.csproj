@@ -112,6 +112,8 @@
     <Compile Include="ValueConverters\BooleanToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\ScrollOnTopValueConverter.cs" />
     <Compile Include="ValueConverters\IoCConverter.cs" />
+    <Compile Include="ValueConverters\StringRGBToLightOrDarkBrushConverter.cs" />
+    <Compile Include="ValueConverters\StringRGBToBrushConverter.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Window\WindowResizer.cs" />
     <Compile Include="ValueConverters\ApplicationPageValueConverter.cs" />

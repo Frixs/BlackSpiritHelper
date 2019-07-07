@@ -7,7 +7,7 @@ namespace BlackSpiritHelper
     /// <summary>
     /// Converts boolean to visibility - Visible/Hidden.
     /// </summary>
-    public class BooleanToVisibilityGoneConverter : BaseValueConverter<IoCConverter>
+    public class BooleanToVisibilityGoneConverter : BaseValueConverter<BooleanToVisibilityGoneConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
