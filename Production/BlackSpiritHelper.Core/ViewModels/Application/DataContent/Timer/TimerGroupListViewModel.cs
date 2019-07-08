@@ -24,7 +24,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Says if you can create a new item. Limit check.
         /// </summary>
-        public bool CanCreateNewGroup { get; private set; }
+        public bool CanCreateNewGroup { get; set; }
 
         #endregion
 
@@ -51,16 +51,14 @@ namespace BlackSpiritHelper.Core
         {
             IoC.Logger.Log($"Trying to add Timer Group '{itemTitle}'...", LogLevel.Debug);
 
-            //TODO conditions.
-            if (itemTitle.Trim().Length <= 0)
+            itemTitle = itemTitle.Trim();
+            // Check conditions.
+            if (itemTitle.Length < TimerGroupViewModel.TitleAllowMinChar && itemTitle.Length > TimerGroupViewModel.TitleAllowMaxChar)
                 return null;
 
             // Check limits.
             if (GroupList.Count + 1 > MaxNoOfGroups)
-            {
-                CanCreateNewGroup = false;
                 return null;
-            }
 
             // Sort Groups by ID.
             GroupList.OrderBy(o => o.ID);
@@ -71,6 +69,7 @@ namespace BlackSpiritHelper.Core
                 ID = (byte)FindNewID(0, GroupList.Count - 1),
                 Title = itemTitle,
                 IsRunning = false,
+                CanCreateNewTimer = false,
             };
 
             // TODO: Test Timers.
@@ -102,6 +101,10 @@ namespace BlackSpiritHelper.Core
             });
 
             GroupList.Add(item);
+
+            // Check to set limits.
+            if (GroupList.Count + 1 > MaxNoOfGroups)
+                CanCreateNewGroup = false;
 
             IoC.Logger.Log($"Timer Group '{itemTitle}' added!", LogLevel.Info);
             return item;

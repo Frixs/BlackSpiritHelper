@@ -17,6 +17,35 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
+        #region Static Limitation Properties
+
+        /// <summary>
+        /// Limitation for min characters in <see cref="Title"/>.
+        /// </summary>
+        public static byte TitleAllowMinChar { get; private set; } = 3;
+
+        /// <summary>
+        /// Limitation for max characters in <see cref="Title"/>.
+        /// </summary>
+        public static byte TitleAllowMaxChar { get; private set; } = 20;
+
+        /// <summary>
+        /// Limitation for min characters in <see cref="IconTitleShortcut"/>.
+        /// </summary>
+        public static byte IconTitleAllowMinChar { get; private set; } = 1;
+
+        /// <summary>
+        /// Limitation for max characters in <see cref="IconTitleShortcut"/>.
+        /// </summary>
+        public static byte IconTitleAllowMaxChar { get; private set; } = 3;
+
+        /// <summary>
+        /// Limitation for max duration in <see cref="CountdownDuration"/>.
+        /// </summary>
+        public static TimeSpan CountdownAllowMaxDuration { get; private set; } = TimeSpan.FromSeconds(7200);
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>

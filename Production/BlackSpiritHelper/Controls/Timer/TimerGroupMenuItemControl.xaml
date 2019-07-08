@@ -45,7 +45,7 @@
 
                                 <!-- Group Play/Pause Button -->
                                 <Grid Grid.Row="2">
-                                    <Button Command="{Binding PlayPauseCommand}"
+                                    <Button Command="{Binding PlayCommand}"
                                             Content="{StaticResource FontAwesomePlayIcon}"
                                             Visibility="{Binding IsRunning,
                                                          Converter={local:BooleanToVisibilityGoneConverter},
@@ -57,7 +57,7 @@
                                             Height="50"
                                             Margin="0" 
                                             VerticalAlignment="Bottom" />
-                                    <Button Command="{Binding PlayPauseCommand}"
+                                    <Button Command="{Binding PauseCommand}"
                                             Content="{StaticResource FontAwesomePauseIcon}"
                                             Visibility="{Binding IsRunning,
                                                             Converter={local:BooleanToVisibilityGoneConverter},

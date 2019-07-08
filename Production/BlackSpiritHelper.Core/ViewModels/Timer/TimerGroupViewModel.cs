@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -10,6 +11,20 @@ namespace BlackSpiritHelper.Core
     /// </summary>
     public class TimerGroupViewModel : BaseViewModel
     {
+        #region Static Limitation Properties
+
+        /// <summary>
+        /// Limitation for min characters in <see cref="Title"/>.
+        /// </summary>
+        public static byte TitleAllowMinChar { get; private set; } = 3;
+
+        /// <summary>
+        /// Limitation for max characters in <see cref="Title"/>.
+        /// </summary>
+        public static byte TitleAllowMaxChar { get; private set; } = 20;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -35,7 +50,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Says if you can create a new item. Limit check.
         /// </summary>
-        public bool CanCreateNewTimer { get; private set; }
+        public bool CanCreateNewTimer { get; set; }
 
         /// <summary>
         /// List of timers in the group.
@@ -47,9 +62,24 @@ namespace BlackSpiritHelper.Core
         #region Commands
 
         /// <summary>
-        /// The command play or pause group.
+        /// The command play group.
         /// </summary>
-        public ICommand PlayPauseCommand { get; set; }
+        public ICommand PlayCommand { get; set; }
+
+        /// <summary>
+        /// The command pause group.
+        /// </summary>
+        public ICommand PauseCommand { get; set; }
+
+        /// <summary>
+        /// The command to add new timer to the group.
+        /// </summary>
+        public ICommand AddTimerCommand { get; set; }
+
+        /// <summary>
+        /// The command to open group settings.
+        /// </summary>
+        public ICommand OpenGroupSettingsCommand { get; set; }
 
         #endregion
 
@@ -72,18 +102,34 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void CreateCommands()
         {
-            PlayPauseCommand = new RelayCommand(async () => await PlayPauseAsync());
+            PlayCommand = new RelayCommand(async () => await PlayAsync());
+            PauseCommand = new RelayCommand(async () => await PauseAsync());
+            AddTimerCommand = new RelayCommand(async () => await AddTimerAsync());
+            OpenGroupSettingsCommand = new RelayCommand(async () => await OpenGroupSettingsAsync());
         }
 
-        /// <summary>
-        /// Command helper, open page async.
-        /// </summary>
-        /// <returns></returns>
-        private async Task PlayPauseAsync()
+        private async Task PlayAsync()
+        {
+            Console.WriteLine("TODO");
+            await Task.Delay(1);
+        }
+
+        private async Task PauseAsync()
         {
             Title = "Hey";
-            System.Console.WriteLine("TRIGGER");
+            Console.WriteLine("TODO");
+            await Task.Delay(1);
+        }
 
+        private async Task AddTimerAsync()
+        {
+            Console.WriteLine("TODO");
+            await Task.Delay(1);
+        }
+
+        private async Task OpenGroupSettingsAsync()
+        {
+            Console.WriteLine("TODO");
             await Task.Delay(1);
         }
 

@@ -14,6 +14,7 @@
         {
             AddGroup("Default");
             AddGroup("Test Group");
+            CanCreateNewGroup = true;
         }
 
         #endregion

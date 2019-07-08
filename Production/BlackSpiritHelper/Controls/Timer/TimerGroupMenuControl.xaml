@@ -88,6 +88,9 @@
                         <!-- Add Button -->
                         <Button Grid.Column="1" 
                                 Command="{Binding AddGroupCommand}"
+                                Visibility="{Binding ApplicationDataContent.TimerGroupListDesignModel.CanCreateNewGroup,
+                                             Source={x:Static local:ViewModelLocator.Instance},
+                                             Converter={local:BooleanToVisibilityGoneConverter}}"
                                 Content="{StaticResource FontAwesomePlusIcon}"
                                 FontFamily="{StaticResource FontAwesomeSolid}"
                                 Style="{StaticResource RegularButtonNoColor}"
