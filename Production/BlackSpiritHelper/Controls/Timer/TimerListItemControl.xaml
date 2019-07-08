@@ -7,7 +7,7 @@
              xmlns:core="clr-namespace:BlackSpiritHelper.Core;assembly=BlackSpiritHelper.Core"
              mc:Ignorable="d" 
              d:DesignHeight="140" d:DesignWidth="270">
-    
+
     <UserControl.Resources>
         <Style x:Key="ContentStyle" TargetType="{x:Type ContentControl}">
             <Setter Property="Template">
@@ -70,7 +70,7 @@
                                         <TextBlock Text="{Binding IconTitleShortcut}"
                                                    Foreground="{Binding IconBackgroundHEX, 
                                                                 Converter={local:StringRGBToLightOrDarkBrushConverter},
-                                                                ConverterParameter='FFFFFF|000000'}"
+                                                                ConverterParameter={StaticResource TimerListItemIconForegroundColorDifference}}"
                                                    FontFamily="{StaticResource LatoHeavy}"
                                                    FontSize="22"
                                                    VerticalAlignment="Center"
@@ -165,13 +165,25 @@
                                             Height="50">
                                     </Button>
                                     <!-- Play/Pause Button -->
-                                    <Button Content="{StaticResource FontAwesomePlayIcon}"
-                                            FontFamily="{StaticResource FontAwesomeSolid}"
-                                            Style="{StaticResource RegularButton}"
-                                            Margin="0 5 5 5"
-                                            Width="50"
-                                            Height="50">
-                                    </Button>
+                                    <Grid>
+                                        <Button Content="{StaticResource FontAwesomePlayIcon}"
+                                                Visibility="{Binding IsRunning,
+                                                             Converter={local:BooleanToVisibilityConverter}}"
+                                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                                Style="{StaticResource RegularButton}"
+                                                Margin="0 5 5 5"
+                                                Width="50"
+                                                Height="50" />
+                                        <Button Content="{StaticResource FontAwesomePauseIcon}"
+                                                Visibility="{Binding IsRunning,
+                                                             Converter={local:BooleanToVisibilityConverter},
+                                                             ConverterParameter=True}"
+                                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                                Style="{StaticResource RegularButton}"
+                                                Margin="0 5 5 5"
+                                                Width="50"
+                                                Height="50" />
+                                    </Grid>
                                 </StackPanel>
                             </Grid>
 
@@ -185,4 +197,5 @@
 
     <ContentControl d:DataContext="{x:Static core:TimerItemDesignModel.Instance}"
                     Style="{StaticResource ContentStyle}" />
+
 </UserControl>

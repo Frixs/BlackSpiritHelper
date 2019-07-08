@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <Color x:Key="Red">#ffec1e24</Color>
     <SolidColorBrush x:Key="RedBrushKey" Color="{StaticResource Red}" />
@@ -46,6 +47,8 @@
     <SolidColorBrush x:Key="TimerGroupListItemBackgroundBrushKey" Color="{StaticResource TimerGroupListItemBackground}" />
     
     <!-- Timer - List Item -->
+    <system:String x:Key="TimerListItemIconForegroundColorDifference">c7c7c7|24242b</system:String>
+    
     <Color x:Key="TimerListItemBackground">#c7c7c7</Color>
     <SolidColorBrush x:Key="TimerListItemBackgroundBrushKey" Color="{StaticResource TimerListItemBackground}" />
 
@@ -128,5 +131,5 @@
 
     <Color x:Key="RegularRedButtonAction">#AE7173</Color>
     <SolidColorBrush x:Key="RegularRedButtonActionBrushKey" Color="{StaticResource RegularRedButtonAction}" />
-    
+
 </ResourceDictionary>

@@ -44,16 +44,32 @@
                                 </Grid>
 
                                 <!-- Group Play/Pause Button -->
-                                <Button Grid.Row="2"
-                                        Command="{Binding PlayPauseCommand}"
-                                        Content="{StaticResource FontAwesomePlayIcon}"
-                                        FontFamily="{StaticResource FontAwesomeSolid}"
-                                        Style="{StaticResource RegularButton}" 
-                                        FontSize="16"
-                                        Width="50"
-                                        Height="50"
-                                        Margin="0" 
-                                        VerticalAlignment="Bottom" />
+                                <Grid Grid.Row="2">
+                                    <Button Command="{Binding PlayPauseCommand}"
+                                            Content="{StaticResource FontAwesomePlayIcon}"
+                                            Visibility="{Binding IsRunning,
+                                                         Converter={local:BooleanToVisibilityGoneConverter},
+                                                         ConverterParameter=True}"
+                                            FontFamily="{StaticResource FontAwesomeSolid}"
+                                            Style="{StaticResource RegularButton}" 
+                                            FontSize="16"
+                                            Width="50"
+                                            Height="50"
+                                            Margin="0" 
+                                            VerticalAlignment="Bottom" />
+                                    <Button Command="{Binding PlayPauseCommand}"
+                                            Content="{StaticResource FontAwesomePauseIcon}"
+                                            Visibility="{Binding IsRunning,
+                                                            Converter={local:BooleanToVisibilityGoneConverter},
+                                                            ConverterParameter=True}"
+                                            FontFamily="{StaticResource FontAwesomeSolid}"
+                                            Style="{StaticResource RegularButton}" 
+                                            FontSize="16"
+                                            Width="50"
+                                            Height="50"
+                                            Margin="0" 
+                                            VerticalAlignment="Bottom" />
+                                </Grid>
                             </Grid>
                         </Border>
                         

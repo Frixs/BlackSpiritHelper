@@ -9,7 +9,8 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <Border DataContext="{x:Static core:TimerListDesignModel.Instance}">
-        <ItemsControl ItemsSource="{Binding TimerGroupListDesignModel.GroupList}">
+        <ItemsControl ItemsSource="{Binding ApplicationDataContent.TimerGroupListDesignModel.GroupList,
+                                    Source={x:Static local:ViewModelLocator.Instance}}">
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
@@ -42,14 +43,28 @@
                                         </Grid.ColumnDefinitions>
 
                                         <StackPanel Grid.Column="0" Orientation="Horizontal">
-                                            <!-- Group Play Button -->
-                                            <Button Content="{StaticResource FontAwesomePlayIcon}"
-                                                    FontFamily="{StaticResource FontAwesomeSolid}"
-                                                    Style="{StaticResource RegularButton}" 
-                                                    FontSize="10"
-                                                    Width="30"
-                                                    Height="30"
-                                                    Margin="10" />
+                                            <!-- Group Play/Pause Button -->
+                                            <Grid>
+                                                <Button Content="{StaticResource FontAwesomePlayIcon}"
+                                                        Visibility="{Binding IsRunning,
+                                                            Converter={local:BooleanToVisibilityGoneConverter}}"
+                                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                                        Style="{StaticResource RegularButton}" 
+                                                        FontSize="10"
+                                                        Width="30"
+                                                        Height="30"
+                                                        Margin="10" />
+                                                <Button Content="{StaticResource FontAwesomePauseIcon}"
+                                                        Visibility="{Binding IsRunning,
+                                                                     Converter={local:BooleanToVisibilityGoneConverter},
+                                                                     ConverterParameter=True}"
+                                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                                        Style="{StaticResource RegularButton}" 
+                                                        FontSize="10"
+                                                        Width="30"
+                                                        Height="30"
+                                                        Margin="10" />
+                                            </Grid>
                                             
                                             <!-- Group Name -->
                                             <TextBlock Text="{Binding Title}" 

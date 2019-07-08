@@ -64,7 +64,8 @@
                         </Grid.ColumnDefinitions>
                         
                         <!-- Group Menu Content -->
-                        <ItemsControl ItemsSource="{Binding TimerGroupListDesignModel.GroupList}">
+                        <ItemsControl ItemsSource="{Binding ApplicationDataContent.TimerGroupListDesignModel.GroupList,
+                                                    Source={x:Static local:ViewModelLocator.Instance}}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel Grid.Column="0" Orientation="Horizontal" />

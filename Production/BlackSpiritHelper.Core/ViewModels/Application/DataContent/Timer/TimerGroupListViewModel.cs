@@ -83,7 +83,7 @@ namespace BlackSpiritHelper.Core
                 TimeFormat = "00:02:30",
                 CountdownDuration = TimeSpan.FromSeconds(3),
                 State = TimerState.Ready,
-                IsRunning = false,
+                IsRunning = true,
                 IsLoopActive = false,
                 IsWarningTime = false,
             });

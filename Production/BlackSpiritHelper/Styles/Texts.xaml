@@ -8,5 +8,5 @@
         <Setter Property="TextAlignment" Value="Left" />
         <Setter Property="Margin" Value="5 8" />
     </Style>
-    
+
 </ResourceDictionary>

@@ -5,15 +5,6 @@ namespace BlackSpiritHelper.Core
 {
     public class TimerGroupMenuViewModel : BaseViewModel
     {
-        #region Public Properties
-
-        /// <summary>
-        /// Group List data structure.
-        /// </summary>
-        public TimerGroupListDesignModel TimerGroupListDesignModel { get; private set; } = IoC.DataContent.TimerGroupListDesignModel;
-
-        #endregion
-
         #region Commands
 
         /// <summary>
@@ -52,7 +43,7 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task AddGroupAsync()
         {
-            TimerGroupListDesignModel.AddGroup("hey2");
+            IoC.DataContent.TimerGroupListDesignModel.AddGroup("hey2");
 
             await Task.Delay(1);
         }
