@@ -111,6 +111,9 @@
     <Compile Include="Pages\Management\TimerGroupSettingsFormPage.xaml.cs">
       <DependentUpon>TimerGroupSettingsFormPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Management\TimerItemSettingsFormPage.xaml.cs">
+      <DependentUpon>TimerItemSettingsFormPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ValueConverters\BooleanToContentConverter.cs" />
     <Compile Include="ValueConverters\BooleanToVisibilityGoneConverter.cs" />
     <Compile Include="ValueConverters\BooleanToVisibilityConverter.cs" />
@@ -175,6 +178,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Management\TimerGroupSettingsFormPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Management\TimerItemSettingsFormPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

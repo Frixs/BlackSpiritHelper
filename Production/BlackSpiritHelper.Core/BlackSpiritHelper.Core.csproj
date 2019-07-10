@@ -101,7 +101,9 @@
     <Compile Include="ViewModels\Application\DataContent\Timer\TimerGroupListViewModel.cs" />
     <Compile Include="ViewModels\Timer\Core\TimerItemViewModel.cs" />
     <Compile Include="ViewModels\Timer\SettingsForm\Design\TimerGroupSettingsFormDesignModel.cs" />
+    <Compile Include="ViewModels\Timer\SettingsForm\Design\TimerItemSettingsFormDesignModel.cs" />
     <Compile Include="ViewModels\Timer\SettingsForm\TimerGroupSettingsFormViewModel.cs" />
+    <Compile Include="ViewModels\Timer\SettingsForm\TimerItemSettingsFormViewModel.cs" />
     <Compile Include="ViewModels\Timer\TimerViewModel.cs" />
     <Compile Include="ViewModels\Home\HomeViewModel.cs" />
     <Compile Include="ViewModels\SideMenu\Design\SideMenuDesignModel.cs" />

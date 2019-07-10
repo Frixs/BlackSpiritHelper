@@ -37,8 +37,13 @@ namespace BlackSpiritHelper.Core
         ///
 
         /// <summary>
-        /// The group settings form.
+        /// The timergroup settings form.
         /// </summary>
         TimerGroupSettingsForm = 100,
+
+        /// <summary>
+        /// The timer item settings form.
+        /// </summary>
+        TimerItemSettingsForm = 101,
     }
 }

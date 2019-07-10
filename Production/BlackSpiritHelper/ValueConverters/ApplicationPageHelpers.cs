@@ -34,6 +34,9 @@ namespace BlackSpiritHelper
                 case ApplicationPage.TimerGroupSettingsForm:
                     return new TimerGroupSettingsFormPage(viewModel as TimerGroupSettingsFormViewModel);
 
+                case ApplicationPage.TimerItemSettingsForm:
+                    return new TimerItemSettingsFormPage(viewModel as TimerItemSettingsFormViewModel);
+
                 default:
                     Debugger.Break();
                     return null;
@@ -62,6 +65,9 @@ namespace BlackSpiritHelper
 
             if (page is TimerGroupSettingsFormPage)
                 return ApplicationPage.TimerGroupSettingsForm;
+
+            if (page is TimerItemSettingsFormPage)
+                return ApplicationPage.TimerItemSettingsForm;
 
             // Alert developer of issue.
             Debugger.Break();

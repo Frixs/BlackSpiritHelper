@@ -110,6 +110,7 @@ namespace BlackSpiritHelper.Core
 
         private async Task PlayAsync()
         {
+            // TODO Play group.
             Console.WriteLine("TODO");
             await Task.Delay(1);
         }
@@ -117,13 +118,28 @@ namespace BlackSpiritHelper.Core
         private async Task PauseAsync()
         {
             Title = "Hey";
+            // TODO Pause Group.
             Console.WriteLine("TODO");
             await Task.Delay(1);
         }
 
         private async Task AddTimerAsync()
         {
-            Console.WriteLine("TODO");
+            // Create default timer.
+            AddTimer(new TimerItemViewModel
+            {
+                GroupID = ID,
+                Title = "Untitled Timer",
+                IconTitleShortcut = "X",
+                IconBackgroundHEX = "FFFFFF",
+                TimeTotal = new TimeSpan(0, 1, 0),
+                CountdownDuration = TimeSpan.FromSeconds(0),
+                State = TimerState.Ready,
+                IsRunning = false,
+                IsLoopActive = false,
+                IsWarningTime = false,
+            });
+
             await Task.Delay(1);
         }
 

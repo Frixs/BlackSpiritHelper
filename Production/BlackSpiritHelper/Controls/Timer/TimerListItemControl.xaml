@@ -40,6 +40,7 @@
 
                                 <!-- Settings Button -->
                                 <Button Grid.Column="2"
+                                        Command="{Binding OpenTimerSettingsCommand}"
                                         Content="{StaticResource FontAwesomeCogIcon}"
                                         FontFamily="{StaticResource FontAwesomeSolid}"
                                         Style="{StaticResource RegularButtonNoColor}"
@@ -88,6 +89,7 @@
                                         </Grid.RowDefinitions>
                                         <!-- Plus Button -->
                                         <Button Grid.Row="0"
+                                                Command="{Binding TimePlusCommand}"
                                                 Content="{StaticResource FontAwesomePlusIcon}"
                                                 FontFamily="{StaticResource FontAwesomeSolid}"
                                                 Style="{StaticResource RegularButtonBlue}"
@@ -99,6 +101,7 @@
                                         </Button>
                                         <!-- Minus Button -->
                                         <Button Grid.Row="1" 
+                                                Command="{Binding TimeMinusCommand}"
                                                 Content="{StaticResource FontAwesomeMinusIcon}"
                                                 FontFamily="{StaticResource FontAwesomeSolid}"
                                                 Style="{StaticResource RegularButtonBlue}"
@@ -132,6 +135,7 @@
                                 <StackPanel Grid.Column="0" Orientation="Horizontal">
                                     <!-- Reset button -->
                                     <Button Content="{StaticResource FontAwesomeRestartIcon}"
+                                            Command="{Binding ResetTimerCommand}"
                                             FontFamily="{StaticResource FontAwesomeSolid}"
                                             Style="{StaticResource RegularButtonRed}"
                                             Margin="5"
@@ -158,6 +162,7 @@
                                 <StackPanel Grid.Column="2" Orientation="Horizontal">
                                     <!-- Sync Button -->
                                     <Button Content="{StaticResource FontAwesomeSyncIcon}"
+                                            Command="{Binding SyncCommand}"
                                             FontFamily="{StaticResource FontAwesomeSolid}"
                                             Style="{StaticResource RegularButtonYellow}"
                                             FontSize="18"
@@ -168,6 +173,7 @@
                                     <!-- Play/Pause Button -->
                                     <Grid>
                                         <Button Content="{StaticResource FontAwesomePlayIcon}"
+                                                Command="{Binding PlayCommand}"
                                                 Visibility="{Binding IsRunning,
                                                              Converter={local:BooleanToVisibilityConverter}}"
                                                 FontFamily="{StaticResource FontAwesomeSolid}"
@@ -177,6 +183,7 @@
                                                 Width="50"
                                                 Height="50" />
                                         <Button Content="{StaticResource FontAwesomePauseIcon}"
+                                                Command="{Binding PauseCommand}"
                                                 Visibility="{Binding IsRunning,
                                                              Converter={local:BooleanToVisibilityConverter},
                                                              ConverterParameter=True}"

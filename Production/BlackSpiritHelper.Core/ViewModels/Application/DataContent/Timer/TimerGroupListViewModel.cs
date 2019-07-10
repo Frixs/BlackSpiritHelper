@@ -74,38 +74,8 @@ namespace BlackSpiritHelper.Core
                 CanCreateNewTimer = false,
             };
 
-            // TODO: Remove Test Timers.
-            item.AddTimer(new TimerItemViewModel
-            {
-                GroupID = 0,
-                Title = "My Timer",
-                IconTitleShortcut = "NT",
-                IconBackgroundHEX = "FA2C9B",
-                TimeFormat = "00:02:30",
-                CountdownDuration = TimeSpan.FromSeconds(3),
-                State = TimerState.Ready,
-                IsRunning = true,
-                IsLoopActive = false,
-                IsWarningTime = false,
-            });
-            item.AddTimer(new TimerItemViewModel
-            {
-                GroupID = 0,
-                Title = "Another One",
-                IconTitleShortcut = "AnO",
-                IconBackgroundHEX = "002F0B",
-                TimeFormat = "01:15:21",
-                CountdownDuration = TimeSpan.FromSeconds(0),
-                State = TimerState.Ready,
-                IsRunning = false,
-                IsLoopActive = true,
-                IsWarningTime = false,
-            });
-
+            // Add.
             GroupList.Add(item);
-
-            // Sort.
-            SortGroupList();
 
             // Check to set limits.
             if (GroupList.Count + 1 > MaxNoOfGroups)
@@ -154,7 +124,7 @@ namespace BlackSpiritHelper.Core
         public void SortGroupList()
         {
             GroupList = new ObservableCollection<TimerGroupViewModel>(
-                GroupList.OrderBy(o => o.Title.Length)
+                GroupList.OrderBy(o => o.Title)
                 );
         }
 

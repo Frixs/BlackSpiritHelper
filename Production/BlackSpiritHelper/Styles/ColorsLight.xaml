@@ -22,7 +22,7 @@
     <Color x:Key="LineSpacer0Background">#ffffff</Color>
     <SolidColorBrush x:Key="LineSpacer0BackgroundBrushKey" Color="{StaticResource LineSpacer0Background}" />
 
-    <Color x:Key="LineSpacer1Background">#ffffff</Color>
+    <Color x:Key="LineSpacer1Background">#000000</Color>
     <SolidColorBrush x:Key="LineSpacer1BackgroundBrushKey" Color="{StaticResource LineSpacer1Background}" />
 
     <!-- System Buttons -->

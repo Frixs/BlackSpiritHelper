@@ -18,7 +18,7 @@ namespace BlackSpiritHelper.Core
             Title = "New Timer";
             IconTitleShortcut = "NT";
             IconBackgroundHEX = "FA2C9B";
-            TimeFormat = "00:02:30";
+            TimeTotal = new TimeSpan(0, 1, 0);
             CountdownDuration = TimeSpan.FromSeconds(3);
             State = TimerState.Ready;
             IsRunning = false;
