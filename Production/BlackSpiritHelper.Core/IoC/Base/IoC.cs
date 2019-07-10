@@ -22,6 +22,11 @@ namespace BlackSpiritHelper.Core
         public static ApplicationViewModel Application => IoC.Get<ApplicationViewModel>();
 
         /// <summary>
+        /// A shortcut to access the <see cref="IUIManager"/>.
+        /// </summary>
+        public static IUIManager UI => IoC.Get<IUIManager>();
+
+        /// <summary>
         /// A shortcut to access the <see cref="ILogFactory"/>.
         /// </summary>
         public static ILogFactory Logger => IoC.Get<ILogFactory>();

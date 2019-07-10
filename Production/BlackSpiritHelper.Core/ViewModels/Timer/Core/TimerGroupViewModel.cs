@@ -105,7 +105,7 @@ namespace BlackSpiritHelper.Core
             PlayCommand = new RelayCommand(async () => await PlayAsync());
             PauseCommand = new RelayCommand(async () => await PauseAsync());
             AddTimerCommand = new RelayCommand(async () => await AddTimerAsync());
-            OpenGroupSettingsCommand = new RelayParameterizedCommand(async (parameter) => await OpenGroupSettingsAsync(parameter));
+            OpenGroupSettingsCommand = new RelayCommand(async () => await OpenGroupSettingsAsync());
         }
 
         private async Task PlayAsync()
@@ -127,16 +127,8 @@ namespace BlackSpiritHelper.Core
             await Task.Delay(1);
         }
 
-        /// <summary>
-        /// Open settings form.
-        /// </summary>
-        /// <param name="parameter">Group ID.</param>
-        /// <returns></returns>
-        private async Task OpenGroupSettingsAsync(object parameter)
+        private async Task OpenGroupSettingsAsync()
         {
-            if (parameter == null)
-                return;
-
             // Create Settings View Model with the current group binding.
             TimerGroupSettingsFormViewModel vm = new TimerGroupSettingsFormViewModel
             {

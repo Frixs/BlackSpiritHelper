@@ -37,6 +37,7 @@
     <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\BlackSpiritHelper\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework" />
     <Reference Include="PropertyChanged, Version=3.0.1.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
       <HintPath>..\BlackSpiritHelper\packages\PropertyChanged.Fody.3.0.1\lib\net452\PropertyChanged.dll</HintPath>
     </Reference>
@@ -61,6 +62,7 @@
     <Compile Include="IoC\Interfaces\IFileManager.cs" />
     <Compile Include="IoC\Interfaces\ILogFactory.cs" />
     <Compile Include="IoC\Interfaces\ITaskManager.cs" />
+    <Compile Include="IoC\Interfaces\IUIManager.cs" />
     <Compile Include="Logger\Core\ILogger.cs" />
     <Compile Include="Logger\Core\LogLevel.cs" />
     <Compile Include="Logger\Implementation\BaseLogFactory.cs" />
@@ -84,6 +86,7 @@
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
     <Compile Include="ViewModels\Base\RelayParameterizedCommand.cs" />
     <Compile Include="ViewModels\Boss\BossViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\MessageBoxDialogViewModel.cs" />
     <Compile Include="ViewModels\SideMenu\Design\SideMenuListItemDesignModel.cs" />
     <Compile Include="ViewModels\SideMenu\Design\SideMenuListDesignModel.cs" />
     <Compile Include="ViewModels\SideMenu\SideMenuListViewModel.cs" />

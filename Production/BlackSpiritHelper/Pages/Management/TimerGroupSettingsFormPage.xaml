@@ -6,7 +6,6 @@
       xmlns:local="clr-namespace:BlackSpiritHelper"
       xmlns:core="clr-namespace:BlackSpiritHelper.Core;assembly=BlackSpiritHelper.Core"
       mc:Ignorable="d" 
-      x:Name="FormPage"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="TimerGroupSettingsFormPage">
 
@@ -33,12 +32,11 @@
 
                 <!-- Group Name -->
                 <TextBox Tag="Group Name" Margin="0 0 0 50"
-                         Text="{Binding TimerGroupViewModel.Title}" />
+                         Text="{Binding Title}" />
 
                 <!-- Save Changes Button -->
                 <Button Content="SAVE CHANGES" Margin="0 0 0 10"
                         Command="{Binding SaveChangesCommand}"
-                        CommandParameter="{Binding ElementName=FormPage}"
                         Style="{StaticResource RegularButton}"
                         Padding="10"/>
 

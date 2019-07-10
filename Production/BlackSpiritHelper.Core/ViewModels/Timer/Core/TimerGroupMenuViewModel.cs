@@ -43,7 +43,7 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task AddGroupAsync()
         {
-            IoC.DataContent.TimerGroupListDesignModel.AddGroup("hey2");
+            IoC.DataContent.TimerGroupListDesignModel.AddGroup("Untitled");
 
             await Task.Delay(1);
         }

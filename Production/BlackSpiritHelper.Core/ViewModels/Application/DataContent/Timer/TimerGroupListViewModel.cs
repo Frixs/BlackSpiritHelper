@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace BlackSpiritHelper.Core
 {
@@ -52,13 +53,13 @@ namespace BlackSpiritHelper.Core
         {
             IoC.Logger.Log($"Trying to add Timer Group '{itemTitle}'...", LogLevel.Debug);
 
-            itemTitle = itemTitle.Trim();
-            // Check conditions.
-            if (itemTitle.Length < TimerGroupViewModel.TitleAllowMinChar && itemTitle.Length > TimerGroupViewModel.TitleAllowMaxChar)
-                return null;
-
             // Check limits.
             if (GroupList.Count + 1 > MaxNoOfGroups)
+                return null;
+
+            itemTitle = itemTitle.Trim();
+            // Validate Inputs.
+            if (!ValidateGroupInputs(itemTitle))
                 return null;
 
             // Sort Groups by ID.
@@ -73,7 +74,7 @@ namespace BlackSpiritHelper.Core
                 CanCreateNewTimer = false,
             };
 
-            // TODO: Test Timers.
+            // TODO: Remove Test Timers.
             item.AddTimer(new TimerItemViewModel
             {
                 GroupID = 0,
@@ -102,6 +103,9 @@ namespace BlackSpiritHelper.Core
             });
 
             GroupList.Add(item);
+
+            // Sort.
+            SortGroupList();
 
             // Check to set limits.
             if (GroupList.Count + 1 > MaxNoOfGroups)
@@ -143,6 +147,58 @@ namespace BlackSpiritHelper.Core
         #endregion
 
         #region Helpers
+
+        /// <summary>
+        /// Sort <see cref="GroupList"/> alphabetically.
+        /// </summary>
+        public void SortGroupList()
+        {
+            GroupList = new ObservableCollection<TimerGroupViewModel>(
+                GroupList.OrderBy(o => o.Title.Length)
+                );
+        }
+
+        /// <summary>
+        /// Check group parameters.
+        /// TRUE, if all parameters are OK and the group can be created.
+        /// </summary>
+        /// <param name="title">The group title.</param>
+        /// <returns></returns>
+        public bool ValidateGroupInputs(string title)
+        {
+            title = title.Trim();
+
+            // Check conditions.
+            if (title.Length < TimerGroupViewModel.TitleAllowMinChar || title.Length > TimerGroupViewModel.TitleAllowMaxChar)
+                return false;
+
+            // Check allowed characters.
+            if (!CheckAlphanumericString(title, true, true))
+                return false;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Check if the string contains only letters and numbers.
+        /// </summary>
+        /// <param name="input">The string.</param>
+        /// <param name="underscores">Are underscores allowed?</param>
+        /// <param name="spaces">Are spaces allowed?</param>
+        /// <returns></returns>
+        private bool CheckAlphanumericString(string input, bool underscores = false, bool spaces = false)
+        {
+            if (underscores && spaces)
+                return Regex.IsMatch(input, @"^[a-zA-Z0-9_ ]+$");
+
+            if (underscores)
+                return Regex.IsMatch(input, @"^[a-zA-Z0-9_]+$");
+
+            if (spaces)
+                return Regex.IsMatch(input, @"^[a-zA-Z0-9 ]+$");
+
+            return Regex.IsMatch(input, @"^[a-zA-Z0-9_]+$");
+        }
 
         /// <summary>
         /// Find the smallest missing key in the list as a new representation for a new group ID.
