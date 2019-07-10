@@ -49,21 +49,22 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void CreateCommands()
         {
-            SaveChangesCommand = new RelayParameterizedCommand(async (parameter) => await SaveChangesCommandAsync(parameter));
-            DeleteGroupCommand = new RelayCommand(async () => await DeleteGroupAsync());
+            SaveChangesCommand = new RelayParameterizedCommand((parameter) => SaveChanges(parameter));
+            DeleteGroupCommand = new RelayCommand(() => DeleteGroup());
         }
 
-        private async Task SaveChangesCommandAsync(object parameter)
+        private void SaveChanges(object parameter)
         {
             Console.WriteLine("TODO");
-            await Task.Delay(1);
         }
 
-        private async Task DeleteGroupAsync()
+        private void DeleteGroup()
         {
-            Console.WriteLine("TODO");
-            Console.WriteLine(TimerGroupViewModel == null ? "-" : TimerGroupViewModel.Title);
-            await Task.Delay(1);
+            if (!IoC.DataContent.TimerGroupListDesignModel.DeleteGroup(TimerGroupViewModel))
+            {
+                // Some error occured during deleting the group.
+
+            }
         }
 
         #endregion

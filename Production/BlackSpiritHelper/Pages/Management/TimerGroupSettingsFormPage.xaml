@@ -32,7 +32,8 @@
                            Margin="0 0 0 50" />
 
                 <!-- Group Name -->
-                <TextBox Tag="Group Name" Margin="0 0 0 50" />
+                <TextBox Tag="Group Name" Margin="0 0 0 50"
+                         Text="{Binding TimerGroupViewModel.Title}" />
 
                 <!-- Save Changes Button -->
                 <Button Content="SAVE CHANGES" Margin="0 0 0 10"

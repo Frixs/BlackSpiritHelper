@@ -5,7 +5,8 @@ using System.Linq;
 namespace BlackSpiritHelper.Core
 {
     /// <summary>
-    /// View model that represents list of groups.
+    /// View model that represents list of all timer Groups.
+    /// Timer Group view model: <see cref="TimerGroupViewModel"/>.
     /// </summary>
     public class TimerGroupListViewModel : BaseViewModel
     {
@@ -108,6 +109,35 @@ namespace BlackSpiritHelper.Core
 
             IoC.Logger.Log($"Timer Group '{itemTitle}' added!", LogLevel.Info);
             return item;
+        }
+
+        /// <summary>
+        /// Delete the group permanently.
+        /// </summary>
+        /// <param name="vm">The view model of the group you wish to delete.</param>
+        /// <returns></returns>
+        public bool DeleteGroup(TimerGroupViewModel vm)
+        {
+            IoC.Logger.Log($"Trying to delete Timer Group '{vm.Title}'...", LogLevel.Debug);
+
+            if (vm == null)
+                return false;
+
+            // CHeck it does not contain any timer.
+            if (vm.TimerList.Count > 0)
+                return false;
+
+            // Check it is not the last group. There should be always at least 1 group.
+            if (GroupList.Count <= 1)
+                return false;
+
+            var title = vm.Title;
+            // Remove the group from the list.
+            if (!GroupList.Remove(vm))
+                return false;
+
+            IoC.Logger.Log($"Timer Group '{title}' deleted!", LogLevel.Info);
+            return true;
         }
 
         #endregion
