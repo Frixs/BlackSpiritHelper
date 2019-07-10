@@ -137,10 +137,13 @@ namespace BlackSpiritHelper.Core
             if (parameter == null)
                 return;
 
-            // TODO
-            TimerGroupSettingsFormDesignModel.Instance.TimerGroupViewModel = this;
+            // Create Settings View Model with the current group binding.
+            TimerGroupSettingsFormViewModel vm = new TimerGroupSettingsFormViewModel
+            {
+                TimerGroupViewModel = this,
+            };
 
-            IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.TimerGroupSettingsForm);
+            IoC.Application.GoToPage(ApplicationPage.TimerGroupSettingsForm, vm);
 
             await Task.Delay(1);
         }

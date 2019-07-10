@@ -42,7 +42,7 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task OpenHomePageAsync()
         {
-            IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.Home);
+            IoC.Application.GoToPage(ApplicationPage.Home);
 
             await Task.Delay(1);
         }

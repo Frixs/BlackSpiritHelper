@@ -11,6 +11,15 @@ namespace BlackSpiritHelper
     /// </summary>
     public class BasePage : Page
     {
+        #region Private Members
+
+        /// <summary>
+        /// The View Model associated with this page.
+        /// </summary>
+        private object mViewModel;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -38,6 +47,28 @@ namespace BlackSpiritHelper
         /// Useful for when we are moving the page to another frame.
         /// </summary>
         public bool ShouldAnimateOut { get; set; }
+
+        /// <summary>
+        /// The View Model associated with this page.
+        /// </summary>
+        public object ViewModelObject
+        {
+            get
+            {
+                return mViewModel;
+            }
+            set
+            {
+                // If nothing has changed, return.
+                if (mViewModel == value)
+                    return;
+
+                mViewModel = value;
+
+                // Set the data context for this page.
+                DataContext = mViewModel;
+            }
+        }
 
         #endregion
 
@@ -138,15 +169,6 @@ namespace BlackSpiritHelper
     public class BasePage<VM> : BasePage
         where VM : BaseViewModel, new()
     {
-        #region Private Members
-
-        /// <summary>
-        /// The View Model associated with this page.
-        /// </summary>
-        private VM mViewModel;
-
-        #endregion
-
         #region Public Properties
 
         /// <summary>
@@ -154,21 +176,8 @@ namespace BlackSpiritHelper
         /// </summary>
         public VM ViewModel
         {
-            get
-            {
-                return mViewModel;
-            }
-            set
-            {
-                // If nothing has changed, return.
-                if (mViewModel == value)
-                    return;
-
-                mViewModel = value;
-
-                // Set the data context for this page.
-                this.DataContext = mViewModel;
-            }
+            get => (VM)ViewModelObject;
+            set => ViewModelObject = value;
         }
 
         #endregion
@@ -178,10 +187,25 @@ namespace BlackSpiritHelper
         /// <summary>
         /// Default constructor.
         /// </summary>
+        /// <param name="specificViewModel">The specific view model to use, if any.</param>
         public BasePage() : base()
         {
             // Create a default view model.
-            this.ViewModel = new VM();
+            ViewModel = IoC.Get<VM>();
+        }
+
+        /// <summary>
+        /// Constructor with specific view model.
+        /// </summary>
+        /// <param name="specificViewModel">The specific view model to use, if any.</param>
+        public BasePage(VM specificViewModel = null) : base()
+        {
+            // Set specific view model.
+            if (specificViewModel != null)
+                ViewModel = specificViewModel;
+            else
+                // Create a default view model.
+                ViewModel = IoC.Get<VM>();
         }
 
         #endregion

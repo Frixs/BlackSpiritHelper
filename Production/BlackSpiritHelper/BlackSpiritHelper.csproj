@@ -119,7 +119,7 @@
     <Compile Include="ValueConverters\StringRGBToBrushConverter.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Window\WindowResizer.cs" />
-    <Compile Include="ValueConverters\ApplicationPageValueConverter.cs" />
+    <Compile Include="ValueConverters\ApplicationPageHelpers.cs" />
     <Compile Include="ValueConverters\BaseValueConverter.cs" />
     <Compile Include="ViewModels\WindowViewModel.cs" />
     <Compile Include="Windows\OverlayWindow.xaml.cs">

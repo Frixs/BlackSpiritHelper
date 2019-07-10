@@ -61,7 +61,7 @@ namespace BlackSpiritHelper
             // Bind Logger.
             IoC.Kernel.Bind<ILogFactory>().ToConstant(new BaseLogFactory(new[] 
             {
-                new FileLogger(IoC.Get<ApplicationViewModel>().ApplicationName.Replace(' ', '_').ToLower() + "_log.txt"),
+                new FileLogger(IoC.Application.ApplicationName.Replace(' ', '_').ToLower() + "_log.txt"),
             }));
 
             // Bind task manager.
@@ -70,7 +70,7 @@ namespace BlackSpiritHelper
             // Bind file manager.
             IoC.Kernel.Bind<IFileManager>().ToConstant(new FileManager());
 
-            // Bind Application data.
+            // Bind Application data content view models.
             IoC.Kernel.Bind<ApplicationDataContent>().ToConstant(new ApplicationDataContent());
         }
 

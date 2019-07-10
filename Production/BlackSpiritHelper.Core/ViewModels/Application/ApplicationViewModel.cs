@@ -49,13 +49,30 @@ namespace BlackSpiritHelper.Core
         public ApplicationPage CurrentPage { get; private set; }
 
         /// <summary>
+        /// The view model to use for the current page when the <see cref="CurrentPage"/> changes.
+        /// NOTE: This is not a love up-to-date view model of the current page.
+        ///       It is simply used to set the view model of the current page at the time it chages.
+        ///       In other words, we can pass data to the new page.
+        /// </summary>
+        public BaseViewModel CurrentPageViewModel { get; set; }
+
+        /// <summary>
         /// Navigates to the specified page.
         /// </summary>
-        /// <param name="page"></param>
-        public void GoToPage(ApplicationPage page)
+        /// <param name="page">The page to go to.</param>
+        /// <param name="viewModel">The view model, if any, ti set explicitly to the new page.</param>
+        public void GoToPage(ApplicationPage page, BaseViewModel viewModel = null)
         {
+            // Set the view model.
+            CurrentPageViewModel = viewModel;
+
+            // Set the current page.
             CurrentPage = page;
 
+            // Fire off a CurrentPage chaned event.
+            OnPropertyChanged(nameof(CurrentPage));
+
+            // Set window title page name.
             if ((int)page < LoadBackPageValueLimit)
                 SetWindowTitlePostfixOnly = (int)page > 0 ? page.ToString() : "";
         }

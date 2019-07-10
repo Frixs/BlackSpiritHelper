@@ -17,6 +17,11 @@ namespace BlackSpiritHelper.Core
         public static IKernel Kernel { get; private set; } = new StandardKernel();
 
         /// <summary>
+        /// A shortcut to access the <see cref="ApplicationViewModel"/>.
+        /// </summary>
+        public static ApplicationViewModel Application => IoC.Get<ApplicationViewModel>();
+
+        /// <summary>
         /// A shortcut to access the <see cref="ILogFactory"/>.
         /// </summary>
         public static ILogFactory Logger => IoC.Get<ILogFactory>();

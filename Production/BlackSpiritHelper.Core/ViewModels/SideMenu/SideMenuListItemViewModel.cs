@@ -57,7 +57,7 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task OpenPageAsync()
         {
-            IoC.Get<ApplicationViewModel>().GoToPage(PageEnum);
+            IoC.Application.GoToPage(PageEnum);
 
             await Task.Delay(1);
         }
