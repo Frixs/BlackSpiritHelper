@@ -34,10 +34,10 @@
     <!-- Windows Control Button -->
     <Style TargetType="{x:Type Button}" x:Key="WindowsControlButton" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Background" Value="{StaticResource SystemButtonBackgroundBrushKey}" />
         <Setter Property="Padding" Value="8" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="Foreground" Value="{StaticResource TextNormalBrushKey}" />
+        <Setter Property="Foreground" Value="{StaticResource SystemButtonForegroundBrushKey}" />
 
         <Setter Property="LayoutTransform">
             <Setter.Value>
@@ -56,21 +56,77 @@
         </Setter>
 
         <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="gray" />
+            <EventTrigger RoutedEvent="MouseEnter">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ColorAnimation To="{StaticResource SystemButtonHoverBackground}" Duration="0:0:0.1" Storyboard.TargetProperty="Background.Color" />
+                        <ColorAnimation To="{StaticResource SystemButtonHoverForeground}" Duration="0:0:0.1" Storyboard.TargetProperty="Foreground.Color" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="MouseLeave">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ColorAnimation To="{StaticResource SystemButtonBackground}" Duration="0:0:0.1" Storyboard.TargetProperty="Background.Color" />
+                        <ColorAnimation To="{StaticResource SystemButtonForeground}" Duration="0:0:0.1" Storyboard.TargetProperty="Foreground.Color" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{StaticResource SystemButtonActiveBackgroundBrushKey}"/>
+                <Setter Property="Foreground" Value="{StaticResource SystemButtonHoverForegroundBrushKey}"/>
             </Trigger>
         </Style.Triggers>
         
     </Style>
 
     <!-- Windows Close Button -->
-    <Style TargetType="{x:Type Button}" x:Key="WindowsCloseButton" BasedOn="{StaticResource WindowsControlButton}">
+    <Style TargetType="{x:Type Button}" x:Key="WindowsCloseButton" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+        <Setter Property="Background" Value="{StaticResource SystemRedButtonBackgroundBrushKey}" />
+        <Setter Property="Padding" Value="8" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Foreground" Value="{StaticResource SystemRedButtonForegroundBrushKey}" />
+
+        <Setter Property="LayoutTransform">
+            <Setter.Value>
+                <ScaleTransform ScaleX="1.4" />
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}">
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
         <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource RedBrushKey}" />
-                <Setter Property="Foreground" Value="{StaticResource TextNormalBrushKey}" />
+            <EventTrigger RoutedEvent="MouseEnter">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ColorAnimation To="{StaticResource SystemRedButtonHoverBackground}" Duration="0:0:0.1" Storyboard.TargetProperty="Background.Color" />
+                        <ColorAnimation To="{StaticResource SystemRedButtonHoverForeground}" Duration="0:0:0.1" Storyboard.TargetProperty="Foreground.Color" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="MouseLeave">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ColorAnimation To="{StaticResource SystemRedButtonBackground}" Duration="0:0:0.1" Storyboard.TargetProperty="Background.Color" />
+                        <ColorAnimation To="{StaticResource SystemRedButtonForeground}" Duration="0:0:0.1" Storyboard.TargetProperty="Foreground.Color" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{StaticResource SystemRedButtonActiveBackgroundBrushKey}"/>
+                <Setter Property="Foreground" Value="{StaticResource SystemRedButtonHoverForegroundBrushKey}"/>
             </Trigger>
         </Style.Triggers>
+
     </Style>
 
     <!-- Application Button -->
@@ -79,13 +135,121 @@
         <Setter Property="Padding" Value="10" />
     </Style>
 
+    <!-- Regular Text Button -->
+    <Style TargetType="{x:Type Button}" x:Key="RegularTextButton" BasedOn="{StaticResource Hoverless}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{StaticResource RegularButtonForegroundBrushKey}" />
+        <Setter Property="FontFamily" Value="{StaticResource LatoMediumItalic}" />
+        <Setter Property="TextBlock.TextDecorations" Value="None" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Padding" Value="0" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border x:Name="border"
+                            CornerRadius="0"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}" 
+                            SnapsToDevicePixels="True">
+                        <TextBlock Text="{TemplateBinding Content}" 
+                                   Focusable="False" 
+                                   FontFamily="{TemplateBinding FontFamily}"
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                   Margin="{TemplateBinding Padding}" 
+                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                   TextDecorations="{TemplateBinding TextBlock.TextDecorations}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation To="{StaticResource RegularButtonHover}" Duration="0:0:0.1" Storyboard.TargetProperty="Foreground.Color" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation To="{StaticResource RegularButtonForeground}" Duration="0:0:0.1" Storyboard.TargetProperty="Foreground.Color" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="TextBlock.TextDecorations" Value="Underline"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource RegularButtonActionBrushKey}"/>
+                            <Setter Property="TextBlock.TextDecorations" Value="Underline"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Regular Text Button - Red -->
+    <Style TargetType="{x:Type Button}" x:Key="RegularTextButtonRed" BasedOn="{StaticResource RegularTextButton}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{StaticResource RegularTextButtonRedForegroundBrushKey}" />
+        <Setter Property="TextBlock.TextDecorations" Value="None" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border x:Name="border"
+                            CornerRadius="0"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}" 
+                            SnapsToDevicePixels="True">
+                        <TextBlock Text="{TemplateBinding Content}" 
+                                   Focusable="False" 
+                                   FontFamily="{TemplateBinding FontFamily}"
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                   Margin="{TemplateBinding Padding}" 
+                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                   TextDecorations="{TemplateBinding TextBlock.TextDecorations}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation To="{StaticResource RegularTextButtonRedHover}" Duration="0:0:0.1" Storyboard.TargetProperty="Foreground.Color" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation To="{StaticResource RegularTextButtonRedForeground}" Duration="0:0:0.1" Storyboard.TargetProperty="Foreground.Color" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="TextBlock.TextDecorations" Value="Underline"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource RegularTextButtonRedActionBrushKey}"/>
+                            <Setter Property="TextBlock.TextDecorations" Value="Underline"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- Regular Button -->
     <Style TargetType="{x:Type Button}" x:Key="RegularButton" BasedOn="{StaticResource Hoverless}">
         <Setter Property="Background" Value="{StaticResource RegularButtonBackgroundBrushKey}" />
         <Setter Property="Foreground" Value="{StaticResource RegularButtonForegroundBrushKey}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="BorderBrush" Value="{StaticResource RegularButtonActionBrushKey}" />
-        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontFamily" Value="{StaticResource LatoRegular}" />
+        <Setter Property="FontSize" Value="14" />
 
         <Setter Property="Template">
             <Setter.Value>
@@ -131,13 +295,12 @@
         </Setter>
     </Style>
 
-    <!-- Regular Button -->
-    <Style TargetType="{x:Type Button}" x:Key="RegularButtonNoColor" BasedOn="{StaticResource Hoverless}">
+    <!-- Regular Button - No Color -->
+    <Style TargetType="{x:Type Button}" x:Key="RegularButtonNoColor" BasedOn="{StaticResource RegularButton}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{StaticResource RegularNoColorButtonForegroundBrushKey}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="BorderBrush" Value="{StaticResource RegularNoColorButtonActionBrushKey}" />
-        <Setter Property="FontSize" Value="18" />
 
         <Setter Property="Template">
             <Setter.Value>
@@ -173,12 +336,12 @@
     </Style>
 
     <!-- Regular Button - Blue -->
-    <Style TargetType="{x:Type Button}" x:Key="RegularButtonBlue" BasedOn="{StaticResource Hoverless}">
+    <Style TargetType="{x:Type Button}" x:Key="RegularButtonBlue" BasedOn="{StaticResource RegularButton}">
         <Setter Property="Background" Value="{StaticResource RegularBlueButtonBackgroundBrushKey}" />
         <Setter Property="Foreground" Value="{StaticResource RegularBlueButtonForegroundBrushKey}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="BorderBrush" Value="{StaticResource RegularBlueButtonActionBrushKey}" />
-        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontFamily" Value="{StaticResource LatoRegular}" />
 
         <Setter Property="Template">
             <Setter.Value>
@@ -225,12 +388,11 @@
     </Style>
 
     <!-- Regular Button - Yellow -->
-    <Style TargetType="{x:Type Button}" x:Key="RegularButtonYellow" BasedOn="{StaticResource Hoverless}">
+    <Style TargetType="{x:Type Button}" x:Key="RegularButtonYellow" BasedOn="{StaticResource RegularButton}">
         <Setter Property="Background" Value="{StaticResource RegularYellowButtonBackgroundBrushKey}" />
         <Setter Property="Foreground" Value="{StaticResource RegularYellowButtonForegroundBrushKey}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="BorderBrush" Value="{StaticResource RegularYellowButtonActionBrushKey}" />
-        <Setter Property="FontSize" Value="18" />
 
         <Setter Property="Template">
             <Setter.Value>
@@ -277,12 +439,11 @@
     </Style>
 
     <!-- Regular Button - Red -->
-    <Style TargetType="{x:Type Button}" x:Key="RegularButtonRed" BasedOn="{StaticResource Hoverless}">
+    <Style TargetType="{x:Type Button}" x:Key="RegularButtonRed" BasedOn="{StaticResource RegularButton}">
         <Setter Property="Background" Value="{StaticResource RegularRedButtonBackgroundBrushKey}" />
         <Setter Property="Foreground" Value="{StaticResource RegularRedButtonForegroundBrushKey}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="BorderBrush" Value="{StaticResource RegularRedButtonActionBrushKey}" />
-        <Setter Property="FontSize" Value="18" />
 
         <Setter Property="Template">
             <Setter.Value>

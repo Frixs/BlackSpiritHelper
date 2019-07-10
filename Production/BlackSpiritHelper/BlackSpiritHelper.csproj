@@ -95,17 +95,20 @@
       <DependentUpon>TimerListItemControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\BasePage.cs" />
-    <Compile Include="Pages\BossPage.xaml.cs">
+    <Compile Include="Pages\Content\BossPage.xaml.cs">
       <DependentUpon>BossPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\HomePage.xaml.cs">
+    <Compile Include="Pages\Content\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\TimerPage.xaml.cs">
+    <Compile Include="Pages\Content\TimerPage.xaml.cs">
       <DependentUpon>TimerPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\WatchdogPage.xaml.cs">
+    <Compile Include="Pages\Content\WatchdogPage.xaml.cs">
       <DependentUpon>WatchdogPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Management\TimerGroupSettingsFormPage.xaml.cs">
+      <DependentUpon>TimerGroupSettingsFormPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ValueConverters\BooleanToContentConverter.cs" />
     <Compile Include="ValueConverters\BooleanToVisibilityGoneConverter.cs" />
@@ -154,19 +157,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\BossPage.xaml">
+    <Page Include="Pages\Content\BossPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\HomePage.xaml">
+    <Page Include="Pages\Content\HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\TimerPage.xaml">
+    <Page Include="Pages\Content\TimerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\WatchdogPage.xaml">
+    <Page Include="Pages\Content\WatchdogPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Management\TimerGroupSettingsFormPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

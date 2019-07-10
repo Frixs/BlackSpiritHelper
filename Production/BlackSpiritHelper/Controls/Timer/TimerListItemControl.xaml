@@ -160,6 +160,7 @@
                                     <Button Content="{StaticResource FontAwesomeSyncIcon}"
                                             FontFamily="{StaticResource FontAwesomeSolid}"
                                             Style="{StaticResource RegularButtonYellow}"
+                                            FontSize="18"
                                             Margin="0 5 5 5"
                                             Width="50"
                                             Height="50">
@@ -171,6 +172,7 @@
                                                              Converter={local:BooleanToVisibilityConverter}}"
                                                 FontFamily="{StaticResource FontAwesomeSolid}"
                                                 Style="{StaticResource RegularButton}"
+                                                FontSize="18"
                                                 Margin="0 5 5 5"
                                                 Width="50"
                                                 Height="50" />
@@ -180,6 +182,7 @@
                                                              ConverterParameter=True}"
                                                 FontFamily="{StaticResource FontAwesomeSolid}"
                                                 Style="{StaticResource RegularButton}"
+                                                FontSize="18"
                                                 Margin="0 5 5 5"
                                                 Width="50"
                                                 Height="50" />

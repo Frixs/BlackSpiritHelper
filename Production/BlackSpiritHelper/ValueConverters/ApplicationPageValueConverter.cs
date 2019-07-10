@@ -27,6 +27,9 @@ namespace BlackSpiritHelper
                 case ApplicationPage.Boss:
                     return new BossPage();
 
+                case ApplicationPage.TimerGroupSettingsForm:
+                    return new TimerGroupSettingsFormPage();
+
                 default:
                     Debugger.Break();
                     return null;

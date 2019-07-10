@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <Color x:Key="Red">#ffec1e24</Color>
+    <Color x:Key="Red">#ec1e24</Color>
     <SolidColorBrush x:Key="RedBrushKey" Color="{StaticResource Red}" />
 
     <!-- Window -->
@@ -18,6 +18,44 @@
     <Color x:Key="WindowTitleBarDropShadow">#FFF8F8F8</Color>
     <SolidColorBrush x:Key="WindowTitleBarDropShadowBrushKey" Color="{StaticResource WindowTitleBarDropShadow}" />
 
+    <!-- Line Spacers -->
+    <Color x:Key="LineSpacer0Background">#ffffff</Color>
+    <SolidColorBrush x:Key="LineSpacer0BackgroundBrushKey" Color="{StaticResource LineSpacer0Background}" />
+
+    <Color x:Key="LineSpacer1Background">#ffffff</Color>
+    <SolidColorBrush x:Key="LineSpacer1BackgroundBrushKey" Color="{StaticResource LineSpacer1Background}" />
+
+    <!-- System Buttons -->
+    <Color x:Key="SystemButtonBackground">#ffffff</Color>
+    <SolidColorBrush x:Key="SystemButtonBackgroundBrushKey" Color="{StaticResource SystemButtonBackground}" />
+
+    <Color x:Key="SystemButtonForeground">#888888</Color>
+    <SolidColorBrush x:Key="SystemButtonForegroundBrushKey" Color="{StaticResource SystemButtonForeground}" />
+
+    <Color x:Key="SystemButtonHoverBackground">#ECECEC</Color>
+    <SolidColorBrush x:Key="SystemButtonHoverBackgroundBrushKey" Color="{StaticResource SystemButtonHoverBackground}" />
+
+    <Color x:Key="SystemButtonHoverForeground">#888888</Color>
+    <SolidColorBrush x:Key="SystemButtonHoverForegroundBrushKey" Color="{StaticResource SystemButtonHoverForeground}" />
+
+    <Color x:Key="SystemButtonActiveBackground">#cccccc</Color>
+    <SolidColorBrush x:Key="SystemButtonActiveBackgroundBrushKey" Color="{StaticResource SystemButtonActiveBackground}" />
+
+    <Color x:Key="SystemRedButtonBackground">#ffffff</Color>
+    <SolidColorBrush x:Key="SystemRedButtonBackgroundBrushKey" Color="{StaticResource SystemRedButtonBackground}" />
+
+    <Color x:Key="SystemRedButtonForeground">#888888</Color>
+    <SolidColorBrush x:Key="SystemRedButtonForegroundBrushKey" Color="{StaticResource SystemRedButtonForeground}" />
+
+    <Color x:Key="SystemRedButtonHoverBackground">#ec1e24</Color>
+    <SolidColorBrush x:Key="SystemRedButtonHoverBackgroundBrushKey" Color="{StaticResource SystemRedButtonHoverBackground}" />
+
+    <Color x:Key="SystemRedButtonHoverForeground">#fefefe</Color>
+    <SolidColorBrush x:Key="SystemRedButtonHoverForegroundBrushKey" Color="{StaticResource SystemRedButtonHoverForeground}" />
+
+    <Color x:Key="SystemRedButtonActiveBackground">#E41D23</Color>
+    <SolidColorBrush x:Key="SystemRedButtonActiveBackgroundBrushKey" Color="{StaticResource SystemRedButtonActiveBackground}" />
+
     <!-- Texts -->
     <Color x:Key="TextNormal">#FF000000</Color>
     <SolidColorBrush x:Key="TextNormalBrushKey" Color="{StaticResource TextNormal}" />
@@ -25,7 +63,26 @@
     <!-- Side Menu -->
     <Color x:Key="SideMenuBackground">#FF36393f</Color>
     <SolidColorBrush x:Key="SideMenuBackgroundBrushKey" Color="{StaticResource SideMenuBackground}" />
-    
+
+    <!-- Forms -->
+    <Color x:Key="FormTitleForeground">#000000</Color>
+    <SolidColorBrush x:Key="FormTitleForegroundBrushKey" Color="{StaticResource FormTitleForeground}" />
+
+    <Color x:Key="FormSubtitleForeground">#aaaaaa</Color>
+    <SolidColorBrush x:Key="FormSubtitleForegroundBrushKey" Color="{StaticResource FormSubtitleForeground}" />
+
+    <Color x:Key="TextBoxPlaceholderForeground">#aaaaaa</Color>
+    <SolidColorBrush x:Key="TextBoxPlaceholderForegroundBrushKey" Color="{StaticResource TextBoxPlaceholderForeground}" />
+
+    <Color x:Key="TextBoxLineBackground">#222222</Color>
+    <SolidColorBrush x:Key="TextBoxLineBackgroundBrushKey" Color="{StaticResource TextBoxLineBackground}" />
+
+    <Color x:Key="TextBoxLineFocusBackground">#888888</Color>
+    <SolidColorBrush x:Key="TextBoxLineFocusBackgroundBrushKey" Color="{StaticResource TextBoxLineFocusBackground}" />
+
+    <Color x:Key="TextBoxLineErrorBackground">#E41D23</Color>
+    <SolidColorBrush x:Key="TextBoxLineErrorBackgroundBrushKey" Color="{StaticResource TextBoxLineErrorBackground}" />
+
     <!-- Timer - Group -->
     <Color x:Key="TimerGroupMenuBackground">#f0f0f0</Color>
     <SolidColorBrush x:Key="TimerGroupMenuBackgroundBrushKey" Color="{StaticResource TimerGroupMenuBackground}" />
@@ -69,6 +126,16 @@
 
     <Color x:Key="TimerListItemWarningColor">#ec1e24</Color>
     <SolidColorBrush x:Key="TimerListItemWarningColorBrushKey" Color="{StaticResource TimerListItemWarningColor}" />
+
+    <!-- Regular Text Button - Red -->
+    <Color x:Key="RegularTextButtonRedForeground">#ec1e24</Color>
+    <SolidColorBrush x:Key="RegularTextButtonRedForegroundBrushKey" Color="{StaticResource RegularTextButtonRedForeground}" />
+
+    <Color x:Key="RegularTextButtonRedHover">#C12529</Color>
+    <SolidColorBrush x:Key="RegularTextButtonRedHoverBrushKey" Color="{StaticResource RegularTextButtonRedHover}" />
+
+    <Color x:Key="RegularTextButtonRedAction">#AE1E21</Color>
+    <SolidColorBrush x:Key="RegularTextButtonRedActionBrushKey" Color="{StaticResource RegularTextButtonRedAction}" />
 
     <!-- Regular Button (Gray) -->
     <Color x:Key="RegularButtonBackground">#acacac</Color>

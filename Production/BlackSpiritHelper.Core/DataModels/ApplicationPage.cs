@@ -30,5 +30,15 @@ namespace BlackSpiritHelper.Core
         /// The Boss page.
         /// </summary>
         Boss = 3,
+
+        ///
+        /// Only pages with value lower than 100 can be loaded back on application start.
+        /// If you want to add more pages change limitation in <see cref="ApplicationViewModel"/>.
+        ///
+
+        /// <summary>
+        /// The group settings form.
+        /// </summary>
+        TimerGroupSettingsForm = 100,
     }
 }

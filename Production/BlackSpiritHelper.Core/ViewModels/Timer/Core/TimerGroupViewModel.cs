@@ -105,7 +105,7 @@ namespace BlackSpiritHelper.Core
             PlayCommand = new RelayCommand(async () => await PlayAsync());
             PauseCommand = new RelayCommand(async () => await PauseAsync());
             AddTimerCommand = new RelayCommand(async () => await AddTimerAsync());
-            OpenGroupSettingsCommand = new RelayCommand(async () => await OpenGroupSettingsAsync());
+            OpenGroupSettingsCommand = new RelayParameterizedCommand(async (parameter) => await OpenGroupSettingsAsync(parameter));
         }
 
         private async Task PlayAsync()
@@ -127,9 +127,21 @@ namespace BlackSpiritHelper.Core
             await Task.Delay(1);
         }
 
-        private async Task OpenGroupSettingsAsync()
+        /// <summary>
+        /// Open settings form.
+        /// </summary>
+        /// <param name="parameter">Group ID.</param>
+        /// <returns></returns>
+        private async Task OpenGroupSettingsAsync(object parameter)
         {
-            Console.WriteLine("TODO");
+            if (parameter == null)
+                return;
+
+            // TODO
+            TimerGroupSettingsFormDesignModel.Instance.TimerGroupViewModel = this;
+
+            IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.TimerGroupSettingsForm);
+
             await Task.Delay(1);
         }
 

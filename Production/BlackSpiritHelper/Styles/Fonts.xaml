@@ -2,8 +2,11 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
     <FontFamily x:Key="LatoRegular">pack://application;,,,/Resources/Fonts/Lato/#Lato Relular</FontFamily>
+    <FontFamily x:Key="LatoMediumItalic">pack://application;,,,/Resources/Fonts/Lato/#Lato Medium Italic</FontFamily>
     <FontFamily x:Key="LatoThin">pack://application;,,,/Resources/Fonts/Lato/#Lato Thin</FontFamily>
+    <FontFamily x:Key="LatoThinItalic">pack://application;,,,/Resources/Fonts/Lato/#Lato Thin Italic</FontFamily>
     <FontFamily x:Key="LatoLight">pack://application;,,,/Resources/Fonts/Lato/#Lato Light</FontFamily>
+    <FontFamily x:Key="LatoLightItalic">pack://application;,,,/Resources/Fonts/Lato/#Lato Light Italic</FontFamily>
     <FontFamily x:Key="LatoBold">pack://application;,,,/Resources/Fonts/Lato/#Lato Bold</FontFamily>
     <FontFamily x:Key="LatoHeavy">pack://application;,,,/Resources/Fonts/Lato/#Lato Heavy</FontFamily>
     <FontFamily x:Key="FontAwesomeSolid">pack://application;,,,/Resources/Fonts/FontAwesome/#Font Awesome 5 Free Solid</FontFamily>
@@ -24,9 +27,8 @@
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseStyle}" />
     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BaseTextBlockStyle}" />
 
-    <system:Double x:Key="FontSizeRegular">14</system:Double>
-    <system:Double x:Key="FontSizeSmall">10</system:Double>
-    <system:Double x:Key="FontSizeLarge">18</system:Double>
+    <system:Double x:Key="FontSizeFormTitle">24</system:Double>
+    <system:Double x:Key="FontSizeFormSubtitle">18</system:Double>
 
     <system:String x:Key="FontAwesomeChatIcon">&#xf086;</system:String>
     <system:String x:Key="FontAwesomePlayIcon">&#xf04b;</system:String>

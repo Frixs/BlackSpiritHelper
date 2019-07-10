@@ -38,12 +38,15 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
+        /// Allow to load back only content pages, not forms etc.
+        /// <see cref="ApplicationPage"/>.
+        /// </summary>
+        public int LoadBackPageValueLimit { get; private set; } = 100;
+
+        /// <summary>
         /// The current page of the application.
         /// </summary>
-        public ApplicationPage CurrentPage { get; private set; } =
-            Properties.Settings.Default.LastOpenedPage > 0 && Properties.Settings.Default.LastOpenedPage < Enum.GetNames(typeof(ApplicationPage)).Length
-            ? (ApplicationPage)Properties.Settings.Default.LastOpenedPage
-            : ApplicationPage.Home;
+        public ApplicationPage CurrentPage { get; private set; }
 
         /// <summary>
         /// Navigates to the specified page.
@@ -52,16 +55,26 @@ namespace BlackSpiritHelper.Core
         public void GoToPage(ApplicationPage page)
         {
             CurrentPage = page;
-            SetWindowTitlePostfixOnly = page > 0 ? page.ToString() : "";
+
+            if ((int)page < LoadBackPageValueLimit)
+                SetWindowTitlePostfixOnly = (int)page > 0 ? page.ToString() : "";
         }
 
         #endregion
 
         #region Constructor
 
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
         public ApplicationViewModel()
         {
             WindowTitleDefault = ApplicationName;
+
+            CurrentPage = Properties.Settings.Default.LastOpenedPage > 0 && Properties.Settings.Default.LastOpenedPage < 100 
+                ? (ApplicationPage)Properties.Settings.Default.LastOpenedPage 
+                : ApplicationPage.Home;
+
             SetWindowTitlePostfixOnly = CurrentPage > 0 ? CurrentPage.ToString() : "";
         }
 
