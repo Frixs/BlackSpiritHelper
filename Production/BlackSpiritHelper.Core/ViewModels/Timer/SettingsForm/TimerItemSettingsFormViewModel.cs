@@ -57,7 +57,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// CountdownDuration binding.
         /// </summary>
-        public TimeSpan CountdownDuration { get; set; }
+        public double CountdownDuration { get; set; }
 
         /// <summary>
         /// IsLoopActive binding.
@@ -103,9 +103,9 @@ namespace BlackSpiritHelper.Core
 
             Title = TimerItemViewModel.Title;
             IconTitleShortcut = TimerItemViewModel.IconTitleShortcut;
-            IconBackgroundHEX = TimerItemViewModel.IconBackgroundHEX;
+            IconBackgroundHEX = "#" + TimerItemViewModel.IconBackgroundHEX;
             TimeTotal = TimerItemViewModel.TimeTotal;
-            CountdownDuration = TimerItemViewModel.CountdownDuration;
+            CountdownDuration = TimerItemViewModel.CountdownDuration.TotalSeconds;
             IsLoopActive = TimerItemViewModel.IsLoopActive;
         }
 
@@ -122,13 +122,7 @@ namespace BlackSpiritHelper.Core
 
         private void SaveChanges()
         {
-            // TODO bind properties correctly.
-            Console.WriteLine(Title);
-            Console.WriteLine(IconTitleShortcut);
-            Console.WriteLine(IconBackgroundHEX);
-            Console.WriteLine(TimeTotal);
-            Console.WriteLine(CountdownDuration);
-            Console.WriteLine(IsLoopActive);
+            // TODO Save changes.
 
             //if (!IoC.DataContent.TimerGroupListDesignModel.ValidateGroupInputs(Title))
             //{

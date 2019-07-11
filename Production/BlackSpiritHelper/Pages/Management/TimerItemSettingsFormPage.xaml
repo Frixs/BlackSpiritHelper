@@ -53,6 +53,10 @@
                                       SelectedColor="{Binding IconBackgroundHEX}"
                                       ColorMode="ColorCanvas"
                                       ShowDropDownButton="False"
+                                      UsingAlphaChannel="False"
+                                      ShowAvailableColors="False"
+                                      ShowStandardColors="False"
+                                      StandardButtonHeader=""
                                       />
                 </Grid>
 
