@@ -64,6 +64,21 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public bool IsLoopActive { get; set; }
 
+        /// <summary>
+        /// GroupID binding.
+        /// </summary>
+        public byte GroupID { get; set; }
+
+        /// <summary>
+        /// Group binding.
+        /// </summary>
+        public TimerGroupViewModel AssociatedGroupViewModel { get; set; }
+
+        /// <summary>
+        /// ShowOnOverlay binding.
+        /// </summary>
+        public bool ShowInOverlay { get; set; }
+
         #endregion
 
         #region Commands
@@ -101,12 +116,15 @@ namespace BlackSpiritHelper.Core
             if (TimerItemViewModel == null)
                 return;
 
-            Title = TimerItemViewModel.Title;
-            IconTitleShortcut = TimerItemViewModel.IconTitleShortcut;
-            IconBackgroundHEX = "#" + TimerItemViewModel.IconBackgroundHEX;
-            TimeTotal = TimerItemViewModel.TimeTotal;
-            CountdownDuration = TimerItemViewModel.CountdownDuration.TotalSeconds;
-            IsLoopActive = TimerItemViewModel.IsLoopActive;
+            Title                           = TimerItemViewModel.Title;
+            IconTitleShortcut               = TimerItemViewModel.IconTitleShortcut;
+            IconBackgroundHEX               = "#" + TimerItemViewModel.IconBackgroundHEX;
+            TimeTotal                       = TimerItemViewModel.TimeTotal;
+            CountdownDuration               = TimerItemViewModel.CountdownDuration.TotalSeconds;
+            IsLoopActive                    = TimerItemViewModel.IsLoopActive;
+            GroupID                         = TimerItemViewModel.GroupID;
+            AssociatedGroupViewModel        = null;
+            ShowInOverlay                   = TimerItemViewModel.ShowInOverlay;
         }
 
         #region Command Helpers

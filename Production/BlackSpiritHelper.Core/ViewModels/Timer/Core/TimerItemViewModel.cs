@@ -42,6 +42,11 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public static TimeSpan TimeAllowMaxDuration { get; private set; } = TimeSpan.FromDays(2);
 
+        /// <summary>
+        /// Limitation for max timers on overlay <see cref="ShowInOverlay"/>.
+        /// </summary>
+        public static byte OverlayTimerLimitCount { get; private set; } = 6;
+
         #endregion
 
         #region Private Members
@@ -144,6 +149,11 @@ namespace BlackSpiritHelper.Core
         /// Says, if the timer is in infinite loop.
         /// </summary>
         public bool IsLoopActive { get; set; }
+
+        /// <summary>
+        /// Show this timer in overlay.
+        /// </summary>
+        public bool ShowInOverlay { get; set; }
 
         /// <summary>
         /// Says, if the timer is in warning time (less than X).

@@ -137,6 +137,7 @@ namespace BlackSpiritHelper.Core
                 State = TimerState.Ready,
                 IsRunning = false,
                 IsLoopActive = false,
+                ShowInOverlay = false,
                 IsWarningTime = false,
             });
 
