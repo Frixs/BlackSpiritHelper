@@ -37,6 +37,11 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public static TimeSpan CountdownAllowMaxDuration { get; private set; } = TimeSpan.FromSeconds(7200);
 
+        /// <summary>
+        /// Limitation for max duration in <see cref="TimeTotal"/>.
+        /// </summary>
+        public static TimeSpan TimeAllowMaxDuration { get; private set; } = TimeSpan.FromDays(2);
+
         #endregion
 
         #region Private Members

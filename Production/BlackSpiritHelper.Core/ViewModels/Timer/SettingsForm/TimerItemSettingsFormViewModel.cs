@@ -39,6 +39,31 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public string Title { get; set; }
 
+        /// <summary>
+        /// IconTitleShortcut binding.
+        /// </summary>
+        public string IconTitleShortcut { get; set; }
+
+        /// <summary>
+        /// IconBackgroundHEX binding.
+        /// </summary>
+        public string IconBackgroundHEX { get; set; }
+
+        /// <summary>
+        /// TimeTotal binding.
+        /// </summary>
+        public TimeSpan TimeTotal { get; set; }
+
+        /// <summary>
+        /// CountdownDuration binding.
+        /// </summary>
+        public TimeSpan CountdownDuration { get; set; }
+
+        /// <summary>
+        /// IsLoopActive binding.
+        /// </summary>
+        public bool IsLoopActive { get; set; }
+
         #endregion
 
         #region Commands
@@ -77,6 +102,11 @@ namespace BlackSpiritHelper.Core
                 return;
 
             Title = TimerItemViewModel.Title;
+            IconTitleShortcut = TimerItemViewModel.IconTitleShortcut;
+            IconBackgroundHEX = TimerItemViewModel.IconBackgroundHEX;
+            TimeTotal = TimerItemViewModel.TimeTotal;
+            CountdownDuration = TimerItemViewModel.CountdownDuration;
+            IsLoopActive = TimerItemViewModel.IsLoopActive;
         }
 
         #region Command Helpers
@@ -92,6 +122,14 @@ namespace BlackSpiritHelper.Core
 
         private void SaveChanges()
         {
+            // TODO bind properties correctly.
+            Console.WriteLine(Title);
+            Console.WriteLine(IconTitleShortcut);
+            Console.WriteLine(IconBackgroundHEX);
+            Console.WriteLine(TimeTotal);
+            Console.WriteLine(CountdownDuration);
+            Console.WriteLine(IsLoopActive);
+
             //if (!IoC.DataContent.TimerGroupListDesignModel.ValidateGroupInputs(Title))
             //{
             //    // Some error occured during saving changes of the group.

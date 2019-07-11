@@ -3,13 +3,16 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+      xmlns:system="clr-namespace:System;assembly=mscorlib"
       xmlns:local="clr-namespace:BlackSpiritHelper"
       xmlns:core="clr-namespace:BlackSpiritHelper.Core;assembly=BlackSpiritHelper.Core"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="600" d:DesignWidth="500"
       Title="TimerItemSettingsFormPage">
 
-    <Border Background="White">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" 
+                  Padding="10">
 
         <Grid HorizontalAlignment="Center"
               VerticalAlignment="Center"
@@ -30,10 +33,70 @@
                            Foreground="{StaticResource FormSubtitleForegroundBrushKey}"
                            Margin="0 0 0 50" />
 
-                <!-- Group Name -->
-                <TextBox Tag="Group Name" Margin="0 0 0 50"
+                <!-- Timer Title -->
+                <TextBox Tag="Title" Margin="0 0 0 10"
                          Text="{Binding Title}"
-                         MaxLength="{Binding TimerGroupViewModel.TitleAllowMaxChar}" />
+                         MaxLength="{Binding TimerItemViewModel.TitleAllowMaxChar}" />
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+                    
+                    <!-- Icon Timer Shortcut -->
+                    <TextBox Tag="Icon Shortcut" Margin="0 0 5 10" Grid.Column="0"
+                             Text="{Binding IconTitleShortcut}"
+                             MaxLength="{Binding TimerItemViewModel.IconTitleAllowMaxChar}" />
+                    <!-- Icon Timer Shortcut -->
+                    <xctk:ColorPicker Margin="5 0 0 10" Grid.Column="1"
+                                      SelectedColor="{Binding IconBackgroundHEX}"
+                                      ColorMode="ColorCanvas"
+                                      ShowDropDownButton="False"
+                                      />
+                </Grid>
+
+                <!-- Timer Total Time -->
+                <xctk:TimeSpanUpDown Margin="0 0 0 30"
+                                     AllowTextInput="True"
+                                     DefaultValue="00:01:00"
+                                     Minimum="00:01:00"
+                                     Maximum="2:00:00:00"
+                                     Value="{Binding TimeTotal}"
+                                     Padding="6"
+                                     FontSize="20"
+                                     TextAlignment="Center"/>
+
+                <!-- Timer Start Countdown -->
+                <TextBlock Text="Start Countdown"
+                           FontSize="14"
+                           Margin="0 0 0 5"/>
+                <DockPanel VerticalAlignment="Center" Margin="0 0 0 30">
+                    <xctk:TimeSpanUpDown Margin="10 0 0 0"
+                                         AllowTextInput="True"
+                                         DefaultValue="00:00:00"
+                                         Minimum="00:00:00"
+                                         Maximum="02:00:00"
+                                         Value="{Binding ElementName=slValue, 
+                                               Path=Value, 
+                                               UpdateSourceTrigger=PropertyChanged,
+                                               Converter={local:TimespanToStringTimeFormatConverter}}" 
+                                         DockPanel.Dock="Right" 
+                                         TextAlignment="Right" 
+                                         Width="100" />
+                    <Slider Maximum="7200" TickPlacement="BottomRight" Name="slValue"
+                            Value="{Binding CountdownDuration}"
+                            TickFrequency="60" 
+                            IsSnapToTickEnabled="True" />
+                </DockPanel>
+
+                <!-- Timer Has Loop -->
+                <TextBlock Text="Auto Repeat (Loop)"
+                           FontSize="14"
+                           Margin="0 0 0 5"/>
+                <CheckBox Margin="0 0 0 50"
+                          IsChecked="{Binding IsLoopActive}"
+                          HorizontalAlignment="Center"/>
 
                 <!-- Save Changes Button -->
                 <Button Content="SAVE CHANGES" Margin="0 0 0 10"
@@ -63,5 +126,5 @@
 
         </Grid>
 
-    </Border>
+    </ScrollViewer>
 </local:BasePage>

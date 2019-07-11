@@ -74,10 +74,10 @@
     <Color x:Key="TextBoxPlaceholderForeground">#aaaaaa</Color>
     <SolidColorBrush x:Key="TextBoxPlaceholderForegroundBrushKey" Color="{StaticResource TextBoxPlaceholderForeground}" />
 
-    <Color x:Key="TextBoxLineBackground">#222222</Color>
+    <Color x:Key="TextBoxLineBackground">#888888</Color>
     <SolidColorBrush x:Key="TextBoxLineBackgroundBrushKey" Color="{StaticResource TextBoxLineBackground}" />
 
-    <Color x:Key="TextBoxLineFocusBackground">#888888</Color>
+    <Color x:Key="TextBoxLineFocusBackground">#222222</Color>
     <SolidColorBrush x:Key="TextBoxLineFocusBackgroundBrushKey" Color="{StaticResource TextBoxLineFocusBackground}" />
 
     <Color x:Key="TextBoxLineErrorBackground">#E41D23</Color>
