@@ -1,7 +1,6 @@
 ﻿using BlackSpiritHelper.Core;
 using System;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace BlackSpiritHelper

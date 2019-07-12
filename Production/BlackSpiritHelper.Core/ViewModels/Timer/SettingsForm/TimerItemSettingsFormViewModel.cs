@@ -120,7 +120,7 @@ namespace BlackSpiritHelper.Core
             IconTitleShortcut               = TimerItemViewModel.IconTitleShortcut;
             IconBackgroundHEX               = "#" + TimerItemViewModel.IconBackgroundHEX;
             TimeTotal                       = TimerItemViewModel.TimeTotal;
-            CountdownDuration               = TimerItemViewModel.CountdownDuration.TotalSeconds;
+            CountdownDuration               = TimerItemViewModel.CountdownDurationTotal.TotalSeconds;
             IsLoopActive                    = TimerItemViewModel.IsLoopActive;
             GroupID                         = TimerItemViewModel.GroupID;
             AssociatedGroupViewModel        = null;
@@ -181,6 +181,8 @@ namespace BlackSpiritHelper.Core
 
             //    return;
             //}
+
+            // TODO: dispose timer instance.
 
             // Move back to the page.
             IoC.Application.GoToPage(ApplicationPage.Timer);

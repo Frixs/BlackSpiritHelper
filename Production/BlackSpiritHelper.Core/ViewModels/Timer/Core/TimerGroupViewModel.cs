@@ -133,12 +133,10 @@ namespace BlackSpiritHelper.Core
                 IconTitleShortcut = "X",
                 IconBackgroundHEX = "FFFFFF",
                 TimeTotal = new TimeSpan(0, 1, 0),
-                CountdownDuration = TimeSpan.FromSeconds(0),
+                CountdownDurationTotal = TimeSpan.FromSeconds(0),
                 State = TimerState.Ready,
-                IsRunning = false,
                 IsLoopActive = false,
                 ShowInOverlay = false,
-                IsWarningTime = false,
             });
 
             await Task.Delay(1);

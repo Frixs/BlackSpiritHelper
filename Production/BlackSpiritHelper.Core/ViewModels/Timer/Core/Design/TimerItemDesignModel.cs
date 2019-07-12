@@ -19,11 +19,9 @@ namespace BlackSpiritHelper.Core
             IconTitleShortcut = "NT";
             IconBackgroundHEX = "FA2C9B";
             TimeTotal = new TimeSpan(0, 1, 0);
-            CountdownDuration = TimeSpan.FromSeconds(3);
+            CountdownDurationTotal = TimeSpan.FromSeconds(3);
             State = TimerState.Ready;
-            IsRunning = false;
             IsLoopActive = false;
-            IsWarningTime = false;
         }
 
         #endregion

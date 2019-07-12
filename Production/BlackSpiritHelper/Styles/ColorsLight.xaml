@@ -124,6 +124,12 @@
     <Color x:Key="TimerListItemLoopIndicatorForeground">#222222</Color>
     <SolidColorBrush x:Key="TimerListItemLoopIndicatorForegroundBrushKey" Color="{StaticResource TimerListItemLoopIndicatorForeground}" />
 
+    <Color x:Key="TimerListItemFreezeIndicatorForeground">#0050DE</Color>
+    <SolidColorBrush x:Key="TimerListItemFreezeIndicatorForegroundBrushKey" Color="{StaticResource TimerListItemFreezeIndicatorForeground}" />
+
+    <Color x:Key="TimerListItemCountdownTextColor">#AE1E21</Color>
+    <SolidColorBrush x:Key="TimerListItemCountdownTextColorBrushKey" Color="{StaticResource TimerListItemCountdownTextColor}" />
+
     <Color x:Key="TimerListItemWarningColor">#ec1e24</Color>
     <SolidColorBrush x:Key="TimerListItemWarningColorBrushKey" Color="{StaticResource TimerListItemWarningColor}" />
 

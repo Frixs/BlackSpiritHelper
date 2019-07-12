@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Timers;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -33,9 +36,14 @@ namespace BlackSpiritHelper.Core
         public static byte IconTitleAllowMaxChar { get; private set; } = 3;
 
         /// <summary>
-        /// Limitation for max duration in <see cref="CountdownDuration"/>.
+        /// Limitation for max duration in <see cref="CountdownDurationTotal"/>.
         /// </summary>
         public static TimeSpan CountdownAllowMaxDuration { get; private set; } = TimeSpan.FromSeconds(7200);
+
+        /// <summary>
+        /// Limitation for min duration in <see cref="TimeTotal"/>.
+        /// </summary>
+        public static TimeSpan TimeAllowMinDuration { get; private set; } = TimeSpan.FromMinutes(1);
 
         /// <summary>
         /// Limitation for max duration in <see cref="TimeTotal"/>.
@@ -54,7 +62,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// DIspatcherTimer to control the timer.
         /// </summary>
-        private DispatcherTimer mTimer;
+        private Timer mTimer;
 
         /// <summary>
         /// Timer time total.
@@ -65,6 +73,29 @@ namespace BlackSpiritHelper.Core
         /// Time left to zero.
         /// </summary>
         private TimeSpan mTimeLeft;
+
+        /// <summary>
+        /// Countdown before timer starts total.
+        /// </summary>
+        private TimeSpan mCountdownDurationTotal;
+
+        /// <summary>
+        /// Countdown before timer starts.
+        /// </summary>
+        private TimeSpan mCountdownLeft;
+
+        /// <summary>
+        /// Timer control.
+        /// </summary>
+        private TimerState mState;
+
+        /// <summary>
+        /// Array of notification event fire record.
+        /// TRUE = the notification event has been fired.
+        /// FALSE = the notification event has NOT been fired yet.
+        /// COunt = Number of notification events for timer.
+        /// </summary>
+        private bool[] IsFiredNotificationEvent = new bool[3];
 
         #endregion
 
@@ -109,8 +140,8 @@ namespace BlackSpiritHelper.Core
             set
             {
                 mTimeTotal = value;
-                mTimeLeft = mTimeTotal;
-                TimeFormat = mTimeTotal.ToString("hh':'mm':'ss");
+                TimeLeft = mTimeTotal;
+                UpdateTimeInUI(mTimeTotal);
             }
         }
 
@@ -126,29 +157,78 @@ namespace BlackSpiritHelper.Core
             private set
             {
                 mTimeLeft = value;
-                TimeFormat = mTimeTotal.ToString("hh':'mm':'ss");
+            }
+        }
+
+        /// <summary>
+        /// Countdown before timer starts total.
+        /// </summary>
+        public TimeSpan CountdownDurationTotal
+        {
+            get
+            {
+                return mCountdownDurationTotal;
+            }
+            set
+            {
+                mCountdownDurationTotal = value;
+                CountdownLeft = mCountdownDurationTotal;
             }
         }
 
         /// <summary>
         /// Countdown before timer starts.
         /// </summary>
-        public TimeSpan CountdownDuration { get; set; }
+        public TimeSpan CountdownLeft
+        {
+            get
+            {
+                return mCountdownLeft;
+            }
+            private set
+            {
+                mCountdownLeft = value;
+            }
+        }
 
         /// <summary>
-        /// Button control.
+        /// Timer control.
         /// </summary>
-        public TimerState State { get; set; }
+        public TimerState State
+        {
+            get
+            {
+                return mState;
+            }
+            set
+            {
+                mState = value;
+
+                // Set the initial state parameters.
+                if (mState == TimerState.None)
+                    UpdateState(value);
+            }
+        }
 
         /// <summary>
         /// Says, the timer is currently playing (True) or it is another state (False).
         /// </summary>
-        public bool IsRunning { get; set; }
+        public bool IsRunning { get; private set; }
+
+        /// <summary>
+        /// Says, the timer is currently in countdown.
+        /// </summary>
+        public bool IsInCountdown { get; private set; }
 
         /// <summary>
         /// Says, if the timer is in infinite loop.
         /// </summary>
         public bool IsLoopActive { get; set; }
+
+        /// <summary>
+        /// Says, if the timer is currently in freeze state.
+        /// </summary>
+        public bool IsInFreeze { get; private set; }
 
         /// <summary>
         /// Show this timer in overlay.
@@ -158,7 +238,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Says, if the timer is in warning time (less than X).
         /// </summary>
-        public bool IsWarningTime { get; set; }
+        public bool IsWarningTime { get; private set; }
 
         #endregion
 
@@ -205,10 +285,255 @@ namespace BlackSpiritHelper.Core
 
         public TimerItemViewModel()
         {
-            mTimer = new DispatcherTimer();
+            // Set the timer.
+            SetTimer();
 
             // Create commands.
             CreateCommands();
+        }
+
+        #endregion
+
+        #region Timer Methods
+
+        /// <summary>
+        /// Set the timer.
+        /// </summary>
+        private void SetTimer()
+        {
+            mTimer = new Timer(1000);
+            mTimer.Elapsed += TimerOnElapsed;
+            mTimer.AutoReset = true;
+
+            IsRunning = false;
+            IsInCountdown = false;
+            IsWarningTime = false;
+        }
+
+        /// <summary>
+        /// On Tick timer event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TimerOnElapsed(object sender, ElapsedEventArgs e)
+        {
+            TimeSpan currTime;
+
+            // Decide which time to pick according to timer state.
+            if (State == TimerState.Countdown)
+                // Calculate Countdown time.
+                currTime = CountdownLeft = CountdownLeft.Subtract(TimeSpan.FromSeconds(1));
+            else
+            {
+                // Calculate Timer time.
+                currTime = TimeLeft = TimeLeft.Subtract(TimeSpan.FromSeconds(1));
+
+                // Fire notification events.
+                // TODO Add option to user to set these time brackets.
+                if (currTime.TotalSeconds < 50)
+                {
+                    // Fire The 1st notification event.
+                    if (!IsFiredNotificationEvent[0])
+                    {
+                        IsFiredNotificationEvent[0] = true;
+                        // TODO
+                    }
+
+                    if (currTime.TotalSeconds < 15)
+                    {
+                        // Fire The 2nd notification event.
+                        if (!IsFiredNotificationEvent[1])
+                        {
+                            IsFiredNotificationEvent[1] = true;
+                            // TODO
+                        }
+
+                        if (currTime.TotalSeconds < 5 && currTime.TotalSeconds > 0)
+                        {
+                            IsWarningTime = true;
+                            // TODO warning UI.
+
+                            // The last seconds countdown event.
+                            // TODO
+                        }
+                    }
+                }
+
+            }
+
+            // Update UI thread.
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                // Update time text format in UI.
+                UpdateTimeInUI(currTime);
+            });
+
+            // Countdown reached zero.
+            if (IsInCountdown && CountdownLeft.TotalSeconds <= 0)
+                UpdateState(TimerState.Play);
+
+            // Timer reached zero.
+            if (TimeLeft.TotalSeconds <= 0)
+            {
+                // Fire 3rd (on-timer-end) notification event.
+                if (!IsFiredNotificationEvent[2])
+                {
+                    IsFiredNotificationEvent[2] = true;
+                    // TODO
+                }
+
+                // Restart.
+                if (IsLoopActive)
+                    TimerRestartLoop();
+                else
+                    TimerRestart();
+            }
+        }
+
+        /// <summary>
+        /// Update <see cref="TimeFormat"/> in UI.
+        /// </summary>
+        /// <param name="ts"></param>
+        private void UpdateTimeInUI(TimeSpan ts)
+        {
+            // Update time text format in UI.
+            TimeFormat = ts.ToString("hh':'mm':'ss");
+        }
+
+        /// <summary>
+        /// Update Timer state parameters.
+        /// </summary>
+        /// <param name="state">The state to update.</param>
+        private void UpdateState(TimerState state)
+        {
+            switch (state)
+            {
+                case TimerState.Play:
+                    // Play.
+                    State = TimerState.Play;
+                    IsRunning       = true;
+                    IsInCountdown   = false;
+                    IsInFreeze      = false;
+                    return;
+
+                case TimerState.Pause:
+                    // Pause.
+                    State = TimerState.Pause;
+                    IsRunning       = false;
+                    IsInFreeze      = false;
+                    return;
+
+                case TimerState.Ready:
+                    // Ready.
+                    State = TimerState.Ready;
+                    IsRunning       = false;
+                    IsInCountdown   = false;
+                    IsInFreeze      = false;
+                    return;
+
+                case TimerState.Freeze:
+                    // Freeze.
+                    State = TimerState.Freeze;
+                    IsRunning       = false;
+                    IsInFreeze      = true;
+                    return;
+
+                case TimerState.Countdown:
+                    // Countdown.
+                    State = TimerState.Countdown;
+                    IsRunning       = true;
+                    IsInCountdown   = true;
+                    IsInFreeze      = false;
+                    return;
+
+                default:
+                    // Break debugger.
+                    Debugger.Break();
+                    return;
+            }
+        }
+
+        /// <summary>
+        /// Play the timer.
+        /// </summary>
+        private void TimerPlay()
+        {
+            // Timer is starting from Ready (after reset).
+            if (State == TimerState.Ready && CountdownDurationTotal.TotalSeconds > 0)
+            {
+                // Set start countdown.
+                UpdateState(TimerState.Countdown);
+
+                // Update time text format in UI.
+                UpdateTimeInUI(CountdownLeft);
+            }
+            // Timer is starting from Freeze.
+            else if (State == TimerState.Freeze)
+            {
+                if (IsInCountdown)
+                    // Awake timer to countdown if it was performed before Freeze.
+                    UpdateState(TimerState.Countdown);
+                else
+                    // Otherwise play the timer.
+                    UpdateState(TimerState.Play);
+            }
+            // Otherwise play the timer.
+            else
+            {
+                UpdateState(TimerState.Play);
+            }
+
+            // Run the timer.
+            mTimer.Start();
+        }
+
+        /// <summary>
+        /// Pause the timer.
+        /// </summary>
+        private void TimerPause()
+        {
+            UpdateState(TimerState.Pause);
+            mTimer.Stop();
+        }
+
+        /// <summary>
+        /// Freeze the timer.
+        /// Used when the application is closed.
+        /// </summary>
+        public void TimerFreeze()
+        {
+            UpdateState(TimerState.Freeze);
+            mTimer.Stop();
+        }
+
+        /// <summary>
+        /// Restart the timer.
+        /// </summary>
+        private void TimerRestart()
+        {
+            IsWarningTime = false;
+
+            TimerPause();
+
+            UpdateState(TimerState.Ready);
+
+            // Reset time.
+            TimeLeft = TimeSpan.FromSeconds(TimeTotal.TotalSeconds);
+            CountdownLeft = TimeSpan.FromSeconds(CountdownDurationTotal.TotalSeconds);
+
+            UpdateTimeInUI(TimeLeft);
+        }
+
+        /// <summary>
+        /// Restart the timer loop.
+        /// </summary>
+        private void TimerRestartLoop()
+        {
+            IsWarningTime = false;
+
+            TimerPause();
+            TimeLeft = TimeSpan.FromSeconds(TimeTotal.TotalSeconds);
+            TimerPlay();
         }
 
         #endregion
@@ -229,6 +554,10 @@ namespace BlackSpiritHelper.Core
             PauseCommand = new RelayCommand(async () => await PauseAsync());
         }
 
+        /// <summary>
+        /// Open timer settings.
+        /// </summary>
+        /// <returns></returns>
         private async Task OpenTimerSettingsAsync()
         {
             // Create Settings View Model with the current timer binding.
@@ -242,24 +571,58 @@ namespace BlackSpiritHelper.Core
             await Task.Delay(1);
         }
 
+        /// <summary>
+        /// Increase time.
+        /// </summary>
+        /// <returns></returns>
         private async Task TimePlusAsync()
         {
-            // TODO.
-            Console.WriteLine("TODO");
+            TimeSpan tAdd = TimeSpan.FromSeconds(30);
+            TimeSpan tAfterChange = TimeSpan.FromSeconds(TimeLeft.TotalSeconds).Add(tAdd);
+
+            // Cannot increase over the total time.
+            if (tAfterChange.TotalSeconds > TimeTotal.TotalSeconds)
+            {
+                TimeLeft = TimeSpan.FromSeconds(TimeTotal.TotalSeconds);
+            }
+            else
+            {
+                TimeLeft = TimeLeft.Add(TimeSpan.FromSeconds(tAdd.TotalSeconds));
+            }
+
             await Task.Delay(1);
         }
 
+        /// <summary>
+        /// Decrease time.
+        /// </summary>
+        /// <returns></returns>
         private async Task TimeMinusAsync()
         {
-            // TODO.
-            Console.WriteLine("TODO");
+            TimeSpan tSubtract = TimeSpan.FromSeconds(30);
+            TimeSpan tAfterChange = TimeSpan.FromSeconds(TimeLeft.TotalSeconds - 1).Subtract(tSubtract); // -1 to prevent overlap.
+
+            // Cannot go below the zero.
+            if (tAfterChange.TotalSeconds <= 0)
+            {
+                TimeLeft = TimeSpan.FromSeconds(0);
+            }
+            else
+            {
+                TimeLeft = TimeLeft.Subtract(TimeSpan.FromSeconds(tSubtract.TotalSeconds));
+            }
+
             await Task.Delay(1);
         }
 
+        /// <summary>
+        /// Restart the timer command reaction.
+        /// </summary>
+        /// <returns></returns>
         private async Task ResetTimerAsync()
         {
-            // TODO Reset timer.
-            Console.WriteLine("TODO");
+            TimerRestart();
+
             await Task.Delay(1);
         }
 
@@ -267,20 +630,29 @@ namespace BlackSpiritHelper.Core
         {
             // TODO Sync timer.
             Console.WriteLine("TODO");
+            TimerFreeze();
             await Task.Delay(1);
         }
 
+        /// <summary>
+        /// Play the timer, command reaction.
+        /// </summary>
+        /// <returns></returns>
         private async Task PlayAsync()
         {
-            // TODO Play timer.
-            Console.WriteLine("TODO");
+            TimerPlay();
+
             await Task.Delay(1);
         }
 
+        /// <summary>
+        /// Pause the timer, command reaction.
+        /// </summary>
+        /// <returns></returns>
         private async Task PauseAsync()
         {
-            // TODO Pause timer.
-            Console.WriteLine("TODO");
+            TimerPause();
+
             await Task.Delay(1);
         }
 

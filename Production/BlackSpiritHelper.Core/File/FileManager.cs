@@ -1,10 +1,8 @@
-﻿using BlackSpiritHelper.Core;
-using System;
-using System.IO;
+﻿using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
-namespace BlackSpiritHelper
+namespace BlackSpiritHelper.Core
 {
     /// <summary>
     /// Handles reading/writing and querying the file system.

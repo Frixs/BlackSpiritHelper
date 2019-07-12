@@ -116,11 +116,21 @@
                                     <!-- Countdown -->
                                     <TextBlock Text="{Binding TimeFormat}" 
                                                FontFamily="{StaticResource LatoRegular}"
-                                               Foreground="{StaticResource TimerListItemCountdownForegroundBrushKey}"
                                                FontSize="32"
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Right"
-                                               Margin="0 0 5 0"/>
+                                               Margin="0 0 5 0">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Foreground" Value="{StaticResource TimerListItemCountdownForegroundBrushKey}"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsInCountdown}" Value="True">
+                                                        <Setter Property="Foreground" Value="{StaticResource TimerListItemCountdownTextColorBrushKey}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
                                 </StackPanel>
                             </Grid>
 
@@ -147,16 +157,28 @@
                                 </StackPanel>
 
                                 <Grid Grid.Column="1">
-                                    <!-- Loop indicator -->
-                                    <TextBlock Text="{StaticResource FontAwesomeRetweetIcon}"
-                                               Visibility="{Binding IsLoopActive,
-                                                            Converter={local:BooleanToVisibilityGoneConverter}}"
-                                               FontFamily="{StaticResource FontAwesomeSolid}"
-                                               Foreground="{StaticResource TimerListItemLoopIndicatorForegroundBrushKey}"
-                                               FontSize="16"
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Center"
-                                               Padding="0 5 5 5" />
+                                    <StackPanel Orientation="Horizontal"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center">
+                                        <!-- Loop indicator -->
+                                        <TextBlock Text="{StaticResource FontAwesomeRetweetIcon}"
+                                                   Visibility="{Binding IsLoopActive,
+                                                                Converter={local:BooleanToVisibilityGoneConverter}}"
+                                                   FontFamily="{StaticResource FontAwesomeSolid}"
+                                                   Foreground="{StaticResource TimerListItemLoopIndicatorForegroundBrushKey}"
+                                                   FontSize="16"
+                                                   Padding="0 5 5 5"
+                                                   Margin="5" />
+                                        <!-- Freeze indicator -->
+                                        <TextBlock Text="{StaticResource FontAwesomeStopwatchIcon}"
+                                                   Visibility="{Binding IsInFreeze,
+                                                                Converter={local:BooleanToVisibilityGoneConverter}}"
+                                                   FontFamily="{StaticResource FontAwesomeSolid}"
+                                                   Foreground="{StaticResource TimerListItemFreezeIndicatorForegroundBrushKey}"
+                                                   FontSize="16"
+                                                   Padding="0 5 5 5"
+                                                   Margin="5" />
+                                    </StackPanel>
                                 </Grid>
                                 
                                 <StackPanel Grid.Column="2" Orientation="Horizontal">
