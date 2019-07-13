@@ -32,8 +32,15 @@
 
                 <!-- Group Name -->
                 <TextBox Tag="Group Name" Margin="0 0 0 50"
-                         Text="{Binding Title}"
-                         MaxLength="{Binding TimerGroupViewModel.TitleAllowMaxChar}" />
+                         MaxLength="{Binding TimerGroupViewModel.TitleAllowMaxChar}">
+                    <TextBox.Text>
+                        <Binding Path="Title">
+                            <Binding.ValidationRules>
+                                <core:TimerGroupTitleRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
 
                 <!-- Save Changes Button -->
                 <Button Content="SAVE CHANGES" Margin="0 0 0 10"

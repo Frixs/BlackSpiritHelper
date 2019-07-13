@@ -63,8 +63,6 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void SetDefaults()
         {
-            CanCreateNewGroup = true;
-
             TimerGroupViewModel g = AddGroup("Default Group");
             g.AddTimer(new TimerItemViewModel
             {

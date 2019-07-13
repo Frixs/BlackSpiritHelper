@@ -81,7 +81,7 @@
                                             <Button Content="{StaticResource FontAwesomePlusIcon}"
                                                     FontFamily="{StaticResource FontAwesomeSolid}"
                                                     Style="{StaticResource RegularButton}"
-                                                    Visibility="{Binding CanCreateNewTimer, Converter={local:BooleanToVisibilityGoneConverter}, ConverterParameter=True}"
+                                                    Visibility="{Binding CanCreateNewTimer, Converter={local:BooleanToVisibilityGoneConverter}}"
                                                     Command="{Binding AddTimerCommand}"
                                                     Margin="0 10 10 10"
                                                     Width="30"

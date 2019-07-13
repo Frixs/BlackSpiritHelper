@@ -19,7 +19,7 @@ namespace BlackSpiritHelper
             {
                 IoC.Logger.Log($"An unhandled exception occurred: {e.Exception.Message}", LogLevel.Fatal);
             }
-            MessageBox.Show($"An unhandled exception just occurred: {e.Exception.Message}. {Environment.NewLine}Please, contact the developers to be able to fix that issue.", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show($"An unhandled exception just occurred: {e.Exception.Message}. {Environment.NewLine}Please, contact the developers to fix the issue.", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Warning);
 
             e.Handled = true;
         }

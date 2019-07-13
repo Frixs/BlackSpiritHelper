@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
@@ -409,6 +410,18 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
+        /// Dispose timer calculations.
+        /// Use this only while destroying the instance of the timer.
+        /// </summary>
+        public void DisposeTimer()
+        {
+            mTimer.Stop();
+            mTimer.Elapsed -= TimerOnElapsed;
+            mTimer.Dispose();
+            mTimer = null;
+        }
+
+        /// <summary>
         /// On Tick timer event.
         /// </summary>
         /// <param name="sender"></param>
@@ -679,16 +692,33 @@ namespace BlackSpiritHelper.Core
         private async Task TimePlusAsync()
         {
             TimeSpan tAdd = TimeSpan.FromSeconds(30);
-            TimeSpan tAfterChange = TimeSpan.FromSeconds(TimeLeft.TotalSeconds).Add(tAdd);
+            TimeSpan tAfterChange;
 
-            // Cannot increase over the total time.
-            if (tAfterChange.TotalSeconds > TimeDuration.TotalSeconds)
+            // Countdown.
+            if (IsInCountdown)
             {
-                TimeLeft = TimeSpan.FromSeconds(TimeDuration.TotalSeconds);
+                tAfterChange = TimeSpan.FromSeconds(CountdownLeft.TotalSeconds).Add(tAdd);
+                // Cannot increase over the total time.
+                if (tAfterChange.TotalSeconds > CountdownDuration.TotalSeconds)
+                    CountdownLeft = TimeSpan.FromSeconds(CountdownDuration.TotalSeconds);
+                else
+                    CountdownLeft = CountdownLeft.Add(TimeSpan.FromSeconds(tAdd.TotalSeconds));
+
+                // Update time UI.
+                UpdateTimeInUI(CountdownLeft);
             }
+            // Normal timer.
             else
             {
-                TimeLeft = TimeLeft.Add(TimeSpan.FromSeconds(tAdd.TotalSeconds));
+                tAfterChange = TimeSpan.FromSeconds(TimeLeft.TotalSeconds).Add(tAdd);
+                // Cannot increase over the total time.
+                if (tAfterChange.TotalSeconds > TimeDuration.TotalSeconds)
+                    TimeLeft = TimeSpan.FromSeconds(TimeDuration.TotalSeconds);
+                else
+                    TimeLeft = TimeLeft.Add(TimeSpan.FromSeconds(tAdd.TotalSeconds));
+
+                // Update time UI.
+                UpdateTimeInUI(TimeLeft);
             }
 
             await Task.Delay(1);
@@ -701,16 +731,33 @@ namespace BlackSpiritHelper.Core
         private async Task TimeMinusAsync()
         {
             TimeSpan tSubtract = TimeSpan.FromSeconds(30);
-            TimeSpan tAfterChange = TimeSpan.FromSeconds(TimeLeft.TotalSeconds - 1).Subtract(tSubtract); // -1 to prevent overlap.
+            TimeSpan tAfterChange;
 
-            // Cannot go below the zero.
-            if (tAfterChange.TotalSeconds <= 0)
+            // Countdown.
+            if (IsInCountdown)
             {
-                TimeLeft = TimeSpan.FromSeconds(0);
+                tAfterChange = TimeSpan.FromSeconds(CountdownLeft.TotalSeconds).Subtract(tSubtract);
+                // Cannot go below the zero.
+                if (tAfterChange.TotalSeconds <= 0)
+                    CountdownLeft = TimeSpan.FromSeconds(1); // Set it 1 sec before zero to prevent overflow over the zero.
+                else
+                    CountdownLeft = CountdownLeft.Subtract(TimeSpan.FromSeconds(tSubtract.TotalSeconds));
+
+                // Update time UI.
+                UpdateTimeInUI(CountdownLeft);
             }
+            // Normal timer.
             else
             {
-                TimeLeft = TimeLeft.Subtract(TimeSpan.FromSeconds(tSubtract.TotalSeconds));
+                tAfterChange = TimeSpan.FromSeconds(TimeLeft.TotalSeconds).Subtract(tSubtract);
+                // Cannot go below the zero.
+                if (tAfterChange.TotalSeconds <= 0)
+                    TimeLeft = TimeSpan.FromSeconds(1); // Set it 1 sec before zero to prevent overflow over the zero.
+                else
+                    TimeLeft = TimeLeft.Subtract(TimeSpan.FromSeconds(tSubtract.TotalSeconds));
+
+                // Update time UI.
+                UpdateTimeInUI(TimeLeft);
             }
 
             await Task.Delay(1);
@@ -732,18 +779,6 @@ namespace BlackSpiritHelper.Core
             // TODO Sync timer.
             Console.WriteLine("TODO");
 
-            TimerGroupListDesignModel xb = IoC.DataContent.TimerGroupListDesignModel;
-            IoC.SettingsStorage.TimerGroupListDesignModel = null;
-            IoC.SettingsStorage.Save();
-            IoC.SettingsStorage.TimerGroupListDesignModel = xb;
-            IoC.SettingsStorage.Save();
-
-            XmlSerializer mySerializer = new XmlSerializer(typeof(TimerGroupListDesignModel));
-            StreamWriter myWriter = new StreamWriter("prefs.xml");
-            mySerializer.Serialize(myWriter, xb);
-            myWriter.Close();
-
-            TimerFreeze();
             await Task.Delay(1);
         }
 
@@ -767,6 +802,93 @@ namespace BlackSpiritHelper.Core
             TimerPause();
 
             await Task.Delay(1);
+        }
+
+        #endregion
+
+        #region Validation Methods
+
+        /// <summary>
+        /// Check timer parameters.
+        /// TRUE, if all parameters are OK and the timer can be created.
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="iconTitleShortcut"></param>
+        /// <param name="iconBackgroundHEX"></param>
+        /// <param name="timeDuration"></param>
+        /// <param name="countdownDuration"></param>
+        /// <param name="showInOverlay"></param>
+        /// <returns></returns>
+        public static bool ValidateTimerInputs(string title, string iconTitleShortcut, string iconBackgroundHEX, TimeSpan timeDuration, TimeSpan countdownDuration, bool showInOverlay)
+        {
+            #region Title
+
+            title = title.Trim();
+            // Check conditions.
+            if (title.Length < TitleAllowMinChar || title.Length > TitleAllowMaxChar)
+                return false;
+            // Check allowed characters.
+            if (!StringUtils.CheckAlphanumericString(title, true, true))
+                return false;
+
+            #endregion
+
+            #region IconTitleShortcut
+
+            iconTitleShortcut = iconTitleShortcut.Trim();
+            // Check conditions.
+            if (title.Length < IconTitleAllowMinChar || title.Length > IconTitleAllowMaxChar)
+                return false;
+            // Check allowed characters.
+            if (!StringUtils.CheckAlphanumericString(title, true, true))
+                return false;
+
+            #endregion
+
+            #region CountdownDuration
+
+            if (countdownDuration == null)
+                return false;
+            // Check conditions.
+            if (countdownDuration.Ticks > CountdownAllowMaxDuration.Ticks || countdownDuration.Ticks < 0)
+                return false;
+
+            #endregion
+
+            #region IconBackgroundHEX
+
+            if (!Regex.IsMatch(iconBackgroundHEX, @"^[A-Fa-f0-9]{6}$"))
+                return false;
+
+            #endregion
+
+            #region TimeDuration
+
+            if (timeDuration == null)
+                return false;
+            // Check conditions.
+            if (timeDuration.Ticks > TimeAllowMaxDuration.Ticks || timeDuration.Ticks < TimeAllowMinDuration.Ticks)
+                return false;
+
+            #endregion
+
+            #region ShowInOverlay
+
+            if (showInOverlay)
+            {
+                // Counter.
+                int c = 1;
+                // Chech conditions.
+                foreach (TimerGroupViewModel g in IoC.DataContent.TimerGroupListDesignModel.GroupList)
+                    foreach (TimerItemViewModel t in g.TimerList)
+                        if (t.ShowInOverlay)
+                            if (++c > OverlayTimerLimitCount)
+                                return false;
+            }
+
+            #endregion
+
+            return true;
         }
 
         #endregion

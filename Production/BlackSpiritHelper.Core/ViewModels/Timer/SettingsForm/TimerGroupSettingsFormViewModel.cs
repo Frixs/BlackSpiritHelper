@@ -94,7 +94,7 @@ namespace BlackSpiritHelper.Core
 
         private void SaveChanges()
         {
-            if (!IoC.DataContent.TimerGroupListDesignModel.ValidateGroupInputs(Title))
+            if (!TimerGroupViewModel.ValidateGroupInputs(Title))
             {
                 // Some error occured during saving changes of the group.
                 IoC.UI.ShowMessage(new MessageBoxDialogViewModel
@@ -120,7 +120,7 @@ namespace BlackSpiritHelper.Core
 
         private void DeleteGroup()
         {
-            if (!IoC.DataContent.TimerGroupListDesignModel.DeleteGroup(TimerGroupViewModel))
+            if (!IoC.DataContent.TimerGroupListDesignModel.DestroyGroup(TimerGroupViewModel))
             {
                 // Some error occured during deleting the group.
                 IoC.UI.ShowMessage(new MessageBoxDialogViewModel

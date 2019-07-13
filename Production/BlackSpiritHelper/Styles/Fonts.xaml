@@ -40,5 +40,6 @@
     <system:String x:Key="FontAwesomeMinusIcon">&#xf068;</system:String>
     <system:String x:Key="FontAwesomeRetweetIcon">&#xf079;</system:String>
     <system:String x:Key="FontAwesomeStopwatchIcon">&#xf2f2;</system:String>
+    <system:String x:Key="FontAwesomeExclamationCircleIcon">&#xf06a;</system:String>
 
 </ResourceDictionary>

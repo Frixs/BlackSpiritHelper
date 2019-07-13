@@ -25,6 +25,11 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public static byte TitleAllowMaxChar { get; private set; } = 20;
 
+        /// <summary>
+        /// Max number of timers that can be created in the group.
+        /// </summary>
+        public static byte AllowedMaxNoOfTimers { get; private set; } = 10;
+
         #endregion
 
         #region Public Properties
@@ -45,15 +50,10 @@ namespace BlackSpiritHelper.Core
         public bool IsRunning { get; set; }
 
         /// <summary>
-        /// Max number of timers that can be created in the group.
-        /// </summary>
-        [XmlIgnore]
-        public byte MaxNoOfTimers { get; private set; } = 10;
-
-        /// <summary>
         /// Says if you can create a new item. Limit check.
         /// </summary>
-        public bool CanCreateNewTimer { get; set; }
+        [XmlIgnore]
+        public bool CanCreateNewTimer => TimerList.Count < AllowedMaxNoOfTimers;
 
         /// <summary>
         /// List of timers in the group.
@@ -167,26 +167,79 @@ namespace BlackSpiritHelper.Core
         #region Public Methods
 
         /// <summary>
-        /// Add timer item to specific group..
+        /// Add timer item to specific group.
         /// </summary>
-        /// <param name="item">The item.</param>
-        public bool AddTimer(TimerItemViewModel item)
+        /// <param name="vm">The item.</param>
+        public bool AddTimer(TimerItemViewModel vm)
         {
-            IoC.Logger.Log($"Trying to add Timer '{item.Title}' to group '{Title}'...", LogLevel.Debug);
+            IoC.Logger.Log($"Trying to add Timer '{vm.Title}' to group '{Title}'...", LogLevel.Debug);
 
-            if (item == null)
+            if (vm == null)
                 return false;
 
             // Check limits.
-            if (TimerList.Count + 1 > MaxNoOfTimers)
-            {
-                CanCreateNewTimer = false;
+            if (!CanCreateNewTimer)
                 return false;
-            }
 
-            TimerList.Add(item);
+            TimerList.Add(vm);
 
-            IoC.Logger.Log($"Timer '{item.Title}' added to group '{Title}'!", LogLevel.Info);
+            IoC.Logger.Log($"Timer '{vm.Title}' added to group '{Title}'!", LogLevel.Info);
+            return true;
+        }
+
+        /// <summary>
+        /// Delete the group permanently.
+        /// </summary>
+        /// <param name="vm">The item.</param>
+        public bool DestroyTimer(TimerItemViewModel vm)
+        {
+            IoC.Logger.Log($"Trying to destroy Timer '{vm.Title}'...", LogLevel.Debug);
+
+            if (vm == null)
+                return false;
+
+            var title = vm.Title;
+            // Remove the group from the list.
+            if (!TimerList.Remove(vm))
+                return false;
+
+            // Dispose timer calculations.
+            vm.DisposeTimer();
+
+            // Destroy reference to timer instance.
+            vm = null;
+
+            // Release GC.
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+
+            IoC.Logger.Log($"Timer '{title}' destroyed!", LogLevel.Info);
+            return true;
+        }
+
+        #endregion
+
+        #region Validation Methods
+
+        /// <summary>
+        /// Check group parameters.
+        /// TRUE, if all parameters are OK and the group can be created.
+        /// </summary>
+        /// <param name="title">The group title.</param>
+        /// <returns></returns>
+        public static bool ValidateGroupInputs(string title)
+        {
+            title = title.Trim();
+
+            // Check conditions.
+            if (title.Length < TimerGroupViewModel.TitleAllowMinChar || title.Length > TimerGroupViewModel.TitleAllowMaxChar)
+                return false;
+
+            // Check allowed characters.
+            if (!StringUtils.CheckAlphanumericString(title, true, true))
+                return false;
+
             return true;
         }
 

@@ -25,7 +25,6 @@
                 <ControlTemplate TargetType="{x:Type TextBoxBase}">
 
                     <Grid>
-
                         <Border x:Name="border" 
                                 BorderBrush="{TemplateBinding BorderBrush}" 
                                 BorderThickness="{TemplateBinding BorderThickness}"
@@ -34,9 +33,9 @@
                             <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
                         </Border>
 
+                        <!-- Placeholder -->
                         <TextBlock IsHitTestVisible="False"
                                    Text="{TemplateBinding Tag}"
-                                   x:Name="placeholder"
                                    FontFamily="{StaticResource LatoThin}"
                                    Padding="{TemplateBinding Padding}"
                                    VerticalAlignment="Center"
@@ -56,6 +55,15 @@
 
                         </TextBlock>
 
+                        <!-- Validation exclamation mark -->
+                        <TextBlock IsHitTestVisible="False"
+                                   Name="exclamation"
+                                   Text="{StaticResource FontAwesomeExclamationCircleIcon}"
+                                   FontFamily="{StaticResource FontAwesomeSolid}"
+                                   Foreground="{StaticResource TextBoxLineErrorBackgroundBrushKey}"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Center"
+                                   Visibility="Collapsed" />
                     </Grid>
 
                     <ControlTemplate.Triggers>
@@ -68,7 +76,20 @@
                         <Trigger Property="IsKeyboardFocused" Value="True">
                             <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBoxLineFocusBackgroundBrushKey}"/>
                         </Trigger>
+                        <Trigger Property="Validation.HasError" Value="True">
+                            <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextBoxLineErrorBackgroundBrushKey}" />
+                            <Setter Property="BorderBrush" Value="{StaticResource TextBoxLineErrorBackgroundBrushKey}" />
+                            <Setter Property="Visibility" TargetName="exclamation" Value="Visible" />
+                        </Trigger>
                     </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <!-- Delete default error template -->
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -78,25 +99,90 @@
     <!--Chechbox Input -->
     <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="FontFamily" Value="{StaticResource LatoLight}" />
+        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="{StaticResource TextBoxLineBackgroundBrushKey}" />
+
+        <!-- Delete default error template -->
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
 
         <Style.Triggers>
             <Trigger Property="IsKeyboardFocusWithin" Value="True">
                 <Setter Property="BorderBrush" Value="{StaticResource TextBoxLineFocusBackgroundBrushKey}"/>
             </Trigger>
+            <Trigger Property="Validation.HasError" Value="True">
+                <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource TextBoxLineErrorBackgroundBrushKey}" />
+            </Trigger>
         </Style.Triggers>
     </Style>
 
-    <!-- Color Picker -->
-    <Style TargetType="{x:Type xctk:ColorPicker}" BasedOn="{StaticResource BaseStyle}">
+    <!--ComboBox Input -->
+    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="FontFamily" Value="{StaticResource LatoLight}" />
+        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="{StaticResource TextBoxLineBackgroundBrushKey}" />
 
+        <!-- Delete default error template -->
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <!-- Validation exclamation mark -->
+                    <TextBlock IsHitTestVisible="False"
+                               Text="{StaticResource FontAwesomeExclamationCircleIcon}"
+                               FontFamily="{StaticResource FontAwesomeSolid}"
+                               Foreground="{StaticResource TextBoxLineErrorBackgroundBrushKey}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter Property="BorderBrush" Value="{StaticResource TextBoxLineFocusBackgroundBrushKey}"/>
+            </Trigger>
+            <Trigger Property="Validation.HasError" Value="True">
+                <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource TextBoxLineErrorBackgroundBrushKey}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!-- Color Picker -->
+    <Style TargetType="{x:Type xctk:ColorPicker}" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{StaticResource TextBoxLineBackgroundBrushKey}" />
+        
+        <!-- Delete default error template -->
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <!-- Validation exclamation mark -->
+                    <TextBlock IsHitTestVisible="False"
+                                   Name="exclamation"
+                                   Text="{StaticResource FontAwesomeExclamationCircleIcon}"
+                                   FontFamily="{StaticResource FontAwesomeSolid}"
+                                   Foreground="{StaticResource TextBoxLineErrorBackgroundBrushKey}"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Center"
+                                   Visibility="Collapsed" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="BorderBrush" Value="{StaticResource TextBoxLineFocusBackgroundBrushKey}"/>
             </Trigger>
             <Trigger Property="IsKeyboardFocused" Value="True">
                 <Setter Property="BorderBrush" Value="{StaticResource TextBoxLineFocusBackgroundBrushKey}"/>
+            </Trigger>
+            <Trigger Property="Validation.HasError" Value="True">
+                <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource TextBoxLineErrorBackgroundBrushKey}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -106,12 +192,24 @@
         <Setter Property="FontFamily" Value="{StaticResource LatoLight}" />
         <Setter Property="BorderBrush" Value="{StaticResource TextBoxLineBackgroundBrushKey}" />
 
+        <!-- Delete default error template -->
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="BorderBrush" Value="{StaticResource TextBoxLineFocusBackgroundBrushKey}"/>
             </Trigger>
             <Trigger Property="IsKeyboardFocusWithin" Value="True">
                 <Setter Property="BorderBrush" Value="{StaticResource TextBoxLineFocusBackgroundBrushKey}"/>
+            </Trigger>
+            <Trigger Property="Validation.HasError" Value="True">
+                <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource TextBoxLineErrorBackgroundBrushKey}" />
             </Trigger>
         </Style.Triggers>
     </Style>

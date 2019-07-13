@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Configuration;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
@@ -14,6 +11,15 @@ namespace BlackSpiritHelper.Core
     /// </summary>
     public class TimerGroupListViewModel : BaseViewModel
     {
+        #region Static Limitation Properties
+
+        /// <summary>
+        /// Max number of groups that can be created.
+        /// </summary>
+        public static byte AllowedMaxNoOfGroups { get; private set; } = 5;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -22,15 +28,10 @@ namespace BlackSpiritHelper.Core
         public ObservableCollection<TimerGroupViewModel> GroupList { get; set; }
 
         /// <summary>
-        /// Max number of groups that can be created.
-        /// </summary>
-        [XmlIgnore]
-        public byte MaxNoOfGroups { get; private set; } = 5;
-
-        /// <summary>
         /// Says if you can create a new item. Limit check.
         /// </summary>
-        public bool CanCreateNewGroup { get; set; }
+        [XmlIgnore]
+        public bool CanCreateNewGroup => GroupList.Count < AllowedMaxNoOfGroups;
 
         #endregion
 
@@ -58,45 +59,39 @@ namespace BlackSpiritHelper.Core
             IoC.Logger.Log($"Trying to add Timer Group '{itemTitle}'...", LogLevel.Debug);
 
             // Check limits.
-            if (GroupList.Count + 1 > MaxNoOfGroups)
+            if (!CanCreateNewGroup)
                 return null;
 
             itemTitle = itemTitle.Trim();
             // Validate Inputs.
-            if (!ValidateGroupInputs(itemTitle))
+            if (!TimerGroupViewModel.ValidateGroupInputs(itemTitle))
                 return null;
 
             // Sort Groups by ID.
             GroupList.OrderBy(o => o.ID);
 
-            // Create a new item.
+            // Create a new item (Default Group).
             TimerGroupViewModel item = new TimerGroupViewModel
             {
                 ID = (byte)FindNewID(0, GroupList.Count - 1),
                 Title = itemTitle,
-                IsRunning = false,
-                CanCreateNewTimer = false,
             };
 
             // Add.
             GroupList.Add(item);
-
-            // Check to set limits.
-            if (GroupList.Count + 1 > MaxNoOfGroups)
-                CanCreateNewGroup = false;
 
             IoC.Logger.Log($"Timer Group '{itemTitle}' added!", LogLevel.Info);
             return item;
         }
 
         /// <summary>
-        /// Delete the group permanently.
+        /// Dispose/delete the group.
         /// </summary>
         /// <param name="vm">The view model of the group you wish to delete.</param>
         /// <returns></returns>
-        public bool DeleteGroup(TimerGroupViewModel vm)
+        public bool DestroyGroup(TimerGroupViewModel vm)
         {
-            IoC.Logger.Log($"Trying to delete Timer Group '{vm.Title}'...", LogLevel.Debug);
+            IoC.Logger.Log($"Trying to destroy Timer Group '{vm.Title}'...", LogLevel.Debug);
 
             if (vm == null)
                 return false;
@@ -114,7 +109,15 @@ namespace BlackSpiritHelper.Core
             if (!GroupList.Remove(vm))
                 return false;
 
-            IoC.Logger.Log($"Timer Group '{title}' deleted!", LogLevel.Info);
+            // Destroy reference to group instance.
+            vm = null;
+
+            // Release GC.
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+
+            IoC.Logger.Log($"Timer Group '{title}' destroyed!", LogLevel.Info);
             return true;
         }
 
@@ -130,48 +133,6 @@ namespace BlackSpiritHelper.Core
             GroupList = new ObservableCollection<TimerGroupViewModel>(
                 GroupList.OrderBy(o => o.Title)
                 );
-        }
-
-        /// <summary>
-        /// Check group parameters.
-        /// TRUE, if all parameters are OK and the group can be created.
-        /// </summary>
-        /// <param name="title">The group title.</param>
-        /// <returns></returns>
-        public bool ValidateGroupInputs(string title)
-        {
-            title = title.Trim();
-
-            // Check conditions.
-            if (title.Length < TimerGroupViewModel.TitleAllowMinChar || title.Length > TimerGroupViewModel.TitleAllowMaxChar)
-                return false;
-
-            // Check allowed characters.
-            if (!CheckAlphanumericString(title, true, true))
-                return false;
-
-            return true;
-        }
-
-        /// <summary>
-        /// Check if the string contains only letters and numbers.
-        /// </summary>
-        /// <param name="input">The string.</param>
-        /// <param name="underscores">Are underscores allowed?</param>
-        /// <param name="spaces">Are spaces allowed?</param>
-        /// <returns></returns>
-        private bool CheckAlphanumericString(string input, bool underscores = false, bool spaces = false)
-        {
-            if (underscores && spaces)
-                return Regex.IsMatch(input, @"^[a-zA-Z0-9_ ]+$");
-
-            if (underscores)
-                return Regex.IsMatch(input, @"^[a-zA-Z0-9_]+$");
-
-            if (spaces)
-                return Regex.IsMatch(input, @"^[a-zA-Z0-9 ]+$");
-
-            return Regex.IsMatch(input, @"^[a-zA-Z0-9_]+$");
         }
 
         /// <summary>

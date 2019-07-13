@@ -40,6 +40,13 @@
 
             // Log it.
             IoC.Logger.Log("User data saved!", LogLevel.Info);
+
+            //
+            //XmlSerializer mySerializer = new XmlSerializer(typeof(TimerGroupListDesignModel));
+            //StreamWriter myWriter = new StreamWriter("prefs.xml");
+            //mySerializer.Serialize(myWriter, xb);
+            //myWriter.Close();
+            //
         }
 
         #endregion

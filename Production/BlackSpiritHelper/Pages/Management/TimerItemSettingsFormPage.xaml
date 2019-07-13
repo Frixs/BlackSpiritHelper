@@ -35,8 +35,15 @@
 
                 <!-- Timer Title -->
                 <TextBox Tag="Title" Margin="0 0 0 10"
-                         Text="{Binding Title}"
-                         MaxLength="{Binding TimerItemViewModel.TitleAllowMaxChar}" />
+                         MaxLength="{Binding TimerItemViewModel.TitleAllowMaxChar}">
+                    <TextBox.Text>
+                        <Binding Path="Title">
+                            <Binding.ValidationRules>
+                                <core:TimerTitleRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
 
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -46,8 +53,15 @@
                     
                     <!-- Icon Timer Shortcut -->
                     <TextBox Tag="Icon Shortcut" Margin="0 0 5 10" Grid.Column="0"
-                             Text="{Binding IconTitleShortcut}"
-                             MaxLength="{Binding TimerItemViewModel.IconTitleAllowMaxChar}" />
+                             MaxLength="{Binding TimerItemViewModel.IconTitleAllowMaxChar}">
+                        <TextBox.Text>
+                            <Binding Path="IconTitleShortcut">
+                                <Binding.ValidationRules>
+                                    <core:TimerIconTitleShortcutRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                     <!-- Icon Timer Shortcut -->
                     <xctk:ColorPicker Margin="5 0 0 10" Grid.Column="1"
                                       SelectedColor="{Binding IconBackgroundHEX}"
@@ -57,7 +71,8 @@
                                       ShowAvailableColors="False"
                                       ShowStandardColors="False"
                                       StandardButtonHeader=""
-                                      />
+                                      >
+                    </xctk:ColorPicker>
                 </Grid>
 
                 <!-- Timer Total Time -->
@@ -66,10 +81,17 @@
                                      DefaultValue="00:01:00"
                                      Minimum="00:01:00"
                                      Maximum="2:00:00:00"
-                                     Value="{Binding TimeTotal}"
                                      Padding="6"
                                      FontSize="20"
-                                     TextAlignment="Center"/>
+                                     TextAlignment="Center">
+                    <xctk:TimeSpanUpDown.Value>
+                        <Binding Path="TimeDuration">
+                            <Binding.ValidationRules>
+                                <core:TimerTimeDurationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </xctk:TimeSpanUpDown.Value>
+                </xctk:TimeSpanUpDown>
 
                 <!-- Timer Start Countdown -->
                 <TextBlock Text="Start Countdown"
@@ -113,8 +135,15 @@
                         <TextBlock Text="Show In Overlay" Grid.Column="1"
                                    FontSize="14"
                                    Margin="0 0 0 5"/>
-                        <CheckBox IsChecked="{Binding ShowInOverlay}"
-                                  HorizontalAlignment="Center"/>
+                        <CheckBox HorizontalAlignment="Center">
+                            <CheckBox.IsChecked>
+                                <Binding Path="ShowInOverlay">
+                                    <Binding.ValidationRules>
+                                        <core:TimerShowInOverlayRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </CheckBox.IsChecked>
+                        </CheckBox>
                     </StackPanel>
                 </Grid>
 
@@ -125,8 +154,15 @@
                 <ComboBox Margin="0 0 0 50"
                           Name="GroupChangeComboBox"
                           HorizontalAlignment="Center"
-                          SelectedItem="{Binding AssociatedGroupViewModel}"
-                          Tag="{Binding GroupID}" />
+                          Tag="{Binding GroupID}">
+                    <ComboBox.SelectedItem>
+                        <Binding Path="AssociatedGroupViewModel">
+                            <Binding.ValidationRules>
+                                <core:TimerAssociatedGroupViewModelRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </ComboBox.SelectedItem>
+                </ComboBox>
 
                 <!-- Save Changes Button -->
                 <Button Content="SAVE CHANGES" Margin="0 0 0 10"
@@ -147,7 +183,7 @@
                     </Border.BorderBrush>
                 </Border>
 
-                <!-- Delete Group Button -->
+                <!-- Delete Timer Button -->
                 <Button Content="Delete Timer"
                         Style="{StaticResource RegularTextButtonRed}"
                         Command="{Binding DeleteTimerCommand}"/>

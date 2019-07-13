@@ -81,6 +81,13 @@
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Include="Task\TaskManager.cs" />
+    <Compile Include="Utilities\StringUtils.cs" />
+    <Compile Include="ValidationRules\Timer\TimerIconTitleShortcutRule.cs" />
+    <Compile Include="ValidationRules\Timer\TimerTimeDurationRule.cs" />
+    <Compile Include="ValidationRules\Timer\TimerShowInOverlayRule.cs" />
+    <Compile Include="ValidationRules\Timer\TimerAssociatedGroupViewModelRule.cs" />
+    <Compile Include="ValidationRules\Timer\TimerGroupTitleRule.cs" />
+    <Compile Include="ValidationRules\Timer\TimerTitleRule.cs" />
     <Compile Include="ViewModels\Application\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
