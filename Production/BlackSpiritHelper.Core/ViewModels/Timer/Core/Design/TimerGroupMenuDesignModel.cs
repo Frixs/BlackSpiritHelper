@@ -2,7 +2,7 @@
 {
     public class TimerGroupMenuDesignModel : TimerGroupMenuViewModel
     {
-        #region Singleton
+        #region New Instance Getter
 
         public static TimerGroupMenuDesignModel Instance => new TimerGroupMenuDesignModel();
 

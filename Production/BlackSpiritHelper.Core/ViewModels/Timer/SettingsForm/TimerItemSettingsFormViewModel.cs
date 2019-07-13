@@ -119,8 +119,8 @@ namespace BlackSpiritHelper.Core
             Title                           = TimerItemViewModel.Title;
             IconTitleShortcut               = TimerItemViewModel.IconTitleShortcut;
             IconBackgroundHEX               = "#" + TimerItemViewModel.IconBackgroundHEX;
-            TimeTotal                       = TimerItemViewModel.TimeTotal;
-            CountdownDuration               = TimerItemViewModel.CountdownDurationTotal.TotalSeconds;
+            TimeTotal                       = TimerItemViewModel.TimeDuration;
+            CountdownDuration               = TimerItemViewModel.CountdownDuration.TotalSeconds;
             IsLoopActive                    = TimerItemViewModel.IsLoopActive;
             GroupID                         = TimerItemViewModel.GroupID;
             AssociatedGroupViewModel        = null;

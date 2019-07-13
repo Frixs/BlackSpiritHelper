@@ -17,6 +17,11 @@ namespace BlackSpiritHelper.Core
         public static IKernel Kernel { get; private set; } = new StandardKernel();
 
         /// <summary>
+        /// A shortcut to access the <see cref="BlackSpiritHelper.Core.Properties.Settings"/>.
+        /// </summary>
+        public static BlackSpiritHelper.Core.Properties.Settings SettingsStorage => IoC.Get<BlackSpiritHelper.Core.Properties.Settings>();
+
+        /// <summary>
         /// A shortcut to access the <see cref="ApplicationViewModel"/>.
         /// </summary>
         public static ApplicationViewModel Application => IoC.Get<ApplicationViewModel>();
@@ -56,6 +61,9 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public static void Setup()
         {
+            // Bind settings storage.
+            Kernel.Bind<BlackSpiritHelper.Core.Properties.Settings>().ToConstant(BlackSpiritHelper.Core.Properties.Settings.Default);
+
             // Bind all required view models.
             BindViewModels();
         }

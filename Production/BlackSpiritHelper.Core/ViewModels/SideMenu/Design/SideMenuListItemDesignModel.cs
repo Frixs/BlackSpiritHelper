@@ -2,7 +2,7 @@
 {
     public class SideMenuListItemDesignModel : SideMenuListItemViewModel
     {
-        #region Singleton
+        #region New Instance Getter
 
         public static SideMenuListItemDesignModel Instance => new SideMenuListItemDesignModel();
 

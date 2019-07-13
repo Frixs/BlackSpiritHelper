@@ -2,7 +2,7 @@
 {
     public class TimerListDesignModel : TimerListViewModel
     {
-        #region Singleton
+        #region New Instance Getter
 
         public static TimerListDesignModel Instance => new TimerListDesignModel();
 

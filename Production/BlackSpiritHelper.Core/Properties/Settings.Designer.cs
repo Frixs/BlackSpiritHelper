@@ -34,5 +34,16 @@ namespace BlackSpiritHelper.Core.Properties {
                 this["LastOpenedPage"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::BlackSpiritHelper.Core.TimerGroupListDesignModel TimerGroupListDesignModel {
+            get {
+                return ((global::BlackSpiritHelper.Core.TimerGroupListDesignModel)(this["TimerGroupListDesignModel"]));
+            }
+            set {
+                this["TimerGroupListDesignModel"] = value;
+            }
+        }
     }
 }

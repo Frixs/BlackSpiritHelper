@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
 {
@@ -45,6 +47,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Max number of timers that can be created in the group.
         /// </summary>
+        [XmlIgnore]
         public byte MaxNoOfTimers { get; private set; } = 10;
 
         /// <summary>
@@ -64,21 +67,25 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// The command play group.
         /// </summary>
+        [XmlIgnore]
         public ICommand PlayCommand { get; set; }
 
         /// <summary>
         /// The command pause group.
         /// </summary>
+        [XmlIgnore]
         public ICommand PauseCommand { get; set; }
 
         /// <summary>
         /// The command to add new timer to the group.
         /// </summary>
+        [XmlIgnore]
         public ICommand AddTimerCommand { get; set; }
 
         /// <summary>
         /// The command to open group settings.
         /// </summary>
+        [XmlIgnore]
         public ICommand OpenGroupSettingsCommand { get; set; }
 
         #endregion
@@ -132,8 +139,8 @@ namespace BlackSpiritHelper.Core
                 Title = "Untitled Timer",
                 IconTitleShortcut = "X",
                 IconBackgroundHEX = "FFFFFF",
-                TimeTotal = new TimeSpan(0, 1, 0),
-                CountdownDurationTotal = TimeSpan.FromSeconds(0),
+                TimeDuration = new TimeSpan(0, 1, 0),
+                CountdownDuration = TimeSpan.FromSeconds(0),
                 State = TimerState.Ready,
                 IsLoopActive = false,
                 ShowInOverlay = false,

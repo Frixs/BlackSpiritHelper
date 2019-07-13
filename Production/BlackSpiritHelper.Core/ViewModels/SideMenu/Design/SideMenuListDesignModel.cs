@@ -4,7 +4,7 @@ namespace BlackSpiritHelper.Core
 {
     public class SideMenuListDesignModel : SideMenuListViewModel
     {
-        #region Singleton
+        #region New Instance Getter
 
         public static SideMenuListDesignModel Instance => new SideMenuListDesignModel();
 

@@ -2,7 +2,7 @@
 {
     public class TimerGroupDesignModel : TimerGroupViewModel
     {
-        #region Singleton
+        #region New Instance Getter
 
         public static TimerGroupDesignModel Instance => new TimerGroupDesignModel();
 

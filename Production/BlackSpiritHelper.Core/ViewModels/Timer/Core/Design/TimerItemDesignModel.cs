@@ -4,7 +4,7 @@ namespace BlackSpiritHelper.Core
 {
     public class TimerItemDesignModel : TimerItemViewModel
     {
-        #region Singleton
+        #region New Instance Getter
 
         public static TimerItemDesignModel Instance => new TimerItemDesignModel();
 
@@ -18,8 +18,8 @@ namespace BlackSpiritHelper.Core
             Title = "New Timer";
             IconTitleShortcut = "NT";
             IconBackgroundHEX = "FA2C9B";
-            TimeTotal = new TimeSpan(0, 1, 0);
-            CountdownDurationTotal = TimeSpan.FromSeconds(3);
+            TimeDuration = new TimeSpan(0, 1, 0);
+            CountdownDuration = TimeSpan.FromSeconds(3);
             State = TimerState.Ready;
             IsLoopActive = false;
         }

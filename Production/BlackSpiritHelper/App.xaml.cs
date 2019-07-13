@@ -77,6 +77,17 @@ namespace BlackSpiritHelper
         }
 
         /// <summary>
+        /// Perform tasks at application exit.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            // Save data before exiting application.
+            IoC.DataContent.SaveUserData();
+        }
+
+        /// <summary>
         /// Checks if a new version of the SW is available.
         /// </summary>
         private void checkForUpdates()

@@ -1,10 +1,13 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
 {
@@ -36,17 +39,17 @@ namespace BlackSpiritHelper.Core
         public static byte IconTitleAllowMaxChar { get; private set; } = 3;
 
         /// <summary>
-        /// Limitation for max duration in <see cref="CountdownDurationTotal"/>.
+        /// Limitation for max duration in <see cref="CountdownDuration"/>.
         /// </summary>
         public static TimeSpan CountdownAllowMaxDuration { get; private set; } = TimeSpan.FromSeconds(7200);
 
         /// <summary>
-        /// Limitation for min duration in <see cref="TimeTotal"/>.
+        /// Limitation for min duration in <see cref="TimeDuration"/>.
         /// </summary>
         public static TimeSpan TimeAllowMinDuration { get; private set; } = TimeSpan.FromMinutes(1);
 
         /// <summary>
-        /// Limitation for max duration in <see cref="TimeTotal"/>.
+        /// Limitation for max duration in <see cref="TimeDuration"/>.
         /// </summary>
         public static TimeSpan TimeAllowMaxDuration { get; private set; } = TimeSpan.FromDays(2);
 
@@ -87,7 +90,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Timer control.
         /// </summary>
-        private TimerState mState;
+        private TimerState mState = TimerState.None;
 
         /// <summary>
         /// Array of notification event fire record.
@@ -126,12 +129,14 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Formatted time output.
         /// </summary>
+        [XmlIgnore]
         public string TimeFormat { get; private set; }
 
         /// <summary>
-        /// Timer time total.
+        /// Timer total time.
         /// </summary>
-        public TimeSpan TimeTotal
+        [XmlIgnore]
+        public TimeSpan TimeDuration
         {
             get
             {
@@ -146,8 +151,25 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
+        /// Helper for <see cref="TimeDuration"/>.
+        /// It is used to set back the value on application load.
+        /// </summary>
+        public long TimeTotalTicks
+        {
+            get
+            {
+                return TimeDuration.Ticks;
+            }
+            set
+            {
+                TimeDuration = new TimeSpan(value);
+            }
+        }
+
+        /// <summary>
         /// Time left to zero.
         /// </summary>
+        [XmlIgnore]
         public TimeSpan TimeLeft
         {
             get
@@ -161,9 +183,29 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
+        /// Helper for <see cref="TimeLeft"/>.
+        /// It is used to set back the value on application load.
+        /// </summary>
+        public long TimeLeftTicks
+        {
+            get
+            {
+                return TimeLeft.Ticks;
+            }
+            set
+            {
+                TimeLeft = new TimeSpan(value);
+
+                // Update time format on load.
+                UpdateTimeInUI(TimeLeft);
+            }
+        }
+
+        /// <summary>
         /// Countdown before timer starts total.
         /// </summary>
-        public TimeSpan CountdownDurationTotal
+        [XmlIgnore]
+        public TimeSpan CountdownDuration
         {
             get
             {
@@ -177,8 +219,25 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
+        /// Helper for <see cref="CountdownDuration"/>.
+        /// It is used to set back the value on application load.
+        /// </summary>
+        public long CountdownDurationTotalTicks
+        {
+            get
+            {
+                return CountdownDuration.Ticks;
+            }
+            set
+            {
+                CountdownDuration = new TimeSpan(value);
+            }
+        }
+
+        /// <summary>
         /// Countdown before timer starts.
         /// </summary>
+        [XmlIgnore]
         public TimeSpan CountdownLeft
         {
             get
@@ -188,6 +247,26 @@ namespace BlackSpiritHelper.Core
             private set
             {
                 mCountdownLeft = value;
+            }
+        }
+
+        /// <summary>
+        /// Helper for <see cref="CountdownLeft"/>.
+        /// It is used to set back the value on application load.
+        /// </summary>
+        public long CountdownLeftTicks
+        {
+            get
+            {
+                return CountdownLeft.Ticks;
+            }
+            set
+            {
+                CountdownLeft = new TimeSpan(value);
+
+                // Update time format on load.
+                if (CountdownLeft.TotalSeconds > 0)
+                    UpdateTimeInUI(CountdownLeft);
             }
         }
 
@@ -202,23 +281,15 @@ namespace BlackSpiritHelper.Core
             }
             set
             {
+                TimerState previousState = mState;
+
                 mState = value;
 
-                // Set the initial state parameters.
-                if (mState == TimerState.None)
+                // Set the initial state parameters at the time of timer creation.
+                if (previousState == TimerState.None)
                     UpdateState(value);
             }
         }
-
-        /// <summary>
-        /// Says, the timer is currently playing (True) or it is another state (False).
-        /// </summary>
-        public bool IsRunning { get; private set; }
-
-        /// <summary>
-        /// Says, the timer is currently in countdown.
-        /// </summary>
-        public bool IsInCountdown { get; private set; }
 
         /// <summary>
         /// Says, if the timer is in infinite loop.
@@ -226,18 +297,32 @@ namespace BlackSpiritHelper.Core
         public bool IsLoopActive { get; set; }
 
         /// <summary>
-        /// Says, if the timer is currently in freeze state.
-        /// </summary>
-        public bool IsInFreeze { get; private set; }
-
-        /// <summary>
         /// Show this timer in overlay.
         /// </summary>
         public bool ShowInOverlay { get; set; }
 
         /// <summary>
+        /// Says, the timer is currently playing (True) or it is another state (False).
+        /// </summary>
+        [XmlIgnore]
+        public bool IsRunning { get; private set; }
+
+        /// <summary>
+        /// Says, if the timer is currently in freeze state.
+        /// </summary>
+        [XmlIgnore]
+        public bool IsInFreeze { get; private set; }
+
+        /// <summary>
+        /// Says, the timer is currently in countdown.
+        /// NOTE: Do NOT set this manually. It helps on application start to recover timer to its previous state.
+        /// </summary>
+        public bool IsInCountdown { get; set; }
+
+        /// <summary>
         /// Says, if the timer is in warning time (less than X).
         /// </summary>
+        [XmlIgnore]
         public bool IsWarningTime { get; private set; }
 
         #endregion
@@ -247,36 +332,43 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// The command open timer settings.
         /// </summary>
+        [XmlIgnore]
         public ICommand OpenTimerSettingsCommand { get; set; }
 
         /// <summary>
         /// The command to increase time in the timer.
         /// </summary>
+        [XmlIgnore]
         public ICommand TimePlusCommand { get; set; }
 
         /// <summary>
         /// The command to decrease time in the timer.
         /// </summary>
+        [XmlIgnore]
         public ICommand TimeMinusCommand { get; set; }
 
         /// <summary>
         /// The command to reset timer.
         /// </summary>
+        [XmlIgnore]
         public ICommand ResetTimerCommand { get; set; }
 
         /// <summary>
         /// The command to SYNC the timer.
         /// </summary>
+        [XmlIgnore]
         public ICommand SyncCommand { get; set; }
 
         /// <summary>
         /// The command to play/resume the timer.
         /// </summary>
+        [XmlIgnore]
         public ICommand PlayCommand { get; set; }
 
         /// <summary>
         /// The command to pause the timer.
         /// </summary>
+        [XmlIgnore]
         public ICommand PauseCommand { get; set; }
 
         #endregion
@@ -308,6 +400,12 @@ namespace BlackSpiritHelper.Core
             IsRunning = false;
             IsInCountdown = false;
             IsWarningTime = false;
+
+            // Update time format on load.
+            if (TimeLeft.Ticks < TimeDuration.Ticks)
+                UpdateTimeInUI(TimeLeft);
+            else if (CountdownLeft.Ticks < CountdownDuration.Ticks)
+                UpdateTimeInUI(CountdownLeft);
         }
 
         /// <summary>
@@ -320,9 +418,12 @@ namespace BlackSpiritHelper.Core
             TimeSpan currTime;
 
             // Decide which time to pick according to timer state.
+            // Countdown.
             if (State == TimerState.Countdown)
                 // Calculate Countdown time.
                 currTime = CountdownLeft = CountdownLeft.Subtract(TimeSpan.FromSeconds(1));
+
+            // Normal timer.
             else
             {
                 // Calculate Timer time.
@@ -346,20 +447,20 @@ namespace BlackSpiritHelper.Core
                         {
                             IsFiredNotificationEvent[1] = true;
                             // TODO
+
+                            IsWarningTime = true;
+                            // TODO warning UI.
                         }
 
                         if (currTime.TotalSeconds < 5 && currTime.TotalSeconds > 0)
                         {
-                            IsWarningTime = true;
-                            // TODO warning UI.
-
                             // The last seconds countdown event.
                             // TODO
                         }
                     }
-                }
+                } // End - notification events.
 
-            }
+            } // End - calculating time.
 
             // Update UI thread.
             Application.Current.Dispatcher.Invoke(() =>
@@ -459,7 +560,7 @@ namespace BlackSpiritHelper.Core
         private void TimerPlay()
         {
             // Timer is starting from Ready (after reset).
-            if (State == TimerState.Ready && CountdownDurationTotal.TotalSeconds > 0)
+            if (State == TimerState.Ready && CountdownDuration.TotalSeconds > 0)
             {
                 // Set start countdown.
                 UpdateState(TimerState.Countdown);
@@ -518,8 +619,8 @@ namespace BlackSpiritHelper.Core
             UpdateState(TimerState.Ready);
 
             // Reset time.
-            TimeLeft = TimeSpan.FromSeconds(TimeTotal.TotalSeconds);
-            CountdownLeft = TimeSpan.FromSeconds(CountdownDurationTotal.TotalSeconds);
+            TimeLeft = new TimeSpan(TimeDuration.Ticks);
+            CountdownLeft = new TimeSpan(CountdownDuration.Ticks);
 
             UpdateTimeInUI(TimeLeft);
         }
@@ -532,7 +633,7 @@ namespace BlackSpiritHelper.Core
             IsWarningTime = false;
 
             TimerPause();
-            TimeLeft = TimeSpan.FromSeconds(TimeTotal.TotalSeconds);
+            TimeLeft = new TimeSpan(TimeDuration.Ticks);
             TimerPlay();
         }
 
@@ -581,9 +682,9 @@ namespace BlackSpiritHelper.Core
             TimeSpan tAfterChange = TimeSpan.FromSeconds(TimeLeft.TotalSeconds).Add(tAdd);
 
             // Cannot increase over the total time.
-            if (tAfterChange.TotalSeconds > TimeTotal.TotalSeconds)
+            if (tAfterChange.TotalSeconds > TimeDuration.TotalSeconds)
             {
-                TimeLeft = TimeSpan.FromSeconds(TimeTotal.TotalSeconds);
+                TimeLeft = TimeSpan.FromSeconds(TimeDuration.TotalSeconds);
             }
             else
             {
@@ -630,6 +731,18 @@ namespace BlackSpiritHelper.Core
         {
             // TODO Sync timer.
             Console.WriteLine("TODO");
+
+            TimerGroupListDesignModel xb = IoC.DataContent.TimerGroupListDesignModel;
+            IoC.SettingsStorage.TimerGroupListDesignModel = null;
+            IoC.SettingsStorage.Save();
+            IoC.SettingsStorage.TimerGroupListDesignModel = xb;
+            IoC.SettingsStorage.Save();
+
+            XmlSerializer mySerializer = new XmlSerializer(typeof(TimerGroupListDesignModel));
+            StreamWriter myWriter = new StreamWriter("prefs.xml");
+            mySerializer.Serialize(myWriter, xb);
+            myWriter.Close();
+
             TimerFreeze();
             await Task.Delay(1);
         }

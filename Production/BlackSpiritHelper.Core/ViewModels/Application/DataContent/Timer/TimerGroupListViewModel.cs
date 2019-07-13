@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Configuration;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
 {
@@ -21,6 +24,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Max number of groups that can be created.
         /// </summary>
+        [XmlIgnore]
         public byte MaxNoOfGroups { get; private set; } = 5;
 
         /// <summary>
