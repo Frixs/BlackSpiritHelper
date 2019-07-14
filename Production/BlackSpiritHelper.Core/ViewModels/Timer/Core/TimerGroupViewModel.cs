@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Xml.Serialization;
@@ -218,6 +219,16 @@ namespace BlackSpiritHelper.Core
             return true;
         }
 
+        /// <summary>
+        /// Sort <see cref="TimerList"/> alphabetically.
+        /// </summary>
+        public void SortTimerList()
+        {
+            TimerList = new ObservableCollection<TimerItemViewModel>(
+                TimerList.OrderBy(o => o.Title)
+                );
+        }
+
         #endregion
 
         #region Validation Methods
@@ -230,15 +241,14 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         public static bool ValidateGroupInputs(string title)
         {
+            #region Title
+
             title = title.Trim();
 
-            // Check conditions.
-            if (title.Length < TimerGroupViewModel.TitleAllowMinChar || title.Length > TimerGroupViewModel.TitleAllowMaxChar)
+            if (!new TimerGroupTitleRule().Validate(title, null).IsValid)
                 return false;
 
-            // Check allowed characters.
-            if (!StringUtils.CheckAlphanumericString(title, true, true))
-                return false;
+            #endregion
 
             return true;
         }

@@ -121,10 +121,6 @@ namespace BlackSpiritHelper.Core
             return true;
         }
 
-        #endregion
-
-        #region Helpers
-
         /// <summary>
         /// Sort <see cref="GroupList"/> alphabetically.
         /// </summary>
@@ -134,6 +130,10 @@ namespace BlackSpiritHelper.Core
                 GroupList.OrderBy(o => o.Title)
                 );
         }
+
+        #endregion
+
+        #region Helpers
 
         /// <summary>
         /// Find the smallest missing key in the list as a new representation for a new group ID.

@@ -141,22 +141,30 @@ namespace BlackSpiritHelper.Core
 
         private void SaveChanges()
         {
-            //TODO
-            Console.WriteLine(Title);
-
             if (TimerItemViewModel.State != TimerState.Ready)
                 return;
 
-            if (!TimerItemViewModel.ValidateTimerInputs(Title, IconTitleShortcut, IconBackgroundHEX, TimeDuration, TimeSpan.FromSeconds(CountdownDuration), ShowInOverlay))
+            // Substring the HEX color to the required form.
+            // We recieve f.e. #FF000000 and we want to transform it into 000000.
+            string iconBackgroundHEX;
+            if (IconBackgroundHEX.Length == 9)
+                iconBackgroundHEX = IconBackgroundHEX.Substring(3);
+            // Color has hashmark.
+            else if (IconBackgroundHEX.Length == 7)
+                iconBackgroundHEX = IconBackgroundHEX.Substring(1);
+            // Color hasn't changed.
+            else
+                iconBackgroundHEX = IconBackgroundHEX;
+
+            // Validate inputs.
+            if (!TimerItemViewModel.ValidateTimerInputs(Title, IconTitleShortcut, iconBackgroundHEX, TimeDuration, TimeSpan.FromSeconds(CountdownDuration), ShowInOverlay, AssociatedGroupViewModel) 
+                || AssociatedGroupViewModel == null)
             {
                 // Some error occured during saving changes of the timer.
                 IoC.UI.ShowMessage(new MessageBoxDialogViewModel
                 {
                     Caption = "Invalid Parameters!",
-                    Message = $"Some of entered parameters are invalid... {Environment.NewLine}{Environment.NewLine}" +
-                              $"- Title can contain only letters and numbers, {TimerItemViewModel.TitleAllowMinChar} characters at minimum and {TimerItemViewModel.TitleAllowMaxChar} characters at maximum. {Environment.NewLine}{Environment.NewLine}" +
-                              $"- Icon Title Shortcut can contain only letters and numbers, {TimerItemViewModel.IconTitleAllowMinChar} characters at minimum and {TimerItemViewModel.IconTitleAllowMaxChar} characters at maximum. {Environment.NewLine}{Environment.NewLine}" +
-                              $"- There is limitation to number of timers in the overlay to {TimerItemViewModel.OverlayTimerLimitCount}.",
+                    Message = $"Some of entered parameters are invalid. Please check them again.{Environment.NewLine}",
                     Button = System.Windows.MessageBoxButton.OK,
                     Icon = System.Windows.MessageBoxImage.Warning,
                 });
@@ -164,17 +172,42 @@ namespace BlackSpiritHelper.Core
                 return;
             }
 
-            // Save changes. TODO
+            // Save changes.
+            if (TimerItemViewModel.GroupID != AssociatedGroupViewModel.ID)
+            {
+                // Find and remove timer from old group.
+                if (!IoC.DataContent.TimerGroupListDesignModel.GroupList.First(o => o.ID == TimerItemViewModel.GroupID).TimerList.Remove(mTimerItemViewModel))
+                {
+                    // Some error occured during removing the timer from old group.
+                    IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                    {
+                        Caption = "An unexpected error occured!",
+                        Message = $"Unexpected error while removing the timer from the old group. Please contact the developers to fix the issue.{Environment.NewLine}",
+                        Button = System.Windows.MessageBoxButton.OK,
+                        Icon = System.Windows.MessageBoxImage.Warning,
+                    });
+
+                    return;
+                }
+                // Add timer to the new group.
+                AssociatedGroupViewModel.TimerList.Add(mTimerItemViewModel);
+                // Set group ID.
+                TimerItemViewModel.GroupID = AssociatedGroupViewModel.ID;
+
+            }
             TimerItemViewModel.Title = Title;
             TimerItemViewModel.IconTitleShortcut = IconTitleShortcut;
-            TimerItemViewModel.IconBackgroundHEX = IconBackgroundHEX;
+            TimerItemViewModel.IconBackgroundHEX = iconBackgroundHEX;
             TimerItemViewModel.TimeDuration = TimeDuration;
             TimerItemViewModel.CountdownDuration = TimeSpan.FromSeconds(CountdownDuration);
             TimerItemViewModel.IsLoopActive = IsLoopActive;
             TimerItemViewModel.ShowInOverlay = ShowInOverlay;
 
-            // Resort groups alphabetically.
-            IoC.DataContent.TimerGroupListDesignModel.SortGroupList();
+            // Resort timer list alphabetically.
+            AssociatedGroupViewModel.SortTimerList();
+
+            // Log it.
+            IoC.Logger.Log($"Timer '{TimerItemViewModel.Title}' settings changed!", LogLevel.Info);
 
             // Move back to the page.
             IoC.Application.GoToPage(ApplicationPage.Timer);

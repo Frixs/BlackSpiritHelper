@@ -18,6 +18,8 @@ namespace BlackSpiritHelper.Core
             else
                 return new ValidationResult(false, "Not a character sequence.");
 
+            val = val.Trim();
+
             // Check conditions.
             if (val.Length < TimerItemViewModel.TitleAllowMinChar || val.Length > TimerItemViewModel.TitleAllowMaxChar)
                 return new ValidationResult(false, $"Please enter a title in the length: {TimerItemViewModel.TitleAllowMinChar} - {TimerItemViewModel.TitleAllowMaxChar}.");

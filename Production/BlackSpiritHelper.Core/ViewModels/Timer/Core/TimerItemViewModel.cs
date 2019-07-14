@@ -674,6 +674,20 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task OpenTimerSettingsAsync()
         {
+            if (State != TimerState.Ready)
+            {
+                // Cannot open timer settings while timer is running.
+                await IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                {
+                    Caption = "Ooops...",
+                    Message = $"You cannot open timer settings while timer is in process. {Environment.NewLine}Please reset the timer into default state, first.",
+                    Button = System.Windows.MessageBoxButton.OK,
+                    Icon = System.Windows.MessageBoxImage.Information,
+                });
+
+                return;
+            }
+
             // Create Settings View Model with the current timer binding.
             TimerItemSettingsFormViewModel vm = new TimerItemSettingsFormViewModel
             {
@@ -691,6 +705,9 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task TimePlusAsync()
         {
+            if (!IsRunning)
+                return;
+
             TimeSpan tAdd = TimeSpan.FromSeconds(30);
             TimeSpan tAfterChange;
 
@@ -730,6 +747,9 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task TimeMinusAsync()
         {
+            if (!IsRunning)
+                return;
+
             TimeSpan tSubtract = TimeSpan.FromSeconds(30);
             TimeSpan tAfterChange;
 
@@ -774,10 +794,35 @@ namespace BlackSpiritHelper.Core
             await Task.Delay(1);
         }
 
+        /// <summary>
+        /// Synchronization command.
+        /// Move your timer to min or to max.
+        /// </summary>
+        /// <returns></returns>
         private async Task SyncCommandAsync()
         {
-            // TODO Sync timer.
-            Console.WriteLine("TODO");
+            if (!IsRunning)
+                return;
+
+            // Countdown.
+            if (State == TimerState.Countdown)
+            {
+                CountdownLeft = TimeSpan.FromSeconds(1);
+
+                // Update time in UI.
+                UpdateTimeInUI(CountdownLeft);
+            }
+            // Normal timer.
+            else
+            {
+                if (TimeLeft.Ticks > TimeDuration.Ticks / 2)
+                    TimeLeft = TimeSpan.FromSeconds(TimeDuration.TotalSeconds);
+                else
+                    TimeLeft = TimeSpan.FromSeconds(1);
+
+                // Update time in UI.
+                UpdateTimeInUI(TimeLeft);
+            }
 
             await Task.Delay(1);
         }
@@ -818,17 +863,14 @@ namespace BlackSpiritHelper.Core
         /// <param name="timeDuration"></param>
         /// <param name="countdownDuration"></param>
         /// <param name="showInOverlay"></param>
+        /// <param name="showInOverlay"></param>
         /// <returns></returns>
-        public static bool ValidateTimerInputs(string title, string iconTitleShortcut, string iconBackgroundHEX, TimeSpan timeDuration, TimeSpan countdownDuration, bool showInOverlay)
+        public static bool ValidateTimerInputs(string title, string iconTitleShortcut, string iconBackgroundHEX, TimeSpan timeDuration, TimeSpan countdownDuration, bool showInOverlay, TimerGroupViewModel associatedGroupViewModel)
         {
             #region Title
 
             title = title.Trim();
-            // Check conditions.
-            if (title.Length < TitleAllowMinChar || title.Length > TitleAllowMaxChar)
-                return false;
-            // Check allowed characters.
-            if (!StringUtils.CheckAlphanumericString(title, true, true))
+            if (!new TimerTitleRule().Validate(title, null).IsValid)
                 return false;
 
             #endregion
@@ -836,21 +878,21 @@ namespace BlackSpiritHelper.Core
             #region IconTitleShortcut
 
             iconTitleShortcut = iconTitleShortcut.Trim();
-            // Check conditions.
-            if (title.Length < IconTitleAllowMinChar || title.Length > IconTitleAllowMaxChar)
+            if (!new TimerIconTitleShortcutRule().Validate(iconTitleShortcut, null).IsValid)
                 return false;
-            // Check allowed characters.
-            if (!StringUtils.CheckAlphanumericString(title, true, true))
+
+            #endregion
+
+            #region TimeDuration
+
+            if (!new TimerTimeDurationRule().Validate(timeDuration, null).IsValid)
                 return false;
 
             #endregion
 
             #region CountdownDuration
 
-            if (countdownDuration == null)
-                return false;
-            // Check conditions.
-            if (countdownDuration.Ticks > CountdownAllowMaxDuration.Ticks || countdownDuration.Ticks < 0)
+            if (!new TimerCountdownDurationRule().Validate(countdownDuration.TotalSeconds, null).IsValid)
                 return false;
 
             #endregion
@@ -862,29 +904,17 @@ namespace BlackSpiritHelper.Core
 
             #endregion
 
-            #region TimeDuration
+            #region ShowInOverlay
 
-            if (timeDuration == null)
-                return false;
-            // Check conditions.
-            if (timeDuration.Ticks > TimeAllowMaxDuration.Ticks || timeDuration.Ticks < TimeAllowMinDuration.Ticks)
+            if (!new TimerShowInOverlayRule().Validate(showInOverlay, null).IsValid)
                 return false;
 
             #endregion
 
-            #region ShowInOverlay
+            #region AssociatedGroupViewModel
 
-            if (showInOverlay)
-            {
-                // Counter.
-                int c = 1;
-                // Chech conditions.
-                foreach (TimerGroupViewModel g in IoC.DataContent.TimerGroupListDesignModel.GroupList)
-                    foreach (TimerItemViewModel t in g.TimerList)
-                        if (t.ShowInOverlay)
-                            if (++c > OverlayTimerLimitCount)
-                                return false;
-            }
+            if (!new TimerAssociatedGroupViewModelRule().Validate(associatedGroupViewModel, null).IsValid)
+                return false;
 
             #endregion
 

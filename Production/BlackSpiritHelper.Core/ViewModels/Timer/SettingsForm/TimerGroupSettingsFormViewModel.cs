@@ -114,6 +114,9 @@ namespace BlackSpiritHelper.Core
             // Resort groups alphabetically.
             IoC.DataContent.TimerGroupListDesignModel.SortGroupList();
 
+            // Log it.
+            IoC.Logger.Log($"Timer Group '{TimerGroupViewModel.Title}' settings changed!", LogLevel.Info);
+
             // Move back to the page.
             IoC.Application.GoToPage(ApplicationPage.Timer);
         }

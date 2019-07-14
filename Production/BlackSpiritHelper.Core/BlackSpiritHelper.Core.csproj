@@ -83,6 +83,7 @@
     <Compile Include="Task\TaskManager.cs" />
     <Compile Include="Utilities\StringUtils.cs" />
     <Compile Include="ValidationRules\Timer\TimerIconTitleShortcutRule.cs" />
+    <Compile Include="ValidationRules\Timer\TimerCountdownDurationRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerTimeDurationRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerShowInOverlayRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerAssociatedGroupViewModelRule.cs" />

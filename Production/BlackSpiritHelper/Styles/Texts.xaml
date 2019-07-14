@@ -121,6 +121,31 @@
         </Style.Triggers>
     </Style>
 
+    <!--Slider Input -->
+    <Style TargetType="{x:Type Slider}" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="FontFamily" Value="{StaticResource LatoLight}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{StaticResource TextBoxLineBackgroundBrushKey}" />
+
+        <!-- Delete default error template -->
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter Property="BorderBrush" Value="{StaticResource TextBoxLineFocusBackgroundBrushKey}"/>
+            </Trigger>
+            <Trigger Property="Validation.HasError" Value="True">
+                <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource TextBoxLineErrorBackgroundBrushKey}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <!--ComboBox Input -->
     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="FontFamily" Value="{StaticResource LatoLight}" />
