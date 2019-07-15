@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Windows.Input;
 
 namespace BlackSpiritHelper.Core
@@ -128,7 +127,7 @@ namespace BlackSpiritHelper.Core
             AssociatedGroupViewModel        = null;
         }
 
-        #region Command Helpers
+        #region Command Methods
 
         /// <summary>
         /// Create commands.
@@ -173,10 +172,12 @@ namespace BlackSpiritHelper.Core
             }
 
             // Save changes.
+            #region Save changes
+
             if (TimerItemViewModel.GroupID != AssociatedGroupViewModel.ID)
             {
                 // Find and remove timer from old group.
-                if (!IoC.DataContent.TimerGroupListDesignModel.GroupList.First(o => o.ID == TimerItemViewModel.GroupID).TimerList.Remove(mTimerItemViewModel))
+                if (!IoC.DataContent.TimerGroupListDesignModel.GetGroupByID(TimerItemViewModel.GroupID).TimerList.Remove(mTimerItemViewModel))
                 {
                     // Some error occured during removing the timer from old group.
                     IoC.UI.ShowMessage(new MessageBoxDialogViewModel
@@ -203,6 +204,8 @@ namespace BlackSpiritHelper.Core
             TimerItemViewModel.IsLoopActive = IsLoopActive;
             TimerItemViewModel.ShowInOverlay = ShowInOverlay;
 
+            #endregion
+
             // Resort timer list alphabetically.
             AssociatedGroupViewModel.SortTimerList();
 
@@ -219,9 +222,7 @@ namespace BlackSpiritHelper.Core
                 return;
 
             // Remove timer.
-            if (!IoC.DataContent.TimerGroupListDesignModel.GroupList
-                .First(o => o.ID == TimerItemViewModel.GroupID)
-                .DestroyTimer(TimerItemViewModel))
+            if (!IoC.DataContent.TimerGroupListDesignModel.GetGroupByID(TimerItemViewModel.GroupID).DestroyTimer(TimerItemViewModel))
             {
                 // Some error occured during deleting the timer.
                 IoC.UI.ShowMessage(new MessageBoxDialogViewModel

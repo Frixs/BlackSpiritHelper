@@ -47,7 +47,8 @@
                                             <Grid>
                                                 <Button Content="{StaticResource FontAwesomePlayIcon}"
                                                         Visibility="{Binding IsRunning,
-                                                            Converter={local:BooleanToVisibilityGoneConverter}}"
+                                                                     Converter={local:BooleanToVisibilityGoneConverter},
+                                                                     ConverterParameter=True}"
                                                         FontFamily="{StaticResource FontAwesomeSolid}"
                                                         Style="{StaticResource RegularButton}" 
                                                         Command="{Binding PlayCommand}"
@@ -57,8 +58,7 @@
                                                         Margin="10" />
                                                 <Button Content="{StaticResource FontAwesomePauseIcon}"
                                                         Visibility="{Binding IsRunning,
-                                                                     Converter={local:BooleanToVisibilityGoneConverter},
-                                                                     ConverterParameter=True}"
+                                                                     Converter={local:BooleanToVisibilityGoneConverter}}"
                                                         FontFamily="{StaticResource FontAwesomeSolid}"
                                                         Style="{StaticResource RegularButton}" 
                                                         Command="{Binding PauseCommand}"

@@ -1,13 +1,10 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Threading;
 using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
@@ -197,8 +194,9 @@ namespace BlackSpiritHelper.Core
             {
                 TimeLeft = new TimeSpan(value);
 
-                // Update time format on load.
-                UpdateTimeInUI(TimeLeft);
+                // Update time format on load (only if there is no live countdown).
+                if (CountdownLeft.TotalSeconds <= 0)
+                    UpdateTimeInUI(TimeLeft);
             }
         }
 
@@ -401,12 +399,6 @@ namespace BlackSpiritHelper.Core
             IsRunning = false;
             IsInCountdown = false;
             IsWarningTime = false;
-
-            // Update time format on load.
-            if (TimeLeft.Ticks < TimeDuration.Ticks)
-                UpdateTimeInUI(TimeLeft);
-            else if (CountdownLeft.Ticks < CountdownDuration.Ticks)
-                UpdateTimeInUI(CountdownLeft);
         }
 
         /// <summary>
@@ -570,7 +562,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Play the timer.
         /// </summary>
-        private void TimerPlay()
+        public void TimerPlay()
         {
             // Timer is starting from Ready (after reset).
             if (State == TimerState.Ready && CountdownDuration.TotalSeconds > 0)
@@ -597,6 +589,9 @@ namespace BlackSpiritHelper.Core
                 UpdateState(TimerState.Play);
             }
 
+            // TODO: Try to find out better solution to update IsRunning property of the group.
+            IoC.DataContent.TimerGroupListDesignModel.GetGroupByID(GroupID).OnPropertyChanged(nameof(IsRunning));
+
             // Run the timer.
             mTimer.Start();
         }
@@ -604,9 +599,13 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Pause the timer.
         /// </summary>
-        private void TimerPause()
+        public void TimerPause()
         {
             UpdateState(TimerState.Pause);
+
+            // TODO: Try to find out better solution to update IsRunning property of the group.
+            IoC.DataContent.TimerGroupListDesignModel.GetGroupByID(GroupID).OnPropertyChanged(nameof(IsRunning));
+
             mTimer.Stop();
         }
 
@@ -652,7 +651,7 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
-        #region Command Helpers
+        #region Command Methods
 
         /// <summary>
         /// Create commands.

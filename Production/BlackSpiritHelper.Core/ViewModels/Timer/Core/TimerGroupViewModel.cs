@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -48,7 +47,8 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Button control - says if any of the child timers are active.
         /// </summary>
-        public bool IsRunning { get; set; }
+        [XmlIgnore]
+        public bool IsRunning => TimerList.FirstOrDefault(o => o.IsRunning == true) == null ? false : true;
 
         /// <summary>
         /// Says if you can create a new item. Limit check.
@@ -103,7 +103,7 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
-        #region Command Helpers
+        #region Command Methods
 
         /// <summary>
         /// Create commands.
@@ -116,18 +116,60 @@ namespace BlackSpiritHelper.Core
             OpenGroupSettingsCommand = new RelayCommand(async () => await OpenGroupSettingsAsync());
         }
 
+        /// <summary>
+        /// Run the timers in the group.
+        /// </summary>
+        /// <returns></returns>
         private async Task PlayAsync()
         {
-            // TODO Play group.
-            Console.WriteLine("TODO");
+            // We don't have any timer to run.
+            if (TimerList.Count <= 0)
+                return;
+
+            bool isAnyInFreeze = false;
+
+            // Chech if there is any freezed timer.
+            foreach (TimerItemViewModel t in TimerList)
+                if (t.IsInFreeze)
+                {
+                    isAnyInFreeze = true;
+                    break;
+                }
+
+            // If there are freezed timers, run them, not all.
+            // -
+            // Lets run all freezed timers.
+            if (isAnyInFreeze)
+            {
+                foreach (TimerItemViewModel t in TimerList)
+                    if (t.IsInFreeze)
+                        t.TimerPlay();
+
+            }
+            // Lets run all timers.
+            else
+            {
+                foreach (TimerItemViewModel t in TimerList)
+                    t.TimerPlay();
+            }
+
             await Task.Delay(1);
         }
 
+        /// <summary>
+        /// Pause the timers in the group.
+        /// </summary>
+        /// <returns></returns>
         private async Task PauseAsync()
         {
-            Title = "Hey";
-            // TODO Pause Group.
-            Console.WriteLine("TODO");
+            // We don't have any timer to pause.
+            if (TimerList.Count <= 0)
+                return;
+
+            // Pause all timers in the group.
+            foreach (TimerItemViewModel t in TimerList)
+                t.TimerPause();
+
             await Task.Delay(1);
         }
 

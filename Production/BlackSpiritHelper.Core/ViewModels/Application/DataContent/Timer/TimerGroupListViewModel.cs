@@ -131,6 +131,16 @@ namespace BlackSpiritHelper.Core
                 );
         }
 
+        /// <summary>
+        /// Get the group from <see cref="GroupList"/> by ID.
+        /// </summary>
+        /// <param name="id">The ID.</param>
+        /// <returns></returns>
+        public TimerGroupViewModel GetGroupByID(byte id)
+        {
+            return GroupList.FirstOrDefault(o => o.ID == id);
+        }
+
         #endregion
 
         #region Helpers

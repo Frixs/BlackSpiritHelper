@@ -81,7 +81,7 @@ namespace BlackSpiritHelper.Core
             Title = TimerGroupViewModel.Title;
         }
 
-        #region Command Helpers
+        #region Command Methods
 
         /// <summary>
         /// Create commands.

@@ -61,8 +61,7 @@
                                     <Button Command="{Binding PauseCommand}"
                                             Content="{StaticResource FontAwesomePauseIcon}"
                                             Visibility="{Binding IsRunning,
-                                                            Converter={local:BooleanToVisibilityGoneConverter},
-                                                            ConverterParameter=True}"
+                                                         Converter={local:BooleanToVisibilityGoneConverter}}"
                                             FontFamily="{StaticResource FontAwesomeSolid}"
                                             Style="{StaticResource RegularButton}" 
                                             FontSize="16"
