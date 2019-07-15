@@ -105,7 +105,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// The group id the timer belongs to.
         /// </summary>
-        public byte GroupID { get; set; }
+        public sbyte GroupID { get; set; }
 
         /// <summary>
         /// Timer title.
@@ -864,7 +864,7 @@ namespace BlackSpiritHelper.Core
         /// <param name="showInOverlay"></param>
         /// <param name="showInOverlay"></param>
         /// <returns></returns>
-        public static bool ValidateTimerInputs(string title, string iconTitleShortcut, string iconBackgroundHEX, TimeSpan timeDuration, TimeSpan countdownDuration, bool showInOverlay, TimerGroupViewModel associatedGroupViewModel)
+        public static bool ValidateTimerInputs(string title, string iconTitleShortcut, string iconBackgroundHEX, TimeSpan timeDuration, TimeSpan countdownDuration, bool showInOverlay, TimerGroupViewModel associatedGroupViewModel, sbyte currentGroupID)
         {
             #region Title
 
@@ -912,7 +912,9 @@ namespace BlackSpiritHelper.Core
 
             #region AssociatedGroupViewModel
 
-            if (!new TimerAssociatedGroupViewModelRule().Validate(associatedGroupViewModel, null).IsValid)
+            var rule = new TimerAssociatedGroupViewModelRule();
+            rule.CurrentGroupID = currentGroupID;
+            if (!rule.Validate(associatedGroupViewModel, null).IsValid)
                 return false;
 
             #endregion

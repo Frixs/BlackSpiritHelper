@@ -88,6 +88,7 @@
     <Compile Include="ValidationRules\Timer\TimerShowInOverlayRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerAssociatedGroupViewModelRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerGroupTitleRule.cs" />
+    <Compile Include="ValidationRules\Timer\BaseRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerTitleRule.cs" />
     <Compile Include="ViewModels\Application\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />

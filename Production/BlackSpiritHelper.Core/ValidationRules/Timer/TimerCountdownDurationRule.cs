@@ -8,15 +8,16 @@ namespace BlackSpiritHelper.Core
     /// Rule for the property <see cref="TimerItemViewModel.CountdownDuration"/>.
     /// Enter TotalSeconds of TimeSpan.
     /// </summary>
-    public class TimerCountdownDurationRule : ValidationRule
+    public class TimerCountdownDurationRule : BaseRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             double val;
+            object oVal = GetBoundValue(value);
 
-            // Get correct type.
-            if (value.GetType() == typeof(double))
-                val = (double)value;
+            // Check data type.
+            if (oVal.GetType() == typeof(double))
+                val = (double)oVal;
             else
                 return new ValidationResult(false, "Not a double type.");
 

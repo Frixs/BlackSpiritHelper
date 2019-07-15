@@ -34,9 +34,10 @@
                 <TextBox Tag="Group Name" Margin="0 0 0 50"
                          MaxLength="{Binding TimerGroupViewModel.TitleAllowMaxChar}">
                     <TextBox.Text>
-                        <Binding Path="Title">
+                        <Binding Path="Title"
+                                 UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <core:TimerGroupTitleRule />
+                                <core:TimerGroupTitleRule ValidationStep="UpdatedValue" />
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>

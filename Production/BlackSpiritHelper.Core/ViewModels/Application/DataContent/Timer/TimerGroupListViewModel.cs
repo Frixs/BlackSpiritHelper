@@ -73,12 +73,15 @@ namespace BlackSpiritHelper.Core
             // Create a new item (Default Group).
             TimerGroupViewModel item = new TimerGroupViewModel
             {
-                ID = (byte)FindNewID(0, GroupList.Count - 1),
+                ID = FindNewID(0, (sbyte)(GroupList.Count - 1)),
                 Title = itemTitle,
             };
 
             // Add.
             GroupList.Add(item);
+
+            // Update properties.
+            OnPropertyChanged(nameof(CanCreateNewGroup));
 
             IoC.Logger.Log($"Timer Group '{itemTitle}' added!", LogLevel.Info);
             return item;
@@ -117,6 +120,9 @@ namespace BlackSpiritHelper.Core
             GC.WaitForPendingFinalizers();
             GC.Collect();
 
+            // Update properties.
+            OnPropertyChanged(nameof(CanCreateNewGroup));
+
             IoC.Logger.Log($"Timer Group '{title}' destroyed!", LogLevel.Info);
             return true;
         }
@@ -136,7 +142,7 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         /// <param name="id">The ID.</param>
         /// <returns></returns>
-        public TimerGroupViewModel GetGroupByID(byte id)
+        public TimerGroupViewModel GetGroupByID(sbyte id)
         {
             return GroupList.FirstOrDefault(o => o.ID == id);
         }
@@ -151,19 +157,19 @@ namespace BlackSpiritHelper.Core
         /// <param name="start">The start index of list.</param>
         /// <param name="end">The end index of list.</param>
         /// <returns></returns>
-        private int FindNewID(int start, int end)
+        private sbyte FindNewID(sbyte start, sbyte end)
         {
             if (start > end)
-                return end + 1;
+                return (sbyte)(end + 1);
 
             if (start != GroupList[start].ID)
                 return start;
 
-            int mid = (start + end) / 2;
+            sbyte mid = (sbyte)((start + end) / 2);
 
             // Left half has all elements from 0 to mid 
             if (GroupList[mid].ID == mid)
-                return FindNewID(mid + 1, end);
+                return FindNewID((sbyte)(mid + 1), end);
 
             return FindNewID(start, mid);
         }

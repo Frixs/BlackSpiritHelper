@@ -37,9 +37,10 @@
                 <TextBox Tag="Title" Margin="0 0 0 10"
                          MaxLength="{Binding TimerItemViewModel.TitleAllowMaxChar}">
                     <TextBox.Text>
-                        <Binding Path="Title">
+                        <Binding Path="Title"
+                                 UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <core:TimerTitleRule />
+                                <core:TimerTitleRule ValidationStep="UpdatedValue" />
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
@@ -53,16 +54,18 @@
                     
                     <!-- Icon Timer Shortcut -->
                     <TextBox Tag="Icon Shortcut" Margin="0 0 5 10" Grid.Column="0"
-                             MaxLength="{Binding TimerItemViewModel.IconTitleAllowMaxChar}">
+                             MaxLength="{Binding TimerItemViewModel.IconTitleAllowMaxChar}"
+                             >
                         <TextBox.Text>
-                            <Binding Path="IconTitleShortcut">
+                            <Binding Path="IconTitleShortcut" 
+                                     UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
-                                    <core:TimerIconTitleShortcutRule />
+                                    <core:TimerIconTitleShortcutRule ValidationStep="UpdatedValue" />
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>
                     </TextBox>
-                    <!-- Icon Timer Shortcut -->
+                    <!-- Icon Timer Color Picker -->
                     <xctk:ColorPicker Margin="5 0 0 10" Grid.Column="1"
                                       SelectedColor="{Binding IconBackgroundHEX}"
                                       ColorMode="ColorCanvas"
@@ -85,9 +88,10 @@
                                      FontSize="20"
                                      TextAlignment="Center">
                     <xctk:TimeSpanUpDown.Value>
-                        <Binding Path="TimeDuration">
+                        <Binding Path="TimeDuration"
+                                 UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <core:TimerTimeDurationRule />
+                                <core:TimerTimeDurationRule ValidationStep="UpdatedValue" />
                             </Binding.ValidationRules>
                         </Binding>
                     </xctk:TimeSpanUpDown.Value>
@@ -114,9 +118,10 @@
                             TickFrequency="60" 
                             IsSnapToTickEnabled="True">
                         <Slider.Value>
-                            <Binding Path="CountdownDuration">
+                            <Binding Path="CountdownDuration"
+                                     UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
-                                    <core:TimerCountdownDurationRule />
+                                    <core:TimerCountdownDurationRule ValidationStep="UpdatedValue" />
                                 </Binding.ValidationRules>
                             </Binding>
                         </Slider.Value>
@@ -144,9 +149,10 @@
                                    Margin="0 0 0 5"/>
                         <CheckBox HorizontalAlignment="Center">
                             <CheckBox.IsChecked>
-                                <Binding Path="ShowInOverlay">
+                                <Binding Path="ShowInOverlay"
+                                         UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
-                                        <core:TimerShowInOverlayRule />
+                                        <core:TimerShowInOverlayRule ValidationStep="UpdatedValue" />
                                     </Binding.ValidationRules>
                                 </Binding>
                             </CheckBox.IsChecked>
@@ -163,9 +169,11 @@
                           HorizontalAlignment="Center"
                           Tag="{Binding GroupID}">
                     <ComboBox.SelectedItem>
-                        <Binding Path="AssociatedGroupViewModel">
+                        <Binding Path="AssociatedGroupViewModel"
+                                 UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <core:TimerAssociatedGroupViewModelRule />
+                                <core:TimerAssociatedGroupViewModelRule ValidationStep="UpdatedValue"
+                                                                        x:Name="GroupChangeComboBoxRule" />
                             </Binding.ValidationRules>
                         </Binding>
                     </ComboBox.SelectedItem>

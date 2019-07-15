@@ -7,15 +7,16 @@ namespace BlackSpiritHelper.Core
     /// <summary>
     /// Rule for the property <see cref="TimerItemViewModel.TimeDuration"/>.
     /// </summary>
-    public class TimerTimeDurationRule : ValidationRule
+    public class TimerTimeDurationRule : BaseRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             TimeSpan val;
+            object oVal = GetBoundValue(value);
 
-            // Get correct type.
-            if (value.GetType() == typeof(TimeSpan))
-                val = (TimeSpan)value;
+            // Check data type.
+            if (oVal.GetType() == typeof(TimeSpan))
+                val = (TimeSpan)oVal;
             else
                 return new ValidationResult(false, "Not a TimeSpan type.");
 

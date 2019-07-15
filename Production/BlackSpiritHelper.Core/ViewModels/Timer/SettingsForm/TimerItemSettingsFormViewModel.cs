@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace BlackSpiritHelper.Core
@@ -67,7 +69,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// GroupID binding.
         /// </summary>
-        public byte GroupID { get; set; }
+        public sbyte GroupID { get; set; }
 
         /// <summary>
         /// Group binding.
@@ -156,7 +158,7 @@ namespace BlackSpiritHelper.Core
                 iconBackgroundHEX = IconBackgroundHEX;
 
             // Validate inputs.
-            if (!TimerItemViewModel.ValidateTimerInputs(Title, IconTitleShortcut, iconBackgroundHEX, TimeDuration, TimeSpan.FromSeconds(CountdownDuration), ShowInOverlay, AssociatedGroupViewModel) 
+            if (!TimerItemViewModel.ValidateTimerInputs(Title, IconTitleShortcut, iconBackgroundHEX, TimeDuration, TimeSpan.FromSeconds(CountdownDuration), ShowInOverlay, AssociatedGroupViewModel, GroupID) 
                 || AssociatedGroupViewModel == null)
             {
                 // Some error occured during saving changes of the timer.
@@ -196,8 +198,8 @@ namespace BlackSpiritHelper.Core
                 TimerItemViewModel.GroupID = AssociatedGroupViewModel.ID;
 
             }
-            TimerItemViewModel.Title = Title;
-            TimerItemViewModel.IconTitleShortcut = IconTitleShortcut;
+            TimerItemViewModel.Title = Title.Trim();
+            TimerItemViewModel.IconTitleShortcut = IconTitleShortcut.Trim();
             TimerItemViewModel.IconBackgroundHEX = iconBackgroundHEX;
             TimerItemViewModel.TimeDuration = TimeDuration;
             TimerItemViewModel.CountdownDuration = TimeSpan.FromSeconds(CountdownDuration);

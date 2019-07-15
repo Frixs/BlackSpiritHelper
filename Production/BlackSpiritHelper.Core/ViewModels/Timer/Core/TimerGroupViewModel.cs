@@ -37,7 +37,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// ID of the group.
         /// </summary>
-        public byte ID { get; set; }
+        public sbyte ID { get; set; }
 
         /// <summary>
         /// Group Title.
@@ -224,7 +224,11 @@ namespace BlackSpiritHelper.Core
             if (!CanCreateNewTimer)
                 return false;
 
+            // Add timer to the list.
             TimerList.Add(vm);
+
+            // Update properties.
+            OnPropertyChanged(nameof(CanCreateNewTimer));
 
             IoC.Logger.Log($"Timer '{vm.Title}' added to group '{Title}'!", LogLevel.Info);
             return true;
@@ -256,6 +260,9 @@ namespace BlackSpiritHelper.Core
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
+
+            // Update properties.
+            OnPropertyChanged(nameof(CanCreateNewTimer));
 
             IoC.Logger.Log($"Timer '{title}' destroyed!", LogLevel.Info);
             return true;

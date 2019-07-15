@@ -6,16 +6,14 @@ namespace BlackSpiritHelper.Core
     /// <summary>
     /// Rule for the property <see cref="TimerGroupViewModel.Title"/>.
     /// </summary>
-    public class TimerGroupTitleRule : ValidationRule
+    public class TimerGroupTitleRule : BaseRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            string val;
+            string val = GetBoundValue(value) as string;
 
-            // Get correct type.
-            if (value.GetType() == typeof(string))
-                val = (string)value;
-            else
+            // Check data type.
+            if (val == null)
                 return new ValidationResult(false, "Not a character sequence.");
 
             val = val.Trim();

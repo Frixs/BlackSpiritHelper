@@ -24,12 +24,15 @@ namespace BlackSpiritHelper
         {
             InitializeComponent();
 
-            // Set ItemsSource.
+            // Set the current group ID to the validation rule.
+            GroupChangeComboBoxRule.CurrentGroupID = (sbyte)GroupChangeComboBox.Tag;
+
+            // Set ComboBox ItemsSource.
             GroupChangeComboBox.ItemsSource = IoC.DataContent.TimerGroupListDesignModel.GroupList;
             GroupChangeComboBox.DisplayMemberPath = "Title";
             GroupChangeComboBox.SelectedIndex = IoC.DataContent.TimerGroupListDesignModel.GroupList
                 .Select((c, i) => new { Group = c, Index = i })
-                .First(o => o.Group.ID == (byte)GroupChangeComboBox.Tag)
+                .First(o => o.Group.ID == (sbyte)GroupChangeComboBox.Tag)
                 .Index;
         }
     }

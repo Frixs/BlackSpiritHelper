@@ -109,7 +109,7 @@ namespace BlackSpiritHelper.Core
             }
 
             // Save changes.
-            TimerGroupViewModel.Title = Title;
+            TimerGroupViewModel.Title = Title.Trim();
 
             // Resort groups alphabetically.
             IoC.DataContent.TimerGroupListDesignModel.SortGroupList();

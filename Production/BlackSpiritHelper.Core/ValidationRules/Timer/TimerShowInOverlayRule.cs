@@ -6,15 +6,16 @@ namespace BlackSpiritHelper.Core
     /// <summary>
     /// Rule for the property <see cref="TimerItemViewModel.ShowInOverlay"/>.
     /// </summary>
-    public class TimerShowInOverlayRule : ValidationRule
+    public class TimerShowInOverlayRule : BaseRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             bool val;
+            object oVal = GetBoundValue(value);
 
-            // Get correct type.
-            if (value.GetType() == typeof(bool))
-                val = (bool)value;
+            // Check data type.
+            if (oVal.GetType() == typeof(bool))
+                val = (bool)oVal;
             else
                 return new ValidationResult(false, "Not a boolean.");
 
