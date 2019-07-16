@@ -31,6 +31,9 @@ namespace BlackSpiritHelper
                 case ApplicationPage.Boss:
                     return new BossPage();
 
+                case ApplicationPage.Preferences:
+                    return new PreferencesPage();
+
                 case ApplicationPage.TimerGroupSettingsForm:
                     return new TimerGroupSettingsFormPage(viewModel as TimerGroupSettingsFormViewModel);
 
@@ -62,6 +65,9 @@ namespace BlackSpiritHelper
 
             if (page is BossPage)
                 return ApplicationPage.Boss;
+
+            if (page is PreferencesPage)
+                return ApplicationPage.Preferences;
 
             if (page is TimerGroupSettingsFormPage)
                 return ApplicationPage.TimerGroupSettingsForm;

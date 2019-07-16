@@ -22,15 +22,11 @@
 
                 <!-- Form Title -->
                 <TextBlock Text="Settings"
-                           FontFamily="{StaticResource LatoLight}"
-                           FontSize="{StaticResource FontSizeFormTitle}"
-                           Foreground="{StaticResource FormTitleForegroundBrushKey}" />
+                           Style="{StaticResource FormTitle}" />
 
                 <!-- Form Subtitle -->
                 <TextBlock Text="Timer"
-                           FontFamily="{StaticResource LatoThinItalic}"
-                           FontSize="{StaticResource FontSizeFormSubtitle}"
-                           Foreground="{StaticResource FormSubtitleForegroundBrushKey}"
+                           Style="{StaticResource FormSubtitle}"
                            Margin="0 0 0 50" />
 
                 <!-- Timer Title -->
@@ -187,16 +183,7 @@
 
                 <!-- Line spacer -->
                 <Border Margin="0 0 0 10" 
-                        BorderThickness="0 0 0 0.2" 
-                        SnapsToDevicePixels="False">
-                    <Border.BorderBrush>
-                        <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 0">
-                            <GradientStop Color="{StaticResource LineSpacer0Background}" Offset="0.0" />
-                            <GradientStop Color="{StaticResource LineSpacer1Background}" Offset="0.5" />
-                            <GradientStop Color="{StaticResource LineSpacer0Background}" Offset="1.0" />
-                        </LinearGradientBrush>
-                    </Border.BorderBrush>
-                </Border>
+                        Style="{StaticResource FormSpacer}"/>
 
                 <!-- Delete Timer Button -->
                 <Button Content="Delete Timer"

@@ -10,6 +10,35 @@
         <Setter Property="Margin" Value="5 8" />
     </Style>
 
+    <!-- Form Title -->
+    <Style TargetType="{x:Type TextBlock}" x:Key="FormTitle" BasedOn="{StaticResource BaseTextBlockStyle}">
+        <Setter Property="FontFamily" Value="{StaticResource LatoLight}" />
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="Foreground" Value="{StaticResource FormTitleForegroundBrushKey}" />
+    </Style>
+
+    <!-- Form Subtitle -->
+    <Style TargetType="{x:Type TextBlock}" x:Key="FormSubtitle" BasedOn="{StaticResource BaseTextBlockStyle}">
+        <Setter Property="FontFamily" Value="{StaticResource LatoThinItalic}" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="Foreground" Value="{StaticResource FormSubtitleForegroundBrushKey}" />
+    </Style>
+
+    <!-- Form Spacer -->
+    <Style TargetType="{x:Type Border}" x:Key="FormSpacer">
+        <Setter Property="SnapsToDevicePixels" Value="False" />
+        <Setter Property="BorderThickness" Value="0 0 0 0.2" />
+        <Setter Property="BorderBrush">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 0">
+                    <GradientStop Color="{StaticResource LineSpacer0Background}" Offset="0.0" />
+                    <GradientStop Color="{StaticResource LineSpacer1Background}" Offset="0.5" />
+                    <GradientStop Color="{StaticResource LineSpacer0Background}" Offset="1.0" />
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- TextBox with placeholder -->
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseStyle}">
 
@@ -99,8 +128,36 @@
     <!--Chechbox Input -->
     <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="FontFamily" Value="{StaticResource LatoLight}" />
+        <Setter Property="FontSize" Value="14" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="{StaticResource TextBoxLineBackgroundBrushKey}" />
+
+        <!-- Delete default error template -->
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter Property="BorderBrush" Value="{StaticResource TextBoxLineFocusBackgroundBrushKey}"/>
+            </Trigger>
+            <Trigger Property="Validation.HasError" Value="True">
+                <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)/ErrorContent}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource TextBoxLineErrorBackgroundBrushKey}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--Radio Input -->
+    <Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="FontFamily" Value="{StaticResource LatoLight}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{StaticResource TextBoxLineBackgroundBrushKey}" />
+        <Setter Property="Margin" Value="5" />
 
         <!-- Delete default error template -->
         <Setter Property="Validation.ErrorTemplate">

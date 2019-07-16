@@ -10,6 +10,10 @@
       Title="BossPage">
 
     <Grid>
-        <Button Content="BossPage" Width="100" HorizontalAlignment="Center" />
+        <TextBlock Text="Content is not available yet." 
+                   FontSize="14"
+                   FontFamily="{StaticResource LatoLightItalic}"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"/>
     </Grid>
 </local:BasePage>

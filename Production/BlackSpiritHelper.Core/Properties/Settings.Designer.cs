@@ -45,5 +45,16 @@ namespace BlackSpiritHelper.Core.Properties {
                 this["TimerGroupListDesignModel"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::BlackSpiritHelper.Core.PreferencesViewModel PreferencesViewModel {
+            get {
+                return ((global::BlackSpiritHelper.Core.PreferencesViewModel)(this["PreferencesViewModel"]));
+            }
+            set {
+                this["PreferencesViewModel"] = value;
+            }
+        }
     }
 }

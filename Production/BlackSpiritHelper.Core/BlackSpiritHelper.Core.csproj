@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Async\AsyncAwaiter.cs" />
     <Compile Include="DataModels\ApplicationPage.cs" />
+    <Compile Include="DataModels\AudioAlert.cs" />
     <Compile Include="DataModels\TimerState.cs" />
     <Compile Include="Expressions\ExpressionHelpers.cs" />
     <Compile Include="File\FileManager.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="ViewModels\Base\RelayParameterizedCommand.cs" />
     <Compile Include="ViewModels\Boss\BossViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\MessageBoxDialogViewModel.cs" />
+    <Compile Include="ViewModels\Application\DataContent\Preferences\PrefernecesViewModel.cs" />
     <Compile Include="ViewModels\SideMenu\Design\SideMenuListItemDesignModel.cs" />
     <Compile Include="ViewModels\SideMenu\Design\SideMenuListDesignModel.cs" />
     <Compile Include="ViewModels\SideMenu\SideMenuListViewModel.cs" />

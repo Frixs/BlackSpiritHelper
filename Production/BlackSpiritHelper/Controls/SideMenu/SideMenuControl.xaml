@@ -47,7 +47,7 @@
 
                 <!-- Footer -->
                 <Border Grid.Row="3" Padding="10">
-                    
+                    <Button Content="Preferences" Command="{Binding OpenPreferencesPageCommand}" />
                 </Border>
                 
             </Grid>

@@ -8,10 +8,12 @@
     <FontFamily x:Key="LatoLight">pack://application;,,,/Resources/Fonts/Lato/#Lato Light</FontFamily>
     <FontFamily x:Key="LatoLightItalic">pack://application;,,,/Resources/Fonts/Lato/#Lato Light Italic</FontFamily>
     <FontFamily x:Key="LatoBold">pack://application;,,,/Resources/Fonts/Lato/#Lato Bold</FontFamily>
+    <FontFamily x:Key="LatoBoldItalic">pack://application;,,,/Resources/Fonts/Lato/#Lato Bold Italic</FontFamily>
     <FontFamily x:Key="LatoHeavy">pack://application;,,,/Resources/Fonts/Lato/#Lato Heavy</FontFamily>
+    <FontFamily x:Key="LatoHeavyItalic">pack://application;,,,/Resources/Fonts/Lato/#Lato Heavy Italic</FontFamily>
     <FontFamily x:Key="FontAwesomeSolid">pack://application;,,,/Resources/Fonts/FontAwesome/#Font Awesome 5 Free Solid</FontFamily>
     <FontFamily x:Key="FontAwesomeRegular">pack://application;,,,/Resources/Fonts/FontAwesome/#Font Awesome 5 Free Regular</FontFamily>
-    <FontFamily x:Key="FontAwesomeBrands">pack://application;,,,/Resources/Fonts/FontAwesome/#Font Awesome 5 Free Brands Regular</FontFamily>
+    <FontFamily x:Key="FontAwesomeBrands">pack://application;,,,/Resources/Fonts/FontAwesome/#Font Awesome 5 Brands Regular</FontFamily>
 
     <!-- Set default font for these elements -->
     <Style TargetType="{x:Type Control}" x:Key="BaseStyle">
@@ -27,9 +29,6 @@
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseStyle}" />
     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BaseTextBlockStyle}" />
 
-    <system:Double x:Key="FontSizeFormTitle">24</system:Double>
-    <system:Double x:Key="FontSizeFormSubtitle">18</system:Double>
-
     <system:String x:Key="FontAwesomeChatIcon">&#xf086;</system:String>
     <system:String x:Key="FontAwesomePlayIcon">&#xf04b;</system:String>
     <system:String x:Key="FontAwesomePauseIcon">&#xf04c;</system:String>
@@ -41,5 +40,6 @@
     <system:String x:Key="FontAwesomeRetweetIcon">&#xf079;</system:String>
     <system:String x:Key="FontAwesomeStopwatchIcon">&#xf2f2;</system:String>
     <system:String x:Key="FontAwesomeExclamationCircleIcon">&#xf06a;</system:String>
+    <system:String x:Key="FontAwesomeGitHubIcon">&#xf09b;</system:String>
 
 </ResourceDictionary>

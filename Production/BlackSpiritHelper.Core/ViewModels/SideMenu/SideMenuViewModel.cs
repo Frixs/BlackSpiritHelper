@@ -13,6 +13,11 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public ICommand OpenHomePageCommand { get; set; }
 
+        /// <summary>
+        /// The command to open preferences page.
+        /// </summary>
+        public ICommand OpenPreferencesPageCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -28,12 +33,15 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
+        #region Command Methods
+
         /// <summary>
         /// Create Windows commands.
         /// </summary>
         private void CreateCommands()
         {
             OpenHomePageCommand = new RelayCommand(async () => await OpenHomePageAsync());
+            OpenPreferencesPageCommand = new RelayCommand(async () => await OpenPreferencesPageAsync());
         }
 
         /// <summary>
@@ -46,5 +54,18 @@ namespace BlackSpiritHelper.Core
 
             await Task.Delay(1);
         }
+
+        /// <summary>
+        /// Open preferences page command task.
+        /// </summary>
+        /// <returns></returns>
+        private async Task OpenPreferencesPageAsync()
+        {
+            IoC.Application.GoToPage(ApplicationPage.Preferences);
+
+            await Task.Delay(1);
+        } 
+
+        #endregion
     }
 }

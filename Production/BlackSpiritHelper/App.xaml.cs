@@ -1,5 +1,6 @@
 ﻿using BlackSpiritHelper.Core;
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Windows;
 
@@ -39,7 +40,7 @@ namespace BlackSpiritHelper
             ApplicationSetup();
 
             // Log it.
-            IoC.Logger.Log("Application starting up...", LogLevel.Debug);
+            IoC.Logger.Log("Application starting up...", LogLevel.Info);
 
             // Check for application available updates.
             checkForUpdates();
@@ -74,6 +75,12 @@ namespace BlackSpiritHelper
 
             // Bind Application data content view models.
             IoC.Kernel.Bind<ApplicationDataContent>().ToConstant(new ApplicationDataContent());
+
+            // Bind AssemblyInfo version.
+            IoC.Application.ApplicationVersion = FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion;
+
+            // Bind AssemblyInfo copyright.
+            IoC.Application.Copyright = FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).LegalCopyright;
         }
 
         /// <summary>

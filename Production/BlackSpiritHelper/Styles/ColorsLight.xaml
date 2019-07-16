@@ -68,6 +68,9 @@
     <Color x:Key="FormTitleForeground">#000000</Color>
     <SolidColorBrush x:Key="FormTitleForegroundBrushKey" Color="{StaticResource FormTitleForeground}" />
 
+    <Color x:Key="FormTitleForegroundAlt">#494949</Color>
+    <SolidColorBrush x:Key="FormTitleForegroundAltBrushKey" Color="{StaticResource FormTitleForegroundAlt}" />
+
     <Color x:Key="FormSubtitleForeground">#aaaaaa</Color>
     <SolidColorBrush x:Key="FormSubtitleForegroundBrushKey" Color="{StaticResource FormSubtitleForeground}" />
 
@@ -204,5 +207,21 @@
 
     <Color x:Key="RegularRedButtonAction">#AE7173</Color>
     <SolidColorBrush x:Key="RegularRedButtonActionBrushKey" Color="{StaticResource RegularRedButtonAction}" />
+
+    <!-- Regular Button - Donate -->
+    <Color x:Key="RegularDonateButtonBackground">#fe8c00</Color>
+    <SolidColorBrush x:Key="RegularDonateButtonBackgroundBrushKey" Color="{StaticResource RegularDonateButtonBackground}" />
+
+    <Color x:Key="RegularDonateButtonBackgroundAlt">#f83600</Color>
+    <SolidColorBrush x:Key="RegularDonateButtonBackgroundAltBrushKey" Color="{StaticResource RegularDonateButtonBackgroundAlt}" />
+
+    <Color x:Key="RegularDonateButtonForeground">#ffffff</Color>
+    <SolidColorBrush x:Key="RegularDonateButtonForegroundBrushKey" Color="{StaticResource RegularDonateButtonForeground}" />
+
+    <Color x:Key="RegularDonateButtonForegroundDropShadow">#000000</Color>
+    <SolidColorBrush x:Key="RegularDonateButtonForegroundDropShadowBrushKey" Color="{StaticResource RegularDonateButtonForegroundDropShadow}" />
+
+    <Color x:Key="RegularDonateButtonAction">#000000</Color>
+    <SolidColorBrush x:Key="RegularDonateButtonActionBrushKey" Color="{StaticResource RegularDonateButtonAction}" />
 
 </ResourceDictionary>

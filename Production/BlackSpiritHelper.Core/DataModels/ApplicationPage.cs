@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BlackSpiritHelper.Core
+﻿namespace BlackSpiritHelper.Core
 {
     /// <summary>
     /// <see langword="abstract"/>page of the application.
@@ -30,6 +24,11 @@ namespace BlackSpiritHelper.Core
         /// The Boss page.
         /// </summary>
         Boss = 3,
+
+        /// <summary>
+        /// The Settings page.
+        /// </summary>
+        Preferences = 4,
 
         ///
         /// Only pages with value lower than 100 can be loaded back on application start.

@@ -16,6 +16,16 @@ namespace BlackSpiritHelper.Core
         public string ApplicationName { get; private set; } = "Black Spirit Helper";
 
         /// <summary>
+        /// Application version from AssemblyInfo.
+        /// </summary>
+        public string ApplicationVersion { get; set; }
+
+        /// <summary>
+        /// Copyright string from AssemblyInfo.
+        /// </summary>
+        public string Copyright { get; set; }
+
+        /// <summary>
         /// Window default title.
         /// </summary>
         public string WindowTitleDefault { get; private set; }
@@ -56,6 +66,28 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public BaseViewModel CurrentPageViewModel { get; set; }
 
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public ApplicationViewModel()
+        {
+            WindowTitleDefault = ApplicationName;
+
+            CurrentPage = Properties.Settings.Default.LastOpenedPage > 0 && Properties.Settings.Default.LastOpenedPage < 100 
+                ? (ApplicationPage)Properties.Settings.Default.LastOpenedPage 
+                : ApplicationPage.Home;
+
+            SetWindowTitlePostfixOnly = CurrentPage > 0 ? CurrentPage.ToString() : "";
+        }
+
+        #endregion
+
+        #region Public Methods
+
         /// <summary>
         /// Navigates to the specified page.
         /// </summary>
@@ -75,24 +107,6 @@ namespace BlackSpiritHelper.Core
             // Set window title page name.
             if ((int)page < LoadBackPageValueLimit)
                 SetWindowTitlePostfixOnly = (int)page > 0 ? page.ToString() : "";
-        }
-
-        #endregion
-
-        #region Constructor
-
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
-        public ApplicationViewModel()
-        {
-            WindowTitleDefault = ApplicationName;
-
-            CurrentPage = Properties.Settings.Default.LastOpenedPage > 0 && Properties.Settings.Default.LastOpenedPage < 100 
-                ? (ApplicationPage)Properties.Settings.Default.LastOpenedPage 
-                : ApplicationPage.Home;
-
-            SetWindowTitlePostfixOnly = CurrentPage > 0 ? CurrentPage.ToString() : "";
         }
 
         #endregion

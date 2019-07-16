@@ -8,5 +8,8 @@
     <Setting Name="TimerGroupListDesignModel" Type="BlackSpiritHelper.Core.TimerGroupListDesignModel" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="PreferencesViewModel" Type="BlackSpiritHelper.Core.PreferencesViewModel" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

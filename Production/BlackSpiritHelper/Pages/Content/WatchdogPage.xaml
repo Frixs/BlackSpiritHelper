@@ -10,6 +10,10 @@
       Title="WatchdogPage">
 
     <Grid>
-        <Button Content="WatchdogPage" Width="300" HorizontalAlignment="Center" />
+        <TextBlock Text="Content is not available yet." 
+                   FontSize="14"
+                   FontFamily="{StaticResource LatoLightItalic}"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"/>
     </Grid>
 </local:BasePage>

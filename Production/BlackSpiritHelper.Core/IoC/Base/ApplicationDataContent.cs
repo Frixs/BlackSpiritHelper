@@ -10,9 +10,16 @@
         #region Public Properties
 
         /// <summary>
+        /// Data structure for the preferences.
+        /// </summary>
+        public PreferencesViewModel Preferences { get; private set; } = IoC.SettingsStorage.PreferencesViewModel == null
+            ? new PreferencesViewModel()
+            : IoC.SettingsStorage.PreferencesViewModel;
+
+        /// <summary>
         /// Data structure for timers with its groups.
         /// </summary>
-        public TimerGroupListDesignModel TimerGroupListDesignModel { get; set; } = IoC.SettingsStorage.TimerGroupListDesignModel == null
+        public TimerGroupListDesignModel TimerGroupListDesignModel { get; private set; } = IoC.SettingsStorage.TimerGroupListDesignModel == null
             ? TimerGroupListDesignModel.Instance
             : IoC.SettingsStorage.TimerGroupListDesignModel;
 

@@ -442,7 +442,7 @@ namespace BlackSpiritHelper.Core
                     if (!IsFiredNotificationEvent[0])
                     {
                         IsFiredNotificationEvent[0] = true;
-                        // TODO
+                        // TODO notification event.
                     }
 
                     if (currTime.TotalSeconds < 15)
@@ -451,7 +451,7 @@ namespace BlackSpiritHelper.Core
                         if (!IsFiredNotificationEvent[1])
                         {
                             IsFiredNotificationEvent[1] = true;
-                            // TODO
+                            // TODO notification event.
 
                             IsWarningTime = true;
                             // TODO warning UI.
@@ -460,7 +460,7 @@ namespace BlackSpiritHelper.Core
                         if (currTime.TotalSeconds < 5 && currTime.TotalSeconds > 0)
                         {
                             // The last seconds countdown event.
-                            // TODO
+                            // TODO notification event.
                         }
                     }
                 } // End - notification events.
@@ -485,7 +485,7 @@ namespace BlackSpiritHelper.Core
                 if (!IsFiredNotificationEvent[2])
                 {
                     IsFiredNotificationEvent[2] = true;
-                    // TODO
+                    // TODO notification event.
                 }
 
                 // Restart.

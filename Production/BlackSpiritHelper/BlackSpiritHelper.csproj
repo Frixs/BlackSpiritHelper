@@ -117,6 +117,9 @@
     <Compile Include="Pages\Content\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Content\PreferencesPage.xaml.cs">
+      <DependentUpon>PreferencesPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Content\TimerPage.xaml.cs">
       <DependentUpon>TimerPage.xaml</DependentUpon>
     </Compile>
@@ -130,6 +133,7 @@
       <DependentUpon>TimerItemSettingsFormPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ValueConverters\BooleanToContentConverter.cs" />
+    <Compile Include="ValueConverters\ObjectToStringConverter.cs" />
     <Compile Include="ValueConverters\TimespanToStringTimeFormatConverter.cs" />
     <Compile Include="ValueConverters\BooleanToVisibilityGoneConverter.cs" />
     <Compile Include="ValueConverters\BooleanToVisibilityConverter.cs" />
@@ -182,6 +186,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Content\HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Content\PreferencesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
