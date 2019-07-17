@@ -92,6 +92,7 @@
     <Compile Include="ValidationRules\Timer\BaseRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerTitleRule.cs" />
     <Compile Include="ViewModels\Application\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Application\DataContent\Preferences\Design\PreferencesDesignModel.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
     <Compile Include="ViewModels\Base\RelayParameterizedCommand.cs" />

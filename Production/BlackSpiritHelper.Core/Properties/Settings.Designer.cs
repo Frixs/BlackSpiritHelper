@@ -48,12 +48,12 @@ namespace BlackSpiritHelper.Core.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::BlackSpiritHelper.Core.PreferencesViewModel PreferencesViewModel {
+        public global::BlackSpiritHelper.Core.PreferencesDesignModel PreferencesDesignModel {
             get {
-                return ((global::BlackSpiritHelper.Core.PreferencesViewModel)(this["PreferencesViewModel"]));
+                return ((global::BlackSpiritHelper.Core.PreferencesDesignModel)(this["PreferencesDesignModel"]));
             }
             set {
-                this["PreferencesViewModel"] = value;
+                this["PreferencesDesignModel"] = value;
             }
         }
     }

@@ -12,9 +12,9 @@
         /// <summary>
         /// Data structure for the preferences.
         /// </summary>
-        public PreferencesViewModel Preferences { get; private set; } = IoC.SettingsStorage.PreferencesViewModel == null
-            ? new PreferencesViewModel()
-            : IoC.SettingsStorage.PreferencesViewModel;
+        public PreferencesDesignModel PreferencesDesignModel { get; private set; } = IoC.SettingsStorage.PreferencesDesignModel == null
+            ? PreferencesDesignModel.Instance
+            : IoC.SettingsStorage.PreferencesDesignModel;
 
         /// <summary>
         /// Data structure for timers with its groups.

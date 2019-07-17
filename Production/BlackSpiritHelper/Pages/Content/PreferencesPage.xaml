@@ -7,7 +7,8 @@
       xmlns:core="clr-namespace:BlackSpiritHelper.Core;assembly=BlackSpiritHelper.Core"
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="500"
-      Title="PreferencesPage">
+      Title="PreferencesPage" DataContext="{Binding ApplicationDataContent.PreferencesDesignModel,
+                                            Source={x:Static local:ViewModelLocator.Instance}}">
 
     <ScrollViewer Background="White" VerticalScrollBarVisibility="Auto" 
                   Padding="10">
@@ -42,9 +43,19 @@
                     <ItemsControl ItemsSource="{Binding AudioAlertList}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <RadioButton GroupName="AudioAlerts"
-                                             Content="{Binding Converter={local:ObjectToStringConverter}}"
-                                             IsChecked="{Binding AudioAlertLevel}"/>
+                                <Grid>
+                                    <TextBlock Text="{Binding Converter={local:ObjectToStringConverter}}"
+                                               x:Name="RadioBindedKey"
+                                               Visibility="Collapsed" />
+                                    <RadioButton GroupName="AudioAlerts"
+                                                 Content="{Binding Converter={local:ObjectToStringConverter}}"
+                                                 IsChecked="{Binding Path=DataContext.AudioAlertLevel,
+                                                             RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:BasePage}},
+                                                             Converter={local:RadioEnumBooleanConverter}, 
+                                                             ConverterParameter={x:Reference Name=RadioBindedKey}}"
+                                                 >
+                                    </RadioButton>
+                                </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

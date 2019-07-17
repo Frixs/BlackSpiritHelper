@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.Windows.Input;
 using System.Xml.Serialization;
 
@@ -8,7 +7,6 @@ namespace BlackSpiritHelper.Core
     /// <summary>
     /// User preferences of the application content.
     /// </summary>
-    [SettingsSerializeAs(SettingsSerializeAs.Xml)]
     public class PreferencesViewModel : BaseViewModel
     {
         #region Public Properties
@@ -119,6 +117,7 @@ namespace BlackSpiritHelper.Core
         private void AuthorDonateLinkMethod()
         {
             // TODO donation link.
+            Console.WriteLine(AudioAlertLevel);
         }
 
         #endregion
