@@ -16,6 +16,11 @@ namespace BlackSpiritHelper.Core
         public string ApplicationName { get; private set; } = "Black Spirit Helper";
 
         /// <summary>
+        /// Executing Assembly of the application.
+        /// </summary>
+        public Assembly ApplicationExecutingAssembly { get; set; }
+
+        /// <summary>
         /// Application version from AssemblyInfo.
         /// </summary>
         public string ApplicationVersion { get; set; }
@@ -24,6 +29,11 @@ namespace BlackSpiritHelper.Core
         /// Copyright string from AssemblyInfo.
         /// </summary>
         public string Copyright { get; set; }
+
+        /// <summary>
+        /// Donation URL address.
+        /// </summary>
+        public string DonationURL { get; private set; } = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QE2V3BNQJVG5W&source=url";
 
         /// <summary>
         /// Window default title.

@@ -81,6 +81,9 @@ namespace BlackSpiritHelper
 
             // Bind AssemblyInfo copyright.
             IoC.Application.Copyright = FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).LegalCopyright;
+
+            // Bind Executing Assembly.
+            IoC.Application.ApplicationExecutingAssembly = Assembly.GetExecutingAssembly();
         }
 
         /// <summary>

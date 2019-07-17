@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Xml.Serialization;
 
@@ -78,19 +80,40 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void CreateCommands()
         {
-            RunOnStartUpCheckboxCommand = new RelayCommand(() => RunOnStartUpCheckboxCommandMethod());
+            RunOnStartUpCheckboxCommand = new RelayCommand(async () => await RunOnStartUpCheckboxCommandMethodAsync());
             ResetOverlayPositionCommand = new RelayCommand(() => ResetOverlayPositionMethod());
             AuthorWebpageLinkCommand = new RelayCommand(() => AuthorWebpageLinkMethod());
             AuthorDonateLinkCommand = new RelayCommand(() => AuthorDonateLinkMethod());
         }
 
         /// <summary>
-        /// Run the application on system startup.
+        /// Set/Unset - Run the application on system startup.
         /// </summary>
-        private void RunOnStartUpCheckboxCommandMethod()
+        private async Task RunOnStartUpCheckboxCommandMethodAsync()
         {
-            // TODO runo on startup.
-            System.Console.WriteLine(RunOnStartup);
+            bool runOnStartup = RunOnStartup;
+
+            try
+            {
+                // Get Windows register startup subkey location.
+                Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+
+                if (runOnStartup)
+                    // Set the application executable into Windows register.
+                    key.SetValue(IoC.Application.ApplicationExecutingAssembly.GetName().Name, IoC.Application.ApplicationExecutingAssembly.Location);
+                else
+                    // Delete the application register key from the Windows register.
+                    key.DeleteValue(IoC.Application.ApplicationExecutingAssembly.GetName().Name);
+            }
+            catch (Exception ex)
+            {
+                if (runOnStartup)
+                    IoC.Logger.Log($"Unable to set the application start on system startup.{Environment.NewLine}{ex.Message}", LogLevel.Error);
+                else
+                    IoC.Logger.Log($"Unable to unset the application start on system startup.{Environment.NewLine}{ex.Message}", LogLevel.Error);
+            }
+
+            await Task.Delay(1);
         }
 
         /// <summary>
@@ -116,8 +139,8 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void AuthorDonateLinkMethod()
         {
-            // TODO donation link.
-            Console.WriteLine(AudioAlertLevel);
+            // Open the webpage.
+            System.Diagnostics.Process.Start(IoC.Application.DonationURL);
         }
 
         #endregion

@@ -28,11 +28,12 @@
         #region Public Methods
 
         /// <summary>
-        /// Save all user data.
+        /// Save all user data (on application exit).
         /// </summary>
         public void SaveUserData()
         {
             // Clear previously saved data, first.
+            ClearSavedPreferences();
             ClearSavedTimerData();
 
             // Clear saved data commit.
@@ -40,6 +41,7 @@
 
             // Save new data.
             SaveApplicationData();
+            SaveNewPreferences();
             SaveNewTimerData();
 
             // Save commit.
@@ -91,6 +93,24 @@
         {
             // Clear previous save.
             IoC.SettingsStorage.TimerGroupListDesignModel = null;
+        }
+
+        /// <summary>
+        /// Save new user preferences.
+        /// </summary>
+        private void SaveNewPreferences()
+        {
+            // Save new data.
+            IoC.SettingsStorage.PreferencesDesignModel = PreferencesDesignModel;
+        }
+
+        /// <summary>
+        /// Clear saved user preferences.
+        /// </summary>
+        private void ClearSavedPreferences()
+        {
+            // Clear previous save.
+            IoC.SettingsStorage.PreferencesDesignModel = null;
         }
 
         #endregion
