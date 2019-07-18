@@ -112,7 +112,7 @@ namespace BlackSpiritHelper.Core
             TimerGroupViewModel.Title = Title.Trim();
 
             // Resort groups alphabetically.
-            IoC.DataContent.TimerGroupListDesignModel.SortGroupList();
+            IoC.DataContent.TimerDesignModel.SortGroupList();
 
             // Log it.
             IoC.Logger.Log($"Timer Group '{TimerGroupViewModel.Title}' settings changed!", LogLevel.Info);
@@ -123,7 +123,7 @@ namespace BlackSpiritHelper.Core
 
         private void DeleteGroup()
         {
-            if (!IoC.DataContent.TimerGroupListDesignModel.DestroyGroup(TimerGroupViewModel))
+            if (!IoC.DataContent.TimerDesignModel.DestroyGroup(TimerGroupViewModel))
             {
                 // Some error occured during deleting the group.
                 IoC.UI.ShowMessage(new MessageBoxDialogViewModel

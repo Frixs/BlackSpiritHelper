@@ -11,7 +11,7 @@
     <UserControl.Template>
         <ControlTemplate TargetType="UserControl">
 
-            <Grid DataContext="{x:Static core:TimerGroupMenuDesignModel.Instance}">
+            <Grid DataContext="{x:Static core:TimerGroupMenuControlDesignModel.Instance}">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="110" />
@@ -64,7 +64,7 @@
                         </Grid.ColumnDefinitions>
                         
                         <!-- Group Menu Content -->
-                        <ItemsControl ItemsSource="{Binding ApplicationDataContent.TimerGroupListDesignModel.GroupList,
+                        <ItemsControl ItemsSource="{Binding ApplicationDataContent.TimerDesignModel.GroupList,
                                                     Source={x:Static local:ViewModelLocator.Instance}}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -88,7 +88,7 @@
                         <!-- Add Button -->
                         <Button Grid.Column="1" 
                                 Command="{Binding AddGroupCommand}"
-                                Visibility="{Binding ApplicationDataContent.TimerGroupListDesignModel.CanCreateNewGroup,
+                                Visibility="{Binding ApplicationDataContent.TimerDesignModel.CanCreateNewGroup,
                                              Source={x:Static local:ViewModelLocator.Instance},
                                              Converter={local:BooleanToVisibilityGoneConverter}}"
                                 Content="{StaticResource FontAwesomePlusIcon}"

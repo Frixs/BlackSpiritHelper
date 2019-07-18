@@ -94,6 +94,7 @@ namespace BlackSpiritHelper.Core
             bool runOnStartup = RunOnStartup;
             bool flag = false;
 
+            // TODO error on action.
             await RunCommandAsync(() => flag, async () => {
                 try
                 {

@@ -3,7 +3,10 @@ using System.Windows.Input;
 
 namespace BlackSpiritHelper.Core
 {
-    public class TimerGroupMenuViewModel : BaseViewModel
+    /// <summary>
+    /// ViewModel for the user control TimerGroupMenu.
+    /// </summary>
+    public class TimerGroupMenuControlViewModel : BaseViewModel
     {
         #region Commands
 
@@ -19,7 +22,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Default Constructor.
         /// </summary>
-        public TimerGroupMenuViewModel()
+        public TimerGroupMenuControlViewModel()
         {
             // Create commands.
             CreateCommands();
@@ -43,7 +46,7 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task AddGroupAsync()
         {
-            IoC.DataContent.TimerGroupListDesignModel.AddGroup("Untitled Group");
+            IoC.DataContent.TimerDesignModel.AddGroup("Untitled Group");
 
             await Task.Delay(1);
         }

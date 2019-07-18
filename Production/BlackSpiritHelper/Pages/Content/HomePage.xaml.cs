@@ -5,7 +5,7 @@ namespace BlackSpiritHelper
     /// <summary>
     /// Interaction logic for HomePage.xaml
     /// </summary>
-    public partial class HomePage : BasePage<HomeViewModel>
+    public partial class HomePage : BasePage<HomeViewPageModel>
     {
         public HomePage()
         {

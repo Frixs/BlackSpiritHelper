@@ -11,6 +11,7 @@ namespace BlackSpiritHelper.Core
 {
     /// <summary>
     /// View model that represents timer. ViewModel for TimerListItemControl.
+    /// Data Content.
     /// </summary>
     public class TimerItemViewModel : BaseViewModel
     {
@@ -590,8 +591,8 @@ namespace BlackSpiritHelper.Core
             }
 
             // TODO: Try to find out better solution to update IsRunning property of the group.
-            IoC.DataContent.TimerGroupListDesignModel.GetGroupByID(GroupID).OnPropertyChanged(nameof(IsRunning));
-            IoC.DataContent.TimerGroupListDesignModel.OnPropertyChanged(nameof(IsRunning));
+            IoC.DataContent.TimerDesignModel.GetGroupByID(GroupID).OnPropertyChanged(nameof(IsRunning));
+            IoC.DataContent.TimerDesignModel.OnPropertyChanged(nameof(IsRunning));
 
             // Run the timer.
             mTimer.Start();
@@ -605,8 +606,8 @@ namespace BlackSpiritHelper.Core
             UpdateState(TimerState.Pause);
 
             // TODO: Try to find out better solution to update IsRunning property of the group.
-            IoC.DataContent.TimerGroupListDesignModel.GetGroupByID(GroupID).OnPropertyChanged(nameof(IsRunning));
-            IoC.DataContent.TimerGroupListDesignModel.OnPropertyChanged(nameof(IsRunning));
+            IoC.DataContent.TimerDesignModel.GetGroupByID(GroupID).OnPropertyChanged(nameof(IsRunning));
+            IoC.DataContent.TimerDesignModel.OnPropertyChanged(nameof(IsRunning));
 
             mTimer.Stop();
         }

@@ -28,9 +28,9 @@ namespace BlackSpiritHelper
             GroupChangeComboBoxRule.CurrentGroupID = (sbyte)GroupChangeComboBox.Tag;
 
             // Set ComboBox ItemsSource.
-            GroupChangeComboBox.ItemsSource = IoC.DataContent.TimerGroupListDesignModel.GroupList;
+            GroupChangeComboBox.ItemsSource = IoC.DataContent.TimerDesignModel.GroupList;
             GroupChangeComboBox.DisplayMemberPath = "Title";
-            GroupChangeComboBox.SelectedIndex = IoC.DataContent.TimerGroupListDesignModel.GroupList
+            GroupChangeComboBox.SelectedIndex = IoC.DataContent.TimerDesignModel.GroupList
                 .Select((c, i) => new { Group = c, Index = i })
                 .First(o => o.Group.ID == (sbyte)GroupChangeComboBox.Tag)
                 .Index;

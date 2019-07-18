@@ -2,7 +2,7 @@
 {
     /// <summary>
     /// Subclass for <see cref="IoC"/>. There you define all application data structures.
-    /// F.e. Timer structure is a bit complex with its groups <see cref="TimerGroupListViewModel"/>. You have to bind the same view model to multiple views.
+    /// F.e. Timer structure is a bit complex with its groups <see cref="TimerViewModel"/>. You have to bind the same view model to multiple views.
     /// FOr this reason, you define these data structures here to easily access it as a singleton.
     /// </summary>
     public class ApplicationDataContent
@@ -19,9 +19,9 @@
         /// <summary>
         /// Data structure for timers with its groups.
         /// </summary>
-        public TimerGroupListDesignModel TimerGroupListDesignModel { get; private set; } = IoC.SettingsStorage.TimerGroupListDesignModel == null
-            ? TimerGroupListDesignModel.Instance
-            : IoC.SettingsStorage.TimerGroupListDesignModel;
+        public TimerDesignModel TimerDesignModel { get; private set; } = IoC.SettingsStorage.TimerDesignModel == null
+            ? TimerDesignModel.Instance
+            : IoC.SettingsStorage.TimerDesignModel;
 
         #endregion
 
@@ -51,7 +51,7 @@
             IoC.Logger.Log("User data saved!", LogLevel.Info);
 
             //
-            //XmlSerializer mySerializer = new XmlSerializer(typeof(TimerGroupListDesignModel));
+            //XmlSerializer mySerializer = new XmlSerializer(typeof(TimerDesignModel));
             //StreamWriter myWriter = new StreamWriter("prefs.xml");
             //mySerializer.Serialize(myWriter, xb);
             //myWriter.Close();
@@ -77,13 +77,13 @@
         private void SaveNewTimerData()
         {
             // Freeze all running timers, first.
-            foreach (TimerGroupViewModel g in TimerGroupListDesignModel.GroupList)
+            foreach (TimerGroupViewModel g in TimerDesignModel.GroupList)
                 foreach (TimerItemViewModel t in g.TimerList)
                     if (t.IsRunning)
                         t.TimerFreeze();
 
             // Save new data.
-            IoC.SettingsStorage.TimerGroupListDesignModel = TimerGroupListDesignModel;
+            IoC.SettingsStorage.TimerDesignModel = TimerDesignModel;
         }
 
         /// <summary>
@@ -92,7 +92,7 @@
         private void ClearSavedTimerData()
         {
             // Clear previous save.
-            IoC.SettingsStorage.TimerGroupListDesignModel = null;
+            IoC.SettingsStorage.TimerDesignModel = null;
         }
 
         /// <summary>

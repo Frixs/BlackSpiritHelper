@@ -79,6 +79,7 @@
         </Style>
     </UserControl.Resources>
 
+    <!-- Data Binding -->
     <ContentControl d:DataContext="{x:Static core:TimerGroupDesignModel.Instance}"
                     Style="{StaticResource ContentStyle}" />
 </UserControl>

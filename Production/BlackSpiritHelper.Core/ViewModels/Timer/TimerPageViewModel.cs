@@ -3,9 +3,9 @@
     /// <summary>
     /// Page view model.
     /// </summary>
-    public class TimerViewModel : BaseViewModel
+    public class TimerPageViewModel : BaseViewModel
     {
-        public TimerViewModel()
+        public TimerPageViewModel()
         {
         }
     }

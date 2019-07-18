@@ -37,12 +37,12 @@ namespace BlackSpiritHelper.Core.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::BlackSpiritHelper.Core.TimerGroupListDesignModel TimerGroupListDesignModel {
+        public global::BlackSpiritHelper.Core.TimerDesignModel TimerDesignModel {
             get {
-                return ((global::BlackSpiritHelper.Core.TimerGroupListDesignModel)(this["TimerGroupListDesignModel"]));
+                return ((global::BlackSpiritHelper.Core.TimerDesignModel)(this["TimerDesignModel"]));
             }
             set {
-                this["TimerGroupListDesignModel"] = value;
+                this["TimerDesignModel"] = value;
             }
         }
         

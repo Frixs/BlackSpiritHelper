@@ -1,13 +1,13 @@
 ﻿namespace BlackSpiritHelper.Core
 {
-    public class WatchdogPageViewModel : BaseViewModel
+    public class BossViewPageModel : BaseViewModel
     {
         #region Constructor
 
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public WatchdogPageViewModel()
+        public BossViewPageModel()
         {
         }
 

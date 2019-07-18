@@ -9,7 +9,7 @@ namespace BlackSpiritHelper.Core
     /// View model that represents list of all timer Groups.
     /// Timer Group view model: <see cref="TimerGroupViewModel"/>.
     /// </summary>
-    public class TimerGroupListViewModel : DataContentBaseViewModel
+    public class TimerViewModel : DataContentBaseViewModel
     {
         #region Static Limitation Properties
 
@@ -34,7 +34,9 @@ namespace BlackSpiritHelper.Core
         public bool CanCreateNewGroup => GroupList.Count < AllowedMaxNoOfGroups;
 
         /// <summary>
-        /// TODO xyz
+        /// Says if the Timer content is running.
+        /// TRUE = at least 1 timer is running.
+        /// FALSE = No timer is running at all.
         /// </summary>
         public override bool IsRunning => GroupList.FirstOrDefault(o => o.IsRunning == true) == null ? false : true;
 
@@ -46,7 +48,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Default Constructor.
         /// </summary>
-        public TimerGroupListViewModel()
+        public TimerViewModel()
         {
             GroupList = new ObservableCollection<TimerGroupViewModel>();
         }

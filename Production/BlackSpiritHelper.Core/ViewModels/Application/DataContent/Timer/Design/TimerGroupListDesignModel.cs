@@ -1,13 +1,11 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Configuration;
-using System.IO;
 using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
 {
     [SettingsSerializeAs(SettingsSerializeAs.Xml)]
-    public class TimerGroupListDesignModel : TimerGroupListViewModel
+    public class TimerDesignModel : TimerViewModel
     {
         #region New Instance Getter
 
@@ -15,11 +13,11 @@ namespace BlackSpiritHelper.Core
         /// Create a new instance of this class.
         /// </summary>
         [XmlIgnore]
-        public static TimerGroupListDesignModel Instance
+        public static TimerDesignModel Instance
         {
             get
             {
-                TimerGroupListDesignModel o = new TimerGroupListDesignModel();
+                TimerDesignModel o = new TimerDesignModel();
 
                 // Set default properties while creating a new instance with this property.
                 // Thanks to this, you can load saved user data on application start with NEW statement. (default)
@@ -31,15 +29,15 @@ namespace BlackSpiritHelper.Core
         }
 
         //[XmlIgnore]
-        //private static TimerGroupListDesignModel mInstance = null;
+        //private static TimerDesignModel mInstance = null;
 
         //[XmlIgnore]
-        //public static TimerGroupListDesignModel Instance
+        //public static TimerDesignModel Instance
         //{
         //    get
         //    {
         //        if (mInstance == null)
-        //            mInstance = new TimerGroupListDesignModel();
+        //            mInstance = new TimerDesignModel();
 
         //        return mInstance;
         //    }
@@ -54,7 +52,7 @@ namespace BlackSpiritHelper.Core
 
         #region Constructor
 
-        public TimerGroupListDesignModel()
+        public TimerDesignModel()
         {
         }
 
