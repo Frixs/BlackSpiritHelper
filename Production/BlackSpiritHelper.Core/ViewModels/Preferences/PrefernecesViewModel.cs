@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Xml.Serialization;
@@ -9,7 +8,7 @@ namespace BlackSpiritHelper.Core
     /// <summary>
     /// User preferences of the application content.
     /// </summary>
-    public class PreferencesViewModel : BaseViewModel
+    public class PreferencesViewModel : DataContentBaseViewModel
     {
         #region Public Properties
 
@@ -28,6 +27,8 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         [XmlIgnore]
         public AudioAlert[] AudioAlertList { get; private set; } = (AudioAlert[])Enum.GetValues(typeof(AudioAlert));
+
+        public override bool IsRunning => throw new NotImplementedException();
 
         #endregion
 

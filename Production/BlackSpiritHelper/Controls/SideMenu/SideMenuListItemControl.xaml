@@ -101,6 +101,6 @@
         </Style>
     </UserControl.Resources>
     
-    <ContentControl d:DataContext="{x:Static core:SideMenuListItemDesignModel.Instance}"
+    <ContentControl d:DataContext="{x:Static core:SideMenuListItemControlDesignModel.Instance}"
                     Style="{StaticResource ContentStyle}" />
 </UserControl>

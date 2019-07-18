@@ -61,8 +61,8 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void SetDefaults()
         {
-            TimerGroupViewModel g = AddGroup("Default Group");
-            g.AddTimer(new TimerItemViewModel
+            TimerGroupDataViewModel g = AddGroup("Default Group");
+            g.AddTimer(new TimerItemDataViewModel
             {
                 GroupID = 0,
                 Title = "My First Timer",

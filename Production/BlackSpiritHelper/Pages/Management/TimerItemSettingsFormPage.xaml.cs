@@ -6,7 +6,7 @@ namespace BlackSpiritHelper
     /// <summary>
     /// Interaction logic for TimerItemSettingsFormPage.xaml
     /// </summary>
-    public partial class TimerItemSettingsFormPage : BasePage<TimerItemSettingsFormViewModel>
+    public partial class TimerItemSettingsFormPage : BasePage<TimerItemSettingsFormPageViewModel>
     {
         /// <summary>
         /// Default constructor.
@@ -20,7 +20,7 @@ namespace BlackSpiritHelper
         /// Constructor with specific view model.
         /// </summary>
         /// <param name="specificViewModel">The specific view model to use for this page.</param>
-        public TimerItemSettingsFormPage(TimerItemSettingsFormViewModel specificViewModel) : base(specificViewModel)
+        public TimerItemSettingsFormPage(TimerItemSettingsFormPageViewModel specificViewModel) : base(specificViewModel)
         {
             InitializeComponent();
 

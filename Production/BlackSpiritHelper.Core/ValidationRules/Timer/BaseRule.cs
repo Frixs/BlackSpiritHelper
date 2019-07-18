@@ -4,7 +4,7 @@ using System.Windows.Data;
 namespace BlackSpiritHelper.Core
 {
     /// <summary>
-    /// Rule for the property <see cref="TimerItemViewModel.Title"/>.
+    /// Rule for the property <see cref="TimerItemDataViewModel.Title"/>.
     /// </summary>
     public abstract class BaseRule : ValidationRule
     {

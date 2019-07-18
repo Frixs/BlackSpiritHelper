@@ -4,7 +4,7 @@ using System.Windows.Input;
 
 namespace BlackSpiritHelper.Core
 {
-    public class SideMenuViewModel : BaseViewModel
+    public class SideMenuControlViewModel : BaseViewModel
     {
         #region Commands
 
@@ -30,7 +30,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public SideMenuViewModel()
+        public SideMenuControlViewModel()
         {
             // Create commands.
             CreateCommands();

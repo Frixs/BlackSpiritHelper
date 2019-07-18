@@ -3,14 +3,14 @@ using System.Windows.Input;
 
 namespace BlackSpiritHelper.Core
 {
-    public class TimerItemSettingsFormViewModel : BaseViewModel
+    public class TimerItemSettingsFormPageViewModel : BaseViewModel
     {
         #region Private Members
 
         /// <summary>
         /// The Timer associated to this settings.
         /// </summary>
-        public TimerItemViewModel mTimerItemViewModel;
+        public TimerItemDataViewModel mTimerItemViewModel;
 
         #endregion
 
@@ -19,7 +19,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// The Timer associated to this settings.
         /// </summary>
-        public TimerItemViewModel TimerItemViewModel
+        public TimerItemDataViewModel TimerItemViewModel
         {
             get
             {
@@ -72,7 +72,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Group binding.
         /// </summary>
-        public TimerGroupViewModel AssociatedGroupViewModel { get; set; }
+        public TimerGroupDataViewModel AssociatedGroupViewModel { get; set; }
 
         /// <summary>
         /// ShowOnOverlay binding.
@@ -100,7 +100,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public TimerItemSettingsFormViewModel()
+        public TimerItemSettingsFormPageViewModel()
         {
             // Create commands.
             CreateCommands();
@@ -156,7 +156,7 @@ namespace BlackSpiritHelper.Core
                 iconBackgroundHEX = IconBackgroundHEX;
 
             // Validate inputs.
-            if (!TimerItemViewModel.ValidateTimerInputs(Title, IconTitleShortcut, iconBackgroundHEX, TimeDuration, TimeSpan.FromSeconds(CountdownDuration), ShowInOverlay, AssociatedGroupViewModel, GroupID) 
+            if (!TimerItemDataViewModel.ValidateTimerInputs(Title, IconTitleShortcut, iconBackgroundHEX, TimeDuration, TimeSpan.FromSeconds(CountdownDuration), ShowInOverlay, AssociatedGroupViewModel, GroupID) 
                 || AssociatedGroupViewModel == null)
             {
                 // Some error occured during saving changes of the timer.

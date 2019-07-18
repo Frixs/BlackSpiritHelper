@@ -4,7 +4,7 @@ using System.Windows.Controls;
 namespace BlackSpiritHelper.Core
 {
     /// <summary>
-    /// Rule for the property <see cref="TimerItemViewModel.Title"/>.
+    /// Rule for the property <see cref="TimerItemDataViewModel.Title"/>.
     /// </summary>
     public class TimerTitleRule : BaseRule
     {
@@ -19,8 +19,8 @@ namespace BlackSpiritHelper.Core
             val = val.Trim();
 
             // Check conditions.
-            if (val.Length < TimerItemViewModel.TitleAllowMinChar || val.Length > TimerItemViewModel.TitleAllowMaxChar)
-                return new ValidationResult(false, $"Please enter a title in the length: {TimerItemViewModel.TitleAllowMinChar} - {TimerItemViewModel.TitleAllowMaxChar}.");
+            if (val.Length < TimerItemDataViewModel.TitleAllowMinChar || val.Length > TimerItemDataViewModel.TitleAllowMaxChar)
+                return new ValidationResult(false, $"Please enter a title in the length: {TimerItemDataViewModel.TitleAllowMinChar} - {TimerItemDataViewModel.TitleAllowMaxChar}.");
 
             // Check allowed characters.
             if (!StringUtils.CheckAlphanumericString(val, true, true))

@@ -35,10 +35,10 @@ namespace BlackSpiritHelper
                     return new PreferencesPage();
 
                 case ApplicationPage.TimerGroupSettingsForm:
-                    return new TimerGroupSettingsFormPage(viewModel as TimerGroupSettingsFormViewModel);
+                    return new TimerGroupSettingsFormPage(viewModel as TimerGroupSettingsFormPageViewModel);
 
                 case ApplicationPage.TimerItemSettingsForm:
-                    return new TimerItemSettingsFormPage(viewModel as TimerItemSettingsFormViewModel);
+                    return new TimerItemSettingsFormPage(viewModel as TimerItemSettingsFormPageViewModel);
 
                 default:
                     Debugger.Break();

@@ -2,32 +2,32 @@
 
 namespace BlackSpiritHelper.Core
 {
-    public class SideMenuListDesignModel : SideMenuListViewModel
+    public class SideMenuListControlDesignModel : SideMenuListControlViewModel
     {
         #region New Instance Getter
 
-        public static SideMenuListDesignModel Instance => new SideMenuListDesignModel();
+        public static SideMenuListControlDesignModel Instance => new SideMenuListControlDesignModel();
 
         #endregion
 
         #region Constructor
 
-        public SideMenuListDesignModel()
+        public SideMenuListControlDesignModel()
         {
-            Items = new List<SideMenuListItemViewModel>
+            Items = new List<SideMenuListItemControlViewModel>
             {
-                new SideMenuListItemViewModel
+                new SideMenuListItemControlViewModel
                 {
                     Title = ApplicationPage.Boss.ToString(),
                     PageEnum = ApplicationPage.Boss,
                 },
-                new SideMenuListItemViewModel
+                new SideMenuListItemControlViewModel
                 {
                     Title = ApplicationPage.Timer.ToString(),
                     PageEnum = ApplicationPage.Timer,
                     DataContent = IoC.DataContent.TimerDesignModel,
                 },
-                new SideMenuListItemViewModel
+                new SideMenuListItemControlViewModel
                 {
                     Title = ApplicationPage.Watchdog.ToString(),
                     PageEnum = ApplicationPage.Watchdog,

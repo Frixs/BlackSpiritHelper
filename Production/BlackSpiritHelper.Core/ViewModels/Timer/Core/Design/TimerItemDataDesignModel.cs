@@ -2,17 +2,17 @@
 
 namespace BlackSpiritHelper.Core
 {
-    public class TimerItemDesignModel : TimerItemViewModel
+    public class TimerItemDataDesignModel : TimerItemDataViewModel
     {
         #region New Instance Getter
 
-        public static TimerItemDesignModel Instance => new TimerItemDesignModel();
+        public static TimerItemDataDesignModel Instance => new TimerItemDataDesignModel();
 
         #endregion
 
         #region Constructor
 
-        public TimerItemDesignModel()
+        public TimerItemDataDesignModel()
         {
             GroupID = 0;
             Title = "New Timer";

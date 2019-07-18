@@ -4,7 +4,7 @@ using System.Windows.Controls;
 namespace BlackSpiritHelper.Core
 {
     /// <summary>
-    /// Rule for the property <see cref="TimerItemViewModel.IconTitleShortcut"/>.
+    /// Rule for the property <see cref="TimerItemDataViewModel.IconTitleShortcut"/>.
     /// </summary>
     public class TimerIconTitleShortcutRule : BaseRule
     {
@@ -17,8 +17,8 @@ namespace BlackSpiritHelper.Core
                 return new ValidationResult(false, "Not a character sequence.");
 
             // Check conditions.
-            if (val.Length < TimerItemViewModel.IconTitleAllowMinChar || val.Length > TimerItemViewModel.IconTitleAllowMaxChar)
-                return new ValidationResult(false, $"Please enter a icon title shortcut in the length: {TimerItemViewModel.IconTitleAllowMinChar} - {TimerItemViewModel.IconTitleAllowMaxChar}.");
+            if (val.Length < TimerItemDataViewModel.IconTitleAllowMinChar || val.Length > TimerItemDataViewModel.IconTitleAllowMaxChar)
+                return new ValidationResult(false, $"Please enter a icon title shortcut in the length: {TimerItemDataViewModel.IconTitleAllowMinChar} - {TimerItemDataViewModel.IconTitleAllowMaxChar}.");
 
             // Check allowed characters.
             if (!StringUtils.CheckAlphanumericString(val, true, true))

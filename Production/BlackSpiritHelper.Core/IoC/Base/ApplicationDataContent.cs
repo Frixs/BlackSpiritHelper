@@ -77,8 +77,8 @@
         private void SaveNewTimerData()
         {
             // Freeze all running timers, first.
-            foreach (TimerGroupViewModel g in TimerDesignModel.GroupList)
-                foreach (TimerItemViewModel t in g.TimerList)
+            foreach (TimerGroupDataViewModel g in TimerDesignModel.GroupList)
+                foreach (TimerItemDataViewModel t in g.TimerList)
                     if (t.IsRunning)
                         t.TimerFreeze();
 

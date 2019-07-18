@@ -234,7 +234,7 @@
         </Style>
     </UserControl.Resources>
 
-    <ContentControl d:DataContext="{x:Static core:TimerItemDesignModel.Instance}"
+    <ContentControl d:DataContext="{x:Static core:TimerItemDataDesignModel.Instance}"
                     Style="{StaticResource ContentStyle}" />
 
 </UserControl>

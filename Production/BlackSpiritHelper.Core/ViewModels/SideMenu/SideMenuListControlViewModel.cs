@@ -2,14 +2,14 @@
 
 namespace BlackSpiritHelper.Core
 {
-    public class SideMenuListViewModel : BaseViewModel
+    public class SideMenuListControlViewModel : BaseViewModel
     {
         #region Public Properties
 
         /// <summary>
         /// Menu items.
         /// </summary>
-        public List<SideMenuListItemViewModel> Items { get; set; }
+        public List<SideMenuListItemControlViewModel> Items { get; set; }
 
         #endregion
 
@@ -18,7 +18,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public SideMenuListViewModel()
+        public SideMenuListControlViewModel()
         {
         }
 

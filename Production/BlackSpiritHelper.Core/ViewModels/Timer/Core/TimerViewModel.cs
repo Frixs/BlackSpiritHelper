@@ -7,7 +7,7 @@ namespace BlackSpiritHelper.Core
 {
     /// <summary>
     /// View model that represents list of all timer Groups.
-    /// Timer Group view model: <see cref="TimerGroupViewModel"/>.
+    /// Timer Group view model: <see cref="TimerGroupDataViewModel"/>.
     /// </summary>
     public class TimerViewModel : DataContentBaseViewModel
     {
@@ -25,7 +25,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// List of timer groups.
         /// </summary>
-        public ObservableCollection<TimerGroupViewModel> GroupList { get; set; }
+        public ObservableCollection<TimerGroupDataViewModel> GroupList { get; set; }
 
         /// <summary>
         /// Says if you can create a new item. Limit check.
@@ -50,7 +50,7 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public TimerViewModel()
         {
-            GroupList = new ObservableCollection<TimerGroupViewModel>();
+            GroupList = new ObservableCollection<TimerGroupDataViewModel>();
         }
 
         #endregion
@@ -62,7 +62,7 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         /// <param name="itemTitle">The group item title.</param>
         /// <returns></returns>
-        public TimerGroupViewModel AddGroup(string itemTitle)
+        public TimerGroupDataViewModel AddGroup(string itemTitle)
         {
             IoC.Logger.Log($"Trying to add Timer Group '{itemTitle}'...", LogLevel.Debug);
 
@@ -72,14 +72,14 @@ namespace BlackSpiritHelper.Core
 
             itemTitle = itemTitle.Trim();
             // Validate Inputs.
-            if (!TimerGroupViewModel.ValidateGroupInputs(itemTitle))
+            if (!TimerGroupDataViewModel.ValidateGroupInputs(itemTitle))
                 return null;
 
             // Sort Groups by ID.
             GroupList.OrderBy(o => o.ID);
 
             // Create a new item (Default Group).
-            TimerGroupViewModel item = new TimerGroupViewModel
+            TimerGroupDataViewModel item = new TimerGroupDataViewModel
             {
                 ID = FindNewID(0, (sbyte)(GroupList.Count - 1)),
                 Title = itemTitle,
@@ -100,7 +100,7 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         /// <param name="vm">The view model of the group you wish to delete.</param>
         /// <returns></returns>
-        public bool DestroyGroup(TimerGroupViewModel vm)
+        public bool DestroyGroup(TimerGroupDataViewModel vm)
         {
             IoC.Logger.Log($"Trying to destroy Timer Group '{vm.Title}'...", LogLevel.Debug);
 
@@ -140,7 +140,7 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public void SortGroupList()
         {
-            GroupList = new ObservableCollection<TimerGroupViewModel>(
+            GroupList = new ObservableCollection<TimerGroupDataViewModel>(
                 GroupList.OrderBy(o => o.Title)
                 );
         }
@@ -150,7 +150,7 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         /// <param name="id">The ID.</param>
         /// <returns></returns>
-        public TimerGroupViewModel GetGroupByID(sbyte id)
+        public TimerGroupDataViewModel GetGroupByID(sbyte id)
         {
             return GroupList.FirstOrDefault(o => o.ID == id);
         }

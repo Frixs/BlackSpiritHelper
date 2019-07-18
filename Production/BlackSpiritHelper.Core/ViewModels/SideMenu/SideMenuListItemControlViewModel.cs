@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace BlackSpiritHelper.Core
 {
-    public class SideMenuListItemViewModel : BaseViewModel
+    public class SideMenuListItemControlViewModel : BaseViewModel
     {
         #region Public Properties
 
@@ -35,7 +35,7 @@ namespace BlackSpiritHelper.Core
 
         #region Constructor
 
-        public SideMenuListItemViewModel()
+        public SideMenuListItemControlViewModel()
         {
             // Create commands.
             CreateCommands();

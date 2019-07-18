@@ -10,10 +10,10 @@ namespace BlackSpiritHelper.Core
     /// <summary>
     /// View model that represents timer Group. ViewModel for TimerGroupMenuItemControl.
     /// List of all groups is in the view model <see cref="TimerViewModel"/>.
-    /// It contains list of timers: <see cref="TimerItemViewModel"/>.
+    /// It contains list of timers: <see cref="TimerItemDataViewModel"/>.
     /// Data Content.
     /// </summary>
-    public class TimerGroupViewModel : BaseViewModel
+    public class TimerGroupDataViewModel : BaseViewModel
     {
         #region Static Limitation Properties
 
@@ -61,7 +61,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// List of timers in the group.
         /// </summary>
-        public ObservableCollection<TimerItemViewModel> TimerList { get; set; }
+        public ObservableCollection<TimerItemDataViewModel> TimerList { get; set; }
 
         #endregion
 
@@ -95,9 +95,9 @@ namespace BlackSpiritHelper.Core
 
         #region Constructor
 
-        public TimerGroupViewModel()
+        public TimerGroupDataViewModel()
         {
-            TimerList = new ObservableCollection<TimerItemViewModel>();
+            TimerList = new ObservableCollection<TimerItemDataViewModel>();
 
             // Create commands.
             CreateCommands();
@@ -131,7 +131,7 @@ namespace BlackSpiritHelper.Core
             bool isAnyInFreeze = false;
 
             // Chech if there is any freezed timer.
-            foreach (TimerItemViewModel t in TimerList)
+            foreach (TimerItemDataViewModel t in TimerList)
                 if (t.IsInFreeze)
                 {
                     isAnyInFreeze = true;
@@ -143,7 +143,7 @@ namespace BlackSpiritHelper.Core
             // Lets run all freezed timers.
             if (isAnyInFreeze)
             {
-                foreach (TimerItemViewModel t in TimerList)
+                foreach (TimerItemDataViewModel t in TimerList)
                     if (t.IsInFreeze)
                         t.TimerPlay();
 
@@ -151,7 +151,7 @@ namespace BlackSpiritHelper.Core
             // Lets run all timers.
             else
             {
-                foreach (TimerItemViewModel t in TimerList)
+                foreach (TimerItemDataViewModel t in TimerList)
                     t.TimerPlay();
             }
 
@@ -169,7 +169,7 @@ namespace BlackSpiritHelper.Core
                 return;
 
             // Pause all timers in the group.
-            foreach (TimerItemViewModel t in TimerList)
+            foreach (TimerItemDataViewModel t in TimerList)
                 t.TimerPause();
 
             await Task.Delay(1);
@@ -178,7 +178,7 @@ namespace BlackSpiritHelper.Core
         private async Task AddTimerAsync()
         {
             // Create default timer.
-            AddTimer(new TimerItemViewModel
+            AddTimer(new TimerItemDataViewModel
             {
                 GroupID = ID,
                 Title = "Untitled Timer",
@@ -197,7 +197,7 @@ namespace BlackSpiritHelper.Core
         private async Task OpenGroupSettingsAsync()
         {
             // Create Settings View Model with the current group binding.
-            TimerGroupSettingsFormViewModel vm = new TimerGroupSettingsFormViewModel
+            TimerGroupSettingsFormPageViewModel vm = new TimerGroupSettingsFormPageViewModel
             {
                 TimerGroupViewModel = this,
             };
@@ -215,7 +215,7 @@ namespace BlackSpiritHelper.Core
         /// Add timer item to specific group.
         /// </summary>
         /// <param name="vm">The item.</param>
-        public bool AddTimer(TimerItemViewModel vm)
+        public bool AddTimer(TimerItemDataViewModel vm)
         {
             IoC.Logger.Log($"Trying to add Timer '{vm.Title}' to group '{Title}'...", LogLevel.Debug);
 
@@ -240,7 +240,7 @@ namespace BlackSpiritHelper.Core
         /// Delete the group permanently.
         /// </summary>
         /// <param name="vm">The item.</param>
-        public bool DestroyTimer(TimerItemViewModel vm)
+        public bool DestroyTimer(TimerItemDataViewModel vm)
         {
             IoC.Logger.Log($"Trying to destroy Timer '{vm.Title}'...", LogLevel.Debug);
 
@@ -275,7 +275,7 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public void SortTimerList()
         {
-            TimerList = new ObservableCollection<TimerItemViewModel>(
+            TimerList = new ObservableCollection<TimerItemDataViewModel>(
                 TimerList.OrderBy(o => o.Title)
                 );
         }

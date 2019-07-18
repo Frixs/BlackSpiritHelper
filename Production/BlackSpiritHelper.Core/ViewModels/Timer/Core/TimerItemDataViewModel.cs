@@ -13,7 +13,7 @@ namespace BlackSpiritHelper.Core
     /// View model that represents timer. ViewModel for TimerListItemControl.
     /// Data Content.
     /// </summary>
-    public class TimerItemViewModel : BaseViewModel
+    public class TimerItemDataViewModel : BaseViewModel
     {
         #region Static Limitation Properties
 
@@ -375,7 +375,7 @@ namespace BlackSpiritHelper.Core
 
         #region Constructor
 
-        public TimerItemViewModel()
+        public TimerItemDataViewModel()
         {
             // Set the timer.
             SetTimer();
@@ -691,7 +691,7 @@ namespace BlackSpiritHelper.Core
             }
 
             // Create Settings View Model with the current timer binding.
-            TimerItemSettingsFormViewModel vm = new TimerItemSettingsFormViewModel
+            TimerItemSettingsFormPageViewModel vm = new TimerItemSettingsFormPageViewModel
             {
                 TimerItemViewModel = this,
             };
@@ -867,7 +867,7 @@ namespace BlackSpiritHelper.Core
         /// <param name="showInOverlay"></param>
         /// <param name="showInOverlay"></param>
         /// <returns></returns>
-        public static bool ValidateTimerInputs(string title, string iconTitleShortcut, string iconBackgroundHEX, TimeSpan timeDuration, TimeSpan countdownDuration, bool showInOverlay, TimerGroupViewModel associatedGroupViewModel, sbyte currentGroupID)
+        public static bool ValidateTimerInputs(string title, string iconTitleShortcut, string iconBackgroundHEX, TimeSpan timeDuration, TimeSpan countdownDuration, bool showInOverlay, TimerGroupDataViewModel associatedGroupViewModel, sbyte currentGroupID)
         {
             #region Title
 

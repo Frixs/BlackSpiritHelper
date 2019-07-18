@@ -80,6 +80,6 @@
     </UserControl.Resources>
 
     <!-- Data Binding -->
-    <ContentControl d:DataContext="{x:Static core:TimerGroupDesignModel.Instance}"
+    <ContentControl d:DataContext="{x:Static core:TimerGroupDataDesignModel.Instance}"
                     Style="{StaticResource ContentStyle}" />
 </UserControl>

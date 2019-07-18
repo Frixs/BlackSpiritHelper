@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace BlackSpiritHelper.Core
 {
-    public class TimerGroupSettingsFormViewModel : BaseViewModel
+    public class TimerGroupSettingsFormPageViewModel : BaseViewModel
     {
         #region Private Members
 
         /// <summary>
         /// The Group associated to this settings.
         /// </summary>
-        public TimerGroupViewModel mTimerGroupViewModel;
+        public TimerGroupDataViewModel mTimerGroupViewModel;
 
         #endregion
 
@@ -21,7 +19,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// The Group associated to this settings.
         /// </summary>
-        public TimerGroupViewModel TimerGroupViewModel
+        public TimerGroupDataViewModel TimerGroupViewModel
         {
             get
             {
@@ -62,7 +60,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public TimerGroupSettingsFormViewModel()
+        public TimerGroupSettingsFormPageViewModel()
         {
             // Create commands.
             CreateCommands();
@@ -94,13 +92,13 @@ namespace BlackSpiritHelper.Core
 
         private void SaveChanges()
         {
-            if (!TimerGroupViewModel.ValidateGroupInputs(Title))
+            if (!TimerGroupDataViewModel.ValidateGroupInputs(Title))
             {
                 // Some error occured during saving changes of the group.
                 IoC.UI.ShowMessage(new MessageBoxDialogViewModel
                 {
                     Caption = "Invalid Parameters!",
-                    Message = $"Some of entered parameters are invalid. {Environment.NewLine}Group Name can contain only letters and numbers, {TimerGroupViewModel.TitleAllowMinChar} characters at minimum and {TimerGroupViewModel.TitleAllowMaxChar} characters at maximum.",
+                    Message = $"Some of entered parameters are invalid. {Environment.NewLine}Group Name can contain only letters and numbers, {TimerGroupDataViewModel.TitleAllowMinChar} characters at minimum and {TimerGroupDataViewModel.TitleAllowMaxChar} characters at maximum.",
                     Button = System.Windows.MessageBoxButton.OK,
                     Icon = System.Windows.MessageBoxImage.Warning,
                 });

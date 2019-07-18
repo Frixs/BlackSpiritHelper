@@ -5,7 +5,7 @@ using System.Windows.Controls;
 namespace BlackSpiritHelper.Core
 {
     /// <summary>
-    /// Rule for the property <see cref="TimerItemViewModel.TimeDuration"/>.
+    /// Rule for the property <see cref="TimerItemDataViewModel.TimeDuration"/>.
     /// </summary>
     public class TimerTimeDurationRule : BaseRule
     {
@@ -21,8 +21,8 @@ namespace BlackSpiritHelper.Core
                 return new ValidationResult(false, "Not a TimeSpan type.");
 
             // Check conditions.
-            if (val.Ticks > TimerItemViewModel.TimeAllowMaxDuration.Ticks || val.Ticks < TimerItemViewModel.TimeAllowMinDuration.Ticks)
-                return new ValidationResult(false, $"Please enter a time in the range: {TimerItemViewModel.TimeAllowMinDuration.ToString("dd':'hh':'mm':'ss")} - {TimerItemViewModel.TimeAllowMaxDuration.ToString("dd':'hh':'mm':'ss")}.");
+            if (val.Ticks > TimerItemDataViewModel.TimeAllowMaxDuration.Ticks || val.Ticks < TimerItemDataViewModel.TimeAllowMinDuration.Ticks)
+                return new ValidationResult(false, $"Please enter a time in the range: {TimerItemDataViewModel.TimeAllowMinDuration.ToString("dd':'hh':'mm':'ss")} - {TimerItemDataViewModel.TimeAllowMaxDuration.ToString("dd':'hh':'mm':'ss")}.");
 
             return ValidationResult.ValidResult;
         }

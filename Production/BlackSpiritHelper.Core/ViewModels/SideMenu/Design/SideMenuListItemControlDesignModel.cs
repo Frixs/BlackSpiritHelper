@@ -1,16 +1,16 @@
 ﻿namespace BlackSpiritHelper.Core
 {
-    public class SideMenuListItemDesignModel : SideMenuListItemViewModel
+    public class SideMenuListItemControlDesignModel : SideMenuListItemControlViewModel
     {
         #region New Instance Getter
 
-        public static SideMenuListItemDesignModel Instance => new SideMenuListItemDesignModel();
+        public static SideMenuListItemControlDesignModel Instance => new SideMenuListItemControlDesignModel();
 
         #endregion
 
         #region Constructor
 
-        public SideMenuListItemDesignModel()
+        public SideMenuListItemControlDesignModel()
         {
             Title = "PLACEHOLDER";
             PageEnum = ApplicationPage.Home;

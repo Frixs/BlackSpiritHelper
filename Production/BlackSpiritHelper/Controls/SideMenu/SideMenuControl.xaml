@@ -11,7 +11,7 @@
     <UserControl.Template>
         <ControlTemplate TargetType="UserControl">
 
-            <Grid Grid.Column="0" Panel.ZIndex="2" DataContext="{x:Static core:SideMenuDesignModel.Instance}" Background="{StaticResource SideMenuBackgroundBrushKey}">
+            <Grid Grid.Column="0" Panel.ZIndex="2" DataContext="{x:Static core:SideMenuControlDesignModel.Instance}" Background="{StaticResource SideMenuBackgroundBrushKey}">
 
                 <Grid.RowDefinitions>
                     <!-- Icon -->

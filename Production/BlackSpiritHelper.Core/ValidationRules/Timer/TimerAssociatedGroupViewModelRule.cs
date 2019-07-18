@@ -4,7 +4,7 @@ using System.Windows.Controls;
 namespace BlackSpiritHelper.Core
 {
     /// <summary>
-    /// Rule to check free space in group... to be able to change timer's group - <see cref="TimerItemViewModel.GroupID"/>.
+    /// Rule to check free space in group... to be able to change timer's group - <see cref="TimerItemDataViewModel.GroupID"/>.
     /// </summary>
     public class TimerAssociatedGroupViewModelRule : BaseRule
     {
@@ -18,18 +18,18 @@ namespace BlackSpiritHelper.Core
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            TimerGroupViewModel val;
+            TimerGroupDataViewModel val;
             object oVal = GetBoundValue(value);
 
             // Check data type.
-            if (oVal.GetType() == typeof(TimerGroupViewModel))
-                val = (TimerGroupViewModel)oVal;
+            if (oVal.GetType() == typeof(TimerGroupDataViewModel))
+                val = (TimerGroupDataViewModel)oVal;
             else
                 return new ValidationResult(false, "Not a timer group model.");
 
             // Check conditions.
             if (!val.CanCreateNewTimer && val.ID != CurrentGroupID)
-                return new ValidationResult(false, $"The group is already full. Maximal number of timers in one group is {TimerGroupViewModel.AllowedMaxNoOfTimers}.");
+                return new ValidationResult(false, $"The group is already full. Maximal number of timers in one group is {TimerGroupDataViewModel.AllowedMaxNoOfTimers}.");
 
             return ValidationResult.ValidResult;
         }

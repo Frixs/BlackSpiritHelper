@@ -5,7 +5,7 @@ using System.Windows.Controls;
 namespace BlackSpiritHelper.Core
 {
     /// <summary>
-    /// Rule for the property <see cref="TimerItemViewModel.CountdownDuration"/>.
+    /// Rule for the property <see cref="TimerItemDataViewModel.CountdownDuration"/>.
     /// Enter TotalSeconds of TimeSpan.
     /// </summary>
     public class TimerCountdownDurationRule : BaseRule
@@ -22,8 +22,8 @@ namespace BlackSpiritHelper.Core
                 return new ValidationResult(false, "Not a double type.");
 
             // Check conditions.
-            if (val > TimerItemViewModel.CountdownAllowMaxDuration.TotalSeconds || val < 0)
-                return new ValidationResult(false, $"Please enter a time in the range: 0 - {TimerItemViewModel.CountdownAllowMaxDuration.ToString("dd':'hh':'mm':'ss")}.");
+            if (val > TimerItemDataViewModel.CountdownAllowMaxDuration.TotalSeconds || val < 0)
+                return new ValidationResult(false, $"Please enter a time in the range: 0 - {TimerItemDataViewModel.CountdownAllowMaxDuration.ToString("dd':'hh':'mm':'ss")}.");
 
             return ValidationResult.ValidResult;
         }

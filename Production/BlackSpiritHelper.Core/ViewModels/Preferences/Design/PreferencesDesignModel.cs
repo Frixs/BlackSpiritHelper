@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 namespace BlackSpiritHelper.Core
 {
     /// <summary>
-    /// Global data content DesignModel. The DesignModel of the ViewModel that controls the preferences page.
+    /// Global data content DesignModel.
     /// </summary>
     [SettingsSerializeAs(SettingsSerializeAs.Xml)]
     public class PreferencesDesignModel : PreferencesViewModel
