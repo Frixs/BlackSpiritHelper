@@ -7,11 +7,12 @@
       xmlns:core="clr-namespace:BlackSpiritHelper.Core;assembly=BlackSpiritHelper.Core"
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="500"
-      Title="PreferencesPage" DataContext="{Binding ApplicationDataContent.PreferencesDesignModel,
-                                            Source={x:Static local:ViewModelLocator.Instance}}">
+      Title="PreferencesPage" >
 
     <ScrollViewer Background="White" VerticalScrollBarVisibility="Auto" 
-                  Padding="10">
+                  Padding="10" 
+                  DataContext="{Binding ApplicationDataContent.PreferencesDesignModel,
+                                Source={x:Static local:ViewModelLocator.Instance}}">
 
         <Grid HorizontalAlignment="Center"
               VerticalAlignment="Center"
@@ -50,7 +51,7 @@
                                     <RadioButton GroupName="AudioAlerts"
                                                  Content="{Binding Converter={local:ObjectToStringConverter}}"
                                                  IsChecked="{Binding Path=DataContext.AudioAlertLevel,
-                                                             RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:BasePage}},
+                                                             RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ScrollViewer}},
                                                              Converter={local:RadioEnumBooleanConverter}, 
                                                              ConverterParameter={x:Reference Name=RadioBindedKey}}"
                                                  >
