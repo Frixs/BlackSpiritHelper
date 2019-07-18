@@ -2,9 +2,13 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
+    <!-- Global -->
     <Color x:Key="Red">#ec1e24</Color>
     <SolidColorBrush x:Key="RedBrushKey" Color="{StaticResource Red}" />
 
+    <Color x:Key="Transparent">#00000000</Color>
+    <SolidColorBrush x:Key="TransparentBrushKey" Color="{StaticResource Transparent}" />
+    
     <!-- Window -->
     <Color x:Key="WindowBackground">#FFFFFFFF</Color>
     <SolidColorBrush x:Key="WindowBackgroundBrushKey" Color="{StaticResource WindowBackground}" />
@@ -97,8 +101,17 @@
     <Color x:Key="SideMenuIsRunningIndicatorTrue">#2FB018</Color>
     <SolidColorBrush x:Key="SideMenuIsRunningIndicatorTrueBrushKey" Color="{StaticResource SideMenuIsRunningIndicatorTrue}" />
 
+    <Color x:Key="SideMenuIsRunningIndicatorTrueAlt">#257516</Color>
+    <SolidColorBrush x:Key="SideMenuIsRunningIndicatorTrueAltBrushKey" Color="{StaticResource SideMenuIsRunningIndicatorTrueAlt}" />
+    
     <Color x:Key="SideMenuIsRunningIndicatorFalse">#ec1e24</Color>
     <SolidColorBrush x:Key="SideMenuIsRunningIndicatorFalseBrushKey" Color="{StaticResource SideMenuIsRunningIndicatorFalse}" />
+
+    <Color x:Key="SideMenuIsRunningIndicatorFalseAlt">#BE1217</Color>
+    <SolidColorBrush x:Key="SideMenuIsRunningIndicatorFalseAltBrushKey" Color="{StaticResource SideMenuIsRunningIndicatorFalseAlt}" />
+
+    <Color x:Key="SideMenuIsRunningIndicatorDropShadow">#2A2C31</Color>
+    <SolidColorBrush x:Key="SideMenuIsRunningIndicatorDropShadowBrushKey" Color="{StaticResource SideMenuIsRunningIndicatorDropShadow}" />
 
     <!-- Forms -->
     <Color x:Key="FormTitleForeground">#000000</Color>
@@ -157,6 +170,9 @@
     <Color x:Key="TimerListItemCountdownForeground">#15151a</Color>
     <SolidColorBrush x:Key="TimerListItemCountdownForegroundBrushKey" Color="{StaticResource TimerListItemCountdownForeground}" />
 
+    <Color x:Key="TimerListItemCountdownForegroundInv">#DFDFEC</Color>
+    <SolidColorBrush x:Key="TimerListItemCountdownForegroundInvBrushKey" Color="{StaticResource TimerListItemCountdownForegroundInv}" />
+    
     <Color x:Key="TimerListItemIconBorderColor">#24242b</Color>
     <SolidColorBrush x:Key="TimerListItemIconBorderColorBrushKey" Color="{StaticResource TimerListItemIconBorderColor}" />
 
@@ -233,6 +249,19 @@
 
     <Color x:Key="RegularBlueButtonAction">#555864</Color>
     <SolidColorBrush x:Key="RegularBlueButtonActionBrushKey" Color="{StaticResource RegularBlueButtonAction}" />
+
+    <!-- Regular Button - Warning Mode -->
+    <Color x:Key="RegularWarningModeButtonBackground">#C12327</Color>
+    <SolidColorBrush x:Key="RegularWarningModeButtonBackgroundBrushKey" Color="{StaticResource RegularWarningModeButtonBackground}" />
+
+    <Color x:Key="RegularWarningModeButtonForeground">#E5E6EF</Color>
+    <SolidColorBrush x:Key="RegularWarningModeButtonForegroundBrushKey" Color="{StaticResource RegularWarningModeButtonForeground}" />
+
+    <Color x:Key="RegularWarningModeButtonHover">#B31D20</Color>
+    <SolidColorBrush x:Key="RegularWarningModeButtonHoverBrushKey" Color="{StaticResource RegularWarningModeButtonHover}" />
+
+    <Color x:Key="RegularWarningModeButtonAction">#A3181B</Color>
+    <SolidColorBrush x:Key="RegularWarningModeButtonActionBrushKey" Color="{StaticResource RegularWarningModeButtonAction}" />
 
     <!-- Regular Button - Yellow -->
     <Color x:Key="RegularYellowButtonBackground">#f5be29</Color>

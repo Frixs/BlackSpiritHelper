@@ -67,7 +67,6 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public PreferencesViewModel()
         {
-            System.Console.WriteLine("HEY");
             // Create commands.
             CreateCommands();
         }

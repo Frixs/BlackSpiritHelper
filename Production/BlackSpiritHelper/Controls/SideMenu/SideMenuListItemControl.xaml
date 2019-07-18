@@ -40,24 +40,62 @@
                                     <TextBlock Text="{StaticResource FontAwesomeCircleIcon}" Grid.Column="3"
                                                Visibility="{Binding DataContent.IsRunning,
                                                             Converter={local:BooleanToVisibilityGoneConverter}}"
-                                               Foreground="{StaticResource SideMenuIsRunningIndicatorTrueBrushKey}"
                                                FontFamily="{StaticResource FontAwesomeSolid}"
                                                FontSize="14" 
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Right"
-                                               Margin="10"
-                                               />
+                                               Margin="15 10"
+                                               >
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Foreground">
+                                                    <Setter.Value>
+                                                        <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 1">
+                                                            <GradientStop Color="{StaticResource SideMenuIsRunningIndicatorTrue}" Offset="0.3" />
+                                                            <GradientStop Color="{StaticResource SideMenuIsRunningIndicatorTrueAlt}" Offset="1.0" />
+                                                        </LinearGradientBrush>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter Property="Effect">
+                                                    <Setter.Value>
+                                                        <DropShadowEffect ShadowDepth="0" 
+                                                                          BlurRadius="10" 
+                                                                          Color="{StaticResource SideMenuIsRunningIndicatorDropShadow}" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
                                     <TextBlock Text="{StaticResource FontAwesomeCircleIcon}" Grid.Column="3"
                                                Visibility="{Binding DataContent.IsRunning,
                                                             Converter={local:BooleanToVisibilityGoneConverter},
                                                             ConverterParameter=True}"
-                                               Foreground="{StaticResource SideMenuIsRunningIndicatorFalseBrushKey}"
                                                FontFamily="{StaticResource FontAwesomeSolid}"
                                                FontSize="14" 
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Right"
-                                               Margin="10"
-                                               />
+                                               Margin="15 10"
+                                               >
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Foreground">
+                                                    <Setter.Value>
+                                                        <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 1">
+                                                            <GradientStop Color="{StaticResource SideMenuIsRunningIndicatorFalse}" Offset="0.3" />
+                                                            <GradientStop Color="{StaticResource SideMenuIsRunningIndicatorFalseAlt}" Offset="1.0" />
+                                                        </LinearGradientBrush>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter Property="Effect">
+                                                    <Setter.Value>
+                                                        <DropShadowEffect ShadowDepth="0" 
+                                                                          BlurRadius="10" 
+                                                                          Color="{StaticResource SideMenuIsRunningIndicatorDropShadow}" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
                                 </Grid>
 
                                 <!-- Top border gradient -->

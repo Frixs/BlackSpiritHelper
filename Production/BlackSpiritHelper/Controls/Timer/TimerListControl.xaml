@@ -115,9 +115,9 @@
 
                                 <!-- Group list ITEM -->
                                 <local:TimerListItemControl 
-                                    Width="270" 
-                                    Height="140"
-                                    Margin="5" />
+                                    Width="280" 
+                                    Height="150"
+                                    />
                                 
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>

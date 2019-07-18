@@ -438,6 +438,58 @@
         </Setter>
     </Style>
 
+    <!-- Regular Button - Warning Mode -->
+    <Style TargetType="{x:Type Button}" x:Key="RegularButtonWarningMode" BasedOn="{StaticResource RegularButton}">
+        <Setter Property="Background" Value="{StaticResource RegularWarningModeButtonBackgroundBrushKey}" />
+        <Setter Property="Foreground" Value="{StaticResource RegularWarningModeButtonForegroundBrushKey}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderBrush" Value="{StaticResource RegularWarningModeButtonActionBrushKey}" />
+        <Setter Property="FontFamily" Value="{StaticResource LatoRegular}" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border x:Name="border"
+                            CornerRadius="0"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}" 
+                            SnapsToDevicePixels="True">
+                        <TextBlock Text="{TemplateBinding Content}" 
+                                   Focusable="False" 
+                                   FontFamily="{TemplateBinding FontFamily}"
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                   Margin="{TemplateBinding Padding}" 
+                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation To="{StaticResource RegularWarningModeButtonHover}" Duration="0:0:0.1" Storyboard.TargetName="border" Storyboard.TargetProperty="Background.Color" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation To="{StaticResource RegularWarningModeButtonBackground}" Duration="0:0:0.1" Storyboard.TargetName="border" Storyboard.TargetProperty="Background.Color" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource RegularWarningModeButtonActionBrushKey}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource RegularWarningModeButtonHoverBrushKey}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- Regular Button - Yellow -->
     <Style TargetType="{x:Type Button}" x:Key="RegularButtonYellow" BasedOn="{StaticResource RegularButton}">
         <Setter Property="Background" Value="{StaticResource RegularYellowButtonBackgroundBrushKey}" />

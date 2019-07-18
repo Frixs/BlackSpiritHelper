@@ -133,6 +133,7 @@
       <DependentUpon>TimerItemSettingsFormPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ValueConverters\BooleanToContentConverter.cs" />
+    <Compile Include="ValueConverters\TimerWarningTimerColorSwapConverter.cs" />
     <Compile Include="ValueConverters\EnumBooleanConverter.cs" />
     <Compile Include="ValueConverters\StringToUppercaseConverter.cs" />
     <Compile Include="ValueConverters\ObjectToStringConverter.cs" />

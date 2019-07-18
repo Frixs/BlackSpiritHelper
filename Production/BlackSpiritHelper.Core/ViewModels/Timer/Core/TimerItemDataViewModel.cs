@@ -62,9 +62,14 @@ namespace BlackSpiritHelper.Core
         #region Private Members
 
         /// <summary>
-        /// DIspatcherTimer to control the timer.
+        /// Timer control.
         /// </summary>
         private Timer mTimer;
+
+        /// <summary>
+        /// Timer control - Warning time.
+        /// </summary>
+        private Timer mWarningTimer;
 
         /// <summary>
         /// Timer time total.
@@ -95,9 +100,9 @@ namespace BlackSpiritHelper.Core
         /// Array of notification event fire record.
         /// TRUE = the notification event has been fired.
         /// FALSE = the notification event has NOT been fired yet.
-        /// COunt = Number of notification events for timer.
+        /// Count = Number of notification events for timer.
         /// </summary>
-        private bool[] IsFiredNotificationEvent = new bool[3];
+        private bool[] mIsFiredNotificationEvent = new bool[3];
 
         #endregion
 
@@ -315,6 +320,7 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// Says, the timer is currently in countdown.
+        /// ---
         /// NOTE: Do NOT set this manually. It helps on application start to recover timer to its previous state.
         /// </summary>
         public bool IsInCountdown { get; set; }
@@ -393,13 +399,15 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void SetTimer()
         {
+            // Set normal timer.
             mTimer = new Timer(1000);
             mTimer.Elapsed += TimerOnElapsed;
             mTimer.AutoReset = true;
 
-            IsRunning = false;
-            IsInCountdown = false;
-            IsWarningTime = false;
+            // Set warning timer.
+            mWarningTimer = new Timer(500);
+            mWarningTimer.Elapsed += TimerOnWarningTime;
+            mWarningTimer.AutoReset = true;
         }
 
         /// <summary>
@@ -408,12 +416,19 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public void DisposeTimer()
         {
+            // Normal timer.
             mTimer.Stop();
             mTimer.Elapsed -= TimerOnElapsed;
             mTimer.Dispose();
             mTimer = null;
-        }
 
+            // Warning timer.
+            mWarningTimer.Stop();
+            mWarningTimer.Elapsed -= TimerOnWarningTime;
+            mWarningTimer.Dispose();
+            mWarningTimer = null;
+        }
+        
         /// <summary>
         /// On Tick timer event.
         /// </summary>
@@ -434,67 +449,42 @@ namespace BlackSpiritHelper.Core
             {
                 // Calculate Timer time.
                 currTime = TimeLeft = TimeLeft.Subtract(TimeSpan.FromSeconds(1));
-
-                // Fire notification events.
-                // TODO Add option to user to set these time brackets.
-                if (currTime.TotalSeconds < 50)
-                {
-                    // Fire The 1st notification event.
-                    if (!IsFiredNotificationEvent[0])
-                    {
-                        IsFiredNotificationEvent[0] = true;
-                        // TODO notification event.
-                    }
-
-                    if (currTime.TotalSeconds < 15)
-                    {
-                        // Fire The 2nd notification event.
-                        if (!IsFiredNotificationEvent[1])
-                        {
-                            IsFiredNotificationEvent[1] = true;
-                            // TODO notification event.
-
-                            IsWarningTime = true;
-                            // TODO warning UI.
-                        }
-
-                        if (currTime.TotalSeconds < 5 && currTime.TotalSeconds > 0)
-                        {
-                            // The last seconds countdown event.
-                            // TODO notification event.
-                        }
-                    }
-                } // End - notification events.
-
-            } // End - calculating time.
+                // Handle notification events.
+                TimerHandleNotificationEvents(currTime);
+            }
 
             // Update UI thread.
-            Application.Current.Dispatcher.Invoke(() =>
+            Application.Current.Dispatcher.BeginInvoke((Action)(() =>
             {
                 // Update time text format in UI.
                 UpdateTimeInUI(currTime);
-            });
+            }));
 
             // Countdown reached zero.
             if (IsInCountdown && CountdownLeft.TotalSeconds <= 0)
+            {
                 UpdateState(TimerState.Play);
+            }
 
             // Timer reached zero.
             if (TimeLeft.TotalSeconds <= 0)
             {
-                // Fire 3rd (on-timer-end) notification event.
-                if (!IsFiredNotificationEvent[2])
-                {
-                    IsFiredNotificationEvent[2] = true;
-                    // TODO notification event.
-                }
-
                 // Restart.
                 if (IsLoopActive)
                     TimerRestartLoop();
                 else
                     TimerRestart();
             }
+        }
+
+        /// <summary>
+        /// On warning time, event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TimerOnWarningTime(object sender, ElapsedEventArgs e)
+        {
+            IsWarningTime = !IsWarningTime;
         }
 
         /// <summary>
@@ -536,6 +526,8 @@ namespace BlackSpiritHelper.Core
                     IsRunning       = false;
                     IsInCountdown   = false;
                     IsInFreeze      = false;
+                    // Reset notification triggers.
+                    TimerResetNotificationEventTriggers();
                     return;
 
                 case TimerState.Freeze:
@@ -543,6 +535,8 @@ namespace BlackSpiritHelper.Core
                     State = TimerState.Freeze;
                     IsRunning       = false;
                     IsInFreeze      = true;
+                    // Set notification triggers.
+                    TimerSetNotificationEventTriggers(TimeLeft);
                     return;
 
                 case TimerState.Countdown:
@@ -627,8 +621,6 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void TimerRestart()
         {
-            IsWarningTime = false;
-
             TimerPause();
 
             UpdateState(TimerState.Ready);
@@ -645,11 +637,143 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void TimerRestartLoop()
         {
+            TimerPause();
+
+            // Reset notification triggers.
+            TimerResetNotificationEventTriggers();
+
+            // Reset time.
+            TimeLeft = new TimeSpan(TimeDuration.Ticks);
+
+            TimerPlay();
+        }
+
+        /// <summary>
+        /// Handle timer's notification events.
+        /// </summary>
+        /// <param name="time"></param>
+        private void TimerHandleNotificationEvents(TimeSpan time)
+        {
+            // TODO Add option to user to set these time brackets.
+            // ------------------------------
+            // 1st Bracket.
+            // ------------------------------
+            if (time.TotalSeconds > 50)
+            {
+                // Time has changed, try to deactivate if the warning UI is running.
+                TimerTryToDeactivateWarningUI();
+                return;
+            }
+
+            // Fire notification event.
+            if (!mIsFiredNotificationEvent[0])
+            {
+                mIsFiredNotificationEvent[0] = true;
+                // TODO notification event.
+            }
+
+            // ------------------------------
+            // 2nd Bracket.
+            // ------------------------------
+            if (time.TotalSeconds > 15)
+            {
+                // Time has changed, try to deactivate if the warning UI is running.
+                TimerTryToDeactivateWarningUI();
+                return;
+            }
+
+            // Fire notification event.
+            if (!mIsFiredNotificationEvent[1])
+            {
+                mIsFiredNotificationEvent[1] = true;
+                // TODO notification event.
+            }
+
+            // Activate WARNING UI event.
+            TimerTryToActivateWarningUI();
+
+            // Counting the last seconds.
+            if (time.TotalSeconds < 5 && time.TotalSeconds > 0)
+            {
+                // The last seconds countdown event.
+                // TODO notification event.
+            }
+
+            // ------------------------------
+            // 3rd Bracket.
+            // ------------------------------
+            if (time.TotalSeconds > 0)
+            {
+                return;
+            }
+
+            // Fire notification event.
+            if (!mIsFiredNotificationEvent[2])
+            {
+                mIsFiredNotificationEvent[2] = true;
+                // TODO notification event.
+            }
+
+            // Deactivate WARNING UI event.
+            TimerTryToDeactivateWarningUI();
+
+        }
+
+        /// <summary>
+        /// Set notification event triggers according to time left.
+        /// </summary>
+        /// <param name="time">Time according to which to set the triggers.</param>
+        private void TimerSetNotificationEventTriggers(TimeSpan time)
+        {
+            // TODO user time brackets.
+            int[] brackets = new int[3] { 50, 15, 0 };
+            
+            for (int i = 0; i < mIsFiredNotificationEvent.Length; i++)
+                if (time.TotalSeconds < brackets[i])
+                    mIsFiredNotificationEvent[i] = true;
+                else
+                    mIsFiredNotificationEvent[i] = false;
+        }
+
+        /// <summary>
+        /// Reset notification event triggers.
+        /// </summary>
+        private void TimerResetNotificationEventTriggers()
+        {
+            for (int i = 0; i < mIsFiredNotificationEvent.Length; ++i)
+                mIsFiredNotificationEvent[i] = false;
+        }
+
+        /// <summary>
+        /// Activate WARNING UI event.
+        /// If the event is already running, it cannot be run multiple times.
+        /// </summary>
+        private void TimerTryToActivateWarningUI()
+        {
+            if (mWarningTimer.Enabled)
+                return;
+
+            // Force warning at the beginning immediately.
+            IsWarningTime = true;
+
+            // Start the event handling.
+            mWarningTimer.Start();
+        }
+
+        /// <summary>
+        /// Deactivate WARNING UI event.
+        /// If the event is not running, it cannot be stopped.
+        /// </summary>
+        private void TimerTryToDeactivateWarningUI()
+        {
+            if (!mWarningTimer.Enabled)
+                return;
+
+            // Force warning off immediately.
             IsWarningTime = false;
 
-            TimerPause();
-            TimeLeft = new TimeSpan(TimeDuration.Ticks);
-            TimerPlay();
+            // Stop the event handling.
+            mWarningTimer.Stop();
         }
 
         #endregion
@@ -739,6 +863,10 @@ namespace BlackSpiritHelper.Core
                 // Update time UI.
                 UpdateTimeInUI(TimeLeft);
             }
+
+            // Update notification event triggers.
+            // We are increasing time, the triggers can trigger again.
+            TimerSetNotificationEventTriggers(TimeLeft);
 
             await Task.Delay(1);
         }
