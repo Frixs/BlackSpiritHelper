@@ -134,6 +134,7 @@
     </Compile>
     <Compile Include="ValueConverters\BooleanToContentConverter.cs" />
     <Compile Include="ValueConverters\EnumBooleanConverter.cs" />
+    <Compile Include="ValueConverters\StringToUppercaseConverter.cs" />
     <Compile Include="ValueConverters\ObjectToStringConverter.cs" />
     <Compile Include="ValueConverters\TimespanToStringTimeFormatConverter.cs" />
     <Compile Include="ValueConverters\BooleanToVisibilityGoneConverter.cs" />

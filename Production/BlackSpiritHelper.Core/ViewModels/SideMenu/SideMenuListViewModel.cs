@@ -13,10 +13,6 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
-        #region Commands
-
-        #endregion
-
         #region Constructor
 
         /// <summary>
@@ -24,17 +20,8 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public SideMenuListViewModel()
         {
-            // Create commands.
-            CreateCommands();
         }
 
         #endregion
-
-        /// <summary>
-        /// Create Windows commands.
-        /// </summary>
-        private void CreateCommands()
-        {
-        }
     }
 }

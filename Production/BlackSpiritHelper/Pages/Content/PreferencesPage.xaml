@@ -114,8 +114,8 @@
                     <!-- Author DONATE Link -->
                     <Button Content="DONATE"
                             Command="{Binding AuthorDonateLinkCommand}"
-                            Style="{StaticResource RegularButtonDonate}"
-                            Padding="10"
+                            Style="{StaticResource DonateButton}"
+                            Padding="15 10"
                             Margin="10 0 0 0"/>
                 </StackPanel>
 

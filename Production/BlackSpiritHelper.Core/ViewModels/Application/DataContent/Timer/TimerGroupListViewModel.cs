@@ -9,7 +9,7 @@ namespace BlackSpiritHelper.Core
     /// View model that represents list of all timer Groups.
     /// Timer Group view model: <see cref="TimerGroupViewModel"/>.
     /// </summary>
-    public class TimerGroupListViewModel : BaseViewModel
+    public class TimerGroupListViewModel : DataContentBaseViewModel
     {
         #region Static Limitation Properties
 
@@ -32,6 +32,12 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         [XmlIgnore]
         public bool CanCreateNewGroup => GroupList.Count < AllowedMaxNoOfGroups;
+
+        /// <summary>
+        /// TODO xyz
+        /// </summary>
+        public override bool IsRunning => GroupList.FirstOrDefault(o => o.IsRunning == true) == null ? false : true;
+
 
         #endregion
 

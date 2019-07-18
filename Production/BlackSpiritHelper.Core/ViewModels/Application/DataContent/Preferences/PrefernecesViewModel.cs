@@ -92,28 +92,31 @@ namespace BlackSpiritHelper.Core
         private async Task RunOnStartUpCheckboxCommandMethodAsync()
         {
             bool runOnStartup = RunOnStartup;
+            bool flag = false;
 
-            try
-            {
-                // Get Windows register startup subkey location.
-                Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            await RunCommandAsync(() => flag, async () => {
+                try
+                {
+                    // Get Windows register startup subkey location.
+                    Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
-                if (runOnStartup)
-                    // Set the application executable into Windows register.
-                    key.SetValue(IoC.Application.ApplicationExecutingAssembly.GetName().Name, IoC.Application.ApplicationExecutingAssembly.Location);
-                else
-                    // Delete the application register key from the Windows register.
-                    key.DeleteValue(IoC.Application.ApplicationExecutingAssembly.GetName().Name);
-            }
-            catch (Exception ex)
-            {
-                if (runOnStartup)
-                    IoC.Logger.Log($"Unable to set the application start on system startup.{Environment.NewLine}{ex.Message}", LogLevel.Error);
-                else
-                    IoC.Logger.Log($"Unable to unset the application start on system startup.{Environment.NewLine}{ex.Message}", LogLevel.Error);
-            }
+                    if (runOnStartup)
+                        // Set the application executable into Windows register.
+                        key.SetValue(IoC.Application.ApplicationExecutingAssembly.GetName().Name, IoC.Application.ApplicationExecutingAssembly.Location);
+                    else
+                        // Delete the application register key from the Windows register.
+                        key.DeleteValue(IoC.Application.ApplicationExecutingAssembly.GetName().Name);
+                }
+                catch (Exception ex)
+                {
+                    if (runOnStartup)
+                        IoC.Logger.Log($"Unable to set the application start on system startup.{Environment.NewLine}{ex.Message}", LogLevel.Error);
+                    else
+                        IoC.Logger.Log($"Unable to unset the application start on system startup.{Environment.NewLine}{ex.Message}", LogLevel.Error);
+                }
 
-            await Task.Delay(1);
+                await Task.Delay(1);
+            });
         }
 
         /// <summary>

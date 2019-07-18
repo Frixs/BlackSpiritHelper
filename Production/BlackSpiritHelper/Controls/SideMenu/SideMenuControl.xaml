@@ -19,9 +19,9 @@
                     <!-- Menu -->
                     <RowDefinition Height="*" />
                     <!-- Overlay Management -->
-                    <RowDefinition Height="Auto" />
-                    <!-- Footer -->
                     <RowDefinition Height="50" />
+                    <!-- Footer -->
+                    <RowDefinition Height="60" />
 
                 </Grid.RowDefinitions>
 
@@ -34,20 +34,49 @@
                 </Grid>
 
                 <!-- Menu -->
-                <Border Grid.Row="1">
+                <ScrollViewer VerticalScrollBarVisibility="Hidden" Grid.Row="1">
                     <ContentPresenter />
-                </Border>
+                </ScrollViewer>
 
                 <!-- Overlay Management -->
-                <Border Grid.Row="2" Padding="10">
-                    <CheckBox Content="Overlay" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                <Border Grid.Row="2" Padding="10"
+                        Background="{StaticResource SideMenuBackgroundDarkBrushKey}">
+                    <!-- Overlay Checkbox -->
+                    <CheckBox Content="Show Overlay" 
+                              Style="{StaticResource OverlayCheckbox}"
+                              HorizontalAlignment="Left" 
+                              VerticalAlignment="Top"
                               Checked="ShowOverlayCheckBox_Checked" 
-                              Unchecked="ShowOverlayCheckBox_Unchecked"/>
+                              Unchecked="ShowOverlayCheckBox_Unchecked" 
+                              />
                 </Border>
 
                 <!-- Footer -->
-                <Border Grid.Row="3" Padding="10">
-                    <Button Content="Preferences" Command="{Binding OpenPreferencesPageCommand}" />
+                <Border Grid.Row="3" Padding="10"
+                        Background="{StaticResource SideMenuBackgroundDarkestBrushKey}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <!-- Author DONATE Link -->
+                        <Button Content="DONATE" Grid.Column="0"
+                                Command="{Binding AuthorDonateLinkCommand}"
+                                Style="{StaticResource DonateButton}" 
+                                Padding="10"
+                                Margin="0 0 10 0"
+                                />
+
+                        <!-- Preferences Button -->
+                        <Button Content="{StaticResource FontAwesomeCogIcon}" Grid.Column="2"
+                                Command="{Binding OpenPreferencesPageCommand}" 
+                                Style="{StaticResource SideMenuButton}"
+                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                FontSize="18"
+                                Width="40"
+                                />
+                    </Grid>
                 </Border>
                 
             </Grid>

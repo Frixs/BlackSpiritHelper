@@ -31,6 +31,7 @@
         Preferences = 4,
 
         ///
+        /// Application content pages are until value 99. Set limit: <see cref="ApplicationViewModel.ApplicationContentPageValueLimit"/>.
         /// Only pages with value lower than 100 can be loaded back on application start.
         /// If you want to add more pages change limitation in <see cref="ApplicationViewModel"/>.
         ///

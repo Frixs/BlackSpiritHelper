@@ -76,6 +76,12 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public BaseViewModel CurrentPageViewModel { get; set; }
 
+        /// <summary>
+        /// Maximal enum value of <see cref="ApplicationPage"/> for content pages.
+        /// The rest are pages that are not accessible as a content (forms etc.).
+        /// </summary>
+        public int ApplicationContentPageValueLimit { get; private set; } = 99;
+
         #endregion
 
         #region Constructor

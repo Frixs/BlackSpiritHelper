@@ -18,6 +18,11 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public ICommand OpenPreferencesPageCommand { get; set; }
 
+        /// <summary>
+        /// The command to open donation link.
+        /// </summary>
+        public ICommand AuthorDonateLinkCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -42,6 +47,7 @@ namespace BlackSpiritHelper.Core
         {
             OpenHomePageCommand = new RelayCommand(async () => await OpenHomePageAsync());
             OpenPreferencesPageCommand = new RelayCommand(async () => await OpenPreferencesPageAsync());
+            AuthorDonateLinkCommand = new RelayCommand(() => AuthorDonateLinkMethod());
         }
 
         /// <summary>
@@ -64,7 +70,16 @@ namespace BlackSpiritHelper.Core
             IoC.Application.GoToPage(ApplicationPage.Preferences);
 
             await Task.Delay(1);
-        } 
+        }
+
+        /// <summary>
+        /// Open donation weblink.
+        /// </summary>
+        private void AuthorDonateLinkMethod()
+        {
+            // Open the webpage.
+            System.Diagnostics.Process.Start(IoC.Application.DonationURL);
+        }
 
         #endregion
     }

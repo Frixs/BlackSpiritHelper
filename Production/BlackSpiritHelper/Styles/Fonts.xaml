@@ -17,11 +17,11 @@
 
     <!-- Set default font for these elements -->
     <Style TargetType="{x:Type Control}" x:Key="BaseStyle">
-        <Setter Property="FontFamily" Value="{StaticResource LatoThin}" />
+        <Setter Property="FontFamily" Value="{StaticResource LatoLight}" />
     </Style>
 
     <Style TargetType="{x:Type TextBlock}" x:Key="BaseTextBlockStyle">
-        <Setter Property="FontFamily" Value="{StaticResource LatoThin}" />
+        <Setter Property="FontFamily" Value="{StaticResource LatoLight}" />
     </Style>
 
     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}" />
@@ -40,6 +40,8 @@
     <system:String x:Key="FontAwesomeRetweetIcon">&#xf079;</system:String>
     <system:String x:Key="FontAwesomeStopwatchIcon">&#xf2f2;</system:String>
     <system:String x:Key="FontAwesomeExclamationCircleIcon">&#xf06a;</system:String>
+    <system:String x:Key="FontAwesomeBookmarkIcon">&#xf02e;</system:String>
+    <system:String x:Key="FontAwesomeCircleIcon">&#xf111;</system:String>
     <system:String x:Key="FontAwesomeGitHubIcon">&#xf09b;</system:String>
 
 </ResourceDictionary>

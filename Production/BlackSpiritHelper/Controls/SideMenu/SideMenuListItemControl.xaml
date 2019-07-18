@@ -6,17 +6,94 @@
              xmlns:local="clr-namespace:BlackSpiritHelper"
              xmlns:core="clr-namespace:BlackSpiritHelper.Core;assembly=BlackSpiritHelper.Core"
              mc:Ignorable="d" 
-             d:DesignHeight="65" d:DesignWidth="200">
+             d:DesignHeight="50" d:DesignWidth="200">
 
     <UserControl.Resources>
         <Style x:Key="ContentStyle" TargetType="{x:Type ContentControl}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ContentControl}">
-                        
+
                         <!-- Content -->
-                        <Button Content="{Binding Title}" Padding="10" Margin="10" FontSize="16"
-                                Command="{Binding OpenPageCommand}" />
+                        <Border Background="{StaticResource SideMenuBackgroundBrushKey}"
+                                Height="50"
+                                >
+                            <Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                
+                                    <!-- Title -->
+                                    <TextBlock Text="{Binding Title, Converter={local:StringToUppercaseConverter}}" Grid.Column="0"
+                                                Foreground="{StaticResource SideMenuForegroundBrushKey}"
+                                                FontFamily="{StaticResource LatoBold}"
+                                                FontSize="16"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Left"
+                                                Padding="10"
+                                                />
+
+                                    <!-- Status Indicator -->
+                                    <TextBlock Text="{StaticResource FontAwesomeCircleIcon}" Grid.Column="3"
+                                               Visibility="{Binding DataContent.IsRunning,
+                                                            Converter={local:BooleanToVisibilityGoneConverter}}"
+                                               Foreground="{StaticResource SideMenuIsRunningIndicatorTrueBrushKey}"
+                                               FontFamily="{StaticResource FontAwesomeSolid}"
+                                               FontSize="14" 
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Right"
+                                               Margin="10"
+                                               />
+                                    <TextBlock Text="{StaticResource FontAwesomeCircleIcon}" Grid.Column="3"
+                                               Visibility="{Binding DataContent.IsRunning,
+                                                            Converter={local:BooleanToVisibilityGoneConverter},
+                                                            ConverterParameter=True}"
+                                               Foreground="{StaticResource SideMenuIsRunningIndicatorFalseBrushKey}"
+                                               FontFamily="{StaticResource FontAwesomeSolid}"
+                                               FontSize="14" 
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Right"
+                                               Margin="10"
+                                               />
+                                </Grid>
+
+                                <!-- Top border gradient -->
+                                <Border BorderThickness="0 0.3 0 0" SnapsToDevicePixels="False" UseLayoutRounding="False">
+                                    <Border.BorderBrush>
+                                        <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 0">
+                                            <GradientStop Color="{StaticResource SideMenuBackgroundDarkest}" Offset="0.0" />
+                                            <GradientStop Color="{StaticResource SideMenuBackground}" Offset="1.0" />
+                                        </LinearGradientBrush>
+                                    </Border.BorderBrush>
+                                </Border>
+                            </Grid>
+
+                            <!-- Input Bindings -->
+                            <Border.InputBindings>
+                                <MouseBinding Gesture="LeftClick" Command="{Binding OpenPageCommand}" />
+                            </Border.InputBindings>
+                            
+                            <!-- Triggers -->
+                            <Border.Triggers>
+                                <EventTrigger RoutedEvent="MouseEnter">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation To="{StaticResource SideMenuBackgroundDark}" Duration="0:0:0.1" Storyboard.TargetProperty="Background.Color" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="MouseLeave">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation To="{StaticResource SideMenuBackground}" Duration="0:0:0.1" Storyboard.TargetProperty="Background.Color" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Border.Triggers>
+                        </Border>
                         
                     </ControlTemplate>
                 </Setter.Value>

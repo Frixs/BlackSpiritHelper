@@ -167,8 +167,7 @@
                                                    FontFamily="{StaticResource FontAwesomeSolid}"
                                                    Foreground="{StaticResource TimerListItemLoopIndicatorForegroundBrushKey}"
                                                    FontSize="16"
-                                                   Padding="0 5 5 5"
-                                                   Margin="5" />
+                                                   Margin="5"/>
                                         <!-- Freeze indicator -->
                                         <TextBlock Text="{StaticResource FontAwesomeStopwatchIcon}"
                                                    Visibility="{Binding IsInFreeze,
@@ -176,8 +175,16 @@
                                                    FontFamily="{StaticResource FontAwesomeSolid}"
                                                    Foreground="{StaticResource TimerListItemFreezeIndicatorForegroundBrushKey}"
                                                    FontSize="16"
-                                                   Padding="0 5 5 5"
-                                                   Margin="5" />
+                                                   Padding="0 0 2 0"
+                                                   Margin="5"/>
+                                        <!-- Overlay indicator -->
+                                        <TextBlock Text="{StaticResource FontAwesomeBookmarkIcon}"
+                                                   Visibility="{Binding ShowInOverlay,
+                                                                Converter={local:BooleanToVisibilityGoneConverter}}"
+                                                   FontFamily="{StaticResource FontAwesomeSolid}"
+                                                   Foreground="{StaticResource TimerListItemOverlayIndicatorForegroundBrushKey}"
+                                                   FontSize="16"
+                                                   Margin="5"/>
                                     </StackPanel>
                                 </Grid>
                                 

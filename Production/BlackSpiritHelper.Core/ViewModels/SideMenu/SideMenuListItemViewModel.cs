@@ -18,9 +18,9 @@ namespace BlackSpiritHelper.Core
         public ApplicationPage PageEnum { get; set; }
 
         /// <summary>
-        /// Says, if any Helper is running in the page.
+        /// TODO xyz
         /// </summary>
-        public bool IsActive { get; set; }
+        public DataContentBaseViewModel DataContent { get; set; } = null;
 
         #endregion
 

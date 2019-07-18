@@ -18,6 +18,9 @@
     <Color x:Key="WindowTitleBarDropShadow">#FFF8F8F8</Color>
     <SolidColorBrush x:Key="WindowTitleBarDropShadowBrushKey" Color="{StaticResource WindowTitleBarDropShadow}" />
 
+    <Color x:Key="WindowTitleForeground">#888888</Color>
+    <SolidColorBrush x:Key="WindowTitleForegroundBrushKey" Color="{StaticResource WindowTitleForeground}" />
+
     <!-- Line Spacers -->
     <Color x:Key="LineSpacer0Background">#ffffff</Color>
     <SolidColorBrush x:Key="LineSpacer0BackgroundBrushKey" Color="{StaticResource LineSpacer0Background}" />
@@ -61,8 +64,41 @@
     <SolidColorBrush x:Key="TextNormalBrushKey" Color="{StaticResource TextNormal}" />
 
     <!-- Side Menu -->
-    <Color x:Key="SideMenuBackground">#FF36393f</Color>
+    <Color x:Key="SideMenuBackground">#36393f</Color>
     <SolidColorBrush x:Key="SideMenuBackgroundBrushKey" Color="{StaticResource SideMenuBackground}" />
+
+    <Color x:Key="SideMenuBackgroundDark">#2A2C31</Color>
+    <SolidColorBrush x:Key="SideMenuBackgroundDarkBrushKey" Color="{StaticResource SideMenuBackgroundDark}" />
+
+    <Color x:Key="SideMenuBackgroundDarkest">#232429</Color>
+    <SolidColorBrush x:Key="SideMenuBackgroundDarkestBrushKey" Color="{StaticResource SideMenuBackgroundDarkest}" />
+
+    <Color x:Key="SideMenuForeground">#93979f</Color>
+    <SolidColorBrush x:Key="SideMenuForegroundBrushKey" Color="{StaticResource SideMenuForeground}" />
+
+    <Color x:Key="SideMenuButtonBackground">#272A31</Color>
+    <SolidColorBrush x:Key="SideMenuButtonBackgroundBrushKey" Color="{StaticResource SideMenuButtonBackground}" />
+
+    <Color x:Key="SideMenuButtonHover">#2D313C</Color>
+    <SolidColorBrush x:Key="SideMenuButtonHoverBrushKey" Color="{StaticResource SideMenuButtonHover}" />
+
+    <Color x:Key="SideMenuButtonAction">#303644</Color>
+    <SolidColorBrush x:Key="SideMenuButtonActionBrushKey" Color="{StaticResource SideMenuButtonAction}" />
+
+    <Color x:Key="SideMenuListButtonBackground">#36393f</Color>
+    <SolidColorBrush x:Key="SideMenuListButtonBackgroundBrushKey" Color="{StaticResource SideMenuListButtonBackground}" />
+
+    <Color x:Key="SideMenuListButtonHover">#2a2c2f</Color>
+    <SolidColorBrush x:Key="SideMenuListButtonHoverBrushKey" Color="{StaticResource SideMenuListButtonHover}" />
+
+    <Color x:Key="SideMenuListButtonAction">#24272B</Color>
+    <SolidColorBrush x:Key="SideMenuListButtonActionBrushKey" Color="{StaticResource SideMenuListButtonAction}" />
+
+    <Color x:Key="SideMenuIsRunningIndicatorTrue">#2FB018</Color>
+    <SolidColorBrush x:Key="SideMenuIsRunningIndicatorTrueBrushKey" Color="{StaticResource SideMenuIsRunningIndicatorTrue}" />
+
+    <Color x:Key="SideMenuIsRunningIndicatorFalse">#ec1e24</Color>
+    <SolidColorBrush x:Key="SideMenuIsRunningIndicatorFalseBrushKey" Color="{StaticResource SideMenuIsRunningIndicatorFalse}" />
 
     <!-- Forms -->
     <Color x:Key="FormTitleForeground">#000000</Color>
@@ -130,6 +166,9 @@
     <Color x:Key="TimerListItemFreezeIndicatorForeground">#0050DE</Color>
     <SolidColorBrush x:Key="TimerListItemFreezeIndicatorForegroundBrushKey" Color="{StaticResource TimerListItemFreezeIndicatorForeground}" />
 
+    <Color x:Key="TimerListItemOverlayIndicatorForeground">#5A003F</Color>
+    <SolidColorBrush x:Key="TimerListItemOverlayIndicatorForegroundBrushKey" Color="{StaticResource TimerListItemOverlayIndicatorForeground}" />
+    
     <Color x:Key="TimerListItemCountdownTextColor">#AE1E21</Color>
     <SolidColorBrush x:Key="TimerListItemCountdownTextColorBrushKey" Color="{StaticResource TimerListItemCountdownTextColor}" />
 
@@ -223,5 +262,24 @@
 
     <Color x:Key="RegularDonateButtonAction">#000000</Color>
     <SolidColorBrush x:Key="RegularDonateButtonActionBrushKey" Color="{StaticResource RegularDonateButtonAction}" />
+    
+    <!-- Overlay Checkbox -->
+    <Color x:Key="OverlayCheckboxBorder">#232429</Color>
+    <SolidColorBrush x:Key="OverlayCheckboxBorderBrushKey" Color="{StaticResource OverlayCheckboxBorder}" />
+
+    <Color x:Key="OverlayCheckboxBackground">#93979f</Color>
+    <SolidColorBrush x:Key="OverlayCheckboxBackgroundBrushKey" Color="{StaticResource OverlayCheckboxBackground}" />
+
+    <Color x:Key="OverlayCheckboxHover">#17171B</Color>
+    <SolidColorBrush x:Key="OverlayCheckboxHoverBrushKey" Color="{StaticResource OverlayCheckboxHover}" />
+
+    <Color x:Key="OverlayCheckboxAction">#0D0D10</Color>
+    <SolidColorBrush x:Key="OverlayCheckboxActionBrushKey" Color="{StaticResource OverlayCheckboxAction}" />
+
+    <Color x:Key="OverlayCheckboxChecked">#EC381E</Color>
+    <SolidColorBrush x:Key="OverlayCheckboxCheckedBrushKey" Color="{StaticResource OverlayCheckboxChecked}" />
+
+    <Color x:Key="OverlayCheckboxCheckedAlt">#ec1e24</Color>
+    <SolidColorBrush x:Key="OverlayCheckboxCheckedAltBrushKey" Color="{StaticResource OverlayCheckboxCheckedAlt}" />
 
 </ResourceDictionary>
