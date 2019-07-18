@@ -15,6 +15,18 @@
               VerticalAlignment="Center"
               Width="400">
 
+            <!-- Go Back Button -->
+            <Button Content="{StaticResource FontAwesomeArrowLeftIcon}"
+                    Command="{Binding GoBackCommand}"
+                    Style="{StaticResource RegularButtonLight}" 
+                    FontFamily="{StaticResource FontAwesomeSolid}"
+                    Width="30"
+                    Height="30"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Panel.ZIndex="1"
+                    />
+
             <StackPanel TextBlock.TextAlignment="Center">
 
                 <!-- Form Title -->

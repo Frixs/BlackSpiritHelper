@@ -93,6 +93,11 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public ICommand DeleteTimerCommand { get; set; }
 
+        /// <summary>
+        /// The command to go back to the timer page.
+        /// </summary>
+        public ICommand GoBackCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -136,6 +141,7 @@ namespace BlackSpiritHelper.Core
         {
             SaveChangesCommand = new RelayCommand(() => SaveChanges());
             DeleteTimerCommand = new RelayCommand(() => DeleteTimer());
+            GoBackCommand = new RelayCommand(() => GoBack());
         }
 
         private void SaveChanges()
@@ -213,7 +219,7 @@ namespace BlackSpiritHelper.Core
             IoC.Logger.Log($"Timer '{TimerItemViewModel.Title}' settings changed!", LogLevel.Info);
 
             // Move back to the page.
-            IoC.Application.GoToPage(ApplicationPage.Timer);
+            GoBack();
         }
 
         private void DeleteTimer()
@@ -237,6 +243,12 @@ namespace BlackSpiritHelper.Core
                 return;
             }
 
+            // Move back to the page.
+            GoBack();
+        }
+
+        private void GoBack()
+        {
             // Move back to the page.
             IoC.Application.GoToPage(ApplicationPage.Timer);
         }

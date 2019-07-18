@@ -208,6 +208,19 @@
     <Color x:Key="RegularNoColorButtonAction">#ec1e24</Color>
     <SolidColorBrush x:Key="RegularNoColorButtonActionBrushKey" Color="{StaticResource RegularNoColorButtonAction}" />
 
+    <!-- Regular Button - Light -->
+    <Color x:Key="RegularLightButtonBackground">#F1F1F1</Color>
+    <SolidColorBrush x:Key="RegularLightButtonBackgroundBrushKey" Color="{StaticResource RegularLightButtonBackground}" />
+
+    <Color x:Key="RegularLightButtonForeground">#222222</Color>
+    <SolidColorBrush x:Key="RegularLightButtonForegroundBrushKey" Color="{StaticResource RegularLightButtonForeground}" />
+
+    <Color x:Key="RegularLightButtonHover">#E1E1E1</Color>
+    <SolidColorBrush x:Key="RegularLightButtonHoverBrushKey" Color="{StaticResource RegularLightButtonHover}" />
+
+    <Color x:Key="RegularLightButtonAction">#D6D6D6</Color>
+    <SolidColorBrush x:Key="RegularLightButtonActionBrushKey" Color="{StaticResource RegularLightButtonAction}" />
+
     <!-- Regular Button - Blue -->
     <Color x:Key="RegularBlueButtonBackground">#6E717D</Color>
     <SolidColorBrush x:Key="RegularBlueButtonBackgroundBrushKey" Color="{StaticResource RegularBlueButtonBackground}" />

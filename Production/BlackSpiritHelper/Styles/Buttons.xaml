@@ -335,6 +335,57 @@
         </Setter>
     </Style>
 
+    <!-- Regular Button - Light -->
+    <Style TargetType="{x:Type Button}" x:Key="RegularButtonLight" BasedOn="{StaticResource Hoverless}">
+        <Setter Property="Background" Value="{StaticResource RegularLightButtonBackgroundBrushKey}" />
+        <Setter Property="Foreground" Value="{StaticResource RegularLightButtonForegroundBrushKey}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderBrush" Value="{StaticResource RegularLightButtonActionBrushKey}" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border x:Name="border"
+                            CornerRadius="0"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}" 
+                            SnapsToDevicePixels="True">
+                        <TextBlock Text="{TemplateBinding Content}" 
+                                   Focusable="False" 
+                                   FontFamily="{TemplateBinding FontFamily}"
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                   Margin="{TemplateBinding Padding}" 
+                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation To="{StaticResource RegularLightButtonHover}" Duration="0:0:0.1" Storyboard.TargetName="border" Storyboard.TargetProperty="Background.Color" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation To="{StaticResource RegularLightButtonBackground}" Duration="0:0:0.1" Storyboard.TargetName="border" Storyboard.TargetProperty="Background.Color" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource RegularLightButtonActionBrushKey}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource RegularLightButtonHoverBrushKey}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- Regular Button - Blue -->
     <Style TargetType="{x:Type Button}" x:Key="RegularButtonBlue" BasedOn="{StaticResource RegularButton}">
         <Setter Property="Background" Value="{StaticResource RegularBlueButtonBackgroundBrushKey}" />

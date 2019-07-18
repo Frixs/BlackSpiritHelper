@@ -9,7 +9,7 @@
       d:DesignHeight="800" d:DesignWidth="500"
       Title="PreferencesPage" >
 
-    <ScrollViewer Background="White" VerticalScrollBarVisibility="Auto" 
+    <ScrollViewer VerticalScrollBarVisibility="Auto" 
                   Padding="10" 
                   DataContext="{Binding ApplicationDataContent.PreferencesDesignModel,
                                 Source={x:Static local:ViewModelLocator.Instance}}">
