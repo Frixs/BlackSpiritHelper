@@ -17,6 +17,13 @@
             : IoC.SettingsStorage.PreferencesDesignModel;
 
         /// <summary>
+        /// Data structure for the overlay.
+        /// </summary>
+        public OverlayDesignModel OverlayDesignModel { get; private set; } = IoC.SettingsStorage.OverlayDesignModel == null
+            ? OverlayDesignModel.Instance
+            : IoC.SettingsStorage.OverlayDesignModel;
+
+        /// <summary>
         /// Data structure for timers with its groups.
         /// </summary>
         public TimerDesignModel TimerDesignModel { get; private set; } = IoC.SettingsStorage.TimerDesignModel == null
@@ -35,6 +42,7 @@
             // Clear previously saved data, first.
             ClearSavedPreferences();
             ClearSavedTimerData();
+            ClearSavedOverlaySettings();
 
             // Clear saved data commit.
             IoC.SettingsStorage.Save();
@@ -43,6 +51,7 @@
             SaveApplicationData();
             SaveNewPreferences();
             SaveNewTimerData();
+            SaveNewOverlaySettings();
 
             // Save commit.
             IoC.SettingsStorage.Save();
@@ -111,6 +120,24 @@
         {
             // Clear previous save.
             IoC.SettingsStorage.PreferencesDesignModel = null;
+        }
+
+        /// <summary>
+        /// Save new overlay settings.
+        /// </summary>
+        private void SaveNewOverlaySettings()
+        {
+            // Save new data.
+            IoC.SettingsStorage.OverlayDesignModel = OverlayDesignModel;
+        }
+
+        /// <summary>
+        /// Clear saved overlay settings.
+        /// </summary>
+        private void ClearSavedOverlaySettings()
+        {
+            // Clear previous save.
+            IoC.SettingsStorage.OverlayDesignModel = null;
         }
 
         #endregion

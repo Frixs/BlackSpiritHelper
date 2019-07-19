@@ -56,5 +56,16 @@ namespace BlackSpiritHelper.Core.Properties {
                 this["PreferencesDesignModel"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::BlackSpiritHelper.Core.OverlayDesignModel OverlayDesignModel {
+            get {
+                return ((global::BlackSpiritHelper.Core.OverlayDesignModel)(this["OverlayDesignModel"]));
+            }
+            set {
+                this["OverlayDesignModel"] = value;
+            }
+        }
     }
 }

@@ -4,7 +4,6 @@ using System.Windows.Interop;
 using BlackSpiritHelper.Core;
 using System.Windows.Input;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace BlackSpiritHelper
 {
@@ -19,11 +18,6 @@ namespace BlackSpiritHelper
         /// Target window handle where to open overlay window.
         /// </summary>
         private IntPtr mTargetWindowHandle;
-
-        ///// <summary>
-        ///// Target window name.
-        ///// </summary>
-        //private const string WindowName = "Calculator";
 
         /// <summary>
         /// Says if the overlay window is ok to show.
@@ -86,21 +80,29 @@ namespace BlackSpiritHelper
 
         private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (IoC.DataContent.OverlayDesignModel.IsDraggingLocked)
+                return;
+
+            // Get clicked object.
+            Mouse.Capture(OverlayObject);
             // Get relative mouse position within overlay object.
             mOverlayObjectMouseRelPos = e.GetPosition(sender as UIElement);
         }
 
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton != MouseButtonState.Pressed)
+            if (IoC.DataContent.OverlayDesignModel.IsDraggingLocked)
                 return;
 
+            if (e.LeftButton != MouseButtonState.Pressed)
+                return;
+            
             // Set X axis.
-            Canvas.SetLeft(sender as FrameworkElement,
+            Canvas.SetLeft(OverlayObject as FrameworkElement,
                 e.GetPosition(null).X - mOverlayObjectMouseRelPos.X
                 );
             // Set Y axis.
-            Canvas.SetTop(sender as FrameworkElement,
+            Canvas.SetTop(OverlayObject as FrameworkElement,
                 e.GetPosition(null).Y - mOverlayObjectMouseRelPos.Y
                 );
 
@@ -109,7 +111,12 @@ namespace BlackSpiritHelper
 
         private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            // Reset.
+            if (IoC.DataContent.OverlayDesignModel.IsDraggingLocked)
+                return;
+
+            // Reset clicked object.
+            Mouse.Capture(null);
+            // Reset position.
             mOverlayObjectMouseRelPos = default;
         }
 

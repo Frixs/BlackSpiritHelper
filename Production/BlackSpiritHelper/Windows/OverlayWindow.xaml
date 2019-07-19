@@ -24,18 +24,141 @@
         </Grid.ColumnDefinitions>
         
         <!-- Canvas -->
-        <Canvas Grid.Row="0" Grid.Column="0">
+        <Canvas Grid.Row="0" Grid.Column="0"
+                DataContext="{Binding ApplicationDataContent.OverlayDesignModel,
+                              Source={x:Static local:ViewModelLocator.Instance}}"
+                >
             
             <!-- Canvas Content -->
-            <Border Background="Brown"
-                    Width="100"
-                    Height="100"
-                    Canvas.Left="300"
-                    Canvas.Top="300"
+            <Border x:Name="OverlayObject"
+                    Canvas.Left="{Binding PosX, Mode=TwoWay}"
+                    Canvas.Top="{Binding PosY, Mode=TwoWay}"
                     MouseLeftButtonDown="OnMouseLeftButtonDown"
                     MouseMove="OnMouseMove"
                     MouseLeftButtonUp="OnMouseLeftButtonUp"
-                    />
+                    >
+
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource DraggableZoneBrushKey}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                
+                <Grid>
+                    <!-- Border -->
+                    <Rectangle StrokeThickness="2">
+                        <Rectangle.Style>
+                            <Style TargetType="Rectangle">
+                                <Setter Property="Stroke" Value="Transparent" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsMouseOver, ElementName=OverlayObject}" Value="True">
+                                        <Setter Property="Stroke" Value="{StaticResource DraggableZoneBrushKey}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsDraggingLocked}" Value="True">
+                                        <Setter Property="Stroke" Value="Transparent" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+
+                    <!-- Overlay Object Content Wrapper -->
+                    <StackPanel Orientation="{Binding OverlayOrientation, FallbackValue=Horizontal}">
+
+                        <!-- Overlay Object Item Wrapper -->
+                        <Button Margin="15"
+                                Padding="0"
+                            >
+
+                            <!-- Content -->
+                            <StackPanel Orientation="{Binding OverlayOrientation, FallbackValue=Horizontal}"
+                                        Width="{Binding OverlaySizeStyleWidthValue, FallbackValue=Auto}" 
+                                        Height="{Binding OverlaySizeStyleHeightValue, FallbackValue=50}"
+                                        MinWidth="{Binding OverlaySizeStyleValue, FallbackValue=50}"
+                                        MinHeight="{Binding OverlaySizeStyleValue, FallbackValue=50}"
+                                        Background="{StaticResource RedBrushKey}"
+                                    >
+
+                                <!-- TODO content -->
+                                <Border Width="{Binding OverlaySizeStyleValue, FallbackValue=50}" 
+                                        Height="{Binding OverlaySizeStyleValue, FallbackValue=50}" 
+                                        Background="Wheat"
+                                    />
+                                <Border Width="{Binding OverlaySizeStyleValue, FallbackValue=50}" 
+                                        Height="{Binding OverlaySizeStyleValue, FallbackValue=50}" 
+                                        Background="PapayaWhip"
+                                    />
+
+                            </StackPanel>
+
+                            <!-- Overlay Object Drop Shadow -->
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource Hoverless}">
+                                    <Setter Property="Effect">
+                                        <Setter.Value>
+                                            <DropShadowEffect ShadowDepth="0" 
+                                                              BlurRadius="10"
+                                                              Opacity="0.25" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Button.Style>
+
+                        </Button>
+
+                        <!-- Overlay Object Control Wrapper -->
+                        <Grid>
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Visibility" Value="Hidden" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsMouseOver, ElementName=OverlayObject}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                            
+                            <!-- Controls -->
+                            <Button Content="{StaticResource FontAwesomeLockIcon}"
+                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                    FontSize="16"
+                                    Visibility="{Binding IsDraggingLocked,
+                                                 Converter={local:BooleanToVisibilityGoneConverter}}"
+                                    Width="{Binding OverlaySizeStyleValue, FallbackValue=50}"
+                                    Height="{Binding OverlaySizeStyleValue, FallbackValue=50}"
+                                    Command="{Binding LockOverlayDraggingCommand}"
+                                    Style="{StaticResource RegularButtonNoColor}"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                />
+                            <Button Content="{StaticResource FontAwesomeUnlockIcon}"
+                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                    FontSize="16"
+                                    Visibility="{Binding IsDraggingLocked,
+                                                 Converter={local:BooleanToVisibilityGoneConverter},
+                                                 ConverterParameter=True}"
+                                    Width="{Binding OverlaySizeStyleValue, FallbackValue=50}"
+                                    Height="{Binding OverlaySizeStyleValue, FallbackValue=50}"
+                                    Command="{Binding LockOverlayDraggingCommand}"
+                                    Style="{StaticResource RegularButtonNoColor}"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                />
+                        </Grid>
+
+                        <!-- Spacer -->
+                        <Border Margin="15 15 0 0" />
+                        
+                    </StackPanel>
+                </Grid>
+            </Border>
+            
         </Canvas>
     </Grid>
     

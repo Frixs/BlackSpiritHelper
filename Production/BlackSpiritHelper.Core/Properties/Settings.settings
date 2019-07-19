@@ -11,5 +11,8 @@
     <Setting Name="PreferencesDesignModel" Type="BlackSpiritHelper.Core.PreferencesDesignModel" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="OverlayDesignModel" Type="BlackSpiritHelper.Core.OverlayDesignModel" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

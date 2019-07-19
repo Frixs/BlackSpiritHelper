@@ -25,6 +25,10 @@
     <Color x:Key="WindowTitleForeground">#888888</Color>
     <SolidColorBrush x:Key="WindowTitleForegroundBrushKey" Color="{StaticResource WindowTitleForeground}" />
 
+    <!-- Overlay -->
+    <Color x:Key="DraggableZone">#44ec1e24</Color>
+    <SolidColorBrush x:Key="DraggableZoneBrushKey" Color="{StaticResource DraggableZone}" />
+
     <!-- Line Spacers -->
     <Color x:Key="LineSpacer0Background">#ffffff</Color>
     <SolidColorBrush x:Key="LineSpacer0BackgroundBrushKey" Color="{StaticResource LineSpacer0Background}" />

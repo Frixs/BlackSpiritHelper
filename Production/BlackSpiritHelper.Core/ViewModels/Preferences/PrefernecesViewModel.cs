@@ -99,7 +99,10 @@ namespace BlackSpiritHelper.Core
         {
             bool runOnStartup = RunOnStartup;
 
-            await RunCommandAsync(() => RunOnStartupFlag, async () => {
+            await RunCommandAsync(() => RunOnStartupFlag, async () => 
+            {
+                await Task.Delay(1);
+
                 try
                 {
                     // Get Windows register startup subkey location.
@@ -119,8 +122,6 @@ namespace BlackSpiritHelper.Core
                     else
                         IoC.Logger.Log($"Unable to unset the application start on system startup.{Environment.NewLine}{ex.Message}", LogLevel.Error);
                 }
-                
-                await Task.Delay(1);
             });
         }
 

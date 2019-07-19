@@ -43,6 +43,8 @@
     <system:String x:Key="FontAwesomeBookmarkIcon">&#xf02e;</system:String>
     <system:String x:Key="FontAwesomeCircleIcon">&#xf111;</system:String>
     <system:String x:Key="FontAwesomeArrowLeftIcon">&#xf060;</system:String>
+    <system:String x:Key="FontAwesomeLockIcon">&#xf023;</system:String>
+    <system:String x:Key="FontAwesomeUnlockIcon">&#xf13e;</system:String>
     <system:String x:Key="FontAwesomeGitHubIcon">&#xf09b;</system:String>
 
 </ResourceDictionary>
