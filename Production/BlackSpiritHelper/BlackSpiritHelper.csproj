@@ -114,6 +114,9 @@
     <Compile Include="Pages\Content\BossPage.xaml.cs">
       <DependentUpon>BossPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Content\DailyCheckPage.xaml.cs">
+      <DependentUpon>DailyCheckPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Content\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
@@ -185,6 +188,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Content\BossPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Content\DailyCheckPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

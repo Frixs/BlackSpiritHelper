@@ -77,6 +77,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Task\TaskManager.cs" />
+    <Compile Include="Utilities\EnumExtensionMethods.cs" />
     <Compile Include="Utilities\StringUtils.cs" />
     <Compile Include="ValidationRules\Timer\TimerIconTitleShortcutRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerCountdownDurationRule.cs" />
@@ -87,12 +88,13 @@
     <Compile Include="ValidationRules\Timer\BaseRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerTitleRule.cs" />
     <Compile Include="ViewModels\Application\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\DailyCheck\DailyCheckPageViewModel.cs" />
     <Compile Include="ViewModels\Preferences\Design\PreferencesDesignModel.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Base\DataContentBaseViewModel.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
     <Compile Include="ViewModels\Base\RelayParameterizedCommand.cs" />
-    <Compile Include="ViewModels\Boss\BossViewPageModel.cs" />
+    <Compile Include="ViewModels\Boss\BossPageViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\MessageBoxDialogViewModel.cs" />
     <Compile Include="ViewModels\Preferences\PreferencesPageViewModel.cs" />
     <Compile Include="ViewModels\Preferences\PrefernecesViewModel.cs" />
@@ -114,11 +116,11 @@
     <Compile Include="ViewModels\Timer\SettingsForm\TimerGroupSettingsFormPageViewModel.cs" />
     <Compile Include="ViewModels\Timer\SettingsForm\TimerItemSettingsFormPageViewModel.cs" />
     <Compile Include="ViewModels\Timer\TimerPageViewModel.cs" />
-    <Compile Include="ViewModels\Home\HomeViewPageModel.cs" />
+    <Compile Include="ViewModels\Home\HomePageViewModel.cs" />
     <Compile Include="ViewModels\SideMenu\Design\SideMenuControlDesignModel.cs" />
     <Compile Include="ViewModels\SideMenu\SideMenuListItemControlViewModel.cs" />
     <Compile Include="ViewModels\SideMenu\SideMenuControlViewModel.cs" />
-    <Compile Include="ViewModels\Watchdog\WatchdogViewModel.cs" />
+    <Compile Include="ViewModels\Watchdog\WatchdogPageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

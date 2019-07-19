@@ -31,6 +31,9 @@ namespace BlackSpiritHelper
                 case ApplicationPage.Boss:
                     return new BossPage();
 
+                case ApplicationPage.DailyCheck:
+                    return new DailyCheckPage();
+
                 case ApplicationPage.Preferences:
                     return new PreferencesPage();
 
@@ -65,6 +68,9 @@ namespace BlackSpiritHelper
 
             if (page is BossPage)
                 return ApplicationPage.Boss;
+
+            if (page is DailyCheckPage)
+                return ApplicationPage.DailyCheck;
 
             if (page is PreferencesPage)
                 return ApplicationPage.Preferences;

@@ -1,4 +1,6 @@
-﻿namespace BlackSpiritHelper.Core
+﻿using System.ComponentModel;
+
+namespace BlackSpiritHelper.Core
 {
     /// <summary>
     /// <see langword="abstract"/>page of the application.
@@ -13,22 +15,31 @@
         /// <summary>
         /// The Combat page.
         /// </summary>
+        [Description("Timer")]
         Timer = 1,
 
         /// <summary>
         /// The Lifeskill page.
         /// </summary>
+        [Description("Watchdog")]
         Watchdog = 2,
 
         /// <summary>
         /// The Boss page.
         /// </summary>
+        [Description("Boss")]
         Boss = 3,
+
+        /// <summary>
+        /// The Daily Check page.
+        /// </summary>
+        [Description("Daily Check")]
+        DailyCheck = 4,
 
         /// <summary>
         /// The Settings page.
         /// </summary>
-        Preferences = 4,
+        Preferences = 10,
 
         ///
         /// Application content pages are until value 99. Set limit: <see cref="ApplicationViewModel.ApplicationContentPageValueLimit"/>.

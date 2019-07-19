@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Interop;
-using System.Windows.Forms;
 using BlackSpiritHelper.Core;
+using System.Windows.Input;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace BlackSpiritHelper
 {
@@ -28,47 +30,92 @@ namespace BlackSpiritHelper
         /// </summary>
         private bool mIsOverlayOk = true;
 
+        /// <summary>
+        /// Depository for the relative mouse position within overlay object.
+        /// </summary>
+        private Point mOverlayObjectMouseRelPos = default;
+
         #endregion
 
         #region Constructor
 
         public OverlayWindow(IntPtr targetWindowReference)
         {
-            this.mTargetWindowHandle = targetWindowReference;
+            mTargetWindowHandle = targetWindowReference;
             InitializeComponent();
         }
 
         #endregion
 
+        #region Window Methods
+
         private void Window_Initialized(object sender, EventArgs e)
         {
             IntPtr overlayWindowHandle = new WindowInteropHelper(this).Handle;
-            
+
             if (mTargetWindowHandle.Equals(IntPtr.Zero))
             {
-                IoC.Logger.Log("Target window not found!", LogLevel.Warning);
+                IoC.Logger.Log("Target window not found!", LogLevel.Error);
                 mIsOverlayOk = false;
                 return;
             }
 
             //this.Background = new SolidColorBrush(Colors.LightGray); // For DEBUG.
-            this.ResizeMode = ResizeMode.NoResize;
-            this.ShowInTaskbar = false;
-            this.Topmost = true;
-
+            ResizeMode = ResizeMode.NoResize;
+            ShowInTaskbar = false;
+            Topmost = true;
+            
             SetOverlayPosition(overlayWindowHandle, mTargetWindowHandle);
         }
 
-        private void DockPanel_Loaded(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             if (!mIsOverlayOk)
             {
-                this.Close();
+                Close();
                 return;
             }
-
-            this.WindowState = WindowState.Maximized;
+            
+            // Maximize the window.
+            WindowState = WindowState.Maximized;
         }
+
+        #endregion
+
+        #region Drag Overlay Methods
+
+        private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            // Get relative mouse position within overlay object.
+            mOverlayObjectMouseRelPos = e.GetPosition(sender as UIElement);
+        }
+
+        private void OnMouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton != MouseButtonState.Pressed)
+                return;
+
+            // Set X axis.
+            Canvas.SetLeft(sender as FrameworkElement,
+                e.GetPosition(null).X - mOverlayObjectMouseRelPos.X
+                );
+            // Set Y axis.
+            Canvas.SetTop(sender as FrameworkElement,
+                e.GetPosition(null).Y - mOverlayObjectMouseRelPos.Y
+                );
+
+            // e.GetPosition((sender as FrameworkElement).Parent as FrameworkElement).Y
+        }
+
+        private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            // Reset.
+            mOverlayObjectMouseRelPos = default;
+        }
+
+        #endregion
+
+        #region Helpers
 
         /// <summary>
         /// Create overlay window on the position of target window.
@@ -77,16 +124,19 @@ namespace BlackSpiritHelper
         /// <param name="targetWindowHandle">Target window handle.</param>
         private void SetOverlayPosition(IntPtr overlayWindowHandle, IntPtr targetWindowHandle)
         {
-            Screen screen = null;
+            System.Windows.Forms.Screen screen = null;
 
-            screen = Screen.FromHandle(targetWindowHandle);
+            screen = System.Windows.Forms.Screen.FromHandle(targetWindowHandle);
 
-            this.WindowState = WindowState.Normal; // Reset.
+            WindowState = WindowState.Normal; // Reset.
 
-            this.Left = screen.WorkingArea.Left;
-            this.Top = screen.WorkingArea.Top;
-            this.Width = screen.WorkingArea.Width;
-            this.Height = screen.WorkingArea.Height;
+            // Move the window to the screen of the traget window.
+            Left = screen.WorkingArea.Left;
+            Top = screen.WorkingArea.Top;
+            Width = screen.WorkingArea.Width;
+            Height = screen.WorkingArea.Height;
         }
+
+        #endregion
     }
 }

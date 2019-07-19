@@ -1,16 +1,13 @@
 ﻿namespace BlackSpiritHelper.Core
 {
-    /// <summary>
-    /// The View Model for the custom flat window.
-    /// </summary>
-    public class HomeViewPageModel : BaseViewModel
+    public class DailyCheckPageViewModel : BaseViewModel
     {
         #region Constructor
 
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public HomeViewPageModel()
+        public DailyCheckPageViewModel()
         {
         }
 

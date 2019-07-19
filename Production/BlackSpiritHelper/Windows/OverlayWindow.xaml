@@ -5,11 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BlackSpiritHelper"
         mc:Ignorable="d"
-        Title="Black Spirit Helper - Overlay" WindowStartupLocation="Manual" Initialized="Window_Initialized" AllowsTransparency="True" WindowStyle="None" Background="Transparent" d:DesignWidth="1059.853" d:DesignHeight="540.955">
-    <Grid Margin="0,0,0,0">
-        <Label Content="TEXT" HorizontalAlignment="Left" Margin="44,45,0,0" VerticalAlignment="Top" FontSize="36"/>
-        <DockPanel LastChildFill="False" Background="Red" Margin="0" Height="50" VerticalAlignment="Top"/>
-        <DockPanel LastChildFill="False" Background="Red" Margin="0" Height="50" VerticalAlignment="Bottom" Loaded="DockPanel_Loaded"/>
-
+        Title="Black Spirit Helper - Overlay" 
+        WindowStartupLocation="Manual" 
+        AllowsTransparency="True" 
+        WindowStyle="None" 
+        Background="Transparent"
+        Initialized="Window_Initialized" 
+        Loaded="Window_Loaded"
+        >
+    
+    <!-- Window Content -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        <!-- Canvas -->
+        <Canvas Grid.Row="0" Grid.Column="0">
+            
+            <!-- Canvas Content -->
+            <Border Background="Brown"
+                    Width="100"
+                    Height="100"
+                    Canvas.Left="300"
+                    Canvas.Top="300"
+                    MouseLeftButtonDown="OnMouseLeftButtonDown"
+                    MouseMove="OnMouseMove"
+                    MouseLeftButtonUp="OnMouseLeftButtonUp"
+                    />
+        </Canvas>
     </Grid>
+    
 </Window>

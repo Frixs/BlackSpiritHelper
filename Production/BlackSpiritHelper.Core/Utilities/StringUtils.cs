@@ -24,5 +24,6 @@ namespace BlackSpiritHelper.Core
 
             return Regex.IsMatch(input, @"^[a-zA-Z0-9_]+$");
         }
+
     }
 }
