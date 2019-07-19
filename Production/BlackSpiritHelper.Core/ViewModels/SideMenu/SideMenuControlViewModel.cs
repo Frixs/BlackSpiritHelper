@@ -47,7 +47,7 @@ namespace BlackSpiritHelper.Core
         {
             OpenHomePageCommand = new RelayCommand(async () => await OpenHomePageAsync());
             OpenPreferencesPageCommand = new RelayCommand(async () => await OpenPreferencesPageAsync());
-            AuthorDonateLinkCommand = new RelayCommand(() => AuthorDonateLinkMethod());
+            AuthorDonateLinkCommand = new RelayCommand(async () => await AuthorDonateLinkMethodAsync());
         }
 
         /// <summary>
@@ -75,10 +75,12 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Open donation weblink.
         /// </summary>
-        private void AuthorDonateLinkMethod()
+        private async Task AuthorDonateLinkMethodAsync()
         {
             // Open the webpage.
             System.Diagnostics.Process.Start(IoC.Application.DonationURL);
+
+            await Task.Delay(1);
         }
 
         #endregion

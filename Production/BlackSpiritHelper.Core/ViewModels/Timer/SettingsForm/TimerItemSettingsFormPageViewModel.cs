@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace BlackSpiritHelper.Core
@@ -141,7 +142,7 @@ namespace BlackSpiritHelper.Core
         {
             SaveChangesCommand = new RelayCommand(() => SaveChanges());
             DeleteTimerCommand = new RelayCommand(() => DeleteTimer());
-            GoBackCommand = new RelayCommand(() => GoBack());
+            GoBackCommand = new RelayCommand(async () => await GoBackAsync());
         }
 
         private void SaveChanges()
@@ -219,7 +220,7 @@ namespace BlackSpiritHelper.Core
             IoC.Logger.Log($"Timer '{TimerItemViewModel.Title}' settings changed!", LogLevel.Info);
 
             // Move back to the page.
-            GoBack();
+            GoBackAsync();
         }
 
         private void DeleteTimer()
@@ -244,13 +245,15 @@ namespace BlackSpiritHelper.Core
             }
 
             // Move back to the page.
-            GoBack();
+            GoBackAsync();
         }
 
-        private void GoBack()
+        private async Task GoBackAsync()
         {
             // Move back to the page.
             IoC.Application.GoToPage(ApplicationPage.Timer);
+
+            await Task.Delay(1);
         }
 
         #endregion

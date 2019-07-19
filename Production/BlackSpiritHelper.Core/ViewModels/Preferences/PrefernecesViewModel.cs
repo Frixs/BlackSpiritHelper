@@ -88,8 +88,8 @@ namespace BlackSpiritHelper.Core
         {
             RunOnStartUpCheckboxCommand = new RelayCommand(async () => await RunOnStartUpCheckboxCommandMethodAsync());
             ResetOverlayPositionCommand = new RelayCommand(() => ResetOverlayPositionMethod());
-            AuthorWebpageLinkCommand = new RelayCommand(() => AuthorWebpageLinkMethod());
-            AuthorDonateLinkCommand = new RelayCommand(() => AuthorDonateLinkMethod());
+            AuthorWebpageLinkCommand = new RelayCommand(async () => await AuthorWebpageLinkMethodAsync());
+            AuthorDonateLinkCommand = new RelayCommand(async () => await AuthorDonateLinkMethodAsync());
         }
 
         /// <summary>
@@ -137,19 +137,23 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Open author webpage.
         /// </summary>
-        private void AuthorWebpageLinkMethod()
+        private async Task AuthorWebpageLinkMethodAsync()
         {
             // Open the webpage.
             System.Diagnostics.Process.Start("https://github.com/Frixs");
+
+            await Task.Delay(1);
         }
 
         /// <summary>
         /// Open donation weblink.
         /// </summary>
-        private void AuthorDonateLinkMethod()
+        private async Task AuthorDonateLinkMethodAsync()
         {
             // Open the webpage.
             System.Diagnostics.Process.Start(IoC.Application.DonationURL);
+
+            await Task.Delay(1);
         }
 
         #endregion
