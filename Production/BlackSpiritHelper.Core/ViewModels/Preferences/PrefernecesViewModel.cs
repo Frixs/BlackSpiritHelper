@@ -28,6 +28,12 @@ namespace BlackSpiritHelper.Core
         [XmlIgnore]
         public AudioAlert[] AudioAlertList { get; private set; } = (AudioAlert[])Enum.GetValues(typeof(AudioAlert));
 
+        /// <summary>
+        /// RunOnStartup Flag for locking.
+        /// </summary>
+        [XmlIgnore]
+        public bool RunOnStartupFlag { get; set; } = false;
+
         public override bool IsRunning => throw new NotImplementedException();
 
         #endregion
@@ -92,10 +98,8 @@ namespace BlackSpiritHelper.Core
         private async Task RunOnStartUpCheckboxCommandMethodAsync()
         {
             bool runOnStartup = RunOnStartup;
-            bool flag = false;
 
-            // TODO error on action.
-            await RunCommandAsync(() => flag, async () => {
+            await RunCommandAsync(() => RunOnStartupFlag, async () => {
                 try
                 {
                     // Get Windows register startup subkey location.
@@ -115,7 +119,7 @@ namespace BlackSpiritHelper.Core
                     else
                         IoC.Logger.Log($"Unable to unset the application start on system startup.{Environment.NewLine}{ex.Message}", LogLevel.Error);
                 }
-
+                
                 await Task.Delay(1);
             });
         }

@@ -10,6 +10,16 @@ namespace BlackSpiritHelper.Core
     /// </summary>
     public class BaseViewModel : INotifyPropertyChanged
     {
+        #region Protected Members
+
+        /// <summary>
+        /// A global lock for property checks so prevent locking on different instances of expressions.
+        /// Considering how fast this check will always be it isn't an issue to globally lock all callers.
+        /// </summary>
+        protected object mPropertyValueCheckLock = new object();
+
+        #endregion
+
         /// <summary>
         /// The event that is fired when any child property changes its value.
         /// </summary>
@@ -40,19 +50,22 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         protected async Task RunCommandAsync(Expression<Func<bool>> updatingFlag, Func<Task> action)
         {
-            // Check if the flag property is true (meaning the function is already running).
-            if (updatingFlag.GetPropertyValue())
-                return;
+            // Lock to ensure single access to check
+            lock (mPropertyValueCheckLock)
+            {
+                // Check if the flag property is true (meaning the function is already running).
+                if (updatingFlag.GetPropertyValue())
+                    return;
 
-            // Set the property flag to true to indicate we are running.
-            updatingFlag.SetPropertyValue(true);
+                // Set the property flag to true to indicate we are running.
+                updatingFlag.SetPropertyValue(true);
+            }
 
             try
             {
                 // Run the passed in action.
                 await action();
             }
-            catch { }
             finally
             {
                 // Set the property flag back to false now it's finished.
