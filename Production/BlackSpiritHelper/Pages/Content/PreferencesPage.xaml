@@ -66,7 +66,63 @@
                 <TextBlock Text="Overlay"
                            Style="{StaticResource FormSubtitle}"
                            Margin="0 0 0 30" />
-                
+
+                <!-- Overlay Orientation -->
+                <StackPanel Margin="0 0 0 30" HorizontalAlignment="Center">
+                    <TextBlock Text="Orientation"
+                               FontFamily="{StaticResource LatoRegular}"
+                               FontSize="14"
+                               Margin="0 0 0 5"/>
+                    <ItemsControl ItemsSource="{Binding ApplicationDataContent.OverlayDesignModel.OrientationList,
+                                                Source={x:Static local:ViewModelLocator.Instance}}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <TextBlock Text="{Binding Converter={local:ObjectToStringConverter}}"
+                                               x:Name="RadioBindedKey"
+                                               Visibility="Collapsed" />
+                                    <RadioButton GroupName="OverlayOrientation"
+                                                 Content="{Binding Converter={local:ObjectToStringConverter}}"
+                                                 IsChecked="{Binding ApplicationDataContent.OverlayDesignModel.OverlayOrientation,
+                                                             Source={x:Static local:ViewModelLocator.Instance},
+                                                             Converter={local:RadioEnumBooleanConverter}, 
+                                                             ConverterParameter={x:Reference Name=RadioBindedKey}}"
+                                                 >
+                                    </RadioButton>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+
+                <!-- Overlay Size -->
+                <StackPanel Margin="0 0 0 30" HorizontalAlignment="Center">
+                    <TextBlock Text="Size"
+                               FontFamily="{StaticResource LatoRegular}"
+                               FontSize="14"
+                               Margin="0 0 0 5"/>
+                    <ItemsControl ItemsSource="{Binding ApplicationDataContent.OverlayDesignModel.OverlaySizeList,
+                                                Source={x:Static local:ViewModelLocator.Instance}}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <TextBlock Text="{Binding Converter={local:ObjectToStringConverter}}"
+                                               x:Name="RadioBindedKey"
+                                               Visibility="Collapsed" />
+                                    <RadioButton GroupName="OverlaySize"
+                                                 Content="{Binding Converter={local:ObjectToStringConverter}}"
+                                                 IsChecked="{Binding ApplicationDataContent.OverlayDesignModel.OverlaySize,
+                                                             Source={x:Static local:ViewModelLocator.Instance},
+                                                             Converter={local:RadioEnumBooleanConverter}, 
+                                                             ConverterParameter={x:Reference Name=RadioBindedKey}}"
+                                                 >
+                                    </RadioButton>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+
                 <!-- Reset overlay position -->
                 <Button Content="Reset Overlay Position" Margin="0 0 0 50"
                         Style="{StaticResource RegularButton}"

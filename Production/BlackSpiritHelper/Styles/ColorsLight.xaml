@@ -124,7 +124,7 @@
     <Color x:Key="FormTitleForegroundAlt">#494949</Color>
     <SolidColorBrush x:Key="FormTitleForegroundAltBrushKey" Color="{StaticResource FormTitleForegroundAlt}" />
 
-    <Color x:Key="FormSubtitleForeground">#aaaaaa</Color>
+    <Color x:Key="FormSubtitleForeground">#ec1e24</Color>
     <SolidColorBrush x:Key="FormSubtitleForegroundBrushKey" Color="{StaticResource FormSubtitleForeground}" />
 
     <Color x:Key="TextBoxPlaceholderForeground">#aaaaaa</Color>

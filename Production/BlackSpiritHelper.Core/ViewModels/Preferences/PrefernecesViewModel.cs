@@ -130,8 +130,8 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void ResetOverlayPositionMethod()
         {
-            // TODO reset overlay position.
-            System.Console.WriteLine("ResetOverlayPositionTrigger");
+            IoC.DataContent.OverlayDesignModel.PosX = 0;
+            IoC.DataContent.OverlayDesignModel.PosY = 0;
         }
 
         /// <summary>
