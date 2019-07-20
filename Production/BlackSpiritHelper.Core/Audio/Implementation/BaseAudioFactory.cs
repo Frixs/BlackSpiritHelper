@@ -38,6 +38,10 @@ namespace BlackSpiritHelper.Core
             if (IoC.DataContent.PreferencesDesignModel.AudioAlertLevel == AudioAlertLevel.None)
                 return;
 
+            // TODO: Add priority Enum as a new parameter with 3 values:
+            // Small == Call audio without restriction.
+            // Medium = Call audio with restriction to the packs. Cannot be called multiple packs from single manager.
+            // High = Only called audio can be called at that time.
             MediaPlayer mediaPlayer = new MediaPlayer();
             mediaPlayer.Open(mAudioManagers[IoC.DataContent.PreferencesDesignModel.AudioAlertLevel].GetAudio(type).URI);
         }
