@@ -143,11 +143,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\Sounds\TimerAlert1_Sound_0.mp3" />
-    <Content Include="Resources\Sounds\TimerAlert3_Sound_0.mp3" />
-    <Content Include="Resources\Sounds\TimerAlertCounting_Sound_0.mp3" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

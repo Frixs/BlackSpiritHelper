@@ -1,6 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Reflection;
 
 namespace BlackSpiritHelper.Core
 {
@@ -31,14 +29,7 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public AudioFile(string filePath)
         {
-            //URI = new Uri("Resources/Sounds/" + filePath, UriKind.RelativeOrAbsolute);
-            //var outPutDirectory = Path.GetDirectoryName(IoC.Application.ApplicationExecutingAssembly.CodeBase);
-            var outPutDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            //var mediaPath = Path.Combine(outPutDirectory, "Resources\\Sounds\\" + filePath);
-            // TODO;
-            var mediaPath = "/BlackSpiritHelper.Core;component/Resources/Sounds/" + filePath;
-            URI = new Uri(mediaPath, UriKind.Relative);
-            Console.WriteLine("x: " + URI);
+            URI = new Uri("Resources/Sounds/" + filePath, UriKind.Relative);
         }
 
         #endregion
@@ -51,11 +42,6 @@ namespace BlackSpiritHelper.Core
         /// <param name="priority"></param>
         public void Play(AudioPriorityBracket priority)
         {
-            // TODO: Split it into threads. This should be callable everytime.
-            // Check if media player is not busy.
-            if (mAudioPlayer.IsPlaying)
-                return;
-
             // Play audio if it is in the correct priority bracket.
             if (priority == AudioPriorityBracket.File)
             {

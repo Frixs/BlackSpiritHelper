@@ -66,7 +66,7 @@ namespace BlackSpiritHelper.Core
             {
                 GroupID = 0,
                 Title = "My First Timer",
-                IconTitleShortcut = "MFT",
+                IconTitleShortcut = "BSH",
                 IconBackgroundHEX = "1f61cc",
                 TimeDuration = new TimeSpan(0, 1, 30),
                 CountdownDuration = TimeSpan.FromSeconds(3),

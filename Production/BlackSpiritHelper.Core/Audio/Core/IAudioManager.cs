@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Threading.Tasks;
 
 namespace BlackSpiritHelper.Core
 {
@@ -9,7 +9,7 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         /// <param name="type"></param>
         /// <param name="priority"></param>
-        void Play(AudioType type, AudioPriorityBracket priority);
+        Task PlayAsync(AudioType type, AudioPriorityBracket priority);
 
         /// <summary>
         /// Get the desired audio from the manager.

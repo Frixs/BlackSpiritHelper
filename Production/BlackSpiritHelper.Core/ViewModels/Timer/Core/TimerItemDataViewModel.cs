@@ -292,7 +292,11 @@ namespace BlackSpiritHelper.Core
 
                 // Set the initial state parameters at the time of timer creation.
                 if (previousState == TimerState.None)
+                {
                     UpdateState(value);
+                    // Set notification triggers.
+                    TimerSetNotificationEventTriggers(TimeLeft);
+                }
             }
         }
 
@@ -453,12 +457,8 @@ namespace BlackSpiritHelper.Core
                 TimerHandleNotificationEvents(currTime);
             }
 
-            // Update UI thread.
-            Application.Current.Dispatcher.BeginInvoke((Action)(() =>
-            {
-                // Update time text format in UI.
-                UpdateTimeInUI(currTime);
-            }));
+            // Update time text format in UI.
+            UpdateTimeInUI(currTime);
 
             // Countdown reached zero.
             if (IsInCountdown && CountdownLeft.TotalSeconds <= 0)
@@ -493,8 +493,12 @@ namespace BlackSpiritHelper.Core
         /// <param name="ts"></param>
         private void UpdateTimeInUI(TimeSpan ts)
         {
-            // Update time text format in UI.
-            TimeFormat = ts.ToString("hh':'mm':'ss");
+            // Update UI thread.
+            Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+            {
+                // Update time text format in UI.
+                TimeFormat = ts.ToString("hh':'mm':'ss");
+            }));
         }
 
         /// <summary>
@@ -535,8 +539,6 @@ namespace BlackSpiritHelper.Core
                     State = TimerState.Freeze;
                     IsRunning       = false;
                     IsInFreeze      = true;
-                    // Set notification triggers.
-                    TimerSetNotificationEventTriggers(TimeLeft);
                     return;
 
                 case TimerState.Countdown:
@@ -695,7 +697,7 @@ namespace BlackSpiritHelper.Core
             TimerTryToActivateWarningUI();
 
             // Counting the last seconds.
-            if (time.TotalSeconds < 5 && time.TotalSeconds > 0)
+            if (time.TotalSeconds <= 5 && time.TotalSeconds > 0)
             {
                 // The last seconds countdown event.
                 IoC.Audio.Play(AudioType.TimerAlertCounting, AudioPriorityBracket.Pack);
@@ -864,11 +866,11 @@ namespace BlackSpiritHelper.Core
 
                 // Update time UI.
                 UpdateTimeInUI(TimeLeft);
-            }
 
-            // Update notification event triggers.
-            // We are increasing time, the triggers can trigger again.
-            TimerSetNotificationEventTriggers(TimeLeft);
+                // Update notification event triggers.
+                // We are increasing time, the triggers can trigger again.
+                TimerSetNotificationEventTriggers(TimeLeft);
+            }
 
             await Task.Delay(1);
         }
@@ -910,6 +912,10 @@ namespace BlackSpiritHelper.Core
 
                 // Update time UI.
                 UpdateTimeInUI(TimeLeft);
+
+                // Update notification event triggers.
+                // We are decreasing time, we do not want to go into the situation where the triggers can trigger simultaneously.
+                TimerSetNotificationEventTriggers(TimeLeft);
             }
 
             await Task.Delay(1);

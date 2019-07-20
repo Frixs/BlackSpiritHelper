@@ -43,7 +43,7 @@ namespace BlackSpiritHelper.Core
             {
                 // Sound.
                 case AudioAlertLevel.Sound:
-                    mAudioManagers[AudioAlertLevel.Sound].Play(type, priority);
+                    mAudioManagers[AudioAlertLevel.Sound].PlayAsync(type, priority);
                     break;
 
                 // Voice.

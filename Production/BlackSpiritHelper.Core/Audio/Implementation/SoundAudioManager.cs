@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Windows.Media;
+using System.Threading.Tasks;
 
 namespace BlackSpiritHelper.Core
 {
@@ -67,11 +67,14 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         /// <param name="type"></param>
         /// <param name="priority"></param>
-        public void Play(AudioType type, AudioPriorityBracket priority)
+        public async Task PlayAsync(AudioType type, AudioPriorityBracket priority)
         {
             // Check if media player is not busy.
             if (mAudioPlayer.IsPlaying)
                 return;
+
+            // Continue in another thread.
+            await Task.Delay(1);
 
             // Play audio if it is in the correct priority bracket.
             if (priority == AudioPriorityBracket.Manager)

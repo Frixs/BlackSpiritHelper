@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Media;
 
 namespace BlackSpiritHelper.Core
 {
     /// <summary>
     /// Wrapper for the <see cref="MediaPlayer"/>.
+    /// TODO: Rework.
     /// </summary>
     public class AudioPlayer
     {
@@ -46,6 +48,31 @@ namespace BlackSpiritHelper.Core
         public AudioPlayer()
         {
             mMediaPlayer = new MediaPlayer();
+            
+            // Start events.
+            StartEvents();
+        }
+
+        #endregion
+
+        #region Events
+
+        /// <summary>
+        /// Start events.
+        /// </summary>
+        private void StartEvents()
+        {
+            // On media end.
+            mMediaPlayer.MediaEnded += (o, args) =>
+            {
+                IsPlaying = false;
+            };
+            // On media failed.
+            mMediaPlayer.MediaFailed += (o, args) =>
+            {
+                IoC.Logger.Log($"Failed to open audio file: {mMediaPlayer.Source}", LogLevel.Error);
+                Debugger.Break();
+            };
         }
 
         #endregion
@@ -53,55 +80,50 @@ namespace BlackSpiritHelper.Core
         #region Public Methods
 
         /// <summary>
-        /// Opens the given <see cref="Uri"/> for the given media playback.
-        /// </summary>
-        /// <param name="source"></param>
-        public void Open(Uri source)
-        {
-            mMediaPlayer.Open(source);
-        }
-
-        /// <summary>
         /// Open (<see cref="Open(Uri)"/>) and Play (<see cref="Play"/>).
         /// </summary>
         /// <param name="source"></param>
         public void OpenAndPlay(Uri source)
         {
-            Open(source);
-            Play();
+            mMediaPlayer.Dispatcher.BeginInvoke((Action)(() =>
+            {
+                Open(source);
+                Play();
+            }));
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Opens the given <see cref="Uri"/> for the given media playback.
+        /// </summary>
+        /// <param name="source"></param>
+        private void Open(Uri source)
+        {
+            mMediaPlayer.Open(source);
         }
 
         /// <summary>
         /// Play media.
         /// </summary>
-        public void Play()
+        private void Play()
         {
-            Position = TimeSpan.Zero;
-            mMediaPlayer.Play();
-        }
+            // Reset position.
+            Stop();
 
-        /// <summary>
-        /// Play media from the current <see cref="Position"/>.
-        /// </summary>
-        public void Continue()
-        {
+            IsPlaying = true;
             mMediaPlayer.Play();
-        }
-
-        /// <summary>
-        /// Pause media playback.
-        /// </summary>
-        public void Pause()
-        {
-            mMediaPlayer.Pause();
         }
 
         /// <summary>
         /// Stop media playback.
         /// </summary>
-        public void Stop()
+        private void Stop()
         {
             mMediaPlayer.Stop();
+            IsPlaying = false;
         }
 
         #endregion
