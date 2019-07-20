@@ -132,6 +132,9 @@ namespace BlackSpiritHelper.Core
         {
             IoC.DataContent.OverlayDesignModel.PosX = 0;
             IoC.DataContent.OverlayDesignModel.PosY = 0;
+
+            // TODO: remove testing.
+            IoC.Audio.Play(AudioType.TimerAlertLevel1, AudioPriorityBracket.Manager);
         }
 
         /// <summary>

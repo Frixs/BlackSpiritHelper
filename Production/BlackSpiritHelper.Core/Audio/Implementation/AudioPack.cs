@@ -9,6 +9,11 @@ namespace BlackSpiritHelper.Core
         #region Private Members
 
         /// <summary>
+        /// Audio player of the manager.
+        /// </summary>
+        private AudioPlayer mAudioPlayer = new AudioPlayer();
+
+        /// <summary>
         /// List of all audio files in this pack.
         /// </summary>
         private List<AudioFile> mList;
@@ -28,7 +33,28 @@ namespace BlackSpiritHelper.Core
         #endregion
 
         #region Public Methods
-        
+
+        /// <summary>
+        /// Play audio according to priority.
+        /// </summary>
+        /// <param name="priority"></param>
+        public void Play(AudioPriorityBracket priority)
+        {
+            // Check if media player is not busy.
+            if (mAudioPlayer.IsPlaying)
+                return;
+
+            // Play audio if it is in the correct priority bracket.
+            if (priority == AudioPriorityBracket.Pack)
+            {
+                mAudioPlayer.OpenAndPlay(GetAudio().URI);
+                return;
+            }
+
+            // Try to play lower bracket.
+            GetAudio().Play(priority);
+        }
+
         /// <summary>
         /// Get random audio from the pack.
         /// </summary>

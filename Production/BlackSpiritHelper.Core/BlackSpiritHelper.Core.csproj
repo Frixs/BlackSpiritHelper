@@ -37,6 +37,7 @@
     <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\BlackSpiritHelper\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="PropertyChanged, Version=3.0.1.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
       <HintPath>..\BlackSpiritHelper\packages\PropertyChanged.Fody.3.0.1\lib\net452\PropertyChanged.dll</HintPath>
@@ -53,10 +54,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Async\AsyncAwaiter.cs" />
+    <Compile Include="Audio\Core\AudioPriorityBracket.cs" />
+    <Compile Include="Audio\Implementation\AudioPlayer.cs" />
     <Compile Include="DataModels\ApplicationPage.cs" />
     <Compile Include="DataModels\OverlaySize.cs" />
-    <Compile Include="Sound\Core\AudioType.cs" />
-    <Compile Include="Sound\Core\AudioAlertLevel.cs" />
+    <Compile Include="Audio\Core\AudioType.cs" />
+    <Compile Include="Audio\Core\AudioAlertLevel.cs" />
     <Compile Include="DataModels\TimerState.cs" />
     <Compile Include="Expressions\ExpressionHelpers.cs" />
     <Compile Include="File\FileManager.cs" />
@@ -79,11 +82,11 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Sound\Core\IAudioManager.cs" />
-    <Compile Include="Sound\Implementation\AudioFile.cs" />
-    <Compile Include="Sound\Implementation\AudioPack.cs" />
-    <Compile Include="Sound\Implementation\BaseAudioFactory.cs" />
-    <Compile Include="Sound\Implementation\SoundAudioManager.cs" />
+    <Compile Include="Audio\Core\IAudioManager.cs" />
+    <Compile Include="Audio\Implementation\AudioFile.cs" />
+    <Compile Include="Audio\Implementation\AudioPack.cs" />
+    <Compile Include="Audio\Implementation\BaseAudioFactory.cs" />
+    <Compile Include="Audio\Implementation\SoundAudioManager.cs" />
     <Compile Include="Task\TaskManager.cs" />
     <Compile Include="Utilities\EnumExtensionMethods.cs" />
     <Compile Include="Utilities\StringUtils.cs" />
@@ -140,7 +143,11 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Resources\Sounds\TimerAlert1_Sound_0.mp3" />
+    <Content Include="Resources\Sounds\TimerAlert3_Sound_0.mp3" />
+    <Content Include="Resources\Sounds\TimerAlertCounting_Sound_0.mp3" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

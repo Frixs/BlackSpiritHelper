@@ -19,5 +19,10 @@
         /// Timer alert Lv1.
         /// </summary>
         TimerAlertLevel1 = 3,
+
+        /// <summary>
+        /// Timer alert counting.
+        /// </summary>
+        TimerAlertCounting = 4,
     }
 }

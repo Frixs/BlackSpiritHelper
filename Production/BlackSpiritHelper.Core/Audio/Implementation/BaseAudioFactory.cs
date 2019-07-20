@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Windows.Media;
+using System.Diagnostics;
 
 namespace BlackSpiritHelper.Core
 {
@@ -29,21 +29,35 @@ namespace BlackSpiritHelper.Core
         #region Public Methods
 
         /// <summary>
-        /// Play the audio according to type.
+        /// Play the audio according to type and priority.
         /// </summary>
         /// <param name="type"></param>
-        public void Play(AudioType type)
+        /// <param name="priority"></param>
+        public void Play(AudioType type, AudioPriorityBracket priority = AudioPriorityBracket.File)
         {
             // We do not want to play any audio.
             if (IoC.DataContent.PreferencesDesignModel.AudioAlertLevel == AudioAlertLevel.None)
                 return;
 
-            // TODO: Add priority Enum as a new parameter with 3 values:
-            // Small == Call audio without restriction.
-            // Medium = Call audio with restriction to the packs. Cannot be called multiple packs from single manager.
-            // High = Only called audio can be called at that time.
-            MediaPlayer mediaPlayer = new MediaPlayer();
-            mediaPlayer.Open(mAudioManagers[IoC.DataContent.PreferencesDesignModel.AudioAlertLevel].GetAudio(type).URI);
+            switch (IoC.DataContent.PreferencesDesignModel.AudioAlertLevel)
+            {
+                // Sound.
+                case AudioAlertLevel.Sound:
+                    mAudioManagers[AudioAlertLevel.Sound].Play(type, priority);
+                    break;
+
+                // Voice.
+                case AudioAlertLevel.Voice:
+                    // TODO Voice Manager.
+                    Debugger.Break();
+                    break;
+
+                default:
+                    // Log it.
+                    IoC.Logger.Log("A selected audio alert level value is out of box!", LogLevel.Error);
+                    Debugger.Break();
+                    break;
+            }
         }
 
         #endregion

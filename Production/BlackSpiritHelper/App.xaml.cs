@@ -67,11 +67,14 @@ namespace BlackSpiritHelper
             // Bind task manager.
             IoC.Kernel.Bind<ITaskManager>().ToConstant(new TaskManager());
 
-            // Bind file manager.
+            // Bind a file manager.
             IoC.Kernel.Bind<IFileManager>().ToConstant(new FileManager());
 
-            // Bind a UI Manager
+            // Bind a UI Manager.
             IoC.Kernel.Bind<IUIManager>().ToConstant(new UIManager());
+
+            // Bind an audio manager.
+            IoC.Kernel.Bind<IAudioFactory>().ToConstant(new BaseAudioFactory());
 
             // Bind Application data content view models.
             IoC.Kernel.Bind<ApplicationDataContent>().ToConstant(new ApplicationDataContent());

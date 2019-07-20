@@ -9,6 +9,7 @@
         /// Play the audio according to type.
         /// </summary>
         /// <param name="type"></param>
-        void Play(AudioType type);
+        /// <param name="priority"></param>
+        void Play(AudioType type, AudioPriorityBracket priority = AudioPriorityBracket.File);
     }
 }
