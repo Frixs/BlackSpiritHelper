@@ -548,6 +548,8 @@ namespace BlackSpiritHelper.Core
                     return;
 
                 default:
+                    // Log it.
+                    IoC.Logger.Log("A selected timer state value is out of box!", LogLevel.Error);
                     // Break debugger.
                     Debugger.Break();
                     return;

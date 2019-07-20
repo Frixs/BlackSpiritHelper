@@ -20,13 +20,13 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// User audio alert level.
         /// </summary>
-        public AudioAlert AudioAlertLevel { get; set; } = AudioAlert.None;
+        public AudioAlertLevel AudioAlertLevel { get; set; } = AudioAlertLevel.None;
 
         /// <summary>
         /// List of all types of audio alerts.
         /// </summary>
         [XmlIgnore]
-        public AudioAlert[] AudioAlertList { get; private set; } = (AudioAlert[])Enum.GetValues(typeof(AudioAlert));
+        public AudioAlertLevel[] AudioAlertLevelList { get; private set; } = (AudioAlertLevel[])Enum.GetValues(typeof(AudioAlertLevel));
 
         /// <summary>
         /// RunOnStartup Flag for locking.

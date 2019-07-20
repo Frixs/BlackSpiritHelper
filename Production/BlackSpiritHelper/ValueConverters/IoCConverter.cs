@@ -20,6 +20,8 @@ namespace BlackSpiritHelper
                     return IoC.Application;
 
                 default:
+                    // Log it.
+                    IoC.Logger.Log("A selected IoC location convertor value is out of box!", LogLevel.Error);
                     Debugger.Break();
                     return null;
             }

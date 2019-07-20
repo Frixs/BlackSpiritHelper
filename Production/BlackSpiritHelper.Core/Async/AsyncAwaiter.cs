@@ -146,7 +146,7 @@ namespace BlackSpiritHelper.Core
 
                 // Log message to debug level.
                 // (may not be an issue but we don't want to miss anything in debug)
-                //Logger.LogDebugSource($"Crash in {nameof(AwaitAsync)}. {ex.Message}"); TODO
+                //Logger.LogDebugSource($"Crash in {nameof(AwaitAsync)}. {ex.Message}"); TODO debugger/log
 
                 // Break debugger.
                 Debugger.Break();

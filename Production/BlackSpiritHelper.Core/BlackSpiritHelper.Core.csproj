@@ -55,7 +55,8 @@
     <Compile Include="Async\AsyncAwaiter.cs" />
     <Compile Include="DataModels\ApplicationPage.cs" />
     <Compile Include="DataModels\OverlaySize.cs" />
-    <Compile Include="DataModels\AudioAlert.cs" />
+    <Compile Include="Sound\Core\AudioType.cs" />
+    <Compile Include="Sound\Core\AudioAlertLevel.cs" />
     <Compile Include="DataModels\TimerState.cs" />
     <Compile Include="Expressions\ExpressionHelpers.cs" />
     <Compile Include="File\FileManager.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="IoC\Base\IoC.cs" />
     <Compile Include="IoC\Interfaces\IFileManager.cs" />
     <Compile Include="IoC\Interfaces\ILogFactory.cs" />
+    <Compile Include="IoC\Interfaces\IAudioFactory.cs" />
     <Compile Include="IoC\Interfaces\ITaskManager.cs" />
     <Compile Include="IoC\Interfaces\IUIManager.cs" />
     <Compile Include="Logger\Core\ILogger.cs" />
@@ -77,6 +79,11 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Sound\Core\IAudioManager.cs" />
+    <Compile Include="Sound\Implementation\AudioFile.cs" />
+    <Compile Include="Sound\Implementation\AudioPack.cs" />
+    <Compile Include="Sound\Implementation\BaseAudioFactory.cs" />
+    <Compile Include="Sound\Implementation\SoundAudioManager.cs" />
     <Compile Include="Task\TaskManager.cs" />
     <Compile Include="Utilities\EnumExtensionMethods.cs" />
     <Compile Include="Utilities\StringUtils.cs" />

@@ -11,7 +11,7 @@ namespace BlackSpiritHelper.Core
     /// </summary>
     public class BaseLogFactory : ILogFactory
     {
-        #region Protected Methods
+        #region Protected Members
 
         /// <summary>
         /// The list of loggers in this factory.
