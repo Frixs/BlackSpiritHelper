@@ -673,7 +673,7 @@ namespace BlackSpiritHelper.Core
             if (!mIsFiredNotificationEvent[0])
             {
                 mIsFiredNotificationEvent[0] = true;
-                IoC.Audio.Play(AudioType.TimerAlertLevel1, AudioPriorityBracket.Pack);
+                IoC.Audio.Play(AudioType.Alert1, AudioPriorityBracket.Pack);
             }
 
             // ------------------------------
@@ -690,7 +690,7 @@ namespace BlackSpiritHelper.Core
             if (!mIsFiredNotificationEvent[1])
             {
                 mIsFiredNotificationEvent[1] = true;
-                IoC.Audio.Play(AudioType.TimerAlertLevel2, AudioPriorityBracket.Pack);
+                IoC.Audio.Play(AudioType.Alert2, AudioPriorityBracket.Pack);
             }
 
             // Activate WARNING UI event.
@@ -700,7 +700,7 @@ namespace BlackSpiritHelper.Core
             if (time.TotalSeconds <= 5 && time.TotalSeconds > 0)
             {
                 // The last seconds countdown event.
-                IoC.Audio.Play(AudioType.TimerAlertCounting, AudioPriorityBracket.Pack);
+                IoC.Audio.Play(AudioType.AlertCountdown, AudioPriorityBracket.Pack);
             }
 
             // ------------------------------
@@ -715,7 +715,7 @@ namespace BlackSpiritHelper.Core
             if (!mIsFiredNotificationEvent[2])
             {
                 mIsFiredNotificationEvent[2] = true;
-                IoC.Audio.Play(AudioType.TimerAlertLevel3, AudioPriorityBracket.Pack);
+                IoC.Audio.Play(AudioType.Alert3, AudioPriorityBracket.Pack);
             }
 
             // Deactivate WARNING UI event.

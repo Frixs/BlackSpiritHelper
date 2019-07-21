@@ -33,27 +33,27 @@ namespace BlackSpiritHelper.Core
         public SoundAudioManager()
         {
             // Pack.
-            AddPack(AudioType.TimerAlertLevel3, o => 
+            AddPack(AudioType.Alert3, o => 
             {
-                o.AddAudio(new AudioFile("TimerAlert3_Sound_0.mp3"));
+                o.AddAudio(new AudioFile("Alert3_Sound_0.mp3"));
                 return o;
             });
             // Pack.
-            AddPack(AudioType.TimerAlertLevel2, o =>
+            AddPack(AudioType.Alert2, o =>
             {
-                o.AddAudio(new AudioFile("TimerAlert2_Sound_0.mp3"));
+                o.AddAudio(new AudioFile("Alert2_Sound_0.mp3"));
                 return o;
             });
             // Pack.
-            AddPack(AudioType.TimerAlertLevel1, o =>
+            AddPack(AudioType.Alert1, o =>
             {
-                o.AddAudio(new AudioFile("TimerAlert1_Sound_0.mp3"));
+                o.AddAudio(new AudioFile("Alert1_Sound_0.mp3"));
                 return o;
             });
             // Pack.
-            AddPack(AudioType.TimerAlertCounting, o =>
+            AddPack(AudioType.AlertCountdown, o =>
             {
-                o.AddAudio(new AudioFile("TimerAlertCounting_Sound_0.mp3"));
+                o.AddAudio(new AudioFile("AlertCounting_Sound_0.mp3"));
                 return o;
             });
         }
