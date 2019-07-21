@@ -11,7 +11,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// The Timer associated to this settings.
         /// </summary>
-        public TimerItemDataViewModel mTimerItemViewModel;
+        public TimerItemDataViewModel mTimerItemDataViewModel;
 
         #endregion
 
@@ -20,16 +20,16 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// The Timer associated to this settings.
         /// </summary>
-        public TimerItemDataViewModel TimerItemViewModel
+        public TimerItemDataViewModel TimerItemDataViewModel
         {
             get
             {
-                return mTimerItemViewModel;
+                return mTimerItemDataViewModel;
             }
             set
             {
-                mTimerItemViewModel = value;
-
+                mTimerItemDataViewModel = value;
+                
                 // Bind properties to the inputs.
                 BindProperties();
             }
@@ -119,17 +119,17 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void BindProperties()
         {
-            if (TimerItemViewModel == null)
+            if (TimerItemDataViewModel == null)
                 return;
 
-            Title                           = TimerItemViewModel.Title;
-            IconTitleShortcut               = TimerItemViewModel.IconTitleShortcut;
-            IconBackgroundHEX               = "#" + TimerItemViewModel.IconBackgroundHEX;
-            TimeDuration                    = TimerItemViewModel.TimeDuration;
-            CountdownDuration               = TimerItemViewModel.CountdownDuration.TotalSeconds;
-            IsLoopActive                    = TimerItemViewModel.IsLoopActive;
-            ShowInOverlay                   = TimerItemViewModel.ShowInOverlay;
-            GroupID                         = TimerItemViewModel.GroupID;
+            Title                           = TimerItemDataViewModel.Title;
+            IconTitleShortcut               = TimerItemDataViewModel.IconTitleShortcut;
+            IconBackgroundHEX               = "#" + TimerItemDataViewModel.IconBackgroundHEX;
+            TimeDuration                    = TimerItemDataViewModel.TimeDuration;
+            CountdownDuration               = TimerItemDataViewModel.CountdownDuration.TotalSeconds;
+            IsLoopActive                    = TimerItemDataViewModel.IsLoopActive;
+            ShowInOverlay                   = TimerItemDataViewModel.ShowInOverlay;
+            GroupID                         = TimerItemDataViewModel.GroupID;
             AssociatedGroupViewModel        = null;
         }
 
@@ -147,7 +147,7 @@ namespace BlackSpiritHelper.Core
 
         private void SaveChanges()
         {
-            if (TimerItemViewModel.State != TimerState.Ready)
+            if (TimerItemDataViewModel.State != TimerState.Ready)
                 return;
 
             // Substring the HEX color to the required form.
@@ -163,7 +163,7 @@ namespace BlackSpiritHelper.Core
                 iconBackgroundHEX = IconBackgroundHEX;
 
             // Validate inputs.
-            if (!TimerItemDataViewModel.ValidateTimerInputs(Title, IconTitleShortcut, iconBackgroundHEX, TimeDuration, TimeSpan.FromSeconds(CountdownDuration), ShowInOverlay, AssociatedGroupViewModel, GroupID) 
+            if (!Core.TimerItemDataViewModel.ValidateTimerInputs(TimerItemDataViewModel, Title, IconTitleShortcut, iconBackgroundHEX, TimeDuration, TimeSpan.FromSeconds(CountdownDuration), ShowInOverlay, AssociatedGroupViewModel, GroupID) 
                 || AssociatedGroupViewModel == null)
             {
                 // Some error occured during saving changes of the timer.
@@ -181,10 +181,10 @@ namespace BlackSpiritHelper.Core
             // Save changes.
             #region Save changes
 
-            if (TimerItemViewModel.GroupID != AssociatedGroupViewModel.ID)
+            if (TimerItemDataViewModel.GroupID != AssociatedGroupViewModel.ID)
             {
                 // Find and remove timer from old group.
-                if (!IoC.DataContent.TimerDesignModel.GetGroupByID(TimerItemViewModel.GroupID).TimerList.Remove(mTimerItemViewModel))
+                if (!IoC.DataContent.TimerDesignModel.GetGroupByID(TimerItemDataViewModel.GroupID).TimerList.Remove(mTimerItemDataViewModel))
                 {
                     // Some error occured during removing the timer from old group.
                     IoC.UI.ShowMessage(new MessageBoxDialogViewModel
@@ -198,18 +198,18 @@ namespace BlackSpiritHelper.Core
                     return;
                 }
                 // Add timer to the new group.
-                AssociatedGroupViewModel.TimerList.Add(mTimerItemViewModel);
+                AssociatedGroupViewModel.TimerList.Add(mTimerItemDataViewModel);
                 // Set group ID.
-                TimerItemViewModel.GroupID = AssociatedGroupViewModel.ID;
+                TimerItemDataViewModel.GroupID = AssociatedGroupViewModel.ID;
 
             }
-            TimerItemViewModel.Title = Title.Trim();
-            TimerItemViewModel.IconTitleShortcut = IconTitleShortcut.Trim();
-            TimerItemViewModel.IconBackgroundHEX = iconBackgroundHEX;
-            TimerItemViewModel.TimeDuration = TimeDuration;
-            TimerItemViewModel.CountdownDuration = TimeSpan.FromSeconds(CountdownDuration);
-            TimerItemViewModel.IsLoopActive = IsLoopActive;
-            TimerItemViewModel.ShowInOverlay = ShowInOverlay;
+            TimerItemDataViewModel.Title = Title.Trim();
+            TimerItemDataViewModel.IconTitleShortcut = IconTitleShortcut.Trim();
+            TimerItemDataViewModel.IconBackgroundHEX = iconBackgroundHEX;
+            TimerItemDataViewModel.TimeDuration = TimeDuration;
+            TimerItemDataViewModel.CountdownDuration = TimeSpan.FromSeconds(CountdownDuration);
+            TimerItemDataViewModel.IsLoopActive = IsLoopActive;
+            TimerItemDataViewModel.ShowInOverlay = ShowInOverlay;
 
             #endregion
 
@@ -217,7 +217,7 @@ namespace BlackSpiritHelper.Core
             AssociatedGroupViewModel.SortTimerList();
 
             // Log it.
-            IoC.Logger.Log($"Timer '{TimerItemViewModel.Title}' settings changed!", LogLevel.Info);
+            IoC.Logger.Log($"Timer '{TimerItemDataViewModel.Title}' settings changed!", LogLevel.Info);
 
             // Move back to the page.
             GoBack();
@@ -225,11 +225,11 @@ namespace BlackSpiritHelper.Core
 
         private void DeleteTimer()
         {
-            if (TimerItemViewModel.State != TimerState.Ready)
+            if (TimerItemDataViewModel.State != TimerState.Ready)
                 return;
 
             // Remove timer.
-            if (!IoC.DataContent.TimerDesignModel.GetGroupByID(TimerItemViewModel.GroupID).DestroyTimer(TimerItemViewModel))
+            if (!IoC.DataContent.TimerDesignModel.GetGroupByID(TimerItemDataViewModel.GroupID).DestroyTimer(TimerItemDataViewModel))
             {
                 // Some error occured during deleting the timer.
                 IoC.UI.ShowMessage(new MessageBoxDialogViewModel

@@ -43,7 +43,7 @@
 
                 <!-- Timer Title -->
                 <TextBox Tag="Title" Margin="0 0 0 10"
-                         MaxLength="{Binding TimerItemViewModel.TitleAllowMaxChar}">
+                         MaxLength="{Binding TimerItemDataViewModel.TitleAllowMaxChar}">
                     <TextBox.Text>
                         <Binding Path="Title"
                                  UpdateSourceTrigger="PropertyChanged">
@@ -62,7 +62,7 @@
                     
                     <!-- Icon Timer Shortcut -->
                     <TextBox Tag="Icon Shortcut" Margin="0 0 5 10" Grid.Column="0"
-                             MaxLength="{Binding TimerItemViewModel.IconTitleAllowMaxChar}"
+                             MaxLength="{Binding TimerItemDataViewModel.IconTitleAllowMaxChar}"
                              >
                         <TextBox.Text>
                             <Binding Path="IconTitleShortcut" 
@@ -155,12 +155,16 @@
                         <TextBlock Text="Show In Overlay" Grid.Column="1"
                                    FontSize="14"
                                    Margin="0 0 0 5"/>
-                        <CheckBox HorizontalAlignment="Center">
+                        <CheckBox x:Name="ShowInOverlayCheckBox" 
+                                  HorizontalAlignment="Center"
+                                  Tag="{Binding TimerItemDataViewModel.ShowInOverlay}"
+                                  >
                             <CheckBox.IsChecked>
                                 <Binding Path="ShowInOverlay"
                                          UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
-                                        <core:TimerShowInOverlayRule ValidationStep="UpdatedValue" />
+                                        <core:TimerShowInOverlayRule ValidationStep="UpdatedValue"
+                                                                     x:Name="ShowInOverlayCheckBoxRule" />
                                     </Binding.ValidationRules>
                                 </Binding>
                             </CheckBox.IsChecked>
@@ -172,8 +176,7 @@
                 <TextBlock Text="Change Associated Group"
                            FontSize="14"
                            Margin="0 0 0 5"/>
-                <ComboBox Margin="0 0 0 50"
-                          Name="GroupChangeComboBox"
+                <ComboBox Name="GroupChangeComboBox" Margin="0 0 0 50"
                           HorizontalAlignment="Center"
                           Tag="{Binding GroupID}">
                     <ComboBox.SelectedItem>

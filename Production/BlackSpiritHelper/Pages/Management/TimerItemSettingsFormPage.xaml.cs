@@ -26,6 +26,8 @@ namespace BlackSpiritHelper
 
             // Set the current group ID to the validation rule.
             GroupChangeComboBoxRule.CurrentGroupID = (sbyte)GroupChangeComboBox.Tag;
+            // Set the current ShowInOverlay value to the validation rule.
+            ShowInOverlayCheckBoxRule.CurrentShowOverlayValue = (bool)ShowInOverlayCheckBox.Tag;
 
             // Set ComboBox ItemsSource.
             GroupChangeComboBox.ItemsSource = IoC.DataContent.TimerDesignModel.GroupList;

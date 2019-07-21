@@ -821,7 +821,7 @@ namespace BlackSpiritHelper.Core
             // Create Settings View Model with the current timer binding.
             TimerItemSettingsFormPageViewModel vm = new TimerItemSettingsFormPageViewModel
             {
-                TimerItemViewModel = this,
+                TimerItemDataViewModel = this,
             };
 
             IoC.Application.GoToPage(ApplicationPage.TimerItemSettingsForm, vm);
@@ -1003,7 +1003,7 @@ namespace BlackSpiritHelper.Core
         /// <param name="showInOverlay"></param>
         /// <param name="showInOverlay"></param>
         /// <returns></returns>
-        public static bool ValidateTimerInputs(string title, string iconTitleShortcut, string iconBackgroundHEX, TimeSpan timeDuration, TimeSpan countdownDuration, bool showInOverlay, TimerGroupDataViewModel associatedGroupViewModel, sbyte currentGroupID)
+        public static bool ValidateTimerInputs(TimerItemDataViewModel vm, string title, string iconTitleShortcut, string iconBackgroundHEX, TimeSpan timeDuration, TimeSpan countdownDuration, bool showInOverlay, TimerGroupDataViewModel associatedGroupViewModel, sbyte currentGroupID)
         {
             #region Title
 
@@ -1044,17 +1044,21 @@ namespace BlackSpiritHelper.Core
 
             #region ShowInOverlay
 
-            if (!new TimerShowInOverlayRule().Validate(showInOverlay, null).IsValid)
+            var rule6 = new TimerShowInOverlayRule();
+            rule6.CurrentShowOverlayValue = vm.ShowInOverlay;
+            if (!rule6.Validate(showInOverlay, null).IsValid)
                 return false;
+            rule6 = null;
 
             #endregion
 
             #region AssociatedGroupViewModel
 
-            var rule = new TimerAssociatedGroupViewModelRule();
-            rule.CurrentGroupID = currentGroupID;
-            if (!rule.Validate(associatedGroupViewModel, null).IsValid)
+            var rule7 = new TimerAssociatedGroupViewModelRule();
+            rule7.CurrentGroupID = currentGroupID;
+            if (!rule7.Validate(associatedGroupViewModel, null).IsValid)
                 return false;
+            rule7 = null;
 
             #endregion
 

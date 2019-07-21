@@ -26,7 +26,7 @@ namespace BlackSpiritHelper
             int count = rComponent + gComponent + bComponent;
 
             // Get edge to change color.
-            int limit = (255 * 3) / 2;
+            int limit = 350; //(255 * 3) / 2;
 
             string finalColor;
             if (count < limit)

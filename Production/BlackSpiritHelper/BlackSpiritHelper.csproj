@@ -107,6 +107,12 @@
     <Compile Include="AttachedProperties\BaseAttachedProperty.cs" />
     <Compile Include="AttachedProperties\FrameworkElementAnimationAttachedProperties.cs" />
     <Compile Include="AttachedProperties\NoFrameHistory.cs" />
+    <Compile Include="Controls\Overlay\OverlayTimerSectionControl.xaml.cs">
+      <DependentUpon>OverlayTimerSectionControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Overlay\OverlayTimerSectionItemControl.xaml.cs">
+      <DependentUpon>OverlayTimerSectionItemControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PageHost.xaml.cs">
       <DependentUpon>PageHost.xaml</DependentUpon>
     </Compile>
@@ -157,7 +163,9 @@
     <Compile Include="Pages\Management\TimerItemSettingsFormPage.xaml.cs">
       <DependentUpon>TimerItemSettingsFormPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ValueConverters\BaseMultiValueConverter.cs" />
     <Compile Include="ValueConverters\BooleanToContentConverter.cs" />
+    <Compile Include="ValueConverters\TimerListOverlayOnlyConverter.cs" />
     <Compile Include="ValueConverters\TimerWarningTimerColorSwapConverter.cs" />
     <Compile Include="ValueConverters\EnumBooleanConverter.cs" />
     <Compile Include="ValueConverters\StringToUppercaseConverter.cs" />
@@ -177,6 +185,14 @@
     <Compile Include="Windows\OverlayWindow.xaml.cs">
       <DependentUpon>OverlayWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\Overlay\OverlayTimerSectionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Overlay\OverlayTimerSectionItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\PageHost.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

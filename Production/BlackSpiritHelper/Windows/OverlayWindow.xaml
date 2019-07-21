@@ -84,15 +84,12 @@
                                         Background="{StaticResource RedBrushKey}"
                                     >
 
-                                <!-- TODO content -->
-                                <Border Width="{Binding OverlaySizeStyleValue, FallbackValue=50}" 
-                                        Height="{Binding OverlaySizeStyleValue, FallbackValue=50}" 
-                                        Background="Wheat"
-                                    />
-                                <Border Width="{Binding OverlaySizeStyleValue, FallbackValue=50}" 
-                                        Height="{Binding OverlaySizeStyleValue, FallbackValue=50}" 
-                                        Background="PapayaWhip"
-                                    />
+                                <!-- Content - Instances of overlay representation -->
+                                
+                                <!-- Timer -->
+                                <local:OverlayTimerSectionControl Width="{Binding OverlaySizeStyleWidthValue, FallbackValue=Auto}" 
+                                                                  Height="{Binding OverlaySizeStyleHeightValue, FallbackValue=50}"
+                                                                  />
 
                             </StackPanel>
 
@@ -130,8 +127,7 @@
                                     FontSize="16"
                                     Visibility="{Binding IsDraggingLocked,
                                                  Converter={local:BooleanToVisibilityGoneConverter}}"
-                                    Width="{Binding OverlaySizeStyleValue, FallbackValue=50}"
-                                    Height="{Binding OverlaySizeStyleValue, FallbackValue=50}"
+                                    Padding="5"
                                     Command="{Binding LockOverlayDraggingCommand}"
                                     Style="{StaticResource RegularButtonNoColor}"
                                     VerticalAlignment="Center"
@@ -143,8 +139,7 @@
                                     Visibility="{Binding IsDraggingLocked,
                                                  Converter={local:BooleanToVisibilityGoneConverter},
                                                  ConverterParameter=True}"
-                                    Width="{Binding OverlaySizeStyleValue, FallbackValue=50}"
-                                    Height="{Binding OverlaySizeStyleValue, FallbackValue=50}"
+                                    Padding="5"
                                     Command="{Binding LockOverlayDraggingCommand}"
                                     Style="{StaticResource RegularButtonNoColor}"
                                     VerticalAlignment="Center"

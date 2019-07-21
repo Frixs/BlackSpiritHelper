@@ -8,6 +8,14 @@ namespace BlackSpiritHelper.Core
     /// </summary>
     public class TimerShowInOverlayRule : BaseRule
     {
+        private bool mCurrentShowOverlayValue = false;
+
+        public bool CurrentShowOverlayValue
+        {
+            get => mCurrentShowOverlayValue;
+            set => mCurrentShowOverlayValue = value;
+        }
+
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             bool val;
@@ -20,7 +28,7 @@ namespace BlackSpiritHelper.Core
                 return new ValidationResult(false, "Not a boolean.");
 
             // Check conditions.
-            if (val)
+            if (val && !CurrentShowOverlayValue)
             {
                 // Counter.
                 int c = 1;
