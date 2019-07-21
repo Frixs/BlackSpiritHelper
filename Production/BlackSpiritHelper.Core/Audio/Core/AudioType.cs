@@ -6,6 +6,11 @@
     public enum AudioType
     {
         /// <summary>
+        /// Default value. /No value.
+        /// </summary>
+        None = 0,
+
+        /// <summary>
         /// Timer alert Lv3.
         /// </summary>
         Alert3 = 1,

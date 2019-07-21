@@ -18,6 +18,29 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private List<AudioFile> mList;
 
+        /// <summary>
+        /// Type of this audio pack.
+        /// </summary>
+        private AudioType mType = AudioType.None;
+
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        /// Type of this audio pack.
+        /// </summary>
+        public AudioType Type {
+            get => mType;
+            set
+            {
+                if (mType != AudioType.None)
+                    return;
+                // Can be set only once.
+                mType = value;
+            }
+        }
+
         #endregion
 
         #region Constructor
@@ -68,7 +91,11 @@ namespace BlackSpiritHelper.Core
         {
             // List has no items.
             if (mList.Count <= 0)
+            {
+                // Log it.
+                IoC.Logger.Log($"Cannot find any audio in audio pack '{Type.ToString()}'!", LogLevel.Error);
                 return null;
+            }
 
             // List has only 1 item.
             if (mList.Count == 1)

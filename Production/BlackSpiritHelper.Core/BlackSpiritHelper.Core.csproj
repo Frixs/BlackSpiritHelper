@@ -56,6 +56,8 @@
     <Compile Include="Async\AsyncAwaiter.cs" />
     <Compile Include="Audio\Core\AudioPriorityBracket.cs" />
     <Compile Include="Audio\Implementation\AudioPlayer.cs" />
+    <Compile Include="Audio\Implementation\VoiceAudioManager.cs" />
+    <Compile Include="Audio\Implementation\SoundAudioManager.cs" />
     <Compile Include="DataModels\ApplicationPage.cs" />
     <Compile Include="DataModels\OverlaySize.cs" />
     <Compile Include="Audio\Core\AudioType.cs" />
@@ -86,7 +88,7 @@
     <Compile Include="Audio\Implementation\AudioFile.cs" />
     <Compile Include="Audio\Implementation\AudioPack.cs" />
     <Compile Include="Audio\Implementation\BaseAudioFactory.cs" />
-    <Compile Include="Audio\Implementation\SoundAudioManager.cs" />
+    <Compile Include="Audio\Implementation\BaseAudioManager.cs" />
     <Compile Include="Task\TaskManager.cs" />
     <Compile Include="Utilities\EnumExtensionMethods.cs" />
     <Compile Include="Utilities\StringUtils.cs" />
