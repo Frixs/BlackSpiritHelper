@@ -50,9 +50,15 @@ namespace BlackSpiritHelper.Core
                 mAudioPlayer.OpenAndPlay(GetAudio().URI);
                 return;
             }
+        }
 
-            // Try to play lower bracket.
-            GetAudio().Play(priority);
+        /// <summary>
+        /// Stop playing the audio.
+        /// </summary>
+        public void Stop()
+        {
+            if (mAudioPlayer.IsPlaying)
+                mAudioPlayer.Stop();
         }
 
         /// <summary>

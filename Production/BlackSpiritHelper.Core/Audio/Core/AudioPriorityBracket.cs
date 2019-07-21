@@ -7,20 +7,21 @@
     {
         /// <summary>
         /// Normal priority.
-        /// No restriction to call an audio.
-        /// </summary>
-        File = 0,
-
-        /// <summary>
-        /// Normal priority.
         /// Cannot call multiple audio packs of the same type.
         /// </summary>
-        Pack = 1,
+        Pack = 0,
 
         /// <summary>
-        /// Normal priority.
+        /// High priority.
         /// Only one audio file can be called at the time.
         /// </summary>
-        Manager = 2,
+        Manager = 1,
+
+        /// <summary>
+        /// High priority.
+        /// Only one audio file can be called at the time.
+        /// Stops all sound effects.
+        /// </summary>
+        ManagerForce = 2,
     }
 }

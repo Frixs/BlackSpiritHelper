@@ -92,6 +92,19 @@ namespace BlackSpiritHelper.Core
             }));
         }
 
+        /// <summary>
+        /// Stop media playback.
+        /// </summary>
+        public void Stop()
+        {
+            mMediaPlayer.Dispatcher.BeginInvoke((Action)(() =>
+            {
+                mMediaPlayer.Stop();
+            }));
+            
+            IsPlaying = false;
+        }
+
         #endregion
 
         #region Private Methods
@@ -111,19 +124,10 @@ namespace BlackSpiritHelper.Core
         private void Play()
         {
             // Reset position.
-            Stop();
+            mMediaPlayer.Stop();
 
             IsPlaying = true;
             mMediaPlayer.Play();
-        }
-
-        /// <summary>
-        /// Stop media playback.
-        /// </summary>
-        private void Stop()
-        {
-            mMediaPlayer.Stop();
-            IsPlaying = false;
         }
 
         #endregion

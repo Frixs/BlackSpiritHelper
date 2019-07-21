@@ -82,8 +82,20 @@ namespace BlackSpiritHelper.Core
                 mAudioPlayer.OpenAndPlay(GetAudio(type).URI);
                 return;
             }
+            // Force.
+            else if (priority == AudioPriorityBracket.ManagerForce)
+            {
+                mAudioPlayer.OpenAndPlay(GetAudio(type).URI);
+                // Stop all playing audio.
+                foreach (
+                    AudioType at in (AudioType[])Enum.GetValues(typeof(AudioType))
+                    )
+                    mAudioList[at].Stop();
 
-            // Try to play lower bracket.
+                return;
+            }
+
+            // Play lower bracket.
             mAudioList[type].Play(priority);
         }
 

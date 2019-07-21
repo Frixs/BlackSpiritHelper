@@ -33,7 +33,7 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         /// <param name="type"></param>
         /// <param name="priority"></param>
-        public void Play(AudioType type, AudioPriorityBracket priority = AudioPriorityBracket.File)
+        public void Play(AudioType type, AudioPriorityBracket priority = AudioPriorityBracket.Pack)
         {
             // We do not want to play any audio.
             if (IoC.DataContent.PreferencesDesignModel.AudioAlertLevel == AudioAlertLevel.None)

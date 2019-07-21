@@ -10,6 +10,6 @@
         /// </summary>
         /// <param name="type"></param>
         /// <param name="priority"></param>
-        void Play(AudioType type, AudioPriorityBracket priority = AudioPriorityBracket.File);
+        void Play(AudioType type, AudioPriorityBracket priority = AudioPriorityBracket.Pack);
     }
 }
