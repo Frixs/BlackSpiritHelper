@@ -94,7 +94,7 @@ namespace BlackSpiritHelper.Core
         {
             SaveChangesCommand = new RelayCommand(() => SaveChanges());
             DeleteGroupCommand = new RelayCommand(() => DeleteGroup());
-            GoBackCommand = new RelayCommand(async () => await GoBackAsync());
+            GoBackCommand = new RelayCommand(() => GoBack());
         }
 
         private void SaveChanges()
@@ -123,7 +123,7 @@ namespace BlackSpiritHelper.Core
             IoC.Logger.Log($"Timer Group '{TimerGroupViewModel.Title}' settings changed!", LogLevel.Info);
 
             // Move back to the page.
-            GoBackAsync();
+            GoBack();
         }
 
         private void DeleteGroup()
@@ -143,15 +143,13 @@ namespace BlackSpiritHelper.Core
             }
 
             // Move back to the page.
-            GoBackAsync();
+            GoBack();
         }
 
-        private async Task GoBackAsync()
+        private void GoBack()
         {
             // Move back to the page.
             IoC.Application.GoToPage(ApplicationPage.Timer);
-
-            await Task.Delay(1);
         }
 
         #endregion
