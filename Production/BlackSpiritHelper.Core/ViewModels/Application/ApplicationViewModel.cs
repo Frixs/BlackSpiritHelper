@@ -13,7 +13,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Application name.
         /// </summary>
-        public string ApplicationName { get; private set; } = "Black Spirit Helper";
+        public string ApplicationName { get; private set; } = "Black Spirit Helper (BETA)";
 
         /// <summary>
         /// Executing Assembly of the application.

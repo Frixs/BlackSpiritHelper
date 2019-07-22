@@ -27,7 +27,18 @@ namespace BlackSpiritHelper
         /// <returns></returns>
         public Task ShowMessage(MessageBoxDialogViewModel viewModel)
         {
-            return IoC.Task.Run(() => MessageBox.Show(viewModel.Message, viewModel.Caption, viewModel.Button, viewModel.Icon));
+            return IoC.Task.Run(() =>
+            {
+                MessageBoxResult res = MessageBox.Show(viewModel.Message, viewModel.Caption, viewModel.Button, viewModel.Icon);
+                switch (res)
+                {
+                    case MessageBoxResult.Yes:
+                        viewModel.YesAction();
+                        break;
+                    default:
+                        break;
+                }
+            });
         }
     }
 }

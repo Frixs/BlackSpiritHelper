@@ -1,6 +1,8 @@
 ﻿using BlackSpiritHelper.Core;
 using System;
 using System.Diagnostics;
+using System.IO;
+using System.Net;
 using System.Reflection;
 using System.Windows;
 
@@ -41,13 +43,13 @@ namespace BlackSpiritHelper
 
             // Log it.
             IoC.Logger.Log("Application starting up...", LogLevel.Info);
-
-            // Check for application available updates.
-            checkForUpdates();
             
             // Show the main window.
             Current.MainWindow = new MainWindow();
             Current.MainWindow.Show();
+
+            // Check for application available updates.
+            CheckForUpdates();
         }
 
         /// <summary>
@@ -59,10 +61,13 @@ namespace BlackSpiritHelper
             IoC.Setup();
 
             // Bind Logger.
-            IoC.Kernel.Bind<ILogFactory>().ToConstant(new BaseLogFactory(new[] 
+            IoC.Kernel.Bind<ILogFactory>().ToConstant(new BaseLogFactory(new[]
             {
                 new FileLogger(IoC.Application.ApplicationName.Replace(' ', '_').ToLower() + "_log.txt"),
-            }));
+            })
+            {
+                LogOutputLevel = Debugger.IsAttached ? LogOutputLevel.Debug : LogOutputLevel.Informative
+            });
 
             // Bind task manager.
             IoC.Kernel.Bind<ITaskManager>().ToConstant(new TaskManager());
@@ -81,7 +86,7 @@ namespace BlackSpiritHelper
             IoC.DataContent.Setup();
 
             // Bind AssemblyInfo version.
-            IoC.Application.ApplicationVersion = FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion;
+            IoC.Application.ApplicationVersion = "1.0.1.0"; //FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion;
 
             // Bind AssemblyInfo copyright.
             IoC.Application.Copyright = FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).LegalCopyright;
@@ -104,23 +109,65 @@ namespace BlackSpiritHelper
         /// <summary>
         /// Checks if a new version of the SW is available.
         /// </summary>
-        private void checkForUpdates()
+        private void CheckForUpdates()
         {
-            string title = (Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false)[0] as AssemblyTitleAttribute).Title;
-            Version currVersion = Assembly.GetExecutingAssembly().GetName().Version;
+            string currVersion = IoC.Application.ApplicationVersion;
 
-            // TODO: Version check.
-            if (true)
+            try
             {
-                return;
+                var webRequest = WebRequest.Create(@"https://raw.githubusercontent.com/Frixs/BlackSpiritHelper/master/Release/latest_version.txt");
+                using (var response = webRequest.GetResponse())
+                using (var content = response.GetResponseStream())
+                using (var reader = new StreamReader(content))
+                {
+                    var strContent = reader.ReadLine();
+
+                    // New version available.
+                    if (IsVersionNewer(strContent))
+                    {
+                        IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                        {
+                            Caption = "New version!",
+                            Message = $"New version is available! {Environment.NewLine}Would you like to download new version now?",
+                            Button = MessageBoxButton.YesNo,
+                            Icon = MessageBoxImage.Information,
+                            YesAction = delegate { Process.Start("https://github.com/Frixs/BlackSpiritHelper#installation"); }
+                        });
+                    }
+                }
             }
+            catch (WebException ex)
+            {
+                // Internet error.
+            }
+        }
+
+        /// <summary>
+        /// Check if there is newer version of the application.
+        /// </summary>
+        /// <param name="newVersion"></param>
+        /// <returns></returns>
+        private bool IsVersionNewer(string newVersion)
+        {
+            string[] newVersionNumbers = newVersion.Split('.');
+            string[] currVersionNumbers = IoC.Application.ApplicationVersion.Split('.');
             
-            // Dialog window.
-            string messageBoxText = "New version of " + title + " is available!\r\nDo you want to download it now?";
-            string caption = title + " - New version available!";
-            MessageBoxButton button = MessageBoxButton.YesNo;
-            MessageBoxImage icon = MessageBoxImage.Information;
-            MessageBox.Show(messageBoxText, caption, button, icon);
+            int newVersionNumber, currVersionNumber;
+
+            for (var i = 0; i < newVersionNumbers.Length; i++)
+            {
+                if (int.TryParse(newVersionNumbers[i], out newVersionNumber) && int.TryParse(currVersionNumbers[i], out currVersionNumber))
+                {
+                    if (newVersionNumber > currVersionNumber)
+                        return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return false;
         }
     }
 }

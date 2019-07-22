@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace BlackSpiritHelper.Core
 {
@@ -28,6 +29,11 @@ namespace BlackSpiritHelper.Core
         /// Icon of the message box.
         /// </summary>
         public MessageBoxImage Icon { get; set; }
+
+        /// <summary>
+        /// Run this action on <see cref="MessageBoxResult.Yes"/> successful result from messagebox.
+        /// </summary>
+        public Action YesAction { get; set; } = delegate { };
 
         #endregion
 
