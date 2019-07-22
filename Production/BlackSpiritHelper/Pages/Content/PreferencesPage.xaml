@@ -61,6 +61,9 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
+                    <TextBlock Text="Voice option is not implemented yet." 
+                               FontFamily="{StaticResource LatoLightItalic}"
+                               FontSize="10"/>
                 </StackPanel>
 
                 <!-- Form Subtitle - Overlay -->
