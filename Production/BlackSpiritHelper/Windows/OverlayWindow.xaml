@@ -24,13 +24,13 @@
         </Grid.ColumnDefinitions>
         
         <!-- Canvas -->
-        <Canvas Grid.Row="0" Grid.Column="0"
+        <Canvas Grid.Row="0" Grid.Column="0" SnapsToDevicePixels="True" UseLayoutRounding="True"
                 DataContext="{Binding ApplicationDataContent.OverlayDesignModel,
                               Source={x:Static local:ViewModelLocator.Instance}}"
                 >
             
             <!-- Canvas Content -->
-            <Border x:Name="OverlayObject"
+            <Border x:Name="OverlayObject" 
                     Canvas.Left="{Binding PosX, Mode=TwoWay}"
                     Canvas.Top="{Binding PosY, Mode=TwoWay}"
                     MouseLeftButtonDown="OnMouseLeftButtonDown"

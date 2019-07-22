@@ -7,7 +7,7 @@ namespace BlackSpiritHelper
     /// <summary>
     /// Converts boolean to visibility - Visible/Hidden.
     /// </summary>
-    public class TimespanToStringTimeFormatConverter : BaseValueConverter<TimespanToStringTimeFormatConverter>
+    public class SecondsToTimeFormatStringConverter : BaseValueConverter<SecondsToTimeFormatStringConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

@@ -118,7 +118,7 @@
                                          Value="{Binding ElementName=slValue, 
                                                Path=Value, 
                                                UpdateSourceTrigger=PropertyChanged,
-                                               Converter={local:TimespanToStringTimeFormatConverter}}" 
+                                               Converter={local:SecondsToTimeFormatStringConverter}}" 
                                          DockPanel.Dock="Right" 
                                          TextAlignment="Right" 
                                          Width="100" />

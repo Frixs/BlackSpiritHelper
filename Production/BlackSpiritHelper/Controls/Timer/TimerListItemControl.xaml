@@ -156,7 +156,9 @@
                                         </Grid>
 
                                         <!-- Countdown -->
-                                        <TextBlock Text="{Binding TimeFormat}" 
+                                        <TextBlock Text="{Binding TimeCurrent, 
+                                                          Converter={local:TimeSpanToStringConverter}, 
+                                                          ConverterParameter=hms}" 
                                                    FontFamily="{StaticResource LatoRegular}"
                                                    FontSize="32"
                                                    VerticalAlignment="Center"

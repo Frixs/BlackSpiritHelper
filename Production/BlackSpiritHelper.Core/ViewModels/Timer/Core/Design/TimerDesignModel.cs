@@ -67,12 +67,12 @@ namespace BlackSpiritHelper.Core
                 GroupID = 0,
                 Title = "My First Timer",
                 IconTitleShortcut = "BSH",
-                IconBackgroundHEX = "1f61cc",
+                IconBackgroundHEX = "820808",
                 TimeDuration = new TimeSpan(0, 1, 30),
                 CountdownDuration = TimeSpan.FromSeconds(3),
                 State = TimerState.Ready,
                 IsLoopActive = false,
-                ShowInOverlay = false,
+                ShowInOverlay = true,
             });
         }
 

@@ -134,7 +134,7 @@ namespace BlackSpiritHelper.Core
         /// Formatted time output.
         /// </summary>
         [XmlIgnore]
-        public string TimeFormat { get; private set; }
+        public TimeSpan TimeCurrent { get; private set; }
 
         /// <summary>
         /// Timer total time.
@@ -488,7 +488,7 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Update <see cref="TimeFormat"/> in UI.
+        /// Update <see cref="TimeCurrent"/> in UI.
         /// </summary>
         /// <param name="ts"></param>
         private void UpdateTimeInUI(TimeSpan ts)
@@ -497,7 +497,7 @@ namespace BlackSpiritHelper.Core
             Application.Current.Dispatcher.BeginInvoke((Action)(() =>
             {
                 // Update time text format in UI.
-                TimeFormat = ts.ToString("hh':'mm':'ss");
+                TimeCurrent = ts;
             }));
         }
 

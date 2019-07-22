@@ -15,7 +15,110 @@
                     <ControlTemplate TargetType="{x:Type ContentControl}">
 
                         <!-- Content -->
-                        <Button Content="{Binding IconTitleShortcut}" />
+                        <Grid>
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Background" 
+                                            Value="{Binding IconBackgroundHEX, 
+                                        Converter={local:StringRGBToBrushConverter}}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsWarningTime}" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource TimerListItemWarningColorBrushKey}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                            
+                            <!-- Border 
+                            <Rectangle StrokeThickness="3" Panel.ZIndex="1"
+                                       Stroke="{Binding IsWarningTime,
+                                                Converter={local:TimerWarningTimerColorSwapConverter},
+                                                ConverterParameter={StaticResource Transparent}}"/>
+                            -->
+
+                            <Grid Margin="{Binding ApplicationDataContent.OverlayDesignModel.OverlaySize, 
+                                Source={x:Static local:ViewModelLocator.Instance},
+                                Converter={local:TimerOverlaySizeMarginValueConverter}}" Panel.ZIndex="0">
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                </Grid.RowDefinitions>
+
+                                <!-- Icon Shortcut Title -->
+                                <Viewbox Grid.Row="0">
+                                    <TextBlock Text="{Binding IconTitleShortcut}"
+                                               FontFamily="{StaticResource LatoHeavy}"
+                                               FontSize="14"
+                                               VerticalAlignment="Top"
+                                               HorizontalAlignment="Center">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Foreground" 
+                                                        Value="{Binding IconBackgroundHEX, 
+                                                    Converter={local:StringRGBToLightOrDarkBrushConverter},
+                                                    ConverterParameter={StaticResource TimerListItemIconForegroundColorDifference}}"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsWarningTime}" Value="True">
+                                                        <Setter Property="Foreground" 
+                                                                Value="{StaticResource TimerListItemCountdownForegroundInvBrushKey}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Viewbox>
+
+                                <!-- Countdown -->
+                                <Viewbox Grid.Row="1">
+                                    <TextBlock Text="{Binding TimeCurrent, 
+                                                      Converter={local:TimeSpanToStringConverter}, 
+                                                      ConverterParameter=h*ms}"
+                                               FontFamily="{StaticResource LatoHeavy}"
+                                               VerticalAlignment="Bottom"
+                                               HorizontalAlignment="Center">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Foreground" Value="{Binding IconBackgroundHEX, 
+                                                    Converter={local:StringRGBToLightOrDarkBrushConverter},
+                                                    ConverterParameter={StaticResource TimerListItemIconForegroundColorDifference}}"/>
+                                                <Setter Property="TextDecorations" Value="None" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsInCountdown}" Value="True">
+                                                        <Setter Property="TextDecorations" 
+                                                                Value="Underline" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding IsWarningTime}" Value="True">
+                                                        <Setter Property="Foreground" 
+                                                                Value="{StaticResource TimerListItemCountdownForegroundInvBrushKey}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Viewbox>
+                            </Grid>
+                            
+                            <!-- Sync Button -->
+                            <Button Content="{StaticResource FontAwesomeSyncIcon}" Panel.ZIndex="1"
+                                    Command="{Binding SyncCommand}"
+                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                    FontSize="18"
+                                    Padding="0"
+                                    Margin="0">
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource RegularButtonYellow}">
+                                        <Setter Property="Opacity" Value="0" />
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Opacity" Value="0.75" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+
+                        </Grid>
 
                     </ControlTemplate>
                 </Setter.Value>
