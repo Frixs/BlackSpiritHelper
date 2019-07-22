@@ -658,11 +658,10 @@ namespace BlackSpiritHelper.Core
         /// <param name="time"></param>
         private void TimerHandleNotificationEvents(TimeSpan time)
         {
-            // TODO Add option to user to set these time brackets.
             // ------------------------------
             // 1st Bracket.
             // ------------------------------
-            if (time.TotalSeconds > 50)
+            if (time.TotalSeconds > IoC.DataContent.PreferencesDesignModel.TimerNotificationTime1)
             {
                 // Time has changed, try to deactivate if the warning UI is running.
                 TimerTryToDeactivateWarningUI();
@@ -679,7 +678,7 @@ namespace BlackSpiritHelper.Core
             // ------------------------------
             // 2nd Bracket.
             // ------------------------------
-            if (time.TotalSeconds > 15)
+            if (time.TotalSeconds > IoC.DataContent.PreferencesDesignModel.TimerNotificationTime2)
             {
                 // Time has changed, try to deactivate if the warning UI is running.
                 TimerTryToDeactivateWarningUI();
@@ -729,8 +728,12 @@ namespace BlackSpiritHelper.Core
         /// <param name="time">Time according to which to set the triggers.</param>
         private void TimerSetNotificationEventTriggers(TimeSpan time)
         {
-            // TODO user time brackets.
-            int[] brackets = new int[3] { 50, 15, 0 };
+            // User time brackets.
+            int[] brackets = new int[3] {
+                IoC.DataContent.PreferencesDesignModel.TimerNotificationTime1,
+                IoC.DataContent.PreferencesDesignModel.TimerNotificationTime2,
+                0
+            };
             
             for (int i = 0; i < mIsFiredNotificationEvent.Length; i++)
                 if (time.TotalSeconds < brackets[i])

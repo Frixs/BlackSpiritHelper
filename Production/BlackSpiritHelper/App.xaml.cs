@@ -78,6 +78,7 @@ namespace BlackSpiritHelper
 
             // Bind Application data content view models.
             IoC.Kernel.Bind<ApplicationDataContent>().ToConstant(new ApplicationDataContent());
+            IoC.DataContent.Setup();
 
             // Bind AssemblyInfo version.
             IoC.Application.ApplicationVersion = FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion;

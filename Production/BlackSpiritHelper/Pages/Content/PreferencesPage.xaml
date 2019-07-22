@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       xmlns:local="clr-namespace:BlackSpiritHelper"
       xmlns:core="clr-namespace:BlackSpiritHelper.Core;assembly=BlackSpiritHelper.Core"
       mc:Ignorable="d" 
@@ -135,8 +136,44 @@
                            Style="{StaticResource FormSubtitle}"
                            Margin="0 0 0 30" />
 
-                <TextBlock Text="TODO" Margin="0 0 0 50"
-                           />
+                <!-- Timer Notification Time Brackets -->
+                <TextBlock Text="Alerts"
+                               FontFamily="{StaticResource LatoRegular}"
+                               FontSize="14"
+                               Margin="0 0 0 5"/>
+                <TextBlock Text="You cannot update this if any timer is running." 
+                           Visibility="{Binding ApplicationDataContent.TimerDesignModel.IsRunning,
+                                        Source={x:Static local:ViewModelLocator.Instance},
+                                        Converter={local:BooleanToVisibilityGoneConverter}}"
+                           Foreground="{StaticResource RedBrushKey}"
+                           FontFamily="{StaticResource LatoLight}"
+                           FontSize="14"
+                           HorizontalAlignment="Center" 
+                           Margin="0 0 0 5"/>
+                <xctk:RangeSlider x:Name="TimerNotificationRangeSlider" Margin="0 0 0 5"
+                                  Orientation="Horizontal"
+                                  Minimum="6"
+                                  LowerValue="{Binding TimerNotificationTime2Value, Mode=TwoWay}" 
+                                  Maximum="59"
+                                  HigherValue="{Binding TimerNotificationTime1Value, Mode=TwoWay}"
+                                  Step="1" />
+                <Grid Margin="0 0 0 50">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" 
+                               Text="{Binding LowerValue, ElementName=TimerNotificationRangeSlider, StringFormat='2nd alert at {0:#} sec.'}"
+                               FontFamily="{StaticResource LatoLight}"
+                               FontSize="14"
+                               HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Column="2"
+                               Text="{Binding HigherValue, ElementName=TimerNotificationRangeSlider, StringFormat='1st alert at {0:#} sec.'}"
+                               FontFamily="{StaticResource LatoLight}"
+                               FontSize="14"
+                               HorizontalAlignment="Right"/>
+                </Grid>
 
                 <!-- Line spacer -->
                 <Border Margin="0 0 0 10" 

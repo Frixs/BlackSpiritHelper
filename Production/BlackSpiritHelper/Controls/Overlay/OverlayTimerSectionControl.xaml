@@ -20,7 +20,7 @@
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <!-- Wrap Groups into stack panel -->
-                    <StackPanel Orientation="{Binding OverlayOrientation, FallbackValue=Horizontal,
+                    <StackPanel Orientation="{Binding DataContext.OverlayOrientation, FallbackValue=Horizontal,
                                               RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}"
                                 >
                     </StackPanel>
@@ -36,7 +36,7 @@
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <!-- Wrap Timers into stack panel -->
-                                <StackPanel Orientation="{Binding OverlayOrientation, FallbackValue=Horizontal,
+                                <StackPanel Orientation="{Binding DataContext.OverlayOrientation, FallbackValue=Horizontal,
                                                           RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}"
                                             >
 

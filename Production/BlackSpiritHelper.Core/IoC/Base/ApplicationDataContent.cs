@@ -12,23 +12,43 @@
         /// <summary>
         /// Data structure for the preferences.
         /// </summary>
-        public PreferencesDesignModel PreferencesDesignModel { get; private set; } = IoC.SettingsStorage.PreferencesDesignModel == null
-            ? PreferencesDesignModel.Instance
-            : IoC.SettingsStorage.PreferencesDesignModel;
+        public PreferencesDesignModel PreferencesDesignModel { get; private set; }
 
         /// <summary>
         /// Data structure for the overlay.
         /// </summary>
-        public OverlayDesignModel OverlayDesignModel { get; private set; } = IoC.SettingsStorage.OverlayDesignModel == null
-            ? OverlayDesignModel.Instance
-            : IoC.SettingsStorage.OverlayDesignModel;
+        public OverlayDesignModel OverlayDesignModel { get; private set; }
 
         /// <summary>
         /// Data structure for timers with its groups.
         /// </summary>
-        public TimerDesignModel TimerDesignModel { get; private set; } = IoC.SettingsStorage.TimerDesignModel == null
-            ? TimerDesignModel.Instance
-            : IoC.SettingsStorage.TimerDesignModel;
+        public TimerDesignModel TimerDesignModel { get; private set; }
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public ApplicationDataContent()
+        {
+        }
+
+        /// <summary>
+        /// Option to load user data on application load in order you want.
+        /// </summary>
+        public void Setup()
+        {
+            // Preferences.
+            PreferencesDesignModel = IoC.SettingsStorage.PreferencesDesignModel ?? PreferencesDesignModel.Instance;
+
+            // Timer.
+            TimerDesignModel = IoC.SettingsStorage.TimerDesignModel ?? TimerDesignModel.Instance;
+
+            // Overlay.
+            OverlayDesignModel = IoC.SettingsStorage.OverlayDesignModel ?? OverlayDesignModel.Instance;
+        }
 
         #endregion
 
