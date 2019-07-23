@@ -1,4 +1,9 @@
 # Black Spirit Helper
+
+<p align="center">
+    <img src="Resources/logo_red_text_512.png" alt="Logo Black Spirit Helper" width="256" style="text-align:center;">
+</p>
+
 **Are you tired of forgetting important tasks in the game such as... daily rewards, world boss spawns, buff activation at proper time and so on?**  
 Or... are you finding hard to track all your tasks you want to do in-game?  
   
@@ -40,10 +45,11 @@ If you want, you can [Donate Me!](https://www.paypal.com/cgi-bin/webscr?cmd=_s-x
 [GNU General Public License v3.0](https://github.com/Frixs/BlackSpiritHelper/blob/master/LICENSE)
 
 ## TODO List
-- [ ] Boss Section
-- [ ] Dail Check Section
-- [ ] Voice 
-- [ ] Watchdog Section
+- [ ] Boss Section.
+- [ ] Daily Check Section.
+- [ ] Voice Alerts.
+- [ ] Watchdog Section.
+- [ ] Loading spinner on application start.
 
 ## Release History
 *No history yet.*
