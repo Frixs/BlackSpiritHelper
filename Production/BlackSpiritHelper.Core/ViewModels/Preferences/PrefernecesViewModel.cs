@@ -94,18 +94,6 @@ namespace BlackSpiritHelper.Core
         [XmlIgnore]
         public ICommand ResetOverlayPositionCommand { get; set; }
 
-        /// <summary>
-        /// The command to open author webpage.
-        /// </summary>
-        [XmlIgnore]
-        public ICommand AuthorWebpageLinkCommand { get; set; }
-
-        /// <summary>
-        /// The command to open donation link.
-        /// </summary>
-        [XmlIgnore]
-        public ICommand AuthorDonateLinkCommand { get; set; }
-
         #endregion
 
         #region Constructor
@@ -130,8 +118,6 @@ namespace BlackSpiritHelper.Core
         {
             RunOnStartUpCheckboxCommand = new RelayCommand(async () => await RunOnStartUpCheckboxCommandMethodAsync());
             ResetOverlayPositionCommand = new RelayCommand(() => ResetOverlayPositionMethod());
-            AuthorWebpageLinkCommand = new RelayCommand(async () => await AuthorWebpageLinkMethodAsync());
-            AuthorDonateLinkCommand = new RelayCommand(async () => await AuthorDonateLinkMethodAsync());
         }
 
         /// <summary>
@@ -174,28 +160,6 @@ namespace BlackSpiritHelper.Core
         {
             IoC.DataContent.OverlayDesignModel.PosX = 0;
             IoC.DataContent.OverlayDesignModel.PosY = 0;
-        }
-
-        /// <summary>
-        /// Open author webpage.
-        /// </summary>
-        private async Task AuthorWebpageLinkMethodAsync()
-        {
-            // Open the webpage.
-            System.Diagnostics.Process.Start("https://github.com/Frixs");
-
-            await Task.Delay(1);
-        }
-
-        /// <summary>
-        /// Open donation weblink.
-        /// </summary>
-        private async Task AuthorDonateLinkMethodAsync()
-        {
-            // Open the webpage.
-            System.Diagnostics.Process.Start(IoC.Application.DonationURL);
-
-            await Task.Delay(1);
         }
 
         #endregion

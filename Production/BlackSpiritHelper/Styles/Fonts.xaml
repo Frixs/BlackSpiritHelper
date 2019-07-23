@@ -46,5 +46,7 @@
     <system:String x:Key="FontAwesomeLockIcon">&#xf023;</system:String>
     <system:String x:Key="FontAwesomeUnlockIcon">&#xf13e;</system:String>
     <system:String x:Key="FontAwesomeGitHubIcon">&#xf09b;</system:String>
+    <system:String x:Key="FontAwesomeDiscordIcon">&#xf392;</system:String>
+    <system:String x:Key="FontAwesomeRedditIcon">&#xf1a1;</system:String>
 
 </ResourceDictionary>

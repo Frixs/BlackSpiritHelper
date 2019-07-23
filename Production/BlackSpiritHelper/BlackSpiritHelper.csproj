@@ -343,6 +343,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icon.ico" />
+    <Resource Include="Resources\Images\Logo\logo_red_text_512.png" />
     <Content Include="Resources\Sounds\Alert2_Sound_0.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

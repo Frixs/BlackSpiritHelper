@@ -178,56 +178,6 @@
                                HorizontalAlignment="Right"/>
                 </Grid>
 
-                <!-- Line spacer -->
-                <Border Margin="0 0 0 10" 
-                        Style="{StaticResource FormSpacer}"/>
-
-                <!-- Form Subtitle - Credits -->
-                <TextBlock Text="Credits"
-                           Style="{StaticResource FormTitle}" />
-
-                <!-- Form Subtitle - Author -->
-                <TextBlock Text="Author"
-                           Style="{StaticResource FormSubtitle}"
-                           Margin="0 0 0 10" />
-
-                <!-- Author signature -->
-                <TextBlock Text="{Binding ApplicationViewModel.Copyright,
-                                  Source={x:Static local:ViewModelLocator.Instance}}"
-                           FontFamily="{StaticResource LatoRegular}"
-                           FontSize="14"
-                           Foreground="{StaticResource FormTitleForegroundAltBrushKey}"
-                           Margin="0 0 0 10"/>
-
-                <StackPanel Orientation="Horizontal" Margin="0 0 0 50"
-                            HorizontalAlignment="Center">
-                    <!-- Author Webpage Link -->
-                    <Button Content="{StaticResource FontAwesomeGitHubIcon}"
-                            Command="{Binding AuthorWebpageLinkCommand}"
-                            Style="{StaticResource RegularButton}"
-                            FontFamily="{StaticResource FontAwesomeBrands}"
-                            FontSize="20"
-                            Padding="10" />
-                    <!-- Author DONATE Link -->
-                    <Button Content="DONATE"
-                            Command="{Binding AuthorDonateLinkCommand}"
-                            Style="{StaticResource DonateButton}"
-                            Padding="15 10"
-                            Margin="10 0 0 0"/>
-                </StackPanel>
-
-                <!-- Form Subtitle - Version -->
-                <TextBlock Text="Version"
-                           Style="{StaticResource FormSubtitle}"
-                           Margin="0 0 0 10" />
-
-                <!-- Application version -->
-                <TextBlock Text="{Binding ApplicationViewModel.ApplicationVersion,
-                                  Source={x:Static local:ViewModelLocator.Instance}}"
-                           FontFamily="{StaticResource LatoRegular}"
-                           FontSize="14"
-                           Foreground="{StaticResource FormTitleForegroundAltBrushKey}"/>
-
             </StackPanel>
             
         </Grid>

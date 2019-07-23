@@ -29,7 +29,7 @@
                 <Grid Grid.Row="0" Panel.ZIndex="1">
                     <Button Style="{StaticResource ApplcationButton}"
                             Command="{Binding OpenHomePageCommand}">
-                        <Image Source="/BlackSpiritHelper;component/Resources/Images/Logo/logo_red_512.png" />
+                        <Image Source="/BlackSpiritHelper;component/Resources/Images/Logo/logo_red_text_512.png" />
                     </Button>
                 </Grid>
 
@@ -63,19 +63,41 @@
                         <!-- Author DONATE Link -->
                         <Button Content="DONATE" Grid.Column="0"
                                 Command="{Binding AuthorDonateLinkCommand}"
-                                Style="{StaticResource DonateButton}" 
                                 Padding="10"
-                                Margin="0 0 10 0"
-                                />
+                                Margin="0 0 10 0">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource DonateButton}">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ApplicationViewModel.CurrentPage,
+                                                               Source={x:Static local:ViewModelLocator.Instance}}" 
+                                                     Value="Home">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
 
                         <!-- Preferences Button -->
-                        <Button Content="{StaticResource FontAwesomeCogIcon}" Grid.Column="2"
+                        <Button Content="{StaticResource FontAwesomeCogIcon}"
                                 Command="{Binding OpenPreferencesPageCommand}" 
-                                Style="{StaticResource SideMenuButton}"
                                 FontFamily="{StaticResource FontAwesomeSolid}"
                                 FontSize="18"
-                                Width="40"
-                                />
+                                MinWidth="40">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource SideMenuButton}">
+                                    <Setter Property="Grid.Column" Value="2" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ApplicationViewModel.CurrentPage,
+                                                               Source={x:Static local:ViewModelLocator.Instance}}" 
+                                                     Value="Home">
+                                            <Setter Property="Grid.Column" Value="0" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
                     </Grid>
                 </Border>
                 
