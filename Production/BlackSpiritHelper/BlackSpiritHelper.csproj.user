@@ -3,9 +3,9 @@
   <PropertyGroup>
     <ProjectView>ProjectFiles</ProjectView>
     <PublishUrlHistory>C:\Users\This\Documents\WORKSPACE\desktop\BlackSpiritHelper\Release\|publish\|C:\Users\This\Documents\WORKSPACE\desktop\BlackSpiritHelper\Release\LatestVersion\</PublishUrlHistory>
-    <InstallUrlHistory>https://github.com/Frixs/BlackSpiritHelper/raw/master/Release/|https://github.com/Frixs/BlackSpiritHelper/tree/master/Release/|http://aoczeco.eu/todo/test/</InstallUrlHistory>
+    <InstallUrlHistory>https://raw.github.com/Frixs/BlackSpiritHelper/tree/master/Release/|https://github.com/Frixs/BlackSpiritHelper/raw/master/Release/|http://aoczeco.eu/todo/|http://aoczeco.eu/todo/test/|https://github.com/Frixs/BlackSpiritHelper/tree/master/Release/</InstallUrlHistory>
     <SupportUrlHistory>https://github.com/Frixs/BlackSpiritHelper</SupportUrlHistory>
-    <UpdateUrlHistory>https://github.com/Frixs/BlackSpiritHelper/tree/master/Release/|http://aoczeco.eu/todo/test/</UpdateUrlHistory>
+    <UpdateUrlHistory>https://github.com/Frixs/BlackSpiritHelper/raw/master/Release/|http://aoczeco.eu/todo/|http://aoczeco.eu/todo/test/|https://github.com/Frixs/BlackSpiritHelper/tree/master/Release/</UpdateUrlHistory>
     <BootstrapperUrlHistory />
     <ErrorReportUrlHistory />
     <FallbackCulture>en-US</FallbackCulture>
