@@ -3,9 +3,9 @@
   <PropertyGroup>
     <ProjectView>ProjectFiles</ProjectView>
     <PublishUrlHistory>C:\Users\This\Documents\WORKSPACE\desktop\BlackSpiritHelper\Release\|publish\|C:\Users\This\Documents\WORKSPACE\desktop\BlackSpiritHelper\Release\LatestVersion\</PublishUrlHistory>
-    <InstallUrlHistory>https://github.com/Frixs/BlackSpiritHelper/tree/master/Release/|http://aoczeco.eu/todo/test/</InstallUrlHistory>
+    <InstallUrlHistory>https://github.com/Frixs/BlackSpiritHelper/raw/master/Release/|https://github.com/Frixs/BlackSpiritHelper/tree/master/Release/|http://aoczeco.eu/todo/test/</InstallUrlHistory>
     <SupportUrlHistory>https://github.com/Frixs/BlackSpiritHelper</SupportUrlHistory>
-    <UpdateUrlHistory>http://aoczeco.eu/todo/test/</UpdateUrlHistory>
+    <UpdateUrlHistory>https://github.com/Frixs/BlackSpiritHelper/tree/master/Release/|http://aoczeco.eu/todo/test/</UpdateUrlHistory>
     <BootstrapperUrlHistory />
     <ErrorReportUrlHistory />
     <FallbackCulture>en-US</FallbackCulture>
