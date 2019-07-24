@@ -3,9 +3,9 @@
   <PropertyGroup>
     <ProjectView>ProjectFiles</ProjectView>
     <PublishUrlHistory>C:\Users\This\Documents\WORKSPACE\desktop\BlackSpiritHelper\Release\|publish\|C:\Users\This\Documents\WORKSPACE\desktop\BlackSpiritHelper\Release\LatestVersion\</PublishUrlHistory>
-    <InstallUrlHistory>https://raw.github.com/Frixs/BlackSpiritHelper/tree/master/Release/|https://github.com/Frixs/BlackSpiritHelper/raw/master/Release/|http://aoczeco.eu/todo/|http://aoczeco.eu/todo/test/|https://github.com/Frixs/BlackSpiritHelper/tree/master/Release/</InstallUrlHistory>
+    <InstallUrlHistory>https://raw.githubusercontent.com/Frixs/BlackSpiritHelper/master/Release/|https://raw.github.com/Frixs/BlackSpiritHelper/tree/master/Release/|https://github.com/Frixs/BlackSpiritHelper/raw/master/Release/|http://aoczeco.eu/todo/|http://aoczeco.eu/todo/test/</InstallUrlHistory>
     <SupportUrlHistory>https://github.com/Frixs/BlackSpiritHelper</SupportUrlHistory>
-    <UpdateUrlHistory>https://github.com/Frixs/BlackSpiritHelper/raw/master/Release/|http://aoczeco.eu/todo/|http://aoczeco.eu/todo/test/|https://github.com/Frixs/BlackSpiritHelper/tree/master/Release/</UpdateUrlHistory>
+    <UpdateUrlHistory>https://raw.github.com/Frixs/BlackSpiritHelper/tree/master/Release/|https://github.com/Frixs/BlackSpiritHelper/raw/master/Release/|http://aoczeco.eu/todo/|http://aoczeco.eu/todo/test/|https://github.com/Frixs/BlackSpiritHelper/tree/master/Release/</UpdateUrlHistory>
     <BootstrapperUrlHistory />
     <ErrorReportUrlHistory />
     <FallbackCulture>en-US</FallbackCulture>

@@ -1,5 +1,6 @@
 /.vs/*
 
+!/Release/
 /Certs/*
 /Production/BlackSpiritHelper*/.vs/*
 /Production/BlackSpiritHelper*/bin/*

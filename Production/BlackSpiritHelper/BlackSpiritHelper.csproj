@@ -25,8 +25,8 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>true</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>https://raw.github.com/Frixs/BlackSpiritHelper/tree/master/Release/</InstallUrl>
-    <UpdateUrl>https://raw.github.com/Frixs/BlackSpiritHelper/tree/master/Release/</UpdateUrl>
+    <InstallUrl>https://raw.githubusercontent.com/Frixs/BlackSpiritHelper/master/Release/</InstallUrl>
+    <UpdateUrl>https://raw.githubusercontent.com/Frixs/BlackSpiritHelper/master/Release/</UpdateUrl>
     <SupportUrl>https://github.com/Frixs/BlackSpiritHelper</SupportUrl>
     <TargetCulture>en</TargetCulture>
     <ProductName>Black Spirit Helper</ProductName>
