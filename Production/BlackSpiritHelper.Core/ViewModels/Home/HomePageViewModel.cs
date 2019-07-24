@@ -60,7 +60,7 @@ namespace BlackSpiritHelper.Core
         {
             // Open the webpage.
             // TODO webpage get started.
-            System.Diagnostics.Process.Start("https://github.com/Frixs");
+            System.Diagnostics.Process.Start("https://github.com/Frixs/BlackSpiritHelper/wiki");
 
             await Task.Delay(1);
         }
