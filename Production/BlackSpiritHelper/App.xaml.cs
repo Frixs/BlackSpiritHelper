@@ -1,10 +1,12 @@
 ﻿using BlackSpiritHelper.Core;
+using Microsoft.Win32;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Windows;
+using System.Deployment.Application;
 
 namespace BlackSpiritHelper
 {
@@ -15,6 +17,11 @@ namespace BlackSpiritHelper
     {
         #region Dispatcher Unhandled Exception
 
+        /// <summary>
+        /// Unhandled exception event handler.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
             // Log error.
@@ -29,6 +36,8 @@ namespace BlackSpiritHelper
 
         #endregion
 
+        #region Start/Exit Methods
+
         /// <summary>
         /// Custom startup so we load our IoC immediately before anything else.
         /// </summary>
@@ -41,16 +50,34 @@ namespace BlackSpiritHelper
             // Configuration.
             ApplicationSetup();
 
+            // Setup on application deployment.
+            OnDeploymentSetup();
+
             // Log it.
             IoC.Logger.Log("Application starting up...", LogLevel.Info);
-            
+
             // Show the main window.
             Current.MainWindow = new MainWindow();
             Current.MainWindow.Show();
 
-            // Check for application available updates.
-            CheckForUpdates();
+            // Custom check for application available updates.
+            //CheckForUpdates();
         }
+
+        /// <summary>
+        /// Perform tasks at application exit.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            // Save data before exiting application.
+            IoC.DataContent.SaveUserData();
+        }
+
+        #endregion
+
+        #region Private Methods
 
         /// <summary>
         /// Configures our application read for use.
@@ -59,6 +86,19 @@ namespace BlackSpiritHelper
         {
             // Setup IoC.
             IoC.Setup();
+
+            #region Set Application Properties
+            // Bind Executing Assembly.
+            IoC.Application.ApplicationExecutingAssembly = Assembly.GetExecutingAssembly();
+
+            // Bind AssemblyInfo version.
+            IoC.Application.ApplicationVersion = ApplicationDeployment.IsNetworkDeployed
+                ? ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString()
+                : FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion;
+
+            // Bind AssemblyInfo copyright.
+            IoC.Application.Copyright = FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).LegalCopyright;
+            #endregion
 
             // Bind Logger.
             IoC.Kernel.Bind<ILogFactory>().ToConstant(new BaseLogFactory(new[]
@@ -84,26 +124,6 @@ namespace BlackSpiritHelper
             // Bind Application data content view models.
             IoC.Kernel.Bind<ApplicationDataContent>().ToConstant(new ApplicationDataContent());
             IoC.DataContent.Setup();
-
-            // Bind AssemblyInfo version.
-            IoC.Application.ApplicationVersion = "1.0.1.0"; //FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion;
-
-            // Bind AssemblyInfo copyright.
-            IoC.Application.Copyright = FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).LegalCopyright;
-
-            // Bind Executing Assembly.
-            IoC.Application.ApplicationExecutingAssembly = Assembly.GetExecutingAssembly();
-        }
-
-        /// <summary>
-        /// Perform tasks at application exit.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Application_Exit(object sender, ExitEventArgs e)
-        {
-            // Save data before exiting application.
-            IoC.DataContent.SaveUserData();
         }
 
         /// <summary>
@@ -136,7 +156,7 @@ namespace BlackSpiritHelper
                     }
                 }
             }
-            catch (WebException ex)
+            catch (WebException)
             {
                 // Internet error.
             }
@@ -151,7 +171,7 @@ namespace BlackSpiritHelper
         {
             string[] newVersionNumbers = newVersion.Split('.');
             string[] currVersionNumbers = IoC.Application.ApplicationVersion.Split('.');
-            
+
             int newVersionNumber, currVersionNumber;
 
             for (var i = 0; i < newVersionNumbers.Length; i++)
@@ -169,5 +189,52 @@ namespace BlackSpiritHelper
 
             return false;
         }
+
+        /// <summary>
+        ///  On application deployment.
+        /// </summary>
+        private void OnDeploymentSetup()
+        {
+            if (!ApplicationDeployment.IsNetworkDeployed || !ApplicationDeployment.CurrentDeployment.IsFirstRun)
+                return;
+
+            // Only run this code if it is ClickOnce's application and if the application runs for the first time (condition above).
+
+            // Set the application icon on the first time deployment only.
+            SetInstallerIcon();
+        }
+
+        /// <summary>
+        /// Set the icon in Add/Remove Programs for all BlackSpiritHelper products.
+        /// </summary>
+        private void SetInstallerIcon()
+        {
+            try
+            {
+                // Icon path.
+                string iconSourcePath = Path.Combine(System.Windows.Forms.Application.StartupPath, @"Resources\Images\Logo\icon_red.ico");
+
+                if (!File.Exists(iconSourcePath))
+                    return;
+
+                RegistryKey myUninstallKey = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Uninstall");
+                string[] mySubKeyNames = myUninstallKey.GetSubKeyNames();
+                for (int i = 0; i < mySubKeyNames.Length; i++)
+                {
+                    RegistryKey myKey = myUninstallKey.OpenSubKey(mySubKeyNames[i], true);
+                    object myValue = myKey.GetValue("DisplayName");
+                    if (
+                        myValue != null && myValue.ToString() == ((AssemblyTitleAttribute)IoC.Application.ApplicationExecutingAssembly.GetCustomAttribute(typeof(AssemblyTitleAttribute))).Title
+                        )
+                    {
+                        myKey.SetValue("DisplayIcon", iconSourcePath);
+                        break;
+                    }
+                }
+            }
+            catch (Exception) { }
+        }
+
+        #endregion
     }
 }

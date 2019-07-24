@@ -2,13 +2,16 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectView>ProjectFiles</ProjectView>
-    <PublishUrlHistory>publish\</PublishUrlHistory>
-    <InstallUrlHistory />
-    <SupportUrlHistory />
-    <UpdateUrlHistory />
+    <PublishUrlHistory>C:\Users\This\Documents\WORKSPACE\desktop\BlackSpiritHelper\Release\|publish\|C:\Users\This\Documents\WORKSPACE\desktop\BlackSpiritHelper\Release\LatestVersion\</PublishUrlHistory>
+    <InstallUrlHistory>http://aoczeco.eu/todo/test/</InstallUrlHistory>
+    <SupportUrlHistory>https://github.com/Frixs/BlackSpiritHelper</SupportUrlHistory>
+    <UpdateUrlHistory>http://aoczeco.eu/todo/test/</UpdateUrlHistory>
     <BootstrapperUrlHistory />
     <ErrorReportUrlHistory />
     <FallbackCulture>en-US</FallbackCulture>
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
+  </PropertyGroup>
+  <PropertyGroup>
+    <EnableSecurityDebugging>false</EnableSecurityDebugging>
   </PropertyGroup>
 </Project>

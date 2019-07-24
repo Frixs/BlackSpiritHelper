@@ -10,7 +10,7 @@
         WindowStyle="None"
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
-        Icon="/BlackSpiritHelper;component/Resources/Images/Logo/logo_white.ico"
+        Icon="/BlackSpiritHelper;component/icon_white.ico"
         Title="{Binding ApplicationViewModel.ApplicationName, Source={x:Static local:ViewModelLocator.Instance}, FallbackValue='Title Placeholder'}" 
         Height="450" Width="803" MinHeight="450" MinWidth="803">
 

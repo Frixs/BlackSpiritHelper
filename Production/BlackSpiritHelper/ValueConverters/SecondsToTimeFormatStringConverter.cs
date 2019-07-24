@@ -28,7 +28,7 @@ namespace BlackSpiritHelper
             {
                 ret = DateTime.ParseExact(((TimeSpan)value).ToString(), "HH:mm:ss", null).TimeOfDay.TotalSeconds.ToString();
             }
-            catch (FormatException ex)
+            catch (FormatException)
             {
                 return null;
             }

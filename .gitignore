@@ -1,7 +1,8 @@
 /.vs/*
 
+/Certs/*
 /Production/BlackSpiritHelper*/.vs/*
 /Production/BlackSpiritHelper*/bin/*
 /Production/BlackSpiritHelper*/obj/*
 /Production/BlackSpiritHelper*/Debug/*
-/Production/BlackSpiritHelper*/BlackSpiritHelper_TemporaryKey.pfx
+/Production/BlackSpiritHelper*/*.pfx

@@ -11,22 +11,22 @@ namespace BlackSpiritHelper.Core
         #region Public Properties
 
         /// <summary>
-        /// Application name.
+        /// Application Title/Name.
         /// </summary>
         public string ApplicationName { get; private set; } = "Black Spirit Helper (BETA)";
 
         /// <summary>
-        /// Executing Assembly of the application.
+        /// Assembly set of the application.
         /// </summary>
         public Assembly ApplicationExecutingAssembly { get; set; }
 
         /// <summary>
-        /// Application version from AssemblyInfo.
+        /// Assembly application version.
         /// </summary>
         public string ApplicationVersion { get; set; }
 
         /// <summary>
-        /// Copyright string from AssemblyInfo.
+        /// Assembly copyright.
         /// </summary>
         public string Copyright { get; set; }
 
