@@ -1,0 +1,3 @@
+/Release/**/*.manifest binary
+/Release/**/*.application binary
+/Release/**/*.deploy binary
