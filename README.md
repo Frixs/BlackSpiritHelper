@@ -34,6 +34,11 @@ It offers to you to create multiple groups with multiple timers in each. You can
 **Work in progress.** This feature controls your internet connection to avoid game disconnections over night. I did not think about the solution much yet. Also, the main goal is to make the application legal use. I will inform you about progress in this section in the future.
 
 ## Installation
+#### Requirements
+- Windows 10  
+    - *I have not tested older Windows OS.*
+
+#### Installation process
 1. Download installer -> [setup.exe](Release/setup.exe?raw=true).
 2. Turn off your antivirus. It may cause issues while installation due to you do not have installed my publisher certificate on your computer. You will see me under the name "Unknown Publisher". If you would like to install certificate to prevent this, you can follow the installation [here](https://github.com/Frixs/BlackSpiritHelper/wiki/Certificate-installation) (It is not required).
 3. Run the installer (setup.exe) and follow the installation process.
