@@ -34,7 +34,14 @@ It offers to you to create multiple groups with multiple timers in each. You can
 **Work in progress.** This feature controls your internet connection to avoid game disconnections over night. I did not think about the solution much yet. Also, the main goal is to make the application legal use. I will inform you about progress in this section in the future.
 
 ## Installation
-*Content will be provided soon.*
+1. Download installer -> [setup.exe](Release/setup.exe?raw=true).
+2. Turn off your antivirus. It may cause issues while installation due to you do not have installed my publisher certificate on your computer. You will see me under the name "Unknown Publisher". If you would like to install certificate to prevent this, you can follow the installation [here](https://github.com/Frixs/BlackSpiritHelper/wiki/Certificate-installation) (It is not required).
+3. Run the installer (setup.exe) and follow the installation process.
+4. Your application is installed!
+    - Now, you can check, [how to get started!](https://github.com/Frixs/BlackSpiritHelper/wiki)
+    
+#### Updating your application
+The application automatically tracks a new updates and download them if needed before each start of the application. Use application shortcut created in the start menu or on your desktop to run the application with update check. If you run the application exe file directly, the update check will not run.
 
 ## Credits
 #### Author
@@ -52,4 +59,4 @@ If you want, you can [Donate Me!](https://www.paypal.com/cgi-bin/webscr?cmd=_s-x
 - [ ] Loading spinner on application start.
 
 ## Release History
-*No history yet.*
+[25/07/2019] [1.0.1.0, BETA] - The application launch!
