@@ -59,4 +59,6 @@ If you want, you can [Donate Me!](https://www.paypal.com/cgi-bin/webscr?cmd=_s-x
 - [ ] Loading spinner on application start.
 
 ## Release History
+```
 [25/07/2019] [1.0.1.0, BETA] - The application launch!
+```
