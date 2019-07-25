@@ -56,7 +56,6 @@ If you want, you can [Donate Me!](https://www.paypal.com/cgi-bin/webscr?cmd=_s-x
 - [ ] Daily Check Section.
 - [ ] Voice Alerts.
 - [ ] Watchdog Section.
-- [ ] Loading spinner on application start.
 
 ## Release History
 ```
