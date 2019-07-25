@@ -133,6 +133,27 @@ namespace BlackSpiritHelper.Core
             NewLog.Invoke((message, level));
         }
 
+        /// <summary>
+        /// Get all log files.
+        /// </summary>
+        /// <returns></returns>
+        public List<FileInfo> GetLogFiles()
+        {
+            var ret = new List<FileInfo>();
+
+            foreach (ILogger logger in mLoggers)
+            {
+                if (!logger.GetType().Equals(typeof(FileLogger)))
+                    continue;
+
+                ret.Add(
+                    new FileInfo(((FileLogger)logger).FilePath)
+                    );
+            }
+            
+            return ret;
+        }
+
         #endregion
     }
 }

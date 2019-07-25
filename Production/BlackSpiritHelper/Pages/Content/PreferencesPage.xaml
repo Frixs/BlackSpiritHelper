@@ -37,7 +37,7 @@
                           HorizontalAlignment="Center"/>
 
                 <!-- Audio Alert Level -->
-                <StackPanel Margin="0 0 0 50" HorizontalAlignment="Center">
+                <StackPanel Margin="0 0 0 30" HorizontalAlignment="Center">
                     <TextBlock Text="Audio Alert Level"
                                FontFamily="{StaticResource LatoRegular}"
                                FontSize="14"
@@ -66,6 +66,13 @@
                                FontSize="10"/>
                 </StackPanel>
 
+                <!-- Reset overlay position -->
+                <Button Content="Export Log File" Margin="0 0 0 50"
+                        Style="{StaticResource RegularButton}"
+                        Command="{Binding ExportLogFileCommand}"
+                        Padding="10"
+                        HorizontalAlignment="Center" />
+                
                 <!-- Form Subtitle - Overlay -->
                 <TextBlock Text="Overlay"
                            Style="{StaticResource FormSubtitle}"

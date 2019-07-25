@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Xml.Serialization;
@@ -94,6 +96,12 @@ namespace BlackSpiritHelper.Core
         [XmlIgnore]
         public ICommand ResetOverlayPositionCommand { get; set; }
 
+        /// <summary>
+        /// The command to export log file.
+        /// </summary>
+        [XmlIgnore]
+        public ICommand ExportLogFileCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -117,7 +125,8 @@ namespace BlackSpiritHelper.Core
         private void CreateCommands()
         {
             RunOnStartUpCheckboxCommand = new RelayCommand(async () => await RunOnStartUpCheckboxCommandMethodAsync());
-            ResetOverlayPositionCommand = new RelayCommand(() => ResetOverlayPositionMethod());
+            ResetOverlayPositionCommand = new RelayCommand(async () => await ResetOverlayPositionAsync());
+            ExportLogFileCommand = new RelayCommand(async () => await ExportLogAsync());
         }
 
         /// <summary>
@@ -127,7 +136,7 @@ namespace BlackSpiritHelper.Core
         {
             bool runOnStartup = RunOnStartup;
 
-            await RunCommandAsync(() => RunOnStartupFlag, async () => 
+            await RunCommandAsync(() => RunOnStartupFlag, async () =>
             {
                 await Task.Delay(1);
 
@@ -156,10 +165,27 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Reset overlay position to defualt.
         /// </summary>
-        private void ResetOverlayPositionMethod()
+        private async Task ResetOverlayPositionAsync()
         {
             IoC.DataContent.OverlayDesignModel.PosX = 0;
             IoC.DataContent.OverlayDesignModel.PosY = 0;
+
+            await Task.Delay(1);
+        }
+
+        /// <summary>
+        /// Export log file for user.
+        /// </summary>
+        /// <returns></returns>
+        private async Task ExportLogAsync()
+        {
+            await IoC.UI.ShowFolderBrowserDialog((selectedPath) =>
+            {
+                foreach (FileInfo f in IoC.Logger.GetLogFiles())
+                {
+                    f.CopyTo(Path.Combine(selectedPath, f.Name));
+                }
+            });
         }
 
         #endregion

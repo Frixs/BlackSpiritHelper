@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace BlackSpiritHelper.Core
 {
@@ -13,5 +14,12 @@ namespace BlackSpiritHelper.Core
         /// <param name="viewModel">The view model.</param>
         /// <returns></returns>
         Task ShowMessage(MessageBoxDialogViewModel viewModel);
+
+        /// <summary>
+        /// Open file browser dialog.
+        /// </summary>
+        /// <param name="action">Action on success/select browser item.</param>
+        /// <returns></returns>
+        Task ShowFolderBrowserDialog(Action<string> action);
     }
 }

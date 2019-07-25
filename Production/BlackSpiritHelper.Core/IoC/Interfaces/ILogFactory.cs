@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Runtime.CompilerServices;
 
 namespace BlackSpiritHelper.Core
@@ -54,6 +56,12 @@ namespace BlackSpiritHelper.Core
         /// <param name="filePath">The code filename that this message was logged from.</param>
         /// <param name="lineNumber">The line of code in the filename this message was logged from.</param>
         void Log(string message, LogLevel level = LogLevel.Info, [CallerMemberName]string origin = "", [CallerFilePath]string filePath = "", [CallerLineNumber]int lineNumber = 0);
+
+        /// <summary>
+        /// Get all log files.
+        /// </summary>
+        /// <returns></returns>
+        List<FileInfo> GetLogFiles();
 
         #endregion
     }

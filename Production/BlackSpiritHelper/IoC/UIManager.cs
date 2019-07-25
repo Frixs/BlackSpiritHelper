@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using BlackSpiritHelper.Core;
 
@@ -37,6 +38,32 @@ namespace BlackSpiritHelper
                         break;
                     default:
                         break;
+                }
+            });
+        }
+
+        /// <summary>
+        /// Open file browser dialog.
+        /// </summary>
+        /// <param name="action">Action on success/select browser item.</param>
+        /// <returns></returns>
+        public Task ShowFolderBrowserDialog(Action<string> action)
+        {
+            return IoC.Task.Run(() =>
+            {
+                using (var fbd = new System.Windows.Forms.FolderBrowserDialog())
+                {
+                    // UI thread required.
+                    Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        System.Windows.Forms.DialogResult result = fbd.ShowDialog();
+
+                        if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                        {
+                            action(fbd.SelectedPath);
+                        }
+                    }));
+                    
                 }
             });
         }
