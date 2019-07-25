@@ -103,7 +103,9 @@ namespace BlackSpiritHelper
             // Bind Logger.
             IoC.Kernel.Bind<ILogFactory>().ToConstant(new BaseLogFactory(new[]
             {
-                new FileLogger(IoC.Application.ApplicationName.Replace(' ', '_').ToLower() + "_log.txt"),
+                new FileLogger(
+                    ((AssemblyTitleAttribute)IoC.Application.ApplicationExecutingAssembly.GetCustomAttribute(typeof(AssemblyTitleAttribute))).Title.Replace(' ', '_').ToLower() + "_log.txt"
+                    ),
             })
             {
                 LogOutputLevel = Debugger.IsAttached ? LogOutputLevel.Debug : LogOutputLevel.Informative

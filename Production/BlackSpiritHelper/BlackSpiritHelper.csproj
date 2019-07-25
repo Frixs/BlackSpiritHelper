@@ -32,6 +32,7 @@
     <ProductName>Black Spirit Helper</ProductName>
     <PublisherName>Tomáš Frixs</PublisherName>
     <MinimumRequiredVersion>1.0.1.0</MinimumRequiredVersion>
+    <AutorunEnabled>true</AutorunEnabled>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
@@ -88,6 +89,11 @@
   </PropertyGroup>
   <PropertyGroup>
     <ManifestTimestampUrl>http://time.certum.pl/</ManifestTimestampUrl>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Windows.Shell, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -337,6 +343,7 @@
     </Compile>
     <None Include="MyKey.pfx" />
     <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
     <Resource Include="Resources\Fonts\FontAwesome\fa-brands-400.ttf" />
     <Resource Include="Resources\Fonts\FontAwesome\fa-regular-400.ttf" />
     <Resource Include="Resources\Fonts\FontAwesome\fa-solid-900.ttf" />
