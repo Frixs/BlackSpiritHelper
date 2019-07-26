@@ -4,6 +4,7 @@ using System.Windows.Interop;
 using BlackSpiritHelper.Core;
 using System.Windows.Input;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace BlackSpiritHelper
 {
@@ -12,6 +13,20 @@ namespace BlackSpiritHelper
     /// </summary>
     public partial class OverlayWindow : Window
     {
+        #region Static Members
+
+        /// <summary>
+        /// Active overlay window instance.
+        /// </summary>
+        public static OverlayWindow Window = null;
+
+        /// <summary>
+        /// Says if the window is transparent to any action like mouse clicks.
+        /// </summary>
+        public static bool IsActionTransparent = true;
+
+        #endregion
+
         #region Private Members
 
         /// <summary>
@@ -29,6 +44,16 @@ namespace BlackSpiritHelper
         /// </summary>
         private Point mOverlayObjectMouseRelPos = default;
 
+        /// <summary>
+        /// Brush background overlay color.
+        /// </summary>
+        private Brush mOverlayBackgroundBrush;
+
+        /// <summary>
+        /// Brush background overlay color if there are no items.
+        /// </summary>
+        private Brush mOverlayBackgroundBrushNoItems;
+
         #endregion
 
         #region Constructor
@@ -37,7 +62,11 @@ namespace BlackSpiritHelper
         {
             mTargetWindowHandle = targetWindowReference;
             InitializeComponent();
-        }
+
+            // Set brush colors.
+            mOverlayBackgroundBrush = (Brush)FindResource("TransparentBrushKey");
+            mOverlayBackgroundBrushNoItems = (Brush)FindResource("RedBrushKey");
+    }
 
         #endregion
 
@@ -49,7 +78,7 @@ namespace BlackSpiritHelper
 
             if (mTargetWindowHandle.Equals(IntPtr.Zero))
             {
-                IoC.Logger.Log("Target window not found!", LogLevel.Error);
+                IoC.Logger.Log("Target window not found!", LogLevel.Warning);
                 mIsOverlayOk = false;
                 return;
             }
@@ -72,6 +101,13 @@ namespace BlackSpiritHelper
             
             // Maximize the window.
             WindowState = WindowState.Maximized;
+        }
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+
+            this.SetWindowExTransparent();
         }
 
         #endregion
@@ -142,6 +178,45 @@ namespace BlackSpiritHelper
             Top = screen.WorkingArea.Top;
             Width = screen.WorkingArea.Width;
             Height = screen.WorkingArea.Height;
+        }
+
+        #endregion
+
+        #region Events
+
+        /// <summary>
+        /// Set Overlay content if there are no items.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OverlayContentWrapper_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            StackPanel val;
+
+            if (sender.GetType().Equals(typeof(StackPanel)))
+                val = (StackPanel)sender;
+            else
+            {
+                IoC.Logger.Log($"The target is in invalid type ({sender.GetType().ToString()})!", LogLevel.Fatal);
+                throw new InvalidOperationException($"The target is in invalid type ({sender.GetType().ToString()})!");
+            }
+
+            // Reset.
+            val.ToolTip = default;
+
+            // Timer section check.
+            foreach (TimerGroupDataViewModel g in IoC.DataContent.TimerDesignModel.GroupList)
+                foreach (TimerItemDataViewModel t in g.TimerList)
+                    if (t.ShowInOverlay)
+                    {
+                        val.Background = mOverlayBackgroundBrush;
+                        return;
+                    }
+
+            // No items.
+            val.Background = mOverlayBackgroundBrushNoItems;
+            val.ToolTip = "No items to display.";
+            return;
         }
 
         #endregion

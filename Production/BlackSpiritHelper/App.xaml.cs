@@ -71,6 +71,9 @@ namespace BlackSpiritHelper
         /// <param name="e"></param>
         private void Application_Exit(object sender, ExitEventArgs e)
         {
+            // Dispose.
+            IoC.Get<IMouseKeyHook>().Dispose();
+
             // Save data before exiting application.
             IoC.DataContent.SaveUserData();
         }
@@ -122,6 +125,9 @@ namespace BlackSpiritHelper
 
             // Bind an audio manager.
             IoC.Kernel.Bind<IAudioFactory>().ToConstant(new BaseAudioFactory());
+
+            // Bind an mouse key hooks.
+            IoC.Kernel.Bind<IMouseKeyHook>().ToConstant(new GlobalMouseKeyHookManager());
 
             // Bind Application data content view models.
             IoC.Kernel.Bind<ApplicationDataContent>().ToConstant(new ApplicationDataContent());

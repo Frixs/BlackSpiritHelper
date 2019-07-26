@@ -41,14 +41,26 @@
                 <!-- Overlay Management -->
                 <Border Grid.Row="2" Padding="10"
                         Background="{StaticResource SideMenuBackgroundDarkBrushKey}">
-                    <!-- Overlay Checkbox -->
-                    <CheckBox Content="Show Overlay" 
-                              Style="{StaticResource OverlayCheckbox}"
-                              HorizontalAlignment="Left" 
-                              VerticalAlignment="Top"
-                              Checked="ShowOverlayCheckBox_Checked" 
-                              Unchecked="ShowOverlayCheckBox_Unchecked" 
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <!-- Overlay Checkbox -->
+                        <CheckBox Content="Show Overlay" Grid.Column="0"
+                                  Style="{StaticResource OverlayCheckbox}"
+                                  HorizontalAlignment="Left" 
+                                  VerticalAlignment="Top"
+                                  Checked="ShowOverlayCheckBox_Checked" 
+                                  Unchecked="ShowOverlayCheckBox_Unchecked" 
                               />
+                        <TextBlock Text="{StaticResource FontAwesomeQuestionCircleIcon}" Grid.Column="1"
+                                   ToolTip="TIP: To interact with the overlay, hold left ALT key."
+                                   FontFamily="{StaticResource FontAwesomeSolid}"
+                                   FontSize="18"
+                                   Foreground="{StaticResource SideMenuForegroundDarkBrushKey}"
+                                   VerticalAlignment="Center"/>
+                    </Grid>
                 </Border>
 
                 <!-- Footer -->
@@ -59,7 +71,7 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        
+
                         <!-- Author DONATE Link -->
                         <Button Content="DONATE" Grid.Column="0"
                                 Command="{Binding AuthorDonateLinkCommand}"
@@ -100,10 +112,10 @@
                         </Button>
                     </Grid>
                 </Border>
-                
+
             </Grid>
 
         </ControlTemplate>
     </UserControl.Template>
-    
+
 </UserControl>

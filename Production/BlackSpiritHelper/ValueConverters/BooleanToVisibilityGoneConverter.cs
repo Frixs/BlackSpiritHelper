@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlackSpiritHelper.Core;
+using System;
 using System.Globalization;
 using System.Windows;
 
@@ -11,10 +12,23 @@ namespace BlackSpiritHelper
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (parameter == null)
-                return (bool)value ? Visibility.Visible : Visibility.Collapsed;
+            bool val;
+            // Get value.
+            if (value.GetType().Equals(typeof(bool)))
+            {
+                val = (bool)value;
+            }
             else
-                return (bool)value ? Visibility.Collapsed : Visibility.Visible;
+            {
+                IoC.Logger.Log($"The target is in invalid type ({value.GetType().ToString()})!", LogLevel.Fatal);
+                throw new InvalidOperationException($"The target is in invalid type ({value.GetType().ToString()})!");
+            }
+
+            // Solve.
+            if (parameter == null)
+                return val ? Visibility.Visible : Visibility.Collapsed;
+            else
+                return val ? Visibility.Collapsed : Visibility.Visible;
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

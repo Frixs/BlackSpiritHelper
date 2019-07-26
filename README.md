@@ -1,4 +1,4 @@
-# Black Spirit Helper
+﻿# Black Spirit Helper
 
 <p align="center">
     <img src="Resources/logo_red_text_512.png" alt="Logo Black Spirit Helper" width="256" style="text-align:center;">
@@ -56,12 +56,13 @@ If you want, you can [Donate Me!](https://www.paypal.com/cgi-bin/webscr?cmd=_s-x
 [GNU General Public License v3.0](https://github.com/Frixs/BlackSpiritHelper/blob/master/LICENSE)
 
 ## TODO List
-- [ ] Boss Section.
+- [x] Boss Section.
 - [ ] Daily Check Section.
 - [ ] Voice Alerts.
 - [ ] Watchdog Section.
 
 ## Release History
 ```
+[26/07/2019] [1.0.2.0, BETA] - Overlay bug fixes. Added keypress to activate interaction with the overlay. Added group control buttons into overlay.
 [25/07/2019] [1.0.1.0, BETA] - The application launch!
 ```

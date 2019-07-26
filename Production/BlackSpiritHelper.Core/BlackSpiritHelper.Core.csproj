@@ -68,6 +68,7 @@
     <Compile Include="IoC\Base\ApplicationDataContent.cs" />
     <Compile Include="IoC\Base\IoC.cs" />
     <Compile Include="IoC\Interfaces\IFileManager.cs" />
+    <Compile Include="IoC\Interfaces\IMouseKeyHook.cs" />
     <Compile Include="IoC\Interfaces\ILogFactory.cs" />
     <Compile Include="IoC\Interfaces\IAudioFactory.cs" />
     <Compile Include="IoC\Interfaces\ITaskManager.cs" />
@@ -145,6 +146,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

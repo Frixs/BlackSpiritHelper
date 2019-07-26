@@ -31,7 +31,9 @@
 
     <system:String x:Key="FontAwesomeChatIcon">&#xf086;</system:String>
     <system:String x:Key="FontAwesomePlayIcon">&#xf04b;</system:String>
+    <system:String x:Key="FontAwesomePlayCircleIcon">&#xf144;</system:String>
     <system:String x:Key="FontAwesomePauseIcon">&#xf04c;</system:String>
+    <system:String x:Key="FontAwesomePauseCircleIcon">&#xf28b;</system:String>
     <system:String x:Key="FontAwesomeRestartIcon">&#xf01e;</system:String>
     <system:String x:Key="FontAwesomeSyncIcon">&#xf021;</system:String>
     <system:String x:Key="FontAwesomeCogIcon">&#xf013;</system:String>
@@ -45,6 +47,8 @@
     <system:String x:Key="FontAwesomeArrowLeftIcon">&#xf060;</system:String>
     <system:String x:Key="FontAwesomeLockIcon">&#xf023;</system:String>
     <system:String x:Key="FontAwesomeUnlockIcon">&#xf13e;</system:String>
+    <system:String x:Key="FontAwesomeQuestionCircleIcon">&#xf059;</system:String>
+    
     <system:String x:Key="FontAwesomeGitHubIcon">&#xf09b;</system:String>
     <system:String x:Key="FontAwesomeDiscordIcon">&#xf392;</system:String>
     <system:String x:Key="FontAwesomeRedditIcon">&#xf1a1;</system:String>

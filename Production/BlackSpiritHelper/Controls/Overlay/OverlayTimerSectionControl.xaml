@@ -10,7 +10,7 @@
              >
 
     <!-- Derived from OverlayWindow -->
-    <StackPanel Orientation="{Binding OverlayOrientation, FallbackValue=Horizontal}"
+    <StackPanel x:Name="OverlayTimerSection" Orientation="{Binding OverlayOrientation, FallbackValue=Horizontal}"
                 Margin="0">
 
         <!-- Group control stack panel -->
@@ -30,7 +30,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
 
-                    <ItemsControl ItemsSource="{Binding TimerList,
+                    <ItemsControl x:Name="TimerList" ItemsSource="{Binding TimerList,
                                                 Converter={local:TimerListOverlayOnlyConverter}}">
 
                         <ItemsControl.ItemsPanel>
@@ -43,6 +43,59 @@
                                 </StackPanel>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.Template>
+                            <ControlTemplate>
+
+                                <!-- Template -->
+                                <StackPanel Orientation="{Binding DataContext.OverlayOrientation, FallbackValue=Horizontal,
+                                              RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}">
+                                    <!-- Group Play/Pause Button -->
+                                    <Grid Width="{Binding Path=DataContext.OverlaySizeStyleValue, FallbackValue=50,
+                                        RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}"
+                                          Height="{Binding Path=DataContext.OverlaySizeStyleValue, FallbackValue=50,
+                                        RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}">
+                                        <!-- Play -->
+                                        <Button Command="{Binding PlayCommand}"
+                                                Content="{StaticResource FontAwesomePlayCircleIcon}"
+                                                Visibility="{Binding IsRunning,
+                                                             Converter={local:BooleanToVisibilityGoneConverter},
+                                                             ConverterParameter=True}"
+                                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                                Style="{StaticResource OverlayPlayButton}"
+                                                FontSize="22">
+                                        </Button>
+                                        <!-- Pause -->
+                                        <Button Command="{Binding PauseCommand}"
+                                                Content="{StaticResource FontAwesomePauseCircleIcon}"
+                                                Visibility="{Binding IsRunning,
+                                                             Converter={local:BooleanToVisibilityGoneConverter}}"
+                                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                                Style="{StaticResource OverlayPauseButton}"
+                                                FontSize="22">
+                                        </Button>
+
+                                        <!-- Grid Styles -->
+                                        <Grid.Style>
+                                            <Style TargetType="Grid">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ItemsSource.Count, ElementName=TimerList}" Value="{x:Null}">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding ItemsSource.Count, ElementName=TimerList}" Value="0">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Grid.Style>
+                                    </Grid>
+                                    <ItemsPresenter />
+                                </StackPanel>
+
+
+                            </ControlTemplate>
+                        </ItemsControl.Template>
 
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>

@@ -81,6 +81,9 @@
     <Color x:Key="SideMenuBackgroundDarkest">#232429</Color>
     <SolidColorBrush x:Key="SideMenuBackgroundDarkestBrushKey" Color="{StaticResource SideMenuBackgroundDarkest}" />
 
+    <Color x:Key="SideMenuForegroundDark">#17181B</Color>
+    <SolidColorBrush x:Key="SideMenuForegroundDarkBrushKey" Color="{StaticResource SideMenuForegroundDark}" />
+
     <Color x:Key="SideMenuForeground">#93979f</Color>
     <SolidColorBrush x:Key="SideMenuForegroundBrushKey" Color="{StaticResource SideMenuForeground}" />
 
@@ -308,7 +311,33 @@
 
     <Color x:Key="RegularDonateButtonAction">#000000</Color>
     <SolidColorBrush x:Key="RegularDonateButtonActionBrushKey" Color="{StaticResource RegularDonateButtonAction}" />
-    
+
+    <!-- Overlay Button - Play -->
+    <Color x:Key="OverlayPlayButtonBackground">#00000000</Color>
+    <SolidColorBrush x:Key="OverlayPlayButtonBackgroundBrushKey" Color="{StaticResource OverlayPlayButtonBackground}" />
+
+    <Color x:Key="OverlayPlayButtonForeground">#3Fec1e24</Color>
+    <SolidColorBrush x:Key="OverlayPlayButtonForegroundBrushKey" Color="{StaticResource OverlayPlayButtonForeground}" />
+
+    <Color x:Key="OverlayPlayButtonHover">#B62125</Color>
+    <SolidColorBrush x:Key="OverlayPlayButtonHoverBrushKey" Color="{StaticResource OverlayPlayButtonHover}" />
+
+    <Color x:Key="OverlayPlayButtonAction">#8A1C1F</Color>
+    <SolidColorBrush x:Key="OverlayPlayButtonActionBrushKey" Color="{StaticResource OverlayPlayButtonAction}" />
+
+    <!-- Overlay Button - Pause -->
+    <Color x:Key="OverlayPauseButtonBackground">#00000000</Color>
+    <SolidColorBrush x:Key="OverlayPauseButtonBackgroundBrushKey" Color="{StaticResource OverlayPauseButtonBackground}" />
+
+    <Color x:Key="OverlayPauseButtonForeground">#3F2FB018</Color>
+    <SolidColorBrush x:Key="OverlayPauseButtonForegroundBrushKey" Color="{StaticResource OverlayPauseButtonForeground}" />
+
+    <Color x:Key="OverlayPauseButtonHover">#257516</Color>
+    <SolidColorBrush x:Key="OverlayPauseButtonHoverBrushKey" Color="{StaticResource OverlayPauseButtonHover}" />
+
+    <Color x:Key="OverlayPauseButtonAction">#1D5712</Color>
+    <SolidColorBrush x:Key="OverlayPauseButtonActionBrushKey" Color="{StaticResource OverlayPauseButtonAction}" />
+
     <!-- Overlay Checkbox -->
     <Color x:Key="OverlayCheckboxBorder">#232429</Color>
     <SolidColorBrush x:Key="OverlayCheckboxBorderBrushKey" Color="{StaticResource OverlayCheckboxBorder}" />

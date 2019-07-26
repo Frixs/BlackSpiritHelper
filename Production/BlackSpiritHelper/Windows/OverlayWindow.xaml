@@ -73,25 +73,22 @@
 
                         <!-- Overlay Object Item Wrapper -->
                         <Button Margin="15"
-                                Padding="0"
-                            >
+                                Padding="0">
 
                             <!-- Content -->
-                            <StackPanel Orientation="{Binding OverlayOrientation, FallbackValue=Horizontal}"
+                            <StackPanel x:Name="OverlayContentWrapper" Orientation="{Binding OverlayOrientation, FallbackValue=Horizontal}"
                                         Width="{Binding OverlaySizeStyleWidthValue, FallbackValue=Auto}" 
                                         Height="{Binding OverlaySizeStyleHeightValue, FallbackValue=50}"
                                         MinWidth="{Binding OverlaySizeStyleValue, FallbackValue=50}"
                                         MinHeight="{Binding OverlaySizeStyleValue, FallbackValue=50}"
-                                        Background="{StaticResource RedBrushKey}"
-                                    >
+                                        SizeChanged="OverlayContentWrapper_SizeChanged">
 
                                 <!-- Content - Instances of overlay representation -->
                                 
-                                <!-- Timer -->
+                                <!-- Timer section -->
                                 <local:OverlayTimerSectionControl Width="{Binding OverlaySizeStyleWidthValue, FallbackValue=Auto}" 
                                                                   Height="{Binding OverlaySizeStyleHeightValue, FallbackValue=50}"
                                                                   />
-
                             </StackPanel>
 
                             <!-- Overlay Object Drop Shadow -->
