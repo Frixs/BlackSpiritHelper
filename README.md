@@ -35,8 +35,7 @@ It offers to you to create multiple groups with multiple timers in each. You can
 
 ## Installation
 #### Requirements
-- Windows 10  
-    - *I have not tested older Windows OS.*
+- **Windows**: .NET 4.7.2+
 
 #### Installation process
 1. Download installer -> [setup.exe](Release/setup.exe?raw=true).
