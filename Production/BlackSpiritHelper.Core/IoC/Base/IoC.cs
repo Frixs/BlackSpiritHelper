@@ -19,42 +19,42 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// A shortcut to access the <see cref="BlackSpiritHelper.Core.Properties.Settings"/>.
         /// </summary>
-        public static BlackSpiritHelper.Core.Properties.Settings SettingsStorage => IoC.Get<BlackSpiritHelper.Core.Properties.Settings>();
+        public static BlackSpiritHelper.Core.Properties.Settings SettingsStorage => Get<BlackSpiritHelper.Core.Properties.Settings>();
 
         /// <summary>
         /// A shortcut to access the <see cref="ApplicationViewModel"/>.
         /// </summary>
-        public static ApplicationViewModel Application => IoC.Get<ApplicationViewModel>();
+        public static ApplicationViewModel Application => Get<ApplicationViewModel>();
 
         /// <summary>
         /// A shortcut to access the <see cref="IUIManager"/>.
         /// </summary>
-        public static IUIManager UI => IoC.Get<IUIManager>();
+        public static IUIManager UI => Get<IUIManager>();
 
         /// <summary>
         /// A shortcut to access the <see cref="ILogFactory"/>.
         /// </summary>
-        public static ILogFactory Logger => IoC.Get<ILogFactory>();
+        public static ILogFactory Logger => Get<ILogFactory>();
 
         /// <summary>
         /// A shortcut to access the <see cref="IFileManager"/>.
         /// </summary>
-        public static IFileManager File => IoC.Get<IFileManager>();
+        public static IFileManager File => Get<IFileManager>();
 
         /// <summary>
         /// A shortcut to access the <see cref="ITaskManager"/>.
         /// </summary>
-        public static ITaskManager Task => IoC.Get<ITaskManager>();
+        public static ITaskManager Task => Get<ITaskManager>();
 
         /// <summary>
         /// A shortcut to access the <see cref="IAudioFactory"/>.
         /// </summary>
-        public static IAudioFactory Audio => IoC.Get<IAudioFactory>();
+        public static IAudioFactory Audio => Get<IAudioFactory>();
 
         /// <summary>
         /// A shortcut to access the <see cref="ApplicationDataContent"/>.
         /// </summary>
-        public static ApplicationDataContent DataContent => IoC.Get<ApplicationDataContent>();
+        public static ApplicationDataContent DataContent => Get<ApplicationDataContent>();
 
         #endregion
 
