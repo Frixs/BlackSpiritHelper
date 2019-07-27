@@ -39,7 +39,7 @@
                 <!-- Run the app As Administrator -->
                 <CheckBox IsChecked="{Binding ForceToRunAsAdministrator}" Margin="0 0 0 30"
                           Command="{Binding ForceToRunAsAdministratorCommand}"
-                          Content="Run the application As Administrator."
+                          Content="Force to run the application As Administrator."
                           HorizontalAlignment="Center"/>
                 
                 <!-- Audio Alert Level -->

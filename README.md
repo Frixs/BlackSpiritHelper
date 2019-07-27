@@ -63,6 +63,7 @@ If you want, you can [Donate Me!](https://www.paypal.com/cgi-bin/webscr?cmd=_s-x
 
 ## Release History
 ```
+[26/07/2019] [1.0.2.1, BETA] - Added option to force Administrator Privileges. See, for more info: Wiki - How to run the application As Administrator.
 [26/07/2019] [1.0.2.0, BETA] - Overlay bug fixes. Added keypress to activate interaction with the overlay. Added group control buttons into overlay.
 [25/07/2019] [1.0.1.0, BETA] - The application launch!
 ```
