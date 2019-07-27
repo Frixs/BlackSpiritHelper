@@ -43,6 +43,7 @@
       <HintPath>..\BlackSpiritHelper\packages\PropertyChanged.Fody.3.0.1\lib\net452\PropertyChanged.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -90,6 +91,7 @@
     <Compile Include="Audio\Implementation\AudioPack.cs" />
     <Compile Include="Audio\Implementation\BaseAudioFactory.cs" />
     <Compile Include="Audio\Implementation\BaseAudioManager.cs" />
+    <Compile Include="Settings\CustomSettingsProvider.cs" />
     <Compile Include="Task\TaskManager.cs" />
     <Compile Include="Utilities\EnumExtensionMethods.cs" />
     <Compile Include="Utilities\StringUtils.cs" />

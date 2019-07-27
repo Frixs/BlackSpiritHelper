@@ -68,7 +68,7 @@ namespace BlackSpiritHelper.Core
         {
             // Bind settings storage.
             Kernel.Bind<BlackSpiritHelper.Core.Properties.Settings>().ToConstant(BlackSpiritHelper.Core.Properties.Settings.Default);
-
+            
             // Bind all required view models.
             BindViewModels();
         }

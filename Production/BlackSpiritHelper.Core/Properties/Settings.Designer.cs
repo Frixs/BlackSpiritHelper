@@ -24,6 +24,7 @@ namespace BlackSpiritHelper.Core.Properties {
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsProviderAttribute(typeof(BlackSpiritHelper.Core.CustomSettingsProvider))]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public byte LastOpenedPage {
@@ -36,6 +37,7 @@ namespace BlackSpiritHelper.Core.Properties {
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsProviderAttribute(typeof(BlackSpiritHelper.Core.CustomSettingsProvider))]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public global::BlackSpiritHelper.Core.TimerDesignModel TimerDesignModel {
             get {
@@ -47,6 +49,7 @@ namespace BlackSpiritHelper.Core.Properties {
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsProviderAttribute(typeof(BlackSpiritHelper.Core.CustomSettingsProvider))]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public global::BlackSpiritHelper.Core.PreferencesDesignModel PreferencesDesignModel {
             get {
@@ -58,6 +61,7 @@ namespace BlackSpiritHelper.Core.Properties {
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsProviderAttribute(typeof(BlackSpiritHelper.Core.CustomSettingsProvider))]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public global::BlackSpiritHelper.Core.OverlayDesignModel OverlayDesignModel {
             get {

@@ -3,7 +3,6 @@ using Microsoft.Win32;
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Net;
 using System.Reflection;
 using System.Windows;
 using System.Deployment.Application;
@@ -64,12 +63,15 @@ namespace BlackSpiritHelper
             OnDeploymentSetup();
 
             // Check for administrator privileges.
-            if (IoC.DataContent.PreferencesDesignModel.ForceToRunAsAdministrator && !IsRunAsAdministrator() && !Debugger.IsAttached)
+            if (IoC.DataContent.PreferencesDesignModel.ForceToRunAsAdministrator 
+                && !IsRunAsAdministrator()
+                && !Debugger.IsAttached
+                )
             {
                 RunAsAdministrator();
                 return;
             }
-
+            
             // Log it.
             IoC.Logger.Log("Application starting up...", LogLevel.Info);
 

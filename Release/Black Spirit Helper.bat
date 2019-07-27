@@ -1,0 +1,1 @@
+start "Start Black Spirit Helper" "C:\Users\This\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Tomas Frixs\Black Spirit Helper.appref-ms"
