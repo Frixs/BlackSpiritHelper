@@ -7,6 +7,7 @@ using System.Net;
 using System.Reflection;
 using System.Windows;
 using System.Deployment.Application;
+using System.Security.Principal;
 
 namespace BlackSpiritHelper
 {
@@ -15,6 +16,15 @@ namespace BlackSpiritHelper
     /// </summary>
     public partial class App : Application
     {
+        #region Private Members
+
+        /// <summary>
+        /// Says if the application is going to restart in order to achieve administrator privileges.
+        /// </summary>
+        private bool mIsRestartingProcess = false;
+
+        #endregion
+
         #region Dispatcher Unhandled Exception
 
         /// <summary>
@@ -53,15 +63,19 @@ namespace BlackSpiritHelper
             // Setup on application deployment.
             OnDeploymentSetup();
 
+            // Check for administrator privileges.
+            if (IoC.DataContent.PreferencesDesignModel.ForceToRunAsAdministrator && !IsRunAsAdministrator() && !Debugger.IsAttached)
+            {
+                RunAsAdministrator();
+                return;
+            }
+
             // Log it.
             IoC.Logger.Log("Application starting up...", LogLevel.Info);
 
             // Show the main window.
             Current.MainWindow = new MainWindow();
             Current.MainWindow.Show();
-
-            // Custom check for application available updates.
-            //CheckForUpdates();
         }
 
         /// <summary>
@@ -74,8 +88,9 @@ namespace BlackSpiritHelper
             // Dispose.
             IoC.Get<IMouseKeyHook>().Dispose();
 
-            // Save data before exiting application.
-            IoC.DataContent.SaveUserData();
+            if (!mIsRestartingProcess)
+                // Save data before exiting application.
+                IoC.DataContent.SaveUserData();
         }
 
         #endregion
@@ -135,67 +150,46 @@ namespace BlackSpiritHelper
         }
 
         /// <summary>
-        /// Checks if a new version of the SW is available.
+        /// Check if the application is running As Administrator or not.
         /// </summary>
-        private void CheckForUpdates()
+        /// <returns></returns>
+        private bool IsRunAsAdministrator()
         {
-            string currVersion = IoC.Application.ApplicationVersion;
+            var wi = WindowsIdentity.GetCurrent();
+            var wp = new WindowsPrincipal(wi);
 
-            try
-            {
-                var webRequest = WebRequest.Create(@"https://raw.githubusercontent.com/Frixs/BlackSpiritHelper/master/Release/latest_version.txt");
-                using (var response = webRequest.GetResponse())
-                using (var content = response.GetResponseStream())
-                using (var reader = new StreamReader(content))
-                {
-                    var strContent = reader.ReadLine();
-
-                    // New version available.
-                    if (IsVersionNewer(strContent))
-                    {
-                        IoC.UI.ShowMessage(new MessageBoxDialogViewModel
-                        {
-                            Caption = "New version!",
-                            Message = $"New version is available! {Environment.NewLine}Would you like to download new version now?",
-                            Button = MessageBoxButton.YesNo,
-                            Icon = MessageBoxImage.Information,
-                            YesAction = delegate { Process.Start("https://github.com/Frixs/BlackSpiritHelper#installation"); }
-                        });
-                    }
-                }
-            }
-            catch (WebException)
-            {
-                // Internet error.
-            }
+            return wp.IsInRole(WindowsBuiltInRole.Administrator);
         }
 
         /// <summary>
-        /// Check if there is newer version of the application.
+        /// Run the application As Administrator.
         /// </summary>
-        /// <param name="newVersion"></param>
-        /// <returns></returns>
-        private bool IsVersionNewer(string newVersion)
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RunAsAdministrator()
         {
-            string[] newVersionNumbers = newVersion.Split('.');
-            string[] currVersionNumbers = IoC.Application.ApplicationVersion.Split('.');
+            // It is not possible to launch a ClickOnce app as administrator directly, so instead we launch the app as administrator in a new process.
+            var processInfo = new ProcessStartInfo(Assembly.GetExecutingAssembly().CodeBase);
 
-            int newVersionNumber, currVersionNumber;
+            // The following properties run the new process as administrator.
+            processInfo.UseShellExecute = true;
+            processInfo.Verb = "runas";
 
-            for (var i = 0; i < newVersionNumbers.Length; i++)
+            // Start the new process.
+            try
             {
-                if (int.TryParse(newVersionNumbers[i], out newVersionNumber) && int.TryParse(currVersionNumbers[i], out currVersionNumber))
-                {
-                    if (newVersionNumber > currVersionNumber)
-                        return true;
-                }
-                else
-                {
-                    return false;
-                }
+                Process.Start(processInfo);
+                mIsRestartingProcess = true;
+            }
+            catch (Exception)
+            {
+                // The user did not allow the application to run as administrator.
+                MessageBox.Show($"Sorry, this application must be run As Administrator in order to interact with the overlay while you are playing your game.{Environment.NewLine}Your computer is not allowing to start the application As Administrator.");
+                return;
             }
 
-            return false;
+            // Shut down the current process.
+            Current.Shutdown();
         }
 
         /// <summary>
@@ -205,7 +199,7 @@ namespace BlackSpiritHelper
         {
             if (!ApplicationDeployment.IsNetworkDeployed || !ApplicationDeployment.CurrentDeployment.IsFirstRun)
                 return;
-
+            
             // Only run this code if it is ClickOnce's application and if the application runs for the first time (condition above).
 
             // Set the application icon on the first time deployment only.

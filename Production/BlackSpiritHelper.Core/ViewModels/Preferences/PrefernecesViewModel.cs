@@ -20,6 +20,11 @@ namespace BlackSpiritHelper.Core
         public bool RunOnStartup { get; set; } = false;
 
         /// <summary>
+        /// Run the application As Administrator.
+        /// </summary>
+        public bool ForceToRunAsAdministrator { get; set; } = false;
+
+        /// <summary>
         /// RunOnStartup Flag for locking.
         /// </summary>
         [XmlIgnore]
@@ -91,6 +96,12 @@ namespace BlackSpiritHelper.Core
         public ICommand RunOnStartUpCheckboxCommand { get; set; }
 
         /// <summary>
+        /// The command to set run the application as administrator.
+        /// </summary>
+        [XmlIgnore]
+        public ICommand ForceToRunAsAdministratorCommand { get; set; }
+
+        /// <summary>
         /// The command to reset overlay position.
         /// </summary>
         [XmlIgnore]
@@ -125,6 +136,7 @@ namespace BlackSpiritHelper.Core
         private void CreateCommands()
         {
             RunOnStartUpCheckboxCommand = new RelayCommand(async () => await RunOnStartUpCheckboxCommandMethodAsync());
+            ForceToRunAsAdministratorCommand = new RelayCommand(async () => await ForceToRunAsAdministratorAsync());
             ResetOverlayPositionCommand = new RelayCommand(async () => await ResetOverlayPositionAsync());
             ExportLogFileCommand = new RelayCommand(async () => await ExportLogAsync());
         }
@@ -159,6 +171,27 @@ namespace BlackSpiritHelper.Core
                     else
                         IoC.Logger.Log($"Unable to unset the application start on system startup.{Environment.NewLine}{ex.Message}", LogLevel.Error);
                 }
+            });
+        }
+
+        /// <summary>
+        /// Set to run the application As Administrator.
+        /// </summary>
+        /// <returns></returns>
+        private async Task ForceToRunAsAdministratorAsync()
+        {
+            if (!ForceToRunAsAdministrator)
+            {
+                await Task.Delay(1);
+                return;
+            }
+
+            await IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+            {
+                Caption = "Restart the application.",
+                Message = $"In order to take an effect, you need to restart the application.",
+                Button = System.Windows.MessageBoxButton.OK,
+                Icon = System.Windows.MessageBoxImage.Information,
             });
         }
 

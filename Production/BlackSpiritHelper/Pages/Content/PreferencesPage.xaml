@@ -36,6 +36,12 @@
                           Content="Run the application when my computer starts."
                           HorizontalAlignment="Center"/>
 
+                <!-- Run the app As Administrator -->
+                <CheckBox IsChecked="{Binding ForceToRunAsAdministrator}" Margin="0 0 0 30"
+                          Command="{Binding ForceToRunAsAdministratorCommand}"
+                          Content="Run the application As Administrator."
+                          HorizontalAlignment="Center"/>
+                
                 <!-- Audio Alert Level -->
                 <StackPanel Margin="0 0 0 30" HorizontalAlignment="Center">
                     <TextBlock Text="Audio Alert Level"
