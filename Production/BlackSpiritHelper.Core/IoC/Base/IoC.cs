@@ -1,6 +1,6 @@
 ﻿using Ninject;
-using System;
-using System.Diagnostics;
+using System.Collections.Generic;
+using System.Windows;
 
 namespace BlackSpiritHelper.Core
 {
@@ -64,11 +64,12 @@ namespace BlackSpiritHelper.Core
         /// Sets up the IoC container, binds all information required and is ready for use.
         /// NOTE: Must be called as soon as your application starts up to ensure all services can be found.
         /// </summary>
-        public static void Setup()
+        /// <param name="args"></param>
+        public static void Setup(Dictionary<string, string> args)
         {
             // Bind settings storage.
             Kernel.Bind<BlackSpiritHelper.Core.Properties.Settings>().ToConstant(BlackSpiritHelper.Core.Properties.Settings.Default);
-            
+
             // Bind all required view models.
             BindViewModels();
         }

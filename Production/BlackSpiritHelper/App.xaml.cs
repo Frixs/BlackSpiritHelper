@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Windows;
 using System.Deployment.Application;
 using System.Security.Principal;
+using System.Collections.Generic;
 
 namespace BlackSpiritHelper
 {
@@ -55,15 +56,15 @@ namespace BlackSpiritHelper
         {
             // Let the base application do what it needs.
             base.OnStartup(e);
-
+            
             // Configuration.
-            ApplicationSetup();
+            ApplicationSetup(CompileArguments(e.Args));
 
             // Setup on application deployment.
             OnDeploymentSetup();
 
             // Check for administrator privileges.
-            if (IoC.DataContent.PreferencesDesignModel.ForceToRunAsAdministrator 
+            if (IoC.DataContent.PreferencesDesignModel.ForceToRunAsAdministrator
                 && !IsRunAsAdministrator()
                 && !Debugger.IsAttached
                 )
@@ -71,7 +72,7 @@ namespace BlackSpiritHelper
                 RunAsAdministrator();
                 return;
             }
-            
+
             // Log it.
             IoC.Logger.Log("Application starting up...", LogLevel.Info);
 
@@ -93,6 +94,9 @@ namespace BlackSpiritHelper
             if (!mIsRestartingProcess)
                 // Save data before exiting application.
                 IoC.DataContent.SaveUserData();
+
+            // Dispose IoC kernel.
+            IoC.Kernel.Dispose();
         }
 
         #endregion
@@ -102,10 +106,11 @@ namespace BlackSpiritHelper
         /// <summary>
         /// Configures our application read for use.
         /// </summary>
-        private void ApplicationSetup()
+        /// <param name="args"></param>
+        private void ApplicationSetup(Dictionary<string, string> args)
         {
             // Setup IoC.
-            IoC.Setup();
+            IoC.Setup(args);
 
             #region Set Application Properties
             // Bind Executing Assembly.
@@ -201,7 +206,7 @@ namespace BlackSpiritHelper
         {
             if (!ApplicationDeployment.IsNetworkDeployed || !ApplicationDeployment.CurrentDeployment.IsFirstRun)
                 return;
-            
+
             // Only run this code if it is ClickOnce's application and if the application runs for the first time (condition above).
 
             // Set the application icon on the first time deployment only.
@@ -237,6 +242,36 @@ namespace BlackSpiritHelper
                 }
             }
             catch (Exception) { }
+        }
+
+        /// <summary>
+        /// Compile arguments into Dictionary.
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        private Dictionary<string, string> CompileArguments(string[] args)
+        {
+            Dictionary<string, string> d = new Dictionary<string, string>();
+
+            if (args.Length == 0)
+                return d;
+
+            string[] sParts;
+            foreach (string s in args)
+            {
+                sParts = s.Split('=');
+
+                // We want only named arguments.
+                if (sParts.Length <= 1)
+                    continue;
+
+                d.Add(
+                    sParts[0].Trim(), 
+                    sParts[1].Trim('"')
+                    );
+            }
+
+            return d;
         }
 
         #endregion
