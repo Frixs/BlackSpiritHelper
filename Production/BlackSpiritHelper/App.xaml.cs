@@ -21,7 +21,7 @@ namespace BlackSpiritHelper
         /// <summary>
         /// Says if the application is going to restart in order to achieve administrator privileges.
         /// </summary>
-        private bool mIsRestartingProcess = false;
+        private bool mIsRestartingProcessFlag = false;
 
         #endregion
 
@@ -91,7 +91,7 @@ namespace BlackSpiritHelper
             // Dispose.
             IoC.Get<IMouseKeyHook>().Dispose();
 
-            if (!mIsRestartingProcess)
+            if (!mIsRestartingProcessFlag)
                 // Save data before exiting application.
                 IoC.DataContent.SaveUserData();
 
@@ -116,10 +116,11 @@ namespace BlackSpiritHelper
             // Bind Executing Assembly.
             IoC.Application.ApplicationExecutingAssembly = Assembly.GetExecutingAssembly();
 
+            // TODO: Starting a new process for Administrator privileges stop behaving the application as ClickOnce so we do not have access to version.
             // Bind AssemblyInfo version.
             IoC.Application.ApplicationVersion = ApplicationDeployment.IsNetworkDeployed
                 ? ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString()
-                : FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion;
+                : (args.ContainsKey("Version") ? args["Version"] : FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion);
 
             // Bind AssemblyInfo copyright.
             IoC.Application.Copyright = FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).LegalCopyright;
@@ -182,11 +183,15 @@ namespace BlackSpiritHelper
             processInfo.UseShellExecute = true;
             processInfo.Verb = "runas";
 
+            processInfo.Arguments = "Version=" + (ApplicationDeployment.IsNetworkDeployed
+                ? ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString()
+                : FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion);
+
             // Start the new process.
             try
             {
                 Process.Start(processInfo);
-                mIsRestartingProcess = true;
+                mIsRestartingProcessFlag = true;
             }
             catch (Exception)
             {
