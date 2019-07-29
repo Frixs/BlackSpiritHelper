@@ -44,14 +44,17 @@
             // Preferences.
             PreferencesDesignModel = IoC.SettingsStorage.PreferencesDesignModel ?? PreferencesDesignModel.Instance;
             PreferencesDesignModel.Setup();
+            PreferencesDesignModel.SetDefaults();
 
             // Timer.
             TimerDesignModel = IoC.SettingsStorage.TimerDesignModel ?? TimerDesignModel.Instance;
             TimerDesignModel.Setup();
+            TimerDesignModel.SetDefaults();
 
             // Overlay.
             OverlayDesignModel = IoC.SettingsStorage.OverlayDesignModel ?? OverlayDesignModel.Instance;
             OverlayDesignModel.Setup();
+            OverlayDesignModel.SetDefaults();
         }
 
         #endregion

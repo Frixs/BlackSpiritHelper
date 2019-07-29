@@ -74,24 +74,19 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Timer time total.
         /// </summary>
-        private TimeSpan mTimeTotal;
-
-        /// <summary>
-        /// Time left to zero.
-        /// </summary>
-        private TimeSpan mTimeLeft;
+        private TimeSpan mTimeDuration;
 
         /// <summary>
         /// Countdown before timer starts total.
         /// </summary>
-        private TimeSpan mCountdownDurationTotal;
+        private TimeSpan mCountdownDuration;
 
         /// <summary>
         /// Indicates, the timer has loaded and <see cref="Setup"/> method has been called.
         /// If it is false. Setup has not been called and you can check other loading procedures.
         /// <see cref="Setup"/> doc for more info.
         /// </summary>
-        private bool mIsSetupDone = false;
+        private bool mIsSetupDoneFlag = false;
 
         /// <summary>
         /// Array of notification event fire record.
@@ -135,19 +130,16 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// Timer total time.
+        /// Set will set <see cref="TimeLeft"/> at the same value.
         /// </summary>
         [XmlIgnore]
         public TimeSpan TimeDuration
         {
-            get
-            {
-                return mTimeTotal;
-            }
+            get => mTimeDuration;
             set
             {
-                mTimeTotal = value;
-                TimeLeft = mTimeTotal;
-                UpdateTimeInUI(mTimeTotal);
+                mTimeDuration = value;
+                TimeLeft = mTimeDuration;
             }
         }
 
@@ -155,33 +147,17 @@ namespace BlackSpiritHelper.Core
         /// Helper for <see cref="TimeDuration"/>.
         /// It is used to set back the value on application load.
         /// </summary>
-        public long TimeTotalTicks
+        public long TimeDurationTicks
         {
-            get
-            {
-                return TimeDuration.Ticks;
-            }
-            set
-            {
-                TimeDuration = new TimeSpan(value);
-            }
+            get => mTimeDuration.Ticks;
+            set => mTimeDuration = new TimeSpan(value);
         }
 
         /// <summary>
         /// Time left to zero.
         /// </summary>
         [XmlIgnore]
-        public TimeSpan TimeLeft
-        {
-            get
-            {
-                return mTimeLeft;
-            }
-            private set
-            {
-                mTimeLeft = value;
-            }
-        }
+        public TimeSpan TimeLeft { get; private set; }
 
         /// <summary>
         /// Helper for <see cref="TimeLeft"/>.
@@ -189,18 +165,8 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public long TimeLeftTicks
         {
-            get
-            {
-                return TimeLeft.Ticks;
-            }
-            set
-            {
-                TimeLeft = new TimeSpan(value);
-
-                // Update time format on load (only if there is no live countdown).
-                if (CountdownLeft.TotalSeconds <= 0)
-                    UpdateTimeInUI(TimeLeft);
-            }
+            get => TimeLeft.Ticks;
+            set => TimeLeft = new TimeSpan(value);
         }
 
         /// <summary>
@@ -209,14 +175,11 @@ namespace BlackSpiritHelper.Core
         [XmlIgnore]
         public TimeSpan CountdownDuration
         {
-            get
-            {
-                return mCountdownDurationTotal;
-            }
+            get => mCountdownDuration;
             set
             {
-                mCountdownDurationTotal = value;
-                CountdownLeft = mCountdownDurationTotal;
+                mCountdownDuration = value;
+                CountdownLeft = mCountdownDuration;
             }
         }
 
@@ -226,8 +189,8 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public long CountdownDurationTotalTicks
         {
-            get => CountdownDuration.Ticks;
-            set => CountdownDuration = new TimeSpan(value);
+            get => mCountdownDuration.Ticks;
+            set => mCountdownDuration = new TimeSpan(value);
         }
 
         /// <summary>
@@ -242,18 +205,8 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public long CountdownLeftTicks
         {
-            get
-            {
-                return CountdownLeft.Ticks;
-            }
-            set
-            {
-                CountdownLeft = new TimeSpan(value);
-
-                // Update time format on load.
-                if (CountdownLeft.TotalSeconds > 0)
-                    UpdateTimeInUI(CountdownLeft);
-            }
+            get => CountdownLeft.Ticks;
+            set => CountdownLeft = new TimeSpan(value);
         }
 
         /// <summary>
@@ -367,9 +320,16 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public void Setup()
         {
-            if (mIsSetupDone)
+            if (mIsSetupDoneFlag)
                 return;
-            mIsSetupDone = true;
+            mIsSetupDoneFlag = true;
+
+            // Update time of countdown if the countdown is live.
+            if (CountdownLeft.TotalSeconds > 0)
+                UpdateTimeInUI(CountdownLeft);
+            // Update time if there is no live countdown.
+            else
+                UpdateTimeInUI(TimeLeft);
 
             // Update state.
             UpdateState(State);

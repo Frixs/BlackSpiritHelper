@@ -91,9 +91,16 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Setup on load.
+        /// Everythng you need to do after construction.
         /// </summary>
-        public override void Setup()
+        protected override void SetupMethod()
+        {
+        }
+
+        /// <summary>
+        /// Set default values into this instance.
+        /// </summary>
+        protected override void SetDefaultsMethod()
         {
         }
 

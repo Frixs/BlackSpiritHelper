@@ -95,15 +95,35 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Setup on load.
+        /// Everythng you need to do after construction.
         /// </summary>
-        public override void Setup()
+        protected override void SetupMethod()
         {
             // This is initialization setup after loading from user settings.
             // We need to run setup method manually.
             foreach (TimerGroupDataViewModel g in GroupList)
                 foreach (TimerItemDataViewModel t in g.TimerList)
                     t.Setup();
+        }
+
+        /// <summary>
+        /// Set default values into this instance.
+        /// </summary>
+        protected override void SetDefaultsMethod()
+        {
+            TimerGroupDataViewModel g = AddGroup("Default Group");
+            g.AddTimer(new TimerItemDataViewModel
+            {
+                GroupID = 0,
+                Title = "My First Timer",
+                IconTitleShortcut = "BSH",
+                IconBackgroundHEX = "820808",
+                TimeDuration = new TimeSpan(0, 1, 30),
+                CountdownDuration = TimeSpan.FromSeconds(3),
+                State = TimerState.Ready,
+                IsLoopActive = false,
+                ShowInOverlay = true,
+            });
         }
 
         #endregion
