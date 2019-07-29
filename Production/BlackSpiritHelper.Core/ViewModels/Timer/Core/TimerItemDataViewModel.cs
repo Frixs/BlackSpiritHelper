@@ -324,8 +324,11 @@ namespace BlackSpiritHelper.Core
                 return;
             mIsSetupDoneFlag = true;
 
-            // Update time of countdown if the countdown is live.
-            if (CountdownLeft.TotalSeconds > 0)
+            // Update time as placeholder, only in ready state.
+            if (State == TimerState.Ready)
+                UpdateTimeInUI(TimeDuration);
+            // In any other state, update time of countdown if the countdown is live.
+            else if (CountdownLeft.TotalSeconds > 0)
                 UpdateTimeInUI(CountdownLeft);
             // Update time if there is no live countdown.
             else

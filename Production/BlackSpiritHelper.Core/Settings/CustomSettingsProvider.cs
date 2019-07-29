@@ -6,6 +6,7 @@ using System.Xml.Linq;
 using System.IO;
 using System.Xml.Serialization;
 using System.Xml;
+using System.Diagnostics;
 
 namespace BlackSpiritHelper.Core
 {
@@ -50,7 +51,7 @@ namespace BlackSpiritHelper.Core
         {
             get
             {
-                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "BSH");
+                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ApplicationName.Split('.')[0]);
             }
         }
 
@@ -61,7 +62,10 @@ namespace BlackSpiritHelper.Core
         {
             get
             {
-                return Path.Combine(mUserConfigFolderPath, "user.config");
+                return Path.Combine(
+                    mUserConfigFolderPath, 
+                    Debugger.IsAttached ? "user.debug.config" : "user.config"
+                    );
             }
 
         }
@@ -81,14 +85,11 @@ namespace BlackSpiritHelper.Core
         #region Public Properties
 
         /// <summary>
-        /// Override. TODO: name
+        /// Override.
         /// </summary>
         public override string ApplicationName
         {
-            get
-            {
-                return /*IoC.Application.ApplicationExecutingAssembly.ManifestModule.Name;*/ System.Reflection.Assembly.GetExecutingAssembly().ManifestModule.Name;
-            }
+            get => System.Reflection.Assembly.GetExecutingAssembly().ManifestModule.Name;
             set
             {
                 // Do nothing.
