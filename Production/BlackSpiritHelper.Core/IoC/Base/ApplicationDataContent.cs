@@ -30,6 +30,7 @@
 
         /// <summary>
         /// Default constructor.
+        /// Call <see cref="Setup"/> method right after creating the instance.
         /// </summary>
         public ApplicationDataContent()
         {
@@ -42,12 +43,15 @@
         {
             // Preferences.
             PreferencesDesignModel = IoC.SettingsStorage.PreferencesDesignModel ?? PreferencesDesignModel.Instance;
+            PreferencesDesignModel.Setup();
 
             // Timer.
             TimerDesignModel = IoC.SettingsStorage.TimerDesignModel ?? TimerDesignModel.Instance;
+            TimerDesignModel.Setup();
 
             // Overlay.
             OverlayDesignModel = IoC.SettingsStorage.OverlayDesignModel ?? OverlayDesignModel.Instance;
+            OverlayDesignModel.Setup();
         }
 
         #endregion

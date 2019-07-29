@@ -226,6 +226,9 @@ namespace BlackSpiritHelper.Core
             if (!CanCreateNewTimer)
                 return false;
 
+            // Run setup if it has not run yet.
+            vm.Setup();
+
             // Add timer to the list.
             TimerList.Add(vm);
 

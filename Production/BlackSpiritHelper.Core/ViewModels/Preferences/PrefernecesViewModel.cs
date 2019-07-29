@@ -41,48 +41,6 @@ namespace BlackSpiritHelper.Core
         [XmlIgnore]
         public AudioAlertLevel[] AudioAlertLevelList { get; private set; } = (AudioAlertLevel[])Enum.GetValues(typeof(AudioAlertLevel));
 
-        /// <summary>
-        /// 1st notification time.
-        /// </summary>
-        public int TimerNotificationTime1 { get; set; } = 50;
-
-        /// <summary>
-        /// 1st notification time. Property to load value from user settings on application load.
-        /// </summary>
-        [XmlIgnore]
-        public double TimerNotificationTime1Value
-        {
-            get => TimerNotificationTime1;
-            set
-            {
-                if (IoC.DataContent.TimerDesignModel.IsRunning)
-                    return;
-
-                TimerNotificationTime1 = (int)value;
-            }
-        }
-
-        /// <summary>
-        /// 2nd notification time.
-        /// </summary>
-        public int TimerNotificationTime2 { get; set; } = 15;
-
-        /// <summary>
-        /// 2nd notification time. Property to load value from user settings on application load.
-        /// </summary>
-        [XmlIgnore]
-        public double TimerNotificationTime2Value
-        {
-            get => TimerNotificationTime2;
-            set
-            {
-                if (IoC.DataContent.TimerDesignModel.IsRunning)
-                    return;
-
-                TimerNotificationTime2 = (int)value;
-            }
-        }
-
         public override bool IsRunning => throw new NotImplementedException();
 
         #endregion
@@ -124,6 +82,13 @@ namespace BlackSpiritHelper.Core
         {
             // Create commands.
             CreateCommands();
+        }
+
+        /// <summary>
+        /// Setup on load.
+        /// </summary>
+        public override void Setup()
+        {
         }
 
         #endregion

@@ -169,9 +169,13 @@
                 <xctk:RangeSlider x:Name="TimerNotificationRangeSlider" Margin="0 0 0 5"
                                   Orientation="Horizontal"
                                   Minimum="6"
-                                  LowerValue="{Binding TimerNotificationTime2Value, Mode=TwoWay}" 
+                                  LowerValue="{Binding ApplicationDataContent.TimerDesignModel.TimerNotificationTime2Value, 
+                                               Mode=TwoWay,
+                                               Source={x:Static local:ViewModelLocator.Instance}}" 
                                   Maximum="59"
-                                  HigherValue="{Binding TimerNotificationTime1Value, Mode=TwoWay}"
+                                  HigherValue="{Binding ApplicationDataContent.TimerDesignModel.TimerNotificationTime1Value, 
+                                                Mode=TwoWay,
+                                                Source={x:Static local:ViewModelLocator.Instance}}"
                                   Step="1" />
                 <Grid Margin="0 0 0 50">
                     <Grid.ColumnDefinitions>

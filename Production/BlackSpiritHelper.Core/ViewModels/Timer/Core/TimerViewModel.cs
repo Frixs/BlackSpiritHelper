@@ -28,6 +28,48 @@ namespace BlackSpiritHelper.Core
         public ObservableCollection<TimerGroupDataViewModel> GroupList { get; set; }
 
         /// <summary>
+        /// 1st notification time.
+        /// </summary>
+        public int TimerNotificationTime1 { get; set; } = 50;
+
+        /// <summary>
+        /// 1st notification time. Property to load value from user settings on application load.
+        /// </summary>
+        [XmlIgnore]
+        public double TimerNotificationTime1Value
+        {
+            get => TimerNotificationTime1;
+            set
+            {
+                if (IsRunning)
+                    return;
+
+                TimerNotificationTime1 = (int)value;
+            }
+        }
+
+        /// <summary>
+        /// 2nd notification time.
+        /// </summary>
+        public int TimerNotificationTime2 { get; set; } = 15;
+
+        /// <summary>
+        /// 2nd notification time. Property to load value from user settings on application load.
+        /// </summary>
+        [XmlIgnore]
+        public double TimerNotificationTime2Value
+        {
+            get => TimerNotificationTime2;
+            set
+            {
+                if (IsRunning)
+                    return;
+
+                TimerNotificationTime2 = (int)value;
+            }
+        }
+
+        /// <summary>
         /// Says if you can create a new item. Limit check.
         /// </summary>
         [XmlIgnore]
@@ -40,7 +82,6 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public override bool IsRunning => GroupList.FirstOrDefault(o => o.IsRunning == true) == null ? false : true;
 
-
         #endregion
 
         #region Constructor
@@ -51,6 +92,18 @@ namespace BlackSpiritHelper.Core
         public TimerViewModel()
         {
             GroupList = new ObservableCollection<TimerGroupDataViewModel>();
+        }
+
+        /// <summary>
+        /// Setup on load.
+        /// </summary>
+        public override void Setup()
+        {
+            // This is initialization setup after loading from user settings.
+            // We need to run setup method manually.
+            foreach (TimerGroupDataViewModel g in GroupList)
+                foreach (TimerItemDataViewModel t in g.TimerList)
+                    t.Setup();
         }
 
         #endregion

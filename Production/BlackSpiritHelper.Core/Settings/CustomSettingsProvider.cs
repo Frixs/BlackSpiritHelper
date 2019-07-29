@@ -127,7 +127,7 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         public override SettingsPropertyValueCollection GetPropertyValues(SettingsContext context, SettingsPropertyCollection collection)
         {
-            // Load the file.
+            // Load all the values from the file.
             if (!mLoaded)
             {
                 mLoaded = true;
@@ -145,13 +145,15 @@ namespace BlackSpiritHelper.Core
 
                 // Need the type of the value for the strong typing.
                 var type = Type.GetType(setting.PropertyType.FullName);
-
+                
+                // Get value if already exists in the memory.
                 if (mSettingsDictionary.ContainsKey(setting.Name))
                 {
                     value.SerializedValue = mSettingsDictionary[setting.Name].value;
                     value.PropertyValue = Convert.ChangeType(mSettingsDictionary[setting.Name].value, type);
                 }
-                else // Use defaults in the case where there are no settings yet.
+                // Use defaults in the case where there are no settings yet.
+                else
                 {
                     value.SerializedValue = setting.DefaultValue;
                     value.PropertyValue = Convert.ChangeType(setting.DefaultValue, type);
@@ -207,14 +209,14 @@ namespace BlackSpiritHelper.Core
         #region Private Methods
 
         /// <summary>
-        /// Loads the values of the file into memory.
+        /// Loads all the values of the file into memory.
         /// </summary>
         private void LoadValuesFromFile()
         {
             if (!File.Exists(mUserConfigPath))
                 // If the config file is not where it's supposed to be, create a new one.
                 CreateEmptyConfig();
-            
+
             // Load the xml.
             var configXml = XDocument.Load(mUserConfigPath);
 
@@ -225,42 +227,49 @@ namespace BlackSpiritHelper.Core
             // Using "String" as default serializeAs.
             foreach (var element in settingElements)
             {
-                // Name.
-                string name = element.Attribute(NAME) == null ? string.Empty : element.Attribute(NAME).Value;
-
-                // SerializeAs.
-                string serializeAs = element.Attribute(SERIALIZE_AS) == null ? nameof(String) : element.Attribute(SERIALIZE_AS).Value;
-
-                // Value's type.
-                Type type = serializeAs.Equals(XML) ? Type.GetType(GetType().Namespace + "." + element.Element(VALUE).Descendants().First().Name.ToString()) : typeof(string);
-                
-                // Value.
-                object value;
-                // Deserialize Xml.
-                if (serializeAs.Equals(XML))
-                {
-                    XmlSerializer xs = new XmlSerializer(type);
-                    value = xs.DeserializeAsObject(element.Element(VALUE).Descendants().First().ToString());
-                    Console.WriteLine("xxx: " + value);
-                }
-                // Rest is string.
-                else
-                {
-                    value = element.Element(VALUE).Value ?? string.Empty;
-                }
-
-                // Create a struct with these properties.
-                var newSetting = new SettingStruct()
-                {
-                    name = name,
-                    serializeAs = serializeAs,
-                    type = type,
-                    value = value,
-                };
-
                 // Add the struct into our list of loaded settings.
-                mSettingsDictionary.Add(element.Attribute(NAME).Value, newSetting);
+                mSettingsDictionary.Add(element.Attribute(NAME).Value, InitValueFromFile(element));
             }
+        }
+
+        /// <summary>
+        /// Init a value from the file.
+        /// </summary>
+        /// <param name="element">Element where the value is stored.</param>
+        /// <returns></returns>
+        private SettingStruct InitValueFromFile(XElement element)
+        {
+            // Name.
+            string name = element.Attribute(NAME) == null ? string.Empty : element.Attribute(NAME).Value;
+
+            // SerializeAs.
+            string serializeAs = element.Attribute(SERIALIZE_AS) == null ? nameof(String) : element.Attribute(SERIALIZE_AS).Value;
+
+            // Value's type.
+            Type type = serializeAs.Equals(XML) ? Type.GetType(GetType().Namespace + "." + element.Element(VALUE).Descendants().First().Name.ToString()) : typeof(string);
+
+            // Value.
+            object value;
+            // Deserialize Xml.
+            if (serializeAs.Equals(XML))
+            {
+                XmlSerializer xs = new XmlSerializer(type);
+                value = xs.DeserializeAsObject(element.Element(VALUE).Descendants().First().ToString());
+            }
+            // Rest is string.
+            else
+            {
+                value = element.Element(VALUE).Value ?? string.Empty;
+            }
+
+            // Create a struct with these properties.
+            return new SettingStruct()
+            {
+                name = name,
+                serializeAs = serializeAs,
+                type = type,
+                value = value,
+            };
         }
 
         /// <summary>

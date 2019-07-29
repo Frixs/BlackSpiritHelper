@@ -11,5 +11,10 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         [XmlIgnore]
         public abstract bool IsRunning { get; }
+
+        /// <summary>
+        /// Setup on load.
+        /// </summary>
+        public abstract void Setup();
     }
 }

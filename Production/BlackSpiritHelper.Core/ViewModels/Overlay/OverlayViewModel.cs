@@ -90,6 +90,13 @@ namespace BlackSpiritHelper.Core
             CreateCommands();
         }
 
+        /// <summary>
+        /// Setup on load.
+        /// </summary>
+        public override void Setup()
+        {
+        }
+
         #endregion
 
         #region Command Methods

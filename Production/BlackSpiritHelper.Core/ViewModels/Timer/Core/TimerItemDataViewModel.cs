@@ -87,14 +87,11 @@ namespace BlackSpiritHelper.Core
         private TimeSpan mCountdownDurationTotal;
 
         /// <summary>
-        /// Countdown before timer starts.
+        /// Indicates, the timer has loaded and <see cref="Setup"/> method has been called.
+        /// If it is false. Setup has not been called and you can check other loading procedures.
+        /// <see cref="Setup"/> doc for more info.
         /// </summary>
-        private TimeSpan mCountdownLeft;
-
-        /// <summary>
-        /// Timer control.
-        /// </summary>
-        private TimerState mState = TimerState.None;
+        private bool mIsSetupDone = false;
 
         /// <summary>
         /// Array of notification event fire record.
@@ -229,31 +226,15 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public long CountdownDurationTotalTicks
         {
-            get
-            {
-                return CountdownDuration.Ticks;
-            }
-            set
-            {
-                CountdownDuration = new TimeSpan(value);
-            }
+            get => CountdownDuration.Ticks;
+            set => CountdownDuration = new TimeSpan(value);
         }
 
         /// <summary>
         /// Countdown before timer starts.
         /// </summary>
         [XmlIgnore]
-        public TimeSpan CountdownLeft
-        {
-            get
-            {
-                return mCountdownLeft;
-            }
-            private set
-            {
-                mCountdownLeft = value;
-            }
-        }
+        public TimeSpan CountdownLeft { get; private set; }
 
         /// <summary>
         /// Helper for <see cref="CountdownLeft"/>.
@@ -278,27 +259,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Timer control.
         /// </summary>
-        public TimerState State
-        {
-            get
-            {
-                return mState;
-            }
-            set
-            {
-                TimerState previousState = mState;
-
-                mState = value;
-
-                // Set the initial state parameters at the time of timer creation.
-                if (previousState == TimerState.None)
-                {
-                    UpdateState(value);
-                    // Set notification triggers.
-                    TimerSetNotificationEventTriggers(TimeLeft);
-                }
-            }
-        }
+        public TimerState State { get; set; } = TimerState.None;
 
         /// <summary>
         /// Says, if the timer is in infinite loop.
@@ -385,6 +346,10 @@ namespace BlackSpiritHelper.Core
 
         #region Constructor
 
+        /// <summary>
+        /// Default constructor.
+        /// <see cref="Setup"/> method should be called everytime after creation.
+        /// </summary>
         public TimerItemDataViewModel()
         {
             // Set the timer.
@@ -392,6 +357,25 @@ namespace BlackSpiritHelper.Core
 
             // Create commands.
             CreateCommands();
+        }
+
+        /// <summary>
+        /// Setup preparation for <see cref="DataContentBaseViewModel.Setup"/> method.
+        /// This should be called only once.
+        /// ---
+        /// Generally, things you cannot initialize while construction, e.g. loading data from <see cref="ApplicationDataContent"/>.
+        /// </summary>
+        public void Setup()
+        {
+            if (mIsSetupDone)
+                return;
+            mIsSetupDone = true;
+
+            // Update state.
+            UpdateState(State);
+
+            // Set notification triggers on load.
+            TimerSetNotificationEventTriggers(TimeLeft);
         }
 
         #endregion
@@ -582,10 +566,15 @@ namespace BlackSpiritHelper.Core
                     // Otherwise play the timer.
                     UpdateState(TimerState.Play);
             }
-            // Otherwise play the timer.
+            // Otherwise play the timer as usual.
             else
             {
-                UpdateState(TimerState.Play);
+                if (IsInCountdown)
+                    // Awake timer to countdown if it was performed.
+                    UpdateState(TimerState.Countdown);
+                else
+                    // Otherwise play the timer.
+                    UpdateState(TimerState.Play);
             }
 
             // Update IsRunning property of the group and timer component itself.
@@ -661,7 +650,7 @@ namespace BlackSpiritHelper.Core
             // ------------------------------
             // 1st Bracket.
             // ------------------------------
-            if (time.TotalSeconds > IoC.DataContent.PreferencesDesignModel.TimerNotificationTime1)
+            if (time.TotalSeconds > IoC.DataContent.TimerDesignModel.TimerNotificationTime1)
             {
                 // Time has changed, try to deactivate if the warning UI is running.
                 TimerTryToDeactivateWarningUI();
@@ -678,7 +667,7 @@ namespace BlackSpiritHelper.Core
             // ------------------------------
             // 2nd Bracket.
             // ------------------------------
-            if (time.TotalSeconds > IoC.DataContent.PreferencesDesignModel.TimerNotificationTime2)
+            if (time.TotalSeconds > IoC.DataContent.TimerDesignModel.TimerNotificationTime2)
             {
                 // Time has changed, try to deactivate if the warning UI is running.
                 TimerTryToDeactivateWarningUI();
@@ -730,8 +719,8 @@ namespace BlackSpiritHelper.Core
         {
             // User time brackets.
             int[] brackets = new int[3] {
-                IoC.DataContent.PreferencesDesignModel.TimerNotificationTime1,
-                IoC.DataContent.PreferencesDesignModel.TimerNotificationTime2,
+                IoC.DataContent.TimerDesignModel.TimerNotificationTime1,
+                IoC.DataContent.TimerDesignModel.TimerNotificationTime2,
                 0
             };
             
@@ -963,6 +952,10 @@ namespace BlackSpiritHelper.Core
 
                 // Update time in UI.
                 UpdateTimeInUI(TimeLeft);
+
+                // Update notification event triggers.
+                // We are modifying time, the triggers can trigger again.
+                TimerSetNotificationEventTriggers(TimeLeft);
             }
 
             await Task.Delay(1);
