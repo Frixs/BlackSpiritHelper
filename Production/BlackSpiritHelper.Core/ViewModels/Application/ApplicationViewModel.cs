@@ -97,7 +97,7 @@ namespace BlackSpiritHelper.Core
                 ? (ApplicationPage)Properties.Settings.Default.LastOpenedPage 
                 : ApplicationPage.Home;
 
-            SetWindowTitlePostfixOnly = CurrentPage > 0 ? CurrentPage.ToString() : "";
+            SetWindowTitlePostfixOnly = CurrentPage > 0 ? CurrentPage.GetDescription() : "";
         }
 
         #endregion
@@ -122,7 +122,7 @@ namespace BlackSpiritHelper.Core
 
             // Set window title page name.
             if ((int)page < LoadBackPageValueLimit)
-                SetWindowTitlePostfixOnly = (int)page > 0 ? page.ToString() : "";
+                SetWindowTitlePostfixOnly = (int)page > 0 ? page.GetDescription() : "";
         }
 
         #endregion

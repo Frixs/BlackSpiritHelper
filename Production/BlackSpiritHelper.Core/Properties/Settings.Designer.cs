@@ -12,7 +12,7 @@ namespace BlackSpiritHelper.Core.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.1.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.2.0.0")]
     public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -69,6 +69,18 @@ namespace BlackSpiritHelper.Core.Properties {
             }
             set {
                 this["OverlayDesignModel"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsProviderAttribute(typeof(BlackSpiritHelper.Core.CustomSettingsProvider))]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::BlackSpiritHelper.Core.ScheduleDesignModel ScheduleDesignModel {
+            get {
+                return ((global::BlackSpiritHelper.Core.ScheduleDesignModel)(this["ScheduleDesignModel"]));
+            }
+            set {
+                this["ScheduleDesignModel"] = value;
             }
         }
     }

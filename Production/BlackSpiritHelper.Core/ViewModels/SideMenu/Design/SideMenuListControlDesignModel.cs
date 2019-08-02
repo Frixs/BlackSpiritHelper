@@ -18,13 +18,13 @@ namespace BlackSpiritHelper.Core
             {
                 new SideMenuListItemControlViewModel
                 {
-                    Title = ApplicationPage.Boss.GetDescription(),
-                    PageEnum = ApplicationPage.Boss,
+                    Title = ApplicationPage.DailyCheck.GetDescription(),
+                    PageEnum = ApplicationPage.DailyCheck,
                 },
                 new SideMenuListItemControlViewModel
                 {
-                    Title = ApplicationPage.DailyCheck.GetDescription(),
-                    PageEnum = ApplicationPage.DailyCheck,
+                    Title = ApplicationPage.Schedule.GetDescription(),
+                    PageEnum = ApplicationPage.Schedule,
                 },
                 new SideMenuListItemControlViewModel
                 {

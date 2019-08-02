@@ -27,8 +27,8 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// The Boss page.
         /// </summary>
-        [Description("Boss")]
-        Boss = 3,
+        [Description("Schedule")]
+        Schedule = 3,
 
         /// <summary>
         /// The Daily Check page.

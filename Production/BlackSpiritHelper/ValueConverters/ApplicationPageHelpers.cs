@@ -28,8 +28,8 @@ namespace BlackSpiritHelper
                 case ApplicationPage.Watchdog:
                     return new WatchdogPage();
 
-                case ApplicationPage.Boss:
-                    return new BossPage();
+                case ApplicationPage.Schedule:
+                    return new SchedulePage();
 
                 case ApplicationPage.DailyCheck:
                     return new DailyCheckPage();
@@ -68,8 +68,8 @@ namespace BlackSpiritHelper
             if (page is WatchdogPage)
                 return ApplicationPage.Watchdog;
 
-            if (page is BossPage)
-                return ApplicationPage.Boss;
+            if (page is SchedulePage)
+                return ApplicationPage.Schedule;
 
             if (page is DailyCheckPage)
                 return ApplicationPage.DailyCheck;

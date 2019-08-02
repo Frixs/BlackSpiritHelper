@@ -60,6 +60,7 @@
     <Compile Include="Audio\Implementation\VoiceAudioManager.cs" />
     <Compile Include="Audio\Implementation\SoundAudioManager.cs" />
     <Compile Include="DataModels\ApplicationPage.cs" />
+    <Compile Include="DataModels\Region.cs" />
     <Compile Include="DataModels\OverlaySize.cs" />
     <Compile Include="Audio\Core\AudioType.cs" />
     <Compile Include="Audio\Core\AudioAlertLevel.cs" />
@@ -104,6 +105,8 @@
     <Compile Include="ValidationRules\Timer\BaseRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerTitleRule.cs" />
     <Compile Include="ViewModels\Application\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Schedule\ScheduleViewModel.cs" />
+    <Compile Include="ViewModels\Schedule\Design\ScheduleDesignModel.cs" />
     <Compile Include="ViewModels\DailyCheck\DailyCheckPageViewModel.cs" />
     <Compile Include="ViewModels\Overlay\Design\OverlayDesignModel.cs" />
     <Compile Include="ViewModels\Overlay\OverlayViewModel.cs" />
@@ -112,7 +115,7 @@
     <Compile Include="ViewModels\Base\DataContentBaseViewModel.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
     <Compile Include="ViewModels\Base\RelayParameterizedCommand.cs" />
-    <Compile Include="ViewModels\Boss\BossPageViewModel.cs" />
+    <Compile Include="ViewModels\Schedule\SchedulePageViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\MessageBoxDialogViewModel.cs" />
     <Compile Include="ViewModels\Preferences\PreferencesPageViewModel.cs" />
     <Compile Include="ViewModels\Preferences\PrefernecesViewModel.cs" />

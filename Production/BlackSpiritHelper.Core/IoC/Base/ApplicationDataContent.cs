@@ -15,14 +15,19 @@
         public PreferencesDesignModel PreferencesDesignModel { get; private set; }
 
         /// <summary>
-        /// Data structure for the overlay.
-        /// </summary>
-        public OverlayDesignModel OverlayDesignModel { get; private set; }
-
-        /// <summary>
         /// Data structure for timers with its groups.
         /// </summary>
         public TimerDesignModel TimerDesignModel { get; private set; }
+
+        /// <summary>
+        /// Data structure for schedule.
+        /// </summary>
+        public ScheduleDesignModel ScheduleDesignModel { get; private set; }
+
+        /// <summary>
+        /// Data structure for the overlay.
+        /// </summary>
+        public OverlayDesignModel OverlayDesignModel { get; private set; }
 
         #endregion
 
@@ -51,6 +56,11 @@
             TimerDesignModel.Setup();
             TimerDesignModel.SetDefaults();
 
+            // Schedule.
+            ScheduleDesignModel = IoC.SettingsStorage.ScheduleDesignModel ?? ScheduleDesignModel.Instance;
+            ScheduleDesignModel.Setup();
+            ScheduleDesignModel.SetDefaults();
+
             // Overlay.
             OverlayDesignModel = IoC.SettingsStorage.OverlayDesignModel ?? OverlayDesignModel.Instance;
             OverlayDesignModel.Setup();
@@ -69,7 +79,8 @@
             // Clear previously saved data, first.
             ClearSavedPreferences();
             ClearSavedTimerData();
-            ClearSavedOverlaySettings();
+            ClearSavedScheduleData();
+            ClearSavedOverlayData();
 
             // Clear saved data commit.
             IoC.SettingsStorage.Save();
@@ -78,7 +89,8 @@
             SaveApplicationData();
             SaveNewPreferences();
             SaveNewTimerData();
-            SaveNewOverlaySettings();
+            SaveNewScheduleData();
+            SaveNewOverlayData();
 
             // Save commit.
             IoC.SettingsStorage.Save();
@@ -152,7 +164,7 @@
         /// <summary>
         /// Save new overlay settings.
         /// </summary>
-        private void SaveNewOverlaySettings()
+        private void SaveNewOverlayData()
         {
             // Save new data.
             IoC.SettingsStorage.OverlayDesignModel = OverlayDesignModel;
@@ -161,10 +173,28 @@
         /// <summary>
         /// Clear saved overlay settings.
         /// </summary>
-        private void ClearSavedOverlaySettings()
+        private void ClearSavedOverlayData()
         {
             // Clear previous save.
             IoC.SettingsStorage.OverlayDesignModel = null;
+        }
+
+        /// <summary>
+        /// Save new overlay settings.
+        /// </summary>
+        private void SaveNewScheduleData()
+        {
+            // Save new data.
+            IoC.SettingsStorage.ScheduleDesignModel = ScheduleDesignModel;
+        }
+
+        /// <summary>
+        /// Clear saved Schedule settings.
+        /// </summary>
+        private void ClearSavedScheduleData()
+        {
+            // Clear previous save.
+            IoC.SettingsStorage.ScheduleDesignModel = null;
         }
 
         #endregion

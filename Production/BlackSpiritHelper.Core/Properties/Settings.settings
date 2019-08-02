@@ -14,5 +14,8 @@
     <Setting Name="OverlayDesignModel" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.OverlayDesignModel" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="ScheduleDesignModel" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.ScheduleDesignModel" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>
