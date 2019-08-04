@@ -60,7 +60,8 @@
     <Compile Include="Audio\Implementation\VoiceAudioManager.cs" />
     <Compile Include="Audio\Implementation\SoundAudioManager.cs" />
     <Compile Include="DataModels\ApplicationPage.cs" />
-    <Compile Include="DataModels\Region.cs" />
+    <Compile Include="DataModels\SchedulePredefinedItem.cs" />
+    <Compile Include="DataModels\RegionTimeZone.cs" />
     <Compile Include="DataModels\OverlaySize.cs" />
     <Compile Include="Audio\Core\AudioType.cs" />
     <Compile Include="Audio\Core\AudioAlertLevel.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Settings\CustomSettingsProvider.cs" />
     <Compile Include="Task\TaskManager.cs" />
     <Compile Include="Utilities\EnumExtensionMethods.cs" />
+    <Compile Include="Utilities\ObjectExtensions.cs" />
     <Compile Include="Utilities\StringUtils.cs" />
     <Compile Include="ValidationRules\Timer\TimerIconTitleShortcutRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerCountdownDurationRule.cs" />
@@ -105,6 +107,10 @@
     <Compile Include="ValidationRules\Timer\BaseRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerTitleRule.cs" />
     <Compile Include="ViewModels\Application\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Schedule\ScheduleItemDataViewModel.cs" />
+    <Compile Include="ViewModels\Schedule\ScheduleTemplateDataViewModel.cs" />
+    <Compile Include="ViewModels\Schedule\ScheduleTemplateDayTimeDataViewModel.cs" />
+    <Compile Include="ViewModels\Schedule\ScheduleTemplateItemDataViewModel.cs" />
     <Compile Include="ViewModels\Schedule\ScheduleViewModel.cs" />
     <Compile Include="ViewModels\Schedule\Design\ScheduleDesignModel.cs" />
     <Compile Include="ViewModels\DailyCheck\DailyCheckPageViewModel.cs" />

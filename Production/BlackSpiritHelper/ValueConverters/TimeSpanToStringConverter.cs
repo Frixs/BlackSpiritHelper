@@ -22,6 +22,10 @@ namespace BlackSpiritHelper
             {
                 return ts.ToString("hh':'mm':'ss");
             }
+            else if (parameter.Equals("hm"))
+            {
+                return ts.ToString("hh':'mm");
+            }
             else if (parameter.Equals("h*ms"))
             {
                 double n = Math.Floor(ts.TotalMinutes);

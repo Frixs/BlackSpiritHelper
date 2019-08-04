@@ -10,10 +10,88 @@
       Title="SchedulePage">
 
     <Grid>
-        <TextBlock Text="Content is not available yet." 
-                   FontSize="14"
-                   FontFamily="{StaticResource LatoLightItalic}"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"/>
+        <ItemsControl ItemsSource="{Binding ApplicationDataContent.ScheduleDesignModel.PredefinedTemplateList,
+                                    Source={x:Static local:ViewModelLocator.Instance}}">
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+
+                    <ItemsControl ItemsSource="{Binding SchedulePresenter}">
+
+                        <ItemsControl.Template>
+                            <ControlTemplate>
+
+                                <StackPanel Orientation="Vertical">
+                                    <Button Content="1" Command="{Binding Btn1Command}" Width="300" Padding="10" />
+                                    <Button Content="2" Command="{Binding Btn2Command}" Width="300" Padding="10" />
+                                    <ItemsPresenter />
+                                </StackPanel>
+
+                            </ControlTemplate>
+                        </ItemsControl.Template>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+
+                                <ItemsControl ItemsSource="{Binding TimeList}">
+
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                            </StackPanel>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+
+                                    <ItemsControl.Template>
+                                        <ControlTemplate>
+
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding DayOfWeek, Converter={local:ObjectToStringConverter}}" />
+                                                <ItemsPresenter />
+                                            </StackPanel>
+
+                                        </ControlTemplate>
+                                    </ItemsControl.Template>
+
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+
+                                            <ItemsControl ItemsSource="{Binding ItemList}">
+
+                                                <ItemsControl.Template>
+                                                    <ControlTemplate>
+
+                                                        <StackPanel Orientation="Vertical" Margin="5">
+                                                            <TextBlock Text="{Binding Time, Converter={local:TimeSpanToStringConverter}, ConverterParameter='hm'}" />
+                                                            <ItemsPresenter />
+                                                        </StackPanel>
+
+                                                    </ControlTemplate>
+                                                </ItemsControl.Template>
+
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+
+                                                        <TextBlock Text="X " />
+
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+
+                                            </ItemsControl>
+
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+
+                                </ItemsControl>
+
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+
+                    </ItemsControl>
+                    
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            
+        </ItemsControl>
     </Grid>
 </local:BasePage>

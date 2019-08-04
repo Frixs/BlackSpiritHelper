@@ -116,7 +116,6 @@ namespace BlackSpiritHelper
             // Bind Executing Assembly.
             IoC.Application.ApplicationExecutingAssembly = Assembly.GetExecutingAssembly();
 
-            // TODO: Starting a new process for Administrator privileges stop behaving the application as ClickOnce so we do not have access to version.
             // Bind AssemblyInfo version.
             IoC.Application.ApplicationVersion = ApplicationDeployment.IsNetworkDeployed
                 ? ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString()
