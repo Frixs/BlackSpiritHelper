@@ -23,7 +23,6 @@
 
                                 <StackPanel Orientation="Vertical">
                                     <Button Content="1" Command="{Binding Btn1Command}" Width="300" Padding="10" />
-                                    <Button Content="2" Command="{Binding Btn2Command}" Width="300" Padding="10" />
                                     <ItemsPresenter />
                                 </StackPanel>
 

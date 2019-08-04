@@ -89,7 +89,7 @@ namespace BlackSpiritHelper.Core
                             {
                                 new ScheduleTemplateDayTimeDataViewModel
                                 {
-                                    Time = new TimeSpan(9, 15, 0),
+                                    Time = new TimeSpan(8, 15, 0),
                                     ItemList = new ObservableCollection<string>
                                     {
                                         SchedulePredefinedItem.Kzarka.ToString(),

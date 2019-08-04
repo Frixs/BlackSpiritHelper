@@ -9,15 +9,24 @@ namespace BlackSpiritHelper.Core
     {
         #region Public Properties
 
+        /// <summary>
+        /// TODO comment.
+        /// </summary>
         [XmlIgnore]
         public TimeSpan Time { get; set; }
 
+        /// <summary>
+        /// TODO comment.
+        /// </summary>
         public long TimeTicks
         {
             get => Time.Ticks;
             set => Time = TimeSpan.FromTicks(value);
         }
 
+        /// <summary>
+        /// TODO comment.
+        /// </summary>
         public ObservableCollection<string> ItemList { get; set; }
 
         #endregion

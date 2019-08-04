@@ -42,8 +42,15 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         [XmlIgnore]
         public TimeSpan LocalTimeOffsetModifier { get; set; }
+
+        /// <summary>
+        /// TODO comment.
+        /// </summary>
         public long LocalTimeOffsetModifierTicks { get; set; }
 
+        /// <summary>
+        /// TODO IsRunning.
+        /// </summary>
         public override bool IsRunning => throw new System.NotImplementedException();
 
         #endregion

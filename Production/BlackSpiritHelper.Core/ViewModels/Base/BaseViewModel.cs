@@ -17,6 +17,7 @@ namespace BlackSpiritHelper.Core
         /// A global lock for property checks so prevent locking on different instances of expressions.
         /// Considering how fast this check will always be it isn't an issue to globally lock all callers.
         /// </summary>
+        [NonSerialized]
         protected object mPropertyValueCheckLock = new object();
 
         #endregion
@@ -24,6 +25,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// The event that is fired when any child property changes its value.
         /// </summary>
+        [field: NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
 
         /// <summary>

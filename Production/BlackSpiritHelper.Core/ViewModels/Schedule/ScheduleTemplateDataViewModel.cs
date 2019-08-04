@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +7,10 @@ using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
 {
+    /// <summary>
+    /// Template model for <see cref="ScheduleViewModel"/>.
+    /// TODO: Possible rework. We do not want to store copy of <see cref="Schedule"/> as <see cref="SchedulePresenter"/>.
+    /// </summary>
     public class ScheduleTemplateDataViewModel : BaseViewModel
     {
         #region Private Members
@@ -43,13 +46,31 @@ namespace BlackSpiritHelper.Core
             set
             {
                 mSchedule = value;
-
-                SchedulePresenter = Schedule.CopyObject<ObservableCollection<ScheduleTemplateDayDataViewModel>>();
+                SchedulePresenter = mSchedule;
             }
         }
 
         /// <summary>
-        /// Schedule.
+        /// TOOD comments
+        /// </summary>
+        [XmlIgnore]
+        public bool IsScheduleConverted { get; private set; } = false;
+
+        /// <summary>
+        /// TOOD comments
+        /// </summary>
+        [XmlIgnore]
+        public bool IsScheduleConvertedFlag { get; private set; } = false;
+
+        /// <summary>
+        /// TODO comment.
+        /// </summary>
+        [XmlIgnore]
+        public string ConvertedTimeZoneID { get; private set; } = null;
+
+        /// <summary>
+        /// Schedule presenter.
+        /// This is duplicate of <see cref="Schedule"/> due to we can set schedule to local and visa versa. We can modify it regardless <see cref="Schedule"/> which is going to be saved to user settings.
         /// </summary>
         [XmlIgnore]
         public ObservableCollection<ScheduleTemplateDayDataViewModel> SchedulePresenter { get; set; }
@@ -58,17 +79,8 @@ namespace BlackSpiritHelper.Core
 
         #region Commands
 
-        /// <summary>
-        /// TODO
-        /// </summary>
         [XmlIgnore]
         public ICommand Btn1Command { get; set; }
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        [XmlIgnore]
-        public ICommand Btn2Command { get; set; }
 
         #endregion
 
@@ -92,11 +104,44 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void CreateCommands()
         {
-            Btn1Command = new RelayCommand(async () => await Btn1Async());
-            Btn2Command = new RelayCommand(async () => await Btn2Async());
+            Btn1Command = new RelayCommand(async () => await ToggleScheduleTimeZoneViewAsync());
         }
 
-        private async Task Btn1Async()
+        #endregion
+
+
+        #region Private Methods
+
+        /// <summary>
+        /// Toggle converted mode of schedule with possibility to show user schedule in his local time (if he is not in the local zone).
+        /// </summary>
+        private async Task ToggleScheduleTimeZoneViewAsync()
+        {
+            await RunCommandAsync(() => IsScheduleConvertedFlag, async () =>
+            {
+                if (IsScheduleConverted)
+                {
+                    IsScheduleConverted = false;
+
+                    SchedulePresenter = null;
+                    SchedulePresenter = Schedule;
+                    await Task.Delay(1); //await ConvertScheduleToGivenTimeZoneAsync();
+                }
+                else
+                {
+                    IsScheduleConverted = true;
+                    // TODO: !
+                    SchedulePresenter = Schedule.CopyObject<ObservableCollection<ScheduleTemplateDayDataViewModel>>();
+                    await ConvertScheduleToLocalAsync();
+                }
+            });
+        }
+
+        /// <summary>
+        /// Convert schedule to user local time zone.
+        /// </summary>
+        /// <returns></returns>
+        private async Task ConvertScheduleToLocalAsync()
         {
             for (int iDay = 0; iDay < Schedule.Count; iDay++)
             {
@@ -120,10 +165,12 @@ namespace BlackSpiritHelper.Core
                         TimeZoneInfo.FindSystemTimeZoneById(TimeZone.GetDescription())
                         );
 
-                    // TODO.
+                    // TODO. comments
 
                     var timePresenter = SchedulePresenter[iDay].TimeList.First(o => o.Time.Ticks == time.Time.Ticks);
+
                     timePresenter.Time = remoteDate.TimeOfDay;
+
                     // Shuffle.
                     if (remoteDate.DayOfWeek != currDay.DayOfWeek)
                     {
@@ -134,14 +181,66 @@ namespace BlackSpiritHelper.Core
                 }
             }
 
+            // Set to let know which time zone we are going to convert in.
+            ConvertedTimeZoneID = TimeZoneInfo.Local.Id;
+
             await Task.Delay(1);
         }
 
         /// <summary>
-        /// <see cref="DayOfWeek"/>. TODO
+        /// Convert schedule to given time zone.
         /// </summary>
-        /// <param name="wanted"></param>
-        /// <param name="current"></param>
+        /// <returns></returns>
+        private async Task ConvertScheduleToGivenTimeZoneAsync()
+        {
+            for (int iDay = SchedulePresenter.Count - 1; iDay > -1; iDay--)
+            {
+                var currDay = SchedulePresenter[iDay];
+
+                for (int iTime = currDay.TimeList.Count - 1; iTime > -1; iTime--)
+                {
+                    var time = SchedulePresenter[iDay].TimeList[iTime];
+
+                    DateTime todayDate = DateTime.Today;
+                    DateTime.SpecifyKind(todayDate, DateTimeKind.Unspecified);
+
+                    // Get offset.
+                    DateTimeOffset currDate = new DateTimeOffset(todayDate);
+                    // Set offset to appropriate day.
+                    currDate = currDate.AddDays(
+                        GetDayDifferenceOffset((int)currDay.DayOfWeek, (int)todayDate.DayOfWeek)
+                        );
+                    currDate = currDate.AddHours(time.Time.Hours).AddMinutes(time.Time.Minutes);
+                    // Pretend, today's date is remote date and convert it into UTC.
+                    DateTime localDate = TimeZoneInfo.ConvertTimeToUtc(currDate.DateTime, TimeZoneInfo.FindSystemTimeZoneById(TimeZone.GetDescription()));
+                    // Convert pretended date to our local timezone.
+                    localDate = TimeZoneInfo.ConvertTimeFromUtc(localDate, TimeZoneInfo.FindSystemTimeZoneById(ConvertedTimeZoneID));
+
+                    // TODO. comments
+
+                    time.Time = localDate.TimeOfDay;
+
+                    // Shuffle.
+                    if (localDate.DayOfWeek != currDay.DayOfWeek)
+                    {
+                        SchedulePresenter[iDay].TimeList.Remove(time);
+                        SchedulePresenter.First(o => o.DayOfWeek == localDate.DayOfWeek).TimeList.Add(time);
+                    }
+
+                }
+            }
+
+            // Unset time zone ID. We are going back to given time zone.
+            ConvertedTimeZoneID = null;
+
+            await Task.Delay(1);
+        }
+
+        /// <summary>
+        /// Get offset difference between two given <see cref="DayOfWeek"/>.
+        /// </summary>
+        /// <param name="wanted">The one which we want to go.</param>
+        /// <param name="current">The one where we are currently at.</param>
         /// <returns></returns>
         private int GetDayDifferenceOffset(int wanted, int current)
         {
@@ -152,13 +251,6 @@ namespace BlackSpiritHelper.Core
                 return wanted;
 
             return wanted - current;
-        }
-
-        private async Task Btn2Async()
-        {
-            Console.WriteLine("B");
-
-            await Task.Delay(1);
         }
 
         #endregion

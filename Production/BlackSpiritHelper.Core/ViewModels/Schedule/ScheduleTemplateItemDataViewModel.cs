@@ -9,8 +9,14 @@ namespace BlackSpiritHelper.Core
     {
         #region Public Properties
 
+        /// <summary>
+        /// Day of the week.
+        /// </summary>
         public DayOfWeek DayOfWeek { get; set; }
 
+        /// <summary>
+        /// List of all time events.
+        /// </summary>
         public ObservableCollection<ScheduleTemplateDayTimeDataViewModel> TimeList { get; set; }
 
         #endregion
