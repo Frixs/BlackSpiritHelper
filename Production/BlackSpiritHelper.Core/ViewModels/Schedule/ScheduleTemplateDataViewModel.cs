@@ -69,7 +69,9 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// TODO comment
+        /// Copy of schedule with presenter values.
+        /// It is used to xaml presentation.
+        /// We need copy, because we are modifying it and we do not want to have possibility to save it as modified.
         /// </summary>
         public ObservableCollection<ScheduleTemplateDayDataViewModel> SchedulePresenter { get; set; }
 
@@ -77,13 +79,13 @@ namespace BlackSpiritHelper.Core
         /// Says, if the template is converted to user's local time zone.
         /// </summary>
         [XmlIgnore]
-        public bool IsScheduleConverted { get; private set; } = false;
+        public bool IsSchedulePresenterConverted { get; private set; } = false;
 
         /// <summary>
-        /// <see cref="IsScheduleConverted"/> flag barriere.
+        /// <see cref="IsSchedulePresenterConverted"/> flag barriere.
         /// </summary>
         [XmlIgnore]
-        public bool IsScheduleConvertedFlag { get; private set; } = false;
+        public bool IsSchedulePresenterConvertedFlag { get; private set; } = false;
 
         #endregion
 
@@ -138,17 +140,17 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private async Task ToggleScheduleTimeZoneViewAsync()
         {
-            await RunCommandAsync(() => IsScheduleConvertedFlag, async () =>
+            await RunCommandAsync(() => IsSchedulePresenterConvertedFlag, async () =>
             {
-                if (IsScheduleConverted)
+                if (IsSchedulePresenterConverted)
                 {
                     if (ConvertScheduleToGivenTimeZone())
-                        IsScheduleConverted = false;
+                        IsSchedulePresenterConverted = false;
                 }
                 else
                 {
                     if (ConvertScheduleToLocal())
-                        IsScheduleConverted = true;
+                        IsSchedulePresenterConverted = true;
                 }
 
                 await Task.Delay(1);
@@ -166,39 +168,56 @@ namespace BlackSpiritHelper.Core
 
             for (int iDay = SchedulePresenter.Count - 1; iDay > -1; iDay--)
             {
-                var currDay = SchedulePresenter[iDay];
+                var day = SchedulePresenter[iDay];
 
-                for (int iTime = currDay.TimeList.Count - 1; iTime > -1; iTime--)
+                for (int iTime = day.TimeList.Count - 1; iTime > -1; iTime--)
                 {
-                    var time = currDay.TimeList[iTime];
+                    var time = day.TimeList[iTime];
 
                     // let pass only non-checked.
                     if (alreadyChecked.Contains(time))
                         continue;
 
-                    // Get offset.
                     DateTimeOffset currDate = new DateTimeOffset(todayDate);
-                    // Set offset to appropriate day.
+                    // Set day offset to appropriate day.
                     currDate = currDate.AddDays(
-                        GetDayDifferenceOffset((int)currDay.DayOfWeek, (int)todayDate.DayOfWeek)
+                        GetDayDifferenceOffset((int)day.DayOfWeek, (int)todayDate.DayOfWeek)
                         );
                     // Set appropriate time of the day.
                     currDate = currDate.AddHours(time.Time.Hours).AddMinutes(time.Time.Minutes);
+                    
+                    // Get offsets.
+                    TimeSpan remoteOffset = TimeZoneInfo.FindSystemTimeZoneById(TimeZone.GetDescription()).GetUtcOffset(currDate);
+                    TimeSpan localOffset = currDate.Offset;
+                    
+                    // Transform local date to pretend as remote.
+                    // Transform it to UTC first without impact on date. We just want to change time zone offset of the date.
+                    currDate = currDate.ToOffset(TimeSpan.Zero);
+                    if (localOffset.Ticks > 0)
+                        currDate += localOffset;
+                    else
+                        currDate -= localOffset;
+                    // Transform it from UTC to remote zone (again, without impact on date).
+                    currDate = currDate.ToOffset(remoteOffset);
+                    if (remoteOffset.Ticks > 0)
+                        currDate += remoteOffset;
+                    else
+                        currDate -= remoteOffset;
 
-                    // Get remote date.
-                    DateTime remoteDate = TimeZoneInfo.ConvertTimeFromUtc(
+                    // Transform our pretended remote date to user's local timezone.
+                    DateTime localDate = TimeZoneInfo.ConvertTimeFromUtc(
                         currDate.UtcDateTime, // We do not want to convert time with DST offset. If we so then we need to use TimeZoneInfo.ConvertTimeToUtc .
-                        TimeZoneInfo.FindSystemTimeZoneById(TimeZone.GetDescription())
+                        TimeZoneInfo.Local
                         );
 
                     // Set new time of the day.
-                    time.Time = remoteDate.TimeOfDay;
+                    time.Time = localDate.TimeOfDay;
 
                     // If modified time belongs to another day, change the day.
-                    if (remoteDate.DayOfWeek != currDay.DayOfWeek)
+                    if (localDate.DayOfWeek != day.DayOfWeek)
                     {
                         SchedulePresenter[iDay].TimeList.Remove(time);
-                        SchedulePresenter.First(o => o.DayOfWeek == remoteDate.DayOfWeek).TimeList.Add(time);
+                        SchedulePresenter.First(o => o.DayOfWeek == localDate.DayOfWeek).TimeList.Add(time);
                     }
 
                     // Add it to already checked to avoid it to check it multiple times.
@@ -302,7 +321,8 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// TODO comment
+        /// Update presenter <see cref="SchedulePresenter"/> from default values <see cref="Schedule"/>.
+        /// Fill all the presenter fields instead of default one.
         /// </summary>
         private void UpdatePresenter()
         {

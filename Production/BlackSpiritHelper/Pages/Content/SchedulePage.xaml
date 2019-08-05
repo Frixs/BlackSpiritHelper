@@ -9,7 +9,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SchedulePage">
 
-    <Grid>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
         <ItemsControl ItemsSource="{Binding ApplicationDataContent.ScheduleDesignModel.TemplatePredefinedList,
                                     Source={x:Static local:ViewModelLocator.Instance}}">
 
@@ -94,5 +94,5 @@
             </ItemsControl.ItemTemplate>
             
         </ItemsControl>
-    </Grid>
+    </ScrollViewer>
 </local:BasePage>
