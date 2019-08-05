@@ -34,13 +34,14 @@
                 <CheckBox IsChecked="{Binding RunOnStartup}" Margin="0 0 0 30"
                           Command="{Binding RunOnStartUpCheckboxCommand}"
                           Content="Run the application when my computer starts."
-                          HorizontalAlignment="Center"/>
+                          HorizontalAlignment="Center"
+                          IsEnabled="{Binding RunOnStartupFlag, Converter={local:BooleanInvertConverter}}" />
 
                 <!-- Run the app As Administrator -->
                 <CheckBox IsChecked="{Binding ForceToRunAsAdministrator}" Margin="0 0 0 30"
                           Command="{Binding ForceToRunAsAdministratorCommand}"
                           Content="Force to run the application As Administrator."
-                          HorizontalAlignment="Center"/>
+                          HorizontalAlignment="Center" />
                 
                 <!-- Audio Alert Level -->
                 <StackPanel Margin="0 0 0 30" HorizontalAlignment="Center">

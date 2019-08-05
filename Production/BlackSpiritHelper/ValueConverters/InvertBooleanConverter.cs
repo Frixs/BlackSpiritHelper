@@ -7,7 +7,7 @@ namespace BlackSpiritHelper
     /// <summary>
     /// Invert boolean.
     /// </summary>
-    public class InvertBooleanConverter : BaseValueConverter<InvertBooleanConverter>
+    public class BooleanInvertConverter : BaseValueConverter<BooleanInvertConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

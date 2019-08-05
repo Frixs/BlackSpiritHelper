@@ -27,7 +27,7 @@ namespace BlackSpiritHelper.Core
         /// RunOnStartup Flag for locking.
         /// </summary>
         [XmlIgnore]
-        public bool RunOnStartupFlag { get; set; } = false;
+        public bool RunOnStartupFlag { get; private set; } = false;
 
         /// <summary>
         /// User audio alert level.
@@ -121,8 +121,6 @@ namespace BlackSpiritHelper.Core
 
             await RunCommandAsync(() => RunOnStartupFlag, async () =>
             {
-                await Task.Delay(1);
-
                 try
                 {
                     // Get Windows register startup subkey location.
@@ -142,6 +140,8 @@ namespace BlackSpiritHelper.Core
                     else
                         IoC.Logger.Log($"Unable to unset the application start on system startup.{Environment.NewLine}{ex.Message}", LogLevel.Error);
                 }
+
+                await Task.Delay(1);
             });
         }
 
