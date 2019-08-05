@@ -9,6 +9,15 @@ namespace BlackSpiritHelper.Core
 
     public class ScheduleViewModel : DataContentBaseViewModel
     {
+        #region Private Members
+
+        /// <summary>
+        /// Item list, custom.
+        /// </summary>
+        private ObservableCollection<ScheduleItemDataViewModel> mItemCustomList;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -36,7 +45,15 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Item list, custom.
         /// </summary>
-        public ObservableCollection<ScheduleItemDataViewModel> ItemCustomList { get; set; }
+        public ObservableCollection<ScheduleItemDataViewModel> ItemCustomList
+        {
+            get => mItemCustomList;
+            set
+            {
+                mItemCustomList = value;
+                CheckDuplicityCustom();
+            }
+        }
 
         /// <summary>
         /// Offset modifier for the local time.
@@ -99,6 +116,7 @@ namespace BlackSpiritHelper.Core
 
             if (!isPredefined)
             {
+                // Check duplicity.
                 if (ItemCustomList.FirstOrDefault(o => o.Name.ToLower().Equals(name.ToLower().Trim())) != null)
                     return null;
             }
@@ -108,6 +126,41 @@ namespace BlackSpiritHelper.Core
                 Name = name.Trim(),
                 ColorHEX = colorHex,
             };
+        }
+
+        /// <summary>
+        /// Get item by name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public ScheduleItemDataViewModel GetItemByName(string name)
+        {
+            ScheduleItemDataViewModel ret = null;
+
+            ret = ItemPredefinedList.FirstOrDefault(o => o.Name.ToLower().Equals(name.ToLower().Trim()));
+
+            if (ret == null)
+                ret = ItemCustomList.FirstOrDefault(o => o.Name.ToLower().Equals(name.ToLower().Trim()));
+
+            return ret;
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Check duplicity of custom list on application load and remove it.
+        /// </summary>
+        private void CheckDuplicityCustom()
+        {
+
+            for (int i = 0; i < ItemPredefinedList.Count; i++)
+            {
+                ItemCustomList.RemoveAll(
+                    o => o.Name.ToLower().Trim().Equals(ItemPredefinedList[i].Name.ToLower())
+                    );
+            }
         }
 
         #endregion

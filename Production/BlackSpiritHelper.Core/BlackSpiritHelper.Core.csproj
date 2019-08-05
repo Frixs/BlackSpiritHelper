@@ -95,7 +95,7 @@
     <Compile Include="Settings\CustomSettingsProvider.cs" />
     <Compile Include="Task\TaskManager.cs" />
     <Compile Include="Utilities\EnumExtensionMethods.cs" />
-    <Compile Include="Utilities\ObjectExtensions.cs" />
+    <Compile Include="Utilities\ObjectExtensionMethods.cs" />
     <Compile Include="Utilities\StringUtils.cs" />
     <Compile Include="ValidationRules\Timer\TimerIconTitleShortcutRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerCountdownDurationRule.cs" />

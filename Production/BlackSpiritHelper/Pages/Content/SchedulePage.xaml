@@ -71,7 +71,7 @@
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate>
 
-                                                        <TextBlock Text="X " />
+                                                        <TextBlock Text="{Binding}" />
 
                                                     </DataTemplate>
                                                 </ItemsControl.ItemTemplate>

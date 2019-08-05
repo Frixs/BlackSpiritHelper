@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -14,6 +15,20 @@ namespace BlackSpiritHelper.Core
     /// </summary>
     public class ScheduleTemplateDataViewModel : BaseViewModel
     {
+        #region Private Members
+
+        /// <summary>
+        /// Temporary folder path.
+        /// </summary>
+        private string mTemporaryFolderRelPath = "Temporary/ScheduleSection";
+
+        /// <summary>
+        /// Temporary <see cref="Schedule"/> file name.
+        /// </summary>
+        private string mTemporaryScheduleFileName = "template.xml";
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -43,13 +58,6 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         [XmlIgnore]
         public bool IsScheduleConvertedFlag { get; private set; } = false;
-
-        /// <summary>
-        /// Time Zone ID which is local time zone at the time of conversion for the user.
-        /// It is stored to be able to convert it back to given time zone.
-        /// </summary>
-        [XmlIgnore]
-        public string ConvertedTimeZoneID { get; private set; } = null;
 
         #endregion
 
@@ -97,14 +105,16 @@ namespace BlackSpiritHelper.Core
             {
                 if (IsScheduleConverted)
                 {
-                    IsScheduleConverted = false;
-                    await ConvertScheduleToGivenTimeZoneAsync();
+                    if (ConvertScheduleToGivenTimeZone())
+                        IsScheduleConverted = false;
                 }
                 else
                 {
-                    IsScheduleConverted = true;
-                    await ConvertScheduleToLocalAsync();
+                    if (ConvertScheduleToLocal())
+                        IsScheduleConverted = true;
                 }
+
+                await Task.Delay(1);
             });
         }
 
@@ -112,8 +122,12 @@ namespace BlackSpiritHelper.Core
         /// Convert schedule to user local time zone.
         /// </summary>
         /// <returns></returns>
-        private async Task ConvertScheduleToLocalAsync()
+        private bool ConvertScheduleToLocal()
         {
+            // Save default configuration, first.
+            if (!SaveToTemporaryFile())
+                return false;
+
             DateTime todayDate = DateTime.Today;
             List<ScheduleTemplateDayTimeDataViewModel> alreadyChecked = new List<ScheduleTemplateDayTimeDataViewModel>();
 
@@ -140,7 +154,7 @@ namespace BlackSpiritHelper.Core
 
                     // Get remote date.
                     DateTime remoteDate = TimeZoneInfo.ConvertTimeFromUtc(
-                        currDate.UtcDateTime,
+                        currDate.UtcDateTime, // We do not want to convert time with DST offset. If we so then we need to use TimeZoneInfo.ConvertTimeToUtc .
                         TimeZoneInfo.FindSystemTimeZoneById(TimeZone.GetDescription())
                         );
 
@@ -159,73 +173,27 @@ namespace BlackSpiritHelper.Core
                 }
             }
 
-            // Set to let know which time zone we are going to convert in.
-            ConvertedTimeZoneID = TimeZoneInfo.Local.Id;
-
             // Resort.
             SortSchedule();
 
-            await Task.Delay(1);
+            // All OK.
+            return true;
         }
 
         /// <summary>
         /// Convert schedule to given time zone.
         /// </summary>
         /// <returns></returns>
-        private async Task ConvertScheduleToGivenTimeZoneAsync()
+        private bool ConvertScheduleToGivenTimeZone()
         {
-            DateTime todayDate = DateTime.Today;
-            DateTime.SpecifyKind(todayDate, DateTimeKind.Unspecified);
-            List<ScheduleTemplateDayTimeDataViewModel> alreadyChecked = new List<ScheduleTemplateDayTimeDataViewModel>();
+            // Load default configuration.
+            if (!LoadFromTemporaryFile())
+                return false;
 
-            for (int iDay = Schedule.Count - 1; iDay > -1; iDay--)
-            {
-                var currDay = Schedule[iDay];
+            // Set flag.
+            IsScheduleConverted = false;
 
-                for (int iTime = currDay.TimeList.Count - 1; iTime > -1; iTime--)
-                {
-                    var time = currDay.TimeList[iTime];
-
-                    // let pass only non-checked.
-                    if (alreadyChecked.Contains(time))
-                        continue;
-
-                    // Get offset.
-                    DateTimeOffset currDate = new DateTimeOffset(todayDate);
-                    // Set offset to appropriate day.
-                    currDate = currDate.AddDays(
-                        GetDayDifferenceOffset((int)currDay.DayOfWeek, (int)todayDate.DayOfWeek)
-                        );
-                    // Set appropriate time of the day.
-                    currDate = currDate.AddHours(time.Time.Hours).AddMinutes(time.Time.Minutes);
-
-                    // Pretend, today's date is remote date and convert it into UTC.
-                    DateTime localDate = TimeZoneInfo.ConvertTimeToUtc(currDate.DateTime, TimeZoneInfo.FindSystemTimeZoneById(TimeZone.GetDescription()));
-                    // Convert pretended date to our local timezone.
-                    localDate = TimeZoneInfo.ConvertTimeFromUtc(localDate, TimeZoneInfo.FindSystemTimeZoneById(ConvertedTimeZoneID));
-
-                    // Set new time of the day.
-                    time.Time = localDate.TimeOfDay;
-
-                    // If modified time belongs to another day, change the day.
-                    if (localDate.DayOfWeek != currDay.DayOfWeek)
-                    {
-                        Schedule[iDay].TimeList.Remove(time);
-                        Schedule.First(o => o.DayOfWeek == localDate.DayOfWeek).TimeList.Add(time);
-                    }
-
-                    // Add it to already checked to avoid it to check it multiple times.
-                    alreadyChecked.Add(time);
-                }
-            }
-
-            // Unset time zone ID. We are going back to given time zone.
-            ConvertedTimeZoneID = null;
-
-            // Resort.
-            SortSchedule();
-
-            await Task.Delay(1);
+            return true;
         }
 
         /// <summary>
@@ -254,6 +222,53 @@ namespace BlackSpiritHelper.Core
             {
                 Schedule[iDay].TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>(Schedule[iDay].TimeList.OrderBy(o => o.Time));
             }
+        }
+
+        /// <summary>
+        /// Save <see cref="Schedule"/> to temporary file.
+        /// </summary>
+        /// <returns></returns>
+        private bool SaveToTemporaryFile()
+        {
+            XmlSerializer xs = new XmlSerializer(Schedule.GetType());
+
+            try
+            {
+                Directory.CreateDirectory(mTemporaryFolderRelPath);
+                FileStream file = File.Create(Path.Combine(mTemporaryFolderRelPath, mTemporaryScheduleFileName));
+                xs.Serialize(file, Schedule);
+            }
+            catch (Exception ex)
+            {
+                IoC.Logger.Log($"Some error occurred during saving temporary file:{Environment.NewLine}{ex.Message}", LogLevel.Warning);
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Load <see cref="Schedule"/> from temporary file.
+        /// </summary>
+        /// <returns></returns>
+        private bool LoadFromTemporaryFile()
+        {
+            XmlSerializer serializer = new XmlSerializer(Schedule.GetType());
+
+            try
+            {
+                using (FileStream fileStream = new FileStream(Path.Combine(mTemporaryFolderRelPath, mTemporaryScheduleFileName), FileMode.Open))
+                {
+                    Schedule = (ObservableCollection<ScheduleTemplateDayDataViewModel>)serializer.Deserialize(fileStream);
+                }
+            }
+            catch (Exception ex)
+            {
+                IoC.Logger.Log($"Some error occurred during loading temporary file:{Environment.NewLine}{ex.Message}", LogLevel.Warning);
+                return false;
+            }
+
+            return true;
         }
 
         #endregion
