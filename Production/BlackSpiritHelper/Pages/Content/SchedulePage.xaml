@@ -16,7 +16,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
 
-                    <ItemsControl ItemsSource="{Binding Schedule}">
+                    <ItemsControl ItemsSource="{Binding SchedulePresenter}">
 
                         <ItemsControl.Template>
                             <ControlTemplate>
@@ -55,7 +55,7 @@
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
 
-                                            <ItemsControl ItemsSource="{Binding ItemList}">
+                                            <ItemsControl ItemsSource="{Binding ItemListPresenter}">
 
                                                 <ItemsControl.Template>
                                                     <ControlTemplate>
@@ -71,7 +71,9 @@
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate>
 
-                                                        <TextBlock Text="{Binding}" />
+                                                        <TextBlock Text="{Binding Name}"
+                                                                   FontFamily="{StaticResource LatoBold}"
+                                                                   Foreground="{Binding ColorHEX, Converter={local:StringRGBToBrushConverter}}"/>
 
                                                     </DataTemplate>
                                                 </ItemsControl.ItemTemplate>

@@ -89,6 +89,11 @@ namespace BlackSpiritHelper.Core
 
         protected override void SetupMethod()
         {
+            // Initialize templates.
+            for (int i = 0; i < TemplatePredefinedList.Count; i++)
+                TemplatePredefinedList[i].Init();
+            for (int i = 0; i < TemplateCustomList.Count; i++)
+                TemplateCustomList[i].Init();
         }
 
         #endregion
@@ -121,11 +126,20 @@ namespace BlackSpiritHelper.Core
                     return null;
             }
 
-            return new ScheduleItemDataViewModel
+            // Create the item.
+            var item = new ScheduleItemDataViewModel
             {
                 Name = name.Trim(),
                 ColorHEX = colorHex,
             };
+
+            // Ad the item to the list.
+            if (isPredefined)
+                ItemPredefinedList.Add(item);
+            else
+                ItemCustomList.Add(item);
+
+            return item;
         }
 
         /// <summary>
@@ -136,9 +150,9 @@ namespace BlackSpiritHelper.Core
         public ScheduleItemDataViewModel GetItemByName(string name)
         {
             ScheduleItemDataViewModel ret = null;
-
+            
             ret = ItemPredefinedList.FirstOrDefault(o => o.Name.ToLower().Equals(name.ToLower().Trim()));
-
+            
             if (ret == null)
                 ret = ItemCustomList.FirstOrDefault(o => o.Name.ToLower().Equals(name.ToLower().Trim()));
 

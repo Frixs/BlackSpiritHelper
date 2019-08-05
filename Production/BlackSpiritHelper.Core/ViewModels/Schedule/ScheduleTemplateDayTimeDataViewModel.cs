@@ -29,8 +29,15 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// List of events at this time (<see cref="Time"/>).
+        /// !!! This is only for loading at application start.
         /// </summary>
         public ObservableCollection<string> ItemList { get; set; }
+
+        /// <summary>
+        /// List of events at this time (<see cref="Time"/>).
+        /// </summary>
+        [XmlIgnore]
+        public ObservableCollection<ScheduleItemDataViewModel> ItemListPresenter { get; set; }
 
         #endregion
 

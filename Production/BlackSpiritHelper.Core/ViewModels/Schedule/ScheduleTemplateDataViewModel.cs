@@ -27,6 +27,16 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private string mTemporaryScheduleFileName = "template.xml";
 
+        /// <summary>
+        /// Says, if the template is initialized.
+        /// </summary>
+        private bool mIsInitialized = false;
+
+        /// <summary>
+        /// Schedule.
+        /// </summary>
+        private ObservableCollection<ScheduleTemplateDayDataViewModel> mSchedule;
+
         #endregion
 
         #region Public Properties
@@ -45,7 +55,23 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Schedule.
         /// </summary>
-        public ObservableCollection<ScheduleTemplateDayDataViewModel> Schedule { get; set; }
+        public ObservableCollection<ScheduleTemplateDayDataViewModel> Schedule
+        {
+            get => mSchedule;
+            set
+            {
+                mSchedule = value;
+
+                // Update only, if it has been initialized.
+                if (mIsInitialized)
+                    UpdatePresenter();
+            }
+        }
+
+        /// <summary>
+        /// TODO comment
+        /// </summary>
+        public ObservableCollection<ScheduleTemplateDayDataViewModel> SchedulePresenter { get; set; }
 
         /// <summary>
         /// Says, if the template is converted to user's local time zone.
@@ -79,6 +105,18 @@ namespace BlackSpiritHelper.Core
             CreateCommands();
         }
 
+        /// <summary>
+        /// Initialize the instance.
+        /// </summary>
+        public void Init()
+        {
+            if (mIsInitialized)
+                return;
+            mIsInitialized = true;
+
+            UpdatePresenter();
+        }
+
         #endregion
 
         #region Command Methods
@@ -92,7 +130,6 @@ namespace BlackSpiritHelper.Core
         }
 
         #endregion
-
 
         #region Private Methods
 
@@ -124,16 +161,12 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private bool ConvertScheduleToLocal()
         {
-            // Save default configuration, first.
-            if (!SaveToTemporaryFile())
-                return false;
-
             DateTime todayDate = DateTime.Today;
             List<ScheduleTemplateDayTimeDataViewModel> alreadyChecked = new List<ScheduleTemplateDayTimeDataViewModel>();
 
-            for (int iDay = Schedule.Count - 1; iDay > -1; iDay--)
+            for (int iDay = SchedulePresenter.Count - 1; iDay > -1; iDay--)
             {
-                var currDay = Schedule[iDay];
+                var currDay = SchedulePresenter[iDay];
 
                 for (int iTime = currDay.TimeList.Count - 1; iTime > -1; iTime--)
                 {
@@ -164,8 +197,8 @@ namespace BlackSpiritHelper.Core
                     // If modified time belongs to another day, change the day.
                     if (remoteDate.DayOfWeek != currDay.DayOfWeek)
                     {
-                        Schedule[iDay].TimeList.Remove(time);
-                        Schedule.First(o => o.DayOfWeek == remoteDate.DayOfWeek).TimeList.Add(time);
+                        SchedulePresenter[iDay].TimeList.Remove(time);
+                        SchedulePresenter.First(o => o.DayOfWeek == remoteDate.DayOfWeek).TimeList.Add(time);
                     }
 
                     // Add it to already checked to avoid it to check it multiple times.
@@ -174,7 +207,7 @@ namespace BlackSpiritHelper.Core
             }
 
             // Resort.
-            SortSchedule();
+            SortSchedulePresenter();
 
             // All OK.
             return true;
@@ -186,13 +219,10 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private bool ConvertScheduleToGivenTimeZone()
         {
-            // Load default configuration.
-            if (!LoadFromTemporaryFile())
-                return false;
+            // Get default values from original.
+            UpdatePresenter();
 
-            // Set flag.
-            IsScheduleConverted = false;
-
+            // All OK.
             return true;
         }
 
@@ -216,11 +246,11 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Sort schedule.
         /// </summary>
-        private void SortSchedule()
+        private void SortSchedulePresenter()
         {
             for (int iDay = 0; iDay < Schedule.Count; iDay++)
             {
-                Schedule[iDay].TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>(Schedule[iDay].TimeList.OrderBy(o => o.Time));
+                SchedulePresenter[iDay].TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>(SchedulePresenter[iDay].TimeList.OrderBy(o => o.Time));
             }
         }
 
@@ -269,6 +299,46 @@ namespace BlackSpiritHelper.Core
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// TODO comment
+        /// </summary>
+        private void UpdatePresenter()
+        {
+            SchedulePresenter = new ObservableCollection<ScheduleTemplateDayDataViewModel>();
+
+            // Go through days.
+            for (int iDay = 0; iDay < Schedule.Count; iDay++)
+            {
+                ObservableCollection<ScheduleTemplateDayTimeDataViewModel> timeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>();
+
+                // Go through times.
+                for (int iTime = 0; iTime < Schedule[iDay].TimeList.Count; iTime++)
+                {
+                    ObservableCollection<ScheduleItemDataViewModel> itemList = new ObservableCollection<ScheduleItemDataViewModel>();
+
+                    // Go through items.
+                    for (int iItem = 0; iItem < Schedule[iDay].TimeList[iTime].ItemList.Count; iItem++)
+                    {
+                        itemList.Add(
+                            IoC.DataContent.ScheduleDesignModel.GetItemByName(Schedule[iDay].TimeList[iTime].ItemList[iItem])
+                            );
+                    }
+
+                    timeList.Add(new ScheduleTemplateDayTimeDataViewModel
+                    {
+                        Time = Schedule[iDay].TimeList[iTime].Time,
+                        ItemListPresenter = itemList,
+                    });
+                }
+
+                SchedulePresenter.Add(new ScheduleTemplateDayDataViewModel
+                {
+                    DayOfWeek = Schedule[iDay].DayOfWeek,
+                    TimeList = timeList,
+                });
+            }
         }
 
         #endregion
