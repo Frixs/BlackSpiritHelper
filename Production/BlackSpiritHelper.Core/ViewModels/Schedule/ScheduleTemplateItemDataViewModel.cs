@@ -4,7 +4,10 @@ using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
 {
-    [Serializable]
+    /// <summary>
+    /// Previous <see cref="ScheduleTemplateDataViewModel"/>.
+    /// Next <see cref="ScheduleTemplateDayTimeDataViewModel"/>.
+    /// </summary>
     public class ScheduleTemplateDayDataViewModel : BaseViewModel
     {
         #region Public Properties

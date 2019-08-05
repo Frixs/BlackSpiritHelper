@@ -4,19 +4,22 @@ using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
 {
-    [Serializable]
+    /// <summary>
+    /// Previous <see cref="ScheduleTemplateDayDataViewModel"/>.
+    /// </summary>
     public class ScheduleTemplateDayTimeDataViewModel : BaseViewModel
     {
         #region Public Properties
 
         /// <summary>
-        /// TODO comment.
+        /// Time.
         /// </summary>
         [XmlIgnore]
         public TimeSpan Time { get; set; }
 
         /// <summary>
-        /// TODO comment.
+        /// <see cref="Time"/> ticks.
+        /// It is used to store <see cref="Time"/> in user settings.
         /// </summary>
         public long TimeTicks
         {
@@ -25,7 +28,7 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// TODO comment.
+        /// List of events at this time (<see cref="Time"/>).
         /// </summary>
         public ObservableCollection<string> ItemList { get; set; }
 

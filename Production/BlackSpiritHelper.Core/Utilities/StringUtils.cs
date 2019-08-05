@@ -11,7 +11,7 @@ namespace BlackSpiritHelper.Core
         /// <param name="underscores">Are underscores allowed?</param>
         /// <param name="spaces">Are spaces allowed?</param>
         /// <returns></returns>
-        public static bool CheckAlphanumericString(string input, bool underscores = false, bool spaces = false)
+        public static bool CheckAlphanumeric(this string input, bool underscores = false, bool spaces = false)
         {
             if (underscores && spaces)
                 return Regex.IsMatch(input, @"^[a-zA-Z0-9_ ]+$");
@@ -25,5 +25,18 @@ namespace BlackSpiritHelper.Core
             return Regex.IsMatch(input, @"^[a-zA-Z0-9_]+$");
         }
 
+        /// <summary>
+        /// Check if the string has appropriate form as HEX color.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="hasHashmark"></param>
+        /// <returns></returns>
+        public static bool CheckColorHEX(this string str, bool hasHashmark = false)
+        {
+            if (hasHashmark)
+                return Regex.IsMatch(str, @"^#[A-Fa-f0-9]{6}$");
+
+            return Regex.IsMatch(str, @"^[A-Fa-f0-9]{6}$");
+        }
     }
 }

@@ -21,7 +21,7 @@ namespace BlackSpiritHelper.Core
                 return new ValidationResult(false, $"Please enter a icon title shortcut in the length: {TimerItemDataViewModel.IconTitleAllowMinChar} - {TimerItemDataViewModel.IconTitleAllowMaxChar}.");
 
             // Check allowed characters.
-            if (!StringUtils.CheckAlphanumericString(val, true, true))
+            if (!StringUtils.CheckAlphanumeric(val, true, true))
                 return new ValidationResult(false, "Illegal characters. Icon title shortcut can contain letters, numbers, underscores and spaces, only.");
 
             return ValidationResult.ValidResult;

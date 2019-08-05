@@ -23,7 +23,7 @@ namespace BlackSpiritHelper.Core
                 return new ValidationResult(false, $"Please enter a group title in the length: {TimerGroupDataViewModel.TitleAllowMinChar} - {TimerGroupDataViewModel.TitleAllowMaxChar}.");
 
             // Check allowed characters.
-            if (!StringUtils.CheckAlphanumericString(val, true, true))
+            if (!StringUtils.CheckAlphanumeric(val, true, true))
                 return new ValidationResult(false, "Illegal characters. Group title can contain letters, numbers, underscores and spaces, only.");
 
             return ValidationResult.ValidResult;

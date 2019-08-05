@@ -10,13 +10,13 @@
       Title="SchedulePage">
 
     <Grid>
-        <ItemsControl ItemsSource="{Binding ApplicationDataContent.ScheduleDesignModel.PredefinedTemplateList,
+        <ItemsControl ItemsSource="{Binding ApplicationDataContent.ScheduleDesignModel.TemplatePredefinedList,
                                     Source={x:Static local:ViewModelLocator.Instance}}">
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
 
-                    <ItemsControl ItemsSource="{Binding SchedulePresenter}">
+                    <ItemsControl ItemsSource="{Binding Schedule}">
 
                         <ItemsControl.Template>
                             <ControlTemplate>

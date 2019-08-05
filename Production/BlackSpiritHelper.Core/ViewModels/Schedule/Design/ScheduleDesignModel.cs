@@ -36,18 +36,24 @@ namespace BlackSpiritHelper.Core
         public ScheduleDesignModel()
         {
             // Schedule Item list.
-            PredefinedItemList = new List<ScheduleItemDataViewModel>();
-            ScheduleItemDataViewModel kzarka = AddItem("Kzarka", "9c0017", true);
-            ScheduleItemDataViewModel offin = AddItem("Offin", "40c3cf", true);
+            ItemPredefinedList = new List<ScheduleItemDataViewModel>();
+            ScheduleItemDataViewModel itemKzarka = AddItem("Kzarka", "9c0017", true);
+            ScheduleItemDataViewModel itemKaranda = AddItem("Karanda", "000000", true);
+            ScheduleItemDataViewModel itemOffin = AddItem("Offin", "40c3cf", true);
+            ScheduleItemDataViewModel itemNouver = AddItem("Nouver", "000000", true);
+            ScheduleItemDataViewModel itemKutum = AddItem("Kutum", "000000", true);
+            ScheduleItemDataViewModel itemVell = AddItem("Vell", "000000", true);
+            ScheduleItemDataViewModel itemGarmoth = AddItem("Garmoth", "000000", true);
+            ScheduleItemDataViewModel itemQuint = AddItem("Quint", "000000", true);
+            ScheduleItemDataViewModel itemMuraka = AddItem("Muraka", "000000", true);
 
             // Schedule Template list.
-            PredefinedTemplateList = new List<ScheduleTemplateDataViewModel>
+            TemplatePredefinedList = new List<ScheduleTemplateDataViewModel>
             {
                 // Template EU.
                 new ScheduleTemplateDataViewModel
                 {
                     LastUpdate = new DateTime(2019, 8, 3).Ticks,
-                    IsCustom = false,
                     TimeZone = RegionTimeZone.NA,
                     Schedule = new ObservableCollection<ScheduleTemplateDayDataViewModel>
                     {
@@ -65,10 +71,59 @@ namespace BlackSpiritHelper.Core
                             {
                                 new ScheduleTemplateDayTimeDataViewModel
                                 {
-                                    Time = new TimeSpan(1, 30, 0),
+                                    Time = new TimeSpan(0, 15, 0),
                                     ItemList = new ObservableCollection<string>
                                     {
-                                        SchedulePredefinedItem.Kzarka.ToString(),
+                                        itemKutum.Name,
+                                        itemKaranda.Name,
+                                    },
+                                },
+                                new ScheduleTemplateDayTimeDataViewModel
+                                {
+                                    Time = new TimeSpan(2, 0, 0),
+                                    ItemList = new ObservableCollection<string>
+                                    {
+                                        itemKaranda.Name,
+                                    },
+                                },
+                                new ScheduleTemplateDayTimeDataViewModel
+                                {
+                                    Time = new TimeSpan(5, 0, 0),
+                                    ItemList = new ObservableCollection<string>
+                                    {
+                                        itemKzarka.Name,
+                                    },
+                                },
+                                new ScheduleTemplateDayTimeDataViewModel
+                                {
+                                    Time = new TimeSpan(9, 0, 0),
+                                    ItemList = new ObservableCollection<string>
+                                    {
+                                        itemKzarka.Name,
+                                    },
+                                },
+                                new ScheduleTemplateDayTimeDataViewModel
+                                {
+                                    Time = new TimeSpan(12, 0, 0),
+                                    ItemList = new ObservableCollection<string>
+                                    {
+                                        itemOffin.Name,
+                                    },
+                                },
+                                new ScheduleTemplateDayTimeDataViewModel
+                                {
+                                    Time = new TimeSpan(16, 0, 0),
+                                    ItemList = new ObservableCollection<string>
+                                    {
+                                        itemKutum.Name,
+                                    },
+                                },
+                                new ScheduleTemplateDayTimeDataViewModel
+                                {
+                                    Time = new TimeSpan(18, 0, 0),
+                                    ItemList = new ObservableCollection<string>
+                                    {
+                                        itemNouver.Name,
                                     },
                                 },
                                 new ScheduleTemplateDayTimeDataViewModel
@@ -76,8 +131,7 @@ namespace BlackSpiritHelper.Core
                                     Time = new TimeSpan(22, 15, 0),
                                     ItemList = new ObservableCollection<string>
                                     {
-                                        SchedulePredefinedItem.Kzarka.ToString(),
-                                        SchedulePredefinedItem.Offin.ToString(),
+                                        itemKzarka.Name,
                                     },
                                 },
                             }
@@ -92,8 +146,8 @@ namespace BlackSpiritHelper.Core
                                     Time = new TimeSpan(8, 15, 0),
                                     ItemList = new ObservableCollection<string>
                                     {
-                                        SchedulePredefinedItem.Kzarka.ToString(),
-                                        SchedulePredefinedItem.Offin.ToString(),
+                                        itemKzarka.Name,
+                                        itemOffin.Name,
                                     },
                                 },
                             }

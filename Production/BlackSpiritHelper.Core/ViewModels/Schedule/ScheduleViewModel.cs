@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
@@ -19,23 +20,23 @@ namespace BlackSpiritHelper.Core
         /// Template list, predefined.
         /// </summary>
         [XmlIgnore]
-        public List<ScheduleTemplateDataViewModel> PredefinedTemplateList { get; protected set; }
+        public List<ScheduleTemplateDataViewModel> TemplatePredefinedList { get; protected set; }
 
         /// <summary>
         /// Template list, custom.
         /// </summary>
-        public ObservableCollection<ScheduleTemplateDataViewModel> CustomTemplateList { get; set; }
+        public ObservableCollection<ScheduleTemplateDataViewModel> TemplateCustomList { get; set; }
 
         /// <summary>
         /// Item list, predefined.
         /// </summary>
         [XmlIgnore]
-        public List<ScheduleItemDataViewModel> PredefinedItemList { get; protected set; }
+        public List<ScheduleItemDataViewModel> ItemPredefinedList { get; protected set; }
 
         /// <summary>
         /// Item list, custom.
         /// </summary>
-        public ObservableCollection<ScheduleItemDataViewModel> CustomItemList { get; set; }
+        public ObservableCollection<ScheduleItemDataViewModel> ItemCustomList { get; set; }
 
         /// <summary>
         /// Offset modifier for the local time.
@@ -44,7 +45,8 @@ namespace BlackSpiritHelper.Core
         public TimeSpan LocalTimeOffsetModifier { get; set; }
 
         /// <summary>
-        /// TODO comment.
+        /// <see cref="LocalTimeOffsetModifier"/> Ticks.
+        /// It is used to store <see cref="LocalTimeOffsetModifier"/> in user settings.
         /// </summary>
         public long LocalTimeOffsetModifierTicks { get; set; }
 
@@ -85,8 +87,27 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         public ScheduleItemDataViewModel AddItem(string name, string colorHex, bool isPredefined = false)
         {
-            // TODO: Add item.
-            return null;
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(colorHex))
+                return null;
+
+            if (!colorHex.CheckColorHEX())
+                return null;
+
+            // Check duplicity.
+            if (ItemPredefinedList.FirstOrDefault(o => o.Name.ToLower().Equals(name.ToLower().Trim())) != null)
+                return null;
+
+            if (!isPredefined)
+            {
+                if (ItemCustomList.FirstOrDefault(o => o.Name.ToLower().Equals(name.ToLower().Trim())) != null)
+                    return null;
+            }
+
+            return new ScheduleItemDataViewModel
+            {
+                Name = name.Trim(),
+                ColorHEX = colorHex,
+            };
         }
 
         #endregion

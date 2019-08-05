@@ -996,7 +996,7 @@ namespace BlackSpiritHelper.Core
 
             #region IconBackgroundHEX
 
-            if (!Regex.IsMatch(iconBackgroundHEX, @"^[A-Fa-f0-9]{6}$"))
+            if (!iconBackgroundHEX.CheckColorHEX())
                 return false;
 
             #endregion
