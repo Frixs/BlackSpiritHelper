@@ -106,6 +106,7 @@
     <Compile Include="ValidationRules\Timer\BaseRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerTitleRule.cs" />
     <Compile Include="ViewModels\Application\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Schedule\Design\ScheduleTemplateDataDesignModel.cs" />
     <Compile Include="ViewModels\Schedule\ScheduleItemDataViewModel.cs" />
     <Compile Include="ViewModels\Schedule\ScheduleTemplateDataViewModel.cs" />
     <Compile Include="ViewModels\Schedule\ScheduleTemplateDayTimeDataViewModel.cs" />

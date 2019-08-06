@@ -108,8 +108,11 @@ namespace BlackSpiritHelper.Core
 
         #region Commands
 
+        /// <summary>
+        /// Command to toggle calendar/schedule time.
+        /// </summary>
         [XmlIgnore]
-        public ICommand Btn1Command { get; set; }
+        public ICommand ToggleLocalCalendarTimeCommand { get; set; }
 
         #endregion
 
@@ -147,7 +150,7 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void CreateCommands()
         {
-            Btn1Command = new RelayCommand(async () => await ToggleScheduleTimeZoneViewAsync());
+            ToggleLocalCalendarTimeCommand = new RelayCommand(async () => await ToggleScheduleTimeZoneViewAsync());
         }
 
         #endregion

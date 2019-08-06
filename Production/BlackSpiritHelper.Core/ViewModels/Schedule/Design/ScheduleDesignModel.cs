@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
-using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
 {
@@ -14,7 +13,6 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Create a new instance of this class.
         /// </summary>
-        [XmlIgnore]
         public static ScheduleDesignModel Instance
         {
             get

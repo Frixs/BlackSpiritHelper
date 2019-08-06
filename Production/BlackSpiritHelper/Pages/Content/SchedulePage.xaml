@@ -12,107 +12,46 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto"
                   DataContext="{Binding ApplicationDataContent.ScheduleDesignModel,
                                 Source={x:Static local:ViewModelLocator.Instance}}">
-        <StackPanel Orientation="Vertical">
-            <TextBlock Text="Select Template"
+
+        <Border Padding="10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Select Template"
                            FontSize="14"
                            Margin="0 0 0 5"/>
-            <ComboBox Name="TemplateComboBox" Margin="0 0 0 50"
-                      HorizontalAlignment="Center"
-                      SelectedItem="{Binding SelectedTemplate}"
-                      ItemsSource="{Binding TemplateListPresenter}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Title}">
-                                <TextBlock.Style>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="Foreground" Value="Black" />
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsPredefined}" Value="True">
-                                                <Setter Property="Foreground" Value="DarkGreen" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </StackPanel>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
+                <ComboBox Name="TemplateComboBox" Margin="0 0 0 50"
+                          HorizontalAlignment="Center"
+                          SelectedItem="{Binding SelectedTemplate}"
+                          ItemsSource="{Binding TemplateListPresenter}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Title}">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="Black" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsPredefined}" Value="True">
+                                                    <Setter Property="Foreground" Value="DarkGreen" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
 
-            <ItemsControl ItemsSource="{Binding SelectedTemplate.SchedulePresenter}">
+                <!-- Calendar/Schedule -->
+                <local:ScheduleCalendarControl DataContext="{Binding SelectedTemplate}" Grid.Row="1"
+                                               x:Name="Calendar" Visibility="Collapsed" />
 
-                <ItemsControl.Template>
-                    <ControlTemplate>
-
-                        <StackPanel Orientation="Vertical">
-                            <Button Content="1" Command="{Binding SelectedTemplate.Btn1Command}" Width="300" Padding="10" />
-                            <ItemsPresenter />
-                        </StackPanel>
-
-                    </ControlTemplate>
-                </ItemsControl.Template>
-
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-
-                        <ItemsControl ItemsSource="{Binding TimeList}">
-
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                    </StackPanel>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-
-                            <ItemsControl.Template>
-                                <ControlTemplate>
-
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding DayOfWeek, Converter={local:ObjectToStringConverter}}" />
-                                        <ItemsPresenter />
-                                    </StackPanel>
-
-                                </ControlTemplate>
-                            </ItemsControl.Template>
-
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-
-                                    <ItemsControl ItemsSource="{Binding ItemListPresenter}">
-
-                                        <ItemsControl.Template>
-                                            <ControlTemplate>
-
-                                                <StackPanel Orientation="Vertical" Margin="5">
-                                                    <TextBlock Text="{Binding Time, Converter={local:TimeSpanToStringConverter}, ConverterParameter='hm'}" />
-                                                    <ItemsPresenter />
-                                                </StackPanel>
-
-                                            </ControlTemplate>
-                                        </ItemsControl.Template>
-
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-
-                                                <TextBlock Text="{Binding Name}"
-                                                                       FontFamily="{StaticResource LatoBold}"
-                                                                       Foreground="{Binding ColorHEX, Converter={local:StringRGBToBrushConverter}}"/>
-
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-
-                                    </ItemsControl>
-
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-
-                        </ItemsControl>
-
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-
-            </ItemsControl>
-        </StackPanel>
+            </Grid>
+        </Border>
     </ScrollViewer>
 </local:BasePage>

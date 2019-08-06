@@ -1,4 +1,7 @@
 ﻿using BlackSpiritHelper.Core;
+using System;
+using System.Threading.Tasks;
+using System.Windows;
 
 namespace BlackSpiritHelper
 {
@@ -10,6 +13,20 @@ namespace BlackSpiritHelper
         public SchedulePage()
         {
             InitializeComponent();
+
+            // Lazy load task.
+            IoC.Task.Run(async () => 
+            {
+                // Lazy load delay.
+                //await Task.Delay((int)(SlideSeconds * 1000 * 3)); // Delay is 3 times the loading duration.
+                // TODO lazy load.
+                // Update UI thread.
+                await Application.Current.Dispatcher.BeginInvoke((Action)(async () =>
+                {
+                    // Animation.
+                    await Calendar.SlideAndFadeInFromBottom(10, 1.2f);
+                }));
+            });
         }
     }
 }
