@@ -54,15 +54,14 @@ namespace BlackSpiritHelper.Core
             string itemQuint = AddItem("Quint", "000000", true).Name;
             string itemMuraka = AddItem("Muraka", "000000", true).Name;
 
-            // Schedule Template list.
-            TemplatePredefinedList = new List<ScheduleTemplateDataViewModel>
+            // Schedule templates.
+            #region Template: BDO-EU
+            AddTemplate(new ScheduleTemplateDataViewModel
             {
-                #region Template: BDO-EU
-                new ScheduleTemplateDataViewModel
-                {
-                    LastUpdate = new DateTime(2019, 8, 5).Ticks,
-                    TimeZone = RegionTimeZone.EU,
-                    Schedule = new ObservableCollection<ScheduleTemplateDayDataViewModel>
+                LastUpdate = new DateTime(2019, 8, 5).Ticks,
+                Title = "BDO-EU",
+                TimeZone = RegionTimeZone.EU,
+                Schedule = new ObservableCollection<ScheduleTemplateDayDataViewModel>
                     {
                         #region Monday
                         new ScheduleTemplateDayDataViewModel
@@ -474,15 +473,16 @@ namespace BlackSpiritHelper.Core
                         },
 	                    #endregion
                     },
-                },
-	            #endregion
+            }, true);
+            #endregion
 
-                #region Template: BDO-NA
-                new ScheduleTemplateDataViewModel
-                {
-                    LastUpdate = new DateTime(2019, 8, 5).Ticks,
-                    TimeZone = RegionTimeZone.NA,
-                    Schedule = new ObservableCollection<ScheduleTemplateDayDataViewModel>
+            #region Template: BDO-NA
+            AddTemplate(new ScheduleTemplateDataViewModel
+            {
+                LastUpdate = new DateTime(2019, 8, 5).Ticks,
+                Title = "BDO-NA",
+                TimeZone = RegionTimeZone.NA,
+                Schedule = new ObservableCollection<ScheduleTemplateDayDataViewModel>
                     {
                         #region Monday
                         new ScheduleTemplateDayDataViewModel
@@ -894,89 +894,89 @@ namespace BlackSpiritHelper.Core
                         },
 	                    #endregion
                     },
-                },
-	            #endregion
+            }, true);
+            #endregion
 
-/*                #region Template: BDO-RU
-                new ScheduleTemplateDataViewModel
-                {
-                    LastUpdate = new DateTime(2019, 8, 5).Ticks,
-                    TimeZone = RegionTimeZone.RU,
-                    Schedule = new ObservableCollection<ScheduleTemplateDayDataViewModel>
-                    {
-                        #region Monday
-                        new ScheduleTemplateDayDataViewModel
-                        {
-                            DayOfWeek = DayOfWeek.Monday,
-                            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
-                            {
-                            }
-                        },
-	                    #endregion
+            #region Template: BDO-RU
+            //AddTemplate(new ScheduleTemplateDataViewModel
+            //{
+            //    LastUpdate = new DateTime(2019, 8, 5).Ticks,
+            //    Title = "BDO-RU",
+            //    TimeZone = RegionTimeZone.RU,
+            //    Schedule = new ObservableCollection<ScheduleTemplateDayDataViewModel>
+            //    {
+            //        #region Monday
+            //        new ScheduleTemplateDayDataViewModel
+            //        {
+            //            DayOfWeek = DayOfWeek.Monday,
+            //            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+            //            {
+            //            }
+            //        },
+            //        #endregion
 
-                        #region Tuesday
-                        new ScheduleTemplateDayDataViewModel
-                        {
-                            DayOfWeek = DayOfWeek.Tuesday,
-                            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
-                            {
-                            }
-                        },
-	                    #endregion
+            //        #region Tuesday
+            //        new ScheduleTemplateDayDataViewModel
+            //        {
+            //            DayOfWeek = DayOfWeek.Tuesday,
+            //            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+            //            {
+            //            }
+            //        },
+            //        #endregion
 
-                        #region Wednesday
-                        new ScheduleTemplateDayDataViewModel
-                        {
-                            DayOfWeek = DayOfWeek.Wednesday,
-                            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
-                            {
-                            }
-                        },
-	                    #endregion
+            //        #region Wednesday
+            //        new ScheduleTemplateDayDataViewModel
+            //        {
+            //            DayOfWeek = DayOfWeek.Wednesday,
+            //            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+            //            {
+            //            }
+            //        },
+            //        #endregion
 
-                        #region Thursday
-                        new ScheduleTemplateDayDataViewModel
-                        {
-                            DayOfWeek = DayOfWeek.Thursday,
-                            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
-                            {
-                            }
-                        },
-	                    #endregion
+            //        #region Thursday
+            //        new ScheduleTemplateDayDataViewModel
+            //        {
+            //            DayOfWeek = DayOfWeek.Thursday,
+            //            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+            //            {
+            //            }
+            //        },
+            //        #endregion
 
-                        #region Friday
-                        new ScheduleTemplateDayDataViewModel
-                        {
-                            DayOfWeek = DayOfWeek.Friday,
-                            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
-                            {
-                            }
-                        },
-	                    #endregion
+            //        #region Friday
+            //        new ScheduleTemplateDayDataViewModel
+            //        {
+            //            DayOfWeek = DayOfWeek.Friday,
+            //            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+            //            {
+            //            }
+            //        },
+            //        #endregion
 
-                        #region Saturday
-                        new ScheduleTemplateDayDataViewModel
-                        {
-                            DayOfWeek = DayOfWeek.Saturday,
-                            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
-                            {
-                            }
-                        },
-	                    #endregion
+            //        #region Saturday
+            //        new ScheduleTemplateDayDataViewModel
+            //        {
+            //            DayOfWeek = DayOfWeek.Saturday,
+            //            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+            //            {
+            //            }
+            //        },
+            //        #endregion
 
-                        #region Sunday
-                        new ScheduleTemplateDayDataViewModel
-                        {
-                            DayOfWeek = DayOfWeek.Sunday,
-                            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
-                            {
-                            }
-                        },
-	                    #endregion
-                    },
-                },
-	            #endregion*/
-            };
+            //        #region Sunday
+            //        new ScheduleTemplateDayDataViewModel
+            //        {
+            //            DayOfWeek = DayOfWeek.Sunday,
+            //            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+            //            {
+            //            }
+            //        },
+            //        #endregion
+            //    },
+            //}, true);
+            #endregion
         }
 
         #endregion

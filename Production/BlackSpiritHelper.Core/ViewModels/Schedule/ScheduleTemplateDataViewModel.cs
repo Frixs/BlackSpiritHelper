@@ -33,6 +33,11 @@ namespace BlackSpiritHelper.Core
         private bool mIsInitialized = false;
 
         /// <summary>
+        /// Says if the template is predefined or not.
+        /// </summary>
+        private bool mIsPredefined = false;
+
+        /// <summary>
         /// Schedule.
         /// </summary>
         private ObservableCollection<ScheduleTemplateDayDataViewModel> mSchedule;
@@ -46,6 +51,11 @@ namespace BlackSpiritHelper.Core
         /// It represents <see cref="DateTime.Ticks"/>.
         /// </summary>
         public long LastUpdate { get; set; }
+
+        /// <summary>
+        /// Title of the template (unique).
+        /// </summary>
+        public string Title { get; set; }
 
         /// <summary>
         /// Time zone.
@@ -73,6 +83,7 @@ namespace BlackSpiritHelper.Core
         /// It is used to xaml presentation.
         /// We need copy, because we are modifying it and we do not want to have possibility to save it as modified.
         /// </summary>
+        [XmlIgnore]
         public ObservableCollection<ScheduleTemplateDayDataViewModel> SchedulePresenter { get; set; }
 
         /// <summary>
@@ -86,6 +97,12 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         [XmlIgnore]
         public bool IsSchedulePresenterConvertedFlag { get; private set; } = false;
+
+        /// <summary>
+        /// Says if the template is predefined or not.
+        /// </summary>
+        [XmlIgnore]
+        public bool IsPredefined => mIsPredefined;
 
         #endregion
 
@@ -110,12 +127,14 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Initialize the instance.
         /// </summary>
-        public void Init()
+        /// <param name="isPredefined"></param>
+        public void Init(bool isPredefined = false)
         {
             if (mIsInitialized)
                 return;
             mIsInitialized = true;
 
+            mIsPredefined = isPredefined;
             UpdatePresenter();
         }
 
@@ -144,12 +163,12 @@ namespace BlackSpiritHelper.Core
             {
                 if (IsSchedulePresenterConverted)
                 {
-                    if (ConvertScheduleToGivenTimeZone())
+                    if (ConvertSchedulePresenterToGivenTimeZone())
                         IsSchedulePresenterConverted = false;
                 }
                 else
                 {
-                    if (ConvertScheduleToLocal())
+                    if (ConvertSchedulePresenterToLocal())
                         IsSchedulePresenterConverted = true;
                 }
 
@@ -158,10 +177,10 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Convert schedule to user local time zone.
+        /// Convert <see cref="SchedulePresenter"/> to user local time zone.
         /// </summary>
         /// <returns></returns>
-        private bool ConvertScheduleToLocal()
+        private bool ConvertSchedulePresenterToLocal()
         {
             DateTime todayDate = DateTime.Today;
             List<ScheduleTemplateDayTimeDataViewModel> alreadyChecked = new List<ScheduleTemplateDayTimeDataViewModel>();
@@ -193,23 +212,17 @@ namespace BlackSpiritHelper.Core
                     // Transform local date to pretend as remote.
                     // Transform it to UTC first without impact on date. We just want to change time zone offset of the date.
                     currDate = currDate.ToOffset(TimeSpan.Zero);
-                    if (localOffset.Ticks > 0)
-                        currDate += localOffset;
-                    else
-                        currDate -= localOffset;
+                    currDate += localOffset;
                     // Transform it from UTC to remote zone (again, without impact on date).
                     currDate = currDate.ToOffset(remoteOffset);
-                    if (remoteOffset.Ticks > 0)
-                        currDate += remoteOffset;
-                    else
-                        currDate -= remoteOffset;
-
+                    currDate -= remoteOffset;
+                    
                     // Transform our pretended remote date to user's local timezone.
                     DateTime localDate = TimeZoneInfo.ConvertTimeFromUtc(
                         currDate.UtcDateTime, // We do not want to convert time with DST offset. If we so then we need to use TimeZoneInfo.ConvertTimeToUtc .
                         TimeZoneInfo.Local
                         );
-
+                    
                     // Set new time of the day.
                     time.Time = localDate.TimeOfDay;
 
@@ -233,10 +246,10 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Convert schedule to given time zone.
+        /// Convert <see cref="SchedulePresenter"/> to given time zone (default value of <see cref="Schedule"/>).
         /// </summary>
         /// <returns></returns>
-        private bool ConvertScheduleToGivenTimeZone()
+        private bool ConvertSchedulePresenterToGivenTimeZone()
         {
             // Get default values from original.
             UpdatePresenter();
@@ -260,6 +273,17 @@ namespace BlackSpiritHelper.Core
                 return wanted;
 
             return wanted - current;
+        }
+
+        /// <summary>
+        /// Get offset, difference between two offsets.
+        /// </summary>
+        /// <param name="from">Offset.</param>
+        /// <param name="to">Offset.</param>
+        /// <returns></returns>
+        private TimeSpan GetTimeZoneOffsetDifference(TimeSpan from, TimeSpan to)
+        {
+            return to - from;
         }
 
         /// <summary>
