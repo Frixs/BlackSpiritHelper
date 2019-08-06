@@ -22,7 +22,42 @@
 
                                     <StackPanel Orientation="Vertical"
                                                 Background="{StaticResource ScheduleCalBackgroundBrushKey}">
-                                        <Button Content="1" Command="{Binding ToggleLocalCalendarTimeCommand}" Width="300" Padding="10" />
+
+                                        <StackPanel Orientation="Horizontal" Margin="10">
+                                            <!-- Toggle Local calendar time Button -->
+                                            <Button Command="{Binding ToggleLocalCalendarTimeCommand}"
+                                                    Padding="10"
+                                                    Width="150"
+                                                    HorizontalAlignment="Left">
+                                                <Button.Style>
+                                                    <Style TargetType="Button" BasedOn="{StaticResource RegularButton}">
+                                                        <Setter Property="Content" Value="Default Time View" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsSchedulePresenterConverted}" Value="True">
+                                                                <Setter Property="Content" Value="Local Time View" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Button.Style>
+                                            </Button>
+
+                                            <TextBlock FontFamily="{StaticResource LatoMediumItalic}"
+                                                       FontSize="14"
+                                                       Foreground="{StaticResource ScheduleCalForegroundBrushKey}"
+                                                       Margin="10 0 0 0"
+                                                       VerticalAlignment="Center">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Text" Value="{Binding TimeZone, Converter={local:ScheduleCalTimeZoneToStringConverter}}" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsSchedulePresenterConverted}" Value="True">
+                                                                <Setter Property="Text" Value="{Binding TimeZone, Converter={local:ScheduleCalTimeZoneToStringConverter}, ConverterParameter=True}" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </StackPanel>
                                         <ScrollViewer HorizontalScrollBarVisibility="Auto" 
                                                       VerticalScrollBarVisibility="Disabled" 
                                                       PreviewMouseWheel="ScrollViewer_PreviewMouseWheel"

@@ -1,4 +1,6 @@
-﻿using System.Xml.Serialization;
+﻿using System.Threading.Tasks;
+using System.Windows.Input;
+using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
 {
@@ -38,6 +40,22 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
+        #region Commands
+
+        /// <summary>
+        /// Command to add item to ignored list.
+        /// </summary>
+        [XmlIgnore]
+        public ICommand AddItemToIgnoredCommand { get; set; }
+
+        /// <summary>
+        /// Command to remove item from ignored list.
+        /// </summary>
+        [XmlIgnore]
+        public ICommand RemoveItemFromIgnoredCommand { get; set; }
+
+        #endregion
+
         #region Constructor
 
         /// <summary>
@@ -45,6 +63,8 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public ScheduleItemDataViewModel()
         {
+            // Create commands.
+            CreateCommands();
         }
 
         /// <summary>
@@ -58,6 +78,45 @@ namespace BlackSpiritHelper.Core
             mIsInitialized = true;
 
             mIsPredefined = isPredefined;
+        }
+
+        #endregion
+
+        #region Command Methods
+
+        /// <summary>
+        /// Create commands.
+        /// </summary>
+        private void CreateCommands()
+        {
+            AddItemToIgnoredCommand = new RelayParameterizedCommand(async (parameter) => await AddItemToIgnoredAsync(parameter));
+            RemoveItemFromIgnoredCommand = new RelayParameterizedCommand(async (parameter) => await RemoveItemFromIgnoredAsync(parameter));
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private async Task AddItemToIgnoredAsync(object parameter)
+        {
+            if (!parameter.GetType().Equals(typeof(string)))
+                return;
+            string par = (string)parameter;
+
+            System.Console.WriteLine("A " + par);
+            // TODO.
+            await Task.Delay(1);
+        }
+
+        private async Task RemoveItemFromIgnoredAsync(object parameter)
+        {
+            if (!parameter.GetType().Equals(typeof(string)))
+                return;
+            string par = (string)parameter;
+
+            System.Console.WriteLine("B " + par);
+            // TODO.
+            await Task.Delay(1);
         }
 
         #endregion

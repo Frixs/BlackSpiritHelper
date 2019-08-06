@@ -103,6 +103,17 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
+        /// List of ignored items.
+        /// </summary>
+        public ObservableCollection<string> ItemIgnoredList { get; set; } = new ObservableCollection<string>();
+
+        /// <summary>
+        /// List of ignored items.
+        /// </summary>
+        [XmlIgnore]
+        public ObservableCollection<ScheduleItemDataViewModel> ItemIgnoredListPresenter { get; private set; }
+
+        /// <summary>
         /// Offset modifier for the local time.
         /// </summary>
         [XmlIgnore]
@@ -136,6 +147,10 @@ namespace BlackSpiritHelper.Core
 
         protected override void SetupMethod()
         {
+            // Check duplicity.
+            CheckItemDuplicityCustom();
+            CheckTemplateDuplicityCustom();
+
             // Initialize items.
             for (int i = 0; i < ItemPredefinedList.Count; i++)
                 ItemPredefinedList[i].Init(true);
@@ -152,6 +167,14 @@ namespace BlackSpiritHelper.Core
             SelectedTemplate = GetTemplateByName(SelectedTemplateTitle);
             if (SelectedTemplate == null)
                 SelectedTemplate = TemplatePredefinedList[0];
+
+            // Set Ignored list.
+            for (int i = 0; i < ItemIgnoredList.Count; i++)
+            {
+                var item = GetItemByName(ItemIgnoredList[i]);
+                if (item != null && !ItemIgnoredListPresenter.Contains(item))
+                    ItemIgnoredListPresenter.Add(item);
+            }
         }
 
         #endregion
@@ -227,6 +250,18 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
+        /// Is item ignored.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public bool IsItemIgnored(ScheduleItemDataViewModel item)
+        {
+            if (ItemIgnoredList.Contains(item.Name))
+                return true;
+            return false;
+        }
+
+        /// <summary>
         /// Add a new template.
         /// </summary>
         /// <param name="template"></param>
@@ -287,7 +322,6 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void CheckItemDuplicityCustom()
         {
-
             for (int i = 0; i < ItemPredefinedList.Count; i++)
             {
                 ItemCustomList.RemoveAll(

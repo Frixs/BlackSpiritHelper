@@ -25,6 +25,7 @@ namespace BlackSpiritHelper
                 {
                     // Animation.
                     await Calendar.SlideAndFadeInFromBottom(10, 1.2f);
+                    await Settings.SlideAndFadeInFromBottom(10, 1.2f);
                 }));
             });
         }

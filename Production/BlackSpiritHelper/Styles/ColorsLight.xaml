@@ -198,10 +198,20 @@
     <Color x:Key="TimerListItemWarningColor">#ec1e24</Color>
     <SolidColorBrush x:Key="TimerListItemWarningColorBrushKey" Color="{StaticResource TimerListItemWarningColor}" />
 
+    <!-- Schedule -->
+    <Color x:Key="ScheduleForeground">#15151a</Color>
+    <SolidColorBrush x:Key="ScheduleForegroundBrushKey" Color="{StaticResource ScheduleForeground}" />
+
+    <Color x:Key="ScheduleForegroundTime">#c7c7c7</Color>
+    <SolidColorBrush x:Key="ScheduleForegroundTimeBrushKey" Color="{StaticResource ScheduleForegroundTime}" />
+
     <!-- Schedule - Calendar -->
     <Color x:Key="ScheduleCalBackground">#f0f0f0</Color>
     <SolidColorBrush x:Key="ScheduleCalBackgroundBrushKey" Color="{StaticResource ScheduleCalBackground}" />
 
+    <Color x:Key="ScheduleCalForeground">#888888</Color>
+    <SolidColorBrush x:Key="ScheduleCalForegroundBrushKey" Color="{StaticResource ScheduleCalForeground}" />
+    
     <Color x:Key="ScheduleCalDayBoxBackground">#15151a</Color>
     <SolidColorBrush x:Key="ScheduleCalDayBoxBackgroundBrushKey" Color="{StaticResource ScheduleCalDayBoxBackground}" />
 
@@ -373,4 +383,29 @@
     <Color x:Key="OverlayCheckboxCheckedAlt">#ec1e24</Color>
     <SolidColorBrush x:Key="OverlayCheckboxCheckedAltBrushKey" Color="{StaticResource OverlayCheckboxCheckedAlt}" />
 
+    <!-- Schedule Button - Remove -->
+    <Color x:Key="ScheduleRemoveButtonBackground">#c7c7c7</Color>
+    <SolidColorBrush x:Key="ScheduleRemoveButtonBackgroundBrushKey" Color="{StaticResource ScheduleRemoveButtonBackground}" />
+
+    <Color x:Key="ScheduleRemoveButtonForeground">#15151a</Color>
+    <SolidColorBrush x:Key="ScheduleRemoveButtonForegroundBrushKey" Color="{StaticResource ScheduleRemoveButtonForeground}" />
+
+    <Color x:Key="ScheduleRemoveButtonHover">#ec1e24</Color>
+    <SolidColorBrush x:Key="ScheduleRemoveButtonHoverBrushKey" Color="{StaticResource ScheduleRemoveButtonHover}" />
+
+    <Color x:Key="ScheduleRemoveButtonAction">#B3B3B3</Color>
+    <SolidColorBrush x:Key="ScheduleRemoveButtonActionBrushKey" Color="{StaticResource ScheduleRemoveButtonAction}" />
+
+    <!-- Schedule Button - Add -->
+    <Color x:Key="ScheduleAddButtonBackground">#c7c7c7</Color>
+    <SolidColorBrush x:Key="ScheduleAddButtonBackgroundBrushKey" Color="{StaticResource ScheduleAddButtonBackground}" />
+
+    <Color x:Key="ScheduleAddButtonForeground">#15151a</Color>
+    <SolidColorBrush x:Key="ScheduleAddButtonForegroundBrushKey" Color="{StaticResource ScheduleAddButtonForeground}" />
+
+    <Color x:Key="ScheduleAddButtonHover">#2FB018</Color>
+    <SolidColorBrush x:Key="ScheduleAddButtonHoverBrushKey" Color="{StaticResource ScheduleAddButtonHover}" />
+
+    <Color x:Key="ScheduleAddButtonAction">#B3B3B3</Color>
+    <SolidColorBrush x:Key="ScheduleAddButtonActionBrushKey" Color="{StaticResource ScheduleAddButtonAction}" />
 </ResourceDictionary>

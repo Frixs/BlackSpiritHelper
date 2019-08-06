@@ -17,24 +17,69 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Border Padding="10" Grid.Row="0">
                 <Grid>
-                    <TextBlock Text="Select Template"
-                                FontSize="14"
-                                Margin="0 0 0 5"/>
-                    <ComboBox Name="TemplateComboBox" Margin="0 0 0 50"
-                                HorizontalAlignment="Center"
-                                SelectedItem="{Binding SelectedTemplate}"
-                                ItemsSource="{Binding TemplateListPresenter}">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Title}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        
+                        <!-- Next title & time -->
+                        <StackPanel Orientation="Horizontal" Grid.Row="0">
+                            <TextBlock Text="Next:"
+                                       Foreground="{StaticResource ScheduleForegroundBrushKey}"
+                                       FontFamily="{StaticResource LatoHeavy}"
+                                       FontSize="32"
+                                       VerticalAlignment="Bottom"/>
+                            <TextBlock Text="00:00:00"
+                                       Foreground="{StaticResource ScheduleForegroundTimeBrushKey}"
+                                       FontFamily="{StaticResource LatoHeavy}"
+                                       FontSize="28"
+                                       VerticalAlignment="Bottom"
+                                       Margin="10 0 0 0"/>
+                        </StackPanel>
+                        <!-- Next items -->
+                        <StackPanel Orientation="Vertical" Grid.Row="1">
+                            <TextBlock Text="Kzarka, Nouver"
+                                       FontFamily="{StaticResource LatoBoldItalic}"
+                                       FontSize="16"/>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Column="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <!-- Template ComboBox -->
+                        <TextBlock Text="Template:" Grid.Column="0"
+                                   FontFamily="{StaticResource LatoBold}"
+                                   FontSize="14"
+                                   Foreground="{StaticResource ScheduleForegroundBrushKey}"
+                                   VerticalAlignment="Center"
+                                   Margin="10 0"/>
+                        <ComboBox Name="TemplateComboBox" Grid.Column="1"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  SelectedItem="{Binding SelectedTemplate}"
+                                  ItemsSource="{Binding TemplateListPresenter}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Title}"
+                                               FontFamily="{StaticResource LatoRegular}">
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
-                                                <Setter Property="Foreground" Value="Black" />
+                                                <Setter Property="Foreground" Value="{StaticResource ScheduleForegroundBrushKey}" />
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding IsPredefined}" Value="True">
                                                         <Setter Property="Foreground" Value="DarkGreen" />
@@ -43,17 +88,22 @@
                                             </Style>
                                         </TextBlock.Style>
                                     </TextBlock>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </Grid>
                 </Grid>
             </Border>
 
             <!-- Calendar/Schedule -->
             <local:ScheduleCalendarControl DataContext="{Binding SelectedTemplate}" Grid.Row="1"
                                             x:Name="Calendar" Visibility="Collapsed" />
-
+            
+            <!-- Schedule Settings -->
+            <Border Grid.Row="2"
+                    Padding="10">
+                <local:ScheduleSettingsControl x:Name="Settings" />
+            </Border>
         </Grid>
     </ScrollViewer>
 </local:BasePage>
