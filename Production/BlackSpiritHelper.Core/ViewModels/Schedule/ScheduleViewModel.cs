@@ -111,7 +111,22 @@ namespace BlackSpiritHelper.Core
         /// List of ignored items.
         /// </summary>
         [XmlIgnore]
-        public ObservableCollection<ScheduleItemDataViewModel> ItemIgnoredListPresenter { get; private set; }
+        public ObservableCollection<ScheduleItemDataViewModel> ItemIgnoredListPresenter { get; private set; } = new ObservableCollection<ScheduleItemDataViewModel>();
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [XmlIgnore]
+        public ObservableCollection<ScheduleItemDataViewModel> ItemIgnoreExceptList
+        {
+            get
+            {
+                var l = new List<ScheduleItemDataViewModel>();
+                l.AddRange(ItemPredefinedList);
+                l.AddRange(ItemCustomList);
+                return new ObservableCollection<ScheduleItemDataViewModel>(l.Except(ItemIgnoredListPresenter).ToList());
+            }
+        }
 
         /// <summary>
         /// Offset modifier for the local time.
@@ -175,6 +190,13 @@ namespace BlackSpiritHelper.Core
                 if (item != null && !ItemIgnoredListPresenter.Contains(item))
                     ItemIgnoredListPresenter.Add(item);
             }
+
+            // Sort collections.
+            TemplatePredefinedList = new List<ScheduleTemplateDataViewModel>(TemplatePredefinedList.OrderBy(o => o.Title));
+            ItemPredefinedList = new List<ScheduleItemDataViewModel>(ItemPredefinedList.OrderBy(o => o.Name));
+            SortTemplateCustomList();
+            SortItemCustomList();
+            SortItemIgnoredList();
         }
 
         #endregion
@@ -240,9 +262,9 @@ namespace BlackSpiritHelper.Core
         public ScheduleItemDataViewModel GetItemByName(string name)
         {
             ScheduleItemDataViewModel ret = null;
-            
+
             ret = ItemPredefinedList.FirstOrDefault(o => o.Name.ToLower().Equals(name.ToLower().Trim()));
-            
+
             if (ret == null)
                 ret = ItemCustomList.FirstOrDefault(o => o.Name.ToLower().Equals(name.ToLower().Trim()));
 
@@ -311,6 +333,30 @@ namespace BlackSpiritHelper.Core
                 ret = TemplateCustomList.FirstOrDefault(o => o.Title.ToLower().Equals(title.ToLower().Trim()));
 
             return ret;
+        }
+
+        /// <summary>
+        /// Sort collection <see cref="TemplateCustomList"/>.
+        /// </summary>
+        public void SortTemplateCustomList()
+        {
+            TemplateCustomList = new ObservableCollection<ScheduleTemplateDataViewModel>(TemplateCustomList.OrderBy(o => o.Title));
+        }
+
+        /// <summary>
+        /// Sort collection <see cref="ItemCustomList"/>
+        /// </summary>
+        public void SortItemCustomList()
+        {
+            ItemCustomList = new ObservableCollection<ScheduleItemDataViewModel>(ItemCustomList.OrderBy(o => o.Name));
+        }
+
+        /// <summary>
+        /// Sort collection <see cref="ItemIgnoredListPresenter"/>
+        /// </summary>
+        public void SortItemIgnoredList()
+        {
+            ItemIgnoredListPresenter = new ObservableCollection<ScheduleItemDataViewModel>(ItemIgnoredListPresenter.OrderBy(o => o.Name));
         }
 
         #endregion

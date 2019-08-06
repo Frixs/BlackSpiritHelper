@@ -24,37 +24,20 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                
-                                <!-- Predefined -->
-                                <ItemsControl Grid.Row="1" ItemsSource="{Binding ItemPredefinedList, Converter={local:ScheduleItemListSortConverter}}">
+
+                                <TextBlock Text="To Alert:"
+                                           FontFamily="{StaticResource LatoBold}"
+                                           Foreground="{StaticResource ScheduleForegroundBrushKey}"
+                                           FontSize="20"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Bottom" />
+
+                                <!-- Alert allowed item list -->
+                                <ItemsControl Grid.Row="1" ItemsSource="{Binding ItemIgnoreExceptList}">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
                                             <WrapPanel Orientation="Horizontal" Margin="5 5 5 0">
-                                            </WrapPanel>
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <Button Content="{Binding Name}"
-                                                    Command="{Binding AddItemToIgnoredCommand}"
-                                                    CommandParameter="{Binding Name}"
-                                                    Style="{StaticResource ScheduleButtonRemove}"
-                                                    Foreground="{Binding ColorHEX, Converter={local:StringRGBToBrushConverter}}"
-                                                    FontFamily="{StaticResource LatoHeavy}"
-                                                    Padding="10"
-                                                    Margin="5" />
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-
-                                <!-- Custom -->
-                                <ItemsControl Grid.Row="2" ItemsSource="{Binding ItemCustomList, Converter={local:ScheduleItemListSortConverter}}">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <WrapPanel Orientation="Horizontal" Margin="5 0 5 5">
                                             </WrapPanel>
                                         </ItemsPanelTemplate>
                                     </ItemsControl.ItemsPanel>
@@ -74,8 +57,20 @@
                                 </ItemsControl>
                             </Grid>
                             <!-- Ignored list -->
-                            <Grid Grid.Row="1">
-                                <ItemsControl ItemsSource="{Binding ItemIgnoredListPresenter, Converter={local:ScheduleItemListSortConverter}}">
+                            <Grid Grid.Row="1" Margin="0 10 0 0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Text="To Ignore:"
+                                           FontFamily="{StaticResource LatoBold}"
+                                           Foreground="{StaticResource ScheduleForegroundBrushKey}"
+                                           FontSize="20"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Bottom"/>
+                                
+                                <ItemsControl Grid.Row="1" ItemsSource="{Binding ItemIgnoredListPresenter}">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
                                             <WrapPanel Orientation="Horizontal" Margin="5">

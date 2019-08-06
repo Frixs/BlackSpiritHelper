@@ -215,7 +215,6 @@
     </Compile>
     <Compile Include="ValueConverters\BaseMultiValueConverter.cs" />
     <Compile Include="ValueConverters\BooleanToContentConverter.cs" />
-    <Compile Include="ValueConverters\Schedule\ScheduleItemListSortConverter.cs" />
     <Compile Include="ValueConverters\Schedule\ScheduleCalTimeZoneToStringConverter.cs" />
     <Compile Include="ValueConverters\Timer\TimerOverlaySizeMarginValueConverter.cs" />
     <Compile Include="ValueConverters\InvertBooleanConverter.cs" />

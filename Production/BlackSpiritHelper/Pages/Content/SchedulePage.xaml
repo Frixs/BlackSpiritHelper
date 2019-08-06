@@ -41,7 +41,7 @@
                                        FontFamily="{StaticResource LatoHeavy}"
                                        FontSize="32"
                                        VerticalAlignment="Bottom"/>
-                            <TextBlock Text="00:00:00"
+                            <TextBlock Text="0.00:00:00"
                                        Foreground="{StaticResource ScheduleForegroundTimeBrushKey}"
                                        FontFamily="{StaticResource LatoHeavy}"
                                        FontSize="28"

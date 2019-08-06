@@ -41,7 +41,6 @@ namespace BlackSpiritHelper.Core
         private void Init()
         {
             // Schedule Item list.
-            ItemPredefinedList = new List<ScheduleItemDataViewModel>();
             string itemKzarka = AddItem("Kzarka", "fc2121", true).Name;
             string itemKaranda = AddItem("Karanda", "004fcf", true).Name;
             string itemOffin = AddItem("Offin", "0087e0", true).Name;

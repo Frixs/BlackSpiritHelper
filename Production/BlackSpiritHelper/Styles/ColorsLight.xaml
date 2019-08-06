@@ -199,7 +199,7 @@
     <SolidColorBrush x:Key="TimerListItemWarningColorBrushKey" Color="{StaticResource TimerListItemWarningColor}" />
 
     <!-- Schedule -->
-    <Color x:Key="ScheduleForeground">#15151a</Color>
+    <Color x:Key="ScheduleForeground">#15151A</Color>
     <SolidColorBrush x:Key="ScheduleForegroundBrushKey" Color="{StaticResource ScheduleForeground}" />
 
     <Color x:Key="ScheduleForegroundTime">#c7c7c7</Color>

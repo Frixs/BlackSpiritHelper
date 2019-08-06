@@ -97,25 +97,61 @@ namespace BlackSpiritHelper.Core
 
         #region Private Methods
 
+        /// <summary>
+        /// Add item to ignore list.
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         private async Task AddItemToIgnoredAsync(object parameter)
         {
-            if (!parameter.GetType().Equals(typeof(string)))
+            if (parameter == null || !parameter.GetType().Equals(typeof(string)))
                 return;
             string par = (string)parameter;
 
-            System.Console.WriteLine("A " + par);
-            // TODO.
+            // Get item.
+            var item = IoC.DataContent.ScheduleDesignModel.GetItemByName(par);
+            if (item == null)
+            {
+                IoC.Logger.Log($"No item found under the name '{par}'!", LogLevel.Warning);
+                return;
+            }
+
+            // Add.
+            IoC.DataContent.ScheduleDesignModel.ItemIgnoredList.Add(item.Name);
+            IoC.DataContent.ScheduleDesignModel.ItemIgnoredListPresenter.Add(item);
+
+            // Resort.
+            IoC.DataContent.ScheduleDesignModel.SortItemIgnoredList();
+
             await Task.Delay(1);
         }
 
+        /// <summary>
+        /// Remove item from ignore list.
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         private async Task RemoveItemFromIgnoredAsync(object parameter)
         {
-            if (!parameter.GetType().Equals(typeof(string)))
+            if (parameter == null || !parameter.GetType().Equals(typeof(string)))
                 return;
             string par = (string)parameter;
 
-            System.Console.WriteLine("B " + par);
-            // TODO.
+            // Get item.
+            var item = IoC.DataContent.ScheduleDesignModel.GetItemByName(par);
+            if (item == null)
+            {
+                IoC.Logger.Log($"No item found under the name '{par}'!", LogLevel.Warning);
+                return;
+            }
+
+            // Remove.
+            IoC.DataContent.ScheduleDesignModel.ItemIgnoredList.RemoveAll(o => o.ToLower().Equals(item.Name.ToLower()));
+            IoC.DataContent.ScheduleDesignModel.ItemIgnoredListPresenter.Remove(item);
+
+            // Resort - to update list.
+            IoC.DataContent.ScheduleDesignModel.SortItemIgnoredList();
+
             await Task.Delay(1);
         }
 
