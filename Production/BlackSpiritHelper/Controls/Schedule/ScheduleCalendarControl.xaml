@@ -20,9 +20,16 @@
                             <ItemsControl.Template>
                                 <ControlTemplate>
 
-                                    <StackPanel Orientation="Vertical">
+                                    <StackPanel Orientation="Vertical"
+                                                Background="{StaticResource ScheduleCalBackgroundBrushKey}">
                                         <Button Content="1" Command="{Binding ToggleLocalCalendarTimeCommand}" Width="300" Padding="10" />
-                                        <ItemsPresenter />
+                                        <ScrollViewer HorizontalScrollBarVisibility="Auto" 
+                                                      VerticalScrollBarVisibility="Disabled" 
+                                                      PreviewMouseWheel="ScrollViewer_PreviewMouseWheel"
+                                                      Template="{StaticResource ScrollViewerHorizontalOnTopTemplate}"
+                                                      Padding="0 5">
+                                                <ItemsPresenter HorizontalAlignment="Left" />
+                                        </ScrollViewer>
                                     </StackPanel>
 
                                 </ControlTemplate>
@@ -47,7 +54,18 @@
                                             <ControlTemplate>
 
                                                 <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="{Binding DayOfWeek, Converter={local:ObjectToStringConverter}}" />
+                                                    <Border Padding="10"
+                                                            Margin="10 5 5 5"
+                                                            MinWidth="100"
+                                                            Background="{StaticResource ScheduleCalDayBoxBackgroundBrushKey}"
+                                                            VerticalAlignment="Center"
+                                                            HorizontalAlignment="Center"
+                                                            TextBlock.TextAlignment="Center">
+                                                        <TextBlock Text="{Binding DayOfWeek, Converter={local:ObjectToStringConverter}}" 
+                                                                   FontFamily="{StaticResource LatoBoldItalic}"
+                                                                   FontSize="14"
+                                                                   Foreground="{StaticResource ScheduleCalDayBoxForegroundBrushKey}" />
+                                                    </Border>
                                                     <ItemsPresenter />
                                                 </StackPanel>
 
@@ -63,10 +81,26 @@
                                                     <ItemsControl.Template>
                                                         <ControlTemplate>
 
-                                                            <StackPanel Orientation="Vertical" Margin="5">
-                                                                <TextBlock Text="{Binding Time, Converter={local:TimeSpanToStringConverter}, ConverterParameter='hm'}" />
-                                                                <ItemsPresenter />
-                                                            </StackPanel>
+                                                            <Border Padding="0"
+                                                                    Margin="5"
+                                                                    MinWidth="76"
+                                                                    MinHeight="76"
+                                                                    Background="{StaticResource ScheduleCalTimeBoxBackgroundBrushKey}">
+                                                                <StackPanel Orientation="Vertical">
+                                                                    <TextBlock Text="{Binding Time, Converter={local:TimeSpanToStringConverter}, ConverterParameter='hm'}" 
+                                                                               FontSize="14"
+                                                                               FontFamily="{StaticResource LatoBold}"
+                                                                               Foreground="{StaticResource ScheduleCalTimeBoxForegroundBrushKey}"
+                                                                               VerticalAlignment="Top"
+                                                                               HorizontalAlignment="Center"
+                                                                               Margin="10 10 10 5" />
+                                                                    <Border Style="{StaticResource FormSpacer}"/>
+                                                                    <ItemsPresenter Margin="10 5 10 10"
+                                                                                    VerticalAlignment="Bottom"
+                                                                                    HorizontalAlignment="Center"
+                                                                                    TextBlock.TextAlignment="Center" />
+                                                                </StackPanel>
+                                                            </Border>
 
                                                         </ControlTemplate>
                                                     </ItemsControl.Template>
@@ -76,7 +110,11 @@
                                                         <DataTemplate>
 
                                                             <TextBlock Text="{Binding Name}"
-                                                   FontFamily="{StaticResource LatoBold}" Foreground="{Binding ColorHEX, Converter={local:StringRGBToBrushConverter}}"/>
+                                                                       FontFamily="{StaticResource LatoHeavy}" 
+                                                                       FontSize="12"
+                                                                       Foreground="{Binding ColorHEX, Converter={local:StringRGBToBrushConverter}}"
+                                                                       >
+                                                            </TextBlock>
 
                                                         </DataTemplate>
                                                     </ItemsControl.ItemTemplate>

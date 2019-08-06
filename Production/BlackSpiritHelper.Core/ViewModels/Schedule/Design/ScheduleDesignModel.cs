@@ -42,15 +42,15 @@ namespace BlackSpiritHelper.Core
         {
             // Schedule Item list.
             ItemPredefinedList = new List<ScheduleItemDataViewModel>();
-            string itemKzarka = AddItem("Kzarka", "9c0017", true).Name;
-            string itemKaranda = AddItem("Karanda", "000000", true).Name;
-            string itemOffin = AddItem("Offin", "40c3cf", true).Name;
-            string itemNouver = AddItem("Nouver", "000000", true).Name;
-            string itemKutum = AddItem("Kutum", "000000", true).Name;
-            string itemVell = AddItem("Vell", "000000", true).Name;
-            string itemGarmoth = AddItem("Garmoth", "000000", true).Name;
-            string itemQuint = AddItem("Quint", "000000", true).Name;
-            string itemMuraka = AddItem("Muraka", "000000", true).Name;
+            string itemKzarka = AddItem("Kzarka", "fc2121", true).Name;
+            string itemKaranda = AddItem("Karanda", "004fcf", true).Name;
+            string itemOffin = AddItem("Offin", "0087e0", true).Name;
+            string itemNouver = AddItem("Nouver", "e68507", true).Name;
+            string itemKutum = AddItem("Kutum", "b108ff", true).Name;
+            string itemVell = AddItem("Vell", "009677", true).Name;
+            string itemGarmoth = AddItem("Garmoth", "d60229", true).Name;
+            string itemQuint = AddItem("Quint", "752300", true).Name;
+            string itemMuraka = AddItem("Muraka", "752300", true).Name;
 
             // Schedule templates.
             #region Template: BDO-EU

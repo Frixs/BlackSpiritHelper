@@ -198,6 +198,22 @@
     <Color x:Key="TimerListItemWarningColor">#ec1e24</Color>
     <SolidColorBrush x:Key="TimerListItemWarningColorBrushKey" Color="{StaticResource TimerListItemWarningColor}" />
 
+    <!-- Schedule - Calendar -->
+    <Color x:Key="ScheduleCalBackground">#f0f0f0</Color>
+    <SolidColorBrush x:Key="ScheduleCalBackgroundBrushKey" Color="{StaticResource ScheduleCalBackground}" />
+
+    <Color x:Key="ScheduleCalDayBoxBackground">#15151a</Color>
+    <SolidColorBrush x:Key="ScheduleCalDayBoxBackgroundBrushKey" Color="{StaticResource ScheduleCalDayBoxBackground}" />
+
+    <Color x:Key="ScheduleCalDayBoxForeground">#DFDFEC</Color>
+    <SolidColorBrush x:Key="ScheduleCalDayBoxForegroundBrushKey" Color="{StaticResource ScheduleCalDayBoxForeground}" />
+
+    <Color x:Key="ScheduleCalTimeBoxBackground">#c7c7c7</Color>
+    <SolidColorBrush x:Key="ScheduleCalTimeBoxBackgroundBrushKey" Color="{StaticResource ScheduleCalTimeBoxBackground}" />
+
+    <Color x:Key="ScheduleCalTimeBoxForeground">#15151a</Color>
+    <SolidColorBrush x:Key="ScheduleCalTimeBoxForegroundBrushKey" Color="{StaticResource ScheduleCalTimeBoxForeground}" />
+
     <!-- Regular Text Button - Red -->
     <Color x:Key="RegularTextButtonRedForeground">#ec1e24</Color>
     <SolidColorBrush x:Key="RegularTextButtonRedForegroundBrushKey" Color="{StaticResource RegularTextButtonRedForeground}" />
