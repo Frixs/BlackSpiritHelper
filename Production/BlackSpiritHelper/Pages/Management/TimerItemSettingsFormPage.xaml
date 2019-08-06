@@ -11,203 +11,204 @@
       d:DesignHeight="600" d:DesignWidth="500"
       Title="TimerItemSettingsFormPage">
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto" 
-                  Padding="10">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
 
-        <Grid HorizontalAlignment="Center"
-              VerticalAlignment="Center"
-              Width="400">
+        <Border Padding="10">
+            <Grid HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Width="400">
 
-            <!-- Go Back Button -->
-            <Button Content="{StaticResource FontAwesomeArrowLeftIcon}"
-                    Command="{Binding GoBackCommand}"
-                    Style="{StaticResource RegularButtonLight}" 
-                    FontFamily="{StaticResource FontAwesomeSolid}"
-                    Width="30"
-                    Height="30"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Panel.ZIndex="1"
-                    />
+                <!-- Go Back Button -->
+                <Button Content="{StaticResource FontAwesomeArrowLeftIcon}"
+                        Command="{Binding GoBackCommand}"
+                        Style="{StaticResource RegularButtonLight}" 
+                        FontFamily="{StaticResource FontAwesomeSolid}"
+                        Width="30"
+                        Height="30"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Panel.ZIndex="1"
+                        />
 
-            <StackPanel TextBlock.TextAlignment="Center">
+                <StackPanel TextBlock.TextAlignment="Center">
 
-                <!-- Form Title -->
-                <TextBlock Text="Settings"
-                           Style="{StaticResource FormTitle}" />
+                    <!-- Form Title -->
+                    <TextBlock Text="Settings"
+                               Style="{StaticResource FormTitle}" />
 
-                <!-- Form Subtitle -->
-                <TextBlock Text="Timer"
-                           Style="{StaticResource FormSubtitle}"
-                           Margin="0 0 0 50" />
+                    <!-- Form Subtitle -->
+                    <TextBlock Text="Timer"
+                               Style="{StaticResource FormSubtitle}"
+                               Margin="0 0 0 50" />
 
-                <!-- Timer Title -->
-                <TextBox Tag="Title" Margin="0 0 0 10"
-                         MaxLength="{Binding TimerItemDataViewModel.TitleAllowMaxChar}">
-                    <TextBox.Text>
-                        <Binding Path="Title"
-                                 UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <core:TimerTitleRule ValidationStep="UpdatedValue" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
-
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*" />
-                        <ColumnDefinition Width="2*" />
-                    </Grid.ColumnDefinitions>
-                    
-                    <!-- Icon Timer Shortcut -->
-                    <TextBox Tag="Icon Shortcut" Margin="0 0 5 10" Grid.Column="0"
-                             MaxLength="{Binding TimerItemDataViewModel.IconTitleAllowMaxChar}"
-                             >
+                    <!-- Timer Title -->
+                    <TextBox Tag="Title" Margin="0 0 0 10"
+                             MaxLength="{Binding TimerItemDataViewModel.TitleAllowMaxChar}">
                         <TextBox.Text>
-                            <Binding Path="IconTitleShortcut" 
+                            <Binding Path="Title"
                                      UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
-                                    <core:TimerIconTitleShortcutRule ValidationStep="UpdatedValue" />
+                                    <core:TimerTitleRule ValidationStep="UpdatedValue" />
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>
                     </TextBox>
-                    <!-- Icon Timer Color Picker -->
-                    <xctk:ColorPicker Margin="5 0 0 10" Grid.Column="1"
-                                      SelectedColor="{Binding IconBackgroundHEX}"
-                                      ColorMode="ColorCanvas"
-                                      ShowDropDownButton="False"
-                                      UsingAlphaChannel="False"
-                                      ShowAvailableColors="False"
-                                      ShowStandardColors="False"
-                                      StandardButtonHeader=""
-                                      >
-                    </xctk:ColorPicker>
-                </Grid>
 
-                <!-- Timer Total Time -->
-                <xctk:TimeSpanUpDown Margin="0 0 0 30"
-                                     AllowTextInput="True"
-                                     DefaultValue="00:01:00"
-                                     Minimum="00:01:00"
-                                     Maximum="2:00:00:00"
-                                     Padding="6"
-                                     FontSize="20"
-                                     TextAlignment="Center">
-                    <xctk:TimeSpanUpDown.Value>
-                        <Binding Path="TimeDuration"
-                                 UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <core:TimerTimeDurationRule ValidationStep="UpdatedValue" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </xctk:TimeSpanUpDown.Value>
-                </xctk:TimeSpanUpDown>
-
-                <!-- Timer Start Countdown -->
-                <TextBlock Text="Start Countdown"
-                           FontSize="14"
-                           Margin="0 0 0 5"/>
-                <DockPanel VerticalAlignment="Center" Margin="0 0 0 30">
-                    <xctk:TimeSpanUpDown Margin="10 0 0 0"
-                                         AllowTextInput="True"
-                                         DefaultValue="00:00:00"
-                                         Minimum="00:00:00"
-                                         Maximum="02:00:00"
-                                         Value="{Binding ElementName=slValue, 
-                                               Path=Value, 
-                                               UpdateSourceTrigger=PropertyChanged,
-                                               Converter={local:SecondsToTimeFormatStringConverter}}" 
-                                         DockPanel.Dock="Right" 
-                                         TextAlignment="Right" 
-                                         Width="100" />
-                    <Slider Maximum="7200" TickPlacement="BottomRight" Name="slValue"
-                            TickFrequency="60" 
-                            IsSnapToTickEnabled="True">
-                        <Slider.Value>
-                            <Binding Path="CountdownDuration"
-                                     UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <core:TimerCountdownDurationRule ValidationStep="UpdatedValue" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </Slider.Value>
-                    </Slider>
-                </DockPanel>
-
-                <Grid Margin="0 0 0 30">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*" />
-                        <ColumnDefinition Width="2*" />
-                    </Grid.ColumnDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="2*" />
+                        </Grid.ColumnDefinitions>
                     
-                    <!-- Timer Has Loop -->
-                    <StackPanel Grid.Column="0" Orientation="Vertical">
-                        <TextBlock Text="Auto Repeat (Loop)"
-                                   FontSize="14"
-                                   Margin="0 0 0 5"/>
-                        <CheckBox IsChecked="{Binding IsLoopActive}"
-                                  HorizontalAlignment="Center"/>
-                    </StackPanel>
-                    <!-- Show On Overlay -->
-                    <StackPanel Grid.Column="1" Orientation="Vertical">
-                        <TextBlock Text="Show In Overlay" Grid.Column="1"
-                                   FontSize="14"
-                                   Margin="0 0 0 5"/>
-                        <CheckBox x:Name="ShowInOverlayCheckBox" 
-                                  HorizontalAlignment="Center"
-                                  Tag="{Binding TimerItemDataViewModel.ShowInOverlay}"
-                                  >
-                            <CheckBox.IsChecked>
-                                <Binding Path="ShowInOverlay"
+                        <!-- Icon Timer Shortcut -->
+                        <TextBox Tag="Icon Shortcut" Margin="0 0 5 10" Grid.Column="0"
+                                 MaxLength="{Binding TimerItemDataViewModel.IconTitleAllowMaxChar}"
+                                 >
+                            <TextBox.Text>
+                                <Binding Path="IconTitleShortcut" 
                                          UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
-                                        <core:TimerShowInOverlayRule ValidationStep="UpdatedValue"
-                                                                     x:Name="ShowInOverlayCheckBoxRule" />
+                                        <core:TimerIconTitleShortcutRule ValidationStep="UpdatedValue" />
                                     </Binding.ValidationRules>
                                 </Binding>
-                            </CheckBox.IsChecked>
-                        </CheckBox>
-                    </StackPanel>
-                </Grid>
+                            </TextBox.Text>
+                        </TextBox>
+                        <!-- Icon Timer Color Picker -->
+                        <xctk:ColorPicker Margin="5 0 0 10" Grid.Column="1"
+                                          SelectedColor="{Binding IconBackgroundHEX}"
+                                          ColorMode="ColorCanvas"
+                                          ShowDropDownButton="False"
+                                          UsingAlphaChannel="False"
+                                          ShowAvailableColors="False"
+                                          ShowStandardColors="False"
+                                          StandardButtonHeader=""
+                                          >
+                        </xctk:ColorPicker>
+                    </Grid>
 
-                <!-- Change Group -->
-                <TextBlock Text="Change Associated Group"
-                           FontSize="14"
-                           Margin="0 0 0 5"/>
-                <ComboBox Name="GroupChangeComboBox" Margin="0 0 0 50"
-                          HorizontalAlignment="Center"
-                          Tag="{Binding GroupID}">
-                    <ComboBox.SelectedItem>
-                        <Binding Path="AssociatedGroupViewModel"
-                                 UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <core:TimerAssociatedGroupViewModelRule ValidationStep="UpdatedValue"
-                                                                        x:Name="GroupChangeComboBoxRule" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </ComboBox.SelectedItem>
-                </ComboBox>
+                    <!-- Timer Total Time -->
+                    <xctk:TimeSpanUpDown Margin="0 0 0 30"
+                                         AllowTextInput="True"
+                                         DefaultValue="00:01:00"
+                                         Minimum="00:01:00"
+                                         Maximum="2:00:00:00"
+                                         Padding="6"
+                                         FontSize="20"
+                                         TextAlignment="Center">
+                        <xctk:TimeSpanUpDown.Value>
+                            <Binding Path="TimeDuration"
+                                     UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <core:TimerTimeDurationRule ValidationStep="UpdatedValue" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </xctk:TimeSpanUpDown.Value>
+                    </xctk:TimeSpanUpDown>
 
-                <!-- Save Changes Button -->
-                <Button Content="SAVE CHANGES" Margin="0 0 0 10"
-                        Command="{Binding SaveChangesCommand}"
-                        Style="{StaticResource RegularButton}"
-                        Padding="10"/>
+                    <!-- Timer Start Countdown -->
+                    <TextBlock Text="Start Countdown"
+                               FontSize="14"
+                               Margin="0 0 0 5"/>
+                    <DockPanel VerticalAlignment="Center" Margin="0 0 0 30">
+                        <xctk:TimeSpanUpDown Margin="10 0 0 0"
+                                             AllowTextInput="True"
+                                             DefaultValue="00:00:00"
+                                             Minimum="00:00:00"
+                                             Maximum="02:00:00"
+                                             Value="{Binding ElementName=slValue, 
+                                                   Path=Value, 
+                                                   UpdateSourceTrigger=PropertyChanged,
+                                                   Converter={local:SecondsToTimeFormatStringConverter}}" 
+                                             DockPanel.Dock="Right" 
+                                             TextAlignment="Right" 
+                                             Width="100" />
+                        <Slider Maximum="7200" TickPlacement="BottomRight" Name="slValue"
+                                TickFrequency="60" 
+                                IsSnapToTickEnabled="True">
+                            <Slider.Value>
+                                <Binding Path="CountdownDuration"
+                                         UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <core:TimerCountdownDurationRule ValidationStep="UpdatedValue" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </Slider.Value>
+                        </Slider>
+                    </DockPanel>
 
-                <!-- Line spacer -->
-                <Border Margin="0 0 0 10" 
-                        Style="{StaticResource FormSpacer}"/>
+                    <Grid Margin="0 0 0 30">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="2*" />
+                        </Grid.ColumnDefinitions>
+                    
+                        <!-- Timer Has Loop -->
+                        <StackPanel Grid.Column="0" Orientation="Vertical">
+                            <TextBlock Text="Auto Repeat (Loop)"
+                                       FontSize="14"
+                                       Margin="0 0 0 5"/>
+                            <CheckBox IsChecked="{Binding IsLoopActive}"
+                                      HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <!-- Show On Overlay -->
+                        <StackPanel Grid.Column="1" Orientation="Vertical">
+                            <TextBlock Text="Show In Overlay" Grid.Column="1"
+                                       FontSize="14"
+                                       Margin="0 0 0 5"/>
+                            <CheckBox x:Name="ShowInOverlayCheckBox" 
+                                      HorizontalAlignment="Center"
+                                      Tag="{Binding TimerItemDataViewModel.ShowInOverlay}"
+                                      >
+                                <CheckBox.IsChecked>
+                                    <Binding Path="ShowInOverlay"
+                                             UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <core:TimerShowInOverlayRule ValidationStep="UpdatedValue"
+                                                                         x:Name="ShowInOverlayCheckBoxRule" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </CheckBox.IsChecked>
+                            </CheckBox>
+                        </StackPanel>
+                    </Grid>
 
-                <!-- Delete Timer Button -->
-                <Button Content="Delete Timer"
-                        Style="{StaticResource RegularTextButtonRed}"
-                        Command="{Binding DeleteTimerCommand}"/>
+                    <!-- Change Group -->
+                    <TextBlock Text="Change Associated Group"
+                               FontSize="14"
+                               Margin="0 0 0 5"/>
+                    <ComboBox Name="GroupChangeComboBox" Margin="0 0 0 50"
+                              HorizontalAlignment="Center"
+                              Tag="{Binding GroupID}">
+                        <ComboBox.SelectedItem>
+                            <Binding Path="AssociatedGroupViewModel"
+                                     UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <core:TimerAssociatedGroupViewModelRule ValidationStep="UpdatedValue"
+                                                                            x:Name="GroupChangeComboBoxRule" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
 
-            </StackPanel>
+                    <!-- Save Changes Button -->
+                    <Button Content="SAVE CHANGES" Margin="0 0 0 10"
+                            Command="{Binding SaveChangesCommand}"
+                            Style="{StaticResource RegularButton}"
+                            Padding="10"/>
 
-        </Grid>
+                    <!-- Line spacer -->
+                    <Border Margin="0 0 0 10" 
+                            Style="{StaticResource FormSpacer}"/>
+
+                    <!-- Delete Timer Button -->
+                    <Button Content="Delete Timer"
+                            Style="{StaticResource RegularTextButtonRed}"
+                            Command="{Binding DeleteTimerCommand}"/>
+
+                </StackPanel>
+
+            </Grid>
+        </Border>
 
     </ScrollViewer>
 </local:BasePage>

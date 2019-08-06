@@ -11,195 +11,195 @@
       Title="PreferencesPage" >
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" 
-                  Padding="10" 
                   DataContext="{Binding ApplicationDataContent.PreferencesDesignModel,
                                 Source={x:Static local:ViewModelLocator.Instance}}">
 
-        <Grid HorizontalAlignment="Center"
-              VerticalAlignment="Center"
-              Width="400">
+        <Border Padding="10">
+            <Grid HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Width="400">
 
-            <StackPanel TextBlock.TextAlignment="Center">
+                <StackPanel TextBlock.TextAlignment="Center">
                 
-                <!-- Form Title -->
-                <TextBlock Text="Preferences"
-                           Style="{StaticResource FormTitle}" />
+                    <!-- Form Title -->
+                    <TextBlock Text="Preferences"
+                               Style="{StaticResource FormTitle}" />
 
-                <!-- Form Subtitle - General -->
-                <TextBlock Text="General"
-                           Style="{StaticResource FormSubtitle}"
-                           Margin="0 0 0 30" />
+                    <!-- Form Subtitle - General -->
+                    <TextBlock Text="General"
+                               Style="{StaticResource FormSubtitle}"
+                               Margin="0 0 0 30" />
                 
-                <!-- Start the app on Startup -->
-                <CheckBox IsChecked="{Binding RunOnStartup}" Margin="0 0 0 30"
-                          Command="{Binding RunOnStartUpCheckboxCommand}"
-                          Content="Run the application when my computer starts."
-                          HorizontalAlignment="Center"
-                          IsEnabled="{Binding RunOnStartupFlag, Converter={local:BooleanInvertConverter}}" />
+                    <!-- Start the app on Startup -->
+                    <CheckBox IsChecked="{Binding RunOnStartup}" Margin="0 0 0 30"
+                              Command="{Binding RunOnStartUpCheckboxCommand}"
+                              Content="Run the application when my computer starts."
+                              HorizontalAlignment="Center"
+                              IsEnabled="{Binding RunOnStartupFlag, Converter={local:BooleanInvertConverter}}" />
 
-                <!-- Run the app As Administrator -->
-                <CheckBox IsChecked="{Binding ForceToRunAsAdministrator}" Margin="0 0 0 30"
-                          Command="{Binding ForceToRunAsAdministratorCommand}"
-                          Content="Force to run the application As Administrator."
-                          HorizontalAlignment="Center" />
+                    <!-- Run the app As Administrator -->
+                    <CheckBox IsChecked="{Binding ForceToRunAsAdministrator}" Margin="0 0 0 30"
+                              Command="{Binding ForceToRunAsAdministratorCommand}"
+                              Content="Force to run the application As Administrator."
+                              HorizontalAlignment="Center" />
                 
-                <!-- Audio Alert Level -->
-                <StackPanel Margin="0 0 0 30" HorizontalAlignment="Center">
-                    <TextBlock Text="Audio Alert Level"
-                               FontFamily="{StaticResource LatoRegular}"
-                               FontSize="14"
-                               Margin="0 0 0 5"/>
-                    <ItemsControl ItemsSource="{Binding AudioAlertLevelList}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <TextBlock Text="{Binding Converter={local:ObjectToStringConverter}}"
-                                               x:Name="RadioBindedKey"
-                                               Visibility="Collapsed" />
-                                    <RadioButton GroupName="AudioAlerts"
-                                                 Content="{Binding Converter={local:ObjectToStringConverter}}"
-                                                 IsChecked="{Binding Path=DataContext.AudioAlertLevel,
-                                                             RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ScrollViewer}},
-                                                             Converter={local:RadioEnumBooleanConverter}, 
-                                                             ConverterParameter={x:Reference Name=RadioBindedKey}}"
-                                                 >
-                                    </RadioButton>
-                                </Grid>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                    <TextBlock Text="Voice option is not implemented yet." 
-                               FontFamily="{StaticResource LatoLightItalic}"
-                               FontSize="10"/>
-                </StackPanel>
+                    <!-- Audio Alert Level -->
+                    <StackPanel Margin="0 0 0 30" HorizontalAlignment="Center">
+                        <TextBlock Text="Audio Alert Level"
+                                   FontFamily="{StaticResource LatoRegular}"
+                                   FontSize="14"
+                                   Margin="0 0 0 5"/>
+                        <ItemsControl ItemsSource="{Binding AudioAlertLevelList}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <TextBlock Text="{Binding Converter={local:ObjectToStringConverter}}"
+                                                   x:Name="RadioBindedKey"
+                                                   Visibility="Collapsed" />
+                                        <RadioButton GroupName="AudioAlerts"
+                                                     Content="{Binding Converter={local:ObjectToStringConverter}}"
+                                                     IsChecked="{Binding Path=DataContext.AudioAlertLevel,
+                                                                 RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ScrollViewer}},
+                                                                 Converter={local:RadioEnumBooleanConverter}, 
+                                                                 ConverterParameter={x:Reference Name=RadioBindedKey}}"
+                                                     >
+                                        </RadioButton>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <TextBlock Text="Voice option is not implemented yet." 
+                                   FontFamily="{StaticResource LatoLightItalic}"
+                                   FontSize="10"/>
+                    </StackPanel>
 
-                <!-- Reset overlay position -->
-                <Button Content="Export Log File" Margin="0 0 0 50"
-                        Style="{StaticResource RegularButton}"
-                        Command="{Binding ExportLogFileCommand}"
-                        Padding="10"
-                        HorizontalAlignment="Center" />
+                    <!-- Reset overlay position -->
+                    <Button Content="Export Log File" Margin="0 0 0 50"
+                            Style="{StaticResource RegularButton}"
+                            Command="{Binding ExportLogFileCommand}"
+                            Padding="10"
+                            HorizontalAlignment="Center" />
                 
-                <!-- Form Subtitle - Overlay -->
-                <TextBlock Text="Overlay"
-                           Style="{StaticResource FormSubtitle}"
-                           Margin="0 0 0 30" />
+                    <!-- Form Subtitle - Overlay -->
+                    <TextBlock Text="Overlay"
+                               Style="{StaticResource FormSubtitle}"
+                               Margin="0 0 0 30" />
 
-                <!-- Overlay Orientation -->
-                <StackPanel Margin="0 0 0 30" HorizontalAlignment="Center">
-                    <TextBlock Text="Orientation"
-                               FontFamily="{StaticResource LatoRegular}"
-                               FontSize="14"
-                               Margin="0 0 0 5"/>
-                    <ItemsControl ItemsSource="{Binding ApplicationDataContent.OverlayDesignModel.OrientationList,
-                                                Source={x:Static local:ViewModelLocator.Instance}}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <TextBlock Text="{Binding Converter={local:ObjectToStringConverter}}"
-                                               x:Name="RadioBindedKey"
-                                               Visibility="Collapsed" />
-                                    <RadioButton GroupName="OverlayOrientation"
-                                                 Content="{Binding Converter={local:ObjectToStringConverter}}"
-                                                 IsChecked="{Binding ApplicationDataContent.OverlayDesignModel.OverlayOrientation,
-                                                             Source={x:Static local:ViewModelLocator.Instance},
-                                                             Converter={local:RadioEnumBooleanConverter}, 
-                                                             ConverterParameter={x:Reference Name=RadioBindedKey}}"
-                                                 >
-                                    </RadioButton>
-                                </Grid>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </StackPanel>
+                    <!-- Overlay Orientation -->
+                    <StackPanel Margin="0 0 0 30" HorizontalAlignment="Center">
+                        <TextBlock Text="Orientation"
+                                   FontFamily="{StaticResource LatoRegular}"
+                                   FontSize="14"
+                                   Margin="0 0 0 5"/>
+                        <ItemsControl ItemsSource="{Binding ApplicationDataContent.OverlayDesignModel.OrientationList,
+                                                    Source={x:Static local:ViewModelLocator.Instance}}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <TextBlock Text="{Binding Converter={local:ObjectToStringConverter}}"
+                                                   x:Name="RadioBindedKey"
+                                                   Visibility="Collapsed" />
+                                        <RadioButton GroupName="OverlayOrientation"
+                                                     Content="{Binding Converter={local:ObjectToStringConverter}}"
+                                                     IsChecked="{Binding ApplicationDataContent.OverlayDesignModel.OverlayOrientation,
+                                                                 Source={x:Static local:ViewModelLocator.Instance},
+                                                                 Converter={local:RadioEnumBooleanConverter}, 
+                                                                 ConverterParameter={x:Reference Name=RadioBindedKey}}"
+                                                     >
+                                        </RadioButton>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
 
-                <!-- Overlay Size -->
-                <StackPanel Margin="0 0 0 30" HorizontalAlignment="Center">
-                    <TextBlock Text="Size"
-                               FontFamily="{StaticResource LatoRegular}"
-                               FontSize="14"
-                               Margin="0 0 0 5"/>
-                    <ItemsControl ItemsSource="{Binding ApplicationDataContent.OverlayDesignModel.OverlaySizeList,
-                                                Source={x:Static local:ViewModelLocator.Instance}}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <TextBlock Text="{Binding Converter={local:ObjectToStringConverter}}"
-                                               x:Name="RadioBindedKey"
-                                               Visibility="Collapsed" />
-                                    <RadioButton GroupName="OverlaySize"
-                                                 Content="{Binding Converter={local:ObjectToStringConverter}}"
-                                                 IsChecked="{Binding ApplicationDataContent.OverlayDesignModel.OverlaySize,
-                                                             Source={x:Static local:ViewModelLocator.Instance},
-                                                             Converter={local:RadioEnumBooleanConverter}, 
-                                                             ConverterParameter={x:Reference Name=RadioBindedKey}}"
-                                                 >
-                                    </RadioButton>
-                                </Grid>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </StackPanel>
+                    <!-- Overlay Size -->
+                    <StackPanel Margin="0 0 0 30" HorizontalAlignment="Center">
+                        <TextBlock Text="Size"
+                                   FontFamily="{StaticResource LatoRegular}"
+                                   FontSize="14"
+                                   Margin="0 0 0 5"/>
+                        <ItemsControl ItemsSource="{Binding ApplicationDataContent.OverlayDesignModel.OverlaySizeList,
+                                                    Source={x:Static local:ViewModelLocator.Instance}}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <TextBlock Text="{Binding Converter={local:ObjectToStringConverter}}"
+                                                   x:Name="RadioBindedKey"
+                                                   Visibility="Collapsed" />
+                                        <RadioButton GroupName="OverlaySize"
+                                                     Content="{Binding Converter={local:ObjectToStringConverter}}"
+                                                     IsChecked="{Binding ApplicationDataContent.OverlayDesignModel.OverlaySize,
+                                                                 Source={x:Static local:ViewModelLocator.Instance},
+                                                                 Converter={local:RadioEnumBooleanConverter}, 
+                                                                 ConverterParameter={x:Reference Name=RadioBindedKey}}"
+                                                     >
+                                        </RadioButton>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
 
-                <!-- Reset overlay position -->
-                <Button Content="Reset Overlay Position" Margin="0 0 0 50"
-                        Style="{StaticResource RegularButton}"
-                        Command="{Binding ResetOverlayPositionCommand}"
-                        Padding="10"
-                        HorizontalAlignment="Center" />
+                    <!-- Reset overlay position -->
+                    <Button Content="Reset Overlay Position" Margin="0 0 0 50"
+                            Style="{StaticResource RegularButton}"
+                            Command="{Binding ResetOverlayPositionCommand}"
+                            Padding="10"
+                            HorizontalAlignment="Center" />
 
-                <!-- Form Subtitle - Timer -->
-                <TextBlock Text="Timer"
-                           Style="{StaticResource FormSubtitle}"
-                           Margin="0 0 0 30" />
+                    <!-- Form Subtitle - Timer -->
+                    <TextBlock Text="Timer"
+                               Style="{StaticResource FormSubtitle}"
+                               Margin="0 0 0 30" />
 
-                <!-- Timer Notification Time Brackets -->
-                <TextBlock Text="Alerts"
-                               FontFamily="{StaticResource LatoRegular}"
-                               FontSize="14"
-                               Margin="0 0 0 5"/>
-                <TextBlock Text="You cannot update this if any timer is running." 
-                           Visibility="{Binding ApplicationDataContent.TimerDesignModel.IsRunning,
-                                        Source={x:Static local:ViewModelLocator.Instance},
-                                        Converter={local:BooleanToVisibilityGoneConverter}}"
-                           Foreground="{StaticResource RedBrushKey}"
-                           FontFamily="{StaticResource LatoLight}"
-                           FontSize="14"
-                           HorizontalAlignment="Center" 
-                           Margin="0 0 0 5"/>
-                <xctk:RangeSlider x:Name="TimerNotificationRangeSlider" Margin="0 0 0 5"
-                                  Orientation="Horizontal"
-                                  Minimum="6"
-                                  LowerValue="{Binding ApplicationDataContent.TimerDesignModel.TimerNotificationTime2Value, 
-                                               Mode=TwoWay,
-                                               Source={x:Static local:ViewModelLocator.Instance}}" 
-                                  Maximum="59"
-                                  HigherValue="{Binding ApplicationDataContent.TimerDesignModel.TimerNotificationTime1Value, 
-                                                Mode=TwoWay,
-                                                Source={x:Static local:ViewModelLocator.Instance}}"
-                                  Step="1" />
-                <Grid Margin="0 0 0 50">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" 
-                               Text="{Binding LowerValue, ElementName=TimerNotificationRangeSlider, StringFormat='2nd alert at {0:#} sec.'}"
+                    <!-- Timer Notification Time Brackets -->
+                    <TextBlock Text="Alerts"
+                                   FontFamily="{StaticResource LatoRegular}"
+                                   FontSize="14"
+                                   Margin="0 0 0 5"/>
+                    <TextBlock Text="You cannot update this if any timer is running." 
+                               Visibility="{Binding ApplicationDataContent.TimerDesignModel.IsRunning,
+                                            Source={x:Static local:ViewModelLocator.Instance},
+                                            Converter={local:BooleanToVisibilityGoneConverter}}"
+                               Foreground="{StaticResource RedBrushKey}"
                                FontFamily="{StaticResource LatoLight}"
                                FontSize="14"
-                               HorizontalAlignment="Left"/>
-                    <TextBlock Grid.Column="2"
-                               Text="{Binding HigherValue, ElementName=TimerNotificationRangeSlider, StringFormat='1st alert at {0:#} sec.'}"
-                               FontFamily="{StaticResource LatoLight}"
-                               FontSize="14"
-                               HorizontalAlignment="Right"/>
-                </Grid>
+                               HorizontalAlignment="Center" 
+                               Margin="0 0 0 5"/>
+                    <xctk:RangeSlider x:Name="TimerNotificationRangeSlider" Margin="0 0 0 5"
+                                      Orientation="Horizontal"
+                                      Minimum="6"
+                                      LowerValue="{Binding ApplicationDataContent.TimerDesignModel.TimerNotificationTime2Value, 
+                                                   Mode=TwoWay,
+                                                   Source={x:Static local:ViewModelLocator.Instance}}" 
+                                      Maximum="59"
+                                      HigherValue="{Binding ApplicationDataContent.TimerDesignModel.TimerNotificationTime1Value, 
+                                                    Mode=TwoWay,
+                                                    Source={x:Static local:ViewModelLocator.Instance}}"
+                                      Step="1" />
+                    <Grid Margin="0 0 0 50">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" 
+                                   Text="{Binding LowerValue, ElementName=TimerNotificationRangeSlider, StringFormat='2nd alert at {0:#} sec.'}"
+                                   FontFamily="{StaticResource LatoLight}"
+                                   FontSize="14"
+                                   HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Column="2"
+                                   Text="{Binding HigherValue, ElementName=TimerNotificationRangeSlider, StringFormat='1st alert at {0:#} sec.'}"
+                                   FontFamily="{StaticResource LatoLight}"
+                                   FontSize="14"
+                                   HorizontalAlignment="Right"/>
+                    </Grid>
 
-            </StackPanel>
+                </StackPanel>
             
-        </Grid>
-        
+            </Grid>
+        </Border>
     </ScrollViewer>
     
 </local:BasePage>

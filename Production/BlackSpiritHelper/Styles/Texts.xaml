@@ -13,14 +13,14 @@
 
     <!-- Form Title -->
     <Style TargetType="{x:Type TextBlock}" x:Key="FormTitle" BasedOn="{StaticResource BaseTextBlockStyle}">
-        <Setter Property="FontFamily" Value="{StaticResource LatoLight}" />
+        <Setter Property="FontFamily" Value="{StaticResource LatoBold}" />
         <Setter Property="FontSize" Value="24" />
         <Setter Property="Foreground" Value="{StaticResource FormTitleForegroundBrushKey}" />
     </Style>
 
     <!-- Form Subtitle -->
     <Style TargetType="{x:Type TextBlock}" x:Key="FormSubtitle" BasedOn="{StaticResource BaseTextBlockStyle}">
-        <Setter Property="FontFamily" Value="{StaticResource LatoThinItalic}" />
+        <Setter Property="FontFamily" Value="{StaticResource LatoRegular}" />
         <Setter Property="FontSize" Value="18" />
         <Setter Property="Foreground" Value="{StaticResource FormSubtitleForegroundBrushKey}" />
     </Style>

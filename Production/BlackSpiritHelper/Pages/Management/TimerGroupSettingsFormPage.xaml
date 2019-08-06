@@ -9,66 +9,69 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="TimerGroupSettingsFormPage">
 
-    <Border>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Border Padding="10">
         
-        <Grid HorizontalAlignment="Center"
-              VerticalAlignment="Center"
-              Width="400">
+            <Grid HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Width="400">
 
-            <!-- Go Back Button -->
-            <Button Content="{StaticResource FontAwesomeArrowLeftIcon}"
-                    Command="{Binding GoBackCommand}"
-                    Style="{StaticResource RegularButtonLight}" 
-                    FontFamily="{StaticResource FontAwesomeSolid}"
-                    Width="30"
-                    Height="30"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Panel.ZIndex="1"
-                    />
+                <!-- Go Back Button -->
+                <Button Content="{StaticResource FontAwesomeArrowLeftIcon}"
+                        Command="{Binding GoBackCommand}"
+                        Style="{StaticResource RegularButtonLight}" 
+                        FontFamily="{StaticResource FontAwesomeSolid}"
+                        Width="30"
+                        Height="30"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Panel.ZIndex="1"
+                        />
 
-            <StackPanel TextBlock.TextAlignment="Center">
+                <StackPanel TextBlock.TextAlignment="Center">
 
-                <!-- Form Title -->
-                <TextBlock Text="Settings"
-                           Style="{StaticResource FormTitle}" />
+                    <!-- Form Title -->
+                    <TextBlock Text="Settings"
+                               Style="{StaticResource FormTitle}" />
 
-                <!-- Form Subtitle -->
-                <TextBlock Text="Timer Group"
-                           Style="{StaticResource FormSubtitle}"
-                           Margin="0 0 0 50" />
+                    <!-- Form Subtitle -->
+                    <TextBlock Text="Timer Group"
+                               Style="{StaticResource FormSubtitle}"
+                               Margin="0 0 0 50" />
 
-                <!-- Group Name -->
-                <TextBox Tag="Group Name" Margin="0 0 0 50"
-                         MaxLength="{Binding TimerGroupViewModel.TitleAllowMaxChar}">
-                    <TextBox.Text>
-                        <Binding Path="Title"
-                                 UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <core:TimerGroupTitleRule ValidationStep="UpdatedValue" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
+                    <!-- Group Name -->
+                    <TextBox Tag="Group Name" Margin="0 0 0 50"
+                             MaxLength="{Binding TimerGroupViewModel.TitleAllowMaxChar}">
+                        <TextBox.Text>
+                            <Binding Path="Title"
+                                     UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <core:TimerGroupTitleRule ValidationStep="UpdatedValue" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
 
-                <!-- Save Changes Button -->
-                <Button Content="SAVE CHANGES" Margin="0 0 0 10"
-                        Command="{Binding SaveChangesCommand}"
-                        Style="{StaticResource RegularButton}"
-                        Padding="10"/>
+                    <!-- Save Changes Button -->
+                    <Button Content="SAVE CHANGES" Margin="0 0 0 10"
+                            Command="{Binding SaveChangesCommand}"
+                            Style="{StaticResource RegularButton}"
+                            Padding="10"/>
 
-                <!-- Line spacer -->
-                <Border Margin="0 0 0 10" 
-                        Style="{StaticResource FormSpacer}"/>
+                    <!-- Line spacer -->
+                    <Border Margin="0 0 0 10" 
+                            Style="{StaticResource FormSpacer}"/>
 
-                <!-- Delete Group Button -->
-                <Button Content="Delete Group"
-                        Style="{StaticResource RegularTextButtonRed}"
-                        Command="{Binding DeleteGroupCommand}"/>
+                    <!-- Delete Group Button -->
+                    <Button Content="Delete Group"
+                            Style="{StaticResource RegularTextButtonRed}"
+                            Command="{Binding DeleteGroupCommand}"/>
 
-            </StackPanel>
+                </StackPanel>
             
-        </Grid>
+            </Grid>
         
-    </Border>
+        </Border>
+    </ScrollViewer>
+    
 </local:BasePage>
