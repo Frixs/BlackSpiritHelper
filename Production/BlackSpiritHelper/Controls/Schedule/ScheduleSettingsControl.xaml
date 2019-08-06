@@ -27,7 +27,7 @@
                                 </Grid.RowDefinitions>
 
                                 <TextBlock Text="To Alert:"
-                                           FontFamily="{StaticResource LatoBold}"
+                                           FontFamily="{StaticResource LatoHeavy}"
                                            Foreground="{StaticResource ScheduleForegroundBrushKey}"
                                            FontSize="20"
                                            HorizontalAlignment="Left"
@@ -64,7 +64,7 @@
                                 </Grid.RowDefinitions>
 
                                 <TextBlock Text="To Ignore:"
-                                           FontFamily="{StaticResource LatoBold}"
+                                           FontFamily="{StaticResource LatoHeavy}"
                                            Foreground="{StaticResource ScheduleForegroundBrushKey}"
                                            FontSize="20"
                                            HorizontalAlignment="Left"

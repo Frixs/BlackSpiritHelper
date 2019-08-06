@@ -114,7 +114,7 @@ namespace BlackSpiritHelper.Core
         public ObservableCollection<ScheduleItemDataViewModel> ItemIgnoredListPresenter { get; private set; } = new ObservableCollection<ScheduleItemDataViewModel>();
 
         /// <summary>
-        /// TODO
+        /// List of all items except ignored one.
         /// </summary>
         [XmlIgnore]
         public ObservableCollection<ScheduleItemDataViewModel> ItemIgnoreExceptList

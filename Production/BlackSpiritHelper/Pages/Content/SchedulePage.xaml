@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       xmlns:local="clr-namespace:BlackSpiritHelper"
       xmlns:core="clr-namespace:BlackSpiritHelper.Core;assembly=BlackSpiritHelper.Core"
       mc:Ignorable="d" 
@@ -55,43 +56,67 @@
                                        FontSize="16"/>
                         </StackPanel>
                     </Grid>
-                    <Grid Grid.Column="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Vertical" Grid.Column="2"
+                                VerticalAlignment="Center">
+                        <Grid HorizontalAlignment="Right"
+                              Margin="0 0 0 10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
                         
-                        <!-- Template ComboBox -->
-                        <TextBlock Text="Template:" Grid.Column="0"
-                                   FontFamily="{StaticResource LatoBold}"
-                                   FontSize="14"
-                                   Foreground="{StaticResource ScheduleForegroundBrushKey}"
-                                   VerticalAlignment="Center"
-                                   Margin="10 0"/>
-                        <ComboBox Name="TemplateComboBox" Grid.Column="1"
-                                  HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"
-                                  SelectedItem="{Binding SelectedTemplate}"
-                                  ItemsSource="{Binding TemplateListPresenter}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Title}"
-                                               FontFamily="{StaticResource LatoRegular}">
-                                        <TextBlock.Style>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="Foreground" Value="{StaticResource ScheduleForegroundBrushKey}" />
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding IsPredefined}" Value="True">
-                                                        <Setter Property="Foreground" Value="DarkGreen" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </Grid>
+                            <!-- Template ComboBox -->
+                            <TextBlock Text="Template:" Grid.Column="0"
+                                       FontFamily="{StaticResource LatoBold}"
+                                       FontSize="14"
+                                       Foreground="{StaticResource ScheduleForegroundBrushKey}"
+                                       VerticalAlignment="Center"
+                                       Margin="10 0"/>
+                            <ComboBox Name="TemplateComboBox" Grid.Column="1"
+                                      HorizontalAlignment="Right"
+                                      VerticalAlignment="Center"
+                                      SelectedItem="{Binding SelectedTemplate}"
+                                      ItemsSource="{Binding TemplateListPresenter}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Title}"
+                                                   FontFamily="{StaticResource LatoRegular}">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Foreground" Value="{StaticResource ScheduleForegroundBrushKey}" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsPredefined}" Value="True">
+                                                            <Setter Property="Foreground" Value="DarkGreen" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </Grid>
+                        <Grid HorizontalAlignment="Right">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Time Modifier -->
+                            <TextBlock Text="Local Time Modifier:" Grid.Column="0"
+                                       FontFamily="{StaticResource LatoBold}"
+                                       FontSize="14"
+                                       Foreground="{StaticResource ScheduleForegroundBrushKey}"
+                                       VerticalAlignment="Center"
+                                       Margin="10 0"/>
+                            <xctk:TimeSpanUpDown Grid.Column="1"
+                                                Value="00:00:00"
+                                                Minimum="-00:12:00"
+                                                Maximum="00:12:00"
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="Center"/>
+                        </Grid>
+                    </StackPanel>
                 </Grid>
             </Border>
 
@@ -102,7 +127,7 @@
             <!-- Schedule Settings -->
             <Border Grid.Row="2"
                     Padding="10">
-                <local:ScheduleSettingsControl x:Name="Settings" />
+                <local:ScheduleSettingsControl x:Name="Settings" Visibility="Collapsed" />
             </Border>
         </Grid>
     </ScrollViewer>
