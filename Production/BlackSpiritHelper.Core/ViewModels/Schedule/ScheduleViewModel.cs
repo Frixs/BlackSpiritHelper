@@ -149,7 +149,9 @@ namespace BlackSpiritHelper.Core
                 TemplateCustomList[i].Init();
 
             // Set selected item.
-            //SelectedTemplate = GetTemplateByName(SelectedTemplateTitle);
+            SelectedTemplate = GetTemplateByName(SelectedTemplateTitle);
+            if (SelectedTemplate == null)
+                SelectedTemplate = TemplatePredefinedList[0];
         }
 
         #endregion
