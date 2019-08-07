@@ -65,7 +65,12 @@ namespace BlackSpiritHelper.Core
         [XmlIgnore]
         public double OverlaySizeStyleHeightValue => GetUserPreferredOverlaySizeHeightStyleValue();
 
-        public override bool IsRunning => throw new NotImplementedException();
+        [XmlIgnore]
+        public override bool IsRunning
+        {
+            get => false;
+            protected set => throw new NotImplementedException();
+        }
 
         #endregion
 

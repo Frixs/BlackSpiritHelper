@@ -40,7 +40,12 @@ namespace BlackSpiritHelper.Core
         [XmlIgnore]
         public AudioAlertLevel[] AudioAlertLevelList { get; private set; } = (AudioAlertLevel[])Enum.GetValues(typeof(AudioAlertLevel));
 
-        public override bool IsRunning => throw new NotImplementedException();
+        [XmlIgnore]
+        public override bool IsRunning
+        {
+            get => false;
+            protected set => throw new NotImplementedException();
+        }
 
         #endregion
 

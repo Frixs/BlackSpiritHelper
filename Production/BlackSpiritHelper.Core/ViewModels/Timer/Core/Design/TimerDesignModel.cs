@@ -1,9 +1,5 @@
-﻿using System.Configuration;
-using System.Xml.Serialization;
-
-namespace BlackSpiritHelper.Core
+﻿namespace BlackSpiritHelper.Core
 {
-    [SettingsSerializeAs(SettingsSerializeAs.Xml)]
     public class TimerDesignModel : TimerViewModel
     {
         #region New Instance Getter
@@ -11,7 +7,6 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Create a new instance of this class.
         /// </summary>
-        [XmlIgnore]
         public static TimerDesignModel Instance
         {
             get

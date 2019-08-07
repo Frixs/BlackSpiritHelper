@@ -80,7 +80,12 @@ namespace BlackSpiritHelper.Core
         /// TRUE = at least 1 timer is running.
         /// FALSE = No timer is running at all.
         /// </summary>
-        public override bool IsRunning => GroupList.FirstOrDefault(o => o.IsRunning == true) == null ? false : true;
+        [XmlIgnore]
+        public override bool IsRunning
+        {
+            get => GroupList.FirstOrDefault(o => o.IsRunning == true) == null ? false : true;
+            protected set => throw new NotImplementedException();
+        }
 
         #endregion
 

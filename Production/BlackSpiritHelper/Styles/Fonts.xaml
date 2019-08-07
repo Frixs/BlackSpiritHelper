@@ -30,6 +30,7 @@
     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BaseTextBlockStyle}" />
 
     <system:String x:Key="FontAwesomeChatIcon">&#xf086;</system:String>
+    <system:String x:Key="FontAwesomeStopIcon">&#xf04d;</system:String>
     <system:String x:Key="FontAwesomePlayIcon">&#xf04b;</system:String>
     <system:String x:Key="FontAwesomePlayCircleIcon">&#xf144;</system:String>
     <system:String x:Key="FontAwesomePauseIcon">&#xf04c;</system:String>

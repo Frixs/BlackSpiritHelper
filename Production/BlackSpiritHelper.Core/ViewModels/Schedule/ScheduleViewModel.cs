@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
@@ -138,12 +140,33 @@ namespace BlackSpiritHelper.Core
         /// <see cref="LocalTimeOffsetModifier"/> Ticks.
         /// It is used to store <see cref="LocalTimeOffsetModifier"/> in user settings.
         /// </summary>
-        public long LocalTimeOffsetModifierTicks { get; set; }
+        public long LocalTimeOffsetModifierTicks
+        {
+            get => LocalTimeOffsetModifier.Ticks;
+            set => LocalTimeOffsetModifier = TimeSpan.FromTicks(value);
+        }
 
         /// <summary>
-        /// TODO IsRunning.
+        /// Says, if a section is running.
         /// </summary>
-        public override bool IsRunning => false;
+        [XmlIgnore]
+        public override bool IsRunning { get; protected set; }
+
+        #endregion
+
+        #region Commands
+
+        /// <summary>
+        /// Command to play the section.
+        /// </summary>
+        [XmlIgnore]
+        public ICommand PlayCommand { get; set; }
+
+        /// <summary>
+        /// Command to stop the section.
+        /// </summary>
+        [XmlIgnore]
+        public ICommand StopCommand { get; set; }
 
         #endregion
 
@@ -154,6 +177,8 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public ScheduleViewModel()
         {
+            // Create commands.
+            CreateCommands();
         }
 
         protected override void SetDefaultsMethod()
@@ -197,6 +222,19 @@ namespace BlackSpiritHelper.Core
             SortTemplateCustomList();
             SortItemCustomList();
             SortItemIgnoredList();
+        }
+
+        #endregion
+
+        #region Command Methods
+
+        /// <summary>
+        /// Create commands.
+        /// </summary>
+        private void CreateCommands()
+        {
+            PlayCommand = new RelayCommand(async () => await PlayAsync());
+            StopCommand = new RelayCommand(async () => await StopAsync());
         }
 
         #endregion
@@ -362,6 +400,28 @@ namespace BlackSpiritHelper.Core
         #endregion
 
         #region Private Methods
+
+        /// <summary>
+        /// Play the section.
+        /// </summary>
+        /// <returns></returns>
+        private async Task PlayAsync()
+        {
+            IsRunning = true;
+            // TODO: Play.
+            await Task.Delay(1);
+        }
+
+        /// <summary>
+        /// Stop the section.
+        /// </summary>
+        /// <returns></returns>
+        private async Task StopAsync()
+        {
+            IsRunning = false;
+            // TODO: Stop.
+            await Task.Delay(1);
+        }
 
         /// <summary>
         /// Check duplicity of item custom list on application load and remove it.

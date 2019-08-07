@@ -1,12 +1,8 @@
-﻿using System.Configuration;
-using System.Xml.Serialization;
-
-namespace BlackSpiritHelper.Core
+﻿namespace BlackSpiritHelper.Core
 {
     /// <summary>
     /// Global data content DesignModel.
     /// </summary>
-    [SettingsSerializeAs(SettingsSerializeAs.Xml)]
     public class PreferencesDesignModel : PreferencesViewModel
     {
         #region New Instance Getter
@@ -14,7 +10,6 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Create a new instance of this class.
         /// </summary>
-        [XmlIgnore]
         public static PreferencesDesignModel Instance
         {
             get

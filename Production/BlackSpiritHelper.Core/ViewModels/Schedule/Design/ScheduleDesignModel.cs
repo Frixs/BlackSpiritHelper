@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Configuration;
 
 namespace BlackSpiritHelper.Core
 {
-    [SettingsSerializeAs(SettingsSerializeAs.Xml)]
+    
     public class ScheduleDesignModel : ScheduleViewModel
     {
         #region New Instance Getter

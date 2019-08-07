@@ -45,9 +45,32 @@
                             <TextBlock Text="0.00:00:00"
                                        Foreground="{StaticResource ScheduleForegroundTimeBrushKey}"
                                        FontFamily="{StaticResource LatoHeavy}"
-                                       FontSize="28"
+                                       FontSize="27"
                                        VerticalAlignment="Bottom"
                                        Margin="10 0 0 0"/>
+                            
+                            <!-- Run Button -->
+                            <Grid VerticalAlignment="Bottom" Margin="10 0 0 0">
+                                <Button Content="{StaticResource FontAwesomePlayIcon}"
+                                        Command="{Binding PlayCommand}"
+                                        Visibility="{Binding IsRunning,
+                                                     Converter={local:BooleanToVisibilityConverter}}"
+                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                        Style="{StaticResource RegularButtonNoColor}"
+                                        FontSize="18"
+                                        Width="32"
+                                        Height="32" />
+                                <Button Content="{StaticResource FontAwesomeStopIcon}"
+                                        Command="{Binding StopCommand}"
+                                        Visibility="{Binding IsRunning,
+                                                     Converter={local:BooleanToVisibilityConverter},
+                                                     ConverterParameter=True}"
+                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                        Style="{StaticResource RegularButtonNoColor}"
+                                        FontSize="18"
+                                        Width="32"
+                                        Height="32" />
+                            </Grid>
                         </StackPanel>
                         <!-- Next items -->
                         <StackPanel Orientation="Vertical" Grid.Row="1">
@@ -110,7 +133,7 @@
                                        VerticalAlignment="Center"
                                        Margin="10 0"/>
                             <xctk:TimeSpanUpDown Grid.Column="1"
-                                                Value="00:00:00"
+                                                Value="{Binding LocalTimeOffsetModifier}"
                                                 Minimum="-00:12:00"
                                                 Maximum="00:12:00"
                                                 HorizontalAlignment="Right"

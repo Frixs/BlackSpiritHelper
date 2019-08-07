@@ -1,7 +1,9 @@
-﻿using System.Xml.Serialization;
+﻿using System.Configuration;
+using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
 {
+    [SettingsSerializeAs(SettingsSerializeAs.Xml)]
     public abstract class DataContentBaseViewModel : BaseViewModel
     {
         /// <summary>
@@ -15,12 +17,10 @@ namespace BlackSpiritHelper.Core
         protected bool mInitWithDefaultsFlag = false;
 
         /// <summary>
-        /// Says if the Timer content is running.
-        /// TRUE = at least 1 timer is running.
-        /// FALSE = No timer is running at all.
+        /// Says, if a section is running.
         /// </summary>
         [XmlIgnore]
-        public abstract bool IsRunning { get; }
+        public abstract bool IsRunning { get; protected set; }
 
         /// <summary>
         /// Everythng you need to do after construction.
