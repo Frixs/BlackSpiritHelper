@@ -3,15 +3,39 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Timers;
+using System.Windows;
 using System.Windows.Input;
 using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
 {
-
+    /// <summary>
+    /// TODO: Add logger to whole Schedule section.
+    /// </summary>
     public class ScheduleViewModel : DataContentBaseViewModel
     {
         #region Private Members
+
+        /// <summary>
+        /// Timer control.
+        /// </summary>
+        private Timer mTimer;
+
+        /// <summary>
+        /// Time left to the next schedule event.
+        /// </summary>
+        private TimeSpan mTimeLeft = TimeSpan.Zero;
+
+        /// <summary>
+        /// Indicates the time when the timer is not shown, but instead of the timer, there is string overlay. If it is zero, it has no effect. Only value higher than zero indiacte this.
+        /// </summary>
+        private TimeSpan mTimeActiveCountdown = TimeSpan.Zero;
+
+        /// <summary>
+        /// Countdown time of <see cref="mTimeActiveCountdown"/> in seconds.
+        /// </summary>
+        private const double mTimeActiveCountdownSeconds = 60;
 
         /// <summary>
         /// Selected template.
@@ -152,6 +176,28 @@ namespace BlackSpiritHelper.Core
         [XmlIgnore]
         public override bool IsRunning { get; protected set; }
 
+        /// <summary>
+        /// Run the section on application load.
+        /// </summary>
+        public bool RunOnLoad
+        {
+            get => IsRunning;
+            set => IsRunning = value;
+        }
+
+        /// <summary>
+        /// <see cref="mTimeLeft"/> presenter.
+        /// Option to display time in GUI with the text. Not only a time.
+        /// </summary>
+        [XmlIgnore]
+        public string TimeLeftPresenter { get; private set; }
+
+        /// <summary>
+        /// TODO comment
+        /// </summary>
+        [XmlIgnore]
+        public bool IsWarningTime { get; private set; }
+
         #endregion
 
         #region Commands
@@ -177,6 +223,9 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public ScheduleViewModel()
         {
+            // Set the timer.
+            SetTimer();
+
             // Create commands.
             CreateCommands();
         }
@@ -222,6 +271,10 @@ namespace BlackSpiritHelper.Core
             SortTemplateCustomList();
             SortItemCustomList();
             SortItemIgnoredList();
+
+            // Run if user wants.
+            if (RunOnLoad)
+                PlayAsync();
         }
 
         #endregion
@@ -235,6 +288,110 @@ namespace BlackSpiritHelper.Core
         {
             PlayCommand = new RelayCommand(async () => await PlayAsync());
             StopCommand = new RelayCommand(async () => await StopAsync());
+        }
+
+        #endregion
+
+        #region Timer Methods
+
+        /// <summary>
+        /// Set the timer.
+        /// </summary>
+        private void SetTimer()
+        {
+            mTimer = new Timer(1000);
+            mTimer.Elapsed += TimerOnElapsed;
+            mTimer.AutoReset = true;
+        }
+
+        /// <summary>
+        /// Dispose timer calculations.
+        /// Use this only while destroying the instance.
+        /// </summary>
+        public void DisposeTimer()
+        {
+            mTimer.Stop();
+            mTimer.Elapsed -= TimerOnElapsed;
+            mTimer.Dispose();
+            mTimer = null;
+            // TODO: Disposable DataContent?
+        }
+
+        /// <summary>
+        /// On Tick timer event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TimerOnElapsed(object sender, ElapsedEventArgs e)
+        {
+            // Calculate time.
+            mTimeLeft = mTimeLeft.Subtract(TimeSpan.FromSeconds(1));
+
+            // Handle notification events.
+            HandleNotificationEvents(mTimeLeft);
+
+            // Update GUI time.
+            if (mTimeActiveCountdown > TimeSpan.Zero)
+            {
+                mTimeActiveCountdown = mTimeActiveCountdown.Subtract(TimeSpan.FromSeconds(1));
+                // Update active time string.
+                UpdateTimeInUI("ACTIVE");
+            }
+            else
+            {
+                // Update with time value.
+                UpdateTimeInUI(mTimeLeft);
+            }
+
+            // Timer reached zero.
+            if (mTimeLeft.Seconds <= 0)
+            {
+                mTimeActiveCountdown = TimeSpan.FromSeconds(mTimeActiveCountdownSeconds);
+                UpdateTimeTarget();
+            }
+        }
+
+        /// <summary>
+        /// Update time in UI thread.
+        /// </summary>
+        /// <param name="ts"></param>
+        private void UpdateTimeInUI(TimeSpan ts)
+        {
+            // Update UI thread.
+            Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+            {
+                TimeLeftPresenter = ts.ToString();
+            }));
+        }
+
+        /// <summary>
+        /// Update time with string value in UI thread.
+        /// </summary>
+        /// <param name="ts"></param>
+        private void UpdateTimeInUI(string str)
+        {
+            // Update UI thread.
+            Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+            {
+                TimeLeftPresenter = str;
+            }));
+        }
+
+        /// <summary>
+        /// Update time to the next target.
+        /// </summary>
+        private void UpdateTimeTarget()
+        {
+            // TODO: do stuff.
+        }
+
+        /// <summary>
+        /// Handle notification events.
+        /// </summary>
+        /// <param name="ts"></param>
+        private void HandleNotificationEvents(TimeSpan ts)
+        {
+            // TODO: notification events.
         }
 
         #endregion
@@ -408,7 +565,10 @@ namespace BlackSpiritHelper.Core
         private async Task PlayAsync()
         {
             IsRunning = true;
-            // TODO: Play.
+
+            UpdateTimeTarget();
+            mTimer.Start();
+
             await Task.Delay(1);
         }
 
@@ -419,7 +579,10 @@ namespace BlackSpiritHelper.Core
         private async Task StopAsync()
         {
             IsRunning = false;
-            // TODO: Stop.
+
+            mTimer.Stop();
+            mTimeActiveCountdown = TimeSpan.Zero;
+
             await Task.Delay(1);
         }
 

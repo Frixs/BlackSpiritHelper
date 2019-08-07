@@ -18,7 +18,7 @@ namespace BlackSpiritHelper.Core
         public ApplicationPage PageEnum { get; set; }
 
         /// <summary>
-        /// DataContent of this content tab.
+        /// DataContent model of current content section.
         /// </summary>
         public DataContentBaseViewModel DataContent { get; set; } = null;
 
