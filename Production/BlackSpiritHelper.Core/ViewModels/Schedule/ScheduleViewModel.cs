@@ -171,6 +171,22 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
+        /// Offset <see cref="LocalTimeOffsetModifier"/> in string form.
+        /// </summary>
+        public string LocalTimeOffsetModifierString
+        {
+            get
+            {
+                if (LocalTimeOffsetModifier > TimeSpan.Zero)
+                    return $"+{LocalTimeOffsetModifier}";
+                else if (LocalTimeOffsetModifier < TimeSpan.Zero)
+                    return $"-{LocalTimeOffsetModifier}";
+                else
+                    return "0";
+            }
+        }
+
+        /// <summary>
         /// Says, if a section is running.
         /// </summary>
         [XmlIgnore]

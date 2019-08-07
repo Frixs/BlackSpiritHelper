@@ -145,6 +145,9 @@ namespace BlackSpiritHelper
             // Bind a UI Manager.
             IoC.Kernel.Bind<IUIManager>().ToConstant(new UIManager());
 
+            // Bind an datetime (with time zones) manager.
+            IoC.Kernel.Bind<IDateTimeZone>().ToConstant(new DateTimeZoneManager());
+
             // Bind an audio manager.
             IoC.Kernel.Bind<IAudioFactory>().ToConstant(new BaseAudioFactory());
 

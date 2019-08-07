@@ -52,6 +52,11 @@ namespace BlackSpiritHelper.Core
         public static IAudioFactory Audio => Get<IAudioFactory>();
 
         /// <summary>
+        /// A shortcut to access the <see cref="IDateTimeZone"/>.
+        /// </summary>
+        public static IDateTimeZone DateTime => Get<IDateTimeZone>();
+
+        /// <summary>
         /// A shortcut to access the <see cref="ApplicationDataContent"/>.
         /// </summary>
         public static ApplicationDataContent DataContent => Get<ApplicationDataContent>();

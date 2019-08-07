@@ -134,8 +134,8 @@
                                        Margin="10 0"/>
                             <xctk:TimeSpanUpDown Grid.Column="1"
                                                 Value="{Binding LocalTimeOffsetModifier}"
-                                                Minimum="-00:12:00"
-                                                Maximum="00:12:00"
+                                                Minimum="-12:00:00"
+                                                Maximum="12:00:00"
                                                 HorizontalAlignment="Right"
                                                 VerticalAlignment="Center"/>
                         </Grid>

@@ -63,6 +63,20 @@ namespace BlackSpiritHelper.Core
         public RegionTimeZone TimeZone { get; set; } = RegionTimeZone.UTC;
 
         /// <summary>
+        /// Get string representation of the currently applied time zone.
+        /// </summary>
+        public string CurrentTimeZoneString
+        {
+            get
+            {
+                if (IsSchedulePresenterConverted)
+                    return TimeZoneInfo.Local.ToString()
+                        + (IoC.DataContent.ScheduleDesignModel.LocalTimeOffsetModifier == TimeSpan.Zero ? string.Empty : $" (Modifier: {IoC.DataContent.ScheduleDesignModel.LocalTimeOffsetModifierString})");
+                return TimeZoneInfo.FindSystemTimeZoneById(TimeZone.GetDescription()).ToString();
+            }
+        }
+
+        /// <summary>
         /// Schedule.
         /// </summary>
         public ObservableCollection<ScheduleTemplateDayDataViewModel> Schedule
@@ -201,31 +215,20 @@ namespace BlackSpiritHelper.Core
                         continue;
 
                     DateTimeOffset currDate = new DateTimeOffset(todayDate);
-                    // Set day offset to appropriate day.
-                    currDate = currDate.AddDays(
-                        GetDayDifferenceOffset((int)day.DayOfWeek, (int)todayDate.DayOfWeek)
-                        );
-                    // Set appropriate time of the day.
-                    currDate = currDate.AddHours(time.Time.Hours).AddMinutes(time.Time.Minutes);
-                    
-                    // Get offsets.
-                    TimeSpan remoteOffset = TimeZoneInfo.FindSystemTimeZoneById(TimeZone.GetDescription()).GetUtcOffset(currDate);
-                    TimeSpan localOffset = currDate.Offset;
-                    
-                    // Transform local date to pretend as remote.
-                    // Transform it to UTC first without impact on date. We just want to change time zone offset of the date.
-                    currDate = currDate.ToOffset(TimeSpan.Zero);
-                    currDate += localOffset;
-                    // Transform it from UTC to remote zone (again, without impact on date).
-                    currDate = currDate.ToOffset(remoteOffset);
-                    currDate -= remoteOffset;
-                    
-                    // Transform our pretended remote date to user's local timezone.
+                    // Set timezone to the correct one.
+                    IoC.DateTime.SetTimeZone(ref currDate, TimeZoneInfo.FindSystemTimeZoneById(TimeZone.GetDescription()));
+                    // Set day offset to appropriate day and set appropriate time of the day.
+                    currDate = currDate
+                        .AddDays(GetDayDifferenceOffset((int)day.DayOfWeek, (int)todayDate.DayOfWeek))
+                        .AddHours(time.Time.Hours)
+                        .AddMinutes(time.Time.Minutes);
+
+                    // Transform the date to user's local timezone.
                     DateTime localDate = TimeZoneInfo.ConvertTimeFromUtc(
-                        currDate.UtcDateTime, // We do not want to convert time with DST offset. If we so then we need to use TimeZoneInfo.ConvertTimeToUtc .
+                        currDate.UtcDateTime + IoC.DataContent.ScheduleDesignModel.LocalTimeOffsetModifier, // We do not want to convert time with DST offset. For that reason, we use UtcDateTime property. If we so then we need to use TimeZoneInfo.ConvertTimeToUtc .
                         TimeZoneInfo.Local
                         );
-                    
+
                     // Set new time of the day.
                     time.Time = localDate.TimeOfDay;
 

@@ -41,22 +41,12 @@
                                                 </Button.Style>
                                             </Button>
 
-                                            <TextBlock FontFamily="{StaticResource LatoMediumItalic}"
+                                            <TextBlock Text="{Binding CurrentTimeZoneString}"
+                                                       FontFamily="{StaticResource LatoMediumItalic}"
                                                        FontSize="14"
                                                        Foreground="{StaticResource ScheduleCalForegroundBrushKey}"
                                                        Margin="10 0 0 0"
-                                                       VerticalAlignment="Center">
-                                                <TextBlock.Style>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="Text" Value="{Binding TimeZone, Converter={local:ScheduleCalTimeZoneToStringConverter}}" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding IsSchedulePresenterConverted}" Value="True">
-                                                                <Setter Property="Text" Value="{Binding TimeZone, Converter={local:ScheduleCalTimeZoneToStringConverter}, ConverterParameter=True}" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
+                                                       VerticalAlignment="Center" />
                                         </StackPanel>
                                         <ScrollViewer HorizontalScrollBarVisibility="Auto" 
                                                       VerticalScrollBarVisibility="Disabled" 
