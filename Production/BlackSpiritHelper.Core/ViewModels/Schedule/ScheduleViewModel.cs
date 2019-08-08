@@ -237,6 +237,30 @@ namespace BlackSpiritHelper.Core
         [XmlIgnore]
         public ICommand StopCommand { get; set; }
 
+        /// <summary>
+        /// Command to add a new template.
+        /// </summary>
+        [XmlIgnore]
+        public ICommand AddTemplateCommand { get; set; }
+
+        /// <summary>
+        /// Command to clone a new template.
+        /// </summary>
+        [XmlIgnore]
+        public ICommand CloneTemplateCommand { get; set; }
+
+        /// <summary>
+        /// Command to edit a new template.
+        /// </summary>
+        [XmlIgnore]
+        public ICommand EditTemplateCommand { get; set; }
+
+        /// <summary>
+        /// Command to manage items.
+        /// </summary>
+        [XmlIgnore]
+        public ICommand ManageItemsCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -311,6 +335,7 @@ namespace BlackSpiritHelper.Core
         {
             PlayCommand = new RelayCommand(async () => await PlayAsync());
             StopCommand = new RelayCommand(async () => await StopAsync());
+            // TODO: Template, Item control methods.
         }
 
         #endregion

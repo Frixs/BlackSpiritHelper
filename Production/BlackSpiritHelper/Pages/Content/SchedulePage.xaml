@@ -90,21 +90,55 @@
                     </Grid>
                     <StackPanel Orientation="Vertical" Grid.Column="2"
                                 VerticalAlignment="Center">
+                        <!-- 1st row -->
                         <Grid HorizontalAlignment="Right"
                               Margin="0 0 0 10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                         
-                            <!-- Template ComboBox -->
+                            <!-- Template ComboBox Label -->
                             <TextBlock Text="Template:" Grid.Column="0"
                                        FontFamily="{StaticResource LatoBold}"
                                        FontSize="14"
                                        Foreground="{StaticResource ScheduleForegroundBrushKey}"
                                        VerticalAlignment="Center"
                                        Margin="10 0"/>
-                            <ComboBox Name="TemplateComboBox" Grid.Column="1"
+                            <!-- Control Button Panel -->
+                            <StackPanel Orientation="Horizontal" Grid.Column="1" Visibility="Hidden"
+                                        VerticalAlignment="Center">
+                                <!-- Edit Button -->
+                                <Button Content="{StaticResource FontAwesomeEditIcon}" Margin="0 0 5 0"
+                                        Command="{Binding EditTemplateCommand}"
+                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                        FontSize="10"
+                                        Style="{StaticResource RegularButton}"
+                                        Width="20"
+                                        Height="20"
+                                        />
+                                <!-- Add Button -->
+                                <Button Content="{StaticResource FontAwesomePlusIcon}" Margin="0 0 5 0"
+                                        Command="{Binding AddTemplateCommand}"
+                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                        FontSize="10"
+                                        Style="{StaticResource RegularButton}"
+                                        Width="20"
+                                        Height="20"
+                                        />
+                                <!-- Clone Button -->
+                                <Button Content="{StaticResource FontAwesomeCloneIcon}" Margin="0 0 5 0"
+                                        Command="{Binding CloneTemplateCommand}"
+                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                        FontSize="10"
+                                        Style="{StaticResource RegularButton}"
+                                        Width="20"
+                                        Height="20"
+                                        />
+                            </StackPanel>
+                            <!-- ComboBox -->
+                            <ComboBox Name="TemplateComboBox" Grid.Column="2"
                                       HorizontalAlignment="Right"
                                       VerticalAlignment="Center"
                                       SelectedItem="{Binding SelectedTemplate}"
@@ -129,6 +163,7 @@
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
                         </Grid>
+                        <!-- 2nd row -->
                         <Grid HorizontalAlignment="Right">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -149,6 +184,29 @@
                                                  HorizontalAlignment="Right"
                                                  VerticalAlignment="Center"
                                                  IsEnabled="{Binding IsRunning, Converter={local:BooleanInvertConverter}}"/>
+                        </Grid>
+                        <!-- 3rd row -->
+                        <Grid HorizontalAlignment="Right" Margin="0 10 0 0" Visibility="Collapsed">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            
+                            <TextBlock Text="Custom Items:" Grid.Column="0"
+                                       FontFamily="{StaticResource LatoBold}"
+                                       FontSize="14"
+                                       Foreground="{StaticResource ScheduleForegroundBrushKey}"
+                                       VerticalAlignment="Center"
+                                       Margin="10 0"/>
+                            <!-- Manage Items Button -->
+                            <Button Content="{StaticResource FontAwesomeCogIcon}" Grid.Column="1"
+                                    Command="{Binding ManageItemsCommand}"
+                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                    FontSize="10"
+                                    Style="{StaticResource RegularButton}"
+                                    Width="40"
+                                    Height="20"
+                                        />
                         </Grid>
                     </StackPanel>
                 </Grid>
