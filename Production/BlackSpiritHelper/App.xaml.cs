@@ -92,8 +92,13 @@ namespace BlackSpiritHelper
             IoC.Get<IMouseKeyHook>().Dispose();
 
             if (!mIsRestartingProcessFlag)
+            {
+                // "Prepare data to die."
+                IoC.DataContent.Unset();
+
                 // Save data before exiting application.
                 IoC.DataContent.SaveUserData();
+            }
 
             // Dispose IoC kernel.
             IoC.Kernel.Dispose();

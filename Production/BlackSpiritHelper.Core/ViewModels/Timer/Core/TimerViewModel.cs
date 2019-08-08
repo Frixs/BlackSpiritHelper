@@ -100,7 +100,7 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Everythng you need to do after construction.
+        /// Anything you need to do after construction.
         /// </summary>
         protected override void SetupMethod()
         {
@@ -129,6 +129,13 @@ namespace BlackSpiritHelper.Core
                 IsLoopActive = false,
                 ShowInOverlay = true,
             });
+        }
+
+        /// <summary>
+        /// Anything you need to do before destroy.
+        /// </summary>
+        protected override void UnsetMethod()
+        {
         }
 
         #endregion

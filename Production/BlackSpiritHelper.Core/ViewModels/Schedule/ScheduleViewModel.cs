@@ -328,6 +328,11 @@ namespace BlackSpiritHelper.Core
                 PlayAsync();
         }
 
+        protected override void UnsetMethod()
+        {
+            // TODO;
+        }
+
         #endregion
 
         #region Command Methods

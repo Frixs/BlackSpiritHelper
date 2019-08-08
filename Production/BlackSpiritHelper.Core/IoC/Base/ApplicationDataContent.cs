@@ -67,6 +67,15 @@
             OverlayDesignModel.SetDefaults();
         }
 
+        /// <summary>
+        /// Unset application's data.
+        /// "Prepare to die."
+        /// </summary>
+        public void Unset()
+        {
+
+        }
+
         #endregion
 
         #region Public Methods

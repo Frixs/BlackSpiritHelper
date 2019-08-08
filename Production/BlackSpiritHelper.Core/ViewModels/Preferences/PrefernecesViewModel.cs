@@ -102,6 +102,13 @@ namespace BlackSpiritHelper.Core
         {
         }
 
+        /// <summary>
+        /// Anything you need to do before destroy.
+        /// </summary>
+        protected override void UnsetMethod()
+        {
+        }
+
         #endregion
 
         #region Command Methods

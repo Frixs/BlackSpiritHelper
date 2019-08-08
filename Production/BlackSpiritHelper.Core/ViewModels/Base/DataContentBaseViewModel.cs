@@ -17,13 +17,18 @@ namespace BlackSpiritHelper.Core
         protected bool mInitWithDefaultsFlag = false;
 
         /// <summary>
+        /// Says, if unset has been already done or not.
+        /// </summary>
+        protected bool mIsUnsetDoneFlag = false;
+
+        /// <summary>
         /// Says, if a section is running.
         /// </summary>
         [XmlIgnore]
         public abstract bool IsRunning { get; protected set; }
 
         /// <summary>
-        /// Everythng you need to do after construction.
+        /// Anything you need to do after construction.
         /// </summary>
         public void Setup()
         {
@@ -35,7 +40,7 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Everythng you need to do after construction.
+        /// Anything you need to do after construction.
         /// </summary>
         protected abstract void SetupMethod();
 
@@ -56,5 +61,22 @@ namespace BlackSpiritHelper.Core
         /// Set default values into this instance.
         /// </summary>
         protected abstract void SetDefaultsMethod();
+
+        /// <summary>
+        /// Anything you need to do before destroy.
+        /// </summary>
+        public void Unset()
+        {
+            if (!mIsSetupDoneFlag || mIsUnsetDoneFlag)
+                return;
+            mIsUnsetDoneFlag = true;
+
+            UnsetMethod();
+        }
+
+        /// <summary>
+        /// Anything you need to do before destroy.
+        /// </summary>
+        protected abstract void UnsetMethod();
     }
 }
