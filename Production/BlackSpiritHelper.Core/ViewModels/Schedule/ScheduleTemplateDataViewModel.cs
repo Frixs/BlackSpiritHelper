@@ -12,8 +12,6 @@ namespace BlackSpiritHelper.Core
     /// <summary>
     /// Template model for <see cref="ScheduleViewModel"/>.
     /// Next <see cref="ScheduleTemplateDayDataViewModel"/>.
-    /// TODO: Turn down opacity on ignored items in schedule.
-    /// TODO: Mark item currently in target.
     /// </summary>
     public class ScheduleTemplateDataViewModel : BaseViewModel
     {
@@ -382,8 +380,14 @@ namespace BlackSpiritHelper.Core
                             );
                     }
 
+                    // Generate time temporary ID.
+                    var tempId = int.Parse((iDay + 1).ToString() + (iTime + 1).ToString());
+
+                    Schedule[iDay].TimeList[iTime].TemporaryID = tempId;
+
                     timeList.Add(new ScheduleTemplateDayTimeDataViewModel
                     {
+                        TemporaryID = tempId,
                         Time = Schedule[iDay].TimeList[iTime].Time,
                         ItemListPresenter = itemList,
                     });

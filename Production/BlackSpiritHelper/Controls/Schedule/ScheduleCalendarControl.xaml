@@ -111,20 +111,37 @@
                                                                     MinWidth="76"
                                                                     MinHeight="76"
                                                                     Background="{StaticResource ScheduleCalTimeBoxBackgroundBrushKey}">
-                                                                <StackPanel Orientation="Vertical">
-                                                                    <TextBlock Text="{Binding Time, Converter={local:TimeSpanToStringConverter}, ConverterParameter='hm'}" 
-                                                                               FontSize="14"
-                                                                               FontFamily="{StaticResource LatoBold}"
-                                                                               Foreground="{StaticResource ScheduleCalTimeBoxForegroundBrushKey}"
-                                                                               VerticalAlignment="Top"
-                                                                               HorizontalAlignment="Center"
-                                                                               Margin="10 10 10 5" />
-                                                                    <Border Style="{StaticResource FormSpacer}"/>
-                                                                    <ItemsPresenter Margin="10 5 10 10"
-                                                                                    VerticalAlignment="Bottom"
-                                                                                    HorizontalAlignment="Center"
-                                                                                    TextBlock.TextAlignment="Center" />
-                                                                </StackPanel>
+                                                                <Grid>
+                                                                    <StackPanel Orientation="Vertical">
+                                                                        <!-- Time holder -->
+                                                                        <TextBlock Text="{Binding Time, Converter={local:TimeSpanToStringConverter}, ConverterParameter='hm'}" 
+                                                                                   FontSize="14"
+                                                                                   FontFamily="{StaticResource LatoBold}"
+                                                                                   Foreground="{StaticResource ScheduleCalTimeBoxForegroundBrushKey}"
+                                                                                   VerticalAlignment="Top"
+                                                                                   HorizontalAlignment="Center"
+                                                                                   Margin="10 10 10 5" />
+                                                                        <Border Style="{StaticResource FormSpacer}"/>
+                                                                        <ItemsPresenter Margin="10 5 10 10"
+                                                                                        VerticalAlignment="Bottom"
+                                                                                        HorizontalAlignment="Center"
+                                                                                        TextBlock.TextAlignment="Center" />
+                                                                    </StackPanel>
+                                                                    <!-- IsMarked -->
+                                                                    <Rectangle Stroke="{StaticResource RedBrushKey}" 
+                                                                               StrokeThickness="2">
+                                                                        <Rectangle.Style>
+                                                                            <Style TargetType="Rectangle">
+                                                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding IsMarkedAsNext}" Value="True">
+                                                                                        <Setter Property="Visibility" Value="Visible" />
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </Rectangle.Style>
+                                                                    </Rectangle>
+                                                                </Grid>
                                                             </Border>
 
                                                         </ControlTemplate>

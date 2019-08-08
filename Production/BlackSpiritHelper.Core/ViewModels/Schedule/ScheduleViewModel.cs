@@ -441,7 +441,7 @@ namespace BlackSpiritHelper.Core
         {
             DateTime today = DateTime.Today;
             DateTime nowUtc = new DateTimeOffset(DateTime.Now + LocalTimeOffsetModifier).UtcDateTime;
-            ScheduleTemplateDayTimeDataViewModel lastMatchingItem = null;
+            ScheduleTemplateDayTimeDataViewModel lastMatchingTimeItem = null;
             DateTimeOffset lastMatchingDate = default;
 
             // Get.
@@ -460,9 +460,9 @@ namespace BlackSpiritHelper.Core
                     dt += time.Time;
 
                     if (nowUtc < dt.UtcDateTime)
-                        if (lastMatchingItem == null || (lastMatchingItem != null && lastMatchingDate.UtcDateTime > dt.UtcDateTime))
+                        if (lastMatchingTimeItem == null || (lastMatchingTimeItem != null && lastMatchingDate.UtcDateTime > dt.UtcDateTime))
                         {
-                            lastMatchingItem = time;
+                            lastMatchingTimeItem = time;
                             lastMatchingDate = dt;
                         }
 
@@ -470,19 +470,23 @@ namespace BlackSpiritHelper.Core
                 }
             }
 
+            // Mark as next.
+            FindAndRemarkAsNew(lastMatchingTimeItem);
+
             // Update.
-            if (lastMatchingItem == null)
+            if (lastMatchingTimeItem == null)
             {
                 StopAsync();
                 return;
             }
 
+            // Set new countdown time.
             mTimeLeft = lastMatchingDate.UtcDateTime - nowUtc;
-
+            // Set time items.
             NextItemPresenterList.Clear();
-            for (int i = 0; i < lastMatchingItem.ItemList.Count; i++)
+            for (int i = 0; i < lastMatchingTimeItem.ItemList.Count; i++)
             {
-                var item = GetItemByName(lastMatchingItem.ItemList[i]);
+                var item = GetItemByName(lastMatchingTimeItem.ItemList[i]);
                 if (item != null)
                     NextItemPresenterList.Add(item);
             }
@@ -713,6 +717,7 @@ namespace BlackSpiritHelper.Core
             StopActiveCountdown();
             UpdateTimeInUI("OFF");
             NextItemPresenterList.Clear();
+            UnmarkAllAsNext();
 
             await Task.Delay(1);
         }
@@ -742,6 +747,89 @@ namespace BlackSpiritHelper.Core
                     o => o.Title.ToLower().Trim().Equals(TemplatePredefinedList[i].Title.ToLower())
                     );
             }
+        }
+
+        /// <summary>
+        /// Unamrk all marked as <see cref="ScheduleTemplateDayTimeDataViewModel.IsMarkedAsNext"/>.
+        /// </summary>
+        /// <param name="firstOccuranceOnly"></param>
+        private void UnmarkAllAsNext(bool firstOccuranceOnly = false)
+        {
+            // Umark first occurance.
+            for (int iDay = 0; iDay < SelectedTemplate.SchedulePresenter.Count; iDay++)
+            {
+                for (int iTime = 0; iTime < SelectedTemplate.SchedulePresenter[iDay].TimeList.Count; iTime++)
+                {
+                    if (!SelectedTemplate.SchedulePresenter[iDay].TimeList[iTime].IsMarkedAsNext)
+                        continue;
+                    SelectedTemplate.SchedulePresenter[iDay].TimeList[iTime].IsMarkedAsNext = false;
+                    if (firstOccuranceOnly)
+                        return;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Find <see cref="ScheduleTemplateDayTimeDataViewModel"/> in <see cref="ScheduleTemplateDataViewModel.SchedulePresenter"/> and mark it.
+        /// </summary>
+        /// <param name="timeItem"></param>
+        private void FindAndMarkAsNew(ScheduleTemplateDayTimeDataViewModel timeItem)
+        {
+            for (int iDay = 0; iDay < SelectedTemplate.SchedulePresenter.Count; iDay++)
+            {
+                for (int iTime = 0; iTime < SelectedTemplate.SchedulePresenter[iDay].TimeList.Count; iTime++)
+                {
+                    if (timeItem.TemporaryID == SelectedTemplate.SchedulePresenter[iDay].TimeList[iTime].TemporaryID)
+                    {
+                        SelectedTemplate.SchedulePresenter[iDay].TimeList[iTime].IsMarkedAsNext = true;
+                        return;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// <see cref="FindAndMarkAsNew"/> and <see cref="UnmarkAllAsNext(bool)"/> methods together in one loop.
+        /// Works only for 1 occurance.
+        /// </summary>
+        /// <param name="timeItem"></param>
+        private void FindAndRemarkAsNew(ScheduleTemplateDayTimeDataViewModel timeItem)
+        {
+            bool doneMark = false;
+            bool doneUnmark = false;
+
+            for (int iDay = 0; iDay < SelectedTemplate.SchedulePresenter.Count; iDay++)
+            {
+                for (int iTime = 0; iTime < SelectedTemplate.SchedulePresenter[iDay].TimeList.Count; iTime++)
+                {
+                    if (!doneUnmark && SelectedTemplate.SchedulePresenter[iDay].TimeList[iTime].IsMarkedAsNext)
+                    {
+                        SelectedTemplate.SchedulePresenter[iDay].TimeList[iTime].IsMarkedAsNext = false;
+                        doneUnmark = true;
+                    }
+
+                    if (!doneMark && timeItem == null)
+                    {
+                        doneMark = true;
+                    }
+                    else if (!doneMark && timeItem.TemporaryID == SelectedTemplate.SchedulePresenter[iDay].TimeList[iTime].TemporaryID)
+                    {
+                        SelectedTemplate.SchedulePresenter[iDay].TimeList[iTime].IsMarkedAsNext = true;
+                        doneMark = true;
+                    }
+
+                    if (doneMark && doneUnmark)
+                        return;
+                }
+            }
+        }
+
+        /// <summary>
+        /// TODO.
+        /// </summary>
+        private void FindAndRemarkIgnored()
+        {
+
         }
 
         #endregion

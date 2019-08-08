@@ -9,7 +9,38 @@ namespace BlackSpiritHelper.Core
     /// </summary>
     public class ScheduleTemplateDayTimeDataViewModel : BaseViewModel
     {
+        #region Private Members
+
+        /// <summary>
+        /// Temporary ID is useful to track equality of time items between <see cref="ScheduleTemplateDataViewModel.Schedule"/> and <see cref="ScheduleTemplateDataViewModel.SchedulePresenter"/>.
+        /// </summary>
+        private int mTemporaryID = -1;
+
+        #endregion
+
         #region Public Properties
+
+        /// <summary>
+        /// Temporary ID is useful to track equality of time items between <see cref="ScheduleTemplateDataViewModel.Schedule"/> and <see cref="ScheduleTemplateDataViewModel.SchedulePresenter"/>.
+        /// </summary>
+        [XmlIgnore]
+        public int TemporaryID
+        {
+            get => mTemporaryID;
+            set
+            {
+                if (mTemporaryID > -1)
+                    return;
+                mTemporaryID = value;
+            }
+        }
+
+        /// <summary>
+        /// Says, if the time is marked as next item to countdown to.
+        /// It is used for GUI to show the time event with special marking.
+        /// </summary>
+        [XmlIgnore]
+        public bool IsMarkedAsNext { get; set; } = false;
 
         /// <summary>
         /// Time.
