@@ -106,6 +106,28 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
+        #region Public Methods
+
+        /// <summary>
+        /// This method is done only if no items is moved from or to ignored list within <see cref="mIgnoreListMoveCounterFlagTime"/>.
+        /// </summary>
+        /// <returns></returns>
+        public static async Task OnItemIgnoredMoveAsync()
+        {
+            mIgnoreListMoveCounterFlag++;
+            await Task.Delay(mIgnoreListMoveCounterFlagTime);
+            mIgnoreListMoveCounterFlag--;
+
+            if (mIgnoreListMoveCounterFlag > 0)
+                return;
+
+            IoC.DataContent.ScheduleDesignModel.FindAndRemarkIgnored();
+
+            await Task.Delay(1);
+        }
+
+        #endregion
+
         #region Private Methods
 
         /// <summary>
@@ -168,24 +190,6 @@ namespace BlackSpiritHelper.Core
 
             // Procedure after move.
             IoC.Task.Run(async () => await OnItemIgnoredMoveAsync());
-
-            await Task.Delay(1);
-        }
-
-        /// <summary>
-        /// This method is done only if no items is moved from or to ignored list within <see cref="mIgnoreListMoveCounterFlagTime"/>.
-        /// </summary>
-        /// <returns></returns>
-        private async Task OnItemIgnoredMoveAsync()
-        {
-            mIgnoreListMoveCounterFlag++;
-            await Task.Delay(mIgnoreListMoveCounterFlagTime);
-            mIgnoreListMoveCounterFlag--;
-
-            if (mIgnoreListMoveCounterFlag > 0)
-                return;
-
-            IoC.DataContent.ScheduleDesignModel.FindAndRemarkIgnored();
 
             await Task.Delay(1);
         }

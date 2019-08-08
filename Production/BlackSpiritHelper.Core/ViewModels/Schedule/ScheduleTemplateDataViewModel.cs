@@ -210,6 +210,7 @@ namespace BlackSpiritHelper.Core
                         IsSchedulePresenterConverted = true;
                 }
 
+
                 await Task.Delay(1);
             });
         }
@@ -280,6 +281,9 @@ namespace BlackSpiritHelper.Core
         {
             // Get default values from original.
             UpdatePresenter();
+
+            // Update ignored list after change.
+            IoC.Task.Run(async () => await ScheduleItemDataViewModel.OnItemIgnoredMoveAsync());
 
             // All OK.
             return true;
@@ -388,6 +392,7 @@ namespace BlackSpiritHelper.Core
                     timeList.Add(new ScheduleTemplateDayTimeDataViewModel
                     {
                         TemporaryID = tempId,
+                        IsMarkedAsNext = Schedule[iDay].TimeList[iTime].IsMarkedAsNext,
                         Time = Schedule[iDay].TimeList[iTime].Time,
                         ItemListPresenter = itemList,
                     });

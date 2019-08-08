@@ -824,6 +824,7 @@ namespace BlackSpiritHelper.Core
                 {
                     if (timeItem.TemporaryID == SelectedTemplate.SchedulePresenter[iDay].TimeList[iTime].TemporaryID)
                     {
+                        timeItem.IsMarkedAsNext = true;
                         SelectedTemplate.SchedulePresenter[iDay].TimeList[iTime].IsMarkedAsNext = true;
                         return;
                     }
@@ -861,6 +862,7 @@ namespace BlackSpiritHelper.Core
                     }
                     else if (!doneMark && timeItem.TemporaryID == time.TemporaryID)
                     {
+                        timeItem.IsMarkedAsNext = true;
                         time.IsMarkedAsNext = true;
                         doneMark = true;
                     }

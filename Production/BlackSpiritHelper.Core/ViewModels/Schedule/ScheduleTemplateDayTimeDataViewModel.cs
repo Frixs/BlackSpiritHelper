@@ -38,7 +38,6 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Says, if the time is marked as next item to countdown to.
         /// It is used for GUI to show the time event with special marking.
-        /// !!! This is set only in <see cref="ScheduleTemplateDataViewModel.SchedulePresenter"/> not in <see cref="ScheduleTemplateDataViewModel.Schedule"/>.
         /// </summary>
         [XmlIgnore]
         public bool IsMarkedAsNext { get; set; } = false;
