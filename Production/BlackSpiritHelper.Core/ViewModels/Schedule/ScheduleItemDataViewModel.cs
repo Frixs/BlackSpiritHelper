@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Xml.Serialization;
 
@@ -17,6 +18,16 @@ namespace BlackSpiritHelper.Core
         /// Says if the item is predefined or not.
         /// </summary>
         private bool mIsPredefined = false;
+
+        /// <summary>
+        /// Flag that counts number of changes, but only the one can be done per <see cref="mIgnoreListMoveCounterFlagTime"/> time period.
+        /// </summary>
+        private static int mIgnoreListMoveCounterFlag = 0;
+
+        /// <summary>
+        /// Time period (delay) during which <see cref="OnItemIgnoredMoveAsync"/> cannot be done.
+        /// </summary>
+        private static TimeSpan mIgnoreListMoveCounterFlagTime = TimeSpan.FromSeconds(5);
 
         #endregion
 
@@ -123,6 +134,9 @@ namespace BlackSpiritHelper.Core
             // Resort.
             IoC.DataContent.ScheduleDesignModel.SortItemIgnoredList();
 
+            // Procedure after move.
+            IoC.Task.Run(async () => await OnItemIgnoredMoveAsync());
+
             await Task.Delay(1);
         }
 
@@ -151,6 +165,27 @@ namespace BlackSpiritHelper.Core
 
             // Resort - to update list.
             IoC.DataContent.ScheduleDesignModel.SortItemIgnoredList();
+
+            // Procedure after move.
+            IoC.Task.Run(async () => await OnItemIgnoredMoveAsync());
+
+            await Task.Delay(1);
+        }
+
+        /// <summary>
+        /// This method is done only if no items is moved from or to ignored list within <see cref="mIgnoreListMoveCounterFlagTime"/>.
+        /// </summary>
+        /// <returns></returns>
+        private async Task OnItemIgnoredMoveAsync()
+        {
+            mIgnoreListMoveCounterFlag++;
+            await Task.Delay(mIgnoreListMoveCounterFlagTime);
+            mIgnoreListMoveCounterFlag--;
+
+            if (mIgnoreListMoveCounterFlag > 0)
+                return;
+
+            IoC.DataContent.ScheduleDesignModel.FindAndRemarkIgnored();
 
             await Task.Delay(1);
         }

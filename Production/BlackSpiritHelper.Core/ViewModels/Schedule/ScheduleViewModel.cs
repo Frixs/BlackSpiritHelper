@@ -686,6 +686,41 @@ namespace BlackSpiritHelper.Core
             ItemIgnoredListPresenter = new ObservableCollection<ScheduleItemDataViewModel>(ItemIgnoredListPresenter.OrderBy(o => o.Name));
         }
 
+        /// <summary>
+        /// Find and remark all values by ignored list.
+        /// </summary>
+        /// <param name="unmarkAll">Force all to unmark.</param>
+        public void FindAndRemarkIgnored(bool unmarkAll = false)
+        {
+            for (int iDay = 0; iDay < SelectedTemplate.SchedulePresenter.Count; iDay++)
+            {
+                var day = SelectedTemplate.SchedulePresenter[iDay];
+
+                for (int iTime = 0; iTime < day.TimeList.Count; iTime++)
+                {
+                    var time = day.TimeList[iTime];
+
+                    // If unmark all is forced.
+                    if (unmarkAll)
+                    {
+                        time.IsMarkedAsIgnored = false;
+                        continue;
+                    }
+
+                    time.IsMarkedAsIgnored = true;
+                    
+                    for (int iItem = 0; iItem < time.ItemListPresenter.Count; iItem++)
+                    {
+                        if (!ItemIgnoredList.Contains(time.ItemListPresenter[iItem].Name))
+                        {
+                            time.IsMarkedAsIgnored = false;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
         #endregion
 
         #region Private Methods
@@ -700,6 +735,7 @@ namespace BlackSpiritHelper.Core
 
             UpdateTimeInUI("STARTING");
             UpdateTimeTargetAsync();
+            FindAndRemarkIgnored();
             mTimer.Start();
 
             await Task.Delay(1);
@@ -718,6 +754,7 @@ namespace BlackSpiritHelper.Core
             UpdateTimeInUI("OFF");
             NextItemPresenterList.Clear();
             UnmarkAllAsNext();
+            FindAndRemarkIgnored(true);
 
             await Task.Delay(1);
         }
@@ -800,11 +837,15 @@ namespace BlackSpiritHelper.Core
 
             for (int iDay = 0; iDay < SelectedTemplate.SchedulePresenter.Count; iDay++)
             {
-                for (int iTime = 0; iTime < SelectedTemplate.SchedulePresenter[iDay].TimeList.Count; iTime++)
+                var day = SelectedTemplate.SchedulePresenter[iDay];
+
+                for (int iTime = 0; iTime < day.TimeList.Count; iTime++)
                 {
-                    if (!doneUnmark && SelectedTemplate.SchedulePresenter[iDay].TimeList[iTime].IsMarkedAsNext)
+                    var time = day.TimeList[iTime];
+
+                    if (!doneUnmark && time.IsMarkedAsNext)
                     {
-                        SelectedTemplate.SchedulePresenter[iDay].TimeList[iTime].IsMarkedAsNext = false;
+                        time.IsMarkedAsNext = false;
                         doneUnmark = true;
                     }
 
@@ -812,9 +853,9 @@ namespace BlackSpiritHelper.Core
                     {
                         doneMark = true;
                     }
-                    else if (!doneMark && timeItem.TemporaryID == SelectedTemplate.SchedulePresenter[iDay].TimeList[iTime].TemporaryID)
+                    else if (!doneMark && timeItem.TemporaryID == time.TemporaryID)
                     {
-                        SelectedTemplate.SchedulePresenter[iDay].TimeList[iTime].IsMarkedAsNext = true;
+                        time.IsMarkedAsNext = true;
                         doneMark = true;
                     }
 
@@ -822,14 +863,6 @@ namespace BlackSpiritHelper.Core
                         return;
                 }
             }
-        }
-
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        private void FindAndRemarkIgnored()
-        {
-
         }
 
         #endregion

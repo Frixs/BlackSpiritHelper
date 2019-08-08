@@ -142,6 +142,17 @@
                                                                         </Rectangle.Style>
                                                                     </Rectangle>
                                                                 </Grid>
+                                                                <Border.Style>
+                                                                    <Style TargetType="Border">
+                                                                        <!-- Is Ignored -->
+                                                                        <Setter Property="Opacity" Value="1.0" />
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding IsMarkedAsIgnored}" Value="True">
+                                                                                <Setter Property="Opacity" Value="0.5" />
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </Border.Style>
                                                             </Border>
 
                                                         </ControlTemplate>
