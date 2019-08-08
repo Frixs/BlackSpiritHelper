@@ -92,9 +92,9 @@ namespace BlackSpiritHelper.Core
             get
             {
                 if (IsSchedulePresenterConverted)
-                    return TimeZoneInfo.Local.StandardName
+                    return IoC.DateTime.TimeZoneToString(TimeZoneInfo.Local, true, true)
                         + (IoC.DataContent.ScheduleDesignModel.LocalTimeOffsetModifier == TimeSpan.Zero ? string.Empty : $" (Modifier: {IoC.DataContent.ScheduleDesignModel.LocalTimeOffsetModifierString})");
-                return TimeZone.StandardName + TimeZone.BaseUtcOffset;
+                return IoC.DateTime.TimeZoneToString(TimeZone, true, true);
             }
         }
 
