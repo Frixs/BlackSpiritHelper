@@ -20,7 +20,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// List of all time events.
         /// </summary>
-        public ObservableCollection<ScheduleTemplateDayTimeDataViewModel> TimeList { get; set; }
+        public ObservableCollection<ScheduleTemplateDayTimeDataViewModel> TimeList { get; set; } = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>();
 
         #endregion
 

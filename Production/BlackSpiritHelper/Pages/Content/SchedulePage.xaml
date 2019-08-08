@@ -43,7 +43,9 @@
                                        FontSize="32"
                                        VerticalAlignment="Bottom"/>
                             <TextBlock Text="{Binding TimeLeftPresenter}"
-                                       Foreground="{StaticResource ScheduleForegroundTimeBrushKey}"
+                                       Foreground="{Binding WarningFlag,
+                                                    Converter={local:WarningTimerColorSwapConverter},
+                                                    ConverterParameter={StaticResource ScheduleForegroundTime}}"
                                        FontFamily="{StaticResource LatoHeavy}"
                                        FontSize="27"
                                        VerticalAlignment="Bottom"

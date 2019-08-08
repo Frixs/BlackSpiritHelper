@@ -937,18 +937,6 @@ namespace BlackSpiritHelper.Core
                         DayOfWeek = DayOfWeek.Thursday,
                         TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
                         {
-                            new ScheduleTemplateDayTimeDataViewModel
-                            {
-                                Time = new TimeSpan(21, 5, 0), ItemList = new ObservableCollection<string> {
-                                    itemGarmoth,
-                                },
-                            },
-                            new ScheduleTemplateDayTimeDataViewModel
-                            {
-                                Time = new TimeSpan(23, 0, 0), ItemList = new ObservableCollection<string> {
-                                    itemKzarka,
-                                },
-                            },
                         }
                     },
                     #endregion
@@ -959,6 +947,24 @@ namespace BlackSpiritHelper.Core
                         DayOfWeek = DayOfWeek.Friday,
                         TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
                         {
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(0, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKzarka,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(0, 50, 0), ItemList = new ObservableCollection<string> {
+                                    itemGarmoth,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(0, 51, 30), ItemList = new ObservableCollection<string> {
+                                    itemKaranda,
+                                },
+                            },
                         }
                     },
                     #endregion

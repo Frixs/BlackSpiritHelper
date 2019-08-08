@@ -9,7 +9,7 @@ namespace BlackSpiritHelper
     /// <summary>
     /// Converts <see cref="TimerItemDataViewModel.WarningFlag"/> into correct color.
     /// </summary>
-    public class TimerWarningTimerColorSwapConverter : BaseValueConverter<TimerWarningTimerColorSwapConverter>
+    public class WarningTimerColorSwapConverter : BaseValueConverter<WarningTimerColorSwapConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -28,7 +28,7 @@ namespace BlackSpiritHelper
             // Swap colors.
             if (val)
                 return new SolidColorBrush(
-                    (Color)ColorConverter.ConvertFromString(Application.Current.Resources["TimerListItemWarningColor"].ToString())
+                    (Color)ColorConverter.ConvertFromString(Application.Current.Resources["WarningColor"].ToString())
                     );
             else
                 return new SolidColorBrush(par);

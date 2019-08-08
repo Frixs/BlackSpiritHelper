@@ -50,6 +50,9 @@
                                                     Style="{StaticResource ScheduleButtonRemove}"
                                                     Foreground="{Binding ColorHEX, Converter={local:StringRGBToBrushConverter}}"
                                                     FontFamily="{StaticResource LatoHeavy}"
+                                                    IsEnabled="{Binding ApplicationDataContent.ScheduleDesignModel.IsRunning,
+                                                                Source={x:Static local:ViewModelLocator.Instance},
+                                                                Converter={local:BooleanInvertConverter}}"
                                                     Padding="10"
                                                     Margin="5" />
                                         </DataTemplate>
@@ -86,6 +89,9 @@
                                                     Style="{StaticResource ScheduleButtonAdd}"
                                                     Foreground="{Binding ColorHEX, Converter={local:StringRGBToBrushConverter}}"
                                                     FontFamily="{StaticResource LatoHeavy}"
+                                                    IsEnabled="{Binding ApplicationDataContent.ScheduleDesignModel.IsRunning,
+                                                                Source={x:Static local:ViewModelLocator.Instance},
+                                                                Converter={local:BooleanInvertConverter}}"
                                                     Padding="10"
                                                     Margin="5" />
                                         </DataTemplate>

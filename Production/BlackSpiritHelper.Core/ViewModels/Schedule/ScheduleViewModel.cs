@@ -23,6 +23,11 @@ namespace BlackSpiritHelper.Core
         private Timer mTimer;
 
         /// <summary>
+        /// Timer control - Warning time.
+        /// </summary>
+        private Timer mWarningTimer;
+
+        /// <summary>
         /// Time left to the next schedule event.
         /// </summary>
         private TimeSpan mTimeLeft = TimeSpan.Zero;
@@ -56,6 +61,19 @@ namespace BlackSpiritHelper.Core
         /// Item list, custom.
         /// </summary>
         private ObservableCollection<ScheduleItemDataViewModel> mItemCustomList = new ObservableCollection<ScheduleItemDataViewModel>();
+
+        /// <summary>
+        /// Array of notification event fire record.
+        /// TRUE = the notification event has been fired.
+        /// FALSE = the notification event has NOT been fired yet.
+        /// Count = Number of notification events for timer.
+        /// </summary>
+        private bool[] mIsFiredNotificationEvent = new bool[3];
+
+        /// <summary>
+        /// Flag, that helps if we should notificate/alert user to the next time event.
+        /// </summary>
+        private bool mNotificateNextTarget = false;
 
         #endregion
 
@@ -222,50 +240,52 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// 1st notification time.
         /// </summary>
-        public int TimerNotificationTime1 { get; set; } = 60;
+        public int TimerNotificationTime1 { get; set; } = 3600;
 
         /// <summary>
         /// 1st notification time. Property to load value from user settings on application load.
+        /// In minutes.
         /// </summary>
         [XmlIgnore]
         public double TimerNotificationTime1Value
         {
-            get => TimerNotificationTime1;
+            get => (int)(TimerNotificationTime1 / 60);
             set
             {
                 if (IsRunning)
                     return;
 
-                TimerNotificationTime1 = (int)value;
+                TimerNotificationTime1 = (int)value * 60;
             }
         }
 
         /// <summary>
         /// 2nd notification time.
         /// </summary>
-        public int TimerNotificationTime2 { get; set; } = 1;
+        public int TimerNotificationTime2 { get; set; } = 60;
 
         /// <summary>
         /// 2nd notification time. Property to load value from user settings on application load.
+        /// In minutes.
         /// </summary>
         [XmlIgnore]
         public double TimerNotificationTime2Value
         {
-            get => TimerNotificationTime2;
+            get => (int)(TimerNotificationTime2 / 60);
             set
             {
                 if (IsRunning)
                     return;
 
-                TimerNotificationTime2 = (int)value;
+                TimerNotificationTime2 = (int)value * 60;
             }
         }
 
         /// <summary>
-        /// TODO comment
+        /// Says, if the schedule is in warning time (less than X).
         /// </summary>
         [XmlIgnore]
-        public bool IsWarningTime { get; private set; }
+        public bool WarningFlag { get; private set; }
 
         #endregion
 
@@ -398,9 +418,15 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void SetTimer()
         {
+            // Normal timer.
             mTimer = new Timer(1000);
             mTimer.Elapsed += TimerOnElapsed;
             mTimer.AutoReset = true;
+
+            // Set warning timer.
+            mWarningTimer = new Timer(500);
+            mWarningTimer.Elapsed += TimerOnWarningTime;
+            mWarningTimer.AutoReset = true;
         }
 
         /// <summary>
@@ -409,10 +435,17 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public void DisposeTimer()
         {
+            // Normal timer.
             mTimer.Stop();
             mTimer.Elapsed -= TimerOnElapsed;
             mTimer.Dispose();
             mTimer = null;
+
+            // Warning timer.
+            mWarningTimer.Stop();
+            mWarningTimer.Elapsed -= TimerOnWarningTime;
+            mWarningTimer.Dispose();
+            mWarningTimer = null;
         }
 
         /// <summary>
@@ -424,7 +457,7 @@ namespace BlackSpiritHelper.Core
         {
             // Calculate time.
             mTimeLeft = mTimeLeft.Subtract(TimeSpan.FromSeconds(1));
-            
+
             // Handle notification events.
             HandleNotificationEvents(mTimeLeft);
 
@@ -452,6 +485,16 @@ namespace BlackSpiritHelper.Core
                     StopActiveCountdown();
                 }
             }
+        }
+
+        /// <summary>
+        /// On warning time, event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TimerOnWarningTime(object sender, ElapsedEventArgs e)
+        {
+            WarningFlag = !WarningFlag;
         }
 
         /// <summary>
@@ -485,39 +528,54 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private async Task UpdateTimeTargetAsync()
         {
+            bool goToNextWeek = false;
             DateTime today = DateTime.Today;
             DateTime nowUtc = new DateTimeOffset(DateTime.Now + LocalTimeOffsetModifier).UtcDateTime;
             ScheduleTemplateDayTimeDataViewModel lastMatchingTimeItem = null;
             DateTimeOffset lastMatchingDate = default;
 
-            // Get.
-            for (int iDay = 0; iDay < SelectedTemplate.Schedule.Count; iDay++)
-            {
-                var day = SelectedTemplate.Schedule[iDay];
+            // Set notification possibility to default.
+            mNotificateNextTarget = false;
 
-                DateTimeOffset dt = new DateTimeOffset(today);
-                IoC.DateTime.SetTimeZone(ref dt, SelectedTemplate.TimeZone);
-                dt = dt.AddDays(IoC.DateTime.GetDayDifferenceOffset((int)day.DayOfWeek, (int)today.DayOfWeek));
+            do {
+                DateTime todayWeek = goToNextWeek ? today.AddDays(7) : today;
 
-                for (int iTime = 0; iTime < day.TimeList.Count; iTime++)
+                // Get.
+                for (int iDay = 0; iDay < SelectedTemplate.Schedule.Count; iDay++)
                 {
-                    var time = day.TimeList[iTime];
+                    var day = SelectedTemplate.Schedule[iDay];
 
-                    dt += time.Time;
+                    DateTimeOffset dt = new DateTimeOffset(todayWeek);
+                    IoC.DateTime.SetTimeZone(ref dt, SelectedTemplate.TimeZone);
+                    dt = dt.AddDays(IoC.DateTime.GetDayDifferenceOffset((int)day.DayOfWeek, (int)todayWeek.DayOfWeek));
 
-                    if (nowUtc < dt.UtcDateTime)
-                        if (lastMatchingTimeItem == null || (lastMatchingTimeItem != null && lastMatchingDate.UtcDateTime > dt.UtcDateTime))
-                        {
-                            lastMatchingTimeItem = time;
-                            lastMatchingDate = dt;
-                        }
+                    for (int iTime = 0; iTime < day.TimeList.Count; iTime++)
+                    {
+                        var time = day.TimeList[iTime];
 
-                    dt -= time.Time;
+                        dt += time.Time;
+
+                        if (nowUtc < dt.UtcDateTime)
+                            if (lastMatchingTimeItem == null || (lastMatchingTimeItem != null && lastMatchingDate.UtcDateTime > dt.UtcDateTime))
+                            {
+                                lastMatchingTimeItem = time;
+                                lastMatchingDate = dt;
+                            }
+
+                        dt -= time.Time;
+                    }
                 }
-            }
+
+                // Go to the next week if there are no items in the current week to take.
+                if (lastMatchingTimeItem == null && !goToNextWeek)
+                    goToNextWeek = true;
+                else
+                    goToNextWeek = false;
+
+            } while (goToNextWeek);
 
             // Mark as next.
-            FindAndRemarkAsNew(lastMatchingTimeItem);
+            SelectedTemplate.FindAndRemarkAsNew(lastMatchingTimeItem);
 
             // Update.
             if (lastMatchingTimeItem == null)
@@ -528,7 +586,7 @@ namespace BlackSpiritHelper.Core
 
             // Set new countdown time.
             mTimeLeft = lastMatchingDate.UtcDateTime - nowUtc;
-
+            
             // Set time items.
             // Clear list first.
             await Application.Current.Dispatcher.BeginInvoke((Action)(() =>
@@ -539,11 +597,23 @@ namespace BlackSpiritHelper.Core
             {
                 var item = GetItemByName(lastMatchingTimeItem.ItemList[i]);
                 if (item != null)
+                {
+                    // We need to update list in UI thread due to Observable.
                     await Application.Current.Dispatcher.BeginInvoke((Action)(() =>
                     {
                         NextItemPresenterList.Add(item);
                     }));
+
+                    // Set notification possibility to the next target.
+                    if (!ItemIgnoredList.Contains(item.Name))
+                    {
+                        mNotificateNextTarget = true;
+                    }
+                }
             }
+            
+            // Update notification triggers.
+            TimerSetNotificationEventTriggers(mTimeLeft);
         }
 
         /// <summary>
@@ -571,11 +641,120 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// Handle notification events.
+        /// TODO: Make a custom timer with these shared methods among data content.
         /// </summary>
-        /// <param name="ts"></param>
-        private void HandleNotificationEvents(TimeSpan ts)
+        /// <param name="time"></param>
+        private void HandleNotificationEvents(TimeSpan time)
         {
-            // TODO: notification events.
+            if (!mNotificateNextTarget)
+                return;
+
+            // ------------------------------
+            // 1st Bracket.
+            // ------------------------------
+            if (time.TotalSeconds > TimerNotificationTime1)
+            {
+                // Time has changed, try to deactivate if the warning UI is running.
+                TimerTryToDeactivateWarningUI();
+                return;
+            }
+
+            // Fire notification event.
+            if (!mIsFiredNotificationEvent[0])
+            {
+                mIsFiredNotificationEvent[0] = true;
+                IoC.Audio.Play(AudioType.Alert1, AudioPriorityBracket.Pack);
+            }
+            
+            // ------------------------------
+            // 2nd Bracket.
+            // ------------------------------
+            if (time.TotalSeconds > TimerNotificationTime2)
+            {
+                // Time has changed, try to deactivate if the warning UI is running.
+                TimerTryToDeactivateWarningUI();
+                return;
+            }
+            
+            // Fire notification event.
+            if (!mIsFiredNotificationEvent[1])
+            {
+                mIsFiredNotificationEvent[1] = true;
+                IoC.Audio.Play(AudioType.Alert2, AudioPriorityBracket.Pack);
+            }
+
+            // Activate WARNING UI event.
+            TimerTryToActivateWarningUI();
+
+            // ------------------------------
+            // 3rd Bracket.
+            // ------------------------------
+            if (time.TotalSeconds > 0)
+            {
+                return;
+            }
+
+            // Fire notification event.
+            if (!mIsFiredNotificationEvent[2])
+            {
+                mIsFiredNotificationEvent[2] = true;
+                IoC.Audio.Play(AudioType.Alert3, AudioPriorityBracket.Pack);
+            }
+
+            // Deactivate WARNING UI event.
+            TimerTryToDeactivateWarningUI();
+        }
+
+        /// <summary>
+        /// Activate WARNING UI event.
+        /// If the event is already running, it cannot be run multiple times.
+        /// </summary>
+        private void TimerTryToActivateWarningUI()
+        {
+            if (mWarningTimer.Enabled)
+                return;
+
+            // Force warning at the beginning immediately.
+            WarningFlag = true;
+
+            // Start the event handling.
+            mWarningTimer.Start();
+        }
+
+        /// <summary>
+        /// Deactivate WARNING UI event.
+        /// If the event is not running, it cannot be stopped.
+        /// </summary>
+        private void TimerTryToDeactivateWarningUI()
+        {
+            if (!mWarningTimer.Enabled)
+                return;
+
+            // Force warning off immediately.
+            WarningFlag = false;
+
+            // Stop the event handling.
+            mWarningTimer.Stop();
+        }
+
+        /// <summary>
+        /// Set notification event triggers according to time left.
+        /// </summary>
+        /// <param name="time">Time according to which to set the triggers.</param>
+        private void TimerSetNotificationEventTriggers(TimeSpan time)
+        {
+            // User time brackets.
+            int[] brackets = new int[3] {
+                TimerNotificationTime1,
+                TimerNotificationTime2,
+                0
+            };
+
+            for (int i = 0; i < mIsFiredNotificationEvent.Length; i++)
+                if (time.TotalSeconds < brackets[i])
+                    mIsFiredNotificationEvent[i] = true;
+                else
+                    mIsFiredNotificationEvent[i] = false;
         }
 
         #endregion
@@ -804,11 +983,13 @@ namespace BlackSpiritHelper.Core
             mTimer.Stop();
             StopActiveCountdown();
             UpdateTimeInUI("OFF");
-            NextItemPresenterList.Clear();
-            UnmarkAllAsNext();
-            FindAndRemarkIgnored(true);
-
-            await Task.Delay(1);
+            await Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+            {
+                NextItemPresenterList.Clear();
+                SelectedTemplate.UnmarkAllAsNext();
+                FindAndRemarkIgnored(true);
+            }));
+            TimerTryToDeactivateWarningUI();
         }
 
         /// <summary>
@@ -835,87 +1016,6 @@ namespace BlackSpiritHelper.Core
                 TemplateCustomList.RemoveAll(
                     o => o.Title.ToLower().Trim().Equals(TemplatePredefinedList[i].Title.ToLower())
                     );
-            }
-        }
-
-        /// <summary>
-        /// Unamrk all marked as <see cref="ScheduleTemplateDayTimeDataViewModel.IsMarkedAsNext"/>.
-        /// </summary>
-        /// <param name="firstOccuranceOnly"></param>
-        private void UnmarkAllAsNext(bool firstOccuranceOnly = false)
-        {
-            // Umark first occurance.
-            for (int iDay = 0; iDay < SelectedTemplate.SchedulePresenter.Count; iDay++)
-            {
-                for (int iTime = 0; iTime < SelectedTemplate.SchedulePresenter[iDay].TimeList.Count; iTime++)
-                {
-                    if (!SelectedTemplate.SchedulePresenter[iDay].TimeList[iTime].IsMarkedAsNext)
-                        continue;
-                    SelectedTemplate.SchedulePresenter[iDay].TimeList[iTime].IsMarkedAsNext = false;
-                    if (firstOccuranceOnly)
-                        return;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Find <see cref="ScheduleTemplateDayTimeDataViewModel"/> in <see cref="ScheduleTemplateDataViewModel.SchedulePresenter"/> and mark it.
-        /// </summary>
-        /// <param name="timeItem"></param>
-        private void FindAndMarkAsNew(ScheduleTemplateDayTimeDataViewModel timeItem)
-        {
-            for (int iDay = 0; iDay < SelectedTemplate.SchedulePresenter.Count; iDay++)
-            {
-                for (int iTime = 0; iTime < SelectedTemplate.SchedulePresenter[iDay].TimeList.Count; iTime++)
-                {
-                    if (timeItem.TemporaryID == SelectedTemplate.SchedulePresenter[iDay].TimeList[iTime].TemporaryID)
-                    {
-                        timeItem.IsMarkedAsNext = true;
-                        SelectedTemplate.SchedulePresenter[iDay].TimeList[iTime].IsMarkedAsNext = true;
-                        return;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// <see cref="FindAndMarkAsNew"/> and <see cref="UnmarkAllAsNext(bool)"/> methods together in one loop.
-        /// Works only for 1 occurance.
-        /// </summary>
-        /// <param name="timeItem"></param>
-        private void FindAndRemarkAsNew(ScheduleTemplateDayTimeDataViewModel timeItem)
-        {
-            bool doneMark = false;
-            bool doneUnmark = false;
-
-            for (int iDay = 0; iDay < SelectedTemplate.SchedulePresenter.Count; iDay++)
-            {
-                var day = SelectedTemplate.SchedulePresenter[iDay];
-
-                for (int iTime = 0; iTime < day.TimeList.Count; iTime++)
-                {
-                    var time = day.TimeList[iTime];
-
-                    if (!doneUnmark && time.IsMarkedAsNext)
-                    {
-                        time.IsMarkedAsNext = false;
-                        doneUnmark = true;
-                    }
-
-                    if (!doneMark && timeItem == null)
-                    {
-                        doneMark = true;
-                    }
-                    else if (!doneMark && timeItem.TemporaryID == time.TemporaryID)
-                    {
-                        timeItem.IsMarkedAsNext = true;
-                        time.IsMarkedAsNext = true;
-                        doneMark = true;
-                    }
-
-                    if (doneMark && doneUnmark)
-                        return;
-                }
             }
         }
 

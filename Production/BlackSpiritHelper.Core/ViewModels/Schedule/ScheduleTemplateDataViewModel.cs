@@ -190,7 +190,120 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
+        #region Public Methods
+
+        /// <summary>
+        /// Unamrk all marked as <see cref="ScheduleTemplateDayTimeDataViewModel.IsMarkedAsNext"/>.
+        /// </summary>
+        /// <param name="firstOccuranceOnly"></param>
+        public void UnmarkAllAsNext(bool firstOccuranceOnly = false)
+        {
+            // Umark first occurance.
+            for (int iDay = 0; iDay < SchedulePresenter.Count; iDay++)
+            {
+                for (int iTime = 0; iTime < SchedulePresenter[iDay].TimeList.Count; iTime++)
+                {
+                    if (!SchedulePresenter[iDay].TimeList[iTime].IsMarkedAsNext)
+                        continue;
+                    SchedulePresenter[iDay].TimeList[iTime].IsMarkedAsNext = false;
+                    if (firstOccuranceOnly)
+                        return;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Find <see cref="ScheduleTemplateDayTimeDataViewModel"/> in <see cref="ScheduleTemplateDataViewModel.SchedulePresenter"/> and mark it.
+        /// </summary>
+        /// <param name="timeItem"></param>
+        public void FindAndMarkAsNew(ScheduleTemplateDayTimeDataViewModel timeItem)
+        {
+            for (int iDay = 0; iDay < SchedulePresenter.Count; iDay++)
+            {
+                for (int iTime = 0; iTime < SchedulePresenter[iDay].TimeList.Count; iTime++)
+                {
+                    if (timeItem.TemporaryID == SchedulePresenter[iDay].TimeList[iTime].TemporaryID)
+                    {
+                        timeItem.IsMarkedAsNext = true;
+                        SchedulePresenter[iDay].TimeList[iTime].IsMarkedAsNext = true;
+                        return;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// <see cref="FindAndMarkAsNew"/> and <see cref="UnmarkAllAsNext(bool)"/> methods together in one loop.
+        /// Works only for 1 occurance.
+        /// </summary>
+        /// <param name="timeItem"></param>
+        public void FindAndRemarkAsNew(ScheduleTemplateDayTimeDataViewModel timeItem)
+        {
+            bool doneMark = false;
+            bool doneUnmark = false;
+
+            // Unmark schedule.
+            ScheduleUnmarkAllAsNext(true);
+
+            // Go through presenter.
+            for (int iDay = 0; iDay < SchedulePresenter.Count; iDay++)
+            {
+                var day = SchedulePresenter[iDay];
+
+                for (int iTime = 0; iTime < day.TimeList.Count; iTime++)
+                {
+                    var time = day.TimeList[iTime];
+
+                    if (!doneUnmark && time.IsMarkedAsNext)
+                    {
+                        time.IsMarkedAsNext = false;
+                        doneUnmark = true;
+                    }
+
+                    if (!doneMark && timeItem == null)
+                    {
+                        doneMark = true;
+                    }
+                    else if (!doneMark && timeItem.TemporaryID == time.TemporaryID)
+                    {
+                        timeItem.IsMarkedAsNext = true;
+                        time.IsMarkedAsNext = true;
+                        doneMark = true;
+                    }
+
+                    if (doneMark && doneUnmark)
+                        return;
+                }
+            }
+        }
+
+        #endregion
+
         #region Private Methods
+
+        /// <summary>
+        /// Unmark <see cref="Schedule"/> first occurance.
+        /// </summary>
+        /// <param name="firstOccuranceOnly"></param>
+        private void ScheduleUnmarkAllAsNext(bool firstOccuranceOnly = false)
+        {
+            for (int iDay = 0; iDay < Schedule.Count; iDay++)
+            {
+                var day = Schedule[iDay];
+
+                for (int iTime = 0; iTime < day.TimeList.Count; iTime++)
+                {
+                    var time = day.TimeList[iTime];
+
+                    if (time.IsMarkedAsNext)
+                    {
+                        time.IsMarkedAsNext = false;
+                        if (firstOccuranceOnly)
+                            return;
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Toggle converted mode of schedule with possibility to show user schedule in his local time (if he is not in the local zone).

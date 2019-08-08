@@ -23,7 +23,7 @@
                                         Converter={local:StringRGBToBrushConverter}}"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding WarningFlag}" Value="True">
-                                            <Setter Property="Background" Value="{StaticResource TimerListItemWarningColorBrushKey}"/>
+                                            <Setter Property="Background" Value="{StaticResource WarningColorBrushKey}"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -32,7 +32,7 @@
                             <!-- Border 
                             <Rectangle StrokeThickness="3" Panel.ZIndex="1"
                                        Stroke="{Binding WarningFlag,
-                                                Converter={local:TimerWarningTimerColorSwapConverter},
+                                                Converter={local:WarningTimerColorSwapConverter},
                                                 ConverterParameter={StaticResource Transparent}}"/>
                             -->
 

@@ -8,7 +8,10 @@
 
     <Color x:Key="Transparent">#00000000</Color>
     <SolidColorBrush x:Key="TransparentBrushKey" Color="{StaticResource Transparent}" />
-    
+
+    <Color x:Key="WarningColor">#ec1e24</Color>
+    <SolidColorBrush x:Key="WarningColorBrushKey" Color="{StaticResource WarningColor}" />
+
     <!-- Window -->
     <Color x:Key="WindowBackground">#FFFFFFFF</Color>
     <SolidColorBrush x:Key="WindowBackgroundBrushKey" Color="{StaticResource WindowBackground}" />
@@ -194,9 +197,6 @@
     
     <Color x:Key="TimerListItemCountdownTextColor">#AE1E21</Color>
     <SolidColorBrush x:Key="TimerListItemCountdownTextColorBrushKey" Color="{StaticResource TimerListItemCountdownTextColor}" />
-
-    <Color x:Key="TimerListItemWarningColor">#ec1e24</Color>
-    <SolidColorBrush x:Key="TimerListItemWarningColorBrushKey" Color="{StaticResource TimerListItemWarningColor}" />
 
     <!-- Schedule -->
     <Color x:Key="ScheduleForeground">#15151A</Color>

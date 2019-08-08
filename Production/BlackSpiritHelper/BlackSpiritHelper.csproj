@@ -218,7 +218,7 @@
     <Compile Include="ValueConverters\Timer\TimerOverlaySizeMarginValueConverter.cs" />
     <Compile Include="ValueConverters\InvertBooleanConverter.cs" />
     <Compile Include="ValueConverters\Timer\TimerListOverlayOnlyConverter.cs" />
-    <Compile Include="ValueConverters\Timer\TimerWarningTimerColorSwapConverter.cs" />
+    <Compile Include="ValueConverters\WarningTimerColorSwapConverter.cs" />
     <Compile Include="ValueConverters\EnumBooleanConverter.cs" />
     <Compile Include="ValueConverters\StringToUppercaseConverter.cs" />
     <Compile Include="ValueConverters\ObjectToStringConverter.cs" />

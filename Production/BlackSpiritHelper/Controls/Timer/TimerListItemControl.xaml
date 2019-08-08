@@ -17,7 +17,7 @@
                         <!-- Content -->
                         <Border BorderThickness="3"
                                 BorderBrush="{Binding WarningFlag,
-                                              Converter={local:TimerWarningTimerColorSwapConverter},
+                                              Converter={local:WarningTimerColorSwapConverter},
                                               ConverterParameter={StaticResource Transparent}}"
                                 Margin="2"
                                 >
@@ -60,7 +60,7 @@
 
                                 <Grid Grid.Row="1" 
                                       Background="{Binding WarningFlag,
-                                                   Converter={local:TimerWarningTimerColorSwapConverter},
+                                                   Converter={local:WarningTimerColorSwapConverter},
                                                    ConverterParameter={StaticResource TimerListItemBackground2}}"
                                       >
                                     <Grid.ColumnDefinitions>
