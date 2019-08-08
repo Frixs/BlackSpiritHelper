@@ -220,6 +220,48 @@ namespace BlackSpiritHelper.Core
         public ObservableCollection<ScheduleItemDataViewModel> NextItemPresenterList { get; private set; } = new ObservableCollection<ScheduleItemDataViewModel>();
 
         /// <summary>
+        /// 1st notification time.
+        /// </summary>
+        public int TimerNotificationTime1 { get; set; } = 60;
+
+        /// <summary>
+        /// 1st notification time. Property to load value from user settings on application load.
+        /// </summary>
+        [XmlIgnore]
+        public double TimerNotificationTime1Value
+        {
+            get => TimerNotificationTime1;
+            set
+            {
+                if (IsRunning)
+                    return;
+
+                TimerNotificationTime1 = (int)value;
+            }
+        }
+
+        /// <summary>
+        /// 2nd notification time.
+        /// </summary>
+        public int TimerNotificationTime2 { get; set; } = 1;
+
+        /// <summary>
+        /// 2nd notification time. Property to load value from user settings on application load.
+        /// </summary>
+        [XmlIgnore]
+        public double TimerNotificationTime2Value
+        {
+            get => TimerNotificationTime2;
+            set
+            {
+                if (IsRunning)
+                    return;
+
+                TimerNotificationTime2 = (int)value;
+            }
+        }
+
+        /// <summary>
         /// TODO comment
         /// </summary>
         [XmlIgnore]
@@ -330,7 +372,7 @@ namespace BlackSpiritHelper.Core
 
         protected override void UnsetMethod()
         {
-            // TODO;
+            DisposeTimer();
         }
 
         #endregion
@@ -371,7 +413,6 @@ namespace BlackSpiritHelper.Core
             mTimer.Elapsed -= TimerOnElapsed;
             mTimer.Dispose();
             mTimer = null;
-            // TODO: Disposable DataContent?
         }
 
         /// <summary>

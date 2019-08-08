@@ -16,7 +16,7 @@
 
                         <!-- Content -->
                         <Border BorderThickness="3"
-                                BorderBrush="{Binding IsWarningTime,
+                                BorderBrush="{Binding WarningFlag,
                                               Converter={local:TimerWarningTimerColorSwapConverter},
                                               ConverterParameter={StaticResource Transparent}}"
                                 Margin="2"
@@ -59,7 +59,7 @@
                                 </Grid>
 
                                 <Grid Grid.Row="1" 
-                                      Background="{Binding IsWarningTime,
+                                      Background="{Binding WarningFlag,
                                                    Converter={local:TimerWarningTimerColorSwapConverter},
                                                    ConverterParameter={StaticResource TimerListItemBackground2}}"
                                       >
@@ -103,7 +103,7 @@
                                                     Content="{StaticResource FontAwesomePlusIcon}"
                                                     Style="{StaticResource RegularButtonBlue}"
                                                     FontFamily="{StaticResource FontAwesomeSolid}"
-                                                    Visibility="{Binding IsWarningTime,
+                                                    Visibility="{Binding WarningFlag,
                                                                  Converter={local:BooleanToVisibilityGoneConverter},
                                                                  ConverterParameter=True}"
                                                     Margin="5 5 5 0"
@@ -117,7 +117,7 @@
                                                     Content="{StaticResource FontAwesomePlusIcon}"
                                                     Style="{StaticResource RegularButtonWarningMode}"
                                                     FontFamily="{StaticResource FontAwesomeSolid}"
-                                                    Visibility="{Binding IsWarningTime,
+                                                    Visibility="{Binding WarningFlag,
                                                                  Converter={local:BooleanToVisibilityGoneConverter}}"
                                                     Margin="5 5 5 0"
                                                     Width="25"
@@ -131,7 +131,7 @@
                                                     Content="{StaticResource FontAwesomeMinusIcon}"
                                                     Style="{StaticResource RegularButtonBlue}"
                                                     FontFamily="{StaticResource FontAwesomeSolid}"
-                                                    Visibility="{Binding IsWarningTime,
+                                                    Visibility="{Binding WarningFlag,
                                                                  Converter={local:BooleanToVisibilityGoneConverter},
                                                                  ConverterParameter=True}"
                                                     Margin="5 0 5 0"
@@ -145,7 +145,7 @@
                                                     Content="{StaticResource FontAwesomeMinusIcon}"
                                                     Style="{StaticResource RegularButtonWarningMode}"
                                                     FontFamily="{StaticResource FontAwesomeSolid}"
-                                                    Visibility="{Binding IsWarningTime,
+                                                    Visibility="{Binding WarningFlag,
                                                                  Converter={local:BooleanToVisibilityGoneConverter}}"
                                                     Margin="5 0 5 0"
                                                     Width="25"
@@ -171,7 +171,7 @@
                                                         <DataTrigger Binding="{Binding IsInCountdown}" Value="True">
                                                             <Setter Property="Foreground" Value="{StaticResource TimerListItemCountdownTextColorBrushKey}"/>
                                                         </DataTrigger>
-                                                        <DataTrigger Binding="{Binding IsWarningTime}" Value="True">
+                                                        <DataTrigger Binding="{Binding WarningFlag}" Value="True">
                                                             <Setter Property="Foreground" Value="{StaticResource TimerListItemCountdownForegroundInvBrushKey}"/>
                                                         </DataTrigger>
                                                     </Style.Triggers>

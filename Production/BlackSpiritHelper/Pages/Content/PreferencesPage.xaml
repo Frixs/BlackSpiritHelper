@@ -7,7 +7,7 @@
       xmlns:local="clr-namespace:BlackSpiritHelper"
       xmlns:core="clr-namespace:BlackSpiritHelper.Core;assembly=BlackSpiritHelper.Core"
       mc:Ignorable="d" 
-      d:DesignHeight="800" d:DesignWidth="500"
+      d:DesignHeight="1000" d:DesignWidth="500"
       Title="PreferencesPage" >
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" 
@@ -25,6 +25,7 @@
                     <TextBlock Text="Preferences"
                                Style="{StaticResource FormTitle}" />
 
+                    <!-- ================================================== -->
                     <!-- Form Subtitle - General -->
                     <TextBlock Text="General"
                                Style="{StaticResource FormSubtitle}"
@@ -79,7 +80,8 @@
                             Command="{Binding ExportLogFileCommand}"
                             Padding="10"
                             HorizontalAlignment="Center" />
-                
+
+                    <!-- ================================================== -->
                     <!-- Form Subtitle - Overlay -->
                     <TextBlock Text="Overlay"
                                Style="{StaticResource FormSubtitle}"
@@ -148,6 +150,56 @@
                             Padding="10"
                             HorizontalAlignment="Center" />
 
+                    <!-- ================================================== -->
+                    <!-- Form Subtitle - Schedule -->
+                    <TextBlock Text="Schedule"
+                               Style="{StaticResource FormSubtitle}"
+                               Margin="0 0 0 30" />
+
+                    <!-- Schedule Notification Time Brackets -->
+                    <TextBlock Text="Alerts"
+                               FontFamily="{StaticResource LatoRegular}"
+                               FontSize="14"
+                               Margin="0 0 0 5"/>
+                    <TextBlock Text="You cannot update this if schedule is running." 
+                               Visibility="{Binding ApplicationDataContent.ScheduleDesignModel.IsRunning,
+                                            Source={x:Static local:ViewModelLocator.Instance},
+                                            Converter={local:BooleanToVisibilityGoneConverter}}"
+                               Foreground="{StaticResource RedBrushKey}"
+                               FontFamily="{StaticResource LatoLight}"
+                               FontSize="14"
+                               HorizontalAlignment="Center" 
+                               Margin="0 0 0 5"/>
+                    <xctk:RangeSlider x:Name="ScheduleNotificationRangeSlider" Margin="0 0 0 5"
+                                      Orientation="Horizontal"
+                                      Minimum="1"
+                                      LowerValue="{Binding ApplicationDataContent.ScheduleDesignModel.TimerNotificationTime2Value, 
+                                                   Mode=TwoWay,
+                                                   Source={x:Static local:ViewModelLocator.Instance}}" 
+                                      Maximum="180"
+                                      HigherValue="{Binding ApplicationDataContent.ScheduleDesignModel.TimerNotificationTime1Value, 
+                                                    Mode=TwoWay,
+                                                    Source={x:Static local:ViewModelLocator.Instance}}"
+                                      Step="1" />
+                    <Grid Margin="0 0 0 50">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" 
+                                   Text="{Binding LowerValue, ElementName=ScheduleNotificationRangeSlider, StringFormat='2nd alert at {0:#} min.'}"
+                                   FontFamily="{StaticResource LatoLight}"
+                                   FontSize="14"
+                                   HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Column="2"
+                                   Text="{Binding HigherValue, ElementName=ScheduleNotificationRangeSlider, StringFormat='1st alert at {0:#} min.'}"
+                                   FontFamily="{StaticResource LatoLight}"
+                                   FontSize="14"
+                                   HorizontalAlignment="Right"/>
+                    </Grid>
+
+                    <!-- ================================================== -->
                     <!-- Form Subtitle - Timer -->
                     <TextBlock Text="Timer"
                                Style="{StaticResource FormSubtitle}"

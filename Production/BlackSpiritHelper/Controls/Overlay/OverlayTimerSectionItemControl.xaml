@@ -22,7 +22,7 @@
                                             Value="{Binding IconBackgroundHEX, 
                                         Converter={local:StringRGBToBrushConverter}}"/>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsWarningTime}" Value="True">
+                                        <DataTrigger Binding="{Binding WarningFlag}" Value="True">
                                             <Setter Property="Background" Value="{StaticResource TimerListItemWarningColorBrushKey}"/>
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -31,7 +31,7 @@
                             
                             <!-- Border 
                             <Rectangle StrokeThickness="3" Panel.ZIndex="1"
-                                       Stroke="{Binding IsWarningTime,
+                                       Stroke="{Binding WarningFlag,
                                                 Converter={local:TimerWarningTimerColorSwapConverter},
                                                 ConverterParameter={StaticResource Transparent}}"/>
                             -->
@@ -59,7 +59,7 @@
                                                     Converter={local:StringRGBToLightOrDarkBrushConverter},
                                                     ConverterParameter={StaticResource TimerListItemIconForegroundColorDifference}}"/>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding IsWarningTime}" Value="True">
+                                                    <DataTrigger Binding="{Binding WarningFlag}" Value="True">
                                                         <Setter Property="Foreground" 
                                                                 Value="{StaticResource TimerListItemCountdownForegroundInvBrushKey}"/>
                                                     </DataTrigger>
@@ -88,7 +88,7 @@
                                                         <Setter Property="TextDecorations" 
                                                                 Value="Underline" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding IsWarningTime}" Value="True">
+                                                    <DataTrigger Binding="{Binding WarningFlag}" Value="True">
                                                         <Setter Property="Foreground" 
                                                                 Value="{StaticResource TimerListItemCountdownForegroundInvBrushKey}"/>
                                                     </DataTrigger>

@@ -247,7 +247,7 @@ namespace BlackSpiritHelper.Core
         /// Says, if the timer is in warning time (less than X).
         /// </summary>
         [XmlIgnore]
-        public bool IsWarningTime { get; private set; }
+        public bool WarningFlag { get; private set; }
 
         #endregion
 
@@ -431,7 +431,7 @@ namespace BlackSpiritHelper.Core
         /// <param name="e"></param>
         private void TimerOnWarningTime(object sender, ElapsedEventArgs e)
         {
-            IsWarningTime = !IsWarningTime;
+            WarningFlag = !WarningFlag;
         }
 
         /// <summary>
@@ -579,12 +579,17 @@ namespace BlackSpiritHelper.Core
         {
             TimerPause();
 
+            // Reset warning flag to default.
+            TimerTryToDeactivateWarningUI();
+
+            // Update state.
             UpdateState(TimerState.Ready);
 
             // Reset time.
             TimeLeft = new TimeSpan(TimeDuration.Ticks);
             CountdownLeft = new TimeSpan(CountdownDuration.Ticks);
 
+            // Update UI.
             UpdateTimeInUI(TimeLeft);
         }
 
@@ -594,6 +599,9 @@ namespace BlackSpiritHelper.Core
         private void TimerRestartLoop()
         {
             TimerPause();
+
+            // Reset warning flag to default.
+            TimerTryToDeactivateWarningUI();
 
             // Reset notification triggers.
             TimerResetNotificationEventTriggers();
@@ -713,7 +721,7 @@ namespace BlackSpiritHelper.Core
                 return;
 
             // Force warning at the beginning immediately.
-            IsWarningTime = true;
+            WarningFlag = true;
 
             // Start the event handling.
             mWarningTimer.Start();
@@ -729,7 +737,7 @@ namespace BlackSpiritHelper.Core
                 return;
 
             // Force warning off immediately.
-            IsWarningTime = false;
+            WarningFlag = false;
 
             // Stop the event handling.
             mWarningTimer.Stop();

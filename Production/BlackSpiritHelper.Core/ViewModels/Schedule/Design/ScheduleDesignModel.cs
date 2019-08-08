@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace BlackSpiritHelper.Core
 {
-    
+
     public class ScheduleDesignModel : ScheduleViewModel
     {
         #region New Instance Getter
@@ -57,417 +57,417 @@ namespace BlackSpiritHelper.Core
                 Title = "BDO-EU",
                 TimeZoneRegion = TimeZoneRegion.EU,
                 Schedule = new ObservableCollection<ScheduleTemplateDayDataViewModel>
+                {
+                    #region Monday
+                    new ScheduleTemplateDayDataViewModel
                     {
-                        #region Monday
-                        new ScheduleTemplateDayDataViewModel
+                        DayOfWeek = DayOfWeek.Monday,
+                        TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
                         {
-                            DayOfWeek = DayOfWeek.Monday,
-                            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                            new ScheduleTemplateDayTimeDataViewModel
                             {
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(0, 15, 0), ItemList = new ObservableCollection<string> {
-                                        itemKutum,
-                                        itemKaranda,
-                                    },
+                                Time = new TimeSpan(0, 15, 0), ItemList = new ObservableCollection<string> {
+                                    itemKutum,
+                                    itemKaranda,
                                 },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(2, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKaranda,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(5, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKzarka,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(9, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKzarka,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(12, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemOffin,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(16, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKutum,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(19, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemNouver,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(22, 15, 0), ItemList = new ObservableCollection<string> {
-                                        itemKzarka,
-                                    },
-                                },
-                            }
-                        },
-	                    #endregion
-
-                        #region Tuesday
-                        new ScheduleTemplateDayDataViewModel
-                        {
-                            DayOfWeek = DayOfWeek.Tuesday,
-                            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
                             {
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(0, 15, 0), ItemList = new ObservableCollection<string> {
-                                        itemKaranda,
-                                    },
+                                Time = new TimeSpan(2, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKaranda,
                                 },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(2, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKutum,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(5, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKzarka,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(9, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemNouver,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(12, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKutum,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(16, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemNouver,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(19, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKaranda,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(22, 15, 0), ItemList = new ObservableCollection<string> {
-                                        itemGarmoth,
-                                    },
-                                },
-                            }
-                        },
-	                    #endregion
-
-                        #region Wednesday
-                        new ScheduleTemplateDayDataViewModel
-                        {
-                            DayOfWeek = DayOfWeek.Wednesday,
-                            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
                             {
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(0, 15, 0), ItemList = new ObservableCollection<string> {
-                                        itemKutum,
-                                        itemKzarka,
-                                    },
+                                Time = new TimeSpan(5, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKzarka,
                                 },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(2, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKaranda,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(5, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKzarka,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(9, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKaranda,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(16, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKutum,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(19, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemOffin,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(22, 15, 0), ItemList = new ObservableCollection<string> {
-                                        itemKaranda,
-                                        itemKzarka,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(23, 15, 0), ItemList = new ObservableCollection<string> {
-                                        itemQuint,
-                                        itemMuraka,
-                                    },
-                                },
-                            }
-                        },
-	                    #endregion
-
-                        #region Thursday
-                        new ScheduleTemplateDayDataViewModel
-                        {
-                            DayOfWeek = DayOfWeek.Thursday,
-                            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
                             {
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(0, 15, 0), ItemList = new ObservableCollection<string> {
-                                        itemNouver,
-                                    },
+                                Time = new TimeSpan(9, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKzarka,
                                 },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(2, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKutum,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(5, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemNouver,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(9, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKutum,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(12, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemNouver,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(16, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKzarka,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(19, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKutum,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(22, 15, 0), ItemList = new ObservableCollection<string> {
-                                        itemGarmoth,
-                                    },
-                                },
-                            }
-                        },
-	                    #endregion
-
-                        #region Friday
-                        new ScheduleTemplateDayDataViewModel
-                        {
-                            DayOfWeek = DayOfWeek.Friday,
-                            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
                             {
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(0, 15, 0), ItemList = new ObservableCollection<string> {
-                                        itemKzarka,
-                                        itemKaranda,
-                                    },
+                                Time = new TimeSpan(12, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemOffin,
                                 },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(2, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemNouver,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(5, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKaranda,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(9, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKutum,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(12, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKaranda,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(16, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemNouver,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(19, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKzarka,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(22, 15, 0), ItemList = new ObservableCollection<string> {
-                                        itemKutum,
-                                        itemKzarka,
-                                    },
-                                },
-                            }
-                        },
-	                    #endregion
-
-                        #region Saturday
-                        new ScheduleTemplateDayDataViewModel
-                        {
-                            DayOfWeek = DayOfWeek.Saturday,
-                            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
                             {
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(0, 15, 0), ItemList = new ObservableCollection<string> {
-                                        itemKzarka,
-                                    },
+                                Time = new TimeSpan(16, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKutum,
                                 },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(2, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemOffin,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(5, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemNouver,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(9, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKutum,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(12, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemNouver,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(16, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemQuint,
-                                        itemMuraka,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(19, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKaranda,
-                                        itemKzarka,
-                                    },
-                                },
-                            }
-                        },
-	                    #endregion
-
-                        #region Sunday
-                        new ScheduleTemplateDayDataViewModel
-                        {
-                            DayOfWeek = DayOfWeek.Sunday,
-                            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
                             {
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(0, 15, 0), ItemList = new ObservableCollection<string> {
-                                        itemNouver,
-                                        itemKutum,
-                                    },
+                                Time = new TimeSpan(19, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemNouver,
                                 },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(2, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKzarka,
-                                    },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(22, 15, 0), ItemList = new ObservableCollection<string> {
+                                    itemKzarka,
                                 },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(5, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKutum,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(9, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemNouver,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(12, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKzarka,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(16, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemVell,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(19, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemGarmoth,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(22, 15, 0), ItemList = new ObservableCollection<string> {
-                                        itemKzarka,
-                                        itemNouver,
-                                    },
-                                },
-                            }
-                        },
-	                    #endregion
+                            },
+                        }
                     },
+	                #endregion
+
+                    #region Tuesday
+                    new ScheduleTemplateDayDataViewModel
+                    {
+                        DayOfWeek = DayOfWeek.Tuesday,
+                        TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                        {
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(0, 15, 0), ItemList = new ObservableCollection<string> {
+                                    itemKaranda,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(2, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKutum,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(5, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKzarka,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(9, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemNouver,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(12, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKutum,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(16, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemNouver,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(19, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKaranda,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(22, 15, 0), ItemList = new ObservableCollection<string> {
+                                    itemGarmoth,
+                                },
+                            },
+                        }
+                    },
+	                #endregion
+
+                    #region Wednesday
+                    new ScheduleTemplateDayDataViewModel
+                    {
+                        DayOfWeek = DayOfWeek.Wednesday,
+                        TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                        {
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(0, 15, 0), ItemList = new ObservableCollection<string> {
+                                    itemKutum,
+                                    itemKzarka,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(2, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKaranda,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(5, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKzarka,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(9, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKaranda,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(16, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKutum,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(19, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemOffin,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(22, 15, 0), ItemList = new ObservableCollection<string> {
+                                    itemKaranda,
+                                    itemKzarka,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(23, 15, 0), ItemList = new ObservableCollection<string> {
+                                    itemQuint,
+                                    itemMuraka,
+                                },
+                            },
+                        }
+                    },
+	                #endregion
+
+                    #region Thursday
+                    new ScheduleTemplateDayDataViewModel
+                    {
+                        DayOfWeek = DayOfWeek.Thursday,
+                        TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                        {
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(0, 15, 0), ItemList = new ObservableCollection<string> {
+                                    itemNouver,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(2, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKutum,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(5, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemNouver,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(9, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKutum,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(12, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemNouver,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(16, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKzarka,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(19, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKutum,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(22, 15, 0), ItemList = new ObservableCollection<string> {
+                                    itemGarmoth,
+                                },
+                            },
+                        }
+                    },
+	                #endregion
+
+                    #region Friday
+                    new ScheduleTemplateDayDataViewModel
+                    {
+                        DayOfWeek = DayOfWeek.Friday,
+                        TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                        {
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(0, 15, 0), ItemList = new ObservableCollection<string> {
+                                    itemKzarka,
+                                    itemKaranda,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(2, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemNouver,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(5, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKaranda,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(9, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKutum,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(12, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKaranda,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(16, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemNouver,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(19, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKzarka,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(22, 15, 0), ItemList = new ObservableCollection<string> {
+                                    itemKutum,
+                                    itemKzarka,
+                                },
+                            },
+                        }
+                    },
+	                #endregion
+
+                    #region Saturday
+                    new ScheduleTemplateDayDataViewModel
+                    {
+                        DayOfWeek = DayOfWeek.Saturday,
+                        TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                        {
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(0, 15, 0), ItemList = new ObservableCollection<string> {
+                                    itemKzarka,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(2, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemOffin,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(5, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemNouver,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(9, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKutum,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(12, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemNouver,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(16, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemQuint,
+                                    itemMuraka,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(19, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKaranda,
+                                    itemKzarka,
+                                },
+                            },
+                        }
+                    },
+	                #endregion
+
+                    #region Sunday
+                    new ScheduleTemplateDayDataViewModel
+                    {
+                        DayOfWeek = DayOfWeek.Sunday,
+                        TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                        {
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(0, 15, 0), ItemList = new ObservableCollection<string> {
+                                    itemNouver,
+                                    itemKutum,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(2, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKzarka,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(5, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKutum,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(9, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemNouver,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(12, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKzarka,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(16, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemVell,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(19, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemGarmoth,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(22, 15, 0), ItemList = new ObservableCollection<string> {
+                                    itemKzarka,
+                                    itemNouver,
+                                },
+                            },
+                        }
+                    },
+	                #endregion
+                },
             }, true);
             #endregion
 
@@ -478,499 +478,512 @@ namespace BlackSpiritHelper.Core
                 Title = "BDO-NA",
                 TimeZoneRegion = TimeZoneRegion.NA,
                 Schedule = new ObservableCollection<ScheduleTemplateDayDataViewModel>
+                {
+                    #region Monday
+                    new ScheduleTemplateDayDataViewModel
                     {
-                        #region Monday
-                        new ScheduleTemplateDayDataViewModel
+                        DayOfWeek = DayOfWeek.Monday,
+                        TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
                         {
-                            DayOfWeek = DayOfWeek.Monday,
-                            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                            new ScheduleTemplateDayTimeDataViewModel
                             {
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(0, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKaranda,
-                                    },
+                                Time = new TimeSpan(0, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKaranda,
                                 },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(3, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKzarka,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(7, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKzarka,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(10, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemOffin,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(14, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKutum,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(17, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemNouver,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(20, 15, 0), ItemList = new ObservableCollection<string> {
-                                        itemKzarka,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(22, 15, 0), ItemList = new ObservableCollection<string> {
-                                        itemKaranda,
-                                    },
-                                },
-                            }
-                        },
-	                    #endregion
-
-                        #region Tuesday
-                        new ScheduleTemplateDayDataViewModel
-                        {
-                            DayOfWeek = DayOfWeek.Tuesday,
-                            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
                             {
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(0, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKutum,
-                                    },
+                                Time = new TimeSpan(3, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKzarka,
                                 },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(3, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKzarka,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(7, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemNouver,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(10, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKutum,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(14, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemNouver,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(17, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKaranda,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(20, 15, 0), ItemList = new ObservableCollection<string> {
-                                        itemGarmoth,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(22, 15, 0), ItemList = new ObservableCollection<string> {
-                                        itemKutum,
-                                        itemKzarka,
-                                    },
-                                },
-                            }
-                        },
-	                    #endregion
-
-                        #region Wednesday
-                        new ScheduleTemplateDayDataViewModel
-                        {
-                            DayOfWeek = DayOfWeek.Wednesday,
-                            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
                             {
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(0, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKaranda,
-                                    },
+                                Time = new TimeSpan(7, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKzarka,
                                 },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(7, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKaranda,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(10, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemNouver,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(14, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKutum,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(17, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemOffin,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(20, 15, 0), ItemList = new ObservableCollection<string> {
-                                        itemKaranda,
-                                        itemKzarka,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(21, 15, 0), ItemList = new ObservableCollection<string> {
-                                        itemQuint,
-                                        itemMuraka,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(22, 15, 0), ItemList = new ObservableCollection<string> {
-                                        itemNouver,
-                                    },
-                                },
-                            }
-                        },
-	                    #endregion
-
-                        #region Thursday
-                        new ScheduleTemplateDayDataViewModel
-                        {
-                            DayOfWeek = DayOfWeek.Thursday,
-                            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
                             {
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(0, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKutum,
-                                    },
+                                Time = new TimeSpan(10, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemOffin,
                                 },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(3, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKzarka,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(7, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKutum,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(10, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemNouver,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(14, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKzarka,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(17, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKutum,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(20, 15, 0), ItemList = new ObservableCollection<string> {
-                                        itemGarmoth,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(22, 15, 0), ItemList = new ObservableCollection<string> {
-                                        itemKzarka,
-                                        itemKaranda,
-                                    },
-                                },
-                            }
-                        },
-	                    #endregion
-
-                        #region Friday
-                        new ScheduleTemplateDayDataViewModel
-                        {
-                            DayOfWeek = DayOfWeek.Friday,
-                            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
                             {
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(0, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemNouver,
-                                    },
+                                Time = new TimeSpan(14, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKutum,
                                 },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(3, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKaranda,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(7, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKutum,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(10, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKaranda,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(14, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemNouver,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(17, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKzarka,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(20, 15, 0), ItemList = new ObservableCollection<string> {
-                                        itemKutum,
-                                        itemKzarka,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(22, 15, 0), ItemList = new ObservableCollection<string> {
-                                        itemKaranda,
-                                    },
-                                },
-                            }
-                        },
-	                    #endregion
-
-                        #region Saturday
-                        new ScheduleTemplateDayDataViewModel
-                        {
-                            DayOfWeek = DayOfWeek.Saturday,
-                            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
                             {
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(0, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemOffin,
-                                    },
+                                Time = new TimeSpan(17, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemNouver,
                                 },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(3, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemNouver,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(7, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKutum,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(10, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemNouver,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(14, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemQuint,
-                                        itemMuraka,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(17, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKzarka,
-                                        itemKaranda,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(22, 15, 0), ItemList = new ObservableCollection<string> {
-                                        itemNouver,
-                                        itemKutum,
-                                    },
-                                },
-                            }
-                        },
-	                    #endregion
-
-                        #region Sunday
-                        new ScheduleTemplateDayDataViewModel
-                        {
-                            DayOfWeek = DayOfWeek.Sunday,
-                            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
                             {
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(0, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKzarka,
-                                    },
+                                Time = new TimeSpan(20, 15, 0), ItemList = new ObservableCollection<string> {
+                                    itemKzarka,
                                 },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(3, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKutum,
-                                    },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(22, 15, 0), ItemList = new ObservableCollection<string> {
+                                    itemKaranda,
                                 },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(7, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemNouver,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(10, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemKzarka,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(14, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemVell,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(17, 0, 0), ItemList = new ObservableCollection<string> {
-                                        itemGarmoth,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(20, 15, 0), ItemList = new ObservableCollection<string> {
-                                        itemKzarka,
-                                        itemNouver,
-                                    },
-                                },
-                                new ScheduleTemplateDayTimeDataViewModel
-                                {
-                                    Time = new TimeSpan(22, 15, 0), ItemList = new ObservableCollection<string> {
-                                        itemKutum,
-                                        itemKaranda,
-                                    },
-                                },
-                            }
-                        },
-	                    #endregion
+                            },
+                        }
                     },
+	                #endregion
+
+                    #region Tuesday
+                    new ScheduleTemplateDayDataViewModel
+                    {
+                        DayOfWeek = DayOfWeek.Tuesday,
+                        TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                        {
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(0, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKutum,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(3, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKzarka,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(7, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemNouver,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(10, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKutum,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(14, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemNouver,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(17, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKaranda,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(20, 15, 0), ItemList = new ObservableCollection<string> {
+                                    itemGarmoth,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(22, 15, 0), ItemList = new ObservableCollection<string> {
+                                    itemKutum,
+                                    itemKzarka,
+                                },
+                            },
+                        }
+                    },
+	                #endregion
+
+                    #region Wednesday
+                    new ScheduleTemplateDayDataViewModel
+                    {
+                        DayOfWeek = DayOfWeek.Wednesday,
+                        TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                        {
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(0, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKaranda,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(7, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKaranda,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(10, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemNouver,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(14, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKutum,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(17, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemOffin,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(20, 15, 0), ItemList = new ObservableCollection<string> {
+                                    itemKaranda,
+                                    itemKzarka,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(21, 15, 0), ItemList = new ObservableCollection<string> {
+                                    itemQuint,
+                                    itemMuraka,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(22, 15, 0), ItemList = new ObservableCollection<string> {
+                                    itemNouver,
+                                },
+                            },
+                        }
+                    },
+	                #endregion
+
+                    #region Thursday
+                    new ScheduleTemplateDayDataViewModel
+                    {
+                        DayOfWeek = DayOfWeek.Thursday,
+                        TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                        {
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(0, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKutum,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(3, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKzarka,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(7, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKutum,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(10, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemNouver,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(14, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKzarka,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(17, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKutum,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(20, 15, 0), ItemList = new ObservableCollection<string> {
+                                    itemGarmoth,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(22, 15, 0), ItemList = new ObservableCollection<string> {
+                                    itemKzarka,
+                                    itemKaranda,
+                                },
+                            },
+                        }
+                    },
+	                #endregion
+
+                    #region Friday
+                    new ScheduleTemplateDayDataViewModel
+                    {
+                        DayOfWeek = DayOfWeek.Friday,
+                        TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                        {
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(0, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemNouver,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(3, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKaranda,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(7, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKutum,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(10, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKaranda,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(14, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemNouver,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(17, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKzarka,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(20, 15, 0), ItemList = new ObservableCollection<string> {
+                                    itemKutum,
+                                    itemKzarka,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(22, 15, 0), ItemList = new ObservableCollection<string> {
+                                    itemKaranda,
+                                },
+                            },
+                        }
+                    },
+	                #endregion
+
+                    #region Saturday
+                    new ScheduleTemplateDayDataViewModel
+                    {
+                        DayOfWeek = DayOfWeek.Saturday,
+                        TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                        {
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(0, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemOffin,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(3, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemNouver,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(7, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKutum,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(10, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemNouver,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(14, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemQuint,
+                                    itemMuraka,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(17, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKzarka,
+                                    itemKaranda,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(22, 15, 0), ItemList = new ObservableCollection<string> {
+                                    itemNouver,
+                                    itemKutum,
+                                },
+                            },
+                        }
+                    },
+	                #endregion
+
+                    #region Sunday
+                    new ScheduleTemplateDayDataViewModel
+                    {
+                        DayOfWeek = DayOfWeek.Sunday,
+                        TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                        {
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(0, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKzarka,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(3, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKutum,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(7, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemNouver,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(10, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKzarka,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(14, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemVell,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(17, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemGarmoth,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(20, 15, 0), ItemList = new ObservableCollection<string> {
+                                    itemKzarka,
+                                    itemNouver,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(22, 15, 0), ItemList = new ObservableCollection<string> {
+                                    itemKutum,
+                                    itemKaranda,
+                                },
+                            },
+                        }
+                    },
+	                #endregion
+                },
             }, true);
             #endregion
 
             #region Template: BDO-RU
-            //AddTemplate(new ScheduleTemplateDataViewModel
-            //{
-            //    LastUpdate = new DateTime(2019, 8, 5).Ticks,
-            //    Title = "BDO-RU",
-            //    TimeZone = RegionTimeZone.RU,
-            //    Schedule = new ObservableCollection<ScheduleTemplateDayDataViewModel>
-            //    {
-            //        #region Monday
-            //        new ScheduleTemplateDayDataViewModel
-            //        {
-            //            DayOfWeek = DayOfWeek.Monday,
-            //            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
-            //            {
-            //            }
-            //        },
-            //        #endregion
+            AddTemplate(new ScheduleTemplateDataViewModel
+            {
+                LastUpdate = new DateTime(2019, 8, 5).Ticks,
+                Title = "BDO-RU",
+                TimeZoneRegion = TimeZoneRegion.RU,
+                Schedule = new ObservableCollection<ScheduleTemplateDayDataViewModel>
+                {
+                    #region Monday
+                    new ScheduleTemplateDayDataViewModel
+                    {
+                        DayOfWeek = DayOfWeek.Monday,
+                        TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                        {
+                        }
+                    },
+                    #endregion
 
-            //        #region Tuesday
-            //        new ScheduleTemplateDayDataViewModel
-            //        {
-            //            DayOfWeek = DayOfWeek.Tuesday,
-            //            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
-            //            {
-            //            }
-            //        },
-            //        #endregion
+                    #region Tuesday
+                    new ScheduleTemplateDayDataViewModel
+                    {
+                        DayOfWeek = DayOfWeek.Tuesday,
+                        TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                        {
+                        }
+                    },
+                    #endregion
 
-            //        #region Wednesday
-            //        new ScheduleTemplateDayDataViewModel
-            //        {
-            //            DayOfWeek = DayOfWeek.Wednesday,
-            //            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
-            //            {
-            //            }
-            //        },
-            //        #endregion
+                    #region Wednesday
+                    new ScheduleTemplateDayDataViewModel
+                    {
+                        DayOfWeek = DayOfWeek.Wednesday,
+                        TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                        {
 
-            //        #region Thursday
-            //        new ScheduleTemplateDayDataViewModel
-            //        {
-            //            DayOfWeek = DayOfWeek.Thursday,
-            //            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
-            //            {
-            //            }
-            //        },
-            //        #endregion
+                        }
+                    },
+                    #endregion
 
-            //        #region Friday
-            //        new ScheduleTemplateDayDataViewModel
-            //        {
-            //            DayOfWeek = DayOfWeek.Friday,
-            //            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
-            //            {
-            //            }
-            //        },
-            //        #endregion
+                    #region Thursday
+                    new ScheduleTemplateDayDataViewModel
+                    {
+                        DayOfWeek = DayOfWeek.Thursday,
+                        TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                        {
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(21, 5, 0), ItemList = new ObservableCollection<string> {
+                                    itemGarmoth,
+                                },
+                            },
+                            new ScheduleTemplateDayTimeDataViewModel
+                            {
+                                Time = new TimeSpan(23, 0, 0), ItemList = new ObservableCollection<string> {
+                                    itemKzarka,
+                                },
+                            },
+                        }
+                    },
+                    #endregion
 
-            //        #region Saturday
-            //        new ScheduleTemplateDayDataViewModel
-            //        {
-            //            DayOfWeek = DayOfWeek.Saturday,
-            //            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
-            //            {
-            //            }
-            //        },
-            //        #endregion
+                    #region Friday
+                    new ScheduleTemplateDayDataViewModel
+                    {
+                        DayOfWeek = DayOfWeek.Friday,
+                        TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                        {
+                        }
+                    },
+                    #endregion
 
-            //        #region Sunday
-            //        new ScheduleTemplateDayDataViewModel
-            //        {
-            //            DayOfWeek = DayOfWeek.Sunday,
-            //            TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
-            //            {
-            //            }
-            //        },
-            //        #endregion
-            //    },
-            //}, true);
+                    #region Saturday
+                    new ScheduleTemplateDayDataViewModel
+                    {
+                        DayOfWeek = DayOfWeek.Saturday,
+                        TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                        {
+                        }
+                    },
+                    #endregion
+
+                    #region Sunday
+                    new ScheduleTemplateDayDataViewModel
+                    {
+                        DayOfWeek = DayOfWeek.Sunday,
+                        TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>
+                        {
+                        }
+                    },
+                    #endregion
+                },
+            }, true);
             #endregion
         }
 

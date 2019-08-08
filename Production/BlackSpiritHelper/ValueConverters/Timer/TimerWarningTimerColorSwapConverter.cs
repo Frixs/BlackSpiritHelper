@@ -7,7 +7,7 @@ using System.Windows.Media;
 namespace BlackSpiritHelper
 {
     /// <summary>
-    /// Converts <see cref="TimerItemDataViewModel.IsWarningTime"/> into correct color.
+    /// Converts <see cref="TimerItemDataViewModel.WarningFlag"/> into correct color.
     /// </summary>
     public class TimerWarningTimerColorSwapConverter : BaseValueConverter<TimerWarningTimerColorSwapConverter>
     {

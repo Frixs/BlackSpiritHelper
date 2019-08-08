@@ -32,7 +32,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// User audio alert level.
         /// </summary>
-        public AudioAlertLevel AudioAlertLevel { get; set; } = AudioAlertLevel.None;
+        public AudioAlertLevel AudioAlertLevel { get; set; } = AudioAlertLevel.Sound;
 
         /// <summary>
         /// List of all types of audio alerts.
