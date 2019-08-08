@@ -12,7 +12,6 @@ namespace BlackSpiritHelper.Core
 {
     /// <summary>
     /// TODO: Add logger to whole Schedule section.
-    /// TODO: Time zones are not calculating with daylight time shifting.
     /// </summary>
     public class ScheduleViewModel : DataContentBaseViewModel
     {
@@ -37,6 +36,11 @@ namespace BlackSpiritHelper.Core
         /// Countdown time of <see cref="mTimeActiveCountdown"/> in seconds.
         /// </summary>
         private const double mTimeActiveCountdownSeconds = 60;
+
+        /// <summary>
+        /// Says, if the timer should show active countdown.
+        /// </summary>
+        private bool mIsActiveCountdownTime = false;
 
         /// <summary>
         /// Selected template.
@@ -394,8 +398,13 @@ namespace BlackSpiritHelper.Core
             // Timer reached zero.
             if (mTimeLeft.TotalSeconds <= 0)
             {
-                mTimeActiveCountdown = TimeSpan.FromSeconds(mTimeActiveCountdownSeconds);
-                UpdateTimeTargetAsync();
+                PlayActiveCountdown();
+
+                if (mTimeActiveCountdown <= TimeSpan.Zero)
+                {
+                    UpdateTimeTargetAsync();
+                    StopActiveCountdown();
+                }
             }
         }
 
@@ -479,6 +488,29 @@ namespace BlackSpiritHelper.Core
             }
 
             await Task.Delay(1);
+        }
+
+        /// <summary>
+        /// Play active countdown.
+        /// </summary>
+        private void PlayActiveCountdown()
+        {
+            if (mIsActiveCountdownTime)
+                return;
+            mIsActiveCountdownTime = true;
+
+            mTimeActiveCountdown = TimeSpan.FromSeconds(mTimeActiveCountdownSeconds);
+        }
+
+        /// <summary>
+        /// Stop active countdown.
+        /// </summary>
+        private void StopActiveCountdown()
+        {
+            if (!mIsActiveCountdownTime)
+                return;
+            mIsActiveCountdownTime = false;
+            mTimeActiveCountdown = TimeSpan.Zero;
         }
 
         /// <summary>
@@ -678,7 +710,7 @@ namespace BlackSpiritHelper.Core
             IsRunning = false;
 
             mTimer.Stop();
-            mTimeActiveCountdown = TimeSpan.Zero;
+            StopActiveCountdown();
             UpdateTimeInUI("OFF");
             NextItemPresenterList.Clear();
 

@@ -107,7 +107,7 @@
                                        VerticalAlignment="Center"
                                        Margin="10 0"/>
                             <!-- Control Button Panel -->
-                            <StackPanel Orientation="Horizontal" Grid.Column="1" Visibility="Hidden"
+                            <StackPanel Orientation="Horizontal" Grid.Column="1" Visibility="Collapsed"
                                         VerticalAlignment="Center">
                                 <!-- Edit Button -->
                                 <Button Content="{StaticResource FontAwesomeEditIcon}" Margin="0 0 5 0"
