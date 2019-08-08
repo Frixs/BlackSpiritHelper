@@ -482,16 +482,22 @@ namespace BlackSpiritHelper.Core
 
             // Set new countdown time.
             mTimeLeft = lastMatchingDate.UtcDateTime - nowUtc;
+
             // Set time items.
-            NextItemPresenterList.Clear();
+            // Clear list first.
+            await Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+            {
+                NextItemPresenterList.Clear();
+            }));
             for (int i = 0; i < lastMatchingTimeItem.ItemList.Count; i++)
             {
                 var item = GetItemByName(lastMatchingTimeItem.ItemList[i]);
                 if (item != null)
-                    NextItemPresenterList.Add(item);
+                    await Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        NextItemPresenterList.Add(item);
+                    }));
             }
-
-            await Task.Delay(1);
         }
 
         /// <summary>
