@@ -12,6 +12,7 @@ namespace BlackSpiritHelper.Core
 {
     /// <summary>
     /// TODO: Add logger to whole Schedule section.
+    /// TODO: Time zones are not calculating with daylight time shifting.
     /// </summary>
     public class ScheduleViewModel : DataContentBaseViewModel
     {
@@ -206,7 +207,13 @@ namespace BlackSpiritHelper.Core
         /// Option to display time in GUI with the text. Not only a time.
         /// </summary>
         [XmlIgnore]
-        public string TimeLeftPresenter { get; private set; }
+        public string TimeLeftPresenter { get; private set; } = "OFF";
+
+        /// <summary>
+        /// List of items that are currently in target.
+        /// </summary>
+        [XmlIgnore]
+        public ObservableCollection<ScheduleItemDataViewModel> NextItemPresenterList { get; private set; } = new ObservableCollection<ScheduleItemDataViewModel>();
 
         /// <summary>
         /// TODO comment
@@ -342,7 +349,7 @@ namespace BlackSpiritHelper.Core
         {
             // Calculate time.
             mTimeLeft = mTimeLeft.Subtract(TimeSpan.FromSeconds(1));
-
+            
             // Handle notification events.
             HandleNotificationEvents(mTimeLeft);
 
@@ -360,10 +367,10 @@ namespace BlackSpiritHelper.Core
             }
 
             // Timer reached zero.
-            if (mTimeLeft.Seconds <= 0)
+            if (mTimeLeft.TotalSeconds <= 0)
             {
                 mTimeActiveCountdown = TimeSpan.FromSeconds(mTimeActiveCountdownSeconds);
-                UpdateTimeTarget();
+                UpdateTimeTargetAsync();
             }
         }
 
@@ -376,7 +383,7 @@ namespace BlackSpiritHelper.Core
             // Update UI thread.
             Application.Current.Dispatcher.BeginInvoke((Action)(() =>
             {
-                TimeLeftPresenter = ts.ToString();
+                TimeLeftPresenter = ts.ToString(@"%d\.hh\:mm\:ss");
             }));
         }
 
@@ -396,9 +403,57 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Update time to the next target.
         /// </summary>
-        private void UpdateTimeTarget()
+        private async Task UpdateTimeTargetAsync()
         {
-            // TODO: do stuff.
+            DateTime today = DateTime.Today;
+            DateTime nowUtc = new DateTimeOffset(DateTime.Now + LocalTimeOffsetModifier).UtcDateTime;
+            ScheduleTemplateDayTimeDataViewModel lastMatchingItem = null;
+            DateTimeOffset lastMatchingDate = default;
+
+            // Get.
+            for (int iDay = 0; iDay < SelectedTemplate.Schedule.Count; iDay++)
+            {
+                var day = SelectedTemplate.Schedule[iDay];
+
+                DateTimeOffset dt = new DateTimeOffset(today);
+                IoC.DateTime.SetTimeZone(ref dt, SelectedTemplate.TimeZone);
+                dt = dt.AddDays(IoC.DateTime.GetDayDifferenceOffset((int)day.DayOfWeek, (int)today.DayOfWeek));
+
+                for (int iTime = 0; iTime < day.TimeList.Count; iTime++)
+                {
+                    var time = day.TimeList[iTime];
+
+                    dt += time.Time;
+
+                    if (nowUtc < dt.UtcDateTime)
+                        if (lastMatchingItem == null || (lastMatchingItem != null && lastMatchingDate.UtcDateTime > dt.UtcDateTime))
+                        {
+                            lastMatchingItem = time;
+                            lastMatchingDate = dt;
+                        }
+
+                    dt -= time.Time;
+                }
+            }
+
+            // Update.
+            if (lastMatchingItem == null)
+            {
+                StopAsync();
+                return;
+            }
+
+            mTimeLeft = lastMatchingDate.UtcDateTime - nowUtc;
+
+            NextItemPresenterList.Clear();
+            for (int i = 0; i < lastMatchingItem.ItemList.Count; i++)
+            {
+                var item = GetItemByName(lastMatchingItem.ItemList[i]);
+                if (item != null)
+                    NextItemPresenterList.Add(item);
+            }
+
+            await Task.Delay(1);
         }
 
         /// <summary>
@@ -582,7 +637,8 @@ namespace BlackSpiritHelper.Core
         {
             IsRunning = true;
 
-            UpdateTimeTarget();
+            UpdateTimeInUI("STARTING");
+            UpdateTimeTargetAsync();
             mTimer.Start();
 
             await Task.Delay(1);
@@ -598,6 +654,8 @@ namespace BlackSpiritHelper.Core
 
             mTimer.Stop();
             mTimeActiveCountdown = TimeSpan.Zero;
+            UpdateTimeInUI("OFF");
+            NextItemPresenterList.Clear();
 
             await Task.Delay(1);
         }

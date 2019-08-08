@@ -55,7 +55,7 @@ namespace BlackSpiritHelper.Core
             {
                 LastUpdate = new DateTime(2019, 8, 5).Ticks,
                 Title = "BDO-EU",
-                TimeZone = RegionTimeZone.EU,
+                TimeZoneRegion = TimeZoneRegion.EU,
                 Schedule = new ObservableCollection<ScheduleTemplateDayDataViewModel>
                     {
                         #region Monday
@@ -476,7 +476,7 @@ namespace BlackSpiritHelper.Core
             {
                 LastUpdate = new DateTime(2019, 8, 5).Ticks,
                 Title = "BDO-NA",
-                TimeZone = RegionTimeZone.NA,
+                TimeZoneRegion = TimeZoneRegion.NA,
                 Schedule = new ObservableCollection<ScheduleTemplateDayDataViewModel>
                     {
                         #region Monday

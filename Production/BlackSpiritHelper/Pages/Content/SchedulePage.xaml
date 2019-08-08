@@ -42,7 +42,7 @@
                                        FontFamily="{StaticResource LatoHeavy}"
                                        FontSize="32"
                                        VerticalAlignment="Bottom"/>
-                            <TextBlock Text="0.00:00:00"
+                            <TextBlock Text="{Binding TimeLeftPresenter}"
                                        Foreground="{StaticResource ScheduleForegroundTimeBrushKey}"
                                        FontFamily="{StaticResource LatoHeavy}"
                                        FontSize="27"
@@ -74,9 +74,18 @@
                         </StackPanel>
                         <!-- Next items -->
                         <StackPanel Orientation="Vertical" Grid.Row="1">
-                            <TextBlock Text="Kzarka, Nouver"
-                                       FontFamily="{StaticResource LatoBoldItalic}"
-                                       FontSize="16"/>
+                            <ItemsControl ItemsSource="{Binding NextItemPresenterList}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        
+                                        <TextBlock Text="{Binding Name}"
+                                                   Foreground="{Binding ColorHEX, Converter={local:StringRGBToBrushConverter}}"
+                                                   FontFamily="{StaticResource LatoBoldItalic}"
+                                                   FontSize="16"/>
+                                        
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                         </StackPanel>
                     </Grid>
                     <StackPanel Orientation="Vertical" Grid.Column="2"
@@ -99,7 +108,8 @@
                                       HorizontalAlignment="Right"
                                       VerticalAlignment="Center"
                                       SelectedItem="{Binding SelectedTemplate}"
-                                      ItemsSource="{Binding TemplateListPresenter}">
+                                      ItemsSource="{Binding TemplateListPresenter}"
+                                      IsEnabled="{Binding IsRunning, Converter={local:BooleanInvertConverter}}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Title}"
@@ -133,11 +143,12 @@
                                        VerticalAlignment="Center"
                                        Margin="10 0"/>
                             <xctk:TimeSpanUpDown Grid.Column="1"
-                                                Value="{Binding LocalTimeOffsetModifier}"
-                                                Minimum="-12:00:00"
-                                                Maximum="12:00:00"
-                                                HorizontalAlignment="Right"
-                                                VerticalAlignment="Center"/>
+                                                 Value="{Binding LocalTimeOffsetModifier}"
+                                                 Minimum="-12:00:00"
+                                                 Maximum="12:00:00"
+                                                 HorizontalAlignment="Right"
+                                                 VerticalAlignment="Center"
+                                                 IsEnabled="{Binding IsRunning, Converter={local:BooleanInvertConverter}}"/>
                         </Grid>
                     </StackPanel>
                 </Grid>

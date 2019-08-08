@@ -39,6 +39,34 @@ namespace BlackSpiritHelper.Core
             date -= remoteOffset;
         }
 
+        /// <summary>
+        /// Get offset difference between two given <see cref="DayOfWeek"/>.
+        /// </summary>
+        /// <param name="wanted">The one which we want to go.</param>
+        /// <param name="current">The one where we are currently at.</param>
+        /// <returns></returns>
+        public int GetDayDifferenceOffset(int wanted, int current)
+        {
+            if (wanted == current)
+                return 0;
+
+            if (current == 0)
+                return wanted;
+
+            return wanted - current;
+        }
+
+        /// <summary>
+        /// Get offset, difference between two offsets.
+        /// </summary>
+        /// <param name="from">Offset.</param>
+        /// <param name="to">Offset.</param>
+        /// <returns></returns>
+        public TimeSpan GetTimeZoneOffsetDifference(TimeSpan from, TimeSpan to)
+        {
+            return to - from;
+        }
+
         #endregion
     }
 }

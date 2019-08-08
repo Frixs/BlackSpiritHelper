@@ -12,6 +12,8 @@ namespace BlackSpiritHelper.Core
     /// <summary>
     /// Template model for <see cref="ScheduleViewModel"/>.
     /// Next <see cref="ScheduleTemplateDayDataViewModel"/>.
+    /// TODO: Turn down opacity on ignored items in schedule.
+    /// TODO: Mark item currently in target.
     /// </summary>
     public class ScheduleTemplateDataViewModel : BaseViewModel
     {
@@ -26,6 +28,11 @@ namespace BlackSpiritHelper.Core
         /// Temporary <see cref="Schedule"/> file name.
         /// </summary>
         private string mTemporaryScheduleFileName = "template.xml";
+
+        /// <summary>
+        /// Default time zone represented with region enumerate.
+        /// </summary>
+        private TimeZoneRegion mTimeZoneRegion = TimeZoneRegion.UTC;
 
         /// <summary>
         /// Says, if the template is initialized.
@@ -58,21 +65,36 @@ namespace BlackSpiritHelper.Core
         public string Title { get; set; }
 
         /// <summary>
-        /// Time zone.
+        /// Default time zone represented with region enumerate.
         /// </summary>
-        public RegionTimeZone TimeZone { get; set; } = RegionTimeZone.UTC;
+        public TimeZoneRegion TimeZoneRegion
+        {
+            get => mTimeZoneRegion;
+            set
+            {
+                mTimeZoneRegion = value;
+                TimeZone = TimeZoneInfo.FindSystemTimeZoneById(mTimeZoneRegion.GetDescription());
+            }
+        }
+
+        /// <summary>
+        /// Default time zone.
+        /// </summary>
+        [XmlIgnore]
+        public TimeZoneInfo TimeZone { get; private set; }
 
         /// <summary>
         /// Get string representation of the currently applied time zone.
         /// </summary>
+        [XmlIgnore]
         public string CurrentTimeZoneString
         {
             get
             {
                 if (IsSchedulePresenterConverted)
-                    return TimeZoneInfo.Local.ToString()
+                    return TimeZoneInfo.Local.StandardName
                         + (IoC.DataContent.ScheduleDesignModel.LocalTimeOffsetModifier == TimeSpan.Zero ? string.Empty : $" (Modifier: {IoC.DataContent.ScheduleDesignModel.LocalTimeOffsetModifierString})");
-                return TimeZoneInfo.FindSystemTimeZoneById(TimeZone.GetDescription()).ToString();
+                return TimeZone.StandardName + TimeZone.BaseUtcOffset;
             }
         }
 
@@ -152,6 +174,7 @@ namespace BlackSpiritHelper.Core
             mIsInitialized = true;
 
             mIsPredefined = isPredefined;
+            SortSchedule();
             UpdatePresenter();
         }
 
@@ -216,10 +239,10 @@ namespace BlackSpiritHelper.Core
 
                     DateTimeOffset currDate = new DateTimeOffset(todayDate);
                     // Set timezone to the correct one.
-                    IoC.DateTime.SetTimeZone(ref currDate, TimeZoneInfo.FindSystemTimeZoneById(TimeZone.GetDescription()));
+                    IoC.DateTime.SetTimeZone(ref currDate, TimeZone);
                     // Set day offset to appropriate day and set appropriate time of the day.
                     currDate = currDate
-                        .AddDays(GetDayDifferenceOffset((int)day.DayOfWeek, (int)todayDate.DayOfWeek))
+                        .AddDays(IoC.DateTime.GetDayDifferenceOffset((int)day.DayOfWeek, (int)todayDate.DayOfWeek))
                         .AddHours(time.Time.Hours)
                         .AddMinutes(time.Time.Minutes);
 
@@ -265,39 +288,22 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Get offset difference between two given <see cref="DayOfWeek"/>.
+        /// Sort <see cref="Schedule"/>.
         /// </summary>
-        /// <param name="wanted">The one which we want to go.</param>
-        /// <param name="current">The one where we are currently at.</param>
-        /// <returns></returns>
-        private int GetDayDifferenceOffset(int wanted, int current)
+        private void SortSchedule()
         {
-            if (wanted == current)
-                return 0;
-
-            if (current == 0)
-                return wanted;
-
-            return wanted - current;
+            for (int iDay = 0; iDay < Schedule.Count; iDay++)
+            {
+                Schedule[iDay].TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>(Schedule[iDay].TimeList.OrderBy(o => o.Time));
+            }
         }
 
         /// <summary>
-        /// Get offset, difference between two offsets.
-        /// </summary>
-        /// <param name="from">Offset.</param>
-        /// <param name="to">Offset.</param>
-        /// <returns></returns>
-        private TimeSpan GetTimeZoneOffsetDifference(TimeSpan from, TimeSpan to)
-        {
-            return to - from;
-        }
-
-        /// <summary>
-        /// Sort schedule.
+        /// Sort <see cref="SchedulePresenter"/>.
         /// </summary>
         private void SortSchedulePresenter()
         {
-            for (int iDay = 0; iDay < Schedule.Count; iDay++)
+            for (int iDay = 0; iDay < SchedulePresenter.Count; iDay++)
             {
                 SchedulePresenter[iDay].TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>(SchedulePresenter[iDay].TimeList.OrderBy(o => o.Time));
             }

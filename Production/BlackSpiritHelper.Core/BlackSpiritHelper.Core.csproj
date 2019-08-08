@@ -60,7 +60,7 @@
     <Compile Include="Audio\Implementation\VoiceAudioManager.cs" />
     <Compile Include="Audio\Implementation\SoundAudioManager.cs" />
     <Compile Include="DataModels\ApplicationPage.cs" />
-    <Compile Include="DataModels\RegionTimeZone.cs" />
+    <Compile Include="DataModels\TimeZoneRegion.cs" />
     <Compile Include="DataModels\OverlaySize.cs" />
     <Compile Include="Audio\Core\AudioType.cs" />
     <Compile Include="Audio\Core\AudioAlertLevel.cs" />

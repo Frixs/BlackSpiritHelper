@@ -8,7 +8,7 @@ namespace BlackSpiritHelper.Core
     /// It is <see cref="TimeZoneInfo"/> list with the only key time zones as a list of regions.
     /// Description contains <see cref="TimeZoneInfo.Id"/>.
     /// </summary>
-    public enum RegionTimeZone
+    public enum TimeZoneRegion
     {
         /// <summary>
         /// The default value.
