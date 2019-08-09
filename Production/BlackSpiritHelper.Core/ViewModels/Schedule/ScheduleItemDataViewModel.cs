@@ -39,6 +39,12 @@ namespace BlackSpiritHelper.Core
         public string Name { get; set; } = "NoName";
 
         /// <summary>
+        /// Name with only 2 leading letters.
+        /// </summary>
+        [XmlIgnore]
+        public string NameShortcut => Name.Length > 1 ? Name.Substring(0, 2).ToUpper() : Name.ToUpper();
+
+        /// <summary>
         /// Representing color.
         /// </summary>
         public string ColorHEX { get; set; } = "000000";

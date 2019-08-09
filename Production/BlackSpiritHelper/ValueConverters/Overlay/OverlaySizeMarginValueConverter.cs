@@ -7,7 +7,7 @@ namespace BlackSpiritHelper
     /// <summary>
     /// Get corresponding margin size for Timer Overlay.
     /// </summary>
-    public class TimerOverlaySizeMarginValueConverter : BaseValueConverter<TimerOverlaySizeMarginValueConverter>
+    public class OverlaySizeMarginValueConverter : BaseValueConverter<OverlaySizeMarginValueConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -28,7 +28,7 @@ namespace BlackSpiritHelper
                 case OverlaySize.Normal:
                     return 5;
                 case OverlaySize.Large:
-                    return 5;
+                    return 10;
                 default:
                     return 0;
             }

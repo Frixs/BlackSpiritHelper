@@ -232,6 +232,13 @@ namespace BlackSpiritHelper.Core
         public string TimeLeftPresenter { get; private set; } = "OFF";
 
         /// <summary>
+        /// <see cref="mTimeLeft"/> presenter.
+        /// Option to display time in Overlay GUI with the text. Not only a time.
+        /// </summary>
+        [XmlIgnore]
+        public string TimeLeftOverlayPresenter { get; private set; } = "OFF";
+
+        /// <summary>
         /// List of items that are currently in target.
         /// </summary>
         [XmlIgnore]
@@ -507,6 +514,23 @@ namespace BlackSpiritHelper.Core
             Application.Current.Dispatcher.BeginInvoke((Action)(() =>
             {
                 TimeLeftPresenter = ts.ToString(@"%d\.hh\:mm\:ss");
+
+                // Set overlay presenter.
+                if ((int)ts.TotalDays > 1)
+                {
+                    TimeLeftOverlayPresenter = ts.ToString(@"%d\d\ hh\h");
+                }
+                else
+                {
+                    if ((int)ts.TotalHours > 1)
+                    {
+                        TimeLeftOverlayPresenter = ts.ToString(@"hh\h\ mm\m");
+                    }
+                    else
+                    {
+                        TimeLeftOverlayPresenter = ts.ToString(@"mm\:ss");
+                    }
+                }
             }));
         }
 
@@ -519,7 +543,7 @@ namespace BlackSpiritHelper.Core
             // Update UI thread.
             Application.Current.Dispatcher.BeginInvoke((Action)(() =>
             {
-                TimeLeftPresenter = str;
+                TimeLeftOverlayPresenter = TimeLeftPresenter = str;
             }));
         }
 

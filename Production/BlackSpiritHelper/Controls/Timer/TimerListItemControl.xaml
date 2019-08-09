@@ -81,7 +81,7 @@
                                             <TextBlock Text="{Binding IconTitleShortcut}"
                                                        Foreground="{Binding IconBackgroundHEX, 
                                                                     Converter={local:StringRGBToLightOrDarkBrushConverter},
-                                                                    ConverterParameter={StaticResource TimerListItemIconForegroundColorDifference}}"
+                                                                    ConverterParameter={StaticResource ForegroundColorDifference}}"
                                                        FontFamily="{StaticResource LatoHeavy}"
                                                        FontSize="22"
                                                        VerticalAlignment="Center"
@@ -172,7 +172,7 @@
                                                             <Setter Property="Foreground" Value="{StaticResource TimerListItemCountdownTextColorBrushKey}"/>
                                                         </DataTrigger>
                                                         <DataTrigger Binding="{Binding WarningFlag}" Value="True">
-                                                            <Setter Property="Foreground" Value="{StaticResource TimerListItemCountdownForegroundInvBrushKey}"/>
+                                                            <Setter Property="Foreground" Value="{StaticResource WarningForegroundBrushKey}"/>
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>

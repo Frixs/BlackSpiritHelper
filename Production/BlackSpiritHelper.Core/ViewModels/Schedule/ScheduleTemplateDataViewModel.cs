@@ -216,7 +216,7 @@ namespace BlackSpiritHelper.Core
         /// Find <see cref="ScheduleTemplateDayTimeDataViewModel"/> in <see cref="ScheduleTemplateDataViewModel.SchedulePresenter"/> and mark it.
         /// </summary>
         /// <param name="timeItem"></param>
-        public void FindAndMarkAsNew(ScheduleTemplateDayTimeDataViewModel timeItem)
+        public void FindAndMarkAsNext(ScheduleTemplateDayTimeDataViewModel timeItem)
         {
             for (int iDay = 0; iDay < SchedulePresenter.Count; iDay++)
             {
@@ -233,7 +233,7 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// <see cref="FindAndMarkAsNew"/> and <see cref="UnmarkAllAsNext(bool)"/> methods together in one loop.
+        /// <see cref="FindAndMarkAsNext"/> and <see cref="UnmarkAllAsNext(bool)"/> methods together in one loop.
         /// Works only for 1 occurance.
         /// </summary>
         /// <param name="timeItem"></param>

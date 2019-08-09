@@ -12,6 +12,11 @@
     <Color x:Key="WarningColor">#ec1e24</Color>
     <SolidColorBrush x:Key="WarningColorBrushKey" Color="{StaticResource WarningColor}" />
 
+    <Color x:Key="WarningForeground">#DFDFEC</Color>
+    <SolidColorBrush x:Key="WarningForegroundBrushKey" Color="{StaticResource WarningForeground}" />
+
+    <system:String x:Key="ForegroundColorDifference">e7e7e7|24242b</system:String>
+
     <!-- Window -->
     <Color x:Key="WindowBackground">#FFFFFFFF</Color>
     <SolidColorBrush x:Key="WindowBackgroundBrushKey" Color="{StaticResource WindowBackground}" />
@@ -166,8 +171,6 @@
     <SolidColorBrush x:Key="TimerGroupListItemBackgroundBrushKey" Color="{StaticResource TimerGroupListItemBackground}" />
     
     <!-- Timer - List Item -->
-    <system:String x:Key="TimerListItemIconForegroundColorDifference">e7e7e7|24242b</system:String>
-    
     <Color x:Key="TimerListItemBackground">#c7c7c7</Color>
     <SolidColorBrush x:Key="TimerListItemBackgroundBrushKey" Color="{StaticResource TimerListItemBackground}" />
 
@@ -179,9 +182,6 @@
 
     <Color x:Key="TimerListItemCountdownForeground">#15151a</Color>
     <SolidColorBrush x:Key="TimerListItemCountdownForegroundBrushKey" Color="{StaticResource TimerListItemCountdownForeground}" />
-
-    <Color x:Key="TimerListItemCountdownForegroundInv">#DFDFEC</Color>
-    <SolidColorBrush x:Key="TimerListItemCountdownForegroundInvBrushKey" Color="{StaticResource TimerListItemCountdownForegroundInv}" />
     
     <Color x:Key="TimerListItemIconBorderColor">#24242b</Color>
     <SolidColorBrush x:Key="TimerListItemIconBorderColorBrushKey" Color="{StaticResource TimerListItemIconBorderColor}" />
@@ -204,6 +204,12 @@
 
     <Color x:Key="ScheduleForegroundTime">#c7c7c7</Color>
     <SolidColorBrush x:Key="ScheduleForegroundTimeBrushKey" Color="{StaticResource ScheduleForegroundTime}" />
+
+    <Color x:Key="ScheduleOverlayBackground">#15151A</Color>
+    <SolidColorBrush x:Key="ScheduleOverlayBackgroundBrushKey" Color="{StaticResource ScheduleOverlayBackground}" />
+
+    <Color x:Key="ScheduleOverlayForeground">#e7e7e7</Color>
+    <SolidColorBrush x:Key="ScheduleOverlayForegroundBrushKey" Color="{StaticResource ScheduleOverlayForeground}" />
 
     <!-- Schedule - Calendar -->
     <Color x:Key="ScheduleCalBackground">#f0f0f0</Color>

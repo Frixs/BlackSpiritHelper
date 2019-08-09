@@ -73,7 +73,8 @@
 
                         <!-- Overlay Object Item Wrapper -->
                         <Button Margin="15"
-                                Padding="0">
+                                Padding="0"
+                                Focusable="False">
 
                             <!-- Content -->
                             <StackPanel x:Name="OverlayContentWrapper" Orientation="{Binding OverlayOrientation, FallbackValue=Horizontal}"
@@ -89,6 +90,10 @@
                                 <local:OverlayTimerSectionControl Width="{Binding OverlaySizeStyleWidthValue, FallbackValue=Auto}" 
                                                                   Height="{Binding OverlaySizeStyleHeightValue, FallbackValue=50}"
                                                                   />
+                                <!-- Schedule section -->
+                                <local:OverlayScheduleSectionControl Width="{Binding OverlaySizeStyleWidthValue, FallbackValue=Auto}" 
+                                                                     Height="{Binding OverlaySizeStyleHeightValue, FallbackValue=50}"
+                                                                     />
                             </StackPanel>
 
                             <!-- Overlay Object Drop Shadow -->
@@ -130,6 +135,7 @@
                                     Style="{StaticResource RegularButtonNoColor}"
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Center"
+                                    Focusable="False"
                                 />
                             <Button Content="{StaticResource FontAwesomeUnlockIcon}"
                                     FontFamily="{StaticResource FontAwesomeSolid}"
@@ -142,6 +148,7 @@
                                     Style="{StaticResource RegularButtonNoColor}"
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Center"
+                                    Focusable="False"
                                 />
                         </Grid>
 
