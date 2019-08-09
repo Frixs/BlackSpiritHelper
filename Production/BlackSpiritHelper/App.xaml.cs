@@ -144,6 +144,9 @@ namespace BlackSpiritHelper
             // Bind task manager.
             IoC.Kernel.Bind<ITaskManager>().ToConstant(new TaskManager());
 
+            // Bind dispatcher manager.
+            IoC.Kernel.Bind<IDispatcherFactory>().ToConstant(new DispatcherManager());
+
             // Bind a file manager.
             IoC.Kernel.Bind<IFileManager>().ToConstant(new FileManager());
 

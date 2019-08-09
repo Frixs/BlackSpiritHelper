@@ -47,6 +47,11 @@ namespace BlackSpiritHelper.Core
         public static ITaskManager Task => Get<ITaskManager>();
 
         /// <summary>
+        /// A shortcut to access the <see cref="IDispatcherFactory"/>.
+        /// </summary>
+        public static IDispatcherFactory Dispatcher => Get<IDispatcherFactory>();
+
+        /// <summary>
         /// A shortcut to access the <see cref="IAudioFactory"/>.
         /// </summary>
         public static IAudioFactory Audio => Get<IAudioFactory>();

@@ -54,7 +54,7 @@ namespace BlackSpiritHelper
                 using (var fbd = new System.Windows.Forms.FolderBrowserDialog())
                 {
                     // UI thread required.
-                    Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+                    IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
                     {
                         System.Windows.Forms.DialogResult result = fbd.ShowDialog();
 

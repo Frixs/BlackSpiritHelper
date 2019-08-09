@@ -66,10 +66,14 @@
     <Compile Include="Audio\Core\AudioAlertLevel.cs" />
     <Compile Include="DataModels\TimerState.cs" />
     <Compile Include="DateTimeZone\DateTimeZoneManager.cs" />
+    <Compile Include="Dispatcher\Implementation\DispatcherManager.cs" />
+    <Compile Include="Dispatcher\Implementation\DisprUiThread.cs" />
     <Compile Include="Expressions\ExpressionHelpers.cs" />
     <Compile Include="File\FileManager.cs" />
     <Compile Include="IoC\Base\ApplicationDataContent.cs" />
     <Compile Include="IoC\Base\IoC.cs" />
+    <Compile Include="Dispatcher\Core\IDispatcher.cs" />
+    <Compile Include="IoC\Interfaces\IDispatcherFactory.cs" />
     <Compile Include="IoC\Interfaces\IDateTimeZone.cs" />
     <Compile Include="IoC\Interfaces\IFileManager.cs" />
     <Compile Include="IoC\Interfaces\IMouseKeyHook.cs" />

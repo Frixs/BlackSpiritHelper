@@ -85,7 +85,7 @@ namespace BlackSpiritHelper.Core
         /// <param name="source"></param>
         public void OpenAndPlay(Uri source)
         {
-            mMediaPlayer.Dispatcher.BeginInvoke((Action)(() =>
+            IoC.Dispatcher.BeginInvoke(mMediaPlayer.Dispatcher, (Action)(() =>
             {
                 Open(source);
                 Play();
@@ -97,7 +97,7 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public void Stop()
         {
-            mMediaPlayer.Dispatcher.BeginInvoke((Action)(() =>
+            IoC.Dispatcher.BeginInvoke(mMediaPlayer.Dispatcher, (Action)(() =>
             {
                 mMediaPlayer.Stop();
             }));

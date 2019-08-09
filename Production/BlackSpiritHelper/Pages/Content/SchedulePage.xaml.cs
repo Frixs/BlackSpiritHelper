@@ -21,7 +21,7 @@ namespace BlackSpiritHelper
                 await Task.Delay((int)(SlideSeconds * 1000));
                 
                 // Update UI thread.
-                await Application.Current.Dispatcher.BeginInvoke((Action)(async () =>
+                await IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(async () =>
                 {
                     Calendar.Visibility = Visibility.Hidden;
                     await Task.Delay(500); // Delay some time to load (heavy) calendar in invisibility.

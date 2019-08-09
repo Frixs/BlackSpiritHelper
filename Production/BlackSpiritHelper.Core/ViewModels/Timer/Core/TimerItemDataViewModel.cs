@@ -441,7 +441,7 @@ namespace BlackSpiritHelper.Core
         private void UpdateTimeInUI(TimeSpan ts)
         {
             // Update UI thread.
-            Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+            IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
             {
                 // Update time text format in UI.
                 TimeCurrent = ts;

@@ -516,8 +516,7 @@ namespace BlackSpiritHelper.Core
         private void UpdateTimeInUI(TimeSpan ts)
         {
             // Update UI thread.
-            // TODO: NullReferenceException on exit.
-            Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+            IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
             {
                 TimeLeftPresenter = ts.ToString(@"%d\.hh\:mm\:ss");
 
@@ -547,7 +546,7 @@ namespace BlackSpiritHelper.Core
         private void UpdateTimeInUI(string str)
         {
             // Update UI thread.
-            Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+            IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
             {
                 TimeLeftOverlayPresenter = TimeLeftPresenter = str;
             }));
@@ -619,7 +618,7 @@ namespace BlackSpiritHelper.Core
             
             // Set time items.
             // Clear list first.
-            await Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+            await IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
             {
                 NextItemPresenterList.Clear();
             }));
@@ -629,7 +628,7 @@ namespace BlackSpiritHelper.Core
                 if (item != null)
                 {
                     // We need to update list in UI thread due to Observable.
-                    await Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+                    await IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
                     {
                         NextItemPresenterList.Add(item);
                     }));
@@ -1013,7 +1012,7 @@ namespace BlackSpiritHelper.Core
             mTimer.Stop();
             StopActiveCountdown();
             UpdateTimeInUI("OFF");
-            await Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+            await IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
             {
                 NextItemPresenterList.Clear();
                 SelectedTemplate.UnmarkAllAsNext();
