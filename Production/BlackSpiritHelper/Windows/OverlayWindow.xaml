@@ -72,7 +72,7 @@
                     <StackPanel Orientation="{Binding OverlayOrientation, FallbackValue=Horizontal}">
 
                         <!-- Overlay Object Item Wrapper -->
-                        <Button Margin="15"
+                        <Button Margin="25"
                                 Padding="0"
                                 Focusable="False">
 
@@ -88,12 +88,33 @@
                                 
                                 <!-- Timer section -->
                                 <local:OverlayTimerSectionControl Width="{Binding OverlaySizeStyleWidthValue, FallbackValue=Auto}" 
-                                                                  Height="{Binding OverlaySizeStyleHeightValue, FallbackValue=50}"
-                                                                  />
+                                                                  Height="{Binding OverlaySizeStyleHeightValue, FallbackValue=50}">
+                                    <local:OverlayTimerSectionControl.Style>
+                                        <Style TargetType="local:OverlayTimerSectionControl">
+                                            <Setter Property="Margin" Value="0 0 10 0" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding OverlayOrientation}" Value="Vertical">
+                                                    <Setter Property="Margin" Value="0 0 0 10" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </local:OverlayTimerSectionControl.Style>
+                                </local:OverlayTimerSectionControl>
+                                
                                 <!-- Schedule section -->
                                 <local:OverlayScheduleSectionControl Width="{Binding OverlaySizeStyleWidthValue, FallbackValue=Auto}" 
-                                                                     Height="{Binding OverlaySizeStyleHeightValue, FallbackValue=50}"
-                                                                     />
+                                                                     Height="{Binding OverlaySizeStyleHeightValue, FallbackValue=50}">
+                                    <local:OverlayScheduleSectionControl.Style>
+                                        <Style TargetType="local:OverlayScheduleSectionControl">
+                                            <Setter Property="Margin" Value="0 0 10 0" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding OverlayOrientation}" Value="Vertical">
+                                                    <Setter Property="Margin" Value="0 0 0 10" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </local:OverlayScheduleSectionControl.Style>
+                                </local:OverlayScheduleSectionControl>
                             </StackPanel>
 
                             <!-- Overlay Object Drop Shadow -->
@@ -153,7 +174,7 @@
                         </Grid>
 
                         <!-- Spacer -->
-                        <Border Margin="15 15 0 0" />
+                        <Border Margin="25 25 0 0" />
                         
                     </StackPanel>
                 </Grid>

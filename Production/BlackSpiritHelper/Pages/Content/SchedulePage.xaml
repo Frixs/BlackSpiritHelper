@@ -93,8 +93,7 @@
                     <StackPanel Orientation="Vertical" Grid.Column="2"
                                 VerticalAlignment="Center">
                         <!-- 1st row -->
-                        <Grid HorizontalAlignment="Right"
-                              Margin="0 0 0 10">
+                        <Grid HorizontalAlignment="Right" Margin="0 0 0 10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
@@ -166,7 +165,7 @@
                             </ComboBox>
                         </Grid>
                         <!-- 2nd row -->
-                        <Grid HorizontalAlignment="Right">
+                        <Grid HorizontalAlignment="Right" Margin="0 0 0 10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
@@ -188,6 +187,37 @@
                                                  IsEnabled="{Binding IsRunning, Converter={local:BooleanInvertConverter}}"/>
                         </Grid>
                         <!-- 3rd row -->
+                        <Grid HorizontalAlignment="Right">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="Show In Overlay:" Grid.Column="0"
+                                       FontFamily="{StaticResource LatoBold}"
+                                       FontSize="14"
+                                       Foreground="{StaticResource ScheduleForegroundBrushKey}"
+                                       VerticalAlignment="Center"
+                                       Margin="10 0"/>
+                            <!-- Show In Overlay CheckBox -->
+                            <CheckBox IsChecked="{Binding ShowInOverlay}" Grid.Column="1">
+                                <CheckBox.Style>
+                                    <Style TargetType="CheckBox">
+                                        <Style.Resources>
+                                            <Style TargetType="Border">
+                                                <Setter Property="Width" Value="20" />
+                                                <Setter Property="Height" Value="20" />
+                                            </Style>
+                                            <Style TargetType="Grid">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                            </Style>
+                                        </Style.Resources>
+                                    </Style>
+                                </CheckBox.Style>
+                            </CheckBox>
+                        </Grid>
+                        <!-- 4th row -->
                         <Grid HorizontalAlignment="Right" Margin="0 10 0 0" Visibility="Collapsed">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -207,8 +237,7 @@
                                     FontSize="10"
                                     Style="{StaticResource RegularButton}"
                                     Width="40"
-                                    Height="20"
-                                        />
+                                    Height="20" />
                         </Grid>
                     </StackPanel>
                 </Grid>

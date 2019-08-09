@@ -153,6 +153,9 @@
     <Compile Include="Controls\Overlay\OverlayScheduleSectionControl.xaml.cs">
       <DependentUpon>OverlayScheduleSectionControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Overlay\OverlayScheduleSectionItemControl.xaml.cs">
+      <DependentUpon>OverlayScheduleSectionItemControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Overlay\OverlayTimerSectionControl.xaml.cs">
       <DependentUpon>OverlayTimerSectionControl.xaml</DependentUpon>
     </Compile>
@@ -243,6 +246,10 @@
       <DependentUpon>OverlayWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\Overlay\OverlayScheduleSectionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Overlay\OverlayScheduleSectionItemControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

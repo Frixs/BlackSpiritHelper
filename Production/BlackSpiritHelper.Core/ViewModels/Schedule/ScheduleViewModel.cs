@@ -294,6 +294,11 @@ namespace BlackSpiritHelper.Core
         [XmlIgnore]
         public bool WarningFlag { get; private set; }
 
+        /// <summary>
+        /// Says if the section should be in the overlay.
+        /// </summary>
+        public bool ShowInOverlay { get; set; } = false;
+
         #endregion
 
         #region Commands
@@ -511,6 +516,7 @@ namespace BlackSpiritHelper.Core
         private void UpdateTimeInUI(TimeSpan ts)
         {
             // Update UI thread.
+            // TODO: NullReferenceException on exit.
             Application.Current.Dispatcher.BeginInvoke((Action)(() =>
             {
                 TimeLeftPresenter = ts.ToString(@"%d\.hh\:mm\:ss");
@@ -518,13 +524,13 @@ namespace BlackSpiritHelper.Core
                 // Set overlay presenter.
                 if ((int)ts.TotalDays > 1)
                 {
-                    TimeLeftOverlayPresenter = ts.ToString(@"%d\d\ hh\h");
+                    TimeLeftOverlayPresenter = ts.ToString(@"%d\d\ h\h");
                 }
                 else
                 {
                     if ((int)ts.TotalHours > 1)
                     {
-                        TimeLeftOverlayPresenter = ts.ToString(@"hh\h\ mm\m");
+                        TimeLeftOverlayPresenter = ts.ToString(@"hh\:mm");
                     }
                     else
                     {

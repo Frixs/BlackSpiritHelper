@@ -7,16 +7,30 @@
              xmlns:core="clr-namespace:BlackSpiritHelper.Core;assembly=BlackSpiritHelper.Core"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="200">
-    
+
     <!-- Derived from OverlayWindow -->
     <StackPanel x:Name="OverlayScheduleSection" Orientation="{Binding OverlayOrientation, FallbackValue=Horizontal}"
                 Margin="0"
                 DataContext="{Binding ApplicationDataContent.ScheduleDesignModel,
-                              Source={x:Static local:ViewModelLocator.Instance}}"
-                Visibility="{Binding ApplicationDataContent.ScheduleDesignModel.IsRunning,
-                             Source={x:Static local:ViewModelLocator.Instance},
-                             Converter={local:BooleanToVisibilityGoneConverter}}">
-        <!-- TODO: IsRunning & Show in overlay - multi condition -->
+                              Source={x:Static local:ViewModelLocator.Instance}}">
+        <StackPanel.Style>
+            <Style TargetType="StackPanel">
+                <Setter Property="Visibility" Value="Collapsed" />
+                <Style.Triggers>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding IsRunning}" 
+                                       Value="True"/>
+                            <Condition Binding="{Binding ShowInOverlay}" 
+                                       Value="True"/>
+                        </MultiDataTrigger.Conditions>
+                        <MultiDataTrigger.Setters>
+                            <Setter Property="Visibility" Value="Visible" />
+                        </MultiDataTrigger.Setters>
+                    </MultiDataTrigger>
+                </Style.Triggers>
+            </Style>
+        </StackPanel.Style>
 
         <ItemsControl x:Name="ItemList" ItemsSource="{Binding NextItemPresenterList}">
             <ItemsControl.ItemsPanel>
@@ -50,7 +64,7 @@
                                     </Style.Triggers>
                                 </Style>
                             </Border.Style>
-                            
+
                             <Grid Margin="{Binding ApplicationDataContent.OverlayDesignModel.OverlaySize, 
                                            Source={x:Static local:ViewModelLocator.Instance},
                                            Converter={local:OverlaySizeMarginValueConverter}, FallbackValue=5}">
@@ -61,12 +75,12 @@
                                 </Grid.RowDefinitions>
 
                                 <!-- Schedule title -->
-                                <Viewbox Grid.Row="0">
+                                <Viewbox Grid.Row="0"
+                                         VerticalAlignment="Top"
+                                         HorizontalAlignment="Center">
                                     <TextBlock Text="NEXT"
                                                FontFamily="{StaticResource LatoHeavy}"
-                                               FontSize="14"
-                                               VerticalAlignment="Top"
-                                               HorizontalAlignment="Center">
+                                               FontSize="14">
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="Foreground" 
@@ -83,11 +97,11 @@
                                 </Viewbox>
 
                                 <!-- Countdown -->
-                                <Viewbox Grid.Row="1">
+                                <Viewbox Grid.Row="1"
+                                         VerticalAlignment="Bottom"
+                                         HorizontalAlignment="Center">
                                     <TextBlock Text="{Binding TimeLeftOverlayPresenter, FallbackValue=0.00:00:00}"
-                                               FontFamily="{StaticResource LatoHeavy}"
-                                               VerticalAlignment="Bottom"
-                                               HorizontalAlignment="Center">
+                                               FontFamily="{StaticResource LatoHeavy}">
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="Foreground" Value="{StaticResource ScheduleOverlayForegroundBrushKey}" />
@@ -104,12 +118,12 @@
 
                             </Grid>
                         </Border>
-                        
+
                         <!-- Items Presenter -->
                         <ItemsPresenter />
-                        
+
                     </StackPanel>
-                    
+
                 </ControlTemplate>
             </ItemsControl.Template>
 
@@ -117,80 +131,12 @@
                 <DataTemplate>
 
                     <!-- Item wrapper -->
-                    <Border Width="{Binding Path=DataContext.OverlaySizeStyleValue, FallbackValue=50,
-                                    RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}"
-                            Height="{Binding Path=DataContext.OverlaySizeStyleValue, FallbackValue=50,
-                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}">
-                        <Border.Style>
-                            <Style TargetType="Border">
-                                <Setter Property="Background" Value="{Binding ColorHEX, Converter={local:StringRGBToBrushConverter}}"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding WarningFlag}" Value="True">
-                                        <Setter Property="Background" Value="{StaticResource WarningColorBrushKey}"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Border.Style>
-
-                        <Grid Margin="{Binding ApplicationDataContent.OverlayDesignModel.OverlaySize, 
-                                       Source={x:Static local:ViewModelLocator.Instance},
-                                       Converter={local:OverlaySizeMarginValueConverter}, FallbackValue=5}">
-
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="2*" />
-                                <RowDefinition Height="2*" />
-                            </Grid.RowDefinitions>
-
-                            <!-- Item Shortcut -->
-                            <Viewbox Grid.Row="0">
-                                <TextBlock Text="{Binding NameShortcut}"
-                                               FontFamily="{StaticResource LatoHeavy}"
-                                               FontSize="14"
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Center">
-                                    <TextBlock.Style>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="Foreground" 
-                                                        Value="{Binding ColorHEX, 
-                                                                Converter={local:StringRGBToLightOrDarkBrushConverter},
-                                                                ConverterParameter={StaticResource ForegroundColorDifference}}"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding WarningFlag}" Value="True">
-                                                    <Setter Property="Foreground" 
-                                                                Value="{StaticResource WarningForegroundBrushKey}"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                            </Viewbox>
-
-                            <!-- Item Name -->
-                            <Viewbox Grid.Row="1">
-                                <TextBlock Text="{Binding Name}"
-                                               FontFamily="{StaticResource LatoHeavy}"
-                                               FontSize="14"
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Center">
-                                    <TextBlock.Style>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="Foreground" 
-                                                        Value="{Binding ColorHEX, 
-                                                                Converter={local:StringRGBToLightOrDarkBrushConverter},
-                                                                ConverterParameter={StaticResource ForegroundColorDifference}}"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding WarningFlag}" Value="True">
-                                                    <Setter Property="Foreground" 
-                                                                Value="{StaticResource WarningForegroundBrushKey}"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                            </Viewbox>
-
-                        </Grid>
-                    </Border>
+                    <local:OverlayScheduleSectionItemControl
+                        Width="{Binding Path=DataContext.OverlaySizeStyleValue, FallbackValue=50,
+                                RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}"
+                        Height="{Binding Path=DataContext.OverlaySizeStyleValue, FallbackValue=50,
+                                 RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}"
+                        />
 
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
@@ -198,5 +144,5 @@
         </ItemsControl>
 
     </StackPanel>
-    
+
 </UserControl>

@@ -186,6 +186,7 @@ namespace BlackSpiritHelper
 
         /// <summary>
         /// Set Overlay content if there are no items.
+        /// TODO: It would be cool to change this to automatic.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -206,12 +207,23 @@ namespace BlackSpiritHelper
 
             // Timer section check.
             foreach (TimerGroupDataViewModel g in IoC.DataContent.TimerDesignModel.GroupList)
+            {
                 foreach (TimerItemDataViewModel t in g.TimerList)
+                { 
                     if (t.ShowInOverlay)
                     {
                         val.Background = mOverlayBackgroundBrush;
                         return;
                     }
+                }
+            }
+
+            // Schedule section check.
+            if (IoC.DataContent.ScheduleDesignModel.ShowInOverlay && IoC.DataContent.ScheduleDesignModel.IsRunning)
+            {
+                val.Background = mOverlayBackgroundBrush;
+                return;
+            }
 
             // No items.
             val.Background = mOverlayBackgroundBrushNoItems;

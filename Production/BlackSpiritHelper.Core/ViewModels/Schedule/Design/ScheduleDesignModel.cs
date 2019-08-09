@@ -949,20 +949,21 @@ namespace BlackSpiritHelper.Core
                         {
                             new ScheduleTemplateDayTimeDataViewModel
                             {
-                                Time = new TimeSpan(10, 0, 0), ItemList = new ObservableCollection<string> {
+                                Time = new TimeSpan(18, 7, 0), ItemList = new ObservableCollection<string> {
                                     itemKzarka,
                                     itemOffin,
                                 },
                             },
                             new ScheduleTemplateDayTimeDataViewModel
                             {
-                                Time = new TimeSpan(10, 50, 0), ItemList = new ObservableCollection<string> {
+                                Time = new TimeSpan(18, 50, 0), ItemList = new ObservableCollection<string> {
                                     itemGarmoth,
+                                    itemVell
                                 },
                             },
                             new ScheduleTemplateDayTimeDataViewModel
                             {
-                                Time = new TimeSpan(10, 51, 30), ItemList = new ObservableCollection<string> {
+                                Time = new TimeSpan(18, 51, 30), ItemList = new ObservableCollection<string> {
                                     itemKaranda,
                                 },
                             },

@@ -46,12 +46,12 @@
                                 </Grid.RowDefinitions>
 
                                 <!-- Icon Shortcut Title -->
-                                <Viewbox Grid.Row="0">
+                                <Viewbox Grid.Row="0"
+                                         VerticalAlignment="Top"
+                                         HorizontalAlignment="Center">
                                     <TextBlock Text="{Binding IconTitleShortcut}"
                                                FontFamily="{StaticResource LatoHeavy}"
-                                               FontSize="14"
-                                               VerticalAlignment="Top"
-                                               HorizontalAlignment="Center">
+                                               FontSize="14">
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="Foreground" 
@@ -70,13 +70,13 @@
                                 </Viewbox>
 
                                 <!-- Countdown -->
-                                <Viewbox Grid.Row="1">
+                                <Viewbox Grid.Row="1"
+                                         VerticalAlignment="Bottom"
+                                         HorizontalAlignment="Center">
                                     <TextBlock Text="{Binding TimeCurrent, 
                                                       Converter={local:TimeSpanToStringConverter}, 
                                                       ConverterParameter=h*ms}"
-                                               FontFamily="{StaticResource LatoHeavy}"
-                                               VerticalAlignment="Bottom"
-                                               HorizontalAlignment="Center">
+                                               FontFamily="{StaticResource LatoHeavy}">
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="Foreground" Value="{Binding IconBackgroundHEX, 
