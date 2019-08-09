@@ -52,6 +52,7 @@
                                                       VerticalScrollBarVisibility="Disabled" 
                                                       PreviewMouseWheel="ScrollViewer_PreviewMouseWheel"
                                                       Template="{StaticResource ScrollViewerHorizontalOnTopTemplate}"
+                                                      Focusable="False"
                                                       Padding="0 5">
                                                 <ItemsPresenter HorizontalAlignment="Left" />
                                         </ScrollViewer>
