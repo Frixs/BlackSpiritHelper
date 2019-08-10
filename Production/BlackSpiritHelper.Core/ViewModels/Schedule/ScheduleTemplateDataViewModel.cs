@@ -18,16 +18,6 @@ namespace BlackSpiritHelper.Core
         #region Private Members
 
         /// <summary>
-        /// Temporary folder path.
-        /// </summary>
-        private string mTemporaryFolderRelPath = "Temporary/ScheduleSection";
-
-        /// <summary>
-        /// Temporary <see cref="Schedule"/> file name.
-        /// </summary>
-        private string mTemporaryScheduleFileName = "template.xml";
-
-        /// <summary>
         /// Default time zone represented with region enumerate.
         /// </summary>
         private TimeZoneRegion mTimeZoneRegion = TimeZoneRegion.UTC;
@@ -422,53 +412,6 @@ namespace BlackSpiritHelper.Core
             {
                 SchedulePresenter[iDay].TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>(SchedulePresenter[iDay].TimeList.OrderBy(o => o.Time));
             }
-        }
-
-        /// <summary>
-        /// Save <see cref="Schedule"/> to temporary file.
-        /// </summary>
-        /// <returns></returns>
-        private bool SaveToTemporaryFile()
-        {
-            XmlSerializer xs = new XmlSerializer(Schedule.GetType());
-
-            try
-            {
-                Directory.CreateDirectory(mTemporaryFolderRelPath);
-                FileStream file = File.Create(Path.Combine(mTemporaryFolderRelPath, mTemporaryScheduleFileName));
-                xs.Serialize(file, Schedule);
-            }
-            catch (Exception ex)
-            {
-                IoC.Logger.Log($"Some error occurred during saving temporary file:{Environment.NewLine}{ex.Message}", LogLevel.Warning);
-                return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Load <see cref="Schedule"/> from temporary file.
-        /// </summary>
-        /// <returns></returns>
-        private bool LoadFromTemporaryFile()
-        {
-            XmlSerializer serializer = new XmlSerializer(Schedule.GetType());
-
-            try
-            {
-                using (FileStream fileStream = new FileStream(Path.Combine(mTemporaryFolderRelPath, mTemporaryScheduleFileName), FileMode.Open))
-                {
-                    Schedule = (ObservableCollection<ScheduleTemplateDayDataViewModel>)serializer.Deserialize(fileStream);
-                }
-            }
-            catch (Exception ex)
-            {
-                IoC.Logger.Log($"Some error occurred during loading temporary file:{Environment.NewLine}{ex.Message}", LogLevel.Warning);
-                return false;
-            }
-
-            return true;
         }
 
         /// <summary>

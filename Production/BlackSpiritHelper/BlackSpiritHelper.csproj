@@ -221,6 +221,8 @@
     </Compile>
     <Compile Include="ValueConverters\BaseMultiValueConverter.cs" />
     <Compile Include="ValueConverters\BooleanToContentConverter.cs" />
+    <Compile Include="ValueConverters\ContainsLeadingCharConverter.cs" />
+    <Compile Include="ValueConverters\SubstringConverter.cs" />
     <Compile Include="ValueConverters\Overlay\OverlaySizeMarginValueConverter.cs" />
     <Compile Include="ValueConverters\InvertBooleanConverter.cs" />
     <Compile Include="ValueConverters\Timer\TimerListOverlayOnlyConverter.cs" />

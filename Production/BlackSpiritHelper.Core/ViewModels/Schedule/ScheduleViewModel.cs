@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
-using System.Windows;
 using System.Windows.Input;
 using System.Xml.Serialization;
 
@@ -12,10 +12,22 @@ namespace BlackSpiritHelper.Core
 {
     /// <summary>
     /// TODO: Add logger to whole Schedule section.
+    /// TODO>>> Code review, simplify code.
     /// </summary>
     public class ScheduleViewModel : DataContentBaseViewModel
     {
         #region Private Members
+
+        /// <summary>
+        /// Template predefined folder path.
+        /// There are stored predefined templates.
+        /// </summary>
+        private string mTemplatePredefinedFolderRelPath = "Data/ScheduleSection/Templates";
+
+        /// <summary>
+        /// Template predefined file extension.
+        /// </summary>
+        private string mTemplatePredefinedFileFileExtension = "xml";
 
         /// <summary>
         /// Timer control.
@@ -99,10 +111,34 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
+        /// This is setter/controler between GUI and code to display template list to user.
+        /// ---
+        /// We do not have access to whole list of predefined templates, we have only titles.
+        /// So, we need to make a list of all templates for user with possibility to distinguish if a template is predefined or not.
+        /// Predefined templates has leading special character as <see cref="TemplateTitleListPresenter"/> documentation says.
+        /// </summary>
+        [XmlIgnore]
+        public string SelectedTemplatePresenterSetter
+        {
+            get => SelectedTemplate.IsPredefined ? '*' + SelectedTemplate.Title : SelectedTemplate.Title;
+            set => IoC.Task.Run(() => RunCommandAsync(() => SelectedTemplateFlag, async () =>
+            {
+                SelectedTemplate = GetTemplateByName(value[0] == '*' ? value.Substring(1) : value);
+                await Task.Delay(1);
+            }));
+        }
+
+        /// <summary>
+        /// Flag that disable possibility to user to change template to another one till the loading of template is done.
+        /// </summary>
+        [XmlIgnore]
+        public bool SelectedTemplateFlag { get; private set; } = false;
+
+        /// <summary>
         /// Template list, predefined.
         /// </summary>
         [XmlIgnore]
-        public List<ScheduleTemplateDataViewModel> TemplatePredefinedList { get; protected set; } = new List<ScheduleTemplateDataViewModel>();
+        public List<string> TemplatePredefinedList { get; protected set; } = new List<string>();
 
         /// <summary>
         /// Template list, custom.
@@ -119,15 +155,19 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// Template list, presenter.
+        /// If a template has value <see cref="ScheduleTemplateDataViewModel.IsPredefined"/> equal to TRUE, its titile in this list has special leading character '*' to be recognized as predefined.
+        /// <see cref="SelectedTemplatePresenterSetter"/> is using this to interact with GUI.
         /// </summary>
         [XmlIgnore]
-        public List<ScheduleTemplateDataViewModel> TemplateListPresenter
+        public List<string> TemplateTitleListPresenter
         {
             get
             {
-                var l = new List<ScheduleTemplateDataViewModel>();
-                l.AddRange(TemplatePredefinedList);
-                l.AddRange(TemplateCustomList);
+                var l = new List<string>(TemplatePredefinedList.Count + TemplateCustomList.Count);
+                for (int i = 0; i < TemplatePredefinedList.Count; i++)
+                    l.Add('*' + TemplatePredefinedList[i]);
+                for (int i = 0; i < TemplateCustomList.Count; i++)
+                    l.Add(TemplateCustomList[i].Title);
                 return l;
             }
         }
@@ -371,16 +411,10 @@ namespace BlackSpiritHelper.Core
             for (int i = 0; i < ItemCustomList.Count; i++)
                 ItemCustomList[i].Init();
 
-            // Initialize templates.
-            for (int i = 0; i < TemplatePredefinedList.Count; i++)
-                TemplatePredefinedList[i].Init(true);
-            for (int i = 0; i < TemplateCustomList.Count; i++)
-                TemplateCustomList[i].Init();
-
             // Set selected item.
             SelectedTemplate = GetTemplateByName(SelectedTemplateTitle);
             if (SelectedTemplate == null)
-                SelectedTemplate = TemplatePredefinedList[0];
+                SelectedTemplate = GetTemplateByName();
 
             // Set Ignored list.
             for (int i = 0; i < ItemIgnoredList.Count; i++)
@@ -391,7 +425,6 @@ namespace BlackSpiritHelper.Core
             }
 
             // Sort collections.
-            TemplatePredefinedList = new List<ScheduleTemplateDataViewModel>(TemplatePredefinedList.OrderBy(o => o.Title));
             ItemPredefinedList = new List<ScheduleItemDataViewModel>(ItemPredefinedList.OrderBy(o => o.Name));
             SortTemplateCustomList();
             SortItemCustomList();
@@ -670,7 +703,6 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// Handle notification events.
-        /// TODO: Make a custom timer with these shared methods among data content.
         /// </summary>
         /// <param name="time"></param>
         private void HandleNotificationEvents(TimeSpan time)
@@ -791,41 +823,6 @@ namespace BlackSpiritHelper.Core
         #region Public Methods
 
         /// <summary>
-        /// Add a new item.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="colorHex"></param>
-        /// <param name="isPredefined"></param>
-        /// <returns></returns>
-        public ScheduleItemDataViewModel AddItem(string name, string colorHex, bool isPredefined = false)
-        {
-            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(colorHex))
-                return null;
-
-            if (!colorHex.CheckColorHEX())
-                return null;
-
-            // Check duplicity.
-            if (IsItemAlreadyDefined(name))
-                return null;
-
-            // Create the item.
-            var item = new ScheduleItemDataViewModel
-            {
-                Name = name.Trim(),
-                ColorHEX = colorHex,
-            };
-
-            // Ad the item to the list.
-            if (isPredefined)
-                ItemPredefinedList.Add(item);
-            else
-                ItemCustomList.Add(item);
-
-            return item;
-        }
-
-        /// <summary>
         /// Check if the item is already defined.
         /// </summary>
         /// <param name="name"></param>
@@ -850,10 +847,16 @@ namespace BlackSpiritHelper.Core
         {
             ScheduleItemDataViewModel ret = null;
 
+            // Try to find and get the item from predefined.
             ret = ItemPredefinedList.FirstOrDefault(o => o.Name.ToLower().Equals(name.ToLower().Trim()));
 
+            // If there is no equal item in predefined list, try to find the item in custom list.
             if (ret == null)
                 ret = ItemCustomList.FirstOrDefault(o => o.Name.ToLower().Equals(name.ToLower().Trim()));
+
+            // If there is no equal item in any of the list.
+            if (ret == null)
+                return AddItem(name.Trim(), "000000");
 
             return ret;
         }
@@ -871,20 +874,19 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Add a new template.
+        /// Add a new custom template.
         /// </summary>
         /// <param name="template"></param>
-        /// <param name="isPredefined"></param>
         /// <returns></returns>
-        public ScheduleTemplateDataViewModel AddTemplate(ScheduleTemplateDataViewModel template, bool isPredefined = false)
+        public ScheduleTemplateDataViewModel AddCustomTemplate(ScheduleTemplateDataViewModel template)
         {
+            if (template == null || string.IsNullOrEmpty(template.Title))
+                return null;
+
             if (IsTemplateAlreadyDefined(template.Title))
                 return null;
 
-            if (isPredefined)
-                TemplatePredefinedList.Add(template);
-            else
-                TemplateCustomList.Add(template);
+            TemplateCustomList.Add(template);
 
             return template;
         }
@@ -896,7 +898,7 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         public bool IsTemplateAlreadyDefined(string title)
         {
-            if (TemplatePredefinedList.FirstOrDefault(o => o.Title.ToLower().Equals(title.ToLower().Trim())) != null)
+            if (TemplatePredefinedList.Contains(title))
                 return true;
 
             if (TemplateCustomList != null && TemplateCustomList.FirstOrDefault(o => o.Title.ToLower().Equals(title.ToLower().Trim())) != null)
@@ -912,14 +914,24 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         public ScheduleTemplateDataViewModel GetTemplateByName(string title)
         {
-            ScheduleTemplateDataViewModel ret = null;
+            if (TemplatePredefinedList.Contains(title))
+                return LoadPredefinedTemplate(title);
 
-            ret = TemplatePredefinedList.FirstOrDefault(o => o.Title.ToLower().Equals(title.ToLower().Trim()));
+            return TemplateCustomList.FirstOrDefault(o => o.Title.ToLower().Equals(title.ToLower().Trim()));
+        }
 
-            if (ret == null)
-                ret = TemplateCustomList.FirstOrDefault(o => o.Title.ToLower().Equals(title.ToLower().Trim()));
+        /// <summary>
+        /// Get first predefined template.
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        public ScheduleTemplateDataViewModel GetTemplateByName()
+        {
+            if (TemplatePredefinedList.Count > 0)
+                return LoadPredefinedTemplate(TemplatePredefinedList[0]);
 
-            return ret;
+            IoC.Logger.Log("No template to load!", LogLevel.Fatal);
+            throw new ArgumentException("No template to load!");
         }
 
         /// <summary>
@@ -986,6 +998,109 @@ namespace BlackSpiritHelper.Core
         #region Private Methods
 
         /// <summary>
+        /// Add a new item.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="colorHex"></param>
+        /// <param name="isPredefined"></param>
+        /// <returns></returns>
+        protected ScheduleItemDataViewModel AddItem(string name, string colorHex, bool isPredefined = false)
+        {
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(colorHex))
+                return null;
+
+            if (!colorHex.CheckColorHEX())
+                return null;
+
+            // Check duplicity.
+            if (IsItemAlreadyDefined(name))
+                return null;
+
+            // Create the item.
+            var item = new ScheduleItemDataViewModel
+            {
+                Name = name.Trim(),
+                ColorHEX = colorHex,
+            };
+
+            // Ad the item to the list.
+            if (isPredefined)
+                ItemPredefinedList.Add(item);
+            else
+                ItemCustomList.Add(item);
+
+            return item;
+        }
+
+        /// <summary>
+        /// Add predefined template.
+        /// </summary>
+        protected void AddPredefinedTemplate(string title)
+        {
+            if (string.IsNullOrEmpty(title))
+                return;
+
+            if (IsTemplateAlreadyDefined(title))
+                return;
+
+            TemplatePredefinedList.Add(title);
+        }
+
+        /// <summary>
+        /// Deserialize template and load it from predefined file.
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        private ScheduleTemplateDataViewModel LoadPredefinedTemplate(string title)
+        {
+            // TODO: Change load from file to load from method?
+            ScheduleTemplateDataViewModel ret = null;
+            XmlSerializer serializer = new XmlSerializer(typeof(ScheduleTemplateDataViewModel));
+            string fileName;
+
+            // Convert title to file name.
+            fileName = ConvertTemplateTitleToFileName(title) + "." + mTemplatePredefinedFileFileExtension;
+
+            // Combine file path.
+            string filePath = Path.Combine(mTemplatePredefinedFolderRelPath, fileName);
+
+            // Check file exists.
+            if (!File.Exists(filePath))
+            {
+                IoC.Logger.Log($"Cannot locate template file '{fileName}'!", LogLevel.Fatal);
+                throw new ArgumentException("Cannot locate template file!");
+            }
+
+            // Try to read the file.
+            try
+            {
+                using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
+                {
+                    // Deserialize the file.
+                    ret = (ScheduleTemplateDataViewModel)serializer.Deserialize(fileStream);
+                    ret.Init(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                IoC.Logger.Log($"Some error occurred during loading predefined template file:{Environment.NewLine}{ex.Message}", LogLevel.Fatal);
+                throw new ArgumentException($"Some error occurred during loading predefined template file:{Environment.NewLine}{ex.Message}");
+            }
+
+            return ret;
+        }
+
+        /// <summary>
+        /// Convert template title to template file name.
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        private string ConvertTemplateTitleToFileName(string title)
+        {
+            return title.Replace('-', '_').ToLower();
+        }
+
+        /// <summary>
         /// Play the section.
         /// </summary>
         /// <returns></returns>
@@ -1043,7 +1158,7 @@ namespace BlackSpiritHelper.Core
             for (int i = 0; i < TemplatePredefinedList.Count; i++)
             {
                 TemplateCustomList.RemoveAll(
-                    o => o.Title.ToLower().Trim().Equals(TemplatePredefinedList[i].Title.ToLower())
+                    o => o.Title.ToLower().Trim().Equals(TemplatePredefinedList[i].ToLower())
                     );
             }
         }

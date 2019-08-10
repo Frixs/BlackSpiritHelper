@@ -142,18 +142,19 @@
                             <ComboBox Name="TemplateComboBox" Grid.Column="2"
                                       HorizontalAlignment="Right"
                                       VerticalAlignment="Center"
-                                      SelectedItem="{Binding SelectedTemplate}"
-                                      ItemsSource="{Binding TemplateListPresenter}"
-                                      IsEnabled="{Binding IsRunning, Converter={local:BooleanInvertConverter}}">
+                                      SelectedItem="{Binding SelectedTemplatePresenterSetter}"
+                                      ItemsSource="{Binding TemplateTitleListPresenter}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding Title}"
+                                        <TextBlock Text="{Binding Converter={local:SubstringConverter}, ConverterParameter=1}"
                                                    FontFamily="{StaticResource LatoRegular}">
                                             <TextBlock.Style>
                                                 <Style TargetType="TextBlock">
                                                     <Setter Property="Foreground" Value="{StaticResource ScheduleForegroundBrushKey}" />
+                                                    <Setter Property="IsEnabled" Value="True" />
                                                     <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding IsPredefined}" Value="True">
+                                                        <DataTrigger Binding="{Binding Converter={local:ContainsLeadingCharConverter}, ConverterParameter='*'}" 
+                                                                     Value="True">
                                                             <Setter Property="Foreground" Value="DarkGreen" />
                                                         </DataTrigger>
                                                     </Style.Triggers>
@@ -162,6 +163,20 @@
                                         </TextBlock>
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
+                                <ComboBox.Style>
+                                    <Style TargetType="ComboBox">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsRunning}"
+                                                         Value="True">
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding SelectedTemplateFlag}"
+                                                         Value="True">
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ComboBox.Style>
                             </ComboBox>
                         </Grid>
                         <!-- 2nd row -->

@@ -14,12 +14,21 @@ namespace BlackSpiritHelper
         {
             InitializeComponent();
 
+            // Run lazy load.
+            StartLazyLoad();
+        }
+
+        /// <summary>
+        /// Run lazy load.
+        /// </summary>
+        private void StartLazyLoad()
+        {
             // Lazy load task.
-            IoC.Task.Run(async () => 
+            IoC.Task.Run(async () =>
             {
                 // Lazy load delay.
                 await Task.Delay((int)(SlideSeconds * 1000));
-                
+
                 // Update UI thread.
                 await IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(async () =>
                 {

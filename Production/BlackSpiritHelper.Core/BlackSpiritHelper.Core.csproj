@@ -68,7 +68,7 @@
     <Compile Include="DateTimeZone\DateTimeZoneManager.cs" />
     <Compile Include="Dispatcher\Implementation\DispatcherManager.cs" />
     <Compile Include="Dispatcher\Implementation\DisprUiThread.cs" />
-    <Compile Include="Expressions\ExpressionHelpers.cs" />
+    <Compile Include="Utilities\ExpressionHelpers.cs" />
     <Compile Include="File\FileManager.cs" />
     <Compile Include="IoC\Base\ApplicationDataContent.cs" />
     <Compile Include="IoC\Base\IoC.cs" />
@@ -164,7 +164,22 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Data\ScheduleSection\Templates\bdo_jp.xml" />
+    <Content Include="Data\ScheduleSection\Templates\bdo_kr.xml" />
+    <Content Include="Data\ScheduleSection\Templates\bdo_mena.xml" />
+    <Content Include="Data\ScheduleSection\Templates\bdo_na.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\ScheduleSection\Templates\bdo_eu.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\ScheduleSection\Templates\bdo_ru.xml" />
+    <Content Include="Data\ScheduleSection\Templates\bdo_sa.xml" />
+    <Content Include="Data\ScheduleSection\Templates\bdo_sea.xml" />
+    <Content Include="Data\ScheduleSection\Templates\bdo_th.xml" />
+    <Content Include="Data\ScheduleSection\Templates\bdo_tw.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
