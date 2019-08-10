@@ -139,6 +139,7 @@ namespace BlackSpiritHelper.Core
             set
             {
                 mTimeDuration = value;
+                UpdateTimeInUI(mTimeDuration);
                 TimeLeft = mTimeDuration;
             }
         }
