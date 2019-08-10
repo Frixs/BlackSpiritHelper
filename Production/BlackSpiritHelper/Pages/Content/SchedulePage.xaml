@@ -142,7 +142,7 @@
                             <ComboBox Name="TemplateComboBox" Grid.Column="2"
                                       HorizontalAlignment="Right"
                                       VerticalAlignment="Center"
-                                      SelectedItem="{Binding SelectedTemplatePresenterSetter}"
+                                      SelectedItem="{Binding SelectedTemplateSetter}"
                                       ItemsSource="{Binding TemplateTitleListPresenter}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>

@@ -103,7 +103,7 @@ namespace BlackSpiritHelper.Core
         public ScheduleTemplateDataViewModel SelectedTemplate
         {
             get => mSelectedTemplate;
-            set
+            private set
             {
                 mSelectedTemplate = value;
                 SelectedTemplateTitle = mSelectedTemplate.Title;
@@ -111,19 +111,24 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// This is setter/controler between GUI and code to display template list to user.
+        /// It is used to set <see cref="SelectedTemplate"/> with finding the correct template by title.
         /// ---
+        /// This is setter/controler between GUI and code to display template list to user.
+        /// -
         /// We do not have access to whole list of predefined templates, we have only titles.
         /// So, we need to make a list of all templates for user with possibility to distinguish if a template is predefined or not.
         /// Predefined templates has leading special character as <see cref="TemplateTitleListPresenter"/> documentation says.
         /// </summary>
         [XmlIgnore]
-        public string SelectedTemplatePresenterSetter
+        public string SelectedTemplateSetter
         {
-            get => SelectedTemplate.IsPredefined ? '*' + SelectedTemplate.Title : SelectedTemplate.Title;
+            get => SelectedTemplate == null ? "NoTemplate" : (SelectedTemplate.IsPredefined ? '*' + SelectedTemplate.Title : SelectedTemplate.Title);
             set => IoC.Task.Run(() => RunCommandAsync(() => SelectedTemplateFlag, async () =>
             {
-                SelectedTemplate = GetTemplateByName(value[0] == '*' ? value.Substring(1) : value);
+                var template = GetTemplateByName(value[0] == '*' ? value.Substring(1) : value);
+                if (template == null)
+                    template = GetTemplateByName();
+                SelectedTemplate = template ?? throw new AggregateException("Unable to load desired template!");
                 await Task.Delay(1);
             }));
         }
@@ -156,7 +161,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Template list, presenter.
         /// If a template has value <see cref="ScheduleTemplateDataViewModel.IsPredefined"/> equal to TRUE, its titile in this list has special leading character '*' to be recognized as predefined.
-        /// <see cref="SelectedTemplatePresenterSetter"/> is using this to interact with GUI.
+        /// <see cref="SelectedTemplateSetter"/> is using this to interact with GUI.
         /// </summary>
         [XmlIgnore]
         public List<string> TemplateTitleListPresenter
@@ -412,9 +417,7 @@ namespace BlackSpiritHelper.Core
                 ItemCustomList[i].Init();
 
             // Set selected item.
-            SelectedTemplate = GetTemplateByName(SelectedTemplateTitle);
-            if (SelectedTemplate == null)
-                SelectedTemplate = GetTemplateByName();
+            SelectedTemplateSetter = SelectedTemplateTitle;
 
             // Set Ignored list.
             for (int i = 0; i < ItemIgnoredList.Count; i++)
@@ -930,7 +933,6 @@ namespace BlackSpiritHelper.Core
             if (TemplatePredefinedList.Count > 0)
                 return LoadPredefinedTemplate(TemplatePredefinedList[0]);
 
-            IoC.Logger.Log("No template to load!", LogLevel.Fatal);
             throw new ArgumentException("No template to load!");
         }
 
@@ -1067,8 +1069,9 @@ namespace BlackSpiritHelper.Core
             // Check file exists.
             if (!File.Exists(filePath))
             {
-                IoC.Logger.Log($"Cannot locate template file '{fileName}'!", LogLevel.Fatal);
-                throw new ArgumentException("Cannot locate template file!");
+                IoC.Logger.Log($"Unable to locate template file '{fileName}'!", LogLevel.Error);
+                TemplatePredefinedList.Remove(title);
+                return null;
             }
 
             // Try to read the file.
@@ -1083,7 +1086,6 @@ namespace BlackSpiritHelper.Core
             }
             catch (Exception ex)
             {
-                IoC.Logger.Log($"Some error occurred during loading predefined template file:{Environment.NewLine}{ex.Message}", LogLevel.Fatal);
                 throw new ArgumentException($"Some error occurred during loading predefined template file:{Environment.NewLine}{ex.Message}");
             }
 
