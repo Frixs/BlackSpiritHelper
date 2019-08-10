@@ -53,25 +53,45 @@
                             
                             <!-- Run Button -->
                             <Grid VerticalAlignment="Bottom" Margin="10 0 0 0">
+                                <!-- Play Button -->
                                 <Button Content="{StaticResource FontAwesomePlayIcon}"
                                         Command="{Binding PlayCommand}"
                                         Visibility="{Binding IsRunning,
                                                      Converter={local:BooleanToVisibilityConverter}}"
                                         FontFamily="{StaticResource FontAwesomeSolid}"
-                                        Style="{StaticResource RegularButtonNoColor}"
                                         FontSize="18"
                                         Width="32"
-                                        Height="32" />
+                                        Height="32">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource RegularButtonNoColor}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectingTemplateFlag}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <!-- Stop Button -->
                                 <Button Content="{StaticResource FontAwesomeStopIcon}"
                                         Command="{Binding StopCommand}"
                                         Visibility="{Binding IsRunning,
                                                      Converter={local:BooleanToVisibilityConverter},
                                                      ConverterParameter=True}"
                                         FontFamily="{StaticResource FontAwesomeSolid}"
-                                        Style="{StaticResource RegularButtonNoColor}"
                                         FontSize="18"
                                         Width="32"
-                                        Height="32" />
+                                        Height="32">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource RegularButtonNoColor}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectingTemplateFlag}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
                             </Grid>
                         </StackPanel>
                         <!-- Next items -->
@@ -115,28 +135,52 @@
                                         Command="{Binding EditTemplateCommand}"
                                         FontFamily="{StaticResource FontAwesomeSolid}"
                                         FontSize="10"
-                                        Style="{StaticResource RegularButton}"
                                         Width="20"
-                                        Height="20"
-                                        />
+                                        Height="20">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource RegularButton}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectingTemplateFlag}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
                                 <!-- Add Button -->
                                 <Button Content="{StaticResource FontAwesomePlusIcon}" Margin="0 0 5 0"
                                         Command="{Binding AddTemplateCommand}"
                                         FontFamily="{StaticResource FontAwesomeSolid}"
                                         FontSize="10"
-                                        Style="{StaticResource RegularButton}"
                                         Width="20"
-                                        Height="20"
-                                        />
+                                        Height="20">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource RegularButton}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectingTemplateFlag}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
                                 <!-- Clone Button -->
                                 <Button Content="{StaticResource FontAwesomeCloneIcon}" Margin="0 0 5 0"
                                         Command="{Binding CloneTemplateCommand}"
                                         FontFamily="{StaticResource FontAwesomeSolid}"
                                         FontSize="10"
-                                        Style="{StaticResource RegularButton}"
                                         Width="20"
-                                        Height="20"
-                                        />
+                                        Height="20">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource RegularButton}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectingTemplateFlag}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
                             </StackPanel>
                             <!-- ComboBox -->
                             <ComboBox Name="TemplateComboBox" Grid.Column="2"
@@ -170,7 +214,7 @@
                                                          Value="True">
                                                 <Setter Property="IsEnabled" Value="False" />
                                             </DataTrigger>
-                                            <DataTrigger Binding="{Binding SelectedTemplateFlag}"
+                                            <DataTrigger Binding="{Binding SelectingTemplateFlag}"
                                                          Value="True">
                                                 <Setter Property="IsEnabled" Value="False" />
                                             </DataTrigger>

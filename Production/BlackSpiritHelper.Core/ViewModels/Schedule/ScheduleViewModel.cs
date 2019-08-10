@@ -123,12 +123,9 @@ namespace BlackSpiritHelper.Core
         public string SelectedTemplateSetter
         {
             get => SelectedTemplate == null ? "NoTemplate" : (SelectedTemplate.IsPredefined ? '*' + SelectedTemplate.Title : SelectedTemplate.Title);
-            set => IoC.Task.Run(() => RunCommandAsync(() => SelectedTemplateFlag, async () =>
+            set => IoC.Task.Run(() => RunCommandAsync(() => SelectingTemplateFlag, async () =>
             {
-                var template = GetTemplateByName(value[0] == '*' ? value.Substring(1) : value);
-                if (template == null)
-                    template = GetTemplateByName();
-                SelectedTemplate = template ?? throw new AggregateException("Unable to load desired template!");
+                SelectTemplateByName(value[0] == '*' ? value.Substring(1) : value);
                 await Task.Delay(1);
             }));
         }
@@ -137,7 +134,7 @@ namespace BlackSpiritHelper.Core
         /// Flag that disable possibility to user to change template to another one till the loading of template is done.
         /// </summary>
         [XmlIgnore]
-        public bool SelectedTemplateFlag { get; private set; } = false;
+        public bool SelectingTemplateFlag { get; private set; } = false;
 
         /// <summary>
         /// Template list, predefined.
@@ -416,8 +413,8 @@ namespace BlackSpiritHelper.Core
             for (int i = 0; i < ItemCustomList.Count; i++)
                 ItemCustomList[i].Init();
 
-            // Set selected item.
-            SelectedTemplateSetter = SelectedTemplateTitle;
+            // Select template.
+            SelectTemplateByName(SelectedTemplateTitle);
 
             // Set Ignored list.
             for (int i = 0; i < ItemIgnoredList.Count; i++)
@@ -604,7 +601,7 @@ namespace BlackSpiritHelper.Core
 
             do {
                 DateTime todayWeek = goToNextWeek ? today.AddDays(7) : today;
-
+                
                 // Get.
                 for (int iDay = 0; iDay < SelectedTemplate.Schedule.Count; iDay++)
                 {
@@ -645,7 +642,7 @@ namespace BlackSpiritHelper.Core
             // Update.
             if (lastMatchingTimeItem == null)
             {
-                StopAsync();
+                await StopAsync();
                 return;
             }
 
@@ -1049,6 +1046,18 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
+        /// Select template by title.
+        /// </summary>
+        /// <param name="title"></param>
+        private void SelectTemplateByName(string title)
+        {
+            var template = GetTemplateByName(title);
+            if (template == null)
+                template = GetTemplateByName();
+            SelectedTemplate = template ?? throw new AggregateException("Unable to load any template!");
+        }
+
+        /// <summary>
         /// Deserialize template and load it from predefined file.
         /// </summary>
         /// <param name="title"></param>
@@ -1111,7 +1120,7 @@ namespace BlackSpiritHelper.Core
             IsRunning = true;
 
             UpdateTimeInUI("STARTING");
-            UpdateTimeTargetAsync();
+            await UpdateTimeTargetAsync();
             FindAndRemarkIgnored();
             mTimer.Start();
 

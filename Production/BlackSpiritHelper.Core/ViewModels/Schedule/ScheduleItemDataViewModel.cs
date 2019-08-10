@@ -163,9 +163,7 @@ namespace BlackSpiritHelper.Core
             IoC.DataContent.ScheduleDesignModel.SortItemIgnoredList();
 
             // Procedure after move.
-            IoC.Task.Run(async () => await OnItemIgnoredMoveAsync());
-
-            await Task.Delay(1);
+            await IoC.Task.Run(async () => await OnItemIgnoredMoveAsync());
         }
 
         /// <summary>
@@ -195,9 +193,7 @@ namespace BlackSpiritHelper.Core
             IoC.DataContent.ScheduleDesignModel.SortItemIgnoredList();
 
             // Procedure after move.
-            IoC.Task.Run(async () => await OnItemIgnoredMoveAsync());
-
-            await Task.Delay(1);
+            await IoC.Task.Run(async () => await OnItemIgnoredMoveAsync());
         }
 
         #endregion
