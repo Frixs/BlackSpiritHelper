@@ -12,6 +12,8 @@ namespace BlackSpiritHelper.Core
 {
     /// <summary>
     /// TODO: Add logger to whole Schedule section.
+    /// TODO: Filename/template name all to lower. Only output uppercase.
+    /// TODO: Create a whole new manager to save user settings. Save templates in user custom config folder. Update check etc. -> Custom templates to separated xml files.
     /// TODO>>> Code review, simplify code.
     /// </summary>
     public class ScheduleViewModel : DataContentBaseViewModel
@@ -125,7 +127,7 @@ namespace BlackSpiritHelper.Core
             get => SelectedTemplate == null ? "NoTemplate" : (SelectedTemplate.IsPredefined ? '*' + SelectedTemplate.Title : SelectedTemplate.Title);
             set => IoC.Task.Run(() => RunCommandAsync(() => SelectingTemplateFlag, async () =>
             {
-                SelectTemplateByName(value[0] == '*' ? value.Substring(1) : value);
+                SelectTemplateByName(value[0].Equals('*') ? value.Substring(1) : value);
                 await Task.Delay(1);
             }));
         }
@@ -413,6 +415,10 @@ namespace BlackSpiritHelper.Core
             for (int i = 0; i < ItemCustomList.Count; i++)
                 ItemCustomList[i].Init();
 
+            // Initialize custom templates.
+            for (int i = 0; i < TemplateCustomList.Count; i++)
+                TemplateCustomList[i].Init();
+
             // Select template.
             SelectTemplateByName(SelectedTemplateTitle);
 
@@ -560,7 +566,7 @@ namespace BlackSpiritHelper.Core
                 }
                 else
                 {
-                    if ((int)ts.TotalHours > 1)
+                    if ((int)ts.TotalHours > 0)
                     {
                         TimeLeftOverlayPresenter = ts.ToString(@"hh\:mm");
                     }
