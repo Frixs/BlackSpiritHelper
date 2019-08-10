@@ -615,7 +615,6 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// Handle timer's notification events.
-        /// TODO: Make a custom timer with these shared methods among data content.
         /// </summary>
         /// <param name="time"></param>
         private void TimerHandleNotificationEvents(TimeSpan time)

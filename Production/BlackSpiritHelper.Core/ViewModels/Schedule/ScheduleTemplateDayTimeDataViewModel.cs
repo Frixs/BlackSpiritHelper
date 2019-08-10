@@ -53,16 +53,26 @@ namespace BlackSpiritHelper.Core
         /// Time.
         /// </summary>
         [XmlIgnore]
-        public TimeSpan Time { get; set; }
+        public TimeSpan Time { get; set; } = TimeSpan.Zero;
 
         /// <summary>
-        /// <see cref="Time"/> ticks.
+        /// <see cref="Time"/> hours.
         /// It is used to store <see cref="Time"/> in user settings.
         /// </summary>
-        public long TimeTicks
+        public int TimeHours
         {
-            get => Time.Ticks;
-            set => Time = TimeSpan.FromTicks(value);
+            get => Time.Hours;
+            set => Time = Time.Add(TimeSpan.FromHours(value));
+        }
+
+        /// <summary>
+        /// <see cref="Time"/> minutes.
+        /// It is used to store <see cref="Time"/> in user settings.
+        /// </summary>
+        public int TimeMinutes
+        {
+            get => Time.Minutes;
+            set => Time = Time.Add(TimeSpan.FromMinutes(value));
         }
 
         /// <summary>

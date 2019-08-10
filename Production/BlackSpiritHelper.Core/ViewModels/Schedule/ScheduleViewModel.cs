@@ -936,6 +936,9 @@ namespace BlackSpiritHelper.Core
             if (TemplatePredefinedList.Count > 0)
                 return LoadPredefinedTemplate(TemplatePredefinedList[0]);
 
+            if (TemplateCustomList.Count > 0)
+                return TemplateCustomList[0];
+
             throw new ArgumentException("No template to load!");
         }
 
