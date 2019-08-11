@@ -100,6 +100,11 @@ namespace BlackSpiritHelper
                 IoC.DataContent.SaveUserData();
             }
 
+            // TODO: Exception thrown: 'System.InvalidOperationException' in Ninject.dll
+            // An exception of type 'System.InvalidOperationException' occurred in Ninject.dll but was not handled in user code
+            // Error loading Ninject component ICache
+            // No such component has been registered in the kernel's component container.
+
             // Dispose IoC kernel.
             IoC.Kernel.Dispose();
         }

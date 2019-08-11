@@ -75,12 +75,12 @@
                                             Width="50"
                                             BorderBrush="{StaticResource TimerListItemIconBorderColorBrushKey}"
                                             BorderThickness="3"
-                                            Background="{Binding IconBackgroundHEX, Converter={local:StringRGBToBrushConverter}}"
+                                            Background="{Binding IconBackgroundHEX, Converter={local:StringHEXToBrushConverter}}"
                                             Margin="5">
                                         <Viewbox>
                                             <TextBlock Text="{Binding IconTitleShortcut}"
                                                        Foreground="{Binding IconBackgroundHEX, 
-                                                                    Converter={local:StringRGBToLightOrDarkBrushConverter},
+                                                                    Converter={local:StringHEXToLightOrDarkBrushConverter},
                                                                     ConverterParameter={StaticResource ForegroundColorDifference}}"
                                                        FontFamily="{StaticResource LatoHeavy}"
                                                        FontSize="22"

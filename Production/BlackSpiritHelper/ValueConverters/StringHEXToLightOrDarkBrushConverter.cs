@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Media;
 
@@ -8,11 +7,11 @@ namespace BlackSpiritHelper
     /// <summary>
     /// A converter that takes in an RGB string such as FF00FF and converts it to a WPF brush.
     /// </summary>
-    public class StringRGBToLightOrDarkBrushConverter : BaseValueConverter<StringRGBToLightOrDarkBrushConverter>
+    public class StringHEXToLightOrDarkBrushConverter : BaseValueConverter<StringHEXToLightOrDarkBrushConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (String.IsNullOrEmpty((string)value))
+            if (string.IsNullOrEmpty((string)value))
                 value = "FFFFFF";
 
             string[] parameters = (parameter as string).Split('|');

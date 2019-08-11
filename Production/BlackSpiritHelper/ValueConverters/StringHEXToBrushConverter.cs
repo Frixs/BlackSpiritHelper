@@ -7,7 +7,7 @@ namespace BlackSpiritHelper
     /// <summary>
     /// A converter that takes in an RGB string such as FF00FF and converts it to a WPF brush.
     /// </summary>
-    public class StringRGBToBrushConverter : BaseValueConverter<StringRGBToBrushConverter>
+    public class StringHEXToBrushConverter : BaseValueConverter<StringHEXToBrushConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

@@ -101,7 +101,7 @@
                                     <DataTemplate>
                                         
                                         <TextBlock Text="{Binding Name}"
-                                                   Foreground="{Binding ColorHEX, Converter={local:StringRGBToBrushConverter}}"
+                                                   Foreground="{Binding ColorHEX, Converter={local:StringHEXToBrushConverter}}"
                                                    FontFamily="{StaticResource LatoBoldItalic}"
                                                    FontSize="16"/>
                                         

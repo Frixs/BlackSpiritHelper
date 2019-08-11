@@ -20,7 +20,7 @@ namespace BlackSpiritHelper.Core
                 {
                     Title = ApplicationPage.DailyCheck.GetDescription(),
                     PageEnum = ApplicationPage.DailyCheck,
-                    // TODO: DailyCheck add data content.
+                    // TODO:SectionInit: DailyCheck add data content.
                 },
                 new SideMenuListItemControlViewModel
                 {
@@ -38,7 +38,7 @@ namespace BlackSpiritHelper.Core
                 {
                     Title = ApplicationPage.Watchdog.GetDescription(),
                     PageEnum = ApplicationPage.Watchdog,
-                    // TODO: Watchdog add data content.
+                    // TODO:SectionInit: Watchdog add data content.
                 },
             };
         }

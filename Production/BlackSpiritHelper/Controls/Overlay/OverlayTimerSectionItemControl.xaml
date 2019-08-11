@@ -20,7 +20,7 @@
                                 <Style TargetType="Grid">
                                     <Setter Property="Background" 
                                             Value="{Binding IconBackgroundHEX, 
-                                        Converter={local:StringRGBToBrushConverter}}"/>
+                                        Converter={local:StringHEXToBrushConverter}}"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding WarningFlag}" Value="True">
                                             <Setter Property="Background" Value="{StaticResource WarningColorBrushKey}"/>
@@ -56,7 +56,7 @@
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="Foreground" 
                                                         Value="{Binding IconBackgroundHEX, 
-                                                    Converter={local:StringRGBToLightOrDarkBrushConverter},
+                                                    Converter={local:StringHEXToLightOrDarkBrushConverter},
                                                     ConverterParameter={StaticResource ForegroundColorDifference}}"/>
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding WarningFlag}" Value="True">
@@ -80,7 +80,7 @@
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="Foreground" Value="{Binding IconBackgroundHEX, 
-                                                    Converter={local:StringRGBToLightOrDarkBrushConverter},
+                                                    Converter={local:StringHEXToLightOrDarkBrushConverter},
                                                     ConverterParameter={StaticResource ForegroundColorDifference}}"/>
                                                 <Setter Property="TextDecorations" Value="None" />
                                                 <Style.Triggers>

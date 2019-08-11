@@ -12,9 +12,8 @@ namespace BlackSpiritHelper.Core
 {
     /// <summary>
     /// TODO: Add logger to whole Schedule section.
-    /// TODO: Filename/template name all to lower. Only output uppercase.
     /// TODO: Create a whole new manager to save user settings. Save templates in user custom config folder. Update check etc. -> Custom templates to separated xml files.
-    /// TODO>>> Code review, simplify code.
+    /// TODO:LATER: Code review, simplify code.
     /// </summary>
     public class ScheduleViewModel : DataContentBaseViewModel
     {
@@ -457,7 +456,7 @@ namespace BlackSpiritHelper.Core
         {
             PlayCommand = new RelayCommand(async () => await PlayAsync());
             StopCommand = new RelayCommand(async () => await StopAsync());
-            // TODO: Template, Item control methods.
+            // TODO: Custom Template controls.
         }
 
         #endregion
@@ -835,10 +834,12 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         public bool IsItemAlreadyDefined(string name)
         {
-            if (ItemPredefinedList.FirstOrDefault(o => o.Name.ToLower().Equals(name.ToLower().Trim())) != null)
+            var n = name.ToLower().Trim();
+
+            if (ItemPredefinedList.FirstOrDefault(o => o.Name.ToLower().Equals(n)) != null)
                 return true;
 
-            if (ItemCustomList != null && ItemCustomList.FirstOrDefault(o => o.Name.ToLower().Equals(name.ToLower().Trim())) != null)
+            if (ItemCustomList != null && ItemCustomList.FirstOrDefault(o => o.Name.ToLower().Equals(n)) != null)
                 return true;
 
             return false;
@@ -852,13 +853,14 @@ namespace BlackSpiritHelper.Core
         public ScheduleItemDataViewModel GetItemByName(string name)
         {
             ScheduleItemDataViewModel ret = null;
+            var n = name.ToLower().Trim();
 
             // Try to find and get the item from predefined.
-            ret = ItemPredefinedList.FirstOrDefault(o => o.Name.ToLower().Equals(name.ToLower().Trim()));
+            ret = ItemPredefinedList.FirstOrDefault(o => o.Name.ToLower().Equals(n));
 
             // If there is no equal item in predefined list, try to find the item in custom list.
             if (ret == null)
-                ret = ItemCustomList.FirstOrDefault(o => o.Name.ToLower().Equals(name.ToLower().Trim()));
+                ret = ItemCustomList.FirstOrDefault(o => o.Name.ToLower().Equals(n));
 
             // If there is no equal item in any of the list.
             if (ret == null)
@@ -907,7 +909,8 @@ namespace BlackSpiritHelper.Core
             if (TemplatePredefinedList.Contains(title))
                 return true;
 
-            if (TemplateCustomList != null && TemplateCustomList.FirstOrDefault(o => o.Title.ToLower().Equals(title.ToLower().Trim())) != null)
+            var t = title.ToLower().Trim();
+            if (TemplateCustomList != null && TemplateCustomList.FirstOrDefault(o => o.Title.ToLower().Equals(t)) != null)
                 return true;
 
             return false;
@@ -923,7 +926,8 @@ namespace BlackSpiritHelper.Core
             if (TemplatePredefinedList.Contains(title))
                 return LoadPredefinedTemplate(title);
 
-            return TemplateCustomList.FirstOrDefault(o => o.Title.ToLower().Equals(title.ToLower().Trim()));
+            var t = title.ToLower().Trim();
+            return TemplateCustomList.FirstOrDefault(o => o.Title.ToLower().Equals(t));
         }
 
         /// <summary>
@@ -1048,10 +1052,10 @@ namespace BlackSpiritHelper.Core
             if (string.IsNullOrEmpty(title))
                 return;
 
-            if (IsTemplateAlreadyDefined(title))
+            if (IsTemplateAlreadyDefined(title.Trim()))
                 return;
 
-            TemplatePredefinedList.Add(title);
+            TemplatePredefinedList.Add(title.Trim());
         }
 
         /// <summary>
@@ -1073,7 +1077,6 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private ScheduleTemplateDataViewModel LoadPredefinedTemplate(string title)
         {
-            // TODO: Change load from file to load from method?
             ScheduleTemplateDataViewModel ret = null;
             XmlSerializer serializer = new XmlSerializer(typeof(ScheduleTemplateDataViewModel));
             string fileName;
@@ -1099,6 +1102,7 @@ namespace BlackSpiritHelper.Core
                 {
                     // Deserialize the file.
                     ret = (ScheduleTemplateDataViewModel)serializer.Deserialize(fileStream);
+                    ret.LastUpdate = File.GetLastWriteTime(filePath).Ticks;
                     ret.Init(true);
                 }
             }
@@ -1164,7 +1168,7 @@ namespace BlackSpiritHelper.Core
             for (int i = 0; i < ItemPredefinedList.Count; i++)
             {
                 ItemCustomList.RemoveAll(
-                    o => o.Name.ToLower().Trim().Equals(ItemPredefinedList[i].Name.ToLower())
+                    o => o.Name.ToLower().Equals(ItemPredefinedList[i].Name.ToLower())
                     );
             }
         }

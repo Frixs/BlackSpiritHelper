@@ -10,12 +10,7 @@ namespace BlackSpiritHelper
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            TimeSpan ts;
-
-            if (value.GetType() == typeof(TimeSpan))
-                ts = (TimeSpan)value;
-            else
-                return "--:--";
+            TimeSpan ts = (TimeSpan)value;
 
             // Parameter to select time format.
             if (parameter.Equals("hms"))

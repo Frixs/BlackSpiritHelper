@@ -23,9 +23,16 @@
                                     <StackPanel Orientation="Vertical"
                                                 Background="{StaticResource ScheduleCalBackgroundBrushKey}">
 
-                                        <StackPanel Orientation="Horizontal" Margin="10">
+                                        <Grid Margin="10">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            
                                             <!-- Toggle Local calendar time Button -->
-                                            <Button Command="{Binding ToggleLocalCalendarTimeCommand}"
+                                            <Button Grid.Column="0" Command="{Binding ToggleLocalCalendarTimeCommand}"
                                                     Padding="10"
                                                     Width="150"
                                                     HorizontalAlignment="Left">
@@ -41,13 +48,24 @@
                                                 </Button.Style>
                                             </Button>
 
-                                            <TextBlock Text="{Binding CurrentTimeZoneString}"
+                                            <!-- Time Zone Info -->
+                                            <TextBlock Grid.Column="1" Text="{Binding CurrentTimeZoneString}"
                                                        FontFamily="{StaticResource LatoMediumItalic}"
                                                        FontSize="14"
                                                        Foreground="{StaticResource ScheduleCalForegroundBrushKey}"
                                                        Margin="10 0 0 0"
                                                        VerticalAlignment="Center" />
-                                        </StackPanel>
+
+                                            <!-- Template Update Date -->
+                                            <TextBlock Grid.Column="4" Text="{Binding LastUpdate, Converter={local:TicksToDateStringConverter}, StringFormat='Last template update: {0:C}'}"
+                                                       FontFamily="{StaticResource LatoBoldItalic}"
+                                                       FontSize="10"
+                                                       Foreground="{StaticResource ScheduleCalForegroundBrushKey}"
+                                                       VerticalAlignment="Top"
+                                                       HorizontalAlignment="Right" />
+                                        </Grid>
+
+                                        <!-- Calendar ScrollView Wrapper -->
                                         <ScrollViewer HorizontalScrollBarVisibility="Auto" 
                                                       VerticalScrollBarVisibility="Disabled" 
                                                       PreviewMouseWheel="ScrollViewer_PreviewMouseWheel"
@@ -166,7 +184,7 @@
                                                             <TextBlock Text="{Binding Name}"
                                                                        FontFamily="{StaticResource LatoHeavy}" 
                                                                        FontSize="12"
-                                                                       Foreground="{Binding ColorHEX, Converter={local:StringRGBToBrushConverter}}"
+                                                                       Foreground="{Binding ColorHEX, Converter={local:StringHEXToBrushConverter}}"
                                                                        >
                                                             </TextBlock>
 

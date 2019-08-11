@@ -186,7 +186,7 @@ namespace BlackSpiritHelper
 
         /// <summary>
         /// Set Overlay content if there are no items.
-        /// TODO: It would be cool to change this to automatic.
+        /// TODO:LATER: Think about changing this to automatic procedure. We do not want to add or update this check everytime, we change the condition in code or if we add a new section.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

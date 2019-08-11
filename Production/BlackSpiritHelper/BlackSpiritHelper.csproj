@@ -226,6 +226,7 @@
     <Compile Include="ValueConverters\Overlay\OverlaySizeMarginValueConverter.cs" />
     <Compile Include="ValueConverters\InvertBooleanConverter.cs" />
     <Compile Include="ValueConverters\Timer\TimerListOverlayOnlyConverter.cs" />
+    <Compile Include="ValueConverters\TicksToDateStringConverter.cs" />
     <Compile Include="ValueConverters\WarningTimerColorSwapConverter.cs" />
     <Compile Include="ValueConverters\EnumBooleanConverter.cs" />
     <Compile Include="ValueConverters\StringToUppercaseConverter.cs" />
@@ -236,8 +237,8 @@
     <Compile Include="ValueConverters\BooleanToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\ScrollOnTopValueConverter.cs" />
     <Compile Include="ValueConverters\IoCConverter.cs" />
-    <Compile Include="ValueConverters\StringRGBToLightOrDarkBrushConverter.cs" />
-    <Compile Include="ValueConverters\StringRGBToBrushConverter.cs" />
+    <Compile Include="ValueConverters\StringHEXToLightOrDarkBrushConverter.cs" />
+    <Compile Include="ValueConverters\StringHEXToBrushConverter.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Window\WindowHelper.cs" />
     <Compile Include="Window\WindowResizer.cs" />

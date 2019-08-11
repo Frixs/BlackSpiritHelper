@@ -6,7 +6,7 @@ namespace BlackSpiritHelper.Core
 {
     /// <summary>
     /// Wrapper for the <see cref="MediaPlayer"/>.
-    /// TODO: Rework.
+    /// TODO:LATER: Rework Custom Audio Player.
     /// </summary>
     public class AudioPlayer
     {

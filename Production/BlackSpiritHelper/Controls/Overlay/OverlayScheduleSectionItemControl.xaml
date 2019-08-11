@@ -17,7 +17,7 @@
                         <Border>
                             <Border.Style>
                                 <Style TargetType="Border">
-                                    <Setter Property="Background" Value="{Binding ColorHEX, Converter={local:StringRGBToBrushConverter}}"/>
+                                    <Setter Property="Background" Value="{Binding ColorHEX, Converter={local:StringHEXToBrushConverter}}"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding ApplicationDataContent.ScheduleDesignModel.WarningFlag,
                                                            Source={x:Static local:ViewModelLocator.Instance}}" 
@@ -48,7 +48,7 @@
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="Foreground" 
                                                     Value="{Binding ColorHEX, 
-                                                            Converter={local:StringRGBToLightOrDarkBrushConverter},
+                                                            Converter={local:StringHEXToLightOrDarkBrushConverter},
                                                             ConverterParameter={StaticResource ForegroundColorDifference}}"/>
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding ApplicationDataContent.ScheduleDesignModel.WarningFlag,
@@ -74,7 +74,7 @@
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="Foreground" 
                                                     Value="{Binding ColorHEX, 
-                                                            Converter={local:StringRGBToLightOrDarkBrushConverter},
+                                                            Converter={local:StringHEXToLightOrDarkBrushConverter},
                                                             ConverterParameter={StaticResource ForegroundColorDifference}}"/>
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding ApplicationDataContent.ScheduleDesignModel.WarningFlag,
