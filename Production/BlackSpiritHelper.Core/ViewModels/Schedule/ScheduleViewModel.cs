@@ -11,7 +11,6 @@ using System.Xml.Serialization;
 namespace BlackSpiritHelper.Core
 {
     /// <summary>
-    /// TODO: Add logger to whole Schedule section.
     /// TODO: Create a whole new manager to save user settings. Save templates in user custom config folder. Update check etc. -> Custom templates to separated xml files.
     /// TODO:LATER: Code review, simplify code.
     /// </summary>
@@ -677,6 +676,10 @@ namespace BlackSpiritHelper.Core
                         mNotificateNextTarget = true;
                     }
                 }
+                else
+                {
+                    IoC.Logger.Log("No item found!", LogLevel.Warning);
+                }
             }
             
             // Update notification triggers.
@@ -864,7 +867,10 @@ namespace BlackSpiritHelper.Core
 
             // If there is no equal item in any of the list.
             if (ret == null)
+            {
+                IoC.Logger.Log($"No item found! Let's create a new custom item from the unknown name '{name}'.", LogLevel.Debug);
                 return AddItem(name.Trim(), "000000");
+            }
 
             return ret;
         }
@@ -876,6 +882,12 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         public bool IsItemIgnored(ScheduleItemDataViewModel item)
         {
+            if (item == null)
+            {
+                IoC.Logger.Log("Item not defined!", LogLevel.Error);
+                return false;
+            }
+
             if (ItemIgnoredList.Contains(item.Name))
                 return true;
             return false;
@@ -889,12 +901,19 @@ namespace BlackSpiritHelper.Core
         public ScheduleTemplateDataViewModel AddCustomTemplate(ScheduleTemplateDataViewModel template)
         {
             if (template == null || string.IsNullOrEmpty(template.Title))
+            {
+                IoC.Logger.Log("Template not defined!", LogLevel.Error);
                 return null;
+            }
 
             if (IsTemplateAlreadyDefined(template.Title))
+            {
+                IoC.Logger.Log("Template is already defined!", LogLevel.Debug);
                 return null;
+            }
 
             TemplateCustomList.Add(template);
+            IoC.Logger.Log($"Added new custom template '{template.Title}'.", LogLevel.Info);
 
             return template;
         }
@@ -1037,9 +1056,14 @@ namespace BlackSpiritHelper.Core
 
             // Ad the item to the list.
             if (isPredefined)
+            {
                 ItemPredefinedList.Add(item);
+            }
             else
+            {
                 ItemCustomList.Add(item);
+                IoC.Logger.Log($"Added new custom item '{item.Name}'.", LogLevel.Info);
+            }
 
             return item;
         }

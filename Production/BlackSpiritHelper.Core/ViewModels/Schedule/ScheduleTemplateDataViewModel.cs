@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -208,6 +207,12 @@ namespace BlackSpiritHelper.Core
         /// <param name="timeItem"></param>
         public void FindAndMarkAsNext(ScheduleTemplateDayTimeDataViewModel timeItem)
         {
+            if (timeItem == null)
+            {
+                IoC.Logger.Log("Time item not defined!", LogLevel.Error);
+                return;
+            }
+
             for (int iDay = 0; iDay < SchedulePresenter.Count; iDay++)
             {
                 for (int iTime = 0; iTime < SchedulePresenter[iDay].TimeList.Count; iTime++)
@@ -229,6 +234,12 @@ namespace BlackSpiritHelper.Core
         /// <param name="timeItem"></param>
         public void FindAndRemarkAsNew(ScheduleTemplateDayTimeDataViewModel timeItem)
         {
+            if (timeItem == null)
+            {
+                IoC.Logger.Log("Time item not defined!", LogLevel.Error);
+                return;
+            }
+
             bool doneMark = false;
             bool doneUnmark = false;
 
