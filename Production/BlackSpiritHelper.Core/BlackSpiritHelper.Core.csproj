@@ -164,22 +164,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Data\ScheduleSection\Templates\bdo_jp.xml" />
-    <Content Include="Data\ScheduleSection\Templates\bdo_kr.xml" />
-    <Content Include="Data\ScheduleSection\Templates\bdo_mena.xml" />
-    <Content Include="Data\ScheduleSection\Templates\bdo_na.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\ScheduleSection\Templates\bdo_eu.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\ScheduleSection\Templates\bdo_ru.xml" />
-    <Content Include="Data\ScheduleSection\Templates\bdo_sa.xml" />
-    <Content Include="Data\ScheduleSection\Templates\bdo_sea.xml" />
-    <Content Include="Data\ScheduleSection\Templates\bdo_th.xml" />
-    <Content Include="Data\ScheduleSection\Templates\bdo_tw.xml" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

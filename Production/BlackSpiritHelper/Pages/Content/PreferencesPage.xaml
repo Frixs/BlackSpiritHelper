@@ -161,7 +161,7 @@
                                FontFamily="{StaticResource LatoRegular}"
                                FontSize="14"
                                Margin="0 0 0 5"/>
-                    <TextBlock Text="You cannot update this if schedule is running." 
+                    <TextBlock Text="You cannot update this value if schedule runs." 
                                Visibility="{Binding ApplicationDataContent.ScheduleDesignModel.IsRunning,
                                             Source={x:Static local:ViewModelLocator.Instance},
                                             Converter={local:BooleanToVisibilityGoneConverter}}"
@@ -210,7 +210,7 @@
                                    FontFamily="{StaticResource LatoRegular}"
                                    FontSize="14"
                                    Margin="0 0 0 5"/>
-                    <TextBlock Text="You cannot update this if any timer is running." 
+                    <TextBlock Text="You cannot update this value if any timer runs." 
                                Visibility="{Binding ApplicationDataContent.TimerDesignModel.IsRunning,
                                             Source={x:Static local:ViewModelLocator.Instance},
                                             Converter={local:BooleanToVisibilityGoneConverter}}"
