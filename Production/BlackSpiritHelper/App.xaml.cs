@@ -8,6 +8,7 @@ using System.Windows;
 using System.Deployment.Application;
 using System.Security.Principal;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BlackSpiritHelper
 {
@@ -62,6 +63,8 @@ namespace BlackSpiritHelper
 
             // Setup on application deployment.
             OnDeploymentSetup();
+            // Setup on application update.
+            OnUpdateSetup();
 
             // Check for administrator privileges.
             if (IoC.DataContent.PreferencesDesignModel.ForceToRunAsAdministrator
@@ -223,6 +226,50 @@ namespace BlackSpiritHelper
 
             // Set the application icon on the first time deployment only.
             SetInstallerIcon();
+        }
+
+        /// <summary>
+        /// This method is fired on each version update or application first deployment.
+        /// </summary>
+        private void OnUpdateSetup()
+        {
+            // TODO ;;;
+            //if (Debugger.IsAttached)
+            //    return;
+
+            bool procedureFailure = true;
+
+            // File relative to execution directory.
+            string filePath = "Version.check/" + IoC.Application.ApplicationVersion.Replace('.', '_');
+
+            // To prevent possible exception.
+            if (!Directory.Exists(Path.GetDirectoryName(filePath)))
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
+            // If the file exists, do nothing.
+            //if (File.Exists(filePath))
+            //    return;
+
+            // if the file does not exist, we need to run on update procedure.
+            #region Procedure
+
+            Console.WriteLine("A");
+            IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+            {
+                
+            });
+            Console.WriteLine("B");
+
+            //if (!DataProvider.Instance.DownloadData(SettingsConfiguration.RemoteDataDirPath))
+            //    procedureFailure = true;
+
+            #endregion
+
+            // If the procedure successfully finished, create a new check file of the current ersion.
+            if (!procedureFailure)
+            {
+                File.Create(filePath);
+            }
         }
 
         /// <summary>

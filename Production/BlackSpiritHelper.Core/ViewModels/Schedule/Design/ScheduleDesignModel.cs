@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-
-namespace BlackSpiritHelper.Core
+﻿namespace BlackSpiritHelper.Core
 {
 
     public class ScheduleDesignModel : ScheduleViewModel

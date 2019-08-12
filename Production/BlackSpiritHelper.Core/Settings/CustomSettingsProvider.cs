@@ -45,32 +45,6 @@ namespace BlackSpiritHelper.Core
         #region Private Members
 
         /// <summary>
-        /// The settings file folder path.
-        /// </summary>
-        private string mUserConfigFolderPath
-        {
-            get
-            {
-                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ApplicationName.Split('.')[0]);
-            }
-        }
-
-        /// <summary>
-        /// The setting file path.
-        /// </summary>
-        private string mUserConfigPath
-        {
-            get
-            {
-                return Path.Combine(
-                    mUserConfigFolderPath, 
-                    Debugger.IsAttached ? "user.debug.config" : "user.config"
-                    );
-            }
-
-        }
-
-        /// <summary>
         /// In memory storage of the settings values.
         /// </summary>
         private Dictionary<string, SettingStruct> mSettingsDictionary { get; set; }
@@ -89,7 +63,7 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public override string ApplicationName
         {
-            get => System.Reflection.Assembly.GetExecutingAssembly().ManifestModule.Name;
+            get => SettingsConfiguration.ApplicationName;
             set
             {
                 // Do nothing.
@@ -214,12 +188,12 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void LoadValuesFromFile()
         {
-            if (!File.Exists(mUserConfigPath))
+            if (!File.Exists(SettingsConfiguration.UserConfigPath))
                 // If the config file is not where it's supposed to be, create a new one.
                 CreateEmptyConfig();
 
             // Load the xml.
-            var configXml = XDocument.Load(mUserConfigPath);
+            var configXml = XDocument.Load(SettingsConfiguration.UserConfigPath);
 
             // Get all of the <setting name="..." serializeAs="..."> elements.
             var settingElements = configXml.Element(CONFIG).Element(USER_SETTINGS).Element(typeof(Properties.Settings).FullName).Elements(SETTING);
@@ -279,7 +253,7 @@ namespace BlackSpiritHelper.Core
         private void SaveValuesToFile()
         {
             // Load the current xml from the file.
-            var import = XDocument.Load(mUserConfigPath);
+            var import = XDocument.Load(SettingsConfiguration.UserConfigPath);
 
             // Get the settings group (e.g. <Company.Project.Desktop.Settings>).
             var settingsSection = import.Element(CONFIG).Element(USER_SETTINGS).Element(typeof(Properties.Settings).FullName);
@@ -337,7 +311,7 @@ namespace BlackSpiritHelper.Core
             }
 
             // Save to the file.
-            import.Save(mUserConfigPath);
+            import.Save(SettingsConfiguration.UserConfigPath);
         }
 
         /// <summary>
@@ -354,8 +328,8 @@ namespace BlackSpiritHelper.Core
             config.Add(userSettings);
             doc.Add(config);
             doc.Declaration = declaration;
-            Directory.CreateDirectory(mUserConfigFolderPath);
-            doc.Save(mUserConfigPath);
+            Directory.CreateDirectory(SettingsConfiguration.UserConfigDirPath);
+            doc.Save(SettingsConfiguration.UserConfigPath);
         }
 
         #endregion

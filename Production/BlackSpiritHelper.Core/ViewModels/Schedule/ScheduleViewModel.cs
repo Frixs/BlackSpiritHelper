@@ -11,7 +11,6 @@ using System.Xml.Serialization;
 namespace BlackSpiritHelper.Core
 {
     /// <summary>
-    /// TODO: Create a whole new manager to save user settings. Save templates in user custom config folder. Update check etc. -> Custom templates to separated xml files.
     /// TODO:LATER: Code review, simplify code.
     /// </summary>
     public class ScheduleViewModel : DataContentBaseViewModel
@@ -22,7 +21,7 @@ namespace BlackSpiritHelper.Core
         /// Template predefined folder path.
         /// There are stored predefined templates.
         /// </summary>
-        private string mTemplatePredefinedFolderRelPath = "Data/ScheduleSection/Templates";
+        private string mTemplatePredefinedFolderRelPath = Path.Combine(SettingsConfiguration.ApplicationDataDirPath, "ScheduleSection/Templates");
 
         /// <summary>
         /// Template predefined file extension.
@@ -434,9 +433,11 @@ namespace BlackSpiritHelper.Core
             SortItemCustomList();
             SortItemIgnoredList();
 
-            // Run if user wants.
-            if (RunOnLoad)
+            // Run if user wants. Also, we do not want to run this if there is no selected template yet.
+            if (RunOnLoad && !SelectingTemplateFlag)
                 PlayAsync();
+            else
+                RunOnLoad = false;
         }
 
         protected override void UnsetMethod()
@@ -962,7 +963,11 @@ namespace BlackSpiritHelper.Core
             if (TemplateCustomList.Count > 0)
                 return TemplateCustomList[0];
 
-            throw new ArgumentException("No template to load!");
+            //throw new ArgumentException("No template to load!");
+            SelectingTemplateFlag = true;
+            IoC.Logger.Log("No template to load!", LogLevel.Warning);
+
+            return null;
         }
 
         /// <summary>
@@ -1091,7 +1096,11 @@ namespace BlackSpiritHelper.Core
             var template = GetTemplateByName(title);
             if (template == null)
                 template = GetTemplateByName();
-            SelectedTemplate = template ?? throw new AggregateException("Unable to load any template!");
+
+            //SelectedTemplate = template ?? throw new AggregateException("Unable to load any template!");
+            if (template == null)
+                IoC.Logger.Log("Unable to load any template!", LogLevel.Warning);
+            SelectedTemplate = template;
         }
 
         /// <summary>

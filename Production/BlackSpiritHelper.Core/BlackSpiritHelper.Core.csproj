@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\BlackSpiritHelper\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\BlackSpiritHelper\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
     </Reference>
@@ -68,6 +71,8 @@
     <Compile Include="DateTimeZone\DateTimeZoneManager.cs" />
     <Compile Include="Dispatcher\Implementation\DispatcherManager.cs" />
     <Compile Include="Dispatcher\Implementation\DisprUiThread.cs" />
+    <Compile Include="Settings\DataProvider.cs" />
+    <Compile Include="Settings\SettingsConfiguration.cs" />
     <Compile Include="Utilities\ExpressionHelpers.cs" />
     <Compile Include="File\FileManager.cs" />
     <Compile Include="IoC\Base\ApplicationDataContent.cs" />

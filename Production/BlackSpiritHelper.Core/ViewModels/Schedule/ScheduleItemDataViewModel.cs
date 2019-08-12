@@ -127,6 +127,9 @@ namespace BlackSpiritHelper.Core
             if (mIgnoreListMoveCounterFlag > 0)
                 return;
 
+            if (IoC.DataContent.ScheduleDesignModel.SelectingTemplateFlag)
+                return;
+
             IoC.DataContent.ScheduleDesignModel.FindAndRemarkIgnored();
 
             await Task.Delay(1);
