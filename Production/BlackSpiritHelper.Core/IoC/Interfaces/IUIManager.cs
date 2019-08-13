@@ -21,5 +21,26 @@ namespace BlackSpiritHelper.Core
         /// <param name="action">Action on success/select browser item.</param>
         /// <returns></returns>
         Task ShowFolderBrowserDialog(Action<string> action);
+
+        /// <summary>
+        /// Open overlay window.
+        /// </summary>
+        void OpenOverlay();
+
+        /// <summary>
+        /// Close overlay window.
+        /// </summary>
+        void CloseOverlay();
+
+        /// <summary>
+        /// Open progress window.
+        /// </summary>
+        /// <param name="viewModel"></param>
+        void OpenProgressWindow(ProgressDialogViewModel viewModel = null);
+
+        /// <summary>
+        /// Close progress window.
+        /// </summary>
+        void CloseProgressWindow();
     }
 }

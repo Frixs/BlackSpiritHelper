@@ -63,8 +63,6 @@ namespace BlackSpiritHelper
 
             // Setup on application deployment.
             OnDeploymentSetup();
-            // Setup on application update.
-            OnUpdateSetup();
 
             // Check for administrator privileges.
             if (IoC.DataContent.PreferencesDesignModel.ForceToRunAsAdministrator
@@ -76,12 +74,22 @@ namespace BlackSpiritHelper
                 return;
             }
 
-            // Log it.
-            IoC.Logger.Log("Application starting up...", LogLevel.Info);
+            // Run application with pre-start process.
+            IoC.Task.Run(async () =>
+            {
+                // Setup on application update.
+                await OnUpdateSetupAsync();
+                
+                // Log it.
+                IoC.Logger.Log("Application starting up...", LogLevel.Info);
 
-            // Show the main window.
-            Current.MainWindow = new MainWindow();
-            Current.MainWindow.Show();
+                // Show the main window.
+                await IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
+                {
+                    Current.MainWindow = new MainWindow();
+                    //Current.MainWindow.Show();
+                }));
+            });
         }
 
         /// <summary>
@@ -231,9 +239,9 @@ namespace BlackSpiritHelper
         /// <summary>
         /// This method is fired on each version update or application first deployment.
         /// </summary>
-        private void OnUpdateSetup()
+        private async Task OnUpdateSetupAsync()
         {
-            // TODO ;;;
+            // TODO ;;; uncomment need code parts. Add doc comments.
             //if (Debugger.IsAttached)
             //    return;
 
@@ -253,16 +261,29 @@ namespace BlackSpiritHelper
             // if the file does not exist, we need to run on update procedure.
             #region Procedure
 
-            Console.WriteLine("A");
-            IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+            // Create default process dialog model.
+            ProgressDialogViewModel progressData = new ProgressDialogViewModel
             {
-                
-            });
-            Console.WriteLine("B");
+                Title = "CHECKING FOR UPDATES",
+                Subtitle = "",
+                WorkOn = "",
+            };
 
-            //if (!DataProvider.Instance.DownloadData(SettingsConfiguration.RemoteDataDirPath))
-            //    procedureFailure = true;
+            await IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
+            {
+                IoC.UI.OpenProgressWindow(progressData);
+            }));
 
+            await Task.Delay(1000);
+
+            progressData.Title = "UPDATING...";
+
+            // TODO:
+            // Exception thrown: 'System.NullReferenceException' 
+            // System.Windows.Data Error: 2 : Cannot find governing FrameworkElement or FrameworkContentElement for target element. BindingExpression:(no path); DataItem=null; target element is 'VisualBrush' (HashCode=48548238); target property is 'Visual' (type 'Visual')
+            progressData.Subtitle = "Application data";
+            if (!DataProvider.Instance.DownloadData(SettingsConfiguration.RemoteDataDirPath, progressData))
+                procedureFailure = true;
             #endregion
 
             // If the procedure successfully finished, create a new check file of the current ersion.
@@ -270,6 +291,13 @@ namespace BlackSpiritHelper
             {
                 File.Create(filePath);
             }
+
+            await IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
+            {
+                IoC.UI.CloseProgressWindow();
+            }));
+
+            await Task.Delay(1);
         }
 
         /// <summary>

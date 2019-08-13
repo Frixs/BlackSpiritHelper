@@ -29,6 +29,10 @@ namespace BlackSpiritHelper.Core
         /// <returns>An object, which is returned immediately after Overload:System.Windows.Threading.Dispatcher.BeginInvoke is called, that can be used to interact with the delegate as it is pending execution in the event queue.</returns>
         public DispatcherOperation BeginInvokeOrDie(Delegate method, params object[] args)
         {
+            // TODO: Possibly, we can remove the whole dispatcher structure, because we can call...
+            // return Application.Current?.Dispatcher.BeginInvoke(method, args);
+            // ... as a null check.
+            // Make sure about functionality before.
             if (Application.Current == null)
                 return null;
 

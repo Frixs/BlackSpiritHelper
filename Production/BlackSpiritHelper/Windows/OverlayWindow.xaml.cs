@@ -66,7 +66,7 @@ namespace BlackSpiritHelper
             // Set brush colors.
             mOverlayBackgroundBrush = (Brush)FindResource("TransparentBrushKey");
             mOverlayBackgroundBrushNoItems = (Brush)FindResource("RedBrushKey");
-    }
+        }
 
         #endregion
 
@@ -87,7 +87,7 @@ namespace BlackSpiritHelper
             ResizeMode = ResizeMode.NoResize;
             ShowInTaskbar = false;
             Topmost = true;
-            
+
             SetOverlayPosition(overlayWindowHandle, mTargetWindowHandle);
         }
 
@@ -98,7 +98,7 @@ namespace BlackSpiritHelper
                 Close();
                 return;
             }
-            
+
             // Maximize the window.
             WindowState = WindowState.Maximized;
         }
@@ -132,7 +132,7 @@ namespace BlackSpiritHelper
 
             if (e.LeftButton != MouseButtonState.Pressed)
                 return;
-            
+
             // Set X axis.
             Canvas.SetLeft(OverlayObject as FrameworkElement,
                 e.GetPosition(null).X - mOverlayObjectMouseRelPos.X
@@ -209,7 +209,7 @@ namespace BlackSpiritHelper
             foreach (TimerGroupDataViewModel g in IoC.DataContent.TimerDesignModel.GroupList)
             {
                 foreach (TimerItemDataViewModel t in g.TimerList)
-                { 
+                {
                     if (t.ShowInOverlay)
                     {
                         val.Background = mOverlayBackgroundBrush;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Interop;
 using BlackSpiritHelper.Core;
 
 namespace BlackSpiritHelper
@@ -66,6 +67,67 @@ namespace BlackSpiritHelper
                     
                 }
             });
+        }
+
+        /// <summary>
+        /// Open overlay window.
+        /// </summary>
+        public void OpenOverlay()
+        {
+            if (OverlayWindow.Window != null)
+                return;
+
+            OverlayWindow.Window = new OverlayWindow(new WindowInteropHelper(Application.Current.MainWindow).Handle);
+            OverlayWindow.Window.Show();
+        }
+
+        /// <summary>
+        /// Close overlay window.
+        /// </summary>
+        public void CloseOverlay()
+        {
+            if (OverlayWindow.Window == null)
+                return;
+
+            OverlayWindow.Window.Close();
+            OverlayWindow.Window = null;
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+        }
+
+        /// <summary>
+        /// Open progress window.
+        /// </summary>
+        /// <param name="viewModel"></param>
+        public void OpenProgressWindow(ProgressDialogViewModel viewModel = null)
+        {
+            if (ProgressWindow.Window != null)
+                return;
+
+            ProgressWindow.Window = new ProgressWindow();
+
+            if (viewModel != null)
+                ((ProgressWindowViewModel)ProgressWindow.Window.DataContext).VM = viewModel;
+
+            ProgressWindow.Window.Show();
+        }
+
+        /// <summary>
+        /// Close progress window.
+        /// </summary>
+        public void CloseProgressWindow()
+        {
+            if (ProgressWindow.Window == null)
+                return;
+
+            ProgressWindow.Window.Close();
+            ProgressWindow.Window = null;
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
         }
     }
 }

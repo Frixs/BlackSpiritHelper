@@ -6,6 +6,15 @@
     <Color x:Key="Red">#ec1e24</Color>
     <SolidColorBrush x:Key="RedBrushKey" Color="{StaticResource Red}" />
 
+    <Color x:Key="RedForeground">#DFDFEC</Color>
+    <SolidColorBrush x:Key="RedForegroundBrushKey" Color="{StaticResource RedForeground}" />
+
+    <Color x:Key="RedForegroundAlt">#FFA0A3</Color>
+    <SolidColorBrush x:Key="RedForegroundAltBrushKey" Color="{StaticResource RedForegroundAlt}" />
+
+    <Color x:Key="RedForegroundAltDark">#510002</Color>
+    <SolidColorBrush x:Key="RedForegroundAltDarkBrushKey" Color="{StaticResource RedForegroundAltDark}" />
+    
     <Color x:Key="Transparent">#00000000</Color>
     <SolidColorBrush x:Key="TransparentBrushKey" Color="{StaticResource Transparent}" />
 

@@ -239,7 +239,11 @@
     <Compile Include="ValueConverters\IoCConverter.cs" />
     <Compile Include="ValueConverters\StringHEXToLightOrDarkBrushConverter.cs" />
     <Compile Include="ValueConverters\StringHEXToBrushConverter.cs" />
+    <Compile Include="ViewModels\ProgressWindowViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
+    <Compile Include="Windows\ProgressWindow.xaml.cs">
+      <DependentUpon>ProgressWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Window\WindowHelper.cs" />
     <Compile Include="Window\WindowResizer.cs" />
     <Compile Include="ValueConverters\ApplicationPageHelpers.cs" />
@@ -336,6 +340,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Resources\Images\Logo\logo_white.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Styles\Buttons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -369,6 +377,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Windows\OverlayWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ProgressWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -458,6 +470,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Logo\logo_red_text_512.png" />
+    <None Include="Resources\Images\Logo\logo_white.svg" />
     <Content Include="Resources\Sounds\Alert2_Sound_0.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

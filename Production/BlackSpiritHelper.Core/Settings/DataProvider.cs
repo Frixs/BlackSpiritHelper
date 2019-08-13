@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace BlackSpiritHelper.Core
 {
@@ -42,8 +43,9 @@ namespace BlackSpiritHelper.Core
         /// Download a new data.
         /// </summary>
         /// <param name="url"></param>
+        /// <param name="dataViewModel"></param>
         /// <returns></returns>
-        public bool DownloadData(string url)
+        public bool DownloadData(string url, ProgressDialogViewModel dataViewModel = null)
         {
             bool isDownloadOk = false;
 
@@ -68,7 +70,7 @@ namespace BlackSpiritHelper.Core
                     // If the item is DIR, go into.
                     if (isDir)
                     {
-                        if (!DownloadData(Path.Combine(url, name)))
+                        if (!DownloadData(Path.Combine(url, name), dataViewModel))
                         {
                             isDownloadOk = false;
                             break;
@@ -87,8 +89,12 @@ namespace BlackSpiritHelper.Core
                         if (!Directory.Exists(Path.GetDirectoryName(localPath)))
                             Directory.CreateDirectory(Path.GetDirectoryName(localPath));
 
+                        // Update data.
+                        if (dataViewModel != null) dataViewModel.WorkOn = "Downloading... " + name;
+
                         // Download file.
-                        wc.DownloadFile(downloadUrl, localPath);
+                        wc.DownloadFile(downloadUrl, localPath); // TODO;;; remove unnecessary code.
+                        //wc.DownloadFile("https://github.com/siwalikm/coffitivity-offline/releases/download/v1.0.2/Coffitivity.Offline-1.0.2.dmg", localPath);
                     }
 
                 }
@@ -101,8 +107,8 @@ namespace BlackSpiritHelper.Core
                 // System.Net.WebException: The remote name could not be resolved: 'api.github.com'.
 
                 isDownloadOk = false;
-
-                IoC.Logger.Log($"Unexpected error occurred during downloading updating files: ({ex.GetType().ToString()}) {ex.Message}", LogLevel.Error);
+                IoC.Logger.Log($"Unexpected error occurred during downloading/updating files: ({ex.GetType().ToString()}) {ex.Message}", LogLevel.Error);
+                // TODO: go through all exception handlers and update them according to this one.
             }
             finally
             {
