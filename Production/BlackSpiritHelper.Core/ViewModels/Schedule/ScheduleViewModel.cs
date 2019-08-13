@@ -1141,7 +1141,7 @@ namespace BlackSpiritHelper.Core
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Some error occurred during loading predefined template file:{Environment.NewLine}{ex.Message}");
+                throw new ArgumentException($"Some error occurred during loading predefined template file: ({ex.GetType().ToString()}) {ex.Message}");
             }
 
             return ret;

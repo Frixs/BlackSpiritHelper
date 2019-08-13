@@ -60,7 +60,6 @@ namespace BlackSpiritHelper.Core
 
                 isDownloadOk = false;
                 IoC.Logger.Log($"Unexpected error occurred during downloading/updating files: ({ex.GetType().ToString()}) {ex.Message}", LogLevel.Error);
-                // TODO: go through all exception handlers and update them according to this one.
             }
             finally
             {

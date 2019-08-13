@@ -161,7 +161,7 @@ namespace BlackSpiritHelper.Core
         /// <param name="lineNumber">The line of code in the filename this message was logged from</param>
         private void LogError(Exception ex, [CallerMemberName] string origin = "", [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
         {
-            IoC.Logger.Log($"An unexpected error occured running a IoC.Task.Run: {ex.Message}", LogLevel.Debug, origin, filePath, lineNumber);
+            IoC.Logger.Log($"An unexpected error occured running a IoC.Task.Run: ({ex.GetType().ToString()}) {ex.Message}", LogLevel.Debug, origin, filePath, lineNumber);
         }
 
         #endregion
