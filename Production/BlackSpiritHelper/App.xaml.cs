@@ -74,20 +74,22 @@ namespace BlackSpiritHelper
                 return;
             }
 
+            // Set application main window.
+            Current.MainWindow = new MainWindow();
+
             // Run application with pre-start process.
             IoC.Task.Run(async () =>
             {
                 // Setup on application update.
                 await OnUpdateSetupAsync();
-                
+
                 // Log it.
                 IoC.Logger.Log("Application starting up...", LogLevel.Info);
 
                 // Show the main window.
                 await IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
                 {
-                    Current.MainWindow = new MainWindow();
-                    //Current.MainWindow.Show();
+                    Current.MainWindow.Show();
                 }));
             });
         }
@@ -239,13 +241,14 @@ namespace BlackSpiritHelper
         /// <summary>
         /// This method is fired on each version update or application first deployment.
         /// </summary>
+        /// <returns></returns>
         private async Task OnUpdateSetupAsync()
         {
-            // TODO ;;; uncomment need code parts. Add doc comments.
-            //if (Debugger.IsAttached)
-            //    return;
+            if (Debugger.IsAttached)
+                return;
 
-            bool procedureFailure = true;
+            int userDelayMs = 500;
+            bool procedureFailure = false;
 
             // File relative to execution directory.
             string filePath = "Version.check/" + IoC.Application.ApplicationVersion.Replace('.', '_');
@@ -255,8 +258,8 @@ namespace BlackSpiritHelper
                 Directory.CreateDirectory(Path.GetDirectoryName(filePath));
 
             // If the file exists, do nothing.
-            //if (File.Exists(filePath))
-            //    return;
+            if (File.Exists(filePath))
+                return;
 
             // if the file does not exist, we need to run on update procedure.
             #region Procedure
@@ -269,35 +272,43 @@ namespace BlackSpiritHelper
                 WorkOn = "",
             };
 
+            // Open progress window.
             await IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
             {
                 IoC.UI.OpenProgressWindow(progressData);
             }));
 
-            await Task.Delay(1000);
+            // Delay to inform user about upcoming procedure.
+            await Task.Delay(userDelayMs);
 
+            // Start procedure with updating progress title.
             progressData.Title = "UPDATING...";
 
-            // TODO:
-            // Exception thrown: 'System.NullReferenceException' 
-            // System.Windows.Data Error: 2 : Cannot find governing FrameworkElement or FrameworkContentElement for target element. BindingExpression:(no path); DataItem=null; target element is 'VisualBrush' (HashCode=48548238); target property is 'Visual' (type 'Visual')
+            // Update application data.
             progressData.Subtitle = "Application data";
             if (!DataProvider.Instance.DownloadData(SettingsConfiguration.RemoteDataDirPath, progressData))
                 procedureFailure = true;
+
             #endregion
 
             // If the procedure successfully finished, create a new check file of the current ersion.
             if (!procedureFailure)
             {
-                File.Create(filePath);
+                File.Create(filePath).Dispose();
             }
 
+            // On procedure finish.
+            progressData.Subtitle = "";
+            progressData.WorkOn = procedureFailure ? "Unable to update!" : "Done!";
+            await Task.Delay(userDelayMs);
+            progressData.Title = "STARTING UP";
+            await Task.Delay(userDelayMs * 3);
+
+            // Close progress window.
             await IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
             {
                 IoC.UI.CloseProgressWindow();
             }));
-
-            await Task.Delay(1);
         }
 
         /// <summary>

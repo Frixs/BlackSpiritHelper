@@ -3,7 +3,6 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace BlackSpiritHelper.Core
 {
@@ -39,65 +38,18 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
-        /// <summary>
-        /// Download a new data.
-        /// </summary>
-        /// <param name="url"></param>
-        /// <param name="dataViewModel"></param>
-        /// <returns></returns>
         public bool DownloadData(string url, ProgressDialogViewModel dataViewModel = null)
         {
-            bool isDownloadOk = false;
+            bool isDownloadOk = true;
 
-            // Create client.
-            var wc = new WebClient();
-            // Add necessary headers to access our release location (github).
-            wc.Headers.Add("User-Agent", "Nothing");
-
+            // Create web client interface.
+            WebClient wc = new WebClient();
+            
             try
             {
-                // Download string that represents json.
-                var content = wc.DownloadString(url);
-
-                var jobj = (JArray)JsonConvert.DeserializeObject(content);
-                for (int i = 0; i < jobj.Count; i++)
-                {
-                    var isDir = jobj[i]["type"].ToString() == "dir" ? true : false;
-                    var name = jobj[i]["name"].ToString();
-                    var path = jobj[i]["path"].ToString();
-                    var downloadUrl = jobj[i]["download_url"].ToString();
-
-                    // If the item is DIR, go into.
-                    if (isDir)
-                    {
-                        if (!DownloadData(Path.Combine(url, name), dataViewModel))
-                        {
-                            isDownloadOk = false;
-                            break;
-                        }
-                    }
-                    // Otherwise, download the file.
-                    else
-                    {
-                        // Get local path where to place a new file.
-                        var localPath = Path.Combine(
-                            SettingsConfiguration.ApplicationDataDirPath,
-                            path.Length > SettingsConfiguration.RemoteDataDirRelPath.Length ? path.Substring(SettingsConfiguration.RemoteDataDirRelPath.Length) : path
-                            );
-
-                        // Create local directory.
-                        if (!Directory.Exists(Path.GetDirectoryName(localPath)))
-                            Directory.CreateDirectory(Path.GetDirectoryName(localPath));
-
-                        // Update data.
-                        if (dataViewModel != null) dataViewModel.WorkOn = "Downloading... " + name;
-
-                        // Download file.
-                        wc.DownloadFile(downloadUrl, localPath); // TODO;;; remove unnecessary code.
-                        //wc.DownloadFile("https://github.com/siwalikm/coffitivity-offline/releases/download/v1.0.2/Coffitivity.Offline-1.0.2.dmg", localPath);
-                    }
-
-                }
+                // Start download.
+                if (!DownloadDataProcess(wc, url, dataViewModel))
+                    isDownloadOk = false;
             }
             catch (Exception ex)
             {
@@ -112,8 +64,72 @@ namespace BlackSpiritHelper.Core
             }
             finally
             {
+                // Dispose web client interface.
                 if (wc != null)
                     ((IDisposable)wc).Dispose();
+            }
+
+            return isDownloadOk;
+        }
+
+        /// <summary>
+        /// Download a new data.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="dataViewModel"></param>
+        /// <returns></returns>
+        private bool DownloadDataProcess(WebClient webClient, string url, ProgressDialogViewModel dataViewModel = null)
+        {
+            bool isDownloadOk = true;
+
+            // Add necessary headers to access our release location (github).
+            // Note: Headers are applied only for upcoming request, not for all requests.
+            webClient.Headers.Add("User-Agent", "Nothing");
+
+            // Download string that represents json.
+            var content = webClient.DownloadString(url);
+
+            // Deserialize json.
+            var jobj = (JArray)JsonConvert.DeserializeObject(content);
+            for (int i = 0; i < jobj.Count; i++)
+            {
+                // Get necessary json items.
+                var isDir = jobj[i]["type"].ToString() == "dir" ? true : false;
+                var name = jobj[i]["name"].ToString();
+                var path = jobj[i]["path"].ToString();
+                var downloadUrl = jobj[i]["download_url"].ToString();
+
+                // If the item is DIR, go into recurse.
+                if (isDir)
+                {
+                    if (!DownloadDataProcess(webClient, Path.Combine(url, name), dataViewModel))
+                    {
+                        isDownloadOk = false;
+                        break;
+                    }
+                }
+                // Otherwise, download the file.
+                else
+                {
+                    // Get local path where to place a new file.
+                    var localPath = Path.Combine(
+                        SettingsConfiguration.ApplicationDataDirPath,
+                        path.Length > SettingsConfiguration.RemoteDataDirRelPath.Length ? path.Substring(SettingsConfiguration.RemoteDataDirRelPath.Length) : path
+                        );
+
+                    // Create local directory.
+                    if (!Directory.Exists(Path.GetDirectoryName(localPath)))
+                    {
+                        Directory.CreateDirectory(Path.GetDirectoryName(localPath));
+                    }
+
+                    // Update data.
+                    if (dataViewModel != null) dataViewModel.WorkOn = "Downloading... " + name;
+
+                    // Download file.
+                    webClient.DownloadFile(downloadUrl, localPath);
+                }
+
             }
 
             return isDownloadOk;

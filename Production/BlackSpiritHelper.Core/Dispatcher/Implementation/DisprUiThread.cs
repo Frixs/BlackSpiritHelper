@@ -33,6 +33,8 @@ namespace BlackSpiritHelper.Core
             // return Application.Current?.Dispatcher.BeginInvoke(method, args);
             // ... as a null check.
             // Make sure about functionality before.
+            // Execute.OnUIThread - implementation like this?
+            // Ivoke vs Begin invoke. think about using.
             if (Application.Current == null)
                 return null;
 
