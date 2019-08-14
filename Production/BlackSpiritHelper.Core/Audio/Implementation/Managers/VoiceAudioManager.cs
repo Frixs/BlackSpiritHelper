@@ -1,13 +1,13 @@
 ﻿namespace BlackSpiritHelper.Core
 {
-    public class SoundAudioManager : BaseAudioManager
+    public class VoiceAudioManager : BaseAudioManager
     {
         #region Constructor
 
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public SoundAudioManager()
+        public VoiceAudioManager()
         {
             // Pack.
             AddPack(AudioType.Alert3, o =>
@@ -31,6 +31,24 @@
             AddPack(AudioType.AlertCountdown, o =>
             {
                 o.AddAudio(new AudioFile("AlertCounting_Sound_0.mp3"));
+                return o;
+            });
+            // Pack.
+            AddPack(AudioType.AlertLongBefore, o =>
+            {
+                o.AddAudio(new AudioFile("AlertLongBefore_Sound_0.mp3"));
+                return o;
+            });
+            // Pack.
+            AddPack(AudioType.AlertClockTicking, o =>
+            {
+                o.AddAudio(new AudioFile("AlertClockTicking_Sound_0.mp3"));
+                return o;
+            });
+            // Pack.
+            AddPack(AudioType.Alert4, o =>
+            {
+                o.AddAudio(new AudioFile("Alert4_Sound_0.mp3"));
                 return o;
             });
         }
