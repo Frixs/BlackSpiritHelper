@@ -36,19 +36,22 @@
                               Command="{Binding RunOnStartUpCheckboxCommand}"
                               Content="Run the application when my computer starts."
                               HorizontalAlignment="Center"
+                              Foreground="{StaticResource ForegroundBrushKey}"
                               IsEnabled="{Binding RunOnStartupFlag, Converter={local:BooleanInvertConverter}}" />
 
                     <!-- Run the app As Administrator -->
                     <CheckBox IsChecked="{Binding ForceToRunAsAdministrator}" Margin="0 0 0 30"
                               Command="{Binding ForceToRunAsAdministratorCommand}"
                               Content="Force to run the application As Administrator."
+                              Foreground="{StaticResource ForegroundBrushKey}"
                               HorizontalAlignment="Center" />
 
                     <!-- Volume -->
                     <TextBlock Text="Volume"
-                                   FontFamily="{StaticResource LatoRegular}"
-                                   FontSize="14"
-                                   Margin="0 0 0 5"/>
+                               FontFamily="{StaticResource LatoRegular}"
+                               FontSize="14"
+                               Foreground="{StaticResource ForegroundBrushKey}"
+                               Margin="0 0 0 5"/>
                     <Grid Margin="0 0 0 30" HorizontalAlignment="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -58,6 +61,7 @@
                                    Text="{StaticResource FontAwesomeVolumeOffIcon}"
                                    FontFamily="{StaticResource FontAwesomeSolid}"
                                    FontSize="20"
+                                   Foreground="{StaticResource ForegroundBrushKey}"
                                    Margin="0 0 10 0"
                                    VerticalAlignment="Center"
                                    />
@@ -73,6 +77,7 @@
                         <TextBlock Text="Audio Alert Level"
                                    FontFamily="{StaticResource LatoRegular}"
                                    FontSize="14"
+                                   Foreground="{StaticResource ForegroundBrushKey}"
                                    Margin="0 0 0 5"/>
                         <ItemsControl ItemsSource="{Binding AudioAlertLevelList}">
                             <ItemsControl.ItemTemplate>
@@ -95,6 +100,7 @@
                         </ItemsControl>
                         <TextBlock Text="Voice option is not implemented yet." 
                                    FontFamily="{StaticResource LatoLightItalic}"
+                                   Foreground="{StaticResource ForegroundBrushKey}"
                                    FontSize="10"/>
                     </StackPanel>
 
@@ -116,6 +122,7 @@
                         <TextBlock Text="Orientation"
                                    FontFamily="{StaticResource LatoRegular}"
                                    FontSize="14"
+                                   Foreground="{StaticResource ForegroundBrushKey}"
                                    Margin="0 0 0 5"/>
                         <ItemsControl ItemsSource="{Binding ApplicationDataContent.OverlayDesignModel.OrientationList,
                                                     Source={x:Static local:ViewModelLocator.Instance}}">
@@ -144,6 +151,7 @@
                         <TextBlock Text="Size"
                                    FontFamily="{StaticResource LatoRegular}"
                                    FontSize="14"
+                                   Foreground="{StaticResource ForegroundBrushKey}"
                                    Margin="0 0 0 5"/>
                         <ItemsControl ItemsSource="{Binding ApplicationDataContent.OverlayDesignModel.OverlaySizeList,
                                                     Source={x:Static local:ViewModelLocator.Instance}}">
@@ -184,6 +192,7 @@
                     <TextBlock Text="Alerts"
                                FontFamily="{StaticResource LatoRegular}"
                                FontSize="14"
+                               Foreground="{StaticResource ForegroundBrushKey}"
                                Margin="0 0 0 5"/>
                     <TextBlock Text="You cannot update this value if schedule runs." 
                                Visibility="{Binding ApplicationDataContent.ScheduleDesignModel.IsRunning,
@@ -215,11 +224,13 @@
                                    Text="{Binding LowerValue, ElementName=ScheduleNotificationRangeSlider, StringFormat='2nd alert at {0:#} min.'}"
                                    FontFamily="{StaticResource LatoLight}"
                                    FontSize="14"
+                                   Foreground="{StaticResource ForegroundBrushKey}"
                                    HorizontalAlignment="Left"/>
                         <TextBlock Grid.Column="2"
                                    Text="{Binding HigherValue, ElementName=ScheduleNotificationRangeSlider, StringFormat='1st alert at {0:#} min.'}"
                                    FontFamily="{StaticResource LatoLight}"
                                    FontSize="14"
+                                   Foreground="{StaticResource ForegroundBrushKey}"
                                    HorizontalAlignment="Right"/>
                     </Grid>
 
@@ -233,6 +244,7 @@
                     <TextBlock Text="Alerts"
                                    FontFamily="{StaticResource LatoRegular}"
                                    FontSize="14"
+                               Foreground="{StaticResource ForegroundBrushKey}"
                                    Margin="0 0 0 5"/>
                     <TextBlock Text="You cannot update this value if any timer runs." 
                                Visibility="{Binding ApplicationDataContent.TimerDesignModel.IsRunning,
@@ -264,11 +276,13 @@
                                    Text="{Binding LowerValue, ElementName=TimerNotificationRangeSlider, StringFormat='2nd alert at {0:#} sec.'}"
                                    FontFamily="{StaticResource LatoLight}"
                                    FontSize="14"
+                                   Foreground="{StaticResource ForegroundBrushKey}"
                                    HorizontalAlignment="Left"/>
                         <TextBlock Grid.Column="2"
                                    Text="{Binding HigherValue, ElementName=TimerNotificationRangeSlider, StringFormat='1st alert at {0:#} sec.'}"
                                    FontFamily="{StaticResource LatoLight}"
                                    FontSize="14"
+                                   Foreground="{StaticResource ForegroundBrushKey}"
                                    HorizontalAlignment="Right"/>
                     </Grid>
 

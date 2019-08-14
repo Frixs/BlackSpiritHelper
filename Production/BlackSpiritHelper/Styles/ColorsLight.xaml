@@ -24,6 +24,9 @@
     <Color x:Key="WarningForeground">#DFDFEC</Color>
     <SolidColorBrush x:Key="WarningForegroundBrushKey" Color="{StaticResource WarningForeground}" />
 
+    <Color x:Key="Foreground">#494949</Color>
+    <SolidColorBrush x:Key="ForegroundBrushKey" Color="{StaticResource Foreground}" />
+    
     <system:String x:Key="ForegroundColorDifference">e7e7e7|24242b</system:String>
 
     <!-- Window -->
@@ -50,7 +53,7 @@
     <Color x:Key="LineSpacer0Background">#ffffff</Color>
     <SolidColorBrush x:Key="LineSpacer0BackgroundBrushKey" Color="{StaticResource LineSpacer0Background}" />
 
-    <Color x:Key="LineSpacer1Background">#000000</Color>
+    <Color x:Key="LineSpacer1Background">#15151A</Color>
     <SolidColorBrush x:Key="LineSpacer1BackgroundBrushKey" Color="{StaticResource LineSpacer1Background}" />
 
     <!-- System Buttons -->
@@ -83,10 +86,6 @@
 
     <Color x:Key="SystemRedButtonActiveBackground">#E41D23</Color>
     <SolidColorBrush x:Key="SystemRedButtonActiveBackgroundBrushKey" Color="{StaticResource SystemRedButtonActiveBackground}" />
-
-    <!-- Texts -->
-    <Color x:Key="TextNormal">#FF000000</Color>
-    <SolidColorBrush x:Key="TextNormalBrushKey" Color="{StaticResource TextNormal}" />
 
     <!-- Side Menu -->
     <Color x:Key="SideMenuBackground">#36393f</Color>
@@ -138,7 +137,7 @@
     <SolidColorBrush x:Key="SideMenuIsRunningIndicatorDropShadowBrushKey" Color="{StaticResource SideMenuIsRunningIndicatorDropShadow}" />
 
     <!-- Forms -->
-    <Color x:Key="FormTitleForeground">#000000</Color>
+    <Color x:Key="FormTitleForeground">#15151A</Color>
     <SolidColorBrush x:Key="FormTitleForegroundBrushKey" Color="{StaticResource FormTitleForeground}" />
 
     <Color x:Key="FormTitleForegroundAlt">#494949</Color>
@@ -189,7 +188,7 @@
     <Color x:Key="TimerListItemTitleForeground">#7f838e</Color>
     <SolidColorBrush x:Key="TimerListItemTitleForegroundBrushKey" Color="{StaticResource TimerListItemTitleForeground}" />
 
-    <Color x:Key="TimerListItemCountdownForeground">#15151a</Color>
+    <Color x:Key="TimerListItemCountdownForeground">#15151A</Color>
     <SolidColorBrush x:Key="TimerListItemCountdownForegroundBrushKey" Color="{StaticResource TimerListItemCountdownForeground}" />
     
     <Color x:Key="TimerListItemIconBorderColor">#24242b</Color>
@@ -210,7 +209,7 @@
     <!-- Schedule -->
     <Color x:Key="ScheduleForeground">#15151A</Color>
     <SolidColorBrush x:Key="ScheduleForegroundBrushKey" Color="{StaticResource ScheduleForeground}" />
-
+    
     <Color x:Key="ScheduleForegroundTime">#c7c7c7</Color>
     <SolidColorBrush x:Key="ScheduleForegroundTimeBrushKey" Color="{StaticResource ScheduleForegroundTime}" />
 
@@ -253,7 +252,7 @@
     <Color x:Key="RegularButtonBackground">#acacac</Color>
     <SolidColorBrush x:Key="RegularButtonBackgroundBrushKey" Color="{StaticResource RegularButtonBackground}" />
 
-    <Color x:Key="RegularButtonForeground">#222222</Color>
+    <Color x:Key="RegularButtonForeground">#15151A</Color>
     <SolidColorBrush x:Key="RegularButtonForegroundBrushKey" Color="{StaticResource RegularButtonForeground}" />
 
     <Color x:Key="RegularButtonHover">#A0A0A0</Color>
@@ -266,7 +265,7 @@
     <Color x:Key="RegularNoColorButtonForeground">#7f838e</Color>
     <SolidColorBrush x:Key="RegularNoColorButtonForegroundBrushKey" Color="{StaticResource RegularNoColorButtonForeground}" />
 
-    <Color x:Key="RegularNoColorButtonHover">#000000</Color>
+    <Color x:Key="RegularNoColorButtonHover">#15151A</Color>
     <SolidColorBrush x:Key="RegularNoColorButtonHoverBrushKey" Color="{StaticResource RegularNoColorButtonHover}" />
 
     <Color x:Key="RegularNoColorButtonAction">#ec1e24</Color>
@@ -276,7 +275,7 @@
     <Color x:Key="RegularLightButtonBackground">#F1F1F1</Color>
     <SolidColorBrush x:Key="RegularLightButtonBackgroundBrushKey" Color="{StaticResource RegularLightButtonBackground}" />
 
-    <Color x:Key="RegularLightButtonForeground">#222222</Color>
+    <Color x:Key="RegularLightButtonForeground">#15151A</Color>
     <SolidColorBrush x:Key="RegularLightButtonForegroundBrushKey" Color="{StaticResource RegularLightButtonForeground}" />
 
     <Color x:Key="RegularLightButtonHover">#E1E1E1</Color>
@@ -328,7 +327,7 @@
     <Color x:Key="RegularRedButtonBackground">#acacac</Color>
     <SolidColorBrush x:Key="RegularRedButtonBackgroundBrushKey" Color="{StaticResource RegularRedButtonBackground}" />
 
-    <Color x:Key="RegularRedButtonForeground">#000000</Color>
+    <Color x:Key="RegularRedButtonForeground">#15151A</Color>
     <SolidColorBrush x:Key="RegularRedButtonForegroundBrushKey" Color="{StaticResource RegularRedButtonForeground}" />
 
     <Color x:Key="RegularRedButtonHover">#B6898B</Color>
@@ -350,7 +349,7 @@
     <Color x:Key="RegularDonateButtonForegroundDropShadow">#000000</Color>
     <SolidColorBrush x:Key="RegularDonateButtonForegroundDropShadowBrushKey" Color="{StaticResource RegularDonateButtonForegroundDropShadow}" />
 
-    <Color x:Key="RegularDonateButtonAction">#000000</Color>
+    <Color x:Key="RegularDonateButtonAction">#15151A</Color>
     <SolidColorBrush x:Key="RegularDonateButtonActionBrushKey" Color="{StaticResource RegularDonateButtonAction}" />
 
     <!-- Overlay Button - Play -->
@@ -389,7 +388,7 @@
     <Color x:Key="OverlayCheckboxHover">#17171B</Color>
     <SolidColorBrush x:Key="OverlayCheckboxHoverBrushKey" Color="{StaticResource OverlayCheckboxHover}" />
 
-    <Color x:Key="OverlayCheckboxAction">#0D0D10</Color>
+    <Color x:Key="OverlayCheckboxAction">#15151A</Color>
     <SolidColorBrush x:Key="OverlayCheckboxActionBrushKey" Color="{StaticResource OverlayCheckboxAction}" />
 
     <Color x:Key="OverlayCheckboxChecked">#EC381E</Color>
@@ -402,7 +401,7 @@
     <Color x:Key="ScheduleRemoveButtonBackground">#c7c7c7</Color>
     <SolidColorBrush x:Key="ScheduleRemoveButtonBackgroundBrushKey" Color="{StaticResource ScheduleRemoveButtonBackground}" />
 
-    <Color x:Key="ScheduleRemoveButtonForeground">#15151a</Color>
+    <Color x:Key="ScheduleRemoveButtonForeground">#15151A</Color>
     <SolidColorBrush x:Key="ScheduleRemoveButtonForegroundBrushKey" Color="{StaticResource ScheduleRemoveButtonForeground}" />
 
     <Color x:Key="ScheduleRemoveButtonHover">#ec1e24</Color>
@@ -415,7 +414,7 @@
     <Color x:Key="ScheduleAddButtonBackground">#c7c7c7</Color>
     <SolidColorBrush x:Key="ScheduleAddButtonBackgroundBrushKey" Color="{StaticResource ScheduleAddButtonBackground}" />
 
-    <Color x:Key="ScheduleAddButtonForeground">#15151a</Color>
+    <Color x:Key="ScheduleAddButtonForeground">#15151A</Color>
     <SolidColorBrush x:Key="ScheduleAddButtonForegroundBrushKey" Color="{StaticResource ScheduleAddButtonForeground}" />
 
     <Color x:Key="ScheduleAddButtonHover">#2FB018</Color>

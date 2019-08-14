@@ -156,6 +156,7 @@
     <Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="FontFamily" Value="{StaticResource LatoLight}" />
         <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="{StaticResource ForegroundBrushKey}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="{StaticResource TextBoxLineBackgroundBrushKey}" />
         <Setter Property="Margin" Value="5" />
