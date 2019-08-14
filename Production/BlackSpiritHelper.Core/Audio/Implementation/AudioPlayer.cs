@@ -127,6 +127,7 @@ namespace BlackSpiritHelper.Core
             mMediaPlayer.Stop();
 
             IsPlaying = true;
+            mMediaPlayer.Volume = IoC.DataContent.PreferencesDesignModel.Volume;
             mMediaPlayer.Play();
         }
 

@@ -24,6 +24,11 @@ namespace BlackSpiritHelper.Core
         public bool ForceToRunAsAdministrator { get; set; } = false;
 
         /// <summary>
+        /// Volume of application audio output.
+        /// </summary>
+        public double Volume { get; set; } = 0.5;
+
+        /// <summary>
         /// RunOnStartup Flag for locking.
         /// </summary>
         [XmlIgnore]

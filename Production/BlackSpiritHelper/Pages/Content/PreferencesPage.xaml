@@ -20,7 +20,7 @@
                   Width="400">
 
                 <StackPanel TextBlock.TextAlignment="Center">
-                
+
                     <!-- Form Title -->
                     <TextBlock Text="Preferences"
                                Style="{StaticResource FormTitle}" />
@@ -30,7 +30,7 @@
                     <TextBlock Text="General"
                                Style="{StaticResource FormSubtitle}"
                                Margin="0 0 0 30" />
-                
+
                     <!-- Start the app on Startup -->
                     <CheckBox IsChecked="{Binding RunOnStartup}" Margin="0 0 0 30"
                               Command="{Binding RunOnStartUpCheckboxCommand}"
@@ -43,7 +43,31 @@
                               Command="{Binding ForceToRunAsAdministratorCommand}"
                               Content="Force to run the application As Administrator."
                               HorizontalAlignment="Center" />
-                
+
+                    <!-- Volume -->
+                    <TextBlock Text="Volume"
+                                   FontFamily="{StaticResource LatoRegular}"
+                                   FontSize="14"
+                                   Margin="0 0 0 5"/>
+                    <Grid Margin="0 0 0 30" HorizontalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="200" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" 
+                                   Text="{StaticResource FontAwesomeVolumeOffIcon}"
+                                   FontFamily="{StaticResource FontAwesomeSolid}"
+                                   FontSize="20"
+                                   Margin="0 0 10 0"
+                                   VerticalAlignment="Center"
+                                   />
+                        <Slider Grid.Column="1"
+                                Minimum="0.0"
+                                Maximum="1.0"
+                                Value="{Binding Volume}"
+                                VerticalAlignment="Center" />
+                    </Grid>
+                    
                     <!-- Audio Alert Level -->
                     <StackPanel Margin="0 0 0 30" HorizontalAlignment="Center">
                         <TextBlock Text="Audio Alert Level"
@@ -74,7 +98,7 @@
                                    FontSize="10"/>
                     </StackPanel>
 
-                    <!-- Reset overlay position -->
+                    <!-- Export log button -->
                     <Button Content="Export Log File" Margin="0 0 0 50"
                             Style="{StaticResource RegularButton}"
                             Command="{Binding ExportLogFileCommand}"
@@ -249,9 +273,9 @@
                     </Grid>
 
                 </StackPanel>
-            
+
             </Grid>
         </Border>
     </ScrollViewer>
-    
+
 </local:BasePage>

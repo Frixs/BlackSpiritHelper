@@ -52,6 +52,7 @@
     <system:String x:Key="FontAwesomeCloneIcon">&#xf24d;</system:String>
     <system:String x:Key="FontAwesomeEditIcon">&#xf044;</system:String>
     <system:String x:Key="FontAwesomeCircleNotchIcon">&#xf1ce;</system:String>
+    <system:String x:Key="FontAwesomeVolumeOffIcon">&#xf026;</system:String>
     
     <system:String x:Key="FontAwesomeGitHubIcon">&#xf09b;</system:String>
     <system:String x:Key="FontAwesomeDiscordIcon">&#xf392;</system:String>
