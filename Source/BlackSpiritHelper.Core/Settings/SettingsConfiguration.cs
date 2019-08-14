@@ -46,7 +46,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Remote data directory relative path.
         /// </summary>
-        public static readonly string RemoteDataDirRelPath = @"Release/Data/";
+        public static readonly string RemoteDataDirRelPath = @"Source/BlackSpiritHelper.Core/Data/";
 
         /// <summary>
         /// Remote data directory lication path.
