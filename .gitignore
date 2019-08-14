@@ -1,9 +1,10 @@
 /.vs/*
 /Certs/*
-/Production/BlackSpiritHelper*/.vs/*
-/Production/BlackSpiritHelper*/bin/*
-/Production/BlackSpiritHelper*/obj/*
-/Production/BlackSpiritHelper*/Debug/*
-/Production/BlackSpiritHelper*/*.pfx
+/Source/.vs/*
+/Source/BlackSpiritHelper*/.vs/*
+/Source/BlackSpiritHelper*/bin/*
+/Source/BlackSpiritHelper*/obj/*
+/Source/BlackSpiritHelper*/Debug/*
+/Source/BlackSpiritHelper*/*.pfx
 
 !/Release/
