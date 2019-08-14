@@ -1,0 +1,316 @@
+﻿<local:BasePage x:TypeArguments="core:SchedulePageViewModel"  x:Class="BlackSpiritHelper.SchedulePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+      xmlns:local="clr-namespace:BlackSpiritHelper"
+      xmlns:core="clr-namespace:BlackSpiritHelper.Core;assembly=BlackSpiritHelper.Core"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="SchedulePage">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  DataContext="{Binding ApplicationDataContent.ScheduleDesignModel,
+                                Source={x:Static local:ViewModelLocator.Instance}}">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Border Padding="10" Grid.Row="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        
+                        <!-- Next title & time -->
+                        <StackPanel Orientation="Horizontal" Grid.Row="0">
+                            <TextBlock Text="Next:"
+                                       Foreground="{StaticResource ScheduleForegroundBrushKey}"
+                                       FontFamily="{StaticResource LatoHeavy}"
+                                       FontSize="32"
+                                       VerticalAlignment="Bottom"/>
+                            <TextBlock Text="{Binding TimeLeftPresenter}"
+                                       Foreground="{Binding WarningFlag,
+                                                    Converter={local:WarningTimerColorSwapConverter},
+                                                    ConverterParameter={StaticResource ScheduleForegroundTime}}"
+                                       FontFamily="{StaticResource LatoHeavy}"
+                                       FontSize="27"
+                                       VerticalAlignment="Bottom"
+                                       Margin="10 0 0 0"/>
+                            
+                            <!-- Run Button -->
+                            <Grid VerticalAlignment="Bottom" Margin="10 0 0 0">
+                                <!-- Play Button -->
+                                <Button Content="{StaticResource FontAwesomePlayIcon}"
+                                        Command="{Binding PlayCommand}"
+                                        Visibility="{Binding IsRunning,
+                                                     Converter={local:BooleanToVisibilityConverter}}"
+                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                        FontSize="18"
+                                        Width="32"
+                                        Height="32">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource RegularButtonNoColor}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectingTemplateFlag}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <!-- Stop Button -->
+                                <Button Content="{StaticResource FontAwesomeStopIcon}"
+                                        Command="{Binding StopCommand}"
+                                        Visibility="{Binding IsRunning,
+                                                     Converter={local:BooleanToVisibilityConverter},
+                                                     ConverterParameter=True}"
+                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                        FontSize="18"
+                                        Width="32"
+                                        Height="32">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource RegularButtonNoColor}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectingTemplateFlag}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                        <!-- Next items -->
+                        <StackPanel Orientation="Vertical" Grid.Row="1">
+                            <ItemsControl ItemsSource="{Binding NextItemPresenterList}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        
+                                        <TextBlock Text="{Binding Name}"
+                                                   Foreground="{Binding ColorHEX, Converter={local:StringHEXToBrushConverter}}"
+                                                   FontFamily="{StaticResource LatoBoldItalic}"
+                                                   FontSize="16"/>
+                                        
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Grid>
+                    <StackPanel Orientation="Vertical" Grid.Column="2"
+                                VerticalAlignment="Center">
+                        <!-- 1st row -->
+                        <Grid HorizontalAlignment="Right" Margin="0 0 0 10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                        
+                            <!-- Template ComboBox Label -->
+                            <TextBlock Text="Template:" Grid.Column="0"
+                                       FontFamily="{StaticResource LatoBold}"
+                                       FontSize="14"
+                                       Foreground="{StaticResource ScheduleForegroundBrushKey}"
+                                       VerticalAlignment="Center"
+                                       Margin="10 0"/>
+                            <!-- Control Button Panel -->
+                            <StackPanel Orientation="Horizontal" Grid.Column="1" Visibility="Collapsed"
+                                        VerticalAlignment="Center">
+                                <!-- Edit Button -->
+                                <Button Content="{StaticResource FontAwesomeEditIcon}" Margin="0 0 5 0"
+                                        Command="{Binding EditTemplateCommand}"
+                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                        FontSize="10"
+                                        Width="20"
+                                        Height="20">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource RegularButton}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectingTemplateFlag}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <!-- Add Button -->
+                                <Button Content="{StaticResource FontAwesomePlusIcon}" Margin="0 0 5 0"
+                                        Command="{Binding AddTemplateCommand}"
+                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                        FontSize="10"
+                                        Width="20"
+                                        Height="20">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource RegularButton}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectingTemplateFlag}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <!-- Clone Button -->
+                                <Button Content="{StaticResource FontAwesomeCloneIcon}" Margin="0 0 5 0"
+                                        Command="{Binding CloneTemplateCommand}"
+                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                        FontSize="10"
+                                        Width="20"
+                                        Height="20">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource RegularButton}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectingTemplateFlag}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </StackPanel>
+                            <!-- ComboBox -->
+                            <ComboBox Name="TemplateComboBox" Grid.Column="2"
+                                      HorizontalAlignment="Right"
+                                      VerticalAlignment="Center"
+                                      SelectedItem="{Binding SelectedTemplateSetter}"
+                                      ItemsSource="{Binding TemplateTitleListPresenter}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock FontFamily="{StaticResource LatoRegular}">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Foreground" Value="{StaticResource ScheduleForegroundBrushKey}" />
+                                                    <Setter Property="Text" Value="{Binding}" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Converter={local:ContainsLeadingCharConverter}, ConverterParameter='*'}" 
+                                                                     Value="True">
+                                                            <Setter Property="Foreground" Value="DarkGreen" />
+                                                            <Setter Property="Text" Value="{Binding Converter={local:SubstringConverter}, ConverterParameter=1}" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                                <ComboBox.Style>
+                                    <Style TargetType="ComboBox">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsRunning}"
+                                                         Value="True">
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding SelectingTemplateFlag}"
+                                                         Value="True">
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ComboBox.Style>
+                            </ComboBox>
+                        </Grid>
+                        <!-- 2nd row -->
+                        <Grid HorizontalAlignment="Right" Margin="0 0 0 10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Time Modifier -->
+                            <TextBlock Text="Local Time Modifier:" Grid.Column="0"
+                                       FontFamily="{StaticResource LatoBold}"
+                                       FontSize="14"
+                                       Foreground="{StaticResource ScheduleForegroundBrushKey}"
+                                       VerticalAlignment="Center"
+                                       Margin="10 0"/>
+                            <xctk:TimeSpanUpDown Grid.Column="1"
+                                                 Value="{Binding LocalTimeOffsetModifier}"
+                                                 Minimum="-14:00:00"
+                                                 Maximum="14:00:00"
+                                                 HorizontalAlignment="Right"
+                                                 VerticalAlignment="Center"
+                                                 IsEnabled="{Binding IsRunning, Converter={local:BooleanInvertConverter}}"/>
+                        </Grid>
+                        <!-- 3rd row -->
+                        <Grid HorizontalAlignment="Right">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="Show In Overlay:" Grid.Column="0"
+                                       FontFamily="{StaticResource LatoBold}"
+                                       FontSize="14"
+                                       Foreground="{StaticResource ScheduleForegroundBrushKey}"
+                                       VerticalAlignment="Center"
+                                       Margin="10 0"/>
+                            <!-- Show In Overlay CheckBox -->
+                            <CheckBox IsChecked="{Binding ShowInOverlay}" Grid.Column="1">
+                                <CheckBox.Style>
+                                    <Style TargetType="CheckBox">
+                                        <Style.Resources>
+                                            <Style TargetType="Border">
+                                                <Setter Property="Width" Value="20" />
+                                                <Setter Property="Height" Value="20" />
+                                            </Style>
+                                            <Style TargetType="Grid">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                            </Style>
+                                        </Style.Resources>
+                                    </Style>
+                                </CheckBox.Style>
+                            </CheckBox>
+                        </Grid>
+                        <!-- 4th row -->
+                        <Grid HorizontalAlignment="Right" Margin="0 10 0 0" Visibility="Collapsed">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            
+                            <TextBlock Text="Custom Items:" Grid.Column="0"
+                                       FontFamily="{StaticResource LatoBold}"
+                                       FontSize="14"
+                                       Foreground="{StaticResource ScheduleForegroundBrushKey}"
+                                       VerticalAlignment="Center"
+                                       Margin="10 0"/>
+                            <!-- Manage Items Button -->
+                            <Button Content="{StaticResource FontAwesomeCogIcon}" Grid.Column="1"
+                                    Command="{Binding ManageItemsCommand}"
+                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                    FontSize="10"
+                                    Style="{StaticResource RegularButton}"
+                                    Width="40"
+                                    Height="20" />
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Calendar/Schedule -->
+            <local:ScheduleCalendarControl DataContext="{Binding SelectedTemplate}" Grid.Row="1"
+                                            x:Name="Calendar" Visibility="Collapsed" />
+            
+            <!-- Schedule Settings -->
+            <Border Grid.Row="2"
+                    Padding="10">
+                <local:ScheduleSettingsControl x:Name="Settings" Visibility="Collapsed" />
+            </Border>
+        </Grid>
+    </ScrollViewer>
+</local:BasePage>

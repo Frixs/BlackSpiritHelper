@@ -1,0 +1,288 @@
+﻿<UserControl x:Class="BlackSpiritHelper.TimerListItemControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BlackSpiritHelper"
+             xmlns:core="clr-namespace:BlackSpiritHelper.Core;assembly=BlackSpiritHelper.Core"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="280">
+
+    <UserControl.Resources>
+        <Style x:Key="ContentStyle" TargetType="{x:Type ContentControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ContentControl}">
+
+                        <!-- Content -->
+                        <Border BorderThickness="3"
+                                BorderBrush="{Binding WarningFlag,
+                                              Converter={local:WarningTimerColorSwapConverter},
+                                              ConverterParameter={StaticResource Transparent}}"
+                                Margin="2"
+                                >
+                            <Grid>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20" />
+                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="60" />
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="0" Background="{StaticResource TimerListItemBackgroundBrushKey}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                
+                                    <TextBlock Grid.Column="0"
+                                               Text="{Binding Title}"
+                                               Foreground="{StaticResource TimerListItemTitleForegroundBrushKey}"
+                                               FontFamily="{StaticResource LatoHeavy}"
+                                               VerticalAlignment="Top"
+                                               HorizontalAlignment="Left"
+                                               Padding="5 2"/>
+
+                                    <!-- Settings Button -->
+                                    <Button Grid.Column="2"
+                                            Command="{Binding OpenTimerSettingsCommand}"
+                                            Content="{StaticResource FontAwesomeCogIcon}"
+                                            FontFamily="{StaticResource FontAwesomeSolid}"
+                                            Style="{StaticResource RegularButtonNoColor}"
+                                            Margin="0"
+                                            Width="20"
+                                            Height="20"
+                                            VerticalAlignment="Bottom"
+                                            FontSize="10">
+                                    </Button>
+                                </Grid>
+
+                                <Grid Grid.Row="1" 
+                                      Background="{Binding WarningFlag,
+                                                   Converter={local:WarningTimerColorSwapConverter},
+                                                   ConverterParameter={StaticResource TimerListItemBackground2}}"
+                                      >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Icon -->
+                                    <Border Grid.Column="0"
+                                            Height="50"
+                                            Width="50"
+                                            BorderBrush="{StaticResource TimerListItemIconBorderColorBrushKey}"
+                                            BorderThickness="3"
+                                            Background="{Binding IconBackgroundHEX, Converter={local:StringHEXToBrushConverter}}"
+                                            Margin="5">
+                                        <Viewbox>
+                                            <TextBlock Text="{Binding IconTitleShortcut}"
+                                                       Foreground="{Binding IconBackgroundHEX, 
+                                                                    Converter={local:StringHEXToLightOrDarkBrushConverter},
+                                                                    ConverterParameter={StaticResource ForegroundColorDifference}}"
+                                                       FontFamily="{StaticResource LatoHeavy}"
+                                                       FontSize="22"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Center"
+                                                       Margin="5" />
+                                        </Viewbox>
+                                    </Border>
+
+                                    <!-- Middle wrapper -->
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <!-- Plus Button -->
+                                            <Button Grid.Row="0"
+                                                    Command="{Binding TimePlusCommand}"
+                                                    Content="{StaticResource FontAwesomePlusIcon}"
+                                                    Style="{StaticResource RegularButtonBlue}"
+                                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                                    Visibility="{Binding WarningFlag,
+                                                                 Converter={local:BooleanToVisibilityGoneConverter},
+                                                                 ConverterParameter=True}"
+                                                    Margin="5 5 5 0"
+                                                    Width="25"
+                                                    Height="25"
+                                                    VerticalAlignment="Bottom"
+                                                    FontSize="12"
+                                                    />
+                                            <Button Grid.Row="0"
+                                                    Command="{Binding TimePlusCommand}"
+                                                    Content="{StaticResource FontAwesomePlusIcon}"
+                                                    Style="{StaticResource RegularButtonWarningMode}"
+                                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                                    Visibility="{Binding WarningFlag,
+                                                                 Converter={local:BooleanToVisibilityGoneConverter}}"
+                                                    Margin="5 5 5 0"
+                                                    Width="25"
+                                                    Height="25"
+                                                    VerticalAlignment="Bottom"
+                                                    FontSize="12"
+                                                    />
+                                            <!-- Minus Button -->
+                                            <Button Grid.Row="1" 
+                                                    Command="{Binding TimeMinusCommand}"
+                                                    Content="{StaticResource FontAwesomeMinusIcon}"
+                                                    Style="{StaticResource RegularButtonBlue}"
+                                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                                    Visibility="{Binding WarningFlag,
+                                                                 Converter={local:BooleanToVisibilityGoneConverter},
+                                                                 ConverterParameter=True}"
+                                                    Margin="5 0 5 0"
+                                                    Width="25"
+                                                    Height="25"
+                                                    VerticalAlignment="Bottom"
+                                                    FontSize="12" 
+                                                    />
+                                            <Button Grid.Row="1" 
+                                                    Command="{Binding TimeMinusCommand}"
+                                                    Content="{StaticResource FontAwesomeMinusIcon}"
+                                                    Style="{StaticResource RegularButtonWarningMode}"
+                                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                                    Visibility="{Binding WarningFlag,
+                                                                 Converter={local:BooleanToVisibilityGoneConverter}}"
+                                                    Margin="5 0 5 0"
+                                                    Width="25"
+                                                    Height="25"
+                                                    VerticalAlignment="Bottom"
+                                                    FontSize="12" 
+                                                    />
+                                        </Grid>
+
+                                        <!-- Countdown -->
+                                        <TextBlock Text="{Binding TimeCurrent, 
+                                                          Converter={local:TimeSpanToStringConverter}, 
+                                                          ConverterParameter=hms}" 
+                                                   FontFamily="{StaticResource LatoRegular}"
+                                                   FontSize="32"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Right"
+                                                   Margin="0 0 5 0">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Foreground" Value="{StaticResource TimerListItemCountdownForegroundBrushKey}"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsInCountdown}" Value="True">
+                                                            <Setter Property="Foreground" Value="{StaticResource TimerListItemCountdownTextColorBrushKey}"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding WarningFlag}" Value="True">
+                                                            <Setter Property="Foreground" Value="{StaticResource WarningForegroundBrushKey}"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Grid>
+
+                                <!-- Foot panel -->
+                                <Grid Grid.Row="2" Background="{StaticResource TimerListItemBackgroundBrushKey}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                        <!-- Reset button -->
+                                        <Button Content="{StaticResource FontAwesomeRestartIcon}"
+                                                Command="{Binding ResetTimerCommand}"
+                                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                                Style="{StaticResource RegularButtonRed}"
+                                                Margin="5"
+                                                Width="25"
+                                                Height="25"
+                                                VerticalAlignment="Bottom"
+                                                FontSize="12">
+                                        </Button>
+                                    </StackPanel>
+
+                                    <Grid Grid.Column="1">
+                                        <StackPanel Orientation="Horizontal"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Center">
+                                            <!-- Loop indicator -->
+                                            <TextBlock Text="{StaticResource FontAwesomeRetweetIcon}"
+                                                       Visibility="{Binding IsLoopActive,
+                                                                    Converter={local:BooleanToVisibilityGoneConverter}}"
+                                                       FontFamily="{StaticResource FontAwesomeSolid}"
+                                                       Foreground="{StaticResource TimerListItemLoopIndicatorForegroundBrushKey}"
+                                                       FontSize="16"
+                                                       Margin="5"/>
+                                            <!-- Freeze indicator -->
+                                            <TextBlock Text="{StaticResource FontAwesomeStopwatchIcon}"
+                                                       Visibility="{Binding IsInFreeze,
+                                                                    Converter={local:BooleanToVisibilityGoneConverter}}"
+                                                       FontFamily="{StaticResource FontAwesomeSolid}"
+                                                       Foreground="{StaticResource TimerListItemFreezeIndicatorForegroundBrushKey}"
+                                                       FontSize="16"
+                                                       Padding="0 0 2 0"
+                                                       Margin="5"/>
+                                            <!-- Overlay indicator -->
+                                            <TextBlock Text="{StaticResource FontAwesomeBookmarkIcon}"
+                                                       Visibility="{Binding ShowInOverlay,
+                                                                    Converter={local:BooleanToVisibilityGoneConverter}}"
+                                                       FontFamily="{StaticResource FontAwesomeSolid}"
+                                                       Foreground="{StaticResource TimerListItemOverlayIndicatorForegroundBrushKey}"
+                                                       FontSize="16"
+                                                       Margin="5"/>
+                                        </StackPanel>
+                                    </Grid>
+                                
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                        <!-- Sync Button -->
+                                        <Button Content="{StaticResource FontAwesomeSyncIcon}"
+                                                Command="{Binding SyncCommand}"
+                                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                                Style="{StaticResource RegularButtonYellow}"
+                                                FontSize="18"
+                                                Margin="0 5 5 5"
+                                                Width="50"
+                                                Height="50">
+                                        </Button>
+                                        <!-- Play/Pause Button -->
+                                        <Grid>
+                                            <Button Content="{StaticResource FontAwesomePlayIcon}"
+                                                    Command="{Binding PlayCommand}"
+                                                    Visibility="{Binding IsRunning,
+                                                                 Converter={local:BooleanToVisibilityConverter}}"
+                                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                                    Style="{StaticResource RegularButton}"
+                                                    FontSize="18"
+                                                    Margin="0 5 5 5"
+                                                    Width="50"
+                                                    Height="50" />
+                                            <Button Content="{StaticResource FontAwesomePauseIcon}"
+                                                    Command="{Binding PauseCommand}"
+                                                    Visibility="{Binding IsRunning,
+                                                                 Converter={local:BooleanToVisibilityConverter},
+                                                                 ConverterParameter=True}"
+                                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                                    Style="{StaticResource RegularButton}"
+                                                    FontSize="18"
+                                                    Margin="0 5 5 5"
+                                                    Width="50"
+                                                    Height="50" />
+                                        </Grid>
+                                    </StackPanel>
+                                </Grid>
+
+                            </Grid>
+                        </Border>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <ContentControl d:DataContext="{x:Static core:TimerItemDataDesignModel.Instance}"
+                    Style="{StaticResource ContentStyle}" />
+
+</UserControl>

@@ -1,0 +1,103 @@
+﻿<UserControl x:Class="BlackSpiritHelper.OverlayScheduleSectionItemControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BlackSpiritHelper"
+             xmlns:core="clr-namespace:BlackSpiritHelper.Core;assembly=BlackSpiritHelper.Core"
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="50">
+    
+    <UserControl.Resources>
+        <Style x:Key="ContentStyle" TargetType="{x:Type ContentControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ContentControl}">
+
+                        <Border>
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="{Binding ColorHEX, Converter={local:StringHEXToBrushConverter}}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ApplicationDataContent.ScheduleDesignModel.WarningFlag,
+                                                           Source={x:Static local:ViewModelLocator.Instance}}" 
+                                                 Value="True">
+                                            <Setter Property="Background" Value="{StaticResource WarningColorBrushKey}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+
+                            <Grid Margin="{Binding ApplicationDataContent.OverlayDesignModel.OverlaySize, 
+                                       Source={x:Static local:ViewModelLocator.Instance},
+                                       Converter={local:OverlaySizeMarginValueConverter}, FallbackValue=5}">
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                </Grid.RowDefinitions>
+
+                                <!-- Item Shortcut -->
+                                <Viewbox Grid.Row="0"
+                                         VerticalAlignment="Top"
+                                         HorizontalAlignment="Center">
+                                    <TextBlock Text="{Binding NameShortcut}"
+                                               FontFamily="{StaticResource LatoHeavy}"
+                                               FontSize="14">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Foreground" 
+                                                    Value="{Binding ColorHEX, 
+                                                            Converter={local:StringHEXToLightOrDarkBrushConverter},
+                                                            ConverterParameter={StaticResource ForegroundColorDifference}}"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ApplicationDataContent.ScheduleDesignModel.WarningFlag,
+                                                                       Source={x:Static local:ViewModelLocator.Instance}}" 
+                                                             Value="True">
+                                                        <Setter Property="Foreground" 
+                                                            Value="{StaticResource WarningForegroundBrushKey}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Viewbox>
+
+                                <!-- Item Name -->
+                                <Viewbox Grid.Row="1" 
+                                         VerticalAlignment="Bottom"
+                                         HorizontalAlignment="Center">
+                                    <TextBlock Text="{Binding Name}"
+                                               FontFamily="{StaticResource LatoHeavy}"
+                                               FontSize="14">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Foreground" 
+                                                    Value="{Binding ColorHEX, 
+                                                            Converter={local:StringHEXToLightOrDarkBrushConverter},
+                                                            ConverterParameter={StaticResource ForegroundColorDifference}}"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ApplicationDataContent.ScheduleDesignModel.WarningFlag,
+                                                                       Source={x:Static local:ViewModelLocator.Instance}}" 
+                                                             Value="True">
+                                                        <Setter Property="Foreground" 
+                                                            Value="{StaticResource WarningForegroundBrushKey}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Viewbox>
+
+                            </Grid>
+                        </Border>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <ContentControl d:DataContext="{x:Static core:ScheduleItemDataDesignModel.Instance}"
+                    Style="{StaticResource ContentStyle}" />
+</UserControl>

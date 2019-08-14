@@ -1,0 +1,110 @@
+﻿<UserControl x:Class="BlackSpiritHelper.ScheduleSettingsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BlackSpiritHelper"
+             xmlns:core="clr-namespace:BlackSpiritHelper.Core;assembly=BlackSpiritHelper.Core"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="ContentStyle" TargetType="{x:Type ContentControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ContentControl}">
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <!-- Alert list -->
+                            <Grid Grid.Row="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Text="To Alert:"
+                                           FontFamily="{StaticResource LatoHeavy}"
+                                           Foreground="{StaticResource ScheduleForegroundBrushKey}"
+                                           FontSize="20"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Bottom" />
+
+                                <!-- Alert allowed item list -->
+                                <ItemsControl Grid.Row="1" ItemsSource="{Binding ItemIgnoreExceptList}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Horizontal" Margin="5 5 5 0">
+                                            </WrapPanel>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Button Content="{Binding Name}"
+                                                    Command="{Binding AddItemToIgnoredCommand}"
+                                                    CommandParameter="{Binding Name}"
+                                                    Style="{StaticResource ScheduleButtonRemove}"
+                                                    Foreground="{Binding ColorHEX, Converter={local:StringHEXToBrushConverter}}"
+                                                    FontFamily="{StaticResource LatoHeavy}"
+                                                    IsEnabled="{Binding ApplicationDataContent.ScheduleDesignModel.IsRunning,
+                                                                Source={x:Static local:ViewModelLocator.Instance},
+                                                                Converter={local:BooleanInvertConverter}}"
+                                                    Padding="10"
+                                                    Margin="5" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Grid>
+                            <!-- Ignored list -->
+                            <Grid Grid.Row="1" Margin="0 10 0 0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Text="To Ignore:"
+                                           FontFamily="{StaticResource LatoHeavy}"
+                                           Foreground="{StaticResource ScheduleForegroundBrushKey}"
+                                           FontSize="20"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Bottom"/>
+                                
+                                <ItemsControl Grid.Row="1" ItemsSource="{Binding ItemIgnoredListPresenter}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Horizontal" Margin="5">
+                                            </WrapPanel>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Button Content="{Binding Name}"
+                                                    Command="{Binding RemoveItemFromIgnoredCommand}"
+                                                    CommandParameter="{Binding Name}"
+                                                    Style="{StaticResource ScheduleButtonAdd}"
+                                                    Foreground="{Binding ColorHEX, Converter={local:StringHEXToBrushConverter}}"
+                                                    FontFamily="{StaticResource LatoHeavy}"
+                                                    IsEnabled="{Binding ApplicationDataContent.ScheduleDesignModel.IsRunning,
+                                                                Source={x:Static local:ViewModelLocator.Instance},
+                                                                Converter={local:BooleanInvertConverter}}"
+                                                    Padding="10"
+                                                    Margin="5" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Grid>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <ContentControl d:DataContext="{x:Static core:ScheduleDesignModel.Instance}"
+                    Style="{StaticResource ContentStyle}" />
+</UserControl>

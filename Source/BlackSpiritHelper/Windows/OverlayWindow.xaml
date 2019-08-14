@@ -1,0 +1,186 @@
+﻿<Window x:Class="BlackSpiritHelper.OverlayWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlackSpiritHelper"
+        mc:Ignorable="d"
+        Icon="/BlackSpiritHelper;component/icon_white.ico"
+        Title="{Binding ApplicationViewModel.ApplicationName, Source={x:Static local:ViewModelLocator.Instance}, StringFormat='{}{0} - Overlay', FallbackValue='Title Placeholder'}"
+        WindowStartupLocation="Manual" 
+        AllowsTransparency="True" 
+        WindowStyle="None" 
+        Background="Transparent"
+        Initialized="Window_Initialized" 
+        Loaded="Window_Loaded"
+        >
+    
+    <!-- Window Content -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        <!-- Canvas -->
+        <Canvas Grid.Row="0" Grid.Column="0" SnapsToDevicePixels="True" UseLayoutRounding="True"
+                DataContext="{Binding ApplicationDataContent.OverlayDesignModel,
+                              Source={x:Static local:ViewModelLocator.Instance}}"
+                >
+            
+            <!-- Canvas Content -->
+            <Border x:Name="OverlayObject" 
+                    Canvas.Left="{Binding PosX, Mode=TwoWay}"
+                    Canvas.Top="{Binding PosY, Mode=TwoWay}"
+                    MouseLeftButtonDown="OnMouseLeftButtonDown"
+                    MouseMove="OnMouseMove"
+                    MouseLeftButtonUp="OnMouseLeftButtonUp"
+                    >
+
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource DraggableZoneBrushKey}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                
+                <Grid>
+                    <!-- Border -->
+                    <Rectangle StrokeThickness="2">
+                        <Rectangle.Style>
+                            <Style TargetType="Rectangle">
+                                <Setter Property="Stroke" Value="Transparent" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsMouseOver, ElementName=OverlayObject}" Value="True">
+                                        <Setter Property="Stroke" Value="{StaticResource DraggableZoneBrushKey}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsDraggingLocked}" Value="True">
+                                        <Setter Property="Stroke" Value="Transparent" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+
+                    <!-- Overlay Object Content Wrapper -->
+                    <StackPanel Orientation="{Binding OverlayOrientation, FallbackValue=Horizontal}">
+
+                        <!-- Overlay Object Item Wrapper -->
+                        <Button Margin="25"
+                                Padding="0"
+                                Focusable="False">
+
+                            <!-- Content -->
+                            <StackPanel x:Name="OverlayContentWrapper" Orientation="{Binding OverlayOrientation, FallbackValue=Horizontal}"
+                                        Width="{Binding OverlaySizeStyleWidthValue, FallbackValue=Auto}" 
+                                        Height="{Binding OverlaySizeStyleHeightValue, FallbackValue=50}"
+                                        MinWidth="{Binding OverlaySizeStyleValue, FallbackValue=50}"
+                                        MinHeight="{Binding OverlaySizeStyleValue, FallbackValue=50}"
+                                        SizeChanged="OverlayContentWrapper_SizeChanged">
+
+                                <!-- Content - Instances of overlay representation -->
+                                
+                                <!-- Timer section -->
+                                <local:OverlayTimerSectionControl Width="{Binding OverlaySizeStyleWidthValue, FallbackValue=Auto}" 
+                                                                  Height="{Binding OverlaySizeStyleHeightValue, FallbackValue=50}">
+                                    <local:OverlayTimerSectionControl.Style>
+                                        <Style TargetType="local:OverlayTimerSectionControl">
+                                            <Setter Property="Margin" Value="0 0 10 0" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding OverlayOrientation}" Value="Vertical">
+                                                    <Setter Property="Margin" Value="0 0 0 10" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </local:OverlayTimerSectionControl.Style>
+                                </local:OverlayTimerSectionControl>
+                                
+                                <!-- Schedule section -->
+                                <local:OverlayScheduleSectionControl Width="{Binding OverlaySizeStyleWidthValue, FallbackValue=Auto}" 
+                                                                     Height="{Binding OverlaySizeStyleHeightValue, FallbackValue=50}">
+                                    <local:OverlayScheduleSectionControl.Style>
+                                        <Style TargetType="local:OverlayScheduleSectionControl">
+                                            <Setter Property="Margin" Value="0 0 10 0" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding OverlayOrientation}" Value="Vertical">
+                                                    <Setter Property="Margin" Value="0 0 0 10" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </local:OverlayScheduleSectionControl.Style>
+                                </local:OverlayScheduleSectionControl>
+                            </StackPanel>
+
+                            <!-- Overlay Object Drop Shadow -->
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource Hoverless}">
+                                    <Setter Property="Effect">
+                                        <Setter.Value>
+                                            <DropShadowEffect ShadowDepth="0" 
+                                                              BlurRadius="10"
+                                                              Opacity="0.25" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Button.Style>
+
+                        </Button>
+
+                        <!-- Overlay Object Control Wrapper -->
+                        <Grid>
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Visibility" Value="Hidden" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsMouseOver, ElementName=OverlayObject}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                            
+                            <!-- Controls -->
+                            <Button Content="{StaticResource FontAwesomeLockIcon}"
+                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                    FontSize="16"
+                                    Visibility="{Binding IsDraggingLocked,
+                                                 Converter={local:BooleanToVisibilityGoneConverter}}"
+                                    Padding="5"
+                                    Command="{Binding LockOverlayDraggingCommand}"
+                                    Style="{StaticResource RegularButtonNoColor}"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Focusable="False"
+                                />
+                            <Button Content="{StaticResource FontAwesomeUnlockIcon}"
+                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                    FontSize="16"
+                                    Visibility="{Binding IsDraggingLocked,
+                                                 Converter={local:BooleanToVisibilityGoneConverter},
+                                                 ConverterParameter=True}"
+                                    Padding="5"
+                                    Command="{Binding LockOverlayDraggingCommand}"
+                                    Style="{StaticResource RegularButtonNoColor}"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Focusable="False"
+                                />
+                        </Grid>
+
+                        <!-- Spacer -->
+                        <Border Margin="25 25 0 0" />
+                        
+                    </StackPanel>
+                </Grid>
+            </Border>
+            
+        </Canvas>
+    </Grid>
+    
+</Window>
