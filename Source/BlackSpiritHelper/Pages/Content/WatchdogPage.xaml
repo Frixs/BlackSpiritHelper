@@ -9,11 +9,21 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="WatchdogPage">
 
-    <Grid>
+    <StackPanel Orientation="Vertical"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
         <TextBlock Text="Content is not available yet." 
                    FontSize="14"
                    FontFamily="{StaticResource LatoLightItalic}"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center"/>
-    </Grid>
+        <TextBlock Text="This feature controls your internet connection to avoid game disconnections (f.e. over night / afk playing). " 
+                   FontSize="14"
+                   TextWrapping="Wrap"
+                   Margin="10 10"
+                   TextAlignment="Center"
+                   FontFamily="{StaticResource LatoLightItalic}"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"/>
+    </StackPanel>
 </local:BasePage>
