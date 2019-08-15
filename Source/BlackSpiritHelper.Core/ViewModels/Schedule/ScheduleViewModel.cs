@@ -951,7 +951,7 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Get first predefined template.
+        /// Get first found template.
         /// </summary>
         /// <param name="title"></param>
         /// <returns></returns>
@@ -1095,9 +1095,12 @@ namespace BlackSpiritHelper.Core
         {
             var template = GetTemplateByName(title);
             if (template == null)
+            {
+                IoC.Logger.Log("Unable to load desired template!", LogLevel.Warning);
+                IoC.Logger.Log("Trying to load the first found template...", LogLevel.Info);
                 template = GetTemplateByName();
+            }
 
-            //SelectedTemplate = template ?? throw new AggregateException("Unable to load any template!");
             if (template == null)
                 IoC.Logger.Log("Unable to load any template!", LogLevel.Warning);
             SelectedTemplate = template;

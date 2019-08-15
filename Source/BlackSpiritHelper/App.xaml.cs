@@ -14,6 +14,9 @@ namespace BlackSpiritHelper
 {
     /// <summary>
     /// Interaction logic for App.xaml
+    /// ---
+    /// TODO:LATER: Application user option to download/check updates.
+    /// TODO:LATER: Auto manage length of log file. Cut the file if it is too large.
     /// </summary>
     public partial class App : Application
     {
@@ -212,6 +215,7 @@ namespace BlackSpiritHelper
             {
                 Process.Start(processInfo);
                 mIsRestartingProcessFlag = true;
+                IoC.Logger.Log("Application is switching to administrator mode...", LogLevel.Info);
             }
             catch (Exception)
             {
