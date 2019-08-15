@@ -262,6 +262,8 @@ namespace BlackSpiritHelper
                 return;
 
             // if the file does not exist, we need to run on update procedure.
+            IoC.Logger.Log("Starting update procedure...", LogLevel.Info);
+
             #region Procedure
 
             // Create default process dialog model.
@@ -291,12 +293,6 @@ namespace BlackSpiritHelper
 
             #endregion
 
-            // If the procedure successfully finished, create a new check file of the current ersion.
-            if (!procedureFailure)
-            {
-                File.Create(filePath).Dispose();
-            }
-
             // On procedure finish.
             progressData.Subtitle = "";
             progressData.WorkOn = procedureFailure ? "Unable to update!" : "Done!";
@@ -309,6 +305,23 @@ namespace BlackSpiritHelper
             {
                 IoC.UI.CloseProgressWindow();
             }));
+
+            // If the procedure successfully finished.
+            if (!procedureFailure)
+            {
+                // Create a new check file of the current version.
+                File.Create(filePath).Dispose();
+
+                IoC.Logger.Log("Update successfully finished!", LogLevel.Info);
+
+                // Restart application.
+                Restart();
+            }
+            // Otherwise do if the updating failed.
+            else
+            {
+                IoC.Logger.Log("Unable to update!", LogLevel.Warning);
+            }
         }
 
         /// <summary>
@@ -370,6 +383,16 @@ namespace BlackSpiritHelper
             }
 
             return d;
+        }
+
+        /// <summary>
+        /// Restart application.
+        /// </summary>
+        private void Restart()
+        {
+            // from System.Windows.Forms.dll
+            System.Windows.Forms.Application.Restart();
+            Current.Shutdown();
         }
 
         #endregion
