@@ -12,6 +12,7 @@ namespace BlackSpiritHelper.Core
 {
     /// <summary>
     /// TODO:LATER: Code review, simplify code.
+    /// TODO: Latest modified date: we do not want file modified date.
     /// </summary>
     public class ScheduleViewModel : DataContentBaseViewModel
     {
