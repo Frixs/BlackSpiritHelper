@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -41,10 +42,25 @@ namespace BlackSpiritHelper.Core
         #region Public Properties
 
         /// <summary>
-        /// Last update.
+        /// Last modified time.
         /// It represents <see cref="DateTime.Ticks"/>.
         /// </summary>
-        public long LastUpdate { get; set; }
+        [XmlIgnore]
+        public long LastModifiedTicks { get; set; }
+
+        /// <summary>
+        /// Setter for <see cref="LastModifiedTicks"/>.
+        /// </summary>
+        public string LastModifiedString
+        {
+            get => new DateTime(LastModifiedTicks).ToString("MM/dd/yyyy");
+            set
+            {
+                DateTime date;
+                DateTime.TryParseExact(value, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
+                LastModifiedTicks = date.Ticks;
+            }
+        }
 
         /// <summary>
         /// Title of the template (unique).
