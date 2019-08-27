@@ -93,8 +93,8 @@ namespace BlackSpiritHelper.Core
         {
             WindowTitleDefault = ApplicationName;
 
-            CurrentPage = Properties.Settings.Default.LastOpenedPage > 0 && Properties.Settings.Default.LastOpenedPage < 100 
-                ? (ApplicationPage)Properties.Settings.Default.LastOpenedPage 
+            CurrentPage = IoC.SettingsStorage.LastOpenedPage > 0 && IoC.SettingsStorage.LastOpenedPage < 100 
+                ? (ApplicationPage)IoC.SettingsStorage.LastOpenedPage 
                 : ApplicationPage.Home;
 
             SetWindowTitlePostfixOnly = CurrentPage > 0 ? CurrentPage.GetDescription() : "";

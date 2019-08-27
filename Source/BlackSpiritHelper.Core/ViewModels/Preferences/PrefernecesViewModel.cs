@@ -20,8 +20,11 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// Run the application As Administrator.
+        /// ---
+        /// This value is set in <see cref="SetupMethod"/>.
         /// </summary>
-        public bool ForceToRunAsAdministrator { get; set; } = false;
+        [XmlIgnore]
+        public bool ForceToRunAsAdministrator { get; set; }
 
         /// <summary>
         /// Volume of application audio output.
@@ -98,6 +101,7 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         protected override void SetupMethod()
         {
+            ForceToRunAsAdministrator = IoC.SettingsStorage.ForceToRunAsAdministrator;
         }
 
         /// <summary>

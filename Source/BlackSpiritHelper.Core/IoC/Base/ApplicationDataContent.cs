@@ -126,6 +126,9 @@
         {
             // Save last opened page.
             IoC.SettingsStorage.LastOpenedPage = (byte)IoC.Application.CurrentPage;
+
+            // Save if user wants to run application As Administrator at startup.
+            IoC.SettingsStorage.ForceToRunAsAdministrator = IoC.DataContent.PreferencesDesignModel.ForceToRunAsAdministrator;
         }
 
         /// <summary>

@@ -17,5 +17,8 @@
     <Setting Name="ScheduleDesignModel" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.ScheduleDesignModel" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="ForceToRunAsAdministrator" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

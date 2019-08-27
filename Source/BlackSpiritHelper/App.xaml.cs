@@ -60,22 +60,25 @@ namespace BlackSpiritHelper
         {
             // Let the base application do what it needs.
             base.OnStartup(e);
-            
-            // Configuration.
-            ApplicationSetup(CompileArguments(e.Args));
+
+            // Configuration setup.
+            ApplicationPropertySetup(CompileArguments(e.Args));
 
             // Setup on application deployment.
             OnDeploymentSetup();
 
             // Check for administrator privileges.
-            if (IoC.DataContent.PreferencesDesignModel.ForceToRunAsAdministrator
+            if (IoC.SettingsStorage.ForceToRunAsAdministrator
                 && !IsRunAsAdministrator()
                 && !Debugger.IsAttached
                 )
             {
-                RunAsAdministrator();
-                return;
+                if (RunAsAdministrator())
+                    return;
             }
+
+            // Configuration module setup.
+            ApplicationModuleSetup();
 
             // Set application main window.
             Current.MainWindow = new MainWindow();
@@ -104,11 +107,11 @@ namespace BlackSpiritHelper
         /// <param name="e"></param>
         private void Application_Exit(object sender, ExitEventArgs e)
         {
-            // Dispose.
-            IoC.Get<IMouseKeyHook>().Dispose();
-
             if (!mIsRestartingProcessFlag)
             {
+                // Dispose.
+                IoC.Get<IMouseKeyHook>().Dispose();
+
                 // "Prepare data to die."
                 IoC.DataContent.Unset();
 
@@ -122,10 +125,10 @@ namespace BlackSpiritHelper
         #region Private Methods
 
         /// <summary>
-        /// Configures our application read for use.
+        /// Configure the basics for our application.
         /// </summary>
         /// <param name="args"></param>
-        private void ApplicationSetup(Dictionary<string, string> args)
+        private void ApplicationPropertySetup(Dictionary<string, string> args)
         {
             // Setup IoC.
             IoC.Setup(args);
@@ -142,7 +145,14 @@ namespace BlackSpiritHelper
             // Bind AssemblyInfo copyright.
             IoC.Application.Copyright = FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).LegalCopyright;
             #endregion
+        }
 
+        /// <summary>
+        /// Configures module departments of our application.
+        /// <see cref="ApplicationPropertySetup(Dictionary{string, string})"/> must be called first.
+        /// </summary>
+        private void ApplicationModuleSetup()
+        {
             // Bind Logger.
             IoC.Kernel.Bind<ILogFactory>().ToConstant(new BaseLogFactory(new[]
             {
@@ -195,9 +205,8 @@ namespace BlackSpiritHelper
         /// <summary>
         /// Run the application As Administrator.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void RunAsAdministrator()
+        /// <returns>If true, applicationwil restart to administrator mode. The return is just for making sure and possibility to stop the code process.</returns>
+        private bool RunAsAdministrator()
         {
             // It is not possible to launch a ClickOnce app as administrator directly, so instead we launch the app as administrator in a new process.
             var processInfo = new ProcessStartInfo(Assembly.GetExecutingAssembly().CodeBase);
@@ -221,11 +230,13 @@ namespace BlackSpiritHelper
             {
                 // The user did not allow the application to run as administrator.
                 MessageBox.Show($"Sorry, this application must be run As Administrator in order to interact with the overlay while you are playing your game.{Environment.NewLine}Your computer is not allowing to start the application As Administrator.");
-                return;
+                return false;
             }
 
             // Shut down the current process.
             Current.Shutdown();
+
+            return true;
         }
 
         /// <summary>
