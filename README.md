@@ -4,23 +4,22 @@
     <img src="Resources/logo_red_text_512.png" alt="Logo Black Spirit Helper" width="256" style="text-align:center;">
 </p>
 
-**Are you tired of forgetting important tasks in the game such as... daily rewards, world boss spawns, buff activation at proper time and so on?**  
+**Are you tired of forgetting important tasks in a game such as... daily rewards, world boss spawns, buff activation at proper time and so on?**  
 Or... are you finding hard to track all your tasks you want to do in-game?  
   
 Black Spirit Helper can **solve your problem!** You can also set the application to start with your operating system to do not miss any task you want to do, accidentally.  
 **Black Spirit Helper offers** several features that can manage these things with multiple types of adjustable timers.  
 Oh... I almost forgot to tell you, the application has **own overlay!** So, you can easily track your timers in-game without needs to switch to your desktop.
 ### Is it legal to use?
-Well, Black Spirit Helper does **not** affect any game files. It does **not** track any screen events. It is just an advanced timer. I ask you... is Windows OS build-in timer illegal?  
-I will try to provide you official confirmation of legal use from [Black Desert Online](https://www.blackdesertonline.com) as soon as possible.
+Well, Black Spirit Helper does **not** affect any game files. It does **not** track any screen events. It is just an advanced timer. I ask you... is Windows OS build-in timer illegal? It is in the same category as other software like [Discord](https://discordapp.com/), [TeamSpeak](https://www.teamspeak.com), etc.
 
 ## Table of Contents
-- [Features](#features)
-- [Installation (Download)](#installation)
-- [Credits](#credits)
-- [License](#license)
-- [TODO List](#todo-list)
-- [Release History](#release-history)
+- **[Features](#features)**
+- **[Installation (Download)](#installation)**
+- **[Credits](#credits)**
+- **[License](#license)**
+- **[TODO List](#todo-list)**
+- **[Release History](#release-history)**
 
 ## Features
 ### Schedule Section
