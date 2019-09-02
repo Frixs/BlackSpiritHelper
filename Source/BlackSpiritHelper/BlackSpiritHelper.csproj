@@ -15,7 +15,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>true</IsWebBootstrapper>
-    <PublishUrl>C:\Users\This\Documents\WORKSPACE\desktop\BlackSpiritHelper\Release\</PublishUrl>
+    <PublishUrl>C:\Users\ThisLAP\Documents\WORKSPACE\desktop\BlackSpiritHelper\Release\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -31,7 +31,7 @@
     <TargetCulture>en</TargetCulture>
     <ProductName>Black Spirit Helper</ProductName>
     <PublisherName>Tomas Frixs</PublisherName>
-    <MinimumRequiredVersion>1.2.1.1</MinimumRequiredVersion>
+    <MinimumRequiredVersion>1.2.1.2</MinimumRequiredVersion>
     <AutorunEnabled>true</AutorunEnabled>
     <ApplicationRevision>2</ApplicationRevision>
     <ApplicationVersion>1.2.1.%2a</ApplicationVersion>
