@@ -133,7 +133,60 @@ namespace BlackSpiritHelper
 
         #endregion
 
-        #region Private Methods
+        #region Private Methods: As Administrator
+
+        /// <summary>
+        /// Check if the application is running As Administrator or not.
+        /// </summary>
+        /// <returns></returns>
+        private bool IsRunningAsAdministrator()
+        {
+            var wi = WindowsIdentity.GetCurrent();
+            var wp = new WindowsPrincipal(wi);
+
+            return wp.IsInRole(WindowsBuiltInRole.Administrator);
+        }
+
+        /// <summary>
+        /// Run the application As Administrator.
+        /// </summary>
+        /// <returns>If true, applicationwil restart to administrator mode. The return is just for making sure and possibility to stop the code process.</returns>
+        private bool RunAsAdministrator()
+        {
+            // It is not possible to launch a ClickOnce app as administrator directly, so instead we launch the app as administrator in a new process.
+            var processInfo = new ProcessStartInfo(Assembly.GetExecutingAssembly().CodeBase);
+
+            // The following properties run the new process as administrator.
+            processInfo.UseShellExecute = true;
+            processInfo.Verb = "runas";
+
+            processInfo.Arguments = "Version=" + (ApplicationDeployment.IsNetworkDeployed
+                ? ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString()
+                : FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion);
+
+            // Start the new process.
+            try
+            {
+                Process.Start(processInfo);
+                mIsRestartingProcessFlag = true;
+            }
+            catch (Exception ex)
+            {
+                // The user did not allow the application to run as administrator.
+                MessageBox.Show($"Sorry, {Assembly.GetExecutingAssembly().GetName().Name} must be run As Administrator in order to interact with the overlay while you are playing your game.{Environment.NewLine}Your computer is not allowing to start the application As Administrator.");
+                AddEarlyError("Process start error: " + ex.Message);
+                return false;
+            }
+
+            // Shut down the current process.
+            Current.Shutdown();
+
+            return true;
+        }
+
+        #endregion
+
+        #region Private Methods: Setup Application
 
         /// <summary>
         /// Configure the basics for our application.
@@ -201,54 +254,9 @@ namespace BlackSpiritHelper
             IoC.DataContent.Setup();
         }
 
-        /// <summary>
-        /// Check if the application is running As Administrator or not.
-        /// </summary>
-        /// <returns></returns>
-        private bool IsRunningAsAdministrator()
-        {
-            var wi = WindowsIdentity.GetCurrent();
-            var wp = new WindowsPrincipal(wi);
+        #endregion
 
-            return wp.IsInRole(WindowsBuiltInRole.Administrator);
-        }
-
-        /// <summary>
-        /// Run the application As Administrator.
-        /// </summary>
-        /// <returns>If true, applicationwil restart to administrator mode. The return is just for making sure and possibility to stop the code process.</returns>
-        private bool RunAsAdministrator()
-        {
-            // It is not possible to launch a ClickOnce app as administrator directly, so instead we launch the app as administrator in a new process.
-            var processInfo = new ProcessStartInfo(Assembly.GetExecutingAssembly().CodeBase);
-
-            // The following properties run the new process as administrator.
-            processInfo.UseShellExecute = true;
-            processInfo.Verb = "runas";
-
-            processInfo.Arguments = "Version=" + (ApplicationDeployment.IsNetworkDeployed
-                ? ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString()
-                : FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion);
-
-            // Start the new process.
-            try
-            {
-                Process.Start(processInfo);
-                mIsRestartingProcessFlag = true;
-            }
-            catch (Exception ex)
-            {
-                // The user did not allow the application to run as administrator.
-                MessageBox.Show($"Sorry, {Assembly.GetExecutingAssembly().GetName().Name} must be run As Administrator in order to interact with the overlay while you are playing your game.{Environment.NewLine}Your computer is not allowing to start the application As Administrator.");
-                AddEarlyError("Process start error: " + ex.Message);
-                return false;
-            }
-
-            // Shut down the current process.
-            Current.Shutdown();
-
-            return true;
-        }
+        #region Private Methods: Setup Deployment
 
         /// <summary>
         ///  On application deployment.
@@ -382,6 +390,20 @@ namespace BlackSpiritHelper
         }
 
         /// <summary>
+        /// Restart application.
+        /// </summary>
+        private void Restart()
+        {
+            // from System.Windows.Forms.dll
+            System.Windows.Forms.Application.Restart();
+            Current.Shutdown();
+        }
+
+        #endregion
+
+        #region Private Helpers
+
+        /// <summary>
         /// Compile arguments into Dictionary.
         /// </summary>
         /// <param name="args"></param>
@@ -403,27 +425,13 @@ namespace BlackSpiritHelper
                     continue;
 
                 d.Add(
-                    sParts[0].Trim(), 
+                    sParts[0].Trim(),
                     sParts[1].Trim('"')
                     );
             }
 
             return d;
         }
-
-        /// <summary>
-        /// Restart application.
-        /// </summary>
-        private void Restart()
-        {
-            // from System.Windows.Forms.dll
-            System.Windows.Forms.Application.Restart();
-            Current.Shutdown();
-        }
-
-        #endregion
-
-        #region Helpers
 
         /// <summary>
         /// Initialize <see cref="mEarlyErrorList"/>.

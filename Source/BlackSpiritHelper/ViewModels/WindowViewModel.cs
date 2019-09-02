@@ -9,6 +9,17 @@ namespace BlackSpiritHelper
     /// </summary>
     public class WindowViewModel : BaseViewModel
     {
+        #region Private Static Members
+
+        /// <summary>
+        /// Windows tray icon of the application.
+        /// ---
+        /// TODO:LATER: Tray icon - We need to access it from IoC to be able to update it from other parts of the code.
+        /// </summary>
+        private static System.Windows.Forms.NotifyIcon mTrayIcon = null;
+
+        #endregion
+
         #region Private Members
 
         /// <summary>
@@ -177,7 +188,12 @@ namespace BlackSpiritHelper
         /// <summary>
         /// The command to close the window.
         /// </summary>
-        public ICommand CloseCommand { get; set; }
+        public ICommand ExitCommand { get; set; }
+
+        /// <summary>
+        /// The command to close the window to tray.
+        /// </summary>
+        public ICommand CloseTrayCommand { get; set; }
 
         /// <summary>
         /// The command to show the system menu of the window.
@@ -227,16 +243,87 @@ namespace BlackSpiritHelper
             MaximizeCommand = new RelayCommand(() => mWindow.WindowState ^= WindowState.Maximized);
 
             // Close.
-            CloseCommand = new RelayCommand(() =>
-            {
-                // Close all windows.
-                for (int intCounter = App.Current.Windows.Count - 1; intCounter >= 0; intCounter--)
-                    App.Current.Windows[intCounter].Close();
-            });
+            ExitCommand = new RelayCommand(() => ExitApplication());
 
             // Menu.
             MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()));
+
+            // Application MainWindow close to Tray.
+            CloseTrayCommand = new RelayCommand(() => CloseMainWindowToTray());
         }
+
+        #region Private Methods
+
+        /// <summary>
+        /// Exit application. Close all windows. Dispose.
+        /// </summary>
+        private void ExitApplication()
+        {
+            // Close all windows.
+            for (int intCounter = Application.Current.Windows.Count - 1; intCounter >= 0; intCounter--)
+                Application.Current.Windows[intCounter].Close();
+
+            // Dispose tray icon.
+            DisposeTrayIcon();
+        }
+
+        /// <summary>
+        /// Close MainWindow to Windows tray.
+        /// </summary>
+        private void CloseMainWindowToTray()
+        {
+            // Create notification tray icon.
+            System.Windows.Forms.NotifyIcon trayIcon = new System.Windows.Forms.NotifyIcon();
+            trayIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon("Resources/Images/Logo/icon_white.ico");
+            trayIcon.DoubleClick += (s, args) => ShowMainWindow();
+            trayIcon.Visible = true;
+            // Create context menu for the notification icon.
+            trayIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
+            trayIcon.ContextMenuStrip.Items.Add("Open Application").Click += (s, e) => ShowMainWindow();
+            trayIcon.ContextMenuStrip.Items.Add("Quit").Click += (s, e) => ExitApplication();
+
+            DisposeTrayIcon();
+            // Assign tray icon.
+            mTrayIcon = trayIcon;
+
+            // Hide MainWindow.
+            Application.Current.MainWindow.Hide(); // A hidden window can be shown again, a closed one not.
+        }
+
+        /// <summary>
+        /// Show MainWindow.
+        /// </summary>
+        private void ShowMainWindow()
+        {
+            // Activate window if it is visible in background.
+            if (Application.Current.MainWindow.IsVisible)
+            {
+                if (Application.Current.MainWindow.WindowState == WindowState.Minimized)
+                    Application.Current.MainWindow.WindowState = WindowState.Normal;
+
+                Application.Current.MainWindow.Activate();
+            }
+            // Open window if it is closed in tray.
+            else
+            {
+                Application.Current.MainWindow.Show();
+                DisposeTrayIcon();
+            }
+        }
+
+        /// <summary>
+        /// Dispose <see cref="mTrayIcon"/>.
+        /// </summary>
+        private static void DisposeTrayIcon()
+        {
+            if (mTrayIcon == null)
+                return;
+
+            mTrayIcon.Dispose();
+            mTrayIcon = null;
+        }
+
+        #endregion
 
         #region Private Helpers
 
