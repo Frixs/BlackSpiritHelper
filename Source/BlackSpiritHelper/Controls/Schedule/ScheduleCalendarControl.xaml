@@ -62,7 +62,7 @@
                                                        VerticalAlignment="Center" />
 
                                             <!-- Template Update Date -->
-                                            <TextBlock Grid.Column="4" Text="{Binding LastUpdate, Converter={local:TicksToDateStringConverter}, StringFormat='Last template update: {0:C}'}"
+                                            <TextBlock Grid.Column="4" Text="{Binding LastModifiedTicks, Converter={local:TicksToDateStringConverter}, StringFormat='Last template update: {0:C}'}"
                                                        FontFamily="{StaticResource LatoBoldItalic}"
                                                        FontSize="10"
                                                        Foreground="{StaticResource ScheduleCalForegroundBrushKey}"

@@ -83,5 +83,18 @@ namespace BlackSpiritHelper.Core.Properties {
                 this["ScheduleDesignModel"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsProviderAttribute(typeof(BlackSpiritHelper.Core.CustomSettingsProvider))]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ForceToRunAsAdministrator {
+            get {
+                return ((bool)(this["ForceToRunAsAdministrator"]));
+            }
+            set {
+                this["ForceToRunAsAdministrator"] = value;
+            }
+        }
     }
 }

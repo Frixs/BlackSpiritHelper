@@ -91,9 +91,6 @@ namespace BlackSpiritHelper.Core
         {
             // Bind to a single instance of Application view model.
             Kernel.Bind<ApplicationViewModel>().ToConstant(new ApplicationViewModel());
-
-            // Kernel.Bind<ApplicationViewModel>().ToConstant(new ApplicationViewModel { CurrentPage = ApplicationPage.Home }); // Option to set initial parameters.
-
         }
 
         #endregion

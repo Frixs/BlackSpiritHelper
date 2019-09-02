@@ -1138,7 +1138,7 @@ namespace BlackSpiritHelper.Core
                 {
                     // Deserialize the file.
                     ret = (ScheduleTemplateDataViewModel)serializer.Deserialize(fileStream);
-                    ret.LastUpdate = File.GetLastWriteTime(filePath).Ticks;
+                    //ret.LastModifiedTicks = File.GetLastWriteTime(filePath).Ticks; We do not want to set last modified date from file anymore.
                     ret.Init(true);
                 }
             }

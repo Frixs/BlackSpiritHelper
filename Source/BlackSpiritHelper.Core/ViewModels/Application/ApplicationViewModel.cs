@@ -11,6 +11,24 @@ namespace BlackSpiritHelper.Core
         #region Public Properties
 
         /// <summary>
+        /// Application product name.
+        /// Represents how the Windows shortcuts will be named, e.g.
+        /// ---
+        /// This const is duplicate of the value from ClickOnce installation settings (Publish->Options)!!!
+        /// Do not forget to change the value on both places!!!
+        /// </summary>
+        public string ProductName { get; } = "Black Spirit Helper";
+
+        /// <summary>
+        /// Application publisher name.
+        /// Represents name of directory in Start Menu, where the application deploys its shortcuts.
+        /// ---
+        /// This const is duplicate of the value from ClickOnce installation settings (Publish->Options)!!!
+        /// Do not forget to change the value on both places!!!
+        /// </summary>
+        public string PublisherName { get; } = "Tomas Frixs";
+
+        /// <summary>
         /// Application Title/Name.
         /// </summary>
         public string ApplicationName { get; private set; } = "Black Spirit Helper (BETA)";
@@ -93,8 +111,8 @@ namespace BlackSpiritHelper.Core
         {
             WindowTitleDefault = ApplicationName;
 
-            CurrentPage = Properties.Settings.Default.LastOpenedPage > 0 && Properties.Settings.Default.LastOpenedPage < 100 
-                ? (ApplicationPage)Properties.Settings.Default.LastOpenedPage 
+            CurrentPage = IoC.SettingsStorage.LastOpenedPage > 0 && IoC.SettingsStorage.LastOpenedPage < 100 
+                ? (ApplicationPage)IoC.SettingsStorage.LastOpenedPage 
                 : ApplicationPage.Home;
 
             SetWindowTitlePostfixOnly = CurrentPage > 0 ? CurrentPage.GetDescription() : "";
