@@ -27,6 +27,11 @@ namespace BlackSpiritHelper
         /// </summary>
         private bool mIsRestartingProcessFlag = false;
 
+        /// <summary>
+        /// Early error list is here to catch all error simple messages that we need to track while <see cref="IoC.Logger"/> is not available yet.
+        /// </summary>
+        private List<string> mEarlyErrorList = null;
+
         #endregion
 
         #region Dispatcher Unhandled Exception
@@ -61,6 +66,9 @@ namespace BlackSpiritHelper
             // Let the base application do what it needs.
             base.OnStartup(e);
 
+            // Initialize early error list.
+            InitEarlyErrorList();
+
             // Configuration setup.
             ApplicationPropertySetup(CompileArguments(e.Args));
 
@@ -69,7 +77,7 @@ namespace BlackSpiritHelper
 
             // Check for administrator privileges.
             if (IoC.SettingsStorage.ForceToRunAsAdministrator
-                && !IsRunAsAdministrator()
+                && !IsRunningAsAdministrator()
                 && !Debugger.IsAttached
                 )
             {
@@ -79,6 +87,9 @@ namespace BlackSpiritHelper
 
             // Configuration module setup.
             ApplicationModuleSetup();
+
+            // Process early error list. We already have access to IoC.
+            ProcessEarlyErrorList();
 
             // Set application main window.
             Current.MainWindow = new MainWindow();
@@ -90,7 +101,7 @@ namespace BlackSpiritHelper
                 await OnUpdateSetupAsync();
 
                 // Log it.
-                IoC.Logger.Log("Application starting up...", LogLevel.Info);
+                IoC.Logger.Log("Application starting up" + (IsRunningAsAdministrator() ? " (As Administrator)" : "") + "...", LogLevel.Info);
 
                 // Show the main window.
                 await IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
@@ -194,7 +205,7 @@ namespace BlackSpiritHelper
         /// Check if the application is running As Administrator or not.
         /// </summary>
         /// <returns></returns>
-        private bool IsRunAsAdministrator()
+        private bool IsRunningAsAdministrator()
         {
             var wi = WindowsIdentity.GetCurrent();
             var wp = new WindowsPrincipal(wi);
@@ -224,12 +235,12 @@ namespace BlackSpiritHelper
             {
                 Process.Start(processInfo);
                 mIsRestartingProcessFlag = true;
-                IoC.Logger.Log("Application is switching to administrator mode...", LogLevel.Info);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 // The user did not allow the application to run as administrator.
-                MessageBox.Show($"Sorry, this application must be run As Administrator in order to interact with the overlay while you are playing your game.{Environment.NewLine}Your computer is not allowing to start the application As Administrator.");
+                MessageBox.Show($"Sorry, {Assembly.GetExecutingAssembly().GetName().Name} must be run As Administrator in order to interact with the overlay while you are playing your game.{Environment.NewLine}Your computer is not allowing to start the application As Administrator.");
+                AddEarlyError("Process start error: " + ex.Message);
                 return false;
             }
 
@@ -408,6 +419,42 @@ namespace BlackSpiritHelper
             // from System.Windows.Forms.dll
             System.Windows.Forms.Application.Restart();
             Current.Shutdown();
+        }
+
+        #endregion
+
+        #region Helpers
+
+        /// <summary>
+        /// Initialize <see cref="mEarlyErrorList"/>.
+        /// </summary>
+        private void InitEarlyErrorList()
+        {
+            mEarlyErrorList = new List<string>();
+        }
+
+        /// <summary>
+        /// Add new early error message to <see cref="mEarlyErrorList"/>.
+        /// </summary>
+        /// <param name="errorMessage"></param>
+        private void AddEarlyError(string errorMessage)
+        {
+            if (mEarlyErrorList == null)
+                return;
+
+            mEarlyErrorList.Add(new StackTrace().GetFrame(1).GetMethod().Name + "(): " + errorMessage);
+        }
+
+        /// <summary>
+        /// Process <see cref="mEarlyErrorList"/>.
+        /// </summary>
+        private void ProcessEarlyErrorList()
+        {
+            for (int i = 0; i < mEarlyErrorList.Count; i++)
+            {
+                IoC.Logger.Log(mEarlyErrorList[i], LogLevel.Error);
+            }
+            mEarlyErrorList = null;
         }
 
         #endregion

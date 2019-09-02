@@ -35,7 +35,7 @@ namespace BlackSpiritHelper.Core
         public void Log(string message, LogLevel level)
         {
             // Get current time.
-            var currentTime = DateTimeOffset.UtcNow.ToString("yyyy-MM-dd hh:mm:ss tt UTC");
+            var currentTime = DateTimeOffset.UtcNow.ToString("yyyy-MM-dd HH:mm:ss UTC");
 
             // Write the message to the log file.
             IoC.File.WriteTextToFileAsync($"[{currentTime}] {message}{Environment.NewLine}", FilePath, append: true);
