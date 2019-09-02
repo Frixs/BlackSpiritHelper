@@ -145,14 +145,21 @@ namespace BlackSpiritHelper.Core
                 try
                 {
                     // Get Windows register startup subkey location.
-                    Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                    Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
 
                     if (runOnStartup)
+                    {
                         // Set the application executable into Windows register.
-                        key.SetValue(IoC.Application.ApplicationExecutingAssembly.GetName().Name, IoC.Application.ApplicationExecutingAssembly.Location);
+                        key.SetValue(
+                            IoC.Application.ApplicationExecutingAssembly.GetName().Name,
+                            Environment.GetFolderPath(Environment.SpecialFolder.Programs) + $"\\{IoC.Application.PublisherName}\\{IoC.Application.ProductName}.appref-ms"
+                            );
+                    }
                     else
+                    {
                         // Delete the application register key from the Windows register.
                         key.DeleteValue(IoC.Application.ApplicationExecutingAssembly.GetName().Name);
+                    }
                 }
                 catch (Exception ex)
                 {
