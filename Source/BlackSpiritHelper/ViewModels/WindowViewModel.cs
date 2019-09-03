@@ -231,6 +231,8 @@ namespace BlackSpiritHelper
 
         #endregion
 
+        #region Command Methods
+
         /// <summary>
         /// Create Windows commands.
         /// </summary>
@@ -252,54 +254,14 @@ namespace BlackSpiritHelper
             CloseTrayCommand = new RelayCommand(() => CloseMainWindowToTray());
         }
 
-        #region Public Methods
-
-        /// <summary>
-        /// Close MainWindow to Windows tray.
-        /// </summary>
-        public void CloseMainWindowToTray()
-        {
-            // Create notification tray icon.
-            System.Windows.Forms.NotifyIcon trayIcon = new System.Windows.Forms.NotifyIcon();
-            trayIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon("Resources/Images/Logo/icon_white.ico");
-            trayIcon.DoubleClick += (s, args) => ShowMainWindow();
-            trayIcon.Visible = true;
-            // Create context menu for the notification icon.
-            trayIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
-            trayIcon.ContextMenuStrip.Items.Add("Open Application").Click += (s, e) => ShowMainWindow();
-            trayIcon.ContextMenuStrip.Items.Add("Donate").Click += (s, e) => System.Diagnostics.Process.Start(IoC.Application.DonationURL);
-            trayIcon.ContextMenuStrip.Items.Add("-");
-            trayIcon.ContextMenuStrip.Items.Add("Quit").Click += (s, e) => ExitApplication();
-
-            DisposeTrayIcon();
-            // Assign tray icon.
-            mTrayIcon = trayIcon;
-
-            // Hide MainWindow.
-            Application.Current.MainWindow.Hide(); // A hidden window can be shown again, a closed one not.
-        }
-
         #endregion
 
-        #region Private Methods
-
-        /// <summary>
-        /// Exit application. Close all windows. Dispose.
-        /// </summary>
-        private void ExitApplication()
-        {
-            // Close all windows.
-            for (int intCounter = Application.Current.Windows.Count - 1; intCounter >= 0; intCounter--)
-                Application.Current.Windows[intCounter].Close();
-
-            // Dispose tray icon.
-            DisposeTrayIcon();
-        }
+        #region Public Static Methods
 
         /// <summary>
         /// Show MainWindow.
         /// </summary>
-        private void ShowMainWindow()
+        public static void ShowMainWindow()
         {
             // Activate window if it is visible in background.
             if (Application.Current.MainWindow.IsVisible)
@@ -315,6 +277,49 @@ namespace BlackSpiritHelper
                 Application.Current.MainWindow.Show();
                 DisposeTrayIcon();
             }
+        }
+
+        /// <summary>
+        /// Close MainWindow to Windows tray.
+        /// </summary>
+        public static void CloseMainWindowToTray()
+        {
+            // Create notification tray icon.
+            System.Windows.Forms.NotifyIcon trayIcon = new System.Windows.Forms.NotifyIcon();
+            trayIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon("Resources/Images/Logo/icon_white.ico");
+            trayIcon.DoubleClick += (s, args) => ShowMainWindow();
+            trayIcon.Visible = true;
+            // Create context menu for the notification icon.
+            trayIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
+            trayIcon.ContextMenuStrip.Items.Add("Open Application").Click += (s, e) => ShowMainWindow();
+            trayIcon.ContextMenuStrip.Items.Add("Donate").Click += (s, e) => System.Diagnostics.Process.Start(IoC.Application.DonationURL);
+            trayIcon.ContextMenuStrip.Items.Add("-");
+            trayIcon.ContextMenuStrip.Items.Add("Quit").Click += (s, e) => ExitApplication();
+
+            // Try to dispose previous ion if exists.
+            DisposeTrayIcon();
+            // Assign tray icon.
+            mTrayIcon = trayIcon;
+
+            // Hide MainWindow.
+            Application.Current.MainWindow.Hide(); // A hidden window can be shown again, a closed one not.
+        }
+
+        #endregion
+
+        #region Private Static Methods
+
+        /// <summary>
+        /// Exit application. Close all windows. Dispose.
+        /// </summary>
+        private static void ExitApplication()
+        {
+            // Close all windows.
+            for (int intCounter = Application.Current.Windows.Count - 1; intCounter >= 0; intCounter--)
+                Application.Current.Windows[intCounter].Close();
+
+            // Dispose tray icon.
+            DisposeTrayIcon();
         }
 
         /// <summary>

@@ -14,6 +14,11 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private bool mIsOpened = false;
 
+        /// <summary>
+        /// Allow opening the overlay on application start.
+        /// </summary>
+        private bool mAllowOpenOnStart = true;
+
         #endregion
 
         #region Public Properties
@@ -28,7 +33,20 @@ namespace BlackSpiritHelper.Core
             set
             {
                 mIsOpened = value;
-                OpenOnStart = mIsOpened;
+                OpenOnStart = AllowOpenOnStart ? value : false;
+            }
+        }
+
+        /// <summary>
+        /// Allow opening the overlay on application start.
+        /// </summary>
+        public bool AllowOpenOnStart
+        {
+            get => mAllowOpenOnStart;
+            set
+            {
+                mAllowOpenOnStart = value;
+                OpenOnStart = value ? IsOpened : false;
             }
         }
 

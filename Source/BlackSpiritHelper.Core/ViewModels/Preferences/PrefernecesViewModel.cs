@@ -32,11 +32,6 @@ namespace BlackSpiritHelper.Core
         public bool StartInTray { get; set; } = false;
 
         /// <summary>
-        /// Do NOT open overlay on application start.
-        /// </summary>
-        public bool NeverOverlayOnStart { get; set; } = false;
-
-        /// <summary>
         /// Volume of application audio output.
         /// </summary>
         public double Volume { get; set; } = 0.5;

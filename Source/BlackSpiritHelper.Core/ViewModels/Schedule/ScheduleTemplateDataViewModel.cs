@@ -76,7 +76,7 @@ namespace BlackSpiritHelper.Core
             set
             {
                 mTimeZoneRegion = value;
-                TimeZone = TimeZoneInfo.FindSystemTimeZoneById(mTimeZoneRegion.GetDescription());
+                TimeZone = TimeZoneInfo.FindSystemTimeZoneById(value.GetDescription());
             }
         }
 

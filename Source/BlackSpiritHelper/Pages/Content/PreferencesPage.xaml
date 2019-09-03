@@ -53,8 +53,10 @@
                               HorizontalAlignment="Center" />
 
                     <!-- Do not open overlay on application start -->
-                    <CheckBox IsChecked="{Binding NeverOverlayOnStart}" Margin="0 0 0 30"
-                              Content="Never open overlay on application start."
+                    <CheckBox IsChecked="{Binding ApplicationDataContent.OverlayDesignModel.AllowOpenOnStart,
+                                          Source={x:Static local:ViewModelLocator.Instance}}" 
+                              Margin="0 0 0 30"
+                              Content="Allow opening the overlay on application start."
                               Foreground="{StaticResource ForegroundBrushKey}"
                               HorizontalAlignment="Center" />
 

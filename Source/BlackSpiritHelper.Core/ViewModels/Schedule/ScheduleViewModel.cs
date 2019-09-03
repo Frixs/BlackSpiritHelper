@@ -105,7 +105,7 @@ namespace BlackSpiritHelper.Core
             private set
             {
                 mSelectedTemplate = value;
-                SelectedTemplateTitle = mSelectedTemplate.Title;
+                SelectedTemplateTitle = value.Title;
             }
         }
 
