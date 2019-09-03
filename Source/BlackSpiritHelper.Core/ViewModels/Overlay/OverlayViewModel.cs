@@ -7,7 +7,35 @@ namespace BlackSpiritHelper.Core
 {
     public class OverlayViewModel : DataContentBaseViewModel
     {
+        #region Private Members
+
+        /// <summary>
+        /// Says, if the overlay is shown (opened) or not.
+        /// </summary>
+        private bool mIsOpened = false;
+
+        #endregion
+
         #region Public Properties
+
+        /// <summary>
+        /// Says, if the overlay is shown (opened) or not.
+        /// </summary>
+        [XmlIgnore]
+        public bool IsOpened
+        {
+            get => mIsOpened;
+            set
+            {
+                mIsOpened = value;
+                OpenOnStart = mIsOpened;
+            }
+        }
+
+        /// <summary>
+        /// Says, if the overlay should be opened on application start (the next start).
+        /// </summary>
+        public bool OpenOnStart { get; set; } = false;
 
         /// <summary>
         /// X axis position of the overlay object.

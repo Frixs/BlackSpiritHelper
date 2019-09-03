@@ -252,25 +252,12 @@ namespace BlackSpiritHelper
             CloseTrayCommand = new RelayCommand(() => CloseMainWindowToTray());
         }
 
-        #region Private Methods
-
-        /// <summary>
-        /// Exit application. Close all windows. Dispose.
-        /// </summary>
-        private void ExitApplication()
-        {
-            // Close all windows.
-            for (int intCounter = Application.Current.Windows.Count - 1; intCounter >= 0; intCounter--)
-                Application.Current.Windows[intCounter].Close();
-
-            // Dispose tray icon.
-            DisposeTrayIcon();
-        }
+        #region Public Methods
 
         /// <summary>
         /// Close MainWindow to Windows tray.
         /// </summary>
-        private void CloseMainWindowToTray()
+        public void CloseMainWindowToTray()
         {
             // Create notification tray icon.
             System.Windows.Forms.NotifyIcon trayIcon = new System.Windows.Forms.NotifyIcon();
@@ -290,6 +277,23 @@ namespace BlackSpiritHelper
 
             // Hide MainWindow.
             Application.Current.MainWindow.Hide(); // A hidden window can be shown again, a closed one not.
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Exit application. Close all windows. Dispose.
+        /// </summary>
+        private void ExitApplication()
+        {
+            // Close all windows.
+            for (int intCounter = Application.Current.Windows.Count - 1; intCounter >= 0; intCounter--)
+                Application.Current.Windows[intCounter].Close();
+
+            // Dispose tray icon.
+            DisposeTrayIcon();
         }
 
         /// <summary>

@@ -106,7 +106,23 @@ namespace BlackSpiritHelper
                 // Show the main window.
                 await IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
                 {
+                    // Open MainWindow.
                     Current.MainWindow.Show();
+
+                    // TODO: Hide window first, then decide if you want to start it in tray or not.
+                    // TODO: Data error while starting application on preference page - binding error - need to define source.
+                    // TODO: NeverOverlay change to Allow?
+                    // Start in tray?
+                    if (IoC.DataContent.PreferencesDesignModel.StartInTray)
+                    {
+                        ((WindowViewModel)Current.MainWindow.DataContext).CloseMainWindowToTray();
+                    }
+
+                    // Start overlay?
+                    if (!IoC.DataContent.PreferencesDesignModel.NeverOverlayOnStart && IoC.DataContent.OverlayDesignModel.OpenOnStart)
+                    {
+                        IoC.UI.OpenOverlay();
+                    }
                 }));
             });
         }

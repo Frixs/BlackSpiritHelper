@@ -51,8 +51,9 @@
                                   Style="{StaticResource OverlayCheckbox}"
                                   HorizontalAlignment="Left" 
                                   VerticalAlignment="Top"
-                                  Checked="ShowOverlayCheckBox_Checked" 
-                                  Unchecked="ShowOverlayCheckBox_Unchecked" 
+                                  IsChecked="{Binding ApplicationDataContent.OverlayDesignModel.IsOpened, 
+                                              Source={x:Static local:ViewModelLocator.Instance}}"
+                                  Command="{Binding OverlayOpenCloseCommand}"
                               />
                         <TextBlock Text="{StaticResource FontAwesomeQuestionCircleIcon}" Grid.Column="1"
                                    ToolTip="TIP: To interact with the overlay, hold left ALT key."

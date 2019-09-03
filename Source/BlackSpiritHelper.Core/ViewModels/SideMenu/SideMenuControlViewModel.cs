@@ -23,6 +23,11 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public ICommand AuthorDonateLinkCommand { get; set; }
 
+        /// <summary>
+        /// The command to open/close overlay.
+        /// </summary>
+        public ICommand OverlayOpenCloseCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -48,6 +53,7 @@ namespace BlackSpiritHelper.Core
             OpenHomePageCommand = new RelayCommand(async () => await OpenHomePageAsync());
             OpenPreferencesPageCommand = new RelayCommand(async () => await OpenPreferencesPageAsync());
             AuthorDonateLinkCommand = new RelayCommand(async () => await AuthorDonateLinkMethodAsync());
+            OverlayOpenCloseCommand = new RelayCommand(async () => await OverlayOpenCloseAsync());
         }
 
         /// <summary>
@@ -79,6 +85,20 @@ namespace BlackSpiritHelper.Core
         {
             // Open the webpage.
             System.Diagnostics.Process.Start(IoC.Application.DonationURL);
+
+            await Task.Delay(1);
+        }
+
+        /// <summary>
+        /// Open/Close overlay process.
+        /// </summary>
+        /// <returns></returns>
+        private async Task OverlayOpenCloseAsync()
+        {
+            if (IoC.DataContent.OverlayDesignModel.IsOpened)
+                IoC.UI.OpenOverlay();
+            else
+                IoC.UI.CloseOverlay();
 
             await Task.Delay(1);
         }

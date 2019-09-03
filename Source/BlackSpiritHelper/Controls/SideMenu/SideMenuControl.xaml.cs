@@ -1,8 +1,4 @@
-﻿using BlackSpiritHelper.Core;
-using System;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Interop;
+﻿using System.Windows.Controls;
 
 namespace BlackSpiritHelper
 {
@@ -16,20 +12,6 @@ namespace BlackSpiritHelper
         public SideMenuControl()
         {
             InitializeComponent();
-        }
-
-        #endregion
-
-        #region Events
-
-        private void ShowOverlayCheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            IoC.UI.OpenOverlay();
-        }
-
-        private void ShowOverlayCheckBox_Unchecked(object sender, RoutedEventArgs e)
-        {
-            IoC.UI.CloseOverlay();
         }
 
         #endregion

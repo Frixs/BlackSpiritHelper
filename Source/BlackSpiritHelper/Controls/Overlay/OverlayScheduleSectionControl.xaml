@@ -9,7 +9,9 @@
              d:DesignHeight="50" d:DesignWidth="200">
 
     <!-- Derived from OverlayWindow -->
-    <StackPanel x:Name="OverlayScheduleSection" Orientation="{Binding OverlayOrientation, FallbackValue=Horizontal}"
+    <StackPanel x:Name="OverlayScheduleSection" 
+                Orientation="{Binding DataContext.OverlayOrientation, FallbackValue=Horizontal,
+                              RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}"
                 Margin="0"
                 DataContext="{Binding ApplicationDataContent.ScheduleDesignModel,
                               Source={x:Static local:ViewModelLocator.Instance}}">

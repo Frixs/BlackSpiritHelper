@@ -46,6 +46,18 @@
                               Foreground="{StaticResource ForegroundBrushKey}"
                               HorizontalAlignment="Center" />
 
+                    <!-- Start application in tray -->
+                    <CheckBox IsChecked="{Binding StartInTray}" Margin="0 0 0 30"
+                              Content="Start the application in tray."
+                              Foreground="{StaticResource ForegroundBrushKey}"
+                              HorizontalAlignment="Center" />
+
+                    <!-- Do not open overlay on application start -->
+                    <CheckBox IsChecked="{Binding NeverOverlayOnStart}" Margin="0 0 0 30"
+                              Content="Never open overlay on application start."
+                              Foreground="{StaticResource ForegroundBrushKey}"
+                              HorizontalAlignment="Center" />
+
                     <!-- Volume -->
                     <TextBlock Text="Volume"
                                FontFamily="{StaticResource LatoRegular}"
