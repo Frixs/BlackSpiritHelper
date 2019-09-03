@@ -280,6 +280,8 @@ namespace BlackSpiritHelper
             // Create context menu for the notification icon.
             trayIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
             trayIcon.ContextMenuStrip.Items.Add("Open Application").Click += (s, e) => ShowMainWindow();
+            trayIcon.ContextMenuStrip.Items.Add("Donate").Click += (s, e) => System.Diagnostics.Process.Start(IoC.Application.DonationURL);
+            trayIcon.ContextMenuStrip.Items.Add("-");
             trayIcon.ContextMenuStrip.Items.Add("Quit").Click += (s, e) => ExitApplication();
 
             DisposeTrayIcon();

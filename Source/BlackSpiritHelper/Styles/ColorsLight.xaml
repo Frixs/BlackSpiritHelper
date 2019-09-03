@@ -56,6 +56,22 @@
     <Color x:Key="LineSpacer1Background">#15151A</Color>
     <SolidColorBrush x:Key="LineSpacer1BackgroundBrushKey" Color="{StaticResource LineSpacer1Background}" />
 
+    <!-- System Buttons - Sub Control -->
+    <Color x:Key="SystemSubButtonBackground">#ffffff</Color>
+    <SolidColorBrush x:Key="SystemSubButtonBackgroundBrushKey" Color="{StaticResource SystemSubButtonBackground}" />
+
+    <Color x:Key="SystemSubButtonForeground">#888888</Color>
+    <SolidColorBrush x:Key="SystemSubButtonForegroundBrushKey" Color="{StaticResource SystemSubButtonForeground}" />
+
+    <Color x:Key="SystemSubButtonHoverBackground">#ECECEC</Color>
+    <SolidColorBrush x:Key="SystemSubButtonHoverBackgroundBrushKey" Color="{StaticResource SystemSubButtonHoverBackground}" />
+
+    <Color x:Key="SystemSubButtonHoverForeground">#888888</Color>
+    <SolidColorBrush x:Key="SystemSubButtonHoverForegroundBrushKey" Color="{StaticResource SystemSubButtonHoverForeground}" />
+
+    <Color x:Key="SystemSubButtonActiveBackground">#cccccc</Color>
+    <SolidColorBrush x:Key="SystemSubButtonActiveBackgroundBrushKey" Color="{StaticResource SystemSubButtonActiveBackground}" />
+    
     <!-- System Buttons -->
     <Color x:Key="SystemButtonBackground">#ffffff</Color>
     <SolidColorBrush x:Key="SystemButtonBackgroundBrushKey" Color="{StaticResource SystemButtonBackground}" />
@@ -72,6 +88,7 @@
     <Color x:Key="SystemButtonActiveBackground">#cccccc</Color>
     <SolidColorBrush x:Key="SystemButtonActiveBackgroundBrushKey" Color="{StaticResource SystemButtonActiveBackground}" />
 
+    <!-- System Buttons - Red -->
     <Color x:Key="SystemRedButtonBackground">#ffffff</Color>
     <SolidColorBrush x:Key="SystemRedButtonBackgroundBrushKey" Color="{StaticResource SystemRedButtonBackground}" />
 

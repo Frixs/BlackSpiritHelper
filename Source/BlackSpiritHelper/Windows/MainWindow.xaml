@@ -120,10 +120,22 @@
 
                                                 <!-- Window Buttons -->
                                                 <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                                    <Button Style="{StaticResource WindowsControlButton}" Command="{Binding CloseTrayCommand}" Content="T" />
-                                                    <Button Style="{StaticResource WindowsControlButton}" Command="{Binding MinimizeCommand}" Content="_" />
-                                                    <Button Style="{StaticResource WindowsControlButton}" Command="{Binding MaximizeCommand}" Content="[ ]" />
-                                                    <Button Style="{StaticResource WindowsCloseButton}" Command="{Binding ExitCommand}" Content="X" />
+                                                    <Button Style="{StaticResource WindowsSubControlButton}" 
+                                                            Command="{Binding CloseTrayCommand}"
+                                                            Margin="0 0 10 0">
+                                                        <TextBlock Text="TRAY"
+                                                                   FontSize="10"
+                                                                   FontFamily="{StaticResource LatoBold}"/>
+                                                    </Button>
+                                                    <Button Style="{StaticResource WindowsControlButton}" 
+                                                            Command="{Binding MinimizeCommand}"
+                                                            Content="_" />
+                                                    <Button Style="{StaticResource WindowsControlButton}" 
+                                                            Command="{Binding MaximizeCommand}"
+                                                            Content="[ ]" />
+                                                    <Button Style="{StaticResource WindowsCloseButton}" 
+                                                            Command="{Binding ExitCommand}"
+                                                            Content="X" />
                                                 </StackPanel>
 
                                             </Grid>
