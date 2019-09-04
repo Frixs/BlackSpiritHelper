@@ -109,7 +109,6 @@ namespace BlackSpiritHelper
                     // Open MainWindow.
                     WindowViewModel.ShowMainWindow();
 
-                    // TODO: Data error while starting application on preference page - binding error - need to define source.
                     // Start in tray?
                     if (IoC.DataContent.PreferencesDesignModel.StartInTray)
                     {

@@ -30,7 +30,7 @@
                                 <Border x:Name="Container"
                                         CornerRadius="{Binding WindowCornerRadius, FallbackValue=0}"
                                         Background="{StaticResource WindowBorderBrushKey}"
-                                        BorderThickness="0"  />
+                                        BorderThickness="0" />
 
                                 <!-- Window border and drop shadow -->
                                 <Border CornerRadius="{Binding WindowCornerRadius, FallbackValue=0}"
@@ -49,6 +49,12 @@
 
                                     <!-- Corner clipping -->
                                     <Grid.OpacityMask>
+                                        <!--
+                                        TODO:LATER: VisualBrush error.
+                                        Everything works find, but this error is raised...
+                                        System.Windows.Data Error: 2 : Cannot find governing FrameworkElement or FrameworkContentElement for target element. BindingExpression:(no path); DataItem=null; target element is 'VisualBrush' (HashCode=43603258); target property is 'Visual' (type 'Visual')
+                                        ...cannot find any solution.
+                                        -->
                                         <VisualBrush Visual="{Binding ElementName=Container}" />
                                     </Grid.OpacityMask>
 
