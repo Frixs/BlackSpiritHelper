@@ -139,6 +139,7 @@
                                         Command="{Binding EditTemplateCommand}"
                                         ToolTip="Edit"
                                         FontFamily="{StaticResource FontAwesomeSolid}"
+                                        Visibility="{Binding SelectedTemplate.IsPredefined, Converter={local:BooleanToVisibilityGoneConverter}, ConverterParameter=True}"
                                         FontSize="10"
                                         Width="20"
                                         Height="20">
@@ -160,6 +161,7 @@
                                         Command="{Binding AddTemplateCommand}"
                                         ToolTip="Add New Template"
                                         FontFamily="{StaticResource FontAwesomeSolid}"
+                                        Visibility="{Binding CanAddCustomTemplate, Converter={local:BooleanToVisibilityGoneConverter}}"
                                         FontSize="10"
                                         Width="20"
                                         Height="20">
@@ -178,6 +180,7 @@
                                         Command="{Binding CloneTemplateCommand}"
                                         ToolTip="New Template as Copy"
                                         FontFamily="{StaticResource FontAwesomeSolid}"
+                                        Visibility="{Binding CanAddCustomTemplate, Converter={local:BooleanToVisibilityGoneConverter}}"
                                         FontSize="10"
                                         Width="20"
                                         Height="20">

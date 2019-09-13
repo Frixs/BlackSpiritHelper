@@ -43,6 +43,9 @@ namespace BlackSpiritHelper
                 case ApplicationPage.TimerItemSettingsForm:
                     return new TimerItemSettingsFormPage(viewModel as TimerItemSettingsFormPageViewModel);
 
+                case ApplicationPage.ScheduleTemplateSettingsForm:
+                    return new ScheduleTemplateSettingsFormPage(viewModel as ScheduleTemplateSettingsFormPageViewModel);
+
                 default:
                     // Log it.
                     IoC.Logger.Log("A selected application page value is out of box!", LogLevel.Error);
@@ -82,6 +85,9 @@ namespace BlackSpiritHelper
 
             if (page is TimerItemSettingsFormPage)
                 return ApplicationPage.TimerItemSettingsForm;
+
+            if (page is ScheduleTemplateSettingsFormPage)
+                return ApplicationPage.ScheduleTemplateSettingsForm;
 
             // Log it.
             IoC.Logger.Log("A selected base page value is out of box!", LogLevel.Error);

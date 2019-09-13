@@ -15,6 +15,30 @@ namespace BlackSpiritHelper.Core
     /// </summary>
     public class ScheduleViewModel : DataContentBaseViewModel
     {
+        #region Static Limitation Properties
+
+        /// <summary>
+        /// Max number of custom templates that can be created.
+        /// </summary>
+        public static byte AllowedMaxNoOfCustomTemplates { get; private set; } = 5;
+
+        /// <summary>
+        /// Max number of custom items that can be created.
+        /// </summary>
+        public static byte AllowedMaxNoOfCustomItems { get; private set; } = 32;
+
+        /// <summary>
+        /// Max number of items that can be added to 1 event.
+        /// </summary>
+        public static byte AllowedMaxNoOfItemsInEvent { get; private set; } = 3;
+
+        /// <summary>
+        /// Max number of events in 1 particular day.
+        /// </summary>
+        public static byte AllowedMaxNoOfEventsInDay { get; private set; } = 10;
+
+        #endregion
+
         #region Private Members
 
         /// <summary>
@@ -340,6 +364,18 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public bool ShowInOverlay { get; set; } = false;
 
+        /// <summary>
+        /// Can you add a new custom template?
+        /// </summary>
+        [XmlIgnore]
+        public bool CanAddCustomTemplate => TemplateCustomList.Count < AllowedMaxNoOfCustomTemplates;
+
+        /// <summary>
+        /// Can you add a new custom item?
+        /// </summary>
+        [XmlIgnore]
+        public bool CanAddCustomItem => ItemCustomList.Count < AllowedMaxNoOfCustomItems;
+
         #endregion
 
         #region Commands
@@ -456,7 +492,11 @@ namespace BlackSpiritHelper.Core
         {
             PlayCommand = new RelayCommand(async () => await PlayAsync());
             StopCommand = new RelayCommand(async () => await StopAsync());
+
             // TODO: Custom Template controls.
+            //AddTemplateCommand = new RelayCommand(async () => await OpenTemplateSettingsPageAsync());
+            //CloneTemplateCommand = new RelayCommand(async () => await OpenTemplateSettingsPageAsync());
+            EditTemplateCommand = new RelayCommand(async () => await OpenTemplateSettingsPageAsync());
         }
 
         #endregion
@@ -1221,6 +1261,27 @@ namespace BlackSpiritHelper.Core
                     o => o.Title.ToLower().Trim().Equals(TemplatePredefinedList[i].ToLower())
                     );
             }
+        }
+
+        #endregion
+
+        #region Command Methods
+
+        /// <summary>
+        /// Open template settings page.
+        /// </summary>
+        /// <returns></returns>
+        private async Task OpenTemplateSettingsPageAsync()
+        {
+            // Create Settings View Model with the current template binding.
+            ScheduleTemplateSettingsFormPageViewModel vm = new ScheduleTemplateSettingsFormPageViewModel
+            {
+                //TimerItemDataViewModel = SelectedTemplate,
+            };
+
+            IoC.Application.GoToPage(ApplicationPage.ScheduleTemplateSettingsForm, vm);
+
+            await Task.Delay(1);
         }
 
         #endregion

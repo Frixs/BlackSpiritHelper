@@ -213,6 +213,9 @@
     <Compile Include="Pages\Content\WatchdogPage.xaml.cs">
       <DependentUpon>WatchdogPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Management\ScheduleTemplateSettingsFormPage.xaml.cs">
+      <DependentUpon>ScheduleTemplateSettingsFormPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Management\TimerGroupSettingsFormPage.xaml.cs">
       <DependentUpon>TimerGroupSettingsFormPage.xaml</DependentUpon>
     </Compile>
@@ -329,6 +332,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Content\WatchdogPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Management\ScheduleTemplateSettingsFormPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

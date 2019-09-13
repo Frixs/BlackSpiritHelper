@@ -56,5 +56,10 @@ namespace BlackSpiritHelper.Core
         /// The timer item settings form.
         /// </summary>
         TimerItemSettingsForm = 101,
+
+        /// <summary>
+        /// The schedule template settings form.
+        /// </summary>
+        ScheduleTemplateSettingsForm = 102,
     }
 }
