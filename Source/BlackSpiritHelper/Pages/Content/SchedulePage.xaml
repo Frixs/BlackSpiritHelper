@@ -10,7 +10,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SchedulePage">
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto"
+    <ScrollViewer VerticalScrollBarVisibility="Auto" d:DesignStyle="{StaticResource WindowBackgroundControlStyle}"
                   DataContext="{Binding ApplicationDataContent.ScheduleDesignModel,
                                 Source={x:Static local:ViewModelLocator.Instance}}">
 

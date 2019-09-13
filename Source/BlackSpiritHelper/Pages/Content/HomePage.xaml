@@ -10,7 +10,7 @@
       Title="HomePage">
 
     <Border>
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" d:DesignStyle="{StaticResource WindowBackgroundControlStyle}">
 
             <Border Padding="10">
                 <StackPanel Orientation="Vertical"
@@ -37,7 +37,7 @@
                                Margin="0 0 0 5" />
 
                     <!-- Information Buttons -->
-                    <StackPanel Orientation="Horizontal" Margin="0 0 0 30"
+                    <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Center">
                         <!-- Get Started Button -->
                         <Button Content="How it works?"
@@ -47,13 +47,16 @@
                                 HorizontalAlignment="Center" />
                     </StackPanel>
 
+                    <!-- Spacer -->
+                    <Border Style="{StaticResource FormItemSpacer}" />
+                    
                     <!-- Support Subtitle -->
                     <TextBlock Text="Support"
                                Style="{StaticResource FormSubtitle}"
                                TextAlignment="Center"
                                Margin="0 0 0 5" />
 
-                    <!-- Description -->
+                    <!-- Support Description -->
                     <TextBlock Text="I will be very grateful and happy for any form of support from you. :-)"
                                MaxWidth="400"
                                TextWrapping="Wrap"
@@ -68,27 +71,31 @@
                             Command="{Binding AuthorDonateLinkCommand}"
                             Style="{StaticResource DonateButton}"
                             Padding="15 10"
-                            Width="175"
-                            Margin="0 0 0 30"/>
+                            Width="175"/>
 
+                    <!-- Spacer -->
+                    <Border Style="{StaticResource FormItemSpacer}" />
+                    
                     <!-- Feedback Subtitle -->
                     <TextBlock Text="Feedback"
                                Style="{StaticResource FormSubtitle}"
                                TextAlignment="Center"
                                Margin="0 0 0 5" />
 
-                    <!-- Description -->
+                    <!-- Feedback Description -->
                     <TextBlock Text="Do you have an idea, how to improve the application? You can use contact information below to send your idea to the author!"
                                MaxWidth="400"
                                TextWrapping="Wrap"
                                FontFamily="{StaticResource LatoLightItalic}"
                                FontSize="14"
                                Foreground="{StaticResource FormTitleForegroundAltBrushKey}"
-                               TextAlignment="Center"
-                               Margin="0 0 0 30"/>
+                               TextAlignment="Center" />
 
+                    <!-- Spacer -->
+                    <Border Style="{StaticResource FormItemSpacer}" />
+                    
                     <!-- Contacts -->
-                    <StackPanel Orientation="Horizontal" Margin="0 0 0 30"
+                    <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Center">
                         <!-- Discord contact -->
                         <StackPanel Orientation="Horizontal" Margin="20 0">
@@ -124,10 +131,15 @@
                         </StackPanel>
                     </StackPanel>
 
-                    <!-- Line spacer -->
-                    <Border Margin="0 0 0 30" 
-                            Style="{StaticResource FormSpacer}"/>
+                    <!-- Spacer -->
+                    <Border Style="{StaticResource FormItemSpacer}" />
+                    
+                    <!-- Line separator -->
+                    <Border Style="{StaticResource LineSeparator}"/>
 
+                    <!-- Spacer -->
+                    <Border Style="{StaticResource FormItemSpacer}" />
+                    
                     <!-- Title - Credits -->
                     <TextBlock Text="Credits"
                                Style="{StaticResource FormTitle}"
@@ -149,7 +161,7 @@
                                TextAlignment="Center"
                                Margin="0 0 0 5"/>
 
-                    <StackPanel Orientation="Horizontal" Margin="0 0 0 30"
+                    <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Center">
                         <!-- Author Webpage Link -->
                         <Button Content="{StaticResource FontAwesomeGitHubIcon}"
@@ -166,6 +178,9 @@
                                 Margin="10 0 0 0"/>
                     </StackPanel>
 
+                    <!-- Spacer -->
+                    <Border Style="{StaticResource FormItemSpacer}" />
+                    
                     <!-- Form Subtitle - Version -->
                     <TextBlock Text="Version"
                                Style="{StaticResource FormSubtitle}"

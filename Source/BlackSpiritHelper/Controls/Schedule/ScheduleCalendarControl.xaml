@@ -145,7 +145,10 @@
                                                                                    VerticalAlignment="Top"
                                                                                    HorizontalAlignment="Center"
                                                                                    Margin="10 10 10 5" />
-                                                                        <Border Style="{StaticResource FormSpacer}"/>
+                                                                        <!-- Line Separator -->
+                                                                        <Border Style="{StaticResource LineSeparator}"
+                                                                                Margin="0"/>
+                                                                        <!-- Item Presenter -->
                                                                         <ItemsPresenter Margin="10 5 10 10"
                                                                                         VerticalAlignment="Bottom"
                                                                                         HorizontalAlignment="Center"

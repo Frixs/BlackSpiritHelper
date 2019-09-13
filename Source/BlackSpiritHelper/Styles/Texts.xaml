@@ -25,16 +25,17 @@
         <Setter Property="Foreground" Value="{StaticResource FormSubtitleForegroundBrushKey}" />
     </Style>
 
-    <!-- Form Spacer -->
-    <Style TargetType="{x:Type Border}" x:Key="FormSpacer">
+    <!-- Line Separator -->
+    <Style TargetType="{x:Type Border}" x:Key="LineSeparator">
         <Setter Property="SnapsToDevicePixels" Value="False" />
+        <Setter Property="Margin" Value="0 10 0 10" />
         <Setter Property="BorderThickness" Value="0 0 0 0.2" />
         <Setter Property="BorderBrush">
             <Setter.Value>
                 <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 0">
-                    <GradientStop Color="{StaticResource LineSpacer0Background}" Offset="0.0" />
-                    <GradientStop Color="{StaticResource LineSpacer1Background}" Offset="0.5" />
-                    <GradientStop Color="{StaticResource LineSpacer0Background}" Offset="1.0" />
+                    <GradientStop Color="{StaticResource LineSeparator0Background}" Offset="0.0" />
+                    <GradientStop Color="{StaticResource LineSeparator1Background}" Offset="0.5" />
+                    <GradientStop Color="{StaticResource LineSeparator0Background}" Offset="1.0" />
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>
@@ -46,7 +47,7 @@
         <Setter Property="FontSize" Value="14" />
         <Setter Property="FontFamily" Value="{StaticResource LatoRegular}" />
         <Setter Property="Padding" Value="10" />
-        <Setter Property="Margin" Value="0 5 0 5" />
+        <Setter Property="Margin" Value="0" />
         <Setter Property="BorderBrush" Value="{StaticResource TextBoxLineBackgroundBrushKey}" />
         <Setter Property="BorderThickness" Value="0 0 0 1" />
 
