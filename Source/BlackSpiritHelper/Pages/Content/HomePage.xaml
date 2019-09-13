@@ -78,7 +78,7 @@
                                Margin="0 0 0 5" />
 
                     <!-- Description -->
-                    <TextBlock Text="Do you have an idea, how to improve the application? You can use contact information below to send your idea to author!"
+                    <TextBlock Text="Do you have an idea, how to improve the application? You can use contact information below to send your idea to the author!"
                                MaxWidth="400"
                                TextWrapping="Wrap"
                                FontFamily="{StaticResource LatoLightItalic}"
