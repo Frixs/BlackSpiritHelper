@@ -5,6 +5,9 @@ using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
 {
+    /// <summary>
+    /// Represents the schedule time item - only the name without time - Like Karanda, Nouver etc.
+    /// </summary>
     public class ScheduleItemDataViewModel : BaseViewModel
     {
         #region Private Properties

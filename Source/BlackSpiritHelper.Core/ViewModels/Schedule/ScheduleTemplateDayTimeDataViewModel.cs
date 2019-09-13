@@ -5,6 +5,7 @@ using System.Xml.Serialization;
 namespace BlackSpiritHelper.Core
 {
     /// <summary>
+    /// Wrapper of <see cref="ScheduleItemDataViewModel"/> for schedule presenter with particular time.
     /// Previous <see cref="ScheduleTemplateDayDataViewModel"/>.
     /// </summary>
     public class ScheduleTemplateDayTimeDataViewModel : BaseViewModel

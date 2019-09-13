@@ -130,7 +130,7 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Flag that disable possibility to user to change template to another one till the loading of template is done.
+        /// Flag that disable possibility (is set to TRUE) to user to change template to another one till the loading of template is done (FALSE).
         /// </summary>
         [XmlIgnore]
         public bool SelectingTemplateFlag { get; private set; } = false;
