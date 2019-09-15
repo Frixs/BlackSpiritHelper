@@ -81,6 +81,6 @@ namespace BlackSpiritHelper.Core
         /// Thailand.
         /// </summary>
         [Description("Taipei Standard Time")]
-        TW = 18,
+        TW = 19,
     }
 }

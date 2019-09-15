@@ -39,9 +39,24 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public string Title { get; set; }
 
+        /// <summary>
+        /// TimeZoneRegion binding.
+        /// </summary>
+        public TimeZoneRegion TimeZoneRegion { get; set; }
+
         #endregion
 
         #region Commands
+
+        /// <summary>
+        /// The command to save changes.
+        /// </summary>
+        public ICommand SaveChangesCommand { get; set; }
+
+        /// <summary>
+        /// The command to delete templatep.
+        /// </summary>
+        public ICommand DeleteCommand { get; set; }
 
         /// <summary>
         /// The command to go back to the schedule page.
@@ -70,6 +85,7 @@ namespace BlackSpiritHelper.Core
                 return;
 
             Title = ScheduleTemplateDataViewModel.Title;
+            TimeZoneRegion = ScheduleTemplateDataViewModel.TimeZoneRegion;
         }
 
         #endregion
@@ -81,7 +97,25 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void CreateCommands()
         {
+            SaveChangesCommand = new RelayCommand(() => SaveChanges());
+            DeleteCommand = new RelayCommand(() => DeleteTemplate());
             GoBackCommand = new RelayCommand(() => GoBack());
+        }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        private void DeleteTemplate()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        private void SaveChanges()
+        {
+            Console.WriteLine(TimeZoneRegion.ToString() + " " + TimeZoneRegion.GetDescription());
         }
 
         /// <summary>

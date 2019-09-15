@@ -56,7 +56,53 @@
                     </TextBox>
 
                     <!-- Spacer -->
-                    <Border Style="{StaticResource FormInputVerSpacer}" />
+                    <Border Style="{StaticResource FormItemSpacer}" />
+
+                    <!-- Change Group -->
+                    <TextBlock Text="Time Zone Region"
+                               FontFamily="{StaticResource LatoRegular}"
+                               Foreground="{StaticResource ForegroundBrushKey}"
+                               FontSize="14"
+                               Margin="0 0 0 5"/>
+                    <ComboBox Name="TimeZoneRegionComboBox"
+                              HorizontalAlignment="Center"
+                              Tag="{Binding TimeZoneRegion}">
+                        <ComboBox.SelectedItem>
+                            <Binding Path="TimeZoneRegion"
+                                     UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <core:ScheduleTimeZoneRegionRule ValidationStep="UpdatedValue" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={local:ScheduleTimeZoneRegionConverter}}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <!-- Spacer -->
+                    <Border Style="{StaticResource FormItemSpacer}" />
+
+                    
+                    
+                    <!-- Spacer -->
+                    <Border Style="{StaticResource FormSectionSpacer}" />
+
+                    <!-- Save Changes Button -->
+                    <Button Content="SAVE CHANGES"
+                            Command="{Binding SaveChangesCommand}"
+                            Style="{StaticResource RegularButton}"
+                            Padding="10"/>
+
+                    <!-- Line separator -->
+                    <Border Style="{StaticResource LineSeparator}"/>
+
+                    <!-- Delete Timer Button -->
+                    <Button Content="Delete Template"
+                            Style="{StaticResource RegularTextButtonRed}"
+                            Command="{Binding DeleteCommand}"/>
 
                 </StackPanel>
             </Grid>

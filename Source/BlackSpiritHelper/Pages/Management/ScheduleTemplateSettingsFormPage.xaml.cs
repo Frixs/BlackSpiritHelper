@@ -1,4 +1,7 @@
 ﻿using BlackSpiritHelper.Core;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BlackSpiritHelper
 {
@@ -22,6 +25,18 @@ namespace BlackSpiritHelper
         public ScheduleTemplateSettingsFormPage(ScheduleTemplateSettingsFormPageViewModel specificViewModel) : base(specificViewModel)
         {
             InitializeComponent();
+
+            // Set ComboBox ItemsSource.
+            // While changing rules, do not forget to change list in ScheduleTimeZoneRegionRule.
+            var items = Enum.GetValues(typeof(TimeZoneRegion));
+            List<TimeZoneRegion> list = new List<TimeZoneRegion>();
+            for (int i = 0; i < items.Length; i++)
+            {
+                if (((TimeZoneRegion)items.GetValue(i)) > 0)
+                    list.Add((TimeZoneRegion)items.GetValue(i));
+            }
+            TimeZoneRegionComboBox.ItemsSource = list;
+            TimeZoneRegionComboBox.SelectedIndex = (int)TimeZoneRegionComboBox.Tag;
         }
     }
 }
