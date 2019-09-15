@@ -475,24 +475,6 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
-        #region Command Methods
-
-        /// <summary>
-        /// Create commands.
-        /// </summary>
-        private void CreateCommands()
-        {
-            PlayCommand = new RelayCommand(async () => await PlayAsync());
-            StopCommand = new RelayCommand(async () => await StopAsync());
-
-            AddTemplateCommand = new RelayCommand(async () => await CmdAddTemplateAsync());
-            CloneTemplateCommand = new RelayCommand(async () => await CmdCloneTemplateAsync());
-            EditTemplateCommand = new RelayCommand(async () => await CmdOpenTemplateSettingsPageAsync());
-            ManageItemsCommand = new RelayCommand(async () => await CmdOpenItemsSettingsPageAsync());
-        }
-
-        #endregion
-
         #region Timer Methods
 
         /// <summary>
@@ -1301,10 +1283,24 @@ namespace BlackSpiritHelper.Core
         #region Command Methods
 
         /// <summary>
+        /// Create commands.
+        /// </summary>
+        private void CreateCommands()
+        {
+            PlayCommand = new RelayCommand(async () => await PlayAsync());
+            StopCommand = new RelayCommand(async () => await StopAsync());
+
+            AddTemplateCommand = new RelayCommand(async () => await AddTemplateAsync());
+            CloneTemplateCommand = new RelayCommand(async () => await CloneTemplateAsync());
+            EditTemplateCommand = new RelayCommand(async () => await OpenTemplateSettingsPageAsync());
+            ManageItemsCommand = new RelayCommand(async () => await OpenItemsSettingsPageAsync());
+        }
+
+        /// <summary>
         /// Open template settings page.
         /// </summary>
         /// <returns></returns>
-        private async Task CmdOpenTemplateSettingsPageAsync()
+        private async Task OpenTemplateSettingsPageAsync()
         {
             if (SelectedTemplate.IsPredefined)
                 return;
@@ -1321,10 +1317,10 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Add a new empty template.
+        /// Add a new empty template to custom list.
         /// </summary>
         /// <returns></returns>
-        private async Task CmdAddTemplateAsync()
+        private async Task AddTemplateAsync()
         {
             if (!CanAddCustomTemplate)
                 return;
@@ -1361,15 +1357,17 @@ namespace BlackSpiritHelper.Core
 
             // Update template title list presenter.
             SetTemplateTitleListPresenter();
+            // Update GUI.
+            OnPropertyChanged(nameof(CanAddCustomTemplate));
 
             await Task.Delay(1);
         }
 
         /// <summary>
-        /// Clone a new template.
+        /// Clone a new template as a custom template.
         /// </summary>
         /// <returns></returns>
-        private async Task CmdCloneTemplateAsync()
+        private async Task CloneTemplateAsync()
         {
             if (!CanAddCustomTemplate)
                 return;
@@ -1435,6 +1433,8 @@ namespace BlackSpiritHelper.Core
 
             // Update template title list presenter.
             SetTemplateTitleListPresenter();
+            // Update GUI.
+            OnPropertyChanged(nameof(CanAddCustomTemplate));
 
             await Task.Delay(1);
         }
@@ -1443,7 +1443,7 @@ namespace BlackSpiritHelper.Core
         /// TODO: Custom items
         /// </summary>
         /// <returns></returns>
-        private async Task CmdOpenItemsSettingsPageAsync()
+        private async Task OpenItemsSettingsPageAsync()
         {
             await Task.Delay(1);
         }
