@@ -9,7 +9,58 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ScheduleTemplateSettingsFormPage">
 
-    <Grid>
-        <TextBlock Text="TODO!" />
-    </Grid>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" d:DesignStyle="{StaticResource WindowBackgroundControlStyle}">
+        <Border Padding="10">
+
+            <Grid HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Width="400">
+
+                <!-- Go Back Button -->
+                <Button Content="{StaticResource FontAwesomeArrowLeftIcon}"
+                        Command="{Binding GoBackCommand}"
+                        Style="{StaticResource RegularButtonLight}" 
+                        FontFamily="{StaticResource FontAwesomeSolid}"
+                        Width="30"
+                        Height="30"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Panel.ZIndex="1"
+                        />
+
+                <!-- Form -->
+                <StackPanel TextBlock.TextAlignment="Center">
+
+                    <!-- Form Title -->
+                    <TextBlock Text="Settings"
+                               Style="{StaticResource FormTitle}" />
+
+                    <!-- Form Subtitle -->
+                    <TextBlock Text="Schedule Template"
+                               Style="{StaticResource FormSubtitle}" />
+
+                    <!-- Spacer -->
+                    <Border Style="{StaticResource FormSectionSpacer}" />
+
+                    <!-- Schedule Title -->
+                    <TextBox Tag="Title"
+                             MaxLength="{Binding ScheduleTemplateDataViewModel.AllowedTitleMaxLength}">
+                        <TextBox.Text>
+                            <Binding Path="Title"
+                                     UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <core:ScheduleTitleRule ValidationStep="UpdatedValue" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <!-- Spacer -->
+                    <Border Style="{StaticResource FormInputVerSpacer}" />
+
+                </StackPanel>
+            </Grid>
+            
+        </Border>
+    </ScrollViewer>
 </local:BasePage>

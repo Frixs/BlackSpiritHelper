@@ -1,9 +1,15 @@
-﻿namespace BlackSpiritHelper.Core
+﻿using System;
+using System.Windows.Input;
+
+namespace BlackSpiritHelper.Core
 {
     public class ScheduleTemplateSettingsFormPageViewModel : BaseViewModel
     {
         #region Private Members
 
+        /// <summary>
+        /// Schedule template associated to this settings.
+        /// </summary>
         private ScheduleTemplateDataViewModel mScheduleTemplateDataViewModel = null;
 
         #endregion
@@ -28,7 +34,19 @@
             }
         }
 
+        /// <summary>
+        /// Title binding.
+        /// </summary>
+        public string Title { get; set; }
 
+        #endregion
+
+        #region Commands
+
+        /// <summary>
+        /// The command to go back to the schedule page.
+        /// </summary>
+        public ICommand GoBackCommand { get; set; }
 
         #endregion
 
@@ -39,6 +57,8 @@
         /// </summary>
         public ScheduleTemplateSettingsFormPageViewModel()
         {
+            // Create commands.
+            CreateCommands();
         }
 
         /// <summary>
@@ -49,7 +69,28 @@
             if (ScheduleTemplateDataViewModel == null)
                 return;
 
-            //Title = ScheduleTemplateDataViewModel.Title;
+            Title = ScheduleTemplateDataViewModel.Title;
+        }
+
+        #endregion
+
+        #region Command Methods
+
+        /// <summary>
+        /// Create commands.
+        /// </summary>
+        private void CreateCommands()
+        {
+            GoBackCommand = new RelayCommand(() => GoBack());
+        }
+
+        /// <summary>
+        /// Back back command.
+        /// </summary>
+        private void GoBack()
+        {
+            // Move back to the page.
+            IoC.Application.GoToPage(ApplicationPage.Schedule);
         }
 
         #endregion

@@ -114,7 +114,8 @@
     <Compile Include="ValidationRules\Timer\TimerShowInOverlayRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerAssociatedGroupViewModelRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerGroupTitleRule.cs" />
-    <Compile Include="ValidationRules\Timer\BaseRule.cs" />
+    <Compile Include="ValidationRules\BaseRule.cs" />
+    <Compile Include="ValidationRules\Schedule\ScheduleTitleRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerTitleRule.cs" />
     <Compile Include="ViewModels\Application\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ProgressDialogViewModel.cs" />
@@ -157,7 +158,7 @@
     <Compile Include="ViewModels\Timer\Form\Design\TimerItemSettingsFormPageDesignModel.cs" />
     <Compile Include="ViewModels\Timer\Form\TimerGroupSettingsFormPageViewModel.cs" />
     <Compile Include="ViewModels\Timer\Form\TimerItemSettingsFormPageViewModel.cs" />
-    <Compile Include="ViewModels\Timer\TimerPageViewModel.cs" />
+    <Compile Include="ViewModels\Timer\Content\TimerPageViewModel.cs" />
     <Compile Include="ViewModels\Home\HomePageViewModel.cs" />
     <Compile Include="ViewModels\SideMenu\Design\SideMenuControlDesignModel.cs" />
     <Compile Include="ViewModels\SideMenu\SideMenuListItemControlViewModel.cs" />

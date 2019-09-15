@@ -15,6 +15,20 @@ namespace BlackSpiritHelper.Core
     /// </summary>
     public class ScheduleTemplateDataViewModel : BaseViewModel
     {
+        #region Static Limitation Properties
+
+        /// <summary>
+        /// Max <see cref="Title"/> length rule.
+        /// </summary>
+        public static byte AllowedTitleMaxLength { get; private set; } = 10;
+
+        /// <summary>
+        /// Min <see cref="Title"/> length rule.
+        /// </summary>
+        public static byte AllowedTitleMinLength { get; private set; } = 3;
+
+        #endregion
+
         #region Private Members
 
         /// <summary>

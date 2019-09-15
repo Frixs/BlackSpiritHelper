@@ -10,19 +10,22 @@ namespace BlackSpiritHelper.Core
         /// <param name="input">The string.</param>
         /// <param name="underscores">Are underscores allowed?</param>
         /// <param name="spaces">Are spaces allowed?</param>
+        /// <param name="dashes">Are dashes allowed?</param>
         /// <returns></returns>
-        public static bool CheckAlphanumeric(this string input, bool underscores = false, bool spaces = false)
+        public static bool CheckAlphanumeric(this string input, bool underscores = false, bool spaces = false, bool dashes = false)
         {
-            if (underscores && spaces)
-                return Regex.IsMatch(input, @"^[a-zA-Z0-9_ ]+$");
+            string regChars = "";
 
             if (underscores)
-                return Regex.IsMatch(input, @"^[a-zA-Z0-9_]+$");
+                regChars += "_";
 
             if (spaces)
-                return Regex.IsMatch(input, @"^[a-zA-Z0-9 ]+$");
+                regChars += " ";
 
-            return Regex.IsMatch(input, @"^[a-zA-Z0-9_]+$");
+            if (dashes)
+                regChars += "-";
+
+            return Regex.IsMatch(input, @"^[a-zA-Z0-9" + regChars + @"]+$");
         }
 
         /// <summary>
