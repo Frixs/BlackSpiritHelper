@@ -184,18 +184,7 @@ namespace BlackSpiritHelper.Core
         /// <see cref="SelectedTemplateSetter"/> is using this to interact with GUI.
         /// </summary>
         [XmlIgnore]
-        public List<string> TemplateTitleListPresenter
-        {
-            get
-            {
-                var l = new List<string>(TemplatePredefinedList.Count + TemplateCustomList.Count);
-                for (int i = 0; i < TemplatePredefinedList.Count; i++)
-                    l.Add('*' + TemplatePredefinedList[i]);
-                for (int i = 0; i < TemplateCustomList.Count; i++)
-                    l.Add(TemplateCustomList[i].Title);
-                return l;
-            }
-        }
+        public ObservableCollection<string> TemplateTitleListPresenter { get; } = new ObservableCollection<string>();
 
         /// <summary>
         /// Item list, predefined.
@@ -451,6 +440,9 @@ namespace BlackSpiritHelper.Core
             // Initialize custom templates.
             for (int i = 0; i < TemplateCustomList.Count; i++)
                 TemplateCustomList[i].Init();
+
+            // Set template title list presenter.
+            SetTemplateTitleListPresenter();
 
             // Select template.
             SelectTemplateByName(SelectedTemplateTitle);
@@ -1285,6 +1277,25 @@ namespace BlackSpiritHelper.Core
             return titlePrefix + titleNumber;
         }
 
+        /// <summary>
+        /// Set <see cref="TemplateTitleListPresenter"/>.
+        /// </summary>
+        private void SetTemplateTitleListPresenter()
+        {
+            for (int i = 0; i < TemplatePredefinedList.Count; i++)
+            {
+                var title = '*' + TemplatePredefinedList[i];
+                if (!TemplateTitleListPresenter.Contains(title))
+                    TemplateTitleListPresenter.Add(title);
+            }
+            for (int i = 0; i < TemplateCustomList.Count; i++)
+            {
+                var title = TemplateCustomList[i].Title;
+                if (!TemplateTitleListPresenter.Contains(title))
+                    TemplateTitleListPresenter.Add(title);
+            }
+        }
+
         #endregion
 
         #region Command Methods
@@ -1295,6 +1306,9 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task CmdOpenTemplateSettingsPageAsync()
         {
+            if (SelectedTemplate.IsPredefined)
+                return;
+
             // Create Settings View Model with the current template binding.
             ScheduleTemplateSettingsFormPageViewModel vm = new ScheduleTemplateSettingsFormPageViewModel
             {
@@ -1312,6 +1326,9 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task CmdAddTemplateAsync()
         {
+            if (!CanAddCustomTemplate)
+                return;
+
             // Create (new) empty template.
             ObservableCollection<ScheduleTemplateDayDataViewModel> schedule = new ObservableCollection<ScheduleTemplateDayDataViewModel>();
             foreach (DayOfWeek day in (DayOfWeek[])Enum.GetValues(typeof(DayOfWeek)))
@@ -1342,6 +1359,9 @@ namespace BlackSpiritHelper.Core
             // Select the template.
             SelectTemplateByName(vm.Title);
 
+            // Update template title list presenter.
+            SetTemplateTitleListPresenter();
+
             await Task.Delay(1);
         }
 
@@ -1351,6 +1371,11 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task CmdCloneTemplateAsync()
         {
+            if (!CanAddCustomTemplate)
+                return;
+
+            string prefix = "-COPY-";
+
             // Deep Copy Schedule.
             ObservableCollection<ScheduleTemplateDayDataViewModel> schedule = new ObservableCollection<ScheduleTemplateDayDataViewModel>();
             for (int i = 0; i < SelectedTemplate.Schedule.Count; i++)
@@ -1387,7 +1412,11 @@ namespace BlackSpiritHelper.Core
             ScheduleTemplateDataViewModel vm = new ScheduleTemplateDataViewModel
             {
                 LastModifiedString = DateTime.Now.ToString("yyyy-MM-dd"),
-                Title = GetTemplateRandomTitle(SelectedTemplate.Title + "-COPY-"),
+                Title = GetTemplateRandomTitle(
+                    SelectedTemplate.Title.Contains(prefix) 
+                    ? SelectedTemplate.Title.Substring(0, SelectedTemplate.Title.Length - 1) 
+                    : SelectedTemplate.Title + prefix
+                    ),
                 TimeZoneRegion = SelectedTemplate.TimeZoneRegion,
                 Schedule = schedule,
             };
@@ -1404,8 +1433,8 @@ namespace BlackSpiritHelper.Core
             // Select the template.
             SelectTemplateByName(vm.Title);
 
-            // TODO:
-            //OnPropertyChanged(TemplateTitleListPresenter);
+            // Update template title list presenter.
+            SetTemplateTitleListPresenter();
 
             await Task.Delay(1);
         }
