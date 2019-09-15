@@ -9,7 +9,7 @@ namespace BlackSpiritHelper.Core
     public static class ObjectExtensionMethods
     {
         /// <summary>
-        /// Depp copy object.
+        /// Deep copy object.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="objSource"></param>

@@ -53,11 +53,11 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public string LastModifiedString
         {
-            get => new DateTime(LastModifiedTicks).ToString("MM/dd/yyyy");
+            get => new DateTime(LastModifiedTicks).ToString("yyyy-MM-dd");
             set
             {
                 DateTime date;
-                DateTime.TryParseExact(value, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
+                DateTime.TryParseExact(value, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
                 LastModifiedTicks = date.Ticks;
             }
         }

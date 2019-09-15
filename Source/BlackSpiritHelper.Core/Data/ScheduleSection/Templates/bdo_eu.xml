@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ScheduleTemplateDataViewModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <LastModifiedString>09/06/2019</LastModifiedString>
+  <LastModifiedString>2019-09-06</LastModifiedString>
   <Title>BDO-EU</Title>
   <TimeZoneRegion>EU</TimeZoneRegion>
   <Schedule>

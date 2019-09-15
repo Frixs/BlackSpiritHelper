@@ -493,10 +493,10 @@ namespace BlackSpiritHelper.Core
             PlayCommand = new RelayCommand(async () => await PlayAsync());
             StopCommand = new RelayCommand(async () => await StopAsync());
 
-            // TODO: Custom Template controls.
-            //AddTemplateCommand = new RelayCommand(async () => await OpenTemplateSettingsPageAsync());
-            //CloneTemplateCommand = new RelayCommand(async () => await OpenTemplateSettingsPageAsync());
-            EditTemplateCommand = new RelayCommand(async () => await OpenTemplateSettingsPageAsync());
+            AddTemplateCommand = new RelayCommand(async () => await CmdAddTemplateAsync());
+            CloneTemplateCommand = new RelayCommand(async () => await CmdCloneTemplateAsync());
+            EditTemplateCommand = new RelayCommand(async () => await CmdOpenTemplateSettingsPageAsync());
+            ManageItemsCommand = new RelayCommand(async () => await CmdOpenItemsSettingsPageAsync());
         }
 
         #endregion
@@ -644,9 +644,10 @@ namespace BlackSpiritHelper.Core
             // Set notification possibility to default.
             mNotificateNextTarget = false;
 
-            do {
+            do
+            {
                 DateTime todayWeek = goToNextWeek ? today.AddDays(7) : today;
-                
+
                 // Get.
                 for (int iDay = 0; iDay < SelectedTemplate.Schedule.Count; iDay++)
                 {
@@ -693,7 +694,7 @@ namespace BlackSpiritHelper.Core
 
             // Set new countdown time.
             mTimeLeft = lastMatchingDate.UtcDateTime - nowUtc;
-            
+
             // Set time items.
             // Clear list first.
             await IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
@@ -722,7 +723,7 @@ namespace BlackSpiritHelper.Core
                     IoC.Logger.Log("No item found!", LogLevel.Warning);
                 }
             }
-            
+
             // Update notification triggers.
             TimerSetNotificationEventTriggers(mTimeLeft);
         }
@@ -775,7 +776,7 @@ namespace BlackSpiritHelper.Core
                 mIsFiredNotificationEvent[0] = true;
                 IoC.Audio.Play(AudioType.AlertLongBefore, AudioPriorityBracket.Pack);
             }
-            
+
             // ------------------------------
             // 2nd Bracket.
             // ------------------------------
@@ -785,7 +786,7 @@ namespace BlackSpiritHelper.Core
                 TimerTryToDeactivateWarningUI();
                 return;
             }
-            
+
             // Fire notification event.
             if (!mIsFiredNotificationEvent[1])
             {
@@ -890,6 +891,24 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
+        /// Is item ignored.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public bool IsItemIgnored(ScheduleItemDataViewModel item)
+        {
+            if (item == null)
+            {
+                IoC.Logger.Log("Item not defined!", LogLevel.Error);
+                return false;
+            }
+
+            if (ItemIgnoredList.Contains(item.Name))
+                return true;
+            return false;
+        }
+
+        /// <summary>
         /// Get item by name.
         /// </summary>
         /// <param name="name"></param>
@@ -917,70 +936,10 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Is item ignored.
-        /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
-        public bool IsItemIgnored(ScheduleItemDataViewModel item)
-        {
-            if (item == null)
-            {
-                IoC.Logger.Log("Item not defined!", LogLevel.Error);
-                return false;
-            }
-
-            if (ItemIgnoredList.Contains(item.Name))
-                return true;
-            return false;
-        }
-
-        /// <summary>
-        /// Add a new custom template.
-        /// </summary>
-        /// <param name="template"></param>
-        /// <returns></returns>
-        public ScheduleTemplateDataViewModel AddCustomTemplate(ScheduleTemplateDataViewModel template)
-        {
-            if (template == null || string.IsNullOrEmpty(template.Title))
-            {
-                IoC.Logger.Log("Template not defined!", LogLevel.Error);
-                return null;
-            }
-
-            if (IsTemplateAlreadyDefined(template.Title))
-            {
-                IoC.Logger.Log("Template is already defined!", LogLevel.Debug);
-                return null;
-            }
-
-            TemplateCustomList.Add(template);
-            IoC.Logger.Log($"Added new custom template '{template.Title}'.", LogLevel.Info);
-
-            return template;
-        }
-
-        /// <summary>
-        /// Check if the template is already defined.
-        /// </summary>
-        /// <param name="title"></param>
-        /// <returns></returns>
-        public bool IsTemplateAlreadyDefined(string title)
-        {
-            if (TemplatePredefinedList.Contains(title))
-                return true;
-
-            var t = title.ToLower().Trim();
-            if (TemplateCustomList != null && TemplateCustomList.FirstOrDefault(o => o.Title.ToLower().Equals(t)) != null)
-                return true;
-
-            return false;
-        }
-
-        /// <summary>
         /// Get template by title.
         /// </summary>
         /// <param name="title"></param>
-        /// <returns></returns>
+        /// <returns><see cref="ScheduleTemplateDataViewModel"/> or null</returns>
         public ScheduleTemplateDataViewModel GetTemplateByName(string title)
         {
             if (TemplatePredefinedList.Contains(title))
@@ -1056,7 +1015,7 @@ namespace BlackSpiritHelper.Core
                     }
 
                     time.IsMarkedAsIgnored = true;
-                    
+
                     for (int iItem = 0; iItem < time.ItemListPresenter.Count; iItem++)
                     {
                         if (!ItemIgnoredList.Contains(time.ItemListPresenter[iItem].Name))
@@ -1114,6 +1073,31 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
+        /// Add a new custom template.
+        /// </summary>
+        /// <param name="template"></param>
+        /// <returns><see cref="ScheduleTemplateDataViewModel"/> or null</returns>
+        public ScheduleTemplateDataViewModel AddCustomTemplate(ScheduleTemplateDataViewModel template)
+        {
+            if (template == null || string.IsNullOrEmpty(template.Title))
+            {
+                IoC.Logger.Log("Template not defined!", LogLevel.Error);
+                return null;
+            }
+
+            if (IsTemplateAlreadyDefined(template.Title))
+            {
+                IoC.Logger.Log("Template is already defined!", LogLevel.Debug);
+                return null;
+            }
+
+            TemplateCustomList.Add(template);
+            IoC.Logger.Log($"Added new custom template '{template.Title}'.", LogLevel.Info);
+
+            return template;
+        }
+
+        /// <summary>
         /// Add predefined template.
         /// </summary>
         protected void AddPredefinedTemplate(string title)
@@ -1125,25 +1109,6 @@ namespace BlackSpiritHelper.Core
                 return;
 
             TemplatePredefinedList.Add(title.Trim());
-        }
-
-        /// <summary>
-        /// Select template by title.
-        /// </summary>
-        /// <param name="title"></param>
-        private void SelectTemplateByName(string title)
-        {
-            var template = GetTemplateByName(title);
-            if (template == null)
-            {
-                IoC.Logger.Log("Unable to load desired template!", LogLevel.Warning);
-                IoC.Logger.Log("Trying to load the first found template...", LogLevel.Info);
-                template = GetTemplateByName();
-            }
-
-            if (template == null)
-                IoC.Logger.Log("Unable to load any template!", LogLevel.Warning);
-            SelectedTemplate = template;
         }
 
         /// <summary>
@@ -1188,6 +1153,42 @@ namespace BlackSpiritHelper.Core
             }
 
             return ret;
+        }
+
+        /// <summary>
+        /// Select template by title.
+        /// </summary>
+        /// <param name="title"></param>
+        private void SelectTemplateByName(string title)
+        {
+            var template = GetTemplateByName(title);
+            if (template == null)
+            {
+                IoC.Logger.Log("Unable to load desired template!", LogLevel.Warning);
+                IoC.Logger.Log("Trying to load the first found template...", LogLevel.Info);
+                template = GetTemplateByName();
+            }
+
+            if (template == null)
+                IoC.Logger.Log("Unable to load any template!", LogLevel.Warning);
+            SelectedTemplate = template;
+        }
+
+        /// <summary>
+        /// Check if the template is already defined.
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        public bool IsTemplateAlreadyDefined(string title)
+        {
+            if (TemplatePredefinedList.Contains(title))
+                return true;
+
+            var t = title.ToLower().Trim();
+            if (TemplateCustomList != null && TemplateCustomList.FirstOrDefault(o => o.Title.ToLower().Equals(t)) != null)
+                return true;
+
+            return false;
         }
 
         /// <summary>
@@ -1263,6 +1264,27 @@ namespace BlackSpiritHelper.Core
             }
         }
 
+        /// <summary>
+        /// Get random free title for template.
+        /// </summary>
+        /// <param name="prefix"></param>
+        /// <returns></returns>
+        private string GetTemplateRandomTitle(string prefix = "")
+        {
+            string titlePrefix = string.IsNullOrEmpty(prefix) ? "CUSTOM-" : prefix;
+            int titleNumber = 0;
+
+            // Get random name for a template.
+            while (true)
+            {
+                titleNumber++;
+                if (GetTemplateByName(titlePrefix + titleNumber) == null)
+                    break;
+            }
+
+            return titlePrefix + titleNumber;
+        }
+
         #endregion
 
         #region Command Methods
@@ -1271,16 +1293,129 @@ namespace BlackSpiritHelper.Core
         /// Open template settings page.
         /// </summary>
         /// <returns></returns>
-        private async Task OpenTemplateSettingsPageAsync()
+        private async Task CmdOpenTemplateSettingsPageAsync()
         {
             // Create Settings View Model with the current template binding.
             ScheduleTemplateSettingsFormPageViewModel vm = new ScheduleTemplateSettingsFormPageViewModel
             {
-                //TimerItemDataViewModel = SelectedTemplate,
+                ScheduleTemplateDataViewModel = SelectedTemplate,
             };
 
             IoC.Application.GoToPage(ApplicationPage.ScheduleTemplateSettingsForm, vm);
 
+            await Task.Delay(1);
+        }
+
+        /// <summary>
+        /// Add a new empty template.
+        /// </summary>
+        /// <returns></returns>
+        private async Task CmdAddTemplateAsync()
+        {
+            // Create (new) empty template.
+            ObservableCollection<ScheduleTemplateDayDataViewModel> schedule = new ObservableCollection<ScheduleTemplateDayDataViewModel>();
+            foreach (DayOfWeek day in (DayOfWeek[])Enum.GetValues(typeof(DayOfWeek)))
+            {
+                schedule.Add(new ScheduleTemplateDayDataViewModel()
+                {
+                    DayOfWeek = day,
+                    TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>(),
+                });
+            }
+            ScheduleTemplateDataViewModel vm = new ScheduleTemplateDataViewModel
+            {
+                LastModifiedString = DateTime.Now.ToString("yyyy-MM-dd"),
+                Title = GetTemplateRandomTitle(),
+                TimeZoneRegion = TimeZoneRegion.EU,
+                Schedule = schedule,
+            };
+
+            // Add new template.
+            if (AddCustomTemplate(vm) == null)
+            {
+                return;
+            }
+
+            // Init.
+            vm.Init();
+
+            // Select the template.
+            SelectTemplateByName(vm.Title);
+
+            await Task.Delay(1);
+        }
+
+        /// <summary>
+        /// Clone a new template.
+        /// </summary>
+        /// <returns></returns>
+        private async Task CmdCloneTemplateAsync()
+        {
+            // Deep Copy Schedule.
+            ObservableCollection<ScheduleTemplateDayDataViewModel> schedule = new ObservableCollection<ScheduleTemplateDayDataViewModel>();
+            for (int i = 0; i < SelectedTemplate.Schedule.Count; i++)
+            {
+                // Copy Time list.
+                var timeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>();
+                for (int j = 0; j < SelectedTemplate.Schedule[i].TimeList.Count; j++)
+                {
+                    // Copy Item list.
+                    var itemList = new ObservableCollection<string>();
+                    for (int z = 0; z < SelectedTemplate.Schedule[i].TimeList[j].ItemList.Count; z++)
+                    {
+                        // Add items to Item list.
+                        itemList.Add(SelectedTemplate.Schedule[i].TimeList[j].ItemList[z]);
+                    }
+
+                    // Add items to Time list.
+                    timeList.Add(new ScheduleTemplateDayTimeDataViewModel()
+                    {
+                        TimeHours = SelectedTemplate.Schedule[i].TimeList[j].TimeHours,
+                        TimeMinutes = SelectedTemplate.Schedule[i].TimeList[j].TimeMinutes,
+                        ItemList = itemList,
+                    });
+                }
+
+                // Add items to schedule.
+                schedule.Add(new ScheduleTemplateDayDataViewModel()
+                {
+                    DayOfWeek = SelectedTemplate.Schedule[i].DayOfWeek,
+                    TimeList = timeList,
+                });
+            }
+            // Make a deep copy of template object.
+            ScheduleTemplateDataViewModel vm = new ScheduleTemplateDataViewModel
+            {
+                LastModifiedString = DateTime.Now.ToString("yyyy-MM-dd"),
+                Title = GetTemplateRandomTitle(SelectedTemplate.Title + "-COPY-"),
+                TimeZoneRegion = SelectedTemplate.TimeZoneRegion,
+                Schedule = schedule,
+            };
+
+            // Add custom cop template.
+            if (AddCustomTemplate(vm) == null)
+            {
+                return;
+            }
+
+            // Init.
+            vm.Init();
+
+            // Select the template.
+            SelectTemplateByName(vm.Title);
+
+            // TODO:
+            //OnPropertyChanged(TemplateTitleListPresenter);
+
+            await Task.Delay(1);
+        }
+
+        /// <summary>
+        /// TODO: Custom items
+        /// </summary>
+        /// <returns></returns>
+        private async Task CmdOpenItemsSettingsPageAsync()
+        {
             await Task.Delay(1);
         }
 

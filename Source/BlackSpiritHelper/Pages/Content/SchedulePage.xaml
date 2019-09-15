@@ -168,6 +168,9 @@
                                     <Button.Style>
                                         <Style TargetType="Button" BasedOn="{StaticResource RegularButton}">
                                             <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsRunning}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
                                                 <DataTrigger Binding="{Binding SelectingTemplateFlag}" Value="True">
                                                     <Setter Property="IsEnabled" Value="False" />
                                                 </DataTrigger>
@@ -187,6 +190,9 @@
                                     <Button.Style>
                                         <Style TargetType="Button" BasedOn="{StaticResource RegularButton}">
                                             <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsRunning}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
                                                 <DataTrigger Binding="{Binding SelectingTemplateFlag}" Value="True">
                                                     <Setter Property="IsEnabled" Value="False" />
                                                 </DataTrigger>
