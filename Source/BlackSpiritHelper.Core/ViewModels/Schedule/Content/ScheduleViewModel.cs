@@ -1374,38 +1374,6 @@ namespace BlackSpiritHelper.Core
 
             string prefix = "-COPY-";
 
-            // Deep Copy Schedule.
-            ObservableCollection<ScheduleTemplateDayDataViewModel> schedule = new ObservableCollection<ScheduleTemplateDayDataViewModel>();
-            for (int i = 0; i < SelectedTemplate.Schedule.Count; i++)
-            {
-                // Copy Time list.
-                var timeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>();
-                for (int j = 0; j < SelectedTemplate.Schedule[i].TimeList.Count; j++)
-                {
-                    // Copy Item list.
-                    var itemList = new ObservableCollection<string>();
-                    for (int z = 0; z < SelectedTemplate.Schedule[i].TimeList[j].ItemList.Count; z++)
-                    {
-                        // Add items to Item list.
-                        itemList.Add(SelectedTemplate.Schedule[i].TimeList[j].ItemList[z]);
-                    }
-
-                    // Add items to Time list.
-                    timeList.Add(new ScheduleTemplateDayTimeDataViewModel()
-                    {
-                        TimeHours = SelectedTemplate.Schedule[i].TimeList[j].TimeHours,
-                        TimeMinutes = SelectedTemplate.Schedule[i].TimeList[j].TimeMinutes,
-                        ItemList = itemList,
-                    });
-                }
-
-                // Add items to schedule.
-                schedule.Add(new ScheduleTemplateDayDataViewModel()
-                {
-                    DayOfWeek = SelectedTemplate.Schedule[i].DayOfWeek,
-                    TimeList = timeList,
-                });
-            }
             // Make a deep copy of template object.
             ScheduleTemplateDataViewModel vm = new ScheduleTemplateDataViewModel
             {
@@ -1416,7 +1384,7 @@ namespace BlackSpiritHelper.Core
                     : SelectedTemplate.Title + prefix
                     ),
                 TimeZoneRegion = SelectedTemplate.TimeZoneRegion,
-                Schedule = schedule,
+                Schedule = SelectedTemplate.CreateScheduleDeepCopy(),
             };
 
             // Add custom cop template.

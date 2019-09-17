@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       xmlns:local="clr-namespace:BlackSpiritHelper"
       xmlns:core="clr-namespace:BlackSpiritHelper.Core;assembly=BlackSpiritHelper.Core"
       mc:Ignorable="d" 
@@ -85,8 +86,114 @@
                     <!-- Spacer -->
                     <Border Style="{StaticResource FormItemSpacer}" />
 
-                    
-                    
+                    <!-- Schedule -->
+                    <TextBlock Text="Schedule"
+                               FontFamily="{StaticResource LatoRegular}"
+                               Foreground="{StaticResource ForegroundBrushKey}"
+                               FontSize="14"
+                               Margin="0 0 0 5"/>
+                    <ItemsControl ItemsSource="{Binding Schedule}">
+                        <ItemsControl.ItemTemplate>
+                            <!-- Day representation -->
+                            <DataTemplate>
+
+                                <!-- Time List -->
+                                <ItemsControl ItemsSource="{Binding TimeList}">
+                                    <ItemsControl.Template>
+                                        <ControlTemplate>
+                                            <!-- Day representation template -->
+                                            <StackPanel Orientation="Vertical">
+                                                <TextBlock Text="{Binding DayOfWeek}"
+                                                           FontFamily="{StaticResource LatoRegular}"
+                                                           Foreground="{StaticResource ForegroundBrushKey}"
+                                                           FontSize="14"
+                                                           Margin="0 0 0 5"/>
+                                                <ItemsPresenter />
+                                                <Button Content="Add Time Event" />
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </ItemsControl.Template>
+                                    <ItemsControl.ItemTemplate>
+                                        <!-- Time event representation -->
+                                        <DataTemplate>
+
+                                            <ItemsControl ItemsSource="{Binding ItemList}">
+                                                <ItemsControl.Template>
+                                                    <ControlTemplate>
+                                                        <!-- Time event representation template -->
+                                                        <StackPanel Orientation="Vertical">
+                                                            <!-- Time inputs -->
+                                                            <StackPanel Orientation="Horizontal" 
+                                                                        HorizontalAlignment="Center">
+                                                                <!-- Hours input  -->
+                                                                <StackPanel Orientation="Vertical" 
+                                                                            Margin="0 0 5 0">
+                                                                    <TextBlock Text="Hours"
+                                                                               FontFamily="{StaticResource LatoRegular}"
+                                                                               Foreground="{StaticResource ForegroundBrushKey}"
+                                                                               FontSize="14"
+                                                                               Margin="0 0 0 5"/>
+                                                                    <xctk:IntegerUpDown Increment="1"
+                                                                                        Minimum="0"
+                                                                                        MaxHeight="23"
+                                                                                        MinWidth="70">
+                                                                        <xctk:IntegerUpDown.Value>
+                                                                            <Binding Path="TimeHours"
+                                                                                     UpdateSourceTrigger="PropertyChanged">
+                                                                                <Binding.ValidationRules>
+                                                                                    <core:TimeHoursRule ValidationStep="UpdatedValue" />
+                                                                                </Binding.ValidationRules>
+                                                                            </Binding>
+                                                                        </xctk:IntegerUpDown.Value>
+                                                                    </xctk:IntegerUpDown>
+                                                                </StackPanel>
+                                                                <!-- Minutes input -->
+                                                                <StackPanel Orientation="Vertical" 
+                                                                            Margin="5 0 0 0">
+                                                                    <TextBlock Text="Minutes"
+                                                                               FontFamily="{StaticResource LatoRegular}"
+                                                                               Foreground="{StaticResource ForegroundBrushKey}"
+                                                                               FontSize="14"
+                                                                               Margin="0 0 0 5"/>
+                                                                    <xctk:IntegerUpDown Increment="1"
+                                                                                        Minimum="0"
+                                                                                        MaxHeight="59"
+                                                                                        MinWidth="70">
+                                                                        <xctk:IntegerUpDown.Value>
+                                                                            <Binding Path="TimeMinutes"
+                                                                                     UpdateSourceTrigger="PropertyChanged">
+                                                                                <Binding.ValidationRules>
+                                                                                    <core:TimeMinutesRule ValidationStep="UpdatedValue" />
+                                                                                </Binding.ValidationRules>
+                                                                            </Binding>
+                                                                        </xctk:IntegerUpDown.Value>
+                                                                    </xctk:IntegerUpDown>
+                                                                </StackPanel>
+                                                            </StackPanel>
+                                                            <!-- Item presenter -->
+                                                            <ItemsPresenter />
+                                                            <Button Content="Add Item" />
+                                                        </StackPanel>
+                                                    </ControlTemplate>
+                                                </ItemsControl.Template>
+                                                <ItemsControl.ItemTemplate>
+                                                    <!-- Item representation -->
+                                                    <DataTemplate>
+
+                                                        <TextBlock Text="{Binding}" />
+
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
                     <!-- Spacer -->
                     <Border Style="{StaticResource FormSectionSpacer}" />
 
@@ -106,7 +213,7 @@
 
                 </StackPanel>
             </Grid>
-            
+
         </Border>
     </ScrollViewer>
 </local:BasePage>

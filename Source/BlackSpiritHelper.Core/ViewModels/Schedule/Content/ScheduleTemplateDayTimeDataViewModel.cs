@@ -52,6 +52,7 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// Time.
+        /// See <see cref="TimeHours"/> and <see cref="TimeMinutes"/>.
         /// </summary>
         [XmlIgnore]
         public TimeSpan Time { get; set; } = TimeSpan.Zero;
@@ -63,7 +64,21 @@ namespace BlackSpiritHelper.Core
         public int TimeHours
         {
             get => Time.Hours;
-            set => Time = Time.Add(TimeSpan.FromHours(value));
+            set
+            {
+                // Do not touch TimeSpan, change the time as string.
+                // Save minutes value what is currently set.
+                int minutes = Time.Minutes;
+                // Create new time.
+                TimeSpan newTime = TimeSpan.Zero;
+                // Set new value of hours.
+                newTime = newTime.Add(TimeSpan.FromHours(value));
+                // Set minutes value what was set before.
+                newTime = newTime.Add(TimeSpan.FromMinutes(minutes));
+
+                // Apply.
+                Time = newTime;
+            }
         }
 
         /// <summary>
@@ -73,7 +88,21 @@ namespace BlackSpiritHelper.Core
         public int TimeMinutes
         {
             get => Time.Minutes;
-            set => Time = Time.Add(TimeSpan.FromMinutes(value));
+            set
+            {
+                // Do not touch TimeSpan, change the time as string.
+                // Save hours value what is currently set.
+                int hours = Time.Hours;
+                // Create new time.
+                TimeSpan newTime = TimeSpan.Zero;
+                // Set new value of minutes.
+                newTime = newTime.Add(TimeSpan.FromMinutes(value));
+                // Set hours value what was set before.
+                newTime = newTime.Add(TimeSpan.FromHours(hours));
+
+                // Apply.
+                Time = newTime;
+            }
         }
 
         /// <summary>

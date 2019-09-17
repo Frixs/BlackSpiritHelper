@@ -109,8 +109,10 @@
     <Compile Include="Utilities\ObjectExtensionMethods.cs" />
     <Compile Include="Utilities\StringUtils.cs" />
     <Compile Include="ValidationRules\Schedule\ScheduleTimeZoneRegionRule.cs" />
+    <Compile Include="ValidationRules\Timer\TimeMinutesRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerIconTitleShortcutRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerCountdownDurationRule.cs" />
+    <Compile Include="ValidationRules\Timer\TimeHoursRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerTimeDurationRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerShowInOverlayRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerAssociatedGroupViewModelRule.cs" />

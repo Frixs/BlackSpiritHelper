@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace BlackSpiritHelper.Core
@@ -44,6 +45,11 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public TimeZoneRegion TimeZoneRegion { get; set; }
 
+        /// <summary>
+        /// Schedule binding.
+        /// </summary>
+        public ObservableCollection<ScheduleTemplateDayDataViewModel> Schedule { get; set; }
+
         #endregion
 
         #region Commands
@@ -86,6 +92,7 @@ namespace BlackSpiritHelper.Core
 
             Title = ScheduleTemplateDataViewModel.Title;
             TimeZoneRegion = ScheduleTemplateDataViewModel.TimeZoneRegion;
+            Schedule = ScheduleTemplateDataViewModel.CreateScheduleDeepCopy();
         }
 
         #endregion

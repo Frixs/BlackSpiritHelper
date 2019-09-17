@@ -308,6 +308,48 @@ namespace BlackSpiritHelper.Core
             }
         }
 
+        /// <summary>
+        /// Create deep copy of <see cref="Schedule"/>.
+        /// Does not contain copy of <see cref="ScheduleTemplateDayTimeDataViewModel.ItemListPresenter"/>.
+        /// </summary>
+        /// <returns></returns>
+        public ObservableCollection<ScheduleTemplateDayDataViewModel> CreateScheduleDeepCopy()
+        {
+            ObservableCollection<ScheduleTemplateDayDataViewModel> schedule = new ObservableCollection<ScheduleTemplateDayDataViewModel>();
+            for (int i = 0; i < Schedule.Count; i++)
+            {
+                // Copy Time list.
+                var timeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>();
+                for (int j = 0; j < Schedule[i].TimeList.Count; j++)
+                {
+                    // Copy Item list.
+                    var itemList = new ObservableCollection<string>();
+                    for (int z = 0; z < Schedule[i].TimeList[j].ItemList.Count; z++)
+                    {
+                        // Add items to Item list.
+                        itemList.Add(Schedule[i].TimeList[j].ItemList[z]);
+                    }
+
+                    // Add items to Time list.
+                    timeList.Add(new ScheduleTemplateDayTimeDataViewModel()
+                    {
+                        TimeHours = Schedule[i].TimeList[j].TimeHours,
+                        TimeMinutes = Schedule[i].TimeList[j].TimeMinutes,
+                        ItemList = itemList,
+                    });
+                }
+
+                // Add items to schedule.
+                schedule.Add(new ScheduleTemplateDayDataViewModel()
+                {
+                    DayOfWeek = Schedule[i].DayOfWeek,
+                    TimeList = timeList,
+                });
+            }
+
+            return schedule;
+        }
+
         #endregion
 
         #region Private Methods
