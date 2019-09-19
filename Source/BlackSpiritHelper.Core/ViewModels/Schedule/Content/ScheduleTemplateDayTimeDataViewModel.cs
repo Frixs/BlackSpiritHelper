@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
@@ -10,12 +11,27 @@ namespace BlackSpiritHelper.Core
     /// </summary>
     public class ScheduleTemplateDayTimeDataViewModel : BaseViewModel
     {
+        #region Static Limitation Properties
+
+        /// <summary>
+        /// Max number of items that can be added to 1 event.
+        /// </summary>
+        public static byte AllowedMaxNoOfItemsInEvent { get; private set; } = 3;
+
+        #endregion
+
         #region Private Members
 
         /// <summary>
         /// Temporary ID is useful to track equality of time items between <see cref="ScheduleTemplateDataViewModel.Schedule"/> and <see cref="ScheduleTemplateDataViewModel.SchedulePresenter"/>.
         /// </summary>
         private int mTemporaryID = -1;
+
+        /// <summary>
+        /// List of events at this time (<see cref="Time"/>).
+        /// !!! This is only for loading at application start.
+        /// </summary>
+        private ObservableCollection<string> mItemList = new ObservableCollection<string>();
 
         #endregion
 
@@ -109,13 +125,43 @@ namespace BlackSpiritHelper.Core
         /// List of events at this time (<see cref="Time"/>).
         /// !!! This is only for loading at application start.
         /// </summary>
-        public ObservableCollection<string> ItemList { get; set; }
+        public ObservableCollection<string> ItemList
+        {
+            get => mItemList;
+            set
+            {
+                mItemList = value;
+                CanAddItem = value.Count < AllowedMaxNoOfItemsInEvent;
+            }
+        }
 
         /// <summary>
         /// List of events at this time (<see cref="Time"/>).
         /// </summary>
         [XmlIgnore]
         public ObservableCollection<ScheduleItemDataViewModel> ItemListPresenter { get; set; }
+
+        /// <summary>
+        /// Can add next item to <see cref="ItemList"/>?
+        /// </summary>
+        [XmlIgnore]
+        public bool CanAddItem { get; private set; } = true;
+
+        #endregion
+
+        #region Commands
+
+        /// <summary>
+        /// The command to add item.
+        /// </summary>
+        [XmlIgnore]
+        public ICommand AddItemCommand { get; set; }
+
+        /// <summary>
+        /// The command to remove item.
+        /// </summary>
+        [XmlIgnore]
+        public ICommand RemoveItemCommand { get; set; }
 
         #endregion
 
@@ -126,6 +172,58 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public ScheduleTemplateDayTimeDataViewModel()
         {
+            // Create commands.
+            CreateCommands();
+        }
+
+        #endregion
+
+        #region Command Methods
+
+        /// <summary>
+        /// Create commands.
+        /// </summary>
+        private void CreateCommands()
+        {
+            AddItemCommand = new RelayCommand(() => AddItem());
+            RemoveItemCommand = new RelayParameterizedCommand((parameter) => RemoveItem(parameter));
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Add item to <see cref="ItemList"/>.
+        /// </summary>
+        private void AddItem()
+        {
+            IoC.Logger.Log("Add Item", LogLevel.Debug);
+
+            // Add item to the list.
+            ItemList.Add(IoC.DataContent.ScheduleDesignModel.ItemPredefinedList[0].Name);
+
+            // Check limitations.
+            if (ItemList.Count >= AllowedMaxNoOfItemsInEvent)
+                CanAddItem = false;
+        }
+
+        /// <summary>
+        /// Remove item from <see cref="ItemList"/>.
+        /// </summary>
+        /// <param name="parameter"></param>
+        private void RemoveItem(object parameter)
+        {
+            IoC.Logger.Log("Remove Item", LogLevel.Debug);
+
+            // Parse parameter.
+            if (parameter == null || !parameter.GetType().Equals(typeof(string)))
+                return;
+            string par = (string)parameter;
+
+            // Remove from the list and set limitation.
+            if (ItemList.Remove(par))
+                CanAddItem = true;
         }
 
         #endregion

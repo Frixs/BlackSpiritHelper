@@ -28,14 +28,14 @@ namespace BlackSpiritHelper.Core
         public static byte AllowedMaxNoOfCustomItems { get; private set; } = 32;
 
         /// <summary>
-        /// Max number of items that can be added to 1 event.
+        /// Max length for items from <see cref="ScheduleTemplateDayTimeDataViewModel.ItemList"/>.
         /// </summary>
-        public static byte AllowedMaxNoOfItemsInEvent { get; private set; } = 3;
+        public static byte AllowedItemMaxLength { get; private set; } = 10;
 
         /// <summary>
-        /// Max number of events in 1 particular day.
+        /// Min length for items from <see cref="ScheduleTemplateDayTimeDataViewModel.ItemList"/>.
         /// </summary>
-        public static byte AllowedMaxNoOfEventsInDay { get; private set; } = 10;
+        public static byte AllowedItemMinLength { get; private set; } = 2;
 
         #endregion
 
@@ -202,6 +202,23 @@ namespace BlackSpiritHelper.Core
             {
                 mItemCustomList = value;
                 CheckItemDuplicityCustom();
+            }
+        }
+
+        /// <summary>
+        /// Getter for item list which contains items from <see cref="ItemPredefinedList"/> and <see cref="ItemCustomList"/>.
+        /// </summary>
+        [XmlIgnore]
+        public List<string> ItemTitleListPresenter
+        {
+            get
+            {
+                List<string> l = new List<string>();
+                for (int i = 0; i < ItemPredefinedList.Count; i++)
+                    l.Add(ItemPredefinedList[i].Name);
+                for (int i = 0; i < ItemCustomList.Count; i++)
+                    l.Add(ItemCustomList[i].Name);
+                return l;
             }
         }
 
@@ -1264,6 +1281,7 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void SetTemplateTitleListPresenter()
         {
+            // !!! Updates only additive only. Not removing items.
             for (int i = 0; i < TemplatePredefinedList.Count; i++)
             {
                 var title = '*' + TemplatePredefinedList[i];

@@ -16,8 +16,6 @@ namespace BlackSpiritHelper.Core
             if (val == null)
                 return new ValidationResult(false, "Not a character sequence.");
 
-            val = val.Trim();
-
             // Check conditions.
             if (val.Length < ScheduleTemplateDataViewModel.AllowedTitleMinLength || val.Length > ScheduleTemplateDataViewModel.AllowedTitleMaxLength)
                 return new ValidationResult(false, $"Please enter a title in the length: {ScheduleTemplateDataViewModel.AllowedTitleMinLength} - {ScheduleTemplateDataViewModel.AllowedTitleMaxLength}.");

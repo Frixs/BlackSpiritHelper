@@ -26,7 +26,7 @@ namespace BlackSpiritHelper
         {
             InitializeComponent();
 
-            // Set ComboBox ItemsSource.
+            // Set TimeZoneRegion ComboBox ItemsSource.
             // While changing rules, do not forget to change list in ScheduleTimeZoneRegionRule.
             var items = Enum.GetValues(typeof(TimeZoneRegion));
             List<TimeZoneRegion> list = new List<TimeZoneRegion>();
