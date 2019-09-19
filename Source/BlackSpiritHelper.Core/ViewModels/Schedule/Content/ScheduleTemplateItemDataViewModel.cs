@@ -25,7 +25,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// List of all time events.
         /// </summary>
-        public ObservableCollection<ScheduleTemplateDayTimeDataViewModel> mTimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>();
+        private ObservableCollection<ScheduleTemplateDayTimeDataViewModel> mTimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>();
 
         #endregion
 

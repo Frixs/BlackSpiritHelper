@@ -102,21 +102,41 @@
                                     <ItemsControl.Template>
                                         <ControlTemplate>
                                             <!-- Day representation template -->
-                                            <StackPanel Orientation="Vertical">
-                                                <TextBlock Text="{Binding DayOfWeek}"
-                                                           FontFamily="{StaticResource LatoRegular}"
-                                                           Foreground="{StaticResource ForegroundBrushKey}"
-                                                           FontSize="14"
-                                                           Margin="0 0 0 5"/>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="115" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <!-- Day of Week + Add Time Event BTN -->
+                                                <StackPanel Grid.Column="0" 
+                                                            Orientation="Vertical"
+                                                            HorizontalAlignment="Left">
+                                                    <!-- Day of Week -->
+                                                    <TextBlock Text="{Binding DayOfWeek}"
+                                                               FontFamily="{StaticResource LatoRegular}"
+                                                               Foreground="{StaticResource ForegroundBrushKey}"
+                                                               FontSize="14"
+                                                               VerticalAlignment="Top"
+                                                               Margin="0 0 5 5"/>
+                                                    <!-- Add Time Event BTN -->
+                                                    <Button Content="{StaticResource FontAwesomePlusSquareIcon}"
+                                                            FontFamily="{StaticResource FontAwesomeRegular}"
+                                                            Command="{Binding AddEventCommand}"
+                                                            Visibility="{Binding CanAddEvent,
+                                                                            Converter={local:BooleanToVisibilityGoneConverter}}" 
+                                                            Style="{StaticResource RegularButtonNoColor}"
+                                                            VerticalAlignment="Top"
+                                                            HorizontalAlignment="Left"
+                                                            FontSize="30"
+                                                            Width="30"
+                                                            Height="30" />
+                                                    <!-- Spacer -->
+                                                    <Border Style="{StaticResource FormInputVerSpacer}" />
+                                                </StackPanel>
                                                 <!-- Item presenter -->
-                                                <ItemsPresenter />
-                                                <!-- Add Time Event BTN -->
-                                                <Button Content="Add Time Event"
-                                                        Command="{Binding AddEventCommand}"
-                                                        Visibility="{Binding CanAddEvent,
-                                                                     Converter={local:BooleanToVisibilityGoneConverter}}" />
-                                                <Border Style="{StaticResource LineSeparator}" />
-                                            </StackPanel>
+                                                <ItemsPresenter Grid.Column="1" />
+                                            </Grid>
                                         </ControlTemplate>
                                     </ItemsControl.Template>
                                     <ItemsControl.ItemTemplate>
@@ -129,20 +149,28 @@
                                                         <!-- Time event representation template -->
                                                         <StackPanel Orientation="Vertical">
                                                             <!-- Time inputs -->
-                                                            <StackPanel Orientation="Horizontal" 
-                                                                        HorizontalAlignment="Center">
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="Auto" />
+                                                                    <ColumnDefinition Width="Auto" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="Auto" />
+                                                                </Grid.ColumnDefinitions>
+                                                                
                                                                 <!-- Hours input  -->
-                                                                <StackPanel Orientation="Vertical" 
+                                                                <StackPanel Grid.Column="0" Orientation="Vertical" 
                                                                             Margin="0 0 5 0">
                                                                     <TextBlock Text="Hours"
                                                                                FontFamily="{StaticResource LatoRegular}"
                                                                                Foreground="{StaticResource ForegroundBrushKey}"
-                                                                               FontSize="14"
+                                                                               FontSize="10"
+                                                                               HorizontalAlignment="Left"
                                                                                Margin="0 0 0 5"/>
                                                                     <xctk:IntegerUpDown Increment="1"
                                                                                         Minimum="0"
-                                                                                        MaxHeight="23"
-                                                                                        MinWidth="70">
+                                                                                        Maximum="23"
+                                                                                        MinWidth="70"
+                                                                                        FontSize="18">
                                                                         <xctk:IntegerUpDown.Value>
                                                                             <Binding Path="TimeHours"
                                                                                      UpdateSourceTrigger="PropertyChanged">
@@ -154,17 +182,19 @@
                                                                     </xctk:IntegerUpDown>
                                                                 </StackPanel>
                                                                 <!-- Minutes input -->
-                                                                <StackPanel Orientation="Vertical" 
+                                                                <StackPanel Grid.Column="1" Orientation="Vertical" 
                                                                             Margin="5 0 0 0">
                                                                     <TextBlock Text="Minutes"
                                                                                FontFamily="{StaticResource LatoRegular}"
                                                                                Foreground="{StaticResource ForegroundBrushKey}"
-                                                                               FontSize="14"
+                                                                               FontSize="10"
+                                                                               HorizontalAlignment="Left"
                                                                                Margin="0 0 0 5"/>
                                                                     <xctk:IntegerUpDown Increment="1"
                                                                                         Minimum="0"
-                                                                                        MaxHeight="59"
-                                                                                        MinWidth="70">
+                                                                                        Maximum="59"
+                                                                                        MinWidth="70"
+                                                                                        FontSize="18">
                                                                         <xctk:IntegerUpDown.Value>
                                                                             <Binding Path="TimeMinutes"
                                                                                      UpdateSourceTrigger="PropertyChanged">
@@ -177,18 +207,34 @@
                                                                 </StackPanel>
                                                                 
                                                                 <!-- Remove Time Event BTN -->
-                                                                <Button Content="Remove Time Event" 
+                                                                <Button Grid.Column="3" 
                                                                         Command="{Binding Tag.RemoveEventCommand,
                                                                               RelativeSource={RelativeSource AncestorType=ItemsControl, AncestorLevel=2, Mode=FindAncestor}}"
-                                                                        CommandParameter="{Binding}"/>
-                                                            </StackPanel>
+                                                                        CommandParameter="{Binding}"
+                                                                        Content="{StaticResource FontAwesomeTimesCircleIcon}"
+                                                                        FontFamily="{StaticResource FontAwesomeRegular}"
+                                                                        Style="{StaticResource RegularButtonNoColor}"
+                                                                        VerticalAlignment="Top"
+                                                                        FontSize="30"
+                                                                        Width="30"
+                                                                        Height="30"
+                                                                        Padding="0" />
+                                                            </Grid>
+                                                            <!-- Spacer -->
+                                                            <Border Style="{StaticResource FormInputVerSpacer}" />
                                                             <!-- Item presenter -->
                                                             <ItemsPresenter />
                                                             <!-- Add item BTN -->
-                                                            <Button Content="Add Item"
-                                                                    Command="{Binding AddItemCommand}" 
+                                                            <Button Command="{Binding AddItemCommand}" 
                                                                     Visibility="{Binding CanAddItem,
-                                                                                 Converter={local:BooleanToVisibilityGoneConverter}}" />
+                                                                                 Converter={local:BooleanToVisibilityGoneConverter}}" 
+                                                                    Content="{StaticResource FontAwesomePlusIcon}"
+                                                                    FontFamily="{StaticResource FontAwesomeRegular}"
+                                                                    Style="{StaticResource RegularButton}"
+                                                                    FontSize="10"
+                                                                    Height="22" />
+                                                            <!-- Spacer -->
+                                                            <Border Style="{StaticResource FormInputVerSpacer}" />
                                                         </StackPanel>
                                                     </ControlTemplate>
                                                 </ItemsControl.Template>
@@ -196,29 +242,41 @@
                                                     <!-- Item representation -->
                                                     <DataTemplate>
 
-                                                        <Grid>
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="*" />
-                                                                <ColumnDefinition Width="Auto" />
-                                                            </Grid.ColumnDefinitions>
+                                                        <StackPanel Orientation="Vertical">
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="Auto" />
+                                                                </Grid.ColumnDefinitions>
 
-                                                            <!-- Item input -->
-                                                            <ComboBox Name="ItemComboBox" Grid.Column="0"
-                                                                      ItemsSource="{Binding ApplicationDataContent.ScheduleDesignModel.ItemTitleListPresenter,
-                                                                                    Source={x:Static local:ViewModelLocator.Instance}}">
-                                                                <ComboBox.SelectedItem>
-                                                                    <Binding Path="."
-                                                                             UpdateSourceTrigger="PropertyChanged">
-                                                                    </Binding>
-                                                                </ComboBox.SelectedItem>
-                                                            </ComboBox>
+                                                                <!-- Item input -->
+                                                                <ComboBox Name="ItemComboBox" Grid.Column="0"
+                                                                          ItemsSource="{Binding ApplicationDataContent.ScheduleDesignModel.ItemTitleListPresenter,
+                                                                                        Source={x:Static local:ViewModelLocator.Instance}}"
+                                                                          Height="22"
+                                                                          Margin="0 0 5 0">
+                                                                    <ComboBox.SelectedItem>
+                                                                        <Binding Path="."
+                                                                                 UpdateSourceTrigger="PropertyChanged">
+                                                                        </Binding>
+                                                                    </ComboBox.SelectedItem>
+                                                                </ComboBox>
 
-                                                            <!-- Item remove button -->
-                                                            <Button Grid.Column="1" Content="Remove"
-                                                                    Command="{Binding Tag.RemoveItemCommand,
-                                                                              RelativeSource={RelativeSource AncestorType=ItemsControl, AncestorLevel=1, Mode=FindAncestor}}"
-                                                                    CommandParameter="{Binding}" />
-                                                        </Grid>
+                                                                <!-- Item remove button -->
+                                                                <Button Grid.Column="1" 
+                                                                        Command="{Binding Tag.RemoveItemCommand,
+                                                                                  RelativeSource={RelativeSource AncestorType=ItemsControl, AncestorLevel=1, Mode=FindAncestor}}"
+                                                                        CommandParameter="{Binding}" 
+                                                                        Content="{StaticResource FontAwesomeTimesIcon}"
+                                                                        FontFamily="{StaticResource FontAwesomeSolid}" 
+                                                                        Style="{StaticResource RegularButtonRed}"
+                                                                        Width="22"
+                                                                        Height="22"
+                                                                        FontSize="10" />
+                                                            </Grid>
+                                                            <!-- Spacer -->
+                                                            <Border Margin="0 0 0 5" />
+                                                        </StackPanel>
 
                                                     </DataTemplate>
                                                 </ItemsControl.ItemTemplate>
