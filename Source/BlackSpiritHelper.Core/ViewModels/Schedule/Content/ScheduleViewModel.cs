@@ -480,7 +480,7 @@ namespace BlackSpiritHelper.Core
 
             // Run if user wants. Also, we do not want to run this if there is no selected template yet.
             if (RunOnLoad && !SelectingTemplateFlag)
-                PlayAsync();
+                _ = PlayAsync();
             else
                 RunOnLoad = false;
         }
@@ -562,7 +562,8 @@ namespace BlackSpiritHelper.Core
 
                 if (mTimeActiveCountdown <= TimeSpan.Zero)
                 {
-                    UpdateTimeTargetAsync();
+                    if (!UpdateTimeTarget())
+                        _ = StopAsync();
                     StopActiveCountdown();
                 }
             }
@@ -624,7 +625,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Update time to the next target.
         /// </summary>
-        private async Task UpdateTimeTargetAsync()
+        private bool UpdateTimeTarget()
         {
             bool goToNextWeek = false;
             DateTime today = DateTime.Today;
@@ -635,6 +636,7 @@ namespace BlackSpiritHelper.Core
             // Set notification possibility to default.
             mNotificateNextTarget = false;
 
+            // Find next time event target.
             do
             {
                 DateTime todayWeek = goToNextWeek ? today.AddDays(7) : today;
@@ -679,8 +681,8 @@ namespace BlackSpiritHelper.Core
             // Update.
             if (lastMatchingTimeItem == null)
             {
-                await StopAsync();
-                return;
+                IoC.Logger.Log("No Time item found!", LogLevel.Debug);
+                return false;
             }
 
             // Set new countdown time.
@@ -688,7 +690,7 @@ namespace BlackSpiritHelper.Core
 
             // Set time items.
             // Clear list first.
-            await IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
+            IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
             {
                 NextItemPresenterList.Clear();
             }));
@@ -698,7 +700,7 @@ namespace BlackSpiritHelper.Core
                 if (item != null)
                 {
                     // We need to update list in UI thread due to Observable.
-                    await IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
+                    IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
                     {
                         NextItemPresenterList.Add(item);
                     }));
@@ -717,10 +719,12 @@ namespace BlackSpiritHelper.Core
 
             // Update notification triggers.
             TimerSetNotificationEventTriggers(mTimeLeft);
+
+            return true;
         }
 
         /// <summary>
-        /// Play active countdown.
+        /// Play "ACTIVE" countdown.
         /// </summary>
         private void PlayActiveCountdown()
         {
@@ -732,7 +736,7 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Stop active countdown.
+        /// Stop "ACTIVE" countdown.
         /// </summary>
         private void StopActiveCountdown()
         {
@@ -1047,9 +1051,36 @@ namespace BlackSpiritHelper.Core
             // Update properties.
             // Update GUI.
             OnPropertyChanged(nameof(CanAddCustomTemplate));
+            // Update template title list presenter.
+            SetTemplateTitleListPresenter();
 
+            // Log it.
             IoC.Logger.Log($"Template '{title}' destroyed!", LogLevel.Info);
+
+            // Select new template, because this is deleted.
+            SelectTemplateByName(TemplateTitleListPresenter.Count > 0 ? TemplateTitleListPresenter[0] : "");
+
             return true;
+        }
+
+        /// <summary>
+        /// Set <see cref="TemplateTitleListPresenter"/>.
+        /// </summary>
+        public void SetTemplateTitleListPresenter()
+        {
+            // !!! Updates only additive only. Not removing items.
+            for (int i = 0; i < TemplatePredefinedList.Count; i++)
+            {
+                var title = '*' + TemplatePredefinedList[i];
+                if (!TemplateTitleListPresenter.Contains(title))
+                    TemplateTitleListPresenter.Add(title);
+            }
+            for (int i = 0; i < TemplateCustomList.Count; i++)
+            {
+                var title = TemplateCustomList[i].Title;
+                if (!TemplateTitleListPresenter.Contains(title))
+                    TemplateTitleListPresenter.Add(title);
+            }
         }
 
         #endregion
@@ -1234,9 +1265,14 @@ namespace BlackSpiritHelper.Core
             IsRunning = true;
 
             UpdateTimeInUI("STARTING");
-            await UpdateTimeTargetAsync();
-            FindAndRemarkIgnored();
-            mTimer.Start();
+            if (UpdateTimeTarget())
+            {
+                FindAndRemarkIgnored();
+                mTimer.Start();
+            }
+            // No item in Schedule.
+            else
+                await StopAsync();
 
             await Task.Delay(1);
         }
@@ -1307,26 +1343,6 @@ namespace BlackSpiritHelper.Core
             }
 
             return titlePrefix + titleNumber;
-        }
-
-        /// <summary>
-        /// Set <see cref="TemplateTitleListPresenter"/>.
-        /// </summary>
-        private void SetTemplateTitleListPresenter()
-        {
-            // !!! Updates only additive only. Not removing items.
-            for (int i = 0; i < TemplatePredefinedList.Count; i++)
-            {
-                var title = '*' + TemplatePredefinedList[i];
-                if (!TemplateTitleListPresenter.Contains(title))
-                    TemplateTitleListPresenter.Add(title);
-            }
-            for (int i = 0; i < TemplateCustomList.Count; i++)
-            {
-                var title = TemplateCustomList[i].Title;
-                if (!TemplateTitleListPresenter.Contains(title))
-                    TemplateTitleListPresenter.Add(title);
-            }
         }
 
         #endregion
@@ -1430,8 +1446,8 @@ namespace BlackSpiritHelper.Core
             {
                 LastModifiedString = DateTime.Now.ToString("yyyy-MM-dd"),
                 Title = GetTemplateRandomTitle(
-                    SelectedTemplate.Title.Contains(prefix) 
-                    ? SelectedTemplate.Title.Substring(0, SelectedTemplate.Title.Length - 1) 
+                    SelectedTemplate.Title.Contains(prefix)
+                    ? SelectedTemplate.Title.Substring(0, SelectedTemplate.Title.Length - 1)
                     : SelectedTemplate.Title + prefix
                     ),
                 TimeZoneRegion = SelectedTemplate.TimeZoneRegion,

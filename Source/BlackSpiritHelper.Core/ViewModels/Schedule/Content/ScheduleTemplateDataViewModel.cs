@@ -350,6 +350,17 @@ namespace BlackSpiritHelper.Core
             return schedule;
         }
 
+        /// <summary>
+        /// Sort <see cref="Schedule"/>.
+        /// </summary>
+        public void SortSchedule()
+        {
+            for (int iDay = 0; iDay < Schedule.Count; iDay++)
+            {
+                Schedule[iDay].TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>(Schedule[iDay].TimeList.OrderBy(o => o.Time));
+            }
+        }
+
         #endregion
 
         #region Private Methods
@@ -476,17 +487,6 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Sort <see cref="Schedule"/>.
-        /// </summary>
-        private void SortSchedule()
-        {
-            for (int iDay = 0; iDay < Schedule.Count; iDay++)
-            {
-                Schedule[iDay].TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>(Schedule[iDay].TimeList.OrderBy(o => o.Time));
-            }
-        }
-
-        /// <summary>
         /// Sort <see cref="SchedulePresenter"/>.
         /// </summary>
         private void SortSchedulePresenter()
@@ -543,6 +543,44 @@ namespace BlackSpiritHelper.Core
                     TimeList = timeList,
                 });
             }
+        }
+
+        #endregion
+
+        #region Validation Methods
+
+        /// <summary>
+        /// Check schedule template parameters.
+        /// TRUE, if all parameters are OK.
+        /// </summary>
+        /// <param name="vm"></param>
+        /// <param name="title"></param>
+        /// <param name="timeZoneRegion"></param>
+        /// <param name="schedule"></param>
+        /// <returns></returns>
+        public static bool ValidateInputs(ScheduleTemplateDataViewModel vm, string title, TimeZoneRegion timeZoneRegion, ObservableCollection<ScheduleTemplateDayDataViewModel> schedule)
+        {
+            #region Title
+
+            if (!new ScheduleTitleRule().Validate(title, null).IsValid)
+                return false;
+
+            #endregion
+
+            #region TimeZoneRegion
+
+            if (!new ScheduleTimeZoneRegionRule().Validate(timeZoneRegion, null).IsValid)
+                return false;
+
+            #endregion
+
+            #region Schedule
+
+            ;
+
+            #endregion
+
+            return true;
         }
 
         #endregion

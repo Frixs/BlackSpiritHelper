@@ -142,7 +142,47 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void SaveChanges()
         {
-            Console.WriteLine(TimeZoneRegion.ToString() + " " + TimeZoneRegion.GetDescription());
+            if (IoC.DataContent.ScheduleDesignModel.IsRunning)
+                return;
+
+            // Trim.
+            string title = Title.Trim();
+
+            // Validate inputs.
+            if (!Core.ScheduleTemplateDataViewModel.ValidateInputs(ScheduleTemplateDataViewModel, title, TimeZoneRegion, Schedule))
+            {
+                // Some error occured during saving changes of the timer.
+                IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                {
+                    Caption = "Invalid Parameters!",
+                    Message = $"Some of entered parameters are invalid. Please check them again.{Environment.NewLine}",
+                    Button = System.Windows.MessageBoxButton.OK,
+                    Icon = System.Windows.MessageBoxImage.Warning,
+                });
+
+                return;
+            }
+
+            // Sort schedule.
+            ScheduleTemplateDataViewModel.SortSchedule();
+
+            // Save changes.
+            #region Save changes
+
+            ScheduleTemplateDataViewModel.Title = title;
+            ScheduleTemplateDataViewModel.TimeZoneRegion = TimeZoneRegion;
+            ScheduleTemplateDataViewModel.Schedule = Schedule;
+
+            #endregion
+
+            // Log it.
+            IoC.Logger.Log($"Template '{ScheduleTemplateDataViewModel.Title}' settings changed!", LogLevel.Info);
+
+            // Update template title list presenter.
+            IoC.DataContent.ScheduleDesignModel.SetTemplateTitleListPresenter();
+
+            // Move back to the page.
+            GoBack();
         }
 
         /// <summary>
