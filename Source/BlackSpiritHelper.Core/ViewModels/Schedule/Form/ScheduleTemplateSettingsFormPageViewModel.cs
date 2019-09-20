@@ -149,7 +149,7 @@ namespace BlackSpiritHelper.Core
             string title = Title.Trim();
 
             // Validate inputs.
-            if (!Core.ScheduleTemplateDataViewModel.ValidateInputs(FormVM, title, TimeZoneRegion, Schedule))
+            if (!Core.ScheduleTemplateDataViewModel.ValidateInputs(FormVM, title, TimeZoneRegion))
             {
                 // Some error occured during saving changes of the timer.
                 IoC.UI.ShowMessage(new MessageBoxDialogViewModel

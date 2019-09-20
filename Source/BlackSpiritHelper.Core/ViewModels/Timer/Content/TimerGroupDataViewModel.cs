@@ -293,7 +293,7 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         /// <param name="title">The group title.</param>
         /// <returns></returns>
-        public static bool ValidateGroupInputs(string title)
+        public static bool ValidateInputs(string title)
         {
             #region Title
 

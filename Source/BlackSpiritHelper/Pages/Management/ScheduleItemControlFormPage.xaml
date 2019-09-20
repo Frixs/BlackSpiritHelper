@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       xmlns:local="clr-namespace:BlackSpiritHelper"
       xmlns:core="clr-namespace:BlackSpiritHelper.Core;assembly=BlackSpiritHelper.Core"
       mc:Ignorable="d" 
@@ -43,24 +44,27 @@
                     <Border Style="{StaticResource FormSectionSpacer}" />
 
                     <!-- Item list -->
-                    <ItemsControl ItemsSource="{Binding ApplicationDataContent.ScheduleDesignModel.ItemCustomList,
-                                                Source={x:Static local:ViewModelLocator.Instance}}">
+                    <ItemsControl ItemsSource="{Binding ItemCustomList}">
                         <ItemsControl.Template>
                             <ControlTemplate>
                                 <StackPanel Orientation="Vertical">
                                     <!-- Item presenter -->
                                     <ItemsPresenter />
                                     <!-- Add item input & BTN -->
-                                    <StackPanel Orientation="Horizontal"
-                                                Visibility="{Binding ApplicationDataContent.ScheduleDesignModel.CanAddCustomItem,
-                                                             Source={x:Static local:ViewModelLocator.Instance},
-                                                             Converter={local:BooleanToVisibilityGoneConverter}}" >
+                                    <Grid Visibility="{Binding FormVM.CanAddCustomItem,
+                                                       Converter={local:BooleanToVisibilityGoneConverter}}" >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        
                                         <!-- Add item input -->
-                                        <TextBox Tag="Name"
-                                                 MaxLength="{Binding ApplicationDataContent.ScheduleDesignModel.AllowedItemMaxLength,
-                                                             Source={x:Static local:ViewModelLocator.Instance}}">
+                                        <TextBox Grid.Column="0"
+                                                 Tag="Name"
+                                                 MaxLength="{Binding FormVM.AllowedItemMaxLength}"
+                                                 Margin="0 0 10 0">
                                             <TextBox.Text>
-                                                <Binding Path="Name"
+                                                <Binding Path="NewName"
                                                          UpdateSourceTrigger="PropertyChanged">
                                                     <Binding.ValidationRules>
                                                         <core:ScheduleItemNameRule ValidationStep="UpdatedValue" />
@@ -69,32 +73,66 @@
                                             </TextBox.Text>
                                         </TextBox>
                                         <!-- Add BTN -->
-                                        <Button Command="{Binding AddItemCommand}" 
+                                        <Button Grid.Column="1" 
+                                                Command="{Binding AddItemCommand}" 
                                                 Content="{StaticResource FontAwesomePlusIcon}"
                                                 FontFamily="{StaticResource FontAwesomeRegular}"
-                                                Style="{StaticResource RegularButton}" />
-                                    </StackPanel>
+                                                Style="{StaticResource RegularButton}"
+                                                Width="40" />
+                                    </Grid>
                                 </StackPanel>
                             </ControlTemplate>
                         </ItemsControl.Template>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Grid>
+                                <Grid Margin="0 0 0 10">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     
-                                    <!-- Name placeholder -->
-                                    <TextBlock Grid.Column="0" Text="{Binding Name}" />
+                                    
+                                    <StackPanel Grid.Column="0"
+                                                Orientation="Horizontal"
+                                                Margin="0 0 10 0">
+                                        <!-- Name input -->
+                                        <TextBlock Text="{Binding Name}"
+                                                   FontFamily="{StaticResource LatoRegular}"
+                                                   Foreground="{StaticResource ForegroundBrushKey}"
+                                                   FontSize="14"
+                                                   TextAlignment="Left"
+                                                   VerticalAlignment="Center"
+                                                   Width="100"
+                                                   Margin="0 0 10 0" />
+                                        <!-- Name shortcut -->
+                                        <TextBlock Text="{Binding NameShortcut, StringFormat='[(0:C)]'}"
+                                                   FontFamily="{StaticResource LatoRegular}"
+                                                   Foreground="{StaticResource ForegroundBrushKey}"
+                                                   FontSize="14"
+                                                   TextAlignment="Left"
+                                                   VerticalAlignment="Center"
+                                                   Width="100"
+                                                   Margin="0 0 10 0" />
+                                        <!-- Color Picker -->
+                                        <xctk:ColorPicker SelectedColor="{Binding ColorHEX, Converter={local:StringHEXLeadingHashConverter}}"
+                                                          ColorMode="ColorCanvas"
+                                                          ShowDropDownButton="False"
+                                                          UsingAlphaChannel="False"
+                                                          ShowAvailableColors="False"
+                                                          ShowStandardColors="False"
+                                                          StandardButtonHeader="">
+                                        </xctk:ColorPicker>
+                                    </StackPanel>
 
                                     <!-- Remove BTN -->
                                     <Button Grid.Column="2"
-                                            Command="{Binding RemoveItemCommand}" 
+                                            Command="{Binding DataContext.RemoveItemCommand,
+                                                        RelativeSource={RelativeSource AncestorType=ScrollViewer, AncestorLevel=1, Mode=FindAncestor}}" 
                                             Content="{StaticResource FontAwesomeTimesIcon}"
                                             FontFamily="{StaticResource FontAwesomeRegular}"
-                                            Style="{StaticResource RegularButton}" />
+                                            Style="{StaticResource RegularButtonRed}" 
+                                            Width="22" />
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>

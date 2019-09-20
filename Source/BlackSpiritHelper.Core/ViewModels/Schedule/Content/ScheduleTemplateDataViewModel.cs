@@ -556,9 +556,8 @@ namespace BlackSpiritHelper.Core
         /// <param name="vm"></param>
         /// <param name="title"></param>
         /// <param name="timeZoneRegion"></param>
-        /// <param name="schedule"></param>
         /// <returns></returns>
-        public static bool ValidateInputs(ScheduleTemplateDataViewModel vm, string title, TimeZoneRegion timeZoneRegion, ObservableCollection<ScheduleTemplateDayDataViewModel> schedule)
+        public static bool ValidateInputs(ScheduleTemplateDataViewModel vm, string title, TimeZoneRegion timeZoneRegion)
         {
             #region Title
 
@@ -571,12 +570,6 @@ namespace BlackSpiritHelper.Core
 
             if (!new ScheduleTimeZoneRegionRule().Validate(timeZoneRegion, null).IsValid)
                 return false;
-
-            #endregion
-
-            #region Schedule
-
-            ;
 
             #endregion
 

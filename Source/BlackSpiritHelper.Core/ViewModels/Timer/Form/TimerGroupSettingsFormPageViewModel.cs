@@ -98,7 +98,7 @@ namespace BlackSpiritHelper.Core
 
         private void SaveChanges()
         {
-            if (!TimerGroupDataViewModel.ValidateGroupInputs(Title))
+            if (!TimerGroupDataViewModel.ValidateInputs(Title))
             {
                 // Some error occured during saving changes of the group.
                 IoC.UI.ShowMessage(new MessageBoxDialogViewModel

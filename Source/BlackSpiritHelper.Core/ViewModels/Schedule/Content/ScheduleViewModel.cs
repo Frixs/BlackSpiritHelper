@@ -448,15 +448,13 @@ namespace BlackSpiritHelper.Core
             CheckItemDuplicityCustom();
             CheckTemplateDuplicityCustom();
 
-            // Initialize items.
-            for (int i = 0; i < ItemPredefinedList.Count; i++)
-                ItemPredefinedList[i].Init(true);
+            // Initialize custom items loaded from user settings.
             for (int i = 0; i < ItemCustomList.Count; i++)
-                ItemCustomList[i].Init();
+                ItemCustomList[i].Init(false);
 
             // Initialize custom templates.
             for (int i = 0; i < TemplateCustomList.Count; i++)
-                TemplateCustomList[i].Init();
+                TemplateCustomList[i].Init(false);
 
             // Set template title list presenter.
             SetTemplateTitleListPresenter();
@@ -1113,6 +1111,9 @@ namespace BlackSpiritHelper.Core
                 ColorHEX = colorHex,
             };
 
+            // Init.
+            item.Init(isPredefined);
+
             // Ad the item to the list.
             if (isPredefined)
             {
@@ -1132,7 +1133,7 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         /// <param name="template"></param>
         /// <returns><see cref="ScheduleTemplateDataViewModel"/> or null</returns>
-        public ScheduleTemplateDataViewModel AddCustomTemplate(ScheduleTemplateDataViewModel template)
+        public ScheduleTemplateDataViewModel AddTemplateCustom(ScheduleTemplateDataViewModel template)
         {
             if (template == null || string.IsNullOrEmpty(template.Title))
             {
@@ -1154,16 +1155,19 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// Add predefined template.
+        /// No input validation - predefined template.
         /// </summary>
-        protected void AddPredefinedTemplate(string title)
+        protected void AddTemplatePredefined(string title)
         {
             if (string.IsNullOrEmpty(title))
                 return;
 
-            if (IsTemplateAlreadyDefined(title.Trim()))
+            var titleVar = title.Trim();
+
+            if (IsTemplateAlreadyDefined(titleVar))
                 return;
 
-            TemplatePredefinedList.Add(title.Trim());
+            TemplatePredefinedList.Add(titleVar);
         }
 
         /// <summary>
@@ -1411,7 +1415,7 @@ namespace BlackSpiritHelper.Core
             };
 
             // Add new template.
-            if (AddCustomTemplate(vm) == null)
+            if (AddTemplateCustom(vm) == null)
             {
                 return;
             }
@@ -1455,7 +1459,7 @@ namespace BlackSpiritHelper.Core
             };
 
             // Add custom cop template.
-            if (AddCustomTemplate(vm) == null)
+            if (AddTemplateCustom(vm) == null)
             {
                 return;
             }

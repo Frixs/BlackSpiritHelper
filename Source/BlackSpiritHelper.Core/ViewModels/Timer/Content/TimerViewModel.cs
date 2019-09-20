@@ -157,7 +157,7 @@ namespace BlackSpiritHelper.Core
 
             itemTitle = itemTitle.Trim();
             // Validate Inputs.
-            if (!TimerGroupDataViewModel.ValidateGroupInputs(itemTitle))
+            if (!TimerGroupDataViewModel.ValidateInputs(itemTitle))
                 return null;
 
             // Sort Groups by ID.

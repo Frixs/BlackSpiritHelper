@@ -38,7 +38,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Name of item to add.
         /// </summary>
-        public string Name { get; set; }
+        public string NewName { get; set; }
 
         /// <summary>
         /// Item custom list binding.
@@ -87,7 +87,17 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void BindProperties()
         {
-            //ItemCustomList = FormVM.ItemCustomList.CopyObject;
+            ItemCustomList = new ObservableCollection<ScheduleItemDataViewModel>();
+            for (int i = 0; i < FormVM.ItemCustomList.Count; i++)
+            {
+                var item = new ScheduleItemDataViewModel
+                {
+                    Name = FormVM.ItemCustomList[i].Name,
+                    ColorHEX = FormVM.ItemCustomList[i].ColorHEX,
+                };
+                item.Init(false);
+                ItemCustomList.Add(item);
+            }
         }
 
         #endregion
@@ -129,8 +139,11 @@ namespace BlackSpiritHelper.Core
             if (!IoC.DataContent.ScheduleDesignModel.CanAddCustomItem)
                 return;
 
+            if (string.IsNullOrEmpty(NewName))
+                return;
+
             // Trim.
-            string name = Name.Trim();
+            string name = NewName.Trim();
 
             // Validate inputs.
             if (!Core.ScheduleItemDataViewModel.ValidateInputs(null, name))
@@ -147,8 +160,12 @@ namespace BlackSpiritHelper.Core
                 return;
             }
 
-            // TODO: Custom items can have custom colors.
-            // TODO: VM as injection to this form - ScheduleViewModel?
+            ItemCustomList.Add(new ScheduleItemDataViewModel
+            {
+                Name = name,
+                ColorHEX = "000000",
+            });
+
             // TODO: use AddItem() - ScheduleViewModel
 
             // Sort schedule.

@@ -152,16 +152,8 @@ namespace BlackSpiritHelper.Core
 
             // Substring the HEX color to the required form.
             // We recieve f.e. #FF000000 and we want to transform it into 000000.
-            string iconBackgroundHEX;
-            if (IconBackgroundHEX.Length == 9)
-                iconBackgroundHEX = IconBackgroundHEX.Substring(3);
-            // Color has hashmark.
-            else if (IconBackgroundHEX.Length == 7)
-                iconBackgroundHEX = IconBackgroundHEX.Substring(1);
-            // Color hasn't changed.
-            else
-                iconBackgroundHEX = IconBackgroundHEX;
-
+            string iconBackgroundHEX = IconBackgroundHEX.ToHexStringWithoutHashmark();
+            
             // Trim.
             string title = Title.Trim();
             string titleShortcut = IconTitleShortcut.Trim();
