@@ -1475,13 +1475,16 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// TODO: Custom items
+        /// Open custom items settings page.
         /// </summary>
         /// <returns></returns>
         private async Task OpenItemsSettingsPageAsync()
         {
             // Create Settings View Model with the current template binding.
-            ScheduleItemControlFormPageViewModel vm = new ScheduleItemControlFormPageViewModel();
+            ScheduleItemControlFormPageViewModel vm = new ScheduleItemControlFormPageViewModel
+            {
+                FormVM = this,
+            };
 
             IoC.Application.GoToPage(ApplicationPage.ScheduleItemControlForm, vm);
 

@@ -203,5 +203,28 @@ namespace BlackSpiritHelper.Core
         }
 
         #endregion
+
+        #region Validation Methods
+
+        /// <summary>
+        /// Check schedule template parameters.
+        /// TRUE, if all parameters are OK.
+        /// </summary>
+        /// <param name="vm"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static bool ValidateInputs(ScheduleItemDataViewModel vm, string name)
+        {
+            #region Name
+
+            if (!new ScheduleItemNameRule().Validate(name, null).IsValid)
+                return false;
+
+            #endregion
+
+            return true;
+        }
+
+        #endregion
     }
 }

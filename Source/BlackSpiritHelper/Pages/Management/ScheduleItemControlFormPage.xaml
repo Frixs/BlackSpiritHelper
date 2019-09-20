@@ -9,7 +9,109 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ScheduleItemControlFormPage">
 
-    <Grid>
-        <TextBlock Text="TODO" />
-    </Grid>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" d:DesignStyle="{StaticResource WindowBackgroundControlStyle}">
+        <Border Padding="10">
+
+            <Grid HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Width="400">
+
+                <!-- Go Back Button -->
+                <Button Content="{StaticResource FontAwesomeArrowLeftIcon}"
+                        Command="{Binding GoBackCommand}"
+                        Style="{StaticResource RegularButtonLight}" 
+                        FontFamily="{StaticResource FontAwesomeSolid}"
+                        Width="30"
+                        Height="30"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Panel.ZIndex="1"
+                        />
+
+                <!-- Form -->
+                <StackPanel TextBlock.TextAlignment="Center">
+
+                    <!-- Form Title -->
+                    <TextBlock Text="Settings"
+                               Style="{StaticResource FormTitle}" />
+
+                    <!-- Form Subtitle -->
+                    <TextBlock Text="Schedule Custom Items"
+                               Style="{StaticResource FormSubtitle}" />
+
+                    <!-- Spacer -->
+                    <Border Style="{StaticResource FormSectionSpacer}" />
+
+                    <!-- Item list -->
+                    <ItemsControl ItemsSource="{Binding ApplicationDataContent.ScheduleDesignModel.ItemCustomList,
+                                                Source={x:Static local:ViewModelLocator.Instance}}">
+                        <ItemsControl.Template>
+                            <ControlTemplate>
+                                <StackPanel Orientation="Vertical">
+                                    <!-- Item presenter -->
+                                    <ItemsPresenter />
+                                    <!-- Add item input & BTN -->
+                                    <StackPanel Orientation="Horizontal"
+                                                Visibility="{Binding ApplicationDataContent.ScheduleDesignModel.CanAddCustomItem,
+                                                             Source={x:Static local:ViewModelLocator.Instance},
+                                                             Converter={local:BooleanToVisibilityGoneConverter}}" >
+                                        <!-- Add item input -->
+                                        <TextBox Tag="Name"
+                                                 MaxLength="{Binding ApplicationDataContent.ScheduleDesignModel.AllowedItemMaxLength,
+                                                             Source={x:Static local:ViewModelLocator.Instance}}">
+                                            <TextBox.Text>
+                                                <Binding Path="Name"
+                                                         UpdateSourceTrigger="PropertyChanged">
+                                                    <Binding.ValidationRules>
+                                                        <core:ScheduleItemNameRule ValidationStep="UpdatedValue" />
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </TextBox.Text>
+                                        </TextBox>
+                                        <!-- Add BTN -->
+                                        <Button Command="{Binding AddItemCommand}" 
+                                                Content="{StaticResource FontAwesomePlusIcon}"
+                                                FontFamily="{StaticResource FontAwesomeRegular}"
+                                                Style="{StaticResource RegularButton}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </ControlTemplate>
+                        </ItemsControl.Template>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <!-- Name placeholder -->
+                                    <TextBlock Grid.Column="0" Text="{Binding Name}" />
+
+                                    <!-- Remove BTN -->
+                                    <Button Grid.Column="2"
+                                            Command="{Binding RemoveItemCommand}" 
+                                            Content="{StaticResource FontAwesomeTimesIcon}"
+                                            FontFamily="{StaticResource FontAwesomeRegular}"
+                                            Style="{StaticResource RegularButton}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <!-- Spacer -->
+                    <Border Style="{StaticResource FormSectionSpacer}" />
+
+                    <!-- Save Changes Button -->
+                    <Button Content="SAVE CHANGES"
+                            Command="{Binding SaveChangesCommand}"
+                            Style="{StaticResource RegularButton}"
+                            Padding="10"/>
+
+                </StackPanel>
+            </Grid>
+
+        </Border>
+    </ScrollViewer>
 </local:BasePage>
