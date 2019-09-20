@@ -199,7 +199,7 @@ namespace BlackSpiritHelper.Core
             // Create Settings View Model with the current group binding.
             TimerGroupSettingsFormPageViewModel vm = new TimerGroupSettingsFormPageViewModel
             {
-                TimerGroupViewModel = this,
+                FormVM = this,
             };
 
             IoC.Application.GoToPage(ApplicationPage.TimerGroupSettingsForm, vm);

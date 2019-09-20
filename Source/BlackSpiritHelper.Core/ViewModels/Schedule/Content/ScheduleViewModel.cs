@@ -1375,7 +1375,7 @@ namespace BlackSpiritHelper.Core
             // Create Settings View Model with the current template binding.
             ScheduleTemplateSettingsFormPageViewModel vm = new ScheduleTemplateSettingsFormPageViewModel
             {
-                ScheduleTemplateDataViewModel = SelectedTemplate,
+                FormVM = SelectedTemplate,
             };
 
             IoC.Application.GoToPage(ApplicationPage.ScheduleTemplateSettingsForm, vm);

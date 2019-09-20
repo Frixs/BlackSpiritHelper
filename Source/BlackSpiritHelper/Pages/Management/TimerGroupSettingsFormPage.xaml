@@ -44,7 +44,7 @@
                     
                     <!-- Group Name -->
                     <TextBox Tag="Group Name"
-                             MaxLength="{Binding TimerGroupViewModel.TitleAllowMaxChar}">
+                             MaxLength="{Binding FormVM.TitleAllowMaxChar}">
                         <TextBox.Text>
                             <Binding Path="Title"
                                      UpdateSourceTrigger="PropertyChanged">

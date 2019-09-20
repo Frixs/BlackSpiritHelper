@@ -45,7 +45,7 @@
 
                     <!-- Schedule Title -->
                     <TextBox Tag="Title"
-                             MaxLength="{Binding ScheduleTemplateDataViewModel.AllowedTitleMaxLength}">
+                             MaxLength="{Binding FormVM.AllowedTitleMaxLength}">
                         <TextBox.Text>
                             <Binding Path="Title"
                                      UpdateSourceTrigger="PropertyChanged">

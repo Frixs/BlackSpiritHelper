@@ -785,7 +785,7 @@ namespace BlackSpiritHelper.Core
             // Create Settings View Model with the current timer binding.
             TimerItemSettingsFormPageViewModel vm = new TimerItemSettingsFormPageViewModel
             {
-                TimerItemDataViewModel = this,
+                FormVM = this,
             };
 
             IoC.Application.GoToPage(ApplicationPage.TimerItemSettingsForm, vm);

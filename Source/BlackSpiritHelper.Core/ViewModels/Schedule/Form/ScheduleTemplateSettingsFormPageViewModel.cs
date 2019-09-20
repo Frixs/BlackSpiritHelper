@@ -11,7 +11,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Schedule template associated to this settings.
         /// </summary>
-        private ScheduleTemplateDataViewModel mScheduleTemplateDataViewModel = null;
+        private ScheduleTemplateDataViewModel mFormVM = null;
 
         #endregion
 
@@ -20,15 +20,15 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Schedule template associated to this settings.
         /// </summary>
-        public ScheduleTemplateDataViewModel ScheduleTemplateDataViewModel
+        public ScheduleTemplateDataViewModel FormVM
         {
             get
             {
-                return mScheduleTemplateDataViewModel;
+                return mFormVM;
             }
             set
             {
-                mScheduleTemplateDataViewModel = value;
+                mFormVM = value;
 
                 // Bind properties to the inputs.
                 BindProperties();
@@ -87,12 +87,12 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void BindProperties()
         {
-            if (ScheduleTemplateDataViewModel == null)
+            if (FormVM == null)
                 return;
 
-            Title = ScheduleTemplateDataViewModel.Title;
-            TimeZoneRegion = ScheduleTemplateDataViewModel.TimeZoneRegion;
-            Schedule = ScheduleTemplateDataViewModel.CreateScheduleDeepCopy();
+            Title = FormVM.Title;
+            TimeZoneRegion = FormVM.TimeZoneRegion;
+            Schedule = FormVM.CreateScheduleDeepCopy();
         }
 
         #endregion
@@ -118,7 +118,7 @@ namespace BlackSpiritHelper.Core
                 return;
 
             // Remove schedule.
-            if (!IoC.DataContent.ScheduleDesignModel.DestroyCustomTemplate(ScheduleTemplateDataViewModel))
+            if (!IoC.DataContent.ScheduleDesignModel.DestroyCustomTemplate(FormVM))
             {
                 // Some error occured during deleting the template.
                 IoC.UI.ShowMessage(new MessageBoxDialogViewModel
@@ -149,7 +149,7 @@ namespace BlackSpiritHelper.Core
             string title = Title.Trim();
 
             // Validate inputs.
-            if (!Core.ScheduleTemplateDataViewModel.ValidateInputs(ScheduleTemplateDataViewModel, title, TimeZoneRegion, Schedule))
+            if (!Core.ScheduleTemplateDataViewModel.ValidateInputs(FormVM, title, TimeZoneRegion, Schedule))
             {
                 // Some error occured during saving changes of the timer.
                 IoC.UI.ShowMessage(new MessageBoxDialogViewModel
@@ -164,19 +164,19 @@ namespace BlackSpiritHelper.Core
             }
 
             // Sort schedule.
-            ScheduleTemplateDataViewModel.SortSchedule();
+            FormVM.SortSchedule();
 
             // Save changes.
             #region Save changes
 
-            ScheduleTemplateDataViewModel.Title = title;
-            ScheduleTemplateDataViewModel.TimeZoneRegion = TimeZoneRegion;
-            ScheduleTemplateDataViewModel.Schedule = Schedule;
+            FormVM.Title = title;
+            FormVM.TimeZoneRegion = TimeZoneRegion;
+            FormVM.Schedule = Schedule;
 
             #endregion
 
             // Log it.
-            IoC.Logger.Log($"Template '{ScheduleTemplateDataViewModel.Title}' settings changed!", LogLevel.Info);
+            IoC.Logger.Log($"Template '{FormVM.Title}' settings changed!", LogLevel.Info);
 
             // Update template title list presenter.
             IoC.DataContent.ScheduleDesignModel.SetTemplateTitleListPresenter();
