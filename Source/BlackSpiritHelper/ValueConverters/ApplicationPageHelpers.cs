@@ -46,6 +46,9 @@ namespace BlackSpiritHelper
                 case ApplicationPage.ScheduleTemplateSettingsForm:
                     return new ScheduleTemplateSettingsFormPage(viewModel as ScheduleTemplateSettingsFormPageViewModel);
 
+                case ApplicationPage.ScheduleItemControlForm:
+                    return new ScheduleItemControlFormPage(viewModel as ScheduleItemControlFormPageViewModel);
+
                 default:
                     // Log it.
                     IoC.Logger.Log("A selected application page value is out of box!", LogLevel.Error);
@@ -88,6 +91,9 @@ namespace BlackSpiritHelper
 
             if (page is ScheduleTemplateSettingsFormPage)
                 return ApplicationPage.ScheduleTemplateSettingsForm;
+
+            if (page is ScheduleItemControlFormPage)
+                return ApplicationPage.ScheduleItemControlForm;
 
             // Log it.
             IoC.Logger.Log("A selected base page value is out of box!", LogLevel.Error);

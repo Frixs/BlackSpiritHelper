@@ -1480,6 +1480,11 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task OpenItemsSettingsPageAsync()
         {
+            // Create Settings View Model with the current template binding.
+            ScheduleItemControlFormPageViewModel vm = new ScheduleItemControlFormPageViewModel();
+
+            IoC.Application.GoToPage(ApplicationPage.ScheduleItemControlForm, vm);
+
             await Task.Delay(1);
         }
 

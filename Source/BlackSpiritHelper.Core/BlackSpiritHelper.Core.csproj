@@ -142,7 +142,9 @@
     <Compile Include="ViewModels\Dialogs\MessageBoxDialogViewModel.cs" />
     <Compile Include="ViewModels\Preferences\PreferencesPageViewModel.cs" />
     <Compile Include="ViewModels\Preferences\PrefernecesViewModel.cs" />
+    <Compile Include="ViewModels\Schedule\Form\Design\ScheduleItemControlFormPageDesignModel.cs" />
     <Compile Include="ViewModels\Schedule\Form\Design\ScheduleTemplateSettingsFormPageDesignModel.cs" />
+    <Compile Include="ViewModels\Schedule\Form\ScheduleItemControlFormPageViewModel.cs" />
     <Compile Include="ViewModels\Schedule\Form\ScheduleTemplateSettingsFormPageViewModel.cs" />
     <Compile Include="ViewModels\SideMenu\Design\SideMenuListItemControlDesignModel.cs" />
     <Compile Include="ViewModels\SideMenu\Design\SideMenuListControlDesignModel.cs" />

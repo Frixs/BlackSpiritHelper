@@ -138,7 +138,7 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// TODO
+        /// Save settings.
         /// </summary>
         private void SaveChanges()
         {
