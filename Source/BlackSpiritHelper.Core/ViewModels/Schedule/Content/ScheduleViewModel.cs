@@ -1019,6 +1019,39 @@ namespace BlackSpiritHelper.Core
             }
         }
 
+        /// <summary>
+        /// Delete template pernamentely.
+        /// </summary>
+        /// <param name="vm"></param>
+        /// <returns></returns>
+        public bool DestroyCustomTemplate(ScheduleTemplateDataViewModel vm)
+        {
+            IoC.Logger.Log($"Trying to destroy Template '{vm.Title}'...", LogLevel.Debug);
+
+            if (vm == null)
+                return false;
+
+            var title = vm.Title;
+            // Remove the template from the list.
+            if (!TemplateCustomList.Remove(vm))
+                return false;
+
+            // Destroy reference to timer instance.
+            vm = null;
+
+            // Release GC.
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+
+            // Update properties.
+            // Update GUI.
+            OnPropertyChanged(nameof(CanAddCustomTemplate));
+
+            IoC.Logger.Log($"Template '{title}' destroyed!", LogLevel.Info);
+            return true;
+        }
+
         #endregion
 
         #region Private Methods

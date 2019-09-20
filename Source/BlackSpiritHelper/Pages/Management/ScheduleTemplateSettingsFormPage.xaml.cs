@@ -1,7 +1,7 @@
 ﻿using BlackSpiritHelper.Core;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 
 namespace BlackSpiritHelper
 {
@@ -16,6 +16,9 @@ namespace BlackSpiritHelper
         public ScheduleTemplateSettingsFormPage() : base()
         {
             InitializeComponent();
+
+            // Run lazy load.
+            StartLazyLoad();
         }
 
         /// <summary>
@@ -37,6 +40,32 @@ namespace BlackSpiritHelper
             }
             TimeZoneRegionComboBox.ItemsSource = list;
             TimeZoneRegionComboBox.SelectedIndex = (int)TimeZoneRegionComboBox.Tag;
+
+            // Run lazy load.
+            StartLazyLoad();
+        }
+
+        /// <summary>
+        /// Run lazy load.
+        /// </summary>
+        private void StartLazyLoad()
+        {
+            // Lazy load task.
+            IoC.Task.Run(async () =>
+            {
+                // Lazy load delay.
+                await Task.Delay((int)(SlideSeconds * 2500));
+
+                // Update UI thread.
+                await IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(async () =>
+                {
+                    ScheduleControl.Visibility = System.Windows.Visibility.Hidden;
+                    await Task.Delay(1000); // Delay some time to load (heavy) schedule in invisibility.
+
+                    // Animation.
+                    await ScheduleControl.SlideAndFadeInFromBottom(8, 0.6f);
+                }));
+            });
         }
     }
 }

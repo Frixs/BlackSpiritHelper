@@ -110,11 +110,31 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// TODO
+        /// Delete template.
         /// </summary>
         private void DeleteTemplate()
         {
-            throw new NotImplementedException();
+            if (IoC.DataContent.ScheduleDesignModel.IsRunning)
+                return;
+
+            // Remove schedule.
+            if (!IoC.DataContent.ScheduleDesignModel.DestroyCustomTemplate(ScheduleTemplateDataViewModel))
+            {
+                // Some error occured during deleting the template.
+                IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                {
+                    Caption = "Cannot delete the template!",
+                    Message = $"Unexpected error occured during deleting the template.{Environment.NewLine}" +
+                               "Please, contact the developers to fix the issue.",
+                    Button = System.Windows.MessageBoxButton.OK,
+                    Icon = System.Windows.MessageBoxImage.Warning,
+                });
+
+                return;
+            }
+
+            // Move back to the page.
+            GoBack();
         }
 
         /// <summary>
