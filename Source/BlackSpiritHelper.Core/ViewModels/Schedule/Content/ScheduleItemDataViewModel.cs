@@ -213,11 +213,18 @@ namespace BlackSpiritHelper.Core
         /// <param name="vm"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static bool ValidateInputs(ScheduleItemDataViewModel vm, string name)
+        public static bool ValidateInputs(ScheduleItemDataViewModel vm, string name, string colorHEX)
         {
             #region Name
 
             if (!new ScheduleItemNameRule().Validate(name, null).IsValid)
+                return false;
+
+            #endregion
+
+            #region ColorHEX
+
+            if (!colorHEX.CheckColorHEX())
                 return false;
 
             #endregion

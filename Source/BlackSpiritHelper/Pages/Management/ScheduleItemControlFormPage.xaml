@@ -44,7 +44,7 @@
                     <Border Style="{StaticResource FormSectionSpacer}" />
 
                     <!-- Item list -->
-                    <ItemsControl ItemsSource="{Binding ItemCustomList}">
+                    <ItemsControl ItemsSource="{Binding FormVM.ItemCustomList}">
                         <ItemsControl.Template>
                             <ControlTemplate>
                                 <StackPanel Orientation="Vertical">
@@ -129,6 +129,7 @@
                                     <Button Grid.Column="2"
                                             Command="{Binding DataContext.RemoveItemCommand,
                                                         RelativeSource={RelativeSource AncestorType=ScrollViewer, AncestorLevel=1, Mode=FindAncestor}}" 
+                                            CommandParameter="{Binding}"
                                             Content="{StaticResource FontAwesomeTimesIcon}"
                                             FontFamily="{StaticResource FontAwesomeRegular}"
                                             Style="{StaticResource RegularButtonRed}" 

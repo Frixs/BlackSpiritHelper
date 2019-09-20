@@ -40,11 +40,6 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public string NewName { get; set; }
 
-        /// <summary>
-        /// Item custom list binding.
-        /// </summary>
-        public ObservableCollection<ScheduleItemDataViewModel> ItemCustomList { get; set; }
-
         #endregion
 
         #region Commands
@@ -87,17 +82,6 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void BindProperties()
         {
-            ItemCustomList = new ObservableCollection<ScheduleItemDataViewModel>();
-            for (int i = 0; i < FormVM.ItemCustomList.Count; i++)
-            {
-                var item = new ScheduleItemDataViewModel
-                {
-                    Name = FormVM.ItemCustomList[i].Name,
-                    ColorHEX = FormVM.ItemCustomList[i].ColorHEX,
-                };
-                item.Init(false);
-                ItemCustomList.Add(item);
-            }
         }
 
         #endregion
@@ -111,7 +95,7 @@ namespace BlackSpiritHelper.Core
         {
             GoBackCommand = new RelayCommand(() => GoBack());
             AddItemCommand = new RelayCommand(() => AddItem());
-            RemoveItemCommand = new RelayCommand(() => RemoveItem());
+            RemoveItemCommand = new RelayParameterizedCommand((parameter) => RemoveItem(parameter));
             SaveChangesCommand = new RelayCommand(() => SaveChanges());
         }
 
@@ -126,9 +110,11 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Remove item from <see cref="ScheduleViewModel.ItemCustomList"/>.
         /// </summary>
-        private void RemoveItem()
+        /// <param name="parameter"></param>
+        private void RemoveItem(object parameter)
         {
-            Console.WriteLine("Remove!");
+            var par = (ScheduleItemDataViewModel)parameter;
+            FormVM.DestroyCustomItem(par);
         }
 
         /// <summary>
@@ -144,15 +130,16 @@ namespace BlackSpiritHelper.Core
 
             // Trim.
             string name = NewName.Trim();
+            string colorHex = "000000";
 
-            // Validate inputs.
-            if (!Core.ScheduleItemDataViewModel.ValidateInputs(null, name))
+            // Add item.
+            if (FormVM.AddItem(name, colorHex, false) == null)
             {
-                // Some error occured during saving changes of the timer.
+                // Some error occured during adding item.
                 IoC.UI.ShowMessage(new MessageBoxDialogViewModel
                 {
-                    Caption = "Invalid Parameters!",
-                    Message = $"Some of entered parameters are invalid. Please check them again.{Environment.NewLine}",
+                    Caption = "Error occured!",
+                    Message = $"The name of the item is already defined or some of entered parameters are invalid. Please check them again.{Environment.NewLine}",
                     Button = System.Windows.MessageBoxButton.OK,
                     Icon = System.Windows.MessageBoxImage.Warning,
                 });
@@ -160,30 +147,8 @@ namespace BlackSpiritHelper.Core
                 return;
             }
 
-            ItemCustomList.Add(new ScheduleItemDataViewModel
-            {
-                Name = name,
-                ColorHEX = "000000",
-            });
-
-            // TODO: use AddItem() - ScheduleViewModel
-
-            // Sort schedule.
-            //ScheduleTemplateDataViewModel.SortSchedule();
-
-            // Save changes.
-            //#region Save changes
-
-            //ScheduleTemplateDataViewModel.Title = title;
-            //ScheduleTemplateDataViewModel.TimeZoneRegion = TimeZoneRegion;
-            //ScheduleTemplateDataViewModel.Schedule = Schedule;
-
-            //#endregion
-
-            // Log it.
-            //IoC.Logger.Log($"Item '{ScheduleTemplateDataViewModel.Title}' settings changed!", LogLevel.Info);
-
-            //IoC.DataContent.ScheduleDesignModel.ItemCustomList.Add();
+            // Sort list.
+            FormVM.SortItemCustomList();
         }
 
         /// <summary>

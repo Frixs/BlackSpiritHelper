@@ -1022,6 +1022,31 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
+        /// Add a new custom template.
+        /// </summary>
+        /// <param name="template"></param>
+        /// <returns><see cref="ScheduleTemplateDataViewModel"/> or null</returns>
+        public ScheduleTemplateDataViewModel AddTemplateCustom(ScheduleTemplateDataViewModel template)
+        {
+            if (template == null || string.IsNullOrEmpty(template.Title))
+            {
+                IoC.Logger.Log("Template not defined!", LogLevel.Error);
+                return null;
+            }
+
+            if (IsTemplateAlreadyDefined(template.Title))
+            {
+                IoC.Logger.Log("Template is already defined!", LogLevel.Debug);
+                return null;
+            }
+
+            TemplateCustomList.Add(template);
+            IoC.Logger.Log($"Added new custom template '{template.Title}'.", LogLevel.Info);
+
+            return template;
+        }
+
+        /// <summary>
         /// Delete template pernamentely.
         /// </summary>
         /// <param name="vm"></param>
@@ -1081,10 +1106,6 @@ namespace BlackSpiritHelper.Core
             }
         }
 
-        #endregion
-
-        #region Private Methods
-
         /// <summary>
         /// Add a new item.
         /// </summary>
@@ -1092,22 +1113,26 @@ namespace BlackSpiritHelper.Core
         /// <param name="colorHex"></param>
         /// <param name="isPredefined"></param>
         /// <returns></returns>
-        protected ScheduleItemDataViewModel AddItem(string name, string colorHex, bool isPredefined = false)
+        public ScheduleItemDataViewModel AddItem(string name, string colorHex, bool isPredefined = false)
         {
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(colorHex))
                 return null;
 
-            if (!colorHex.CheckColorHEX())
+            // Trim.
+            var nameVar = name.Trim();
+
+            // Validate.
+            if (!ScheduleItemDataViewModel.ValidateInputs(null, nameVar, colorHex))
                 return null;
 
             // Check duplicity.
-            if (IsItemAlreadyDefined(name))
+            if (IsItemAlreadyDefined(nameVar))
                 return null;
 
             // Create the item.
             var item = new ScheduleItemDataViewModel
             {
-                Name = name.Trim(),
+                Name = nameVar,
                 ColorHEX = colorHex,
             };
 
@@ -1125,33 +1150,31 @@ namespace BlackSpiritHelper.Core
                 IoC.Logger.Log($"Added new custom item '{item.Name}'.", LogLevel.Info);
             }
 
+            // Update values.
+            OnPropertyChanged(nameof(CanAddCustomItem));
+
             return item;
         }
 
         /// <summary>
-        /// Add a new custom template.
+        /// Delete permanentely custom item.
         /// </summary>
-        /// <param name="template"></param>
-        /// <returns><see cref="ScheduleTemplateDataViewModel"/> or null</returns>
-        public ScheduleTemplateDataViewModel AddTemplateCustom(ScheduleTemplateDataViewModel template)
+        /// <param name="vm"></param>
+        /// <returns></returns>
+        public bool DestroyCustomItem(ScheduleItemDataViewModel vm)
         {
-            if (template == null || string.IsNullOrEmpty(template.Title))
-            {
-                IoC.Logger.Log("Template not defined!", LogLevel.Error);
-                return null;
-            }
+            if (!ItemCustomList.Remove(vm))
+                return false;
 
-            if (IsTemplateAlreadyDefined(template.Title))
-            {
-                IoC.Logger.Log("Template is already defined!", LogLevel.Debug);
-                return null;
-            }
+            // Update values.
+            OnPropertyChanged(nameof(CanAddCustomItem));
 
-            TemplateCustomList.Add(template);
-            IoC.Logger.Log($"Added new custom template '{template.Title}'.", LogLevel.Info);
-
-            return template;
+            return true;
         }
+
+        #endregion
+
+        #region Private Methods
 
         /// <summary>
         /// Add predefined template.
@@ -1238,7 +1261,7 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         /// <param name="title"></param>
         /// <returns></returns>
-        public bool IsTemplateAlreadyDefined(string title)
+        private bool IsTemplateAlreadyDefined(string title)
         {
             if (TemplatePredefinedList.Contains(title))
                 return true;
