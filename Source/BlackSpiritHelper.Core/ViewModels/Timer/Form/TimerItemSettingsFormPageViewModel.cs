@@ -162,8 +162,12 @@ namespace BlackSpiritHelper.Core
             else
                 iconBackgroundHEX = IconBackgroundHEX;
 
+            // Trim.
+            string title = Title.Trim();
+            string titleShortcut = IconTitleShortcut.Trim();
+
             // Validate inputs.
-            if (!Core.TimerItemDataViewModel.ValidateTimerInputs(TimerItemDataViewModel, Title, IconTitleShortcut, iconBackgroundHEX, TimeDuration, TimeSpan.FromSeconds(CountdownDuration), ShowInOverlay, AssociatedGroupViewModel, GroupID) 
+            if (!Core.TimerItemDataViewModel.ValidateInputs(TimerItemDataViewModel, title, titleShortcut, iconBackgroundHEX, TimeDuration, TimeSpan.FromSeconds(CountdownDuration), ShowInOverlay, AssociatedGroupViewModel, GroupID) 
                 || AssociatedGroupViewModel == null)
             {
                 // Some error occured during saving changes of the timer.
@@ -203,8 +207,8 @@ namespace BlackSpiritHelper.Core
                 TimerItemDataViewModel.GroupID = AssociatedGroupViewModel.ID;
 
             }
-            TimerItemDataViewModel.Title = Title.Trim();
-            TimerItemDataViewModel.IconTitleShortcut = IconTitleShortcut.Trim();
+            TimerItemDataViewModel.Title = title;
+            TimerItemDataViewModel.IconTitleShortcut = titleShortcut;
             TimerItemDataViewModel.IconBackgroundHEX = iconBackgroundHEX;
             TimerItemDataViewModel.TimeDuration = TimeDuration;
             TimerItemDataViewModel.CountdownDuration = TimeSpan.FromSeconds(CountdownDuration);
