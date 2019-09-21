@@ -31,7 +31,7 @@ namespace BlackSpiritHelper.Core
         /// List of events at this time (<see cref="Time"/>).
         /// !!! This is only for loading at application start.
         /// </summary>
-        private ObservableCollection<string> mItemList = new ObservableCollection<string>();
+        private ObservableCollection<string> mItemList = null;
 
         #endregion
 
@@ -123,7 +123,7 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// List of events at this time (<see cref="Time"/>).
-        /// !!! This is only for loading at application start.
+        /// !!! This should NOT be changed unless you are changing custom template in setting page.
         /// </summary>
         public ObservableCollection<string> ItemList
         {
@@ -153,12 +153,14 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// The command to add item.
+        /// Settings command - working with presenter.
         /// </summary>
         [XmlIgnore]
         public ICommand AddItemCommand { get; set; }
 
         /// <summary>
         /// The command to remove item.
+        /// Settings command - working with presenter.
         /// </summary>
         [XmlIgnore]
         public ICommand RemoveItemCommand { get; set; }
@@ -185,8 +187,8 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void CreateCommands()
         {
-            AddItemCommand = new RelayCommand(() => AddItem());
-            RemoveItemCommand = new RelayParameterizedCommand((parameter) => RemoveItem(parameter));
+            AddItemCommand = new RelayCommand(() => AddItem(true));
+            RemoveItemCommand = new RelayParameterizedCommand((parameter) => RemoveItem(true, parameter));
         }
 
         #endregion
@@ -194,36 +196,62 @@ namespace BlackSpiritHelper.Core
         #region Private Methods
 
         /// <summary>
-        /// Add item to <see cref="ItemList"/>.
+        /// Add new item.
         /// </summary>
-        private void AddItem()
+        /// <param name="addToPresenter"></param>
+        private void AddItem(bool addToPresenter)
         {
             IoC.Logger.Log("Add Item", LogLevel.Debug);
 
             // Add item to the list.
-            ItemList.Add(IoC.DataContent.ScheduleDesignModel.ItemPredefinedList[0].Name);
-
-            // Check limitations.
-            if (ItemList.Count >= AllowedMaxNoOfItemsInEvent)
-                CanAddItem = false;
+            if (addToPresenter)
+            {
+                ItemListPresenter.Add(IoC.DataContent.ScheduleDesignModel.ItemPredefinedList[0]);
+                // Check limitations.
+                if (ItemListPresenter.Count >= AllowedMaxNoOfItemsInEvent)
+                    CanAddItem = false;
+            }
+            else
+            {
+                ItemList.Add(IoC.DataContent.ScheduleDesignModel.ItemPredefinedList[0].Name);
+                // Check limitations.
+                if (ItemList.Count >= AllowedMaxNoOfItemsInEvent)
+                    CanAddItem = false;
+            }
         }
 
         /// <summary>
-        /// Remove item from <see cref="ItemList"/>.
+        /// Remove item.
         /// </summary>
+        /// <param name="removeFromPresenter"></param>
         /// <param name="parameter"></param>
-        private void RemoveItem(object parameter)
+        private void RemoveItem(bool removeFromPresenter, object parameter)
         {
             IoC.Logger.Log("Remove Item", LogLevel.Debug);
 
-            // Parse parameter.
-            if (parameter == null || !parameter.GetType().Equals(typeof(string)))
-                return;
-            string par = (string)parameter;
-
             // Remove from the list and set limitation.
-            if (ItemList.Remove(par))
-                CanAddItem = true;
+            if (removeFromPresenter)
+            {
+                if (parameter == null || !parameter.GetType().Equals(typeof(ScheduleItemDataViewModel)))
+                {
+                    IoC.Logger.Log($"Wrong type - {parameter.GetType().ToString()}!", LogLevel.Error);
+                    return;
+                }
+                ScheduleItemDataViewModel par = (ScheduleItemDataViewModel)parameter;
+                if (ItemListPresenter.Remove(par))
+                    CanAddItem = true;
+            }
+            else
+            {
+                if (parameter == null || !parameter.GetType().Equals(typeof(string)))
+                {
+                    IoC.Logger.Log($"Wrong type - {parameter.GetType().ToString()}!", LogLevel.Error);
+                    return;
+                }
+                string par = (string)parameter;
+                if (ItemList.Remove((string)parameter))
+                    CanAddItem = true;
+            }
         }
 
         #endregion

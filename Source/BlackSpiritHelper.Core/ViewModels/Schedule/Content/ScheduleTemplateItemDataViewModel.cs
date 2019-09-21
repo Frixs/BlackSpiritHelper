@@ -93,9 +93,11 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void CreateCommands()
         {
-            AddEventCommand = new RelayCommand(() => AddEvent());
+            AddEventCommand = new RelayCommand(() => AddEvent(true));
             RemoveEventCommand = new RelayParameterizedCommand((parameter) => RemoveEvent(parameter));
         }
+
+
 
         #endregion
 
@@ -104,11 +106,17 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Add time event into <see cref="TimeList"/>.
         /// </summary>
-        private void AddEvent()
+        private void AddEvent(bool hasPresenter)
         {
             IoC.Logger.Log("Add Time Event", LogLevel.Debug);
 
-            TimeList.Add(new ScheduleTemplateDayTimeDataViewModel());
+            var timeEvent = new ScheduleTemplateDayTimeDataViewModel();
+            if (hasPresenter)
+                timeEvent.ItemListPresenter = new ObservableCollection<ScheduleItemDataViewModel>();
+            else
+                timeEvent.ItemList = new ObservableCollection<string>();
+
+            TimeList.Add(timeEvent);
 
             if (TimeList.Count >= AllowedMaxNoOfEventsInDay)
                 CanAddEvent = false;
@@ -123,7 +131,10 @@ namespace BlackSpiritHelper.Core
             IoC.Logger.Log("Remove Time Event", LogLevel.Debug);
 
             if (parameter == null || !parameter.GetType().Equals(typeof(ScheduleTemplateDayTimeDataViewModel)))
+            {
+                IoC.Logger.Log($"Wrong type - {parameter.GetType().ToString()}!", LogLevel.Error);
                 return;
+            }
             ScheduleTemplateDayTimeDataViewModel par = (ScheduleTemplateDayTimeDataViewModel)parameter;
 
             if (TimeList.Remove(par))

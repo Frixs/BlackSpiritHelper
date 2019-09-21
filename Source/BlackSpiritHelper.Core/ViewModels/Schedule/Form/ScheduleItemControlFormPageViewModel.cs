@@ -104,6 +104,7 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void SaveChanges()
         {
+            // TODO: save
             Console.WriteLine("Save!");
         }
 

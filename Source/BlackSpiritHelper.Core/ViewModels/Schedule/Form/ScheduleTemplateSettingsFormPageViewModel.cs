@@ -48,7 +48,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Schedule binding.
         /// </summary>
-        public ObservableCollection<ScheduleTemplateDayDataViewModel> Schedule { get; set; }
+        public ObservableCollection<ScheduleTemplateDayDataViewModel> SchedulePresenter { get; set; }
 
         #endregion
 
@@ -92,7 +92,7 @@ namespace BlackSpiritHelper.Core
 
             Title = FormVM.Title;
             TimeZoneRegion = FormVM.TimeZoneRegion;
-            Schedule = FormVM.CreateScheduleDeepCopy();
+            SchedulePresenter = FormVM.CreateScheduleCopy(true);
         }
 
         #endregion
@@ -163,17 +163,17 @@ namespace BlackSpiritHelper.Core
                 return;
             }
 
-            // Sort schedule.
-            FormVM.SortSchedule();
-
             // Save changes.
             #region Save changes
 
             FormVM.Title = title;
             FormVM.TimeZoneRegion = TimeZoneRegion;
-            FormVM.Schedule = Schedule;
+            FormVM.Schedule = FormVM.CreateScheduleFromPresenter(SchedulePresenter);
 
             #endregion
+
+            // Sort schedule.
+            FormVM.SortSchedule();
 
             // Log it.
             IoC.Logger.Log($"Template '{FormVM.Title}' settings changed!", LogLevel.Info);

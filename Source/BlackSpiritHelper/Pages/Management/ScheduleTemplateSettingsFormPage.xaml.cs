@@ -1,7 +1,9 @@
 ﻿using BlackSpiritHelper.Core;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace BlackSpiritHelper
 {
@@ -66,6 +68,18 @@ namespace BlackSpiritHelper
                     await ScheduleControl.SlideAndFadeInFromBottom(8, 0.6f);
                 }));
             });
+        }
+
+        /// <summary>
+        /// Serve TODO: Not working for while multiple the same items are in the same list.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ItemComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            var itemList = (ObservableCollection<ScheduleItemDataViewModel>)(sender as ComboBox).Tag;
+            var index = itemList.IndexOf((ScheduleItemDataViewModel)e.RemovedItems[0]);
+            itemList[index] = (ScheduleItemDataViewModel)e.AddedItems[0];
         }
     }
 }

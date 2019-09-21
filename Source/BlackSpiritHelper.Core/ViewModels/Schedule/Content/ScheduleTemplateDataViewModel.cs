@@ -116,7 +116,9 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Schedule.
+        /// Schedule source.
+        /// ---
+        /// Has <see cref="ScheduleTemplateDayTimeDataViewModel.ItemListPresenter"/> set to null.
         /// </summary>
         public ObservableCollection<ScheduleTemplateDayDataViewModel> Schedule
         {
@@ -135,6 +137,8 @@ namespace BlackSpiritHelper.Core
         /// Copy of schedule with presenter values.
         /// It is used to xaml presentation.
         /// We need copy, because we are modifying it and we do not want to have possibility to save it as modified.
+        /// ---
+        /// Has <see cref="ScheduleTemplateDayTimeDataViewModel.ItemList"/> set to null.
         /// </summary>
         [XmlIgnore]
         public ObservableCollection<ScheduleTemplateDayDataViewModel> SchedulePresenter { get; set; }
@@ -309,44 +313,79 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Create deep copy of <see cref="Schedule"/>.
-        /// Does not contain copy of <see cref="ScheduleTemplateDayTimeDataViewModel.ItemListPresenter"/>.
+        /// Create copy of <see cref="SchedulePresenter"/> or <see cref="Schedule"/>.
         /// </summary>
+        /// <param name="generatePresenter">Generate presenter or source?</param>
         /// <returns></returns>
-        public ObservableCollection<ScheduleTemplateDayDataViewModel> CreateScheduleDeepCopy()
+        public ObservableCollection<ScheduleTemplateDayDataViewModel> CreateScheduleCopy(bool generatePresenter)
         {
-            ObservableCollection<ScheduleTemplateDayDataViewModel> schedule = new ObservableCollection<ScheduleTemplateDayDataViewModel>();
-            for (int i = 0; i < Schedule.Count; i++)
+            return GenerateNewSchedule(generatePresenter, false);
+        }
+
+        /// <summary>
+        /// Create copy of <see cref="Schedule"/> built from <see cref="SchedulePresenter"/>.
+        /// ---
+        /// !!! Be very careful with using this method! Generally, we do not want to override source schedule.
+        /// </summary>
+        /// <param name="externalSource"></param>
+        /// <returns></returns>
+        public ObservableCollection<ScheduleTemplateDayDataViewModel> CreateScheduleFromPresenter(ObservableCollection<ScheduleTemplateDayDataViewModel> externalSource = null)
+        {
+            var schedule = new ObservableCollection<ScheduleTemplateDayDataViewModel>();
+
+            // Specify source.
+            var source = SchedulePresenter;
+            if (externalSource != null)
+                source = externalSource;
+
+            // Go through days.
+            for (int iDay = 0; iDay < source.Count; iDay++)
             {
-                // Copy Time list.
-                var timeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>();
-                for (int j = 0; j < Schedule[i].TimeList.Count; j++)
+                // Current day of SchedulePresenter.
+                var currDay = source[iDay];
+                // Create time list for source.
+                ObservableCollection<ScheduleTemplateDayTimeDataViewModel> timeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>();
+
+                // Go through times and create time event list for each day.
+                for (int iTime = 0; iTime < currDay.TimeList.Count; iTime++)
                 {
-                    // Copy Item list.
-                    var itemList = new ObservableCollection<string>();
-                    for (int z = 0; z < Schedule[i].TimeList[j].ItemList.Count; z++)
+                    // Current time event of SchedulePresenter.
+                    var currTimeEvent = currDay.TimeList[iTime];
+
+                    // Create time event.
+                    var timeEvent = new ScheduleTemplateDayTimeDataViewModel
                     {
-                        // Add items to Item list.
-                        itemList.Add(Schedule[i].TimeList[j].ItemList[z]);
+                        Time = currTimeEvent.Time,
+                    };
+
+                    // Create item list for source.
+                    ObservableCollection<string> itemList = new ObservableCollection<string>();
+                    // Go thourgh items from presenter.
+                    for (int iItem = 0; iItem < currTimeEvent.ItemListPresenter.Count; iItem++)
+                    {
+                        // Current iem of Schedule presenter.
+                        var currItem = currTimeEvent.ItemListPresenter[iItem];
+
+                        // Create and add item to the source list.
+                        itemList.Add(currItem.Name);
                     }
 
-                    // Add items to Time list.
-                    timeList.Add(new ScheduleTemplateDayTimeDataViewModel()
-                    {
-                        TimeHours = Schedule[i].TimeList[j].TimeHours,
-                        TimeMinutes = Schedule[i].TimeList[j].TimeMinutes,
-                        ItemList = itemList,
-                    });
+                    // Assign source item list.
+                    timeEvent.ItemList = itemList;
+
+                    // Add time event to the time list.
+                    timeList.Add(timeEvent);
                 }
 
-                // Add items to schedule.
-                schedule.Add(new ScheduleTemplateDayDataViewModel()
+                // Add day to the schedule source.
+                schedule.Add(new ScheduleTemplateDayDataViewModel
                 {
-                    DayOfWeek = Schedule[i].DayOfWeek,
+                    DayOfWeek = currDay.DayOfWeek,
                     TimeList = timeList,
                 });
             }
 
+            // Return.
             return schedule;
         }
 
@@ -499,50 +538,108 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// Update presenter <see cref="SchedulePresenter"/> from default values <see cref="Schedule"/>.
-        /// Fill all the presenter fields instead of default one.
         /// </summary>
         private void UpdatePresenter()
         {
-            SchedulePresenter = new ObservableCollection<ScheduleTemplateDayDataViewModel>();
+            SchedulePresenter = GenerateNewSchedule(true, true);
+        }
+
+        /// <summary>
+        /// Generate new schedule (source-copy or presenter) from source <see cref="Schedule"/>.
+        /// </summary>
+        /// <param name="generatePresenter">Generate presenter or source?</param>
+        /// <param name="tempLinkToSource">Should add pointers to source Schedule to point to new schedule?</param>
+        /// <returns></returns>
+        private ObservableCollection<ScheduleTemplateDayDataViewModel> GenerateNewSchedule(bool generatePresenter, bool tempLinkToSource = false)
+        {
+            var schedule = new ObservableCollection<ScheduleTemplateDayDataViewModel>();
 
             // Go through days.
             for (int iDay = 0; iDay < Schedule.Count; iDay++)
             {
+                // Current day of Schedule source.
+                var currDay = Schedule[iDay];
+                // Create time list for presenter.
                 ObservableCollection<ScheduleTemplateDayTimeDataViewModel> timeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>();
 
-                // Go through times.
-                for (int iTime = 0; iTime < Schedule[iDay].TimeList.Count; iTime++)
+                // Go through times and create time event list for each day.
+                for (int iTime = 0; iTime < currDay.TimeList.Count; iTime++)
                 {
-                    ObservableCollection<ScheduleItemDataViewModel> itemList = new ObservableCollection<ScheduleItemDataViewModel>();
+                    // Current time event of Schedule source.
+                    var currTimeEvent = currDay.TimeList[iTime];
 
-                    // Go through items.
-                    for (int iItem = 0; iItem < Schedule[iDay].TimeList[iTime].ItemList.Count; iItem++)
+                    // Create time event.
+                    var timeEvent = new ScheduleTemplateDayTimeDataViewModel
                     {
-                        itemList.Add(
-                            IoC.DataContent.ScheduleDesignModel.GetItemByName(Schedule[iDay].TimeList[iTime].ItemList[iItem])
-                            );
+                        Time = currTimeEvent.Time,
+                    };
+
+                    // Generate presenter or source?
+                    // Presenter item generation.
+                    if (generatePresenter)
+                    {
+                        // Link to schedule source.
+                        if (tempLinkToSource)
+                        {
+                            // Generate time temporary ID.
+                            var tempId = int.Parse((iDay + 1).ToString() + (iTime + 1).ToString());
+                            // Assign temporary ID to Schedule's list (not the presenter one).
+                            currTimeEvent.TemporaryID = tempId;
+                            // Assign values to presenter.
+                            timeEvent.TemporaryID = tempId;
+                            timeEvent.IsMarkedAsNext = currTimeEvent.IsMarkedAsNext;
+                        }
+
+                        // Create item list for presenter.
+                        ObservableCollection<ScheduleItemDataViewModel> itemList = new ObservableCollection<ScheduleItemDataViewModel>();
+                        // Go thourgh items from source.
+                        for (int iItem = 0; iItem < currTimeEvent.ItemList.Count; iItem++)
+                        {
+                            // Current iem of Schedule source.
+                            var currItem = currTimeEvent.ItemList[iItem];
+
+                            // Create and add item to the presenter list.
+                            itemList.Add(
+                                IoC.DataContent.ScheduleDesignModel.GetItemByName(currItem)
+                                );
+                        }
+
+                        // Assign presenter item list.
+                        timeEvent.ItemListPresenter = itemList;
+                    }
+                    // Source item generation.
+                    else
+                    {
+                        // Create item list for source-copy.
+                        ObservableCollection<string> itemList = new ObservableCollection<string>();
+                        // Go thourgh items from source.
+                        for (int iItem = 0; iItem < currTimeEvent.ItemList.Count; iItem++)
+                        {
+                            // Current iem of Schedule source.
+                            var currItem = currTimeEvent.ItemList[iItem];
+
+                            // Create and add item to the source-copy list.
+                            itemList.Add(currItem);
+                        }
+
+                        // Assign source-copy item list.
+                        timeEvent.ItemList = itemList;
                     }
 
-                    // Generate time temporary ID.
-                    var tempId = int.Parse((iDay + 1).ToString() + (iTime + 1).ToString());
-
-                    Schedule[iDay].TimeList[iTime].TemporaryID = tempId;
-
-                    timeList.Add(new ScheduleTemplateDayTimeDataViewModel
-                    {
-                        TemporaryID = tempId,
-                        IsMarkedAsNext = Schedule[iDay].TimeList[iTime].IsMarkedAsNext,
-                        Time = Schedule[iDay].TimeList[iTime].Time,
-                        ItemListPresenter = itemList,
-                    });
+                    // Add time event to the time list.
+                    timeList.Add(timeEvent);
                 }
 
-                SchedulePresenter.Add(new ScheduleTemplateDayDataViewModel
+                // Add day to the schedule presenter.
+                schedule.Add(new ScheduleTemplateDayDataViewModel
                 {
-                    DayOfWeek = Schedule[iDay].DayOfWeek,
+                    DayOfWeek = currDay.DayOfWeek,
                     TimeList = timeList,
                 });
             }
+
+            // Return.
+            return schedule;
         }
 
         #endregion

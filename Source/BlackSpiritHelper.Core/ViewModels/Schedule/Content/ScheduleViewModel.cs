@@ -209,15 +209,13 @@ namespace BlackSpiritHelper.Core
         /// Getter for item list which contains items from <see cref="ItemPredefinedList"/> and <see cref="ItemCustomList"/>.
         /// </summary>
         [XmlIgnore]
-        public List<string> ItemTitleListPresenter
+        public List<ScheduleItemDataViewModel> ItemListPresenter
         {
             get
             {
-                List<string> l = new List<string>();
-                for (int i = 0; i < ItemPredefinedList.Count; i++)
-                    l.Add(ItemPredefinedList[i].Name);
-                for (int i = 0; i < ItemCustomList.Count; i++)
-                    l.Add(ItemCustomList[i].Name);
+                List<ScheduleItemDataViewModel> l = new List<ScheduleItemDataViewModel>(ItemPredefinedList.Count + ItemCustomList.Count);
+                l.AddRange(ItemPredefinedList);
+                l.AddRange(ItemCustomList);
                 return l;
             }
         }
@@ -1478,7 +1476,7 @@ namespace BlackSpiritHelper.Core
                     : SelectedTemplate.Title + prefix
                     ),
                 TimeZoneRegion = SelectedTemplate.TimeZoneRegion,
-                Schedule = SelectedTemplate.CreateScheduleDeepCopy(),
+                Schedule = SelectedTemplate.CreateScheduleCopy(false),
             };
 
             // Add custom cop template.

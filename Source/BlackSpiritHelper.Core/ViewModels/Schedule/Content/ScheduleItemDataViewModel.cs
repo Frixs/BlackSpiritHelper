@@ -118,6 +118,8 @@ namespace BlackSpiritHelper.Core
         #region Public Methods
 
         /// <summary>
+        /// Update UI schedule for user.
+        /// All procedures will be done after certain time period without user interactions.
         /// This method is done only if no items is moved from or to ignored list within <see cref="mIgnoreListMoveCounterFlagTime"/>.
         /// </summary>
         /// <returns></returns>
