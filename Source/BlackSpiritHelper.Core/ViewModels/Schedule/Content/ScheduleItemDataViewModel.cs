@@ -132,6 +132,9 @@ namespace BlackSpiritHelper.Core
             if (mIgnoreListMoveCounterFlag > 0)
                 return;
 
+            if (!IoC.DataContent.ScheduleDesignModel.IsRunning)
+                return;
+
             if (IoC.DataContent.ScheduleDesignModel.SelectingTemplateFlag)
                 return;
 

@@ -71,7 +71,8 @@ namespace BlackSpiritHelper
         }
 
         /// <summary>
-        /// Serve TODO: Not working for while multiple the same items are in the same list.
+        /// Serve 
+        /// TODO: Not working for while multiple the same items are in the same list.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

@@ -671,10 +671,7 @@ namespace BlackSpiritHelper.Core
 
             } while (goToNextWeek);
 
-            // Mark as next.
-            SelectedTemplate.FindAndRemarkAsNew(lastMatchingTimeItem);
-
-            // Update.
+            // Update check.
             if (lastMatchingTimeItem == null)
             {
                 IoC.Logger.Log("No Time item found!", LogLevel.Debug);
@@ -684,12 +681,13 @@ namespace BlackSpiritHelper.Core
             // Set new countdown time.
             mTimeLeft = lastMatchingDate.UtcDateTime - nowUtc;
 
-            // Set time items.
+            // Manage target time event items.
             // Clear list first.
             IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
             {
                 NextItemPresenterList.Clear();
             }));
+            // Go thourgh target time event items.
             for (int i = 0; i < lastMatchingTimeItem.ItemList.Count; i++)
             {
                 var item = GetItemByName(lastMatchingTimeItem.ItemList[i]);
@@ -715,6 +713,9 @@ namespace BlackSpiritHelper.Core
 
             // Update notification triggers.
             TimerSetNotificationEventTriggers(mTimeLeft);
+
+            // Mark as next.
+            SelectedTemplate.FindAndRemarkAsNext(lastMatchingTimeItem, true);
 
             return true;
         }
