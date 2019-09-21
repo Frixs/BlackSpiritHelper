@@ -146,7 +146,8 @@
                                             <!-- Time event representation -->
                                             <DataTemplate>
 
-                                                <ItemsControl ItemsSource="{Binding ItemListPresenter}" Tag="{Binding}">
+                                                <!-- AlternationCount - maximum possible count of items - then it starts again from 0 -->
+                                                <ItemsControl ItemsSource="{Binding ItemListPresenter}" Tag="{Binding}" AlternationCount="10">
                                                     <ItemsControl.Template>
                                                         <ControlTemplate>
                                                             <!-- Time event representation template -->
@@ -258,8 +259,8 @@
                                                                                             Source={x:Static local:ViewModelLocator.Instance}}"
                                                                               DisplayMemberPath="Name"
                                                                               SelectionChanged="ItemComboBox_SelectionChanged"
-                                                                              Tag="{Binding Tag.ItemListPresenter,
-                                                                                    RelativeSource={RelativeSource AncestorType=ItemsControl, AncestorLevel=1, Mode=FindAncestor}}"
+                                                                              Tag="{Binding Path=(ItemsControl.AlternationIndex), 
+                                                                                    RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                                               Height="22"
                                                                               Margin="0 0 5 0">
                                                                         <ComboBox.SelectedItem>

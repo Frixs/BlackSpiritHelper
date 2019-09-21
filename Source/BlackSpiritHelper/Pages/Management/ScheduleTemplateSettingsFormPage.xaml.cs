@@ -72,14 +72,14 @@ namespace BlackSpiritHelper
 
         /// <summary>
         /// Serve 
-        /// TODO: Not working for while multiple the same items are in the same list.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ItemComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            var itemList = (ObservableCollection<ScheduleItemDataViewModel>)(sender as ComboBox).Tag;
-            var index = itemList.IndexOf((ScheduleItemDataViewModel)e.RemovedItems[0]);
+            var itemList = (ObservableCollection<ScheduleItemDataViewModel>)(sender as ComboBox).FindParent<ItemsControl>().ItemsSource;
+            //int index = itemList.IndexOf((ScheduleItemDataViewModel)e.RemovedItems[0]);
+            int index = (int)(sender as ComboBox).Tag;
             itemList[index] = (ScheduleItemDataViewModel)e.AddedItems[0];
         }
     }
