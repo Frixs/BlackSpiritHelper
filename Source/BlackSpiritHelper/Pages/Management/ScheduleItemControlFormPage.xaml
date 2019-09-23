@@ -57,7 +57,7 @@
                                             <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
-                                        
+
                                         <!-- Add item input -->
                                         <TextBox Grid.Column="0"
                                                  Tag="Name"
@@ -121,7 +121,8 @@
                                                           UsingAlphaChannel="False"
                                                           ShowAvailableColors="False"
                                                           ShowStandardColors="False"
-                                                          StandardButtonHeader="">
+                                                          StandardButtonHeader=""
+                                                          Width="70">
                                         </xctk:ColorPicker>
                                     </StackPanel>
 
@@ -140,14 +141,8 @@
                     </ItemsControl>
 
                     <!-- Spacer -->
-                    <Border Style="{StaticResource FormSectionSpacer}" />
-
-                    <!-- Save Changes Button -->
-                    <Button Content="SAVE CHANGES"
-                            Command="{Binding SaveChangesCommand}"
-                            Style="{StaticResource RegularButton}"
-                            Padding="10"/>
-
+                    <Border Style="{StaticResource FormInputVerSpacer}" />
+                    
                 </StackPanel>
             </Grid>
 

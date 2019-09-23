@@ -71,7 +71,7 @@ namespace BlackSpiritHelper
         }
 
         /// <summary>
-        /// Serve 
+        /// Serve selection changed for <see cref="BlackSpiritHelper.Core.ScheduleTemplateSettingsFormPageViewModel.SchedulePresenter"/>.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

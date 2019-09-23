@@ -59,11 +59,6 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public ICommand RemoveItemCommand { get; set; }
 
-        /// <summary>
-        /// The command to save changes.
-        /// </summary>
-        public ICommand SaveChangesCommand { get; set; }
-
         #endregion
 
         #region Constructor
@@ -96,16 +91,6 @@ namespace BlackSpiritHelper.Core
             GoBackCommand = new RelayCommand(() => GoBack());
             AddItemCommand = new RelayCommand(() => AddItem());
             RemoveItemCommand = new RelayParameterizedCommand((parameter) => RemoveItem(parameter));
-            SaveChangesCommand = new RelayCommand(() => SaveChanges());
-        }
-
-        /// <summary>
-        /// Save changes.
-        /// </summary>
-        private void SaveChanges()
-        {
-            // TODO: save
-            Console.WriteLine("Save!");
         }
 
         /// <summary>
