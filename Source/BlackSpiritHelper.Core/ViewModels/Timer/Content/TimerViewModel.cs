@@ -149,7 +149,7 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         public TimerGroupDataViewModel AddGroup(string itemTitle)
         {
-            IoC.Logger.Log($"Trying to add Timer Group '{itemTitle}'...", LogLevel.Debug);
+            IoC.Logger.Log($"Adding timer group '{itemTitle}'...", LogLevel.Debug);
 
             // Check limits.
             if (!CanCreateNewGroup)
@@ -157,7 +157,7 @@ namespace BlackSpiritHelper.Core
 
             itemTitle = itemTitle.Trim();
             // Validate Inputs.
-            if (!TimerGroupDataViewModel.ValidateGroupInputs(itemTitle))
+            if (!TimerGroupDataViewModel.ValidateInputs(itemTitle))
                 return null;
 
             // Sort Groups by ID.
@@ -176,7 +176,7 @@ namespace BlackSpiritHelper.Core
             // Update properties.
             OnPropertyChanged(nameof(CanCreateNewGroup));
 
-            IoC.Logger.Log($"Timer Group '{itemTitle}' added!", LogLevel.Info);
+            IoC.Logger.Log($"Added timer group '{itemTitle}'!", LogLevel.Info);
             return item;
         }
 
@@ -187,7 +187,7 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         public bool DestroyGroup(TimerGroupDataViewModel vm)
         {
-            IoC.Logger.Log($"Trying to destroy Timer Group '{vm.Title}'...", LogLevel.Debug);
+            IoC.Logger.Log($"Destroying timer group '{vm.Title}'...", LogLevel.Debug);
 
             if (vm == null)
                 return false;
@@ -216,7 +216,7 @@ namespace BlackSpiritHelper.Core
             // Update properties.
             OnPropertyChanged(nameof(CanCreateNewGroup));
 
-            IoC.Logger.Log($"Timer Group '{title}' destroyed!", LogLevel.Info);
+            IoC.Logger.Log($"Destroyed timer group '{title}'!", LogLevel.Info);
             return true;
         }
 

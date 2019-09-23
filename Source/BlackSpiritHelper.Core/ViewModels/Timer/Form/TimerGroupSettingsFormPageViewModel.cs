@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace BlackSpiritHelper.Core
@@ -11,7 +10,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// The Group associated to this settings.
         /// </summary>
-        public TimerGroupDataViewModel mTimerGroupViewModel;
+        public TimerGroupDataViewModel mFormVM;
 
         #endregion
 
@@ -20,15 +19,15 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// The Group associated to this settings.
         /// </summary>
-        public TimerGroupDataViewModel TimerGroupViewModel
+        public TimerGroupDataViewModel FormVM
         {
             get
             {
-                return mTimerGroupViewModel;
+                return mFormVM;
             }
             set
             {
-                mTimerGroupViewModel = value;
+                mFormVM = value;
 
                 // Bind properties to the inputs.
                 BindProperties();
@@ -79,10 +78,10 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void BindProperties()
         {
-            if (TimerGroupViewModel == null)
+            if (FormVM == null)
                 return;
 
-            Title = TimerGroupViewModel.Title;
+            Title = FormVM.Title;
         }
 
         #region Command Methods
@@ -99,7 +98,7 @@ namespace BlackSpiritHelper.Core
 
         private void SaveChanges()
         {
-            if (!TimerGroupDataViewModel.ValidateGroupInputs(Title))
+            if (!TimerGroupDataViewModel.ValidateInputs(Title))
             {
                 // Some error occured during saving changes of the group.
                 IoC.UI.ShowMessage(new MessageBoxDialogViewModel
@@ -114,13 +113,13 @@ namespace BlackSpiritHelper.Core
             }
 
             // Save changes.
-            TimerGroupViewModel.Title = Title.Trim();
+            FormVM.Title = Title.Trim();
 
             // Resort groups alphabetically.
             IoC.DataContent.TimerDesignModel.SortGroupList();
 
             // Log it.
-            IoC.Logger.Log($"Timer Group '{TimerGroupViewModel.Title}' settings changed!", LogLevel.Info);
+            IoC.Logger.Log($"Settings changed: timer group '{FormVM.Title}'.", LogLevel.Info);
 
             // Move back to the page.
             GoBack();
@@ -128,13 +127,13 @@ namespace BlackSpiritHelper.Core
 
         private void DeleteGroup()
         {
-            if (!IoC.DataContent.TimerDesignModel.DestroyGroup(TimerGroupViewModel))
+            if (!IoC.DataContent.TimerDesignModel.DestroyGroup(FormVM))
             {
                 // Some error occured during deleting the group.
                 IoC.UI.ShowMessage(new MessageBoxDialogViewModel
                 {
                     Caption = "Cannot delete the group!",
-                    Message = $"The group is not empty or it is the last existing group! {Environment.NewLine}Please, remove all the timers in the group first. {Environment.NewLine}Number of timers in this group is {TimerGroupViewModel.TimerList.Count}.",
+                    Message = $"The group is not empty or it is the last existing group! {Environment.NewLine}Please, remove all the timers in the group first. {Environment.NewLine}Number of timers in this group is {FormVM.TimerList.Count}.",
                     Button = System.Windows.MessageBoxButton.OK,
                     Icon = System.Windows.MessageBoxImage.Warning,
                 });

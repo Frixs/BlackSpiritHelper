@@ -78,7 +78,7 @@ namespace BlackSpiritHelper
 
             if (mTargetWindowHandle.Equals(IntPtr.Zero))
             {
-                IoC.Logger.Log("Target window not found!", LogLevel.Warning);
+                IoC.Logger.Log("Target window not found!", LogLevel.Error);
                 mIsOverlayOk = false;
                 return;
             }

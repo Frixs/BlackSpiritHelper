@@ -5,13 +5,17 @@ using System.Globalization;
 namespace BlackSpiritHelper
 {
     /// <summary>
-    /// Invert boolean.
+    /// Converts enum to boolean for RadioButton.
     /// </summary>
-    public class BooleanInvertConverter : BaseValueConverter<BooleanInvertConverter>
+    public class ScheduleTimeZoneRegionConverter : BaseValueConverter<ScheduleTimeZoneRegionConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return !(bool)value;
+            // Prevention against Type erros.
+            if (!value.GetType().Equals(typeof(TimeZoneRegion)))
+                return "";
+
+            return ((Enum)value).ToString() + " (" + ((Enum)value).GetDescription() + ")";
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
