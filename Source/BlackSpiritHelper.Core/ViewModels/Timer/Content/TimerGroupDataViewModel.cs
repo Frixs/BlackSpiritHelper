@@ -217,7 +217,7 @@ namespace BlackSpiritHelper.Core
         /// <param name="vm">The item.</param>
         public bool AddTimer(TimerItemDataViewModel vm)
         {
-            IoC.Logger.Log($"Trying to add Timer '{vm.Title}' to group '{Title}'...", LogLevel.Debug);
+            IoC.Logger.Log($"Adding timer '{vm.Title}' to group '{Title}'...", LogLevel.Debug);
 
             if (vm == null)
                 return false;
@@ -235,7 +235,7 @@ namespace BlackSpiritHelper.Core
             // Update properties.
             OnPropertyChanged(nameof(CanCreateNewTimer));
 
-            IoC.Logger.Log($"Timer '{vm.Title}' added to group '{Title}'!", LogLevel.Info);
+            IoC.Logger.Log($"Added timer '{vm.Title}' to group '{Title}'!", LogLevel.Info);
             return true;
         }
 
@@ -245,7 +245,7 @@ namespace BlackSpiritHelper.Core
         /// <param name="vm">The item.</param>
         public bool DestroyTimer(TimerItemDataViewModel vm)
         {
-            IoC.Logger.Log($"Trying to destroy Timer '{vm.Title}'...", LogLevel.Debug);
+            IoC.Logger.Log($"Destroying timer '{vm.Title}'...", LogLevel.Debug);
 
             if (vm == null)
                 return false;
@@ -269,7 +269,7 @@ namespace BlackSpiritHelper.Core
             // Update properties.
             OnPropertyChanged(nameof(CanCreateNewTimer));
 
-            IoC.Logger.Log($"Timer '{title}' destroyed!", LogLevel.Info);
+            IoC.Logger.Log($"Destroyed timer '{title}'!", LogLevel.Info);
             return true;
         }
 

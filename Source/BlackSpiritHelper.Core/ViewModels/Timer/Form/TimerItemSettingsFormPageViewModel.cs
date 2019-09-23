@@ -213,7 +213,7 @@ namespace BlackSpiritHelper.Core
             AssociatedGroupViewModel.SortTimerList();
 
             // Log it.
-            IoC.Logger.Log($"Timer '{FormVM.Title}' settings changed!", LogLevel.Info);
+            IoC.Logger.Log($"Settings changed: timer '{FormVM.Title}'.", LogLevel.Info);
 
             // Move back to the page.
             GoBack();

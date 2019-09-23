@@ -176,7 +176,7 @@ namespace BlackSpiritHelper.Core
             FormVM.SortSchedule();
 
             // Log it.
-            IoC.Logger.Log($"Template '{FormVM.Title}' settings changed!", LogLevel.Info);
+            IoC.Logger.Log($"Settings changed: template '{FormVM.Title}'.", LogLevel.Info);
 
             // Update template title list presenter.
             IoC.DataContent.ScheduleDesignModel.SetTemplateTitleListPresenter();

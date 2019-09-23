@@ -11,12 +11,6 @@ namespace BlackSpiritHelper
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (targetType != typeof(bool))
-            {
-                IoC.Logger.Log("The target must be a boolean!", LogLevel.Fatal);
-                throw new InvalidOperationException("The target must be a boolean!");
-            }
-
             return !(bool)value;
         }
 

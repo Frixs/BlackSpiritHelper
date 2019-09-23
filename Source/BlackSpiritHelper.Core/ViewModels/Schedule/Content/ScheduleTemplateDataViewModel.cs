@@ -234,7 +234,7 @@ namespace BlackSpiritHelper.Core
         {
             if (sourceTimeEvent == null)
             {
-                IoC.Logger.Log("Time event item is not defined!", LogLevel.Error);
+                IoC.Logger.Log("Time-event item is not defined!", LogLevel.Error);
                 return;
             }
 
@@ -265,7 +265,7 @@ namespace BlackSpiritHelper.Core
         {
             if (sourceTimeEvent == null)
             {
-                IoC.Logger.Log("Time event item is not defined!", LogLevel.Error);
+                IoC.Logger.Log("Time-event item is not defined!", LogLevel.Error);
                 return;
             }
 

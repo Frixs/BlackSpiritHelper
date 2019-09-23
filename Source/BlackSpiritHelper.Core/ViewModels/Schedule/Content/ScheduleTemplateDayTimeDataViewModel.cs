@@ -201,7 +201,7 @@ namespace BlackSpiritHelper.Core
         /// <param name="addToPresenter"></param>
         private void AddItem(bool addToPresenter)
         {
-            IoC.Logger.Log("Add Item", LogLevel.Debug);
+            IoC.Logger.Log("Adding item to schedule...", LogLevel.Debug);
 
             // Add item to the list.
             if (addToPresenter)
@@ -227,7 +227,7 @@ namespace BlackSpiritHelper.Core
         /// <param name="parameter"></param>
         private void RemoveItem(bool removeFromPresenter, object parameter)
         {
-            IoC.Logger.Log("Remove Item", LogLevel.Debug);
+            IoC.Logger.Log("Removing item from schedule...", LogLevel.Debug);
 
             // Remove from the list and set limitation.
             if (removeFromPresenter)

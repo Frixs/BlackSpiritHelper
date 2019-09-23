@@ -902,6 +902,7 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// Get item by name.
+        /// If the item does not exist, it will create a new one with the name.
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
@@ -920,7 +921,7 @@ namespace BlackSpiritHelper.Core
             // If there is no equal item in any of the list.
             if (ret == null)
             {
-                IoC.Logger.Log($"No item found! Let's create a new custom item from the unknown name '{name}'.", LogLevel.Debug);
+                IoC.Logger.Log($"No item found! Let's create a new custom item from the unknown name '{name}'.", LogLevel.Warning);
                 return AddItem(name.Trim(), "000000");
             }
 
@@ -1052,7 +1053,7 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         public bool DestroyCustomTemplate(ScheduleTemplateDataViewModel vm)
         {
-            IoC.Logger.Log($"Trying to destroy Template '{vm.Title}'...", LogLevel.Debug);
+            IoC.Logger.Log($"Destroying template '{vm.Title}'...", LogLevel.Debug);
 
             if (vm == null)
                 return false;
@@ -1077,7 +1078,7 @@ namespace BlackSpiritHelper.Core
             SetTemplateTitleListPresenter();
 
             // Log it.
-            IoC.Logger.Log($"Template '{title}' destroyed!", LogLevel.Info);
+            IoC.Logger.Log($"Destroyed template '{title}'!", LogLevel.Info);
 
             // Select new template, because this is deleted.
             SelectTemplateByName(TemplateTitleListPresenter.Count > 0 ? TemplateTitleListPresenter[0] : "");

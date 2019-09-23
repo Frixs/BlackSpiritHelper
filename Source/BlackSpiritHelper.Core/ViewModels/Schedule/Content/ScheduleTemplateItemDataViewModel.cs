@@ -108,7 +108,7 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void AddEvent(bool hasPresenter)
         {
-            IoC.Logger.Log("Add Time Event", LogLevel.Debug);
+            IoC.Logger.Log("Adding time-event to schedule...", LogLevel.Debug);
 
             var timeEvent = new ScheduleTemplateDayTimeDataViewModel();
             if (hasPresenter)
@@ -128,7 +128,7 @@ namespace BlackSpiritHelper.Core
         /// <param name="parameter"></param>
         private void RemoveEvent(object parameter)
         {
-            IoC.Logger.Log("Remove Time Event", LogLevel.Debug);
+            IoC.Logger.Log("Removing time-event from schedule...", LogLevel.Debug);
 
             if (parameter == null || !parameter.GetType().Equals(typeof(ScheduleTemplateDayTimeDataViewModel)))
             {

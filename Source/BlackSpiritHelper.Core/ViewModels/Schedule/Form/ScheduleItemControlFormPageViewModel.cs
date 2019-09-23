@@ -100,7 +100,11 @@ namespace BlackSpiritHelper.Core
         private void RemoveItem(object parameter)
         {
             var par = (ScheduleItemDataViewModel)parameter;
-            FormVM.DestroyCustomItem(par);
+
+            IoC.Logger.Log($"Removing schedule custom item '{par}'...", LogLevel.Debug);
+
+            if (FormVM.DestroyCustomItem(par))
+                IoC.Logger.Log($"Removed schedule custom item '{par}'.", LogLevel.Info);
         }
 
         /// <summary>
@@ -108,6 +112,8 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void AddItem()
         {
+            IoC.Logger.Log("Creating new schedule custom item.", LogLevel.Debug);
+
             if (!IoC.DataContent.ScheduleDesignModel.CanAddCustomItem)
                 return;
 
@@ -132,6 +138,9 @@ namespace BlackSpiritHelper.Core
 
                 return;
             }
+
+            // Log it.
+            IoC.Logger.Log($"Created new schedule custom item '{name}'.", LogLevel.Info);
 
             // Sort list.
             FormVM.SortItemCustomList();

@@ -59,7 +59,7 @@
                     <!-- Spacer -->
                     <Border Style="{StaticResource FormItemSpacer}" />
 
-                    <!-- Change Group -->
+                    <!-- Time Zone Region -->
                     <TextBlock Text="Time Zone Region"
                                FontFamily="{StaticResource LatoRegular}"
                                Foreground="{StaticResource ForegroundBrushKey}"
