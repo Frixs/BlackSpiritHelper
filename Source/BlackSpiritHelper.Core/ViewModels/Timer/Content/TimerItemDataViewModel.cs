@@ -785,7 +785,7 @@ namespace BlackSpiritHelper.Core
             // Create Settings View Model with the current timer binding.
             TimerItemSettingsFormPageViewModel vm = new TimerItemSettingsFormPageViewModel
             {
-                TimerItemDataViewModel = this,
+                FormVM = this,
             };
 
             IoC.Application.GoToPage(ApplicationPage.TimerItemSettingsForm, vm);
@@ -971,11 +971,10 @@ namespace BlackSpiritHelper.Core
         /// <param name="showInOverlay"></param>
         /// <param name="showInOverlay"></param>
         /// <returns></returns>
-        public static bool ValidateTimerInputs(TimerItemDataViewModel vm, string title, string iconTitleShortcut, string iconBackgroundHEX, TimeSpan timeDuration, TimeSpan countdownDuration, bool showInOverlay, TimerGroupDataViewModel associatedGroupViewModel, sbyte currentGroupID)
+        public static bool ValidateInputs(TimerItemDataViewModel vm, string title, string iconTitleShortcut, string iconBackgroundHEX, TimeSpan timeDuration, TimeSpan countdownDuration, bool showInOverlay, TimerGroupDataViewModel associatedGroupViewModel, sbyte currentGroupID)
         {
             #region Title
 
-            title = title.Trim();
             if (!new TimerTitleRule().Validate(title, null).IsValid)
                 return false;
 
@@ -983,7 +982,6 @@ namespace BlackSpiritHelper.Core
 
             #region IconTitleShortcut
 
-            iconTitleShortcut = iconTitleShortcut.Trim();
             if (!new TimerIconTitleShortcutRule().Validate(iconTitleShortcut, null).IsValid)
                 return false;
 

@@ -11,15 +11,7 @@ namespace BlackSpiritHelper
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            OverlaySize val;
-
-            if (value.GetType() == typeof(OverlaySize))
-                val = (OverlaySize)value;
-            else
-            {
-                IoC.Logger.Log("The target must be a OverlaySize!", LogLevel.Fatal);
-                throw new InvalidOperationException("The target must be a OverlaySize!");
-            }
+            OverlaySize val = (OverlaySize)value;
 
             switch (val)
             {

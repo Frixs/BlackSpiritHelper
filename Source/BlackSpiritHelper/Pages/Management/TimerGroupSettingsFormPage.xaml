@@ -9,7 +9,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="TimerGroupSettingsFormPage">
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" d:DesignStyle="{StaticResource WindowBackgroundControlStyle}">
         <Border Padding="10">
         
             <Grid HorizontalAlignment="Center"
@@ -28,6 +28,7 @@
                         Panel.ZIndex="1"
                         />
 
+                <!-- Form -->
                 <StackPanel TextBlock.TextAlignment="Center">
 
                     <!-- Form Title -->
@@ -36,12 +37,14 @@
 
                     <!-- Form Subtitle -->
                     <TextBlock Text="Timer Group"
-                               Style="{StaticResource FormSubtitle}"
-                               Margin="0 0 0 50" />
+                               Style="{StaticResource FormSubtitle}" />
 
+                    <!-- Spacer -->
+                    <Border Style="{StaticResource FormSectionSpacer}" />
+                    
                     <!-- Group Name -->
-                    <TextBox Tag="Group Name" Margin="0 0 0 50"
-                             MaxLength="{Binding TimerGroupViewModel.TitleAllowMaxChar}">
+                    <TextBox Tag="Group Name"
+                             MaxLength="{Binding FormVM.TitleAllowMaxChar}">
                         <TextBox.Text>
                             <Binding Path="Title"
                                      UpdateSourceTrigger="PropertyChanged">
@@ -52,15 +55,17 @@
                         </TextBox.Text>
                     </TextBox>
 
+                    <!-- Spacer -->
+                    <Border Style="{StaticResource FormSectionSpacer}" />
+                    
                     <!-- Save Changes Button -->
-                    <Button Content="SAVE CHANGES" Margin="0 0 0 10"
+                    <Button Content="SAVE CHANGES"
                             Command="{Binding SaveChangesCommand}"
                             Style="{StaticResource RegularButton}"
                             Padding="10"/>
 
-                    <!-- Line spacer -->
-                    <Border Margin="0 0 0 10" 
-                            Style="{StaticResource FormSpacer}"/>
+                    <!-- Line separator -->
+                    <Border Style="{StaticResource LineSeparator}"/>
 
                     <!-- Delete Group Button -->
                     <Button Content="Delete Group"
