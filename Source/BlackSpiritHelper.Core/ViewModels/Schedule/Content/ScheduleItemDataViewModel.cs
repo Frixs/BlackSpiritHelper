@@ -113,6 +113,39 @@ namespace BlackSpiritHelper.Core
             RemoveItemFromIgnoredCommand = new RelayParameterizedCommand(async (parameter) => await RemoveItemFromIgnoredAsync(parameter));
         }
 
+
+        /// <summary>
+        /// Add item to ignore list.
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        private async Task AddItemToIgnoredAsync(object parameter)
+        {
+            if (parameter == null || !parameter.GetType().Equals(typeof(string)))
+                return;
+            string par = (string)parameter;
+
+            IoC.DataContent.ScheduleDesignModel.AddItemToIgnoredList(par);
+
+            await Task.Delay(1);
+        }
+
+        /// <summary>
+        /// Remove item from ignore list.
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        private async Task RemoveItemFromIgnoredAsync(object parameter)
+        {
+            if (parameter == null || !parameter.GetType().Equals(typeof(string)))
+                return;
+            string par = (string)parameter;
+
+            IoC.DataContent.ScheduleDesignModel.RemoveItemFromIgnoredList(par);
+
+            await Task.Delay(1);
+        }
+
         #endregion
 
         #region Public Methods
@@ -141,70 +174,6 @@ namespace BlackSpiritHelper.Core
             IoC.DataContent.ScheduleDesignModel.FindAndRemarkIgnored();
 
             await Task.Delay(1);
-        }
-
-        #endregion
-
-        #region Private Methods
-
-        /// <summary>
-        /// Add item to ignore list.
-        /// </summary>
-        /// <param name="parameter"></param>
-        /// <returns></returns>
-        private async Task AddItemToIgnoredAsync(object parameter)
-        {
-            if (parameter == null || !parameter.GetType().Equals(typeof(string)))
-                return;
-            string par = (string)parameter;
-
-            // Get item.
-            var item = IoC.DataContent.ScheduleDesignModel.GetItemByName(par);
-            if (item == null)
-            {
-                IoC.Logger.Log($"No item found under the name '{par}'!", LogLevel.Warning);
-                return;
-            }
-
-            // Add.
-            IoC.DataContent.ScheduleDesignModel.ItemIgnoredList.Add(item.Name);
-            IoC.DataContent.ScheduleDesignModel.ItemIgnoredListPresenter.Add(item);
-
-            // Resort.
-            IoC.DataContent.ScheduleDesignModel.SortItemIgnoredList();
-
-            // Procedure after move.
-            await IoC.Task.Run(async () => await OnItemIgnoredMoveAsync());
-        }
-
-        /// <summary>
-        /// Remove item from ignore list.
-        /// </summary>
-        /// <param name="parameter"></param>
-        /// <returns></returns>
-        private async Task RemoveItemFromIgnoredAsync(object parameter)
-        {
-            if (parameter == null || !parameter.GetType().Equals(typeof(string)))
-                return;
-            string par = (string)parameter;
-
-            // Get item.
-            var item = IoC.DataContent.ScheduleDesignModel.GetItemByName(par);
-            if (item == null)
-            {
-                IoC.Logger.Log($"No item found under the name '{par}'!", LogLevel.Warning);
-                return;
-            }
-
-            // Remove.
-            IoC.DataContent.ScheduleDesignModel.ItemIgnoredList.RemoveAll(o => o.ToLower().Equals(item.Name.ToLower()));
-            IoC.DataContent.ScheduleDesignModel.ItemIgnoredListPresenter.Remove(item);
-
-            // Resort - to update list.
-            IoC.DataContent.ScheduleDesignModel.SortItemIgnoredList();
-
-            // Procedure after move.
-            await IoC.Task.Run(async () => await OnItemIgnoredMoveAsync());
         }
 
         #endregion

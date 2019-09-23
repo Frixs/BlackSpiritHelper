@@ -1165,9 +1165,81 @@ namespace BlackSpiritHelper.Core
         {
             if (!ItemCustomList.Remove(vm))
                 return false;
+            if (!RemoveItemFromIgnoredList(vm))
+                return false;
 
             // Update values.
             OnPropertyChanged(nameof(CanAddCustomItem));
+
+            return true;
+        }
+
+        /// <summary>
+        /// Add item to ignore list.
+        /// </summary>
+        /// <param name="itemName"></param>
+        /// <returns></returns>
+        public bool AddItemToIgnoredList(string itemName)
+        {
+            if (string.IsNullOrEmpty(itemName))
+                return false;
+
+            // Get item.
+            var item = GetItemByName(itemName);
+            if (item == null)
+            {
+                IoC.Logger.Log($"No item found under the name '{itemName}'!", LogLevel.Warning);
+                return false;
+            }
+
+            // Add.
+            ItemIgnoredList.Add(item.Name);
+            ItemIgnoredListPresenter.Add(item);
+
+            // Resort.
+            SortItemIgnoredList();
+
+            // Procedure after move.
+            IoC.Task.Run(async () => await ScheduleItemDataViewModel.OnItemIgnoredMoveAsync());
+
+            return true;
+        }
+
+        /// <summary>
+        /// Remove item from ignore list.
+        /// </summary>
+        /// <param name="itemName"></param>
+        /// <returns></returns>
+        public bool RemoveItemFromIgnoredList(string itemName)
+        {
+            if (string.IsNullOrEmpty(itemName))
+                return false;
+            
+            return RemoveItemFromIgnoredList(GetItemByName(itemName));
+        }
+
+        /// <summary>
+        /// Remove item from ignore list.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public bool RemoveItemFromIgnoredList(ScheduleItemDataViewModel item)
+        {
+            if (item == null)
+            {
+                IoC.Logger.Log($"Undefined item!", LogLevel.Warning);
+                return false;
+            }
+
+            // Remove.
+            ItemIgnoredList.RemoveAll(o => o.ToLower().Equals(item.Name.ToLower()));
+            ItemIgnoredListPresenter.Remove(item);
+
+            // Resort - to update list.
+            SortItemIgnoredList();
+
+            // Procedure after move.
+            IoC.Task.Run(async () => await ScheduleItemDataViewModel.OnItemIgnoredMoveAsync());
 
             return true;
         }

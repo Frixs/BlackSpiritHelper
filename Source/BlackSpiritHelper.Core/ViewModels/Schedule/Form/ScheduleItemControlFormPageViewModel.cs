@@ -103,8 +103,15 @@ namespace BlackSpiritHelper.Core
 
             IoC.Logger.Log($"Removing schedule custom item '{par}'...", LogLevel.Debug);
 
-            if (FormVM.DestroyCustomItem(par))
-                IoC.Logger.Log($"Removed schedule custom item '{par}'.", LogLevel.Info);
+            // Remove.
+            if (!FormVM.DestroyCustomItem(par))
+            {
+                IoC.Logger.Log($"Error occured during removing schedule custom item '{par}'!", LogLevel.Error);
+                return;
+            }
+
+            // Log it.
+            IoC.Logger.Log($"Removed schedule custom item '{par}'.", LogLevel.Info);
         }
 
         /// <summary>
