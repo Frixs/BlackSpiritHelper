@@ -5,6 +5,9 @@ using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
 {
+    /// <summary>
+    /// Represents the schedule time item - only the name without time - Like Karanda, Nouver etc.
+    /// </summary>
     public class ScheduleItemDataViewModel : BaseViewModel
     {
         #region Private Properties
@@ -110,34 +113,6 @@ namespace BlackSpiritHelper.Core
             RemoveItemFromIgnoredCommand = new RelayParameterizedCommand(async (parameter) => await RemoveItemFromIgnoredAsync(parameter));
         }
 
-        #endregion
-
-        #region Public Methods
-
-        /// <summary>
-        /// This method is done only if no items is moved from or to ignored list within <see cref="mIgnoreListMoveCounterFlagTime"/>.
-        /// </summary>
-        /// <returns></returns>
-        public static async Task OnItemIgnoredMoveAsync()
-        {
-            mIgnoreListMoveCounterFlag++;
-            await Task.Delay(mIgnoreListMoveCounterFlagTime);
-            mIgnoreListMoveCounterFlag--;
-
-            if (mIgnoreListMoveCounterFlag > 0)
-                return;
-
-            if (IoC.DataContent.ScheduleDesignModel.SelectingTemplateFlag)
-                return;
-
-            IoC.DataContent.ScheduleDesignModel.FindAndRemarkIgnored();
-
-            await Task.Delay(1);
-        }
-
-        #endregion
-
-        #region Private Methods
 
         /// <summary>
         /// Add item to ignore list.
@@ -150,23 +125,9 @@ namespace BlackSpiritHelper.Core
                 return;
             string par = (string)parameter;
 
-            // Get item.
-            var item = IoC.DataContent.ScheduleDesignModel.GetItemByName(par);
-            if (item == null)
-            {
-                IoC.Logger.Log($"No item found under the name '{par}'!", LogLevel.Warning);
-                return;
-            }
+            IoC.DataContent.ScheduleDesignModel.AddItemToIgnoredList(par);
 
-            // Add.
-            IoC.DataContent.ScheduleDesignModel.ItemIgnoredList.Add(item.Name);
-            IoC.DataContent.ScheduleDesignModel.ItemIgnoredListPresenter.Add(item);
-
-            // Resort.
-            IoC.DataContent.ScheduleDesignModel.SortItemIgnoredList();
-
-            // Procedure after move.
-            await IoC.Task.Run(async () => await OnItemIgnoredMoveAsync());
+            await Task.Delay(1);
         }
 
         /// <summary>
@@ -180,23 +141,69 @@ namespace BlackSpiritHelper.Core
                 return;
             string par = (string)parameter;
 
-            // Get item.
-            var item = IoC.DataContent.ScheduleDesignModel.GetItemByName(par);
-            if (item == null)
-            {
-                IoC.Logger.Log($"No item found under the name '{par}'!", LogLevel.Warning);
+            IoC.DataContent.ScheduleDesignModel.RemoveItemFromIgnoredList(par);
+
+            await Task.Delay(1);
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Update UI schedule for user.
+        /// All procedures will be done after certain time period without user interactions.
+        /// This method is done only if no items is moved from or to ignored list within <see cref="mIgnoreListMoveCounterFlagTime"/>.
+        /// </summary>
+        /// <returns></returns>
+        public static async Task OnItemIgnoredMoveAsync()
+        {
+            mIgnoreListMoveCounterFlag++;
+            await Task.Delay(mIgnoreListMoveCounterFlagTime);
+            mIgnoreListMoveCounterFlag--;
+
+            if (mIgnoreListMoveCounterFlag > 0)
                 return;
-            }
 
-            // Remove.
-            IoC.DataContent.ScheduleDesignModel.ItemIgnoredList.RemoveAll(o => o.ToLower().Equals(item.Name.ToLower()));
-            IoC.DataContent.ScheduleDesignModel.ItemIgnoredListPresenter.Remove(item);
+            if (!IoC.DataContent.ScheduleDesignModel.IsRunning)
+                return;
 
-            // Resort - to update list.
-            IoC.DataContent.ScheduleDesignModel.SortItemIgnoredList();
+            if (IoC.DataContent.ScheduleDesignModel.SelectingTemplateFlag)
+                return;
 
-            // Procedure after move.
-            await IoC.Task.Run(async () => await OnItemIgnoredMoveAsync());
+            IoC.DataContent.ScheduleDesignModel.FindAndRemarkIgnored();
+
+            await Task.Delay(1);
+        }
+
+        #endregion
+
+        #region Validation Methods
+
+        /// <summary>
+        /// Check schedule template parameters.
+        /// TRUE, if all parameters are OK.
+        /// </summary>
+        /// <param name="vm"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static bool ValidateInputs(ScheduleItemDataViewModel vm, string name, string colorHEX)
+        {
+            #region Name
+
+            if (!new ScheduleItemNameRule().Validate(name, null).IsValid)
+                return false;
+
+            #endregion
+
+            #region ColorHEX
+
+            if (!colorHEX.CheckColorHEX())
+                return false;
+
+            #endregion
+
+            return true;
         }
 
         #endregion

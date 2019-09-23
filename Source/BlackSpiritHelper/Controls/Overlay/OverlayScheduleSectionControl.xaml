@@ -8,6 +8,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="200">
 
+    <!-- 
+        Schedule countdown box
+        +
+        schedule items listing
+    -->
+    
     <!-- Derived from OverlayWindow -->
     <StackPanel x:Name="OverlayScheduleSection" 
                 Orientation="{Binding DataContext.OverlayOrientation, FallbackValue=Horizontal,

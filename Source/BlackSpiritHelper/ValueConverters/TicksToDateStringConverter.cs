@@ -10,7 +10,7 @@ namespace BlackSpiritHelper
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return new DateTime((long)value).ToString("MM/dd/yyyy");
+            return new DateTime((long)value).ToString("yyyy-MM-dd");
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

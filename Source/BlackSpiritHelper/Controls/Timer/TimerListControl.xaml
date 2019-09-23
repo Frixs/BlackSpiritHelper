@@ -8,6 +8,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
+    <!--
+        Template for all groups with menu and all items
+    -->
+    
     <Border DataContext="{x:Static core:TimerListControlDesignModel.Instance}">
         <ItemsControl ItemsSource="{Binding ApplicationDataContent.TimerDesignModel.GroupList,
                                     Source={x:Static local:ViewModelLocator.Instance}}">

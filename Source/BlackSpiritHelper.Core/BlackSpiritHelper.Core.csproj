@@ -108,24 +108,29 @@
     <Compile Include="Utilities\EnumExtensionMethods.cs" />
     <Compile Include="Utilities\ObjectExtensionMethods.cs" />
     <Compile Include="Utilities\StringUtils.cs" />
+    <Compile Include="ValidationRules\Schedule\ScheduleTimeZoneRegionRule.cs" />
+    <Compile Include="ValidationRules\Schedule\ScheduleItemNameRule.cs" />
+    <Compile Include="ValidationRules\Timer\TimeMinutesRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerIconTitleShortcutRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerCountdownDurationRule.cs" />
+    <Compile Include="ValidationRules\Timer\TimeHoursRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerTimeDurationRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerShowInOverlayRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerAssociatedGroupViewModelRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerGroupTitleRule.cs" />
-    <Compile Include="ValidationRules\Timer\BaseRule.cs" />
+    <Compile Include="ValidationRules\BaseRule.cs" />
+    <Compile Include="ValidationRules\Schedule\ScheduleTitleRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerTitleRule.cs" />
     <Compile Include="ViewModels\Application\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ProgressDialogViewModel.cs" />
-    <Compile Include="ViewModels\Schedule\Design\ScheduleItemDataDesignModel.cs" />
-    <Compile Include="ViewModels\Schedule\Design\ScheduleTemplateDataDesignModel.cs" />
-    <Compile Include="ViewModels\Schedule\ScheduleItemDataViewModel.cs" />
-    <Compile Include="ViewModels\Schedule\ScheduleTemplateDataViewModel.cs" />
-    <Compile Include="ViewModels\Schedule\ScheduleTemplateDayTimeDataViewModel.cs" />
-    <Compile Include="ViewModels\Schedule\ScheduleTemplateItemDataViewModel.cs" />
-    <Compile Include="ViewModels\Schedule\ScheduleViewModel.cs" />
-    <Compile Include="ViewModels\Schedule\Design\ScheduleDesignModel.cs" />
+    <Compile Include="ViewModels\Schedule\Content\Design\ScheduleItemDataDesignModel.cs" />
+    <Compile Include="ViewModels\Schedule\Content\Design\ScheduleTemplateDataDesignModel.cs" />
+    <Compile Include="ViewModels\Schedule\Content\ScheduleItemDataViewModel.cs" />
+    <Compile Include="ViewModels\Schedule\Content\ScheduleTemplateDataViewModel.cs" />
+    <Compile Include="ViewModels\Schedule\Content\ScheduleTemplateDayTimeDataViewModel.cs" />
+    <Compile Include="ViewModels\Schedule\Content\ScheduleTemplateItemDataViewModel.cs" />
+    <Compile Include="ViewModels\Schedule\Content\ScheduleViewModel.cs" />
+    <Compile Include="ViewModels\Schedule\Content\Design\ScheduleDesignModel.cs" />
     <Compile Include="ViewModels\DailyCheck\DailyCheckPageViewModel.cs" />
     <Compile Include="ViewModels\Overlay\Design\OverlayDesignModel.cs" />
     <Compile Include="ViewModels\Overlay\OverlayViewModel.cs" />
@@ -134,28 +139,32 @@
     <Compile Include="ViewModels\Base\DataContentBaseViewModel.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
     <Compile Include="ViewModels\Base\RelayParameterizedCommand.cs" />
-    <Compile Include="ViewModels\Schedule\SchedulePageViewModel.cs" />
+    <Compile Include="ViewModels\Schedule\Content\SchedulePageViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\MessageBoxDialogViewModel.cs" />
     <Compile Include="ViewModels\Preferences\PreferencesPageViewModel.cs" />
     <Compile Include="ViewModels\Preferences\PrefernecesViewModel.cs" />
+    <Compile Include="ViewModels\Schedule\Form\Design\ScheduleItemControlFormPageDesignModel.cs" />
+    <Compile Include="ViewModels\Schedule\Form\Design\ScheduleTemplateSettingsFormPageDesignModel.cs" />
+    <Compile Include="ViewModels\Schedule\Form\ScheduleItemControlFormPageViewModel.cs" />
+    <Compile Include="ViewModels\Schedule\Form\ScheduleTemplateSettingsFormPageViewModel.cs" />
     <Compile Include="ViewModels\SideMenu\Design\SideMenuListItemControlDesignModel.cs" />
     <Compile Include="ViewModels\SideMenu\Design\SideMenuListControlDesignModel.cs" />
     <Compile Include="ViewModels\SideMenu\SideMenuListControlViewModel.cs" />
-    <Compile Include="ViewModels\Timer\Core\Design\TimerDesignModel.cs" />
-    <Compile Include="ViewModels\Timer\Core\Design\TimerGroupDataDesignModel.cs" />
-    <Compile Include="ViewModels\Timer\Core\Design\TimerListControlDesignModel.cs" />
-    <Compile Include="ViewModels\Timer\Core\Design\TimerGroupMenuControlDesignModel.cs" />
-    <Compile Include="ViewModels\Timer\Core\Design\TimerItemDataDesignModel.cs" />
-    <Compile Include="ViewModels\Timer\Core\TimerListControlViewModel.cs" />
-    <Compile Include="ViewModels\Timer\Core\TimerGroupMenuControlViewModel.cs" />
-    <Compile Include="ViewModels\Timer\Core\TimerGroupDataViewModel.cs" />
-    <Compile Include="ViewModels\Timer\Core\TimerViewModel.cs" />
-    <Compile Include="ViewModels\Timer\Core\TimerItemDataViewModel.cs" />
-    <Compile Include="ViewModels\Timer\SettingsForm\Design\TimerGroupSettingsFormPageDesignModel.cs" />
-    <Compile Include="ViewModels\Timer\SettingsForm\Design\TimerItemSettingsFormPageDesignModel.cs" />
-    <Compile Include="ViewModels\Timer\SettingsForm\TimerGroupSettingsFormPageViewModel.cs" />
-    <Compile Include="ViewModels\Timer\SettingsForm\TimerItemSettingsFormPageViewModel.cs" />
-    <Compile Include="ViewModels\Timer\TimerPageViewModel.cs" />
+    <Compile Include="ViewModels\Timer\Content\Design\TimerDesignModel.cs" />
+    <Compile Include="ViewModels\Timer\Content\Design\TimerGroupDataDesignModel.cs" />
+    <Compile Include="ViewModels\Timer\Content\Design\TimerListControlDesignModel.cs" />
+    <Compile Include="ViewModels\Timer\Content\Design\TimerGroupMenuControlDesignModel.cs" />
+    <Compile Include="ViewModels\Timer\Content\Design\TimerItemDataDesignModel.cs" />
+    <Compile Include="ViewModels\Timer\Content\TimerListControlViewModel.cs" />
+    <Compile Include="ViewModels\Timer\Content\TimerGroupMenuControlViewModel.cs" />
+    <Compile Include="ViewModels\Timer\Content\TimerGroupDataViewModel.cs" />
+    <Compile Include="ViewModels\Timer\Content\TimerViewModel.cs" />
+    <Compile Include="ViewModels\Timer\Content\TimerItemDataViewModel.cs" />
+    <Compile Include="ViewModels\Timer\Form\Design\TimerGroupSettingsFormPageDesignModel.cs" />
+    <Compile Include="ViewModels\Timer\Form\Design\TimerItemSettingsFormPageDesignModel.cs" />
+    <Compile Include="ViewModels\Timer\Form\TimerGroupSettingsFormPageViewModel.cs" />
+    <Compile Include="ViewModels\Timer\Form\TimerItemSettingsFormPageViewModel.cs" />
+    <Compile Include="ViewModels\Timer\Content\TimerPageViewModel.cs" />
     <Compile Include="ViewModels\Home\HomePageViewModel.cs" />
     <Compile Include="ViewModels\SideMenu\Design\SideMenuControlDesignModel.cs" />
     <Compile Include="ViewModels\SideMenu\SideMenuListItemControlViewModel.cs" />
@@ -202,6 +211,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
