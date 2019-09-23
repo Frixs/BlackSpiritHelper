@@ -10,7 +10,7 @@
       d:DesignHeight="1000" d:DesignWidth="500"
       Title="PreferencesPage" >
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto" d:DesignStyle="{StaticResource WindowBackgroundControlStyle}"
+    <ScrollViewer VerticalScrollBarVisibility="Auto" 
                   DataContext="{Binding ApplicationDataContent.PreferencesDesignModel,
                                 Source={x:Static local:ViewModelLocator.Instance}}">
 
@@ -19,7 +19,6 @@
                   VerticalAlignment="Center"
                   Width="400">
 
-                <!-- Form -->
                 <StackPanel TextBlock.TextAlignment="Center">
 
                     <!-- Form Title -->
@@ -29,58 +28,45 @@
                     <!-- ================================================== -->
                     <!-- Form Subtitle - General -->
                     <TextBlock Text="General"
-                               Style="{StaticResource FormSubtitle}" />
+                               Style="{StaticResource FormSubtitle}"
+                               Margin="0 0 0 30" />
 
-                    <!-- Spacer -->
-                    <Border Style="{StaticResource FormInputVerSpacer}" />
-                    
                     <!-- Start the app on Startup -->
-                    <CheckBox IsChecked="{Binding RunOnStartup}"
+                    <CheckBox IsChecked="{Binding RunOnStartup}" Margin="0 0 0 30"
                               Command="{Binding RunOnStartUpCheckboxCommand}"
                               Content="Run the application when my computer starts."
                               HorizontalAlignment="Center"
                               Foreground="{StaticResource ForegroundBrushKey}"
                               IsEnabled="{Binding RunOnStartupFlag, Converter={local:BooleanInvertConverter}}" />
 
-                    <!-- Spacer -->
-                    <Border Style="{StaticResource FormItemSpacer}" />
-                    
                     <!-- Run the app As Administrator -->
-                    <CheckBox IsChecked="{Binding ForceToRunAsAdministrator}"
+                    <CheckBox IsChecked="{Binding ForceToRunAsAdministrator}" Margin="0 0 0 30"
                               Command="{Binding ForceToRunAsAdministratorCommand}"
                               Content="Force to run the application As Administrator."
                               Foreground="{StaticResource ForegroundBrushKey}"
                               HorizontalAlignment="Center" />
 
-                    <!-- Spacer -->
-                    <Border Style="{StaticResource FormItemSpacer}" />
-                    
                     <!-- Start application in tray -->
-                    <CheckBox IsChecked="{Binding StartInTray}"
+                    <CheckBox IsChecked="{Binding StartInTray}" Margin="0 0 0 30"
                               Content="Start the application in tray."
                               Foreground="{StaticResource ForegroundBrushKey}"
                               HorizontalAlignment="Center" />
 
-                    <!-- Spacer -->
-                    <Border Style="{StaticResource FormItemSpacer}" />
-                    
                     <!-- Do not open overlay on application start -->
                     <CheckBox IsChecked="{Binding ApplicationDataContent.OverlayDesignModel.AllowOpenOnStart,
                                           Source={x:Static local:ViewModelLocator.Instance}}" 
+                              Margin="0 0 0 30"
                               Content="Allow opening the overlay on application start."
                               Foreground="{StaticResource ForegroundBrushKey}"
                               HorizontalAlignment="Center" />
 
-                    <!-- Spacer -->
-                    <Border Style="{StaticResource FormItemSpacer}" />
-                    
                     <!-- Volume -->
                     <TextBlock Text="Volume"
                                FontFamily="{StaticResource LatoRegular}"
                                FontSize="14"
                                Foreground="{StaticResource ForegroundBrushKey}"
                                Margin="0 0 0 5"/>
-                    <Grid HorizontalAlignment="Center">
+                    <Grid Margin="0 0 0 30" HorizontalAlignment="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="200" />
@@ -99,12 +85,9 @@
                                 Value="{Binding Volume}"
                                 VerticalAlignment="Center" />
                     </Grid>
-
-                    <!-- Spacer -->
-                    <Border Style="{StaticResource FormItemSpacer}" />
-
+                    
                     <!-- Audio Alert Level -->
-                    <StackPanel HorizontalAlignment="Center">
+                    <StackPanel Margin="0 0 0 30" HorizontalAlignment="Center">
                         <TextBlock Text="Audio Alert Level"
                                    FontFamily="{StaticResource LatoRegular}"
                                    FontSize="14"
@@ -135,29 +118,21 @@
                                    FontSize="10"/>
                     </StackPanel>
 
-                    <!-- Spacer -->
-                    <Border Style="{StaticResource FormItemSpacer}" />
-                    
                     <!-- Export log button -->
-                    <Button Content="Export Log File"
+                    <Button Content="Export Log File" Margin="0 0 0 50"
                             Style="{StaticResource RegularButton}"
                             Command="{Binding ExportLogFileCommand}"
                             Padding="10"
                             HorizontalAlignment="Center" />
 
-                    <!-- Spacer -->
-                    <Border Style="{StaticResource FormSectionSpacer}" />
-                    
                     <!-- ================================================== -->
                     <!-- Form Subtitle - Overlay -->
                     <TextBlock Text="Overlay"
-                               Style="{StaticResource FormSubtitle}" />
+                               Style="{StaticResource FormSubtitle}"
+                               Margin="0 0 0 30" />
 
-                    <!-- Spacer -->
-                    <Border Style="{StaticResource FormInputVerSpacer}" />
-                    
                     <!-- Overlay Orientation -->
-                    <StackPanel HorizontalAlignment="Center">
+                    <StackPanel Margin="0 0 0 30" HorizontalAlignment="Center">
                         <TextBlock Text="Orientation"
                                    FontFamily="{StaticResource LatoRegular}"
                                    FontSize="14"
@@ -185,11 +160,8 @@
                         </ItemsControl>
                     </StackPanel>
 
-                    <!-- Spacer -->
-                    <Border Style="{StaticResource FormItemSpacer}" />
-                    
                     <!-- Overlay Size -->
-                    <StackPanel HorizontalAlignment="Center">
+                    <StackPanel Margin="0 0 0 30" HorizontalAlignment="Center">
                         <TextBlock Text="Size"
                                    FontFamily="{StaticResource LatoRegular}"
                                    FontSize="14"
@@ -217,27 +189,19 @@
                         </ItemsControl>
                     </StackPanel>
 
-                    <!-- Spacer -->
-                    <Border Style="{StaticResource FormItemSpacer}" />
-                    
                     <!-- Reset overlay position -->
-                    <Button Content="Reset Overlay Position"
+                    <Button Content="Reset Overlay Position" Margin="0 0 0 50"
                             Style="{StaticResource RegularButton}"
                             Command="{Binding ResetOverlayPositionCommand}"
                             Padding="10"
                             HorizontalAlignment="Center" />
 
-                    <!-- Spacer -->
-                    <Border Style="{StaticResource FormSectionSpacer}" />
-                    
                     <!-- ================================================== -->
                     <!-- Form Subtitle - Schedule -->
                     <TextBlock Text="Schedule"
-                               Style="{StaticResource FormSubtitle}" />
+                               Style="{StaticResource FormSubtitle}"
+                               Margin="0 0 0 30" />
 
-                    <!-- Spacer -->
-                    <Border Style="{StaticResource FormInputVerSpacer}" />
-                    
                     <!-- Schedule Notification Time Brackets -->
                     <TextBlock Text="Alerts"
                                FontFamily="{StaticResource LatoRegular}"
@@ -264,8 +228,7 @@
                                                     Mode=TwoWay,
                                                     Source={x:Static local:ViewModelLocator.Instance}}"
                                       Step="1" />
-                    <!-- Schedule Notification Time Bracket label wrapper -->
-                    <Grid>
+                    <Grid Margin="0 0 0 50">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
@@ -285,17 +248,12 @@
                                    HorizontalAlignment="Right"/>
                     </Grid>
 
-                    <!-- Spacer -->
-                    <Border Style="{StaticResource FormSectionSpacer}" />
-                    
                     <!-- ================================================== -->
                     <!-- Form Subtitle - Timer -->
                     <TextBlock Text="Timer"
-                               Style="{StaticResource FormSubtitle}" />
+                               Style="{StaticResource FormSubtitle}"
+                               Margin="0 0 0 30" />
 
-                    <!-- Spacer -->
-                    <Border Style="{StaticResource FormInputVerSpacer}" />
-                    
                     <!-- Timer Notification Time Brackets -->
                     <TextBlock Text="Alerts"
                                    FontFamily="{StaticResource LatoRegular}"
@@ -322,8 +280,7 @@
                                                     Mode=TwoWay,
                                                     Source={x:Static local:ViewModelLocator.Instance}}"
                                       Step="1" />
-                    <!-- Timer Notification Time Bracket label wrapper -->
-                    <Grid>
+                    <Grid Margin="0 0 0 50">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
@@ -343,9 +300,6 @@
                                    HorizontalAlignment="Right"/>
                     </Grid>
 
-                    <!-- Spacer -->
-                    <Border Style="{StaticResource FormSectionSpacer}" />
-                    
                 </StackPanel>
 
             </Grid>

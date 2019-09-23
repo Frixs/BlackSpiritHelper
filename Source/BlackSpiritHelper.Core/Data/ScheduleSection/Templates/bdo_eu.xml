@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ScheduleTemplateDataViewModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <LastModifiedString>2019-09-06</LastModifiedString>
+  <LastModifiedString>08/22/2019</LastModifiedString>
   <Title>BDO-EU</Title>
   <TimeZoneRegion>EU</TimeZoneRegion>
   <Schedule>
@@ -322,7 +322,7 @@
           <TimeHours>0</TimeHours>
           <TimeMinutes>15</TimeMinutes>
           <ItemList>
-            <string>Karanda</string>
+            <string>Kzarka</string>
           </ItemList>
         </ScheduleTemplateDayTimeDataViewModel>
         <ScheduleTemplateDayTimeDataViewModel>

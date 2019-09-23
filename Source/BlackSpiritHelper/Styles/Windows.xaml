@@ -1,26 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- Form Spacers -->
-    <Style TargetType="Border" x:Key="FormItemSpacer">
-        <Setter Property="Margin" Value="0 0 0 30" />
-    </Style>
-    <Style TargetType="Border" x:Key="FormInputVerSpacer">
-        <Setter Property="Margin" Value="0 0 0 10" />
-    </Style>
-    <Style TargetType="Border" x:Key="FormSectionSpacer">
-        <Setter Property="Margin" Value="0 0 0 50" />
-    </Style>
-
-    <!--  Window background style color -->
-    <Style TargetType="{x:Type Panel}" x:Key="WindowBackgroundPanelStyle">
-        <Setter Property="Background" Value="{StaticResource WindowBackgroundBrushKey}" />
-    </Style>
-    <!--  Window background style color -->
-    <Style TargetType="{x:Type Control}" x:Key="WindowBackgroundControlStyle">
-        <Setter Property="Background" Value="{StaticResource WindowBackgroundBrushKey}" />
-    </Style>
-
     <!-- ScrollViewer with horizontal scroll on top -->
     <ControlTemplate x:Key="ScrollViewerHorizontalOnTopTemplate" TargetType="{x:Type ScrollViewer}">
         <Grid x:Name="Grid" Background="{TemplateBinding Background}">

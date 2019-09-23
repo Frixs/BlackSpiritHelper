@@ -47,16 +47,16 @@
             AddItem("Muraka", "752300", true);
 
             // Schedule predefined Template list.
-            AddTemplatePredefined("BDO-EU");
-            AddTemplatePredefined("BDO-JP");
-            AddTemplatePredefined("BDO-KR");
-            AddTemplatePredefined("BDO-MENA");
-            AddTemplatePredefined("BDO-NA");
-            AddTemplatePredefined("BDO-RU");
-            AddTemplatePredefined("BDO-SA");
-            AddTemplatePredefined("BDO-SEA");
-            AddTemplatePredefined("BDO-TH");
-            AddTemplatePredefined("BDO-TW");
+            AddPredefinedTemplate("BDO-EU");
+            AddPredefinedTemplate("BDO-JP");
+            AddPredefinedTemplate("BDO-KR");
+            AddPredefinedTemplate("BDO-MENA");
+            AddPredefinedTemplate("BDO-NA");
+            AddPredefinedTemplate("BDO-RU");
+            AddPredefinedTemplate("BDO-SA");
+            AddPredefinedTemplate("BDO-SEA");
+            AddPredefinedTemplate("BDO-TH");
+            AddPredefinedTemplate("BDO-TW");
         }
 
         #endregion

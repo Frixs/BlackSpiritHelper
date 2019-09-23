@@ -303,9 +303,6 @@ namespace BlackSpiritHelper
 
             // Hide MainWindow.
             Application.Current.MainWindow.Hide(); // A hidden window can be shown again, a closed one not.
-
-            // Save user data on closing appliation to tray.
-            IoC.DataContent.SaveUserData();
         }
 
         #endregion
@@ -317,12 +314,12 @@ namespace BlackSpiritHelper
         /// </summary>
         private static void ExitApplication()
         {
-            // Dispose tray icon.
-            DisposeTrayIcon();
-
             // Close all windows.
             for (int intCounter = Application.Current.Windows.Count - 1; intCounter >= 0; intCounter--)
                 Application.Current.Windows[intCounter].Close();
+
+            // Dispose tray icon.
+            DisposeTrayIcon();
         }
 
         /// <summary>
