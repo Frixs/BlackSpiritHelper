@@ -166,6 +166,7 @@ namespace BlackSpiritHelper.Core
             // Save changes.
             #region Save changes
 
+            FormVM.LastModifiedTicks = DateTime.Now.Ticks;
             FormVM.Title = title;
             FormVM.TimeZoneRegion = TimeZoneRegion;
             FormVM.Schedule = FormVM.CreateScheduleFromPresenter(SchedulePresenter);

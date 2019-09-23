@@ -41,7 +41,7 @@ namespace BlackSpiritHelper
                     list.Add((TimeZoneRegion)items.GetValue(i));
             }
             TimeZoneRegionComboBox.ItemsSource = list;
-            TimeZoneRegionComboBox.SelectedIndex = (int)TimeZoneRegionComboBox.Tag;
+            TimeZoneRegionComboBox.SelectedValue = (TimeZoneRegion)TimeZoneRegionComboBox.Tag;
 
             // Run lazy load.
             StartLazyLoad();

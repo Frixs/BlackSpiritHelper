@@ -1505,7 +1505,7 @@ namespace BlackSpiritHelper.Core
             {
                 LastModifiedString = DateTime.Now.ToString("yyyy-MM-dd"),
                 Title = GetTemplateRandomTitle(),
-                TimeZoneRegion = TimeZoneRegion.EU,
+                TimeZoneRegion = TimeZoneRegion.UTC,
                 Schedule = schedule,
             };
 
