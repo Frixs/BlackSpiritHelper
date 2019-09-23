@@ -213,12 +213,6 @@
     <Compile Include="Pages\Content\WatchdogPage.xaml.cs">
       <DependentUpon>WatchdogPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Management\ScheduleItemControlFormPage.xaml.cs">
-      <DependentUpon>ScheduleItemControlFormPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Management\ScheduleTemplateSettingsFormPage.xaml.cs">
-      <DependentUpon>ScheduleTemplateSettingsFormPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\Management\TimerGroupSettingsFormPage.xaml.cs">
       <DependentUpon>TimerGroupSettingsFormPage.xaml</DependentUpon>
     </Compile>
@@ -228,8 +222,6 @@
     <Compile Include="ValueConverters\BaseMultiValueConverter.cs" />
     <Compile Include="ValueConverters\BooleanToContentConverter.cs" />
     <Compile Include="ValueConverters\ContainsLeadingCharConverter.cs" />
-    <Compile Include="ValueConverters\Schedule\ScheduleTimeZoneRegionConverter.cs" />
-    <Compile Include="ValueConverters\StringHEXLeadingHashConverter.cs" />
     <Compile Include="ValueConverters\SubstringConverter.cs" />
     <Compile Include="ValueConverters\Overlay\OverlaySizeMarginValueConverter.cs" />
     <Compile Include="ValueConverters\InvertBooleanConverter.cs" />
@@ -337,14 +329,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Content\WatchdogPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\Management\ScheduleItemControlFormPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\Management\ScheduleTemplateSettingsFormPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -133,17 +133,13 @@ namespace BlackSpiritHelper
         {
             if (!mIsRestartingProcessFlag)
             {
-                #region Dispose section (on application exit)
-
                 // Dispose.
                 IoC.Get<IMouseKeyHook>().Dispose();
 
                 // "Prepare data to die."
                 IoC.DataContent.Unset();
 
-                #endregion
-
-                // Save user data before exiting application.
+                // Save data before exiting application.
                 IoC.DataContent.SaveUserData();
             }
         }

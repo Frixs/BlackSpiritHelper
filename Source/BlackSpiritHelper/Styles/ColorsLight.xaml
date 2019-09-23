@@ -49,12 +49,12 @@
     <Color x:Key="DraggableZone">#44ec1e24</Color>
     <SolidColorBrush x:Key="DraggableZoneBrushKey" Color="{StaticResource DraggableZone}" />
 
-    <!-- Line separator -->
-    <Color x:Key="LineSeparator0Background">#ffffff</Color>
-    <SolidColorBrush x:Key="LineSeparator0BackgroundBrushKey" Color="{StaticResource LineSeparator0Background}" />
+    <!-- Line Spacers -->
+    <Color x:Key="LineSpacer0Background">#ffffff</Color>
+    <SolidColorBrush x:Key="LineSpacer0BackgroundBrushKey" Color="{StaticResource LineSpacer0Background}" />
 
-    <Color x:Key="LineSeparator1Background">#15151A</Color>
-    <SolidColorBrush x:Key="LineSeparator1BackgroundBrushKey" Color="{StaticResource LineSeparator1Background}" />
+    <Color x:Key="LineSpacer1Background">#15151A</Color>
+    <SolidColorBrush x:Key="LineSpacer1BackgroundBrushKey" Color="{StaticResource LineSpacer1Background}" />
 
     <!-- System Buttons - Sub Control -->
     <Color x:Key="SystemSubButtonBackground">#ffffff</Color>

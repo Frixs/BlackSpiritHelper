@@ -16,6 +16,8 @@ namespace BlackSpiritHelper.Core
             if (val == null)
                 return new ValidationResult(false, "Not a character sequence.");
 
+            val = val.Trim();
+
             // Check conditions.
             if (val.Length < TimerGroupDataViewModel.TitleAllowMinChar || val.Length > TimerGroupDataViewModel.TitleAllowMaxChar)
                 return new ValidationResult(false, $"Please enter a group title in the length: {TimerGroupDataViewModel.TitleAllowMinChar} - {TimerGroupDataViewModel.TitleAllowMaxChar}.");

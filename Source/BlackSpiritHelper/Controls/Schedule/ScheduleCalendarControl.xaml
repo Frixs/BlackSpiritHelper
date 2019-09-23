@@ -62,7 +62,7 @@
                                                        VerticalAlignment="Center" />
 
                                             <!-- Template Update Date -->
-                                            <TextBlock Grid.Column="4" Text="{Binding LastModifiedTicks, Converter={local:TicksToDateStringConverter}, StringFormat='Template update: {0:C}'}"
+                                            <TextBlock Grid.Column="4" Text="{Binding LastModifiedTicks, Converter={local:TicksToDateStringConverter}, StringFormat='Last template update: {0:C}'}"
                                                        FontFamily="{StaticResource LatoBoldItalic}"
                                                        FontSize="10"
                                                        Foreground="{StaticResource ScheduleCalForegroundBrushKey}"
@@ -145,10 +145,7 @@
                                                                                    VerticalAlignment="Top"
                                                                                    HorizontalAlignment="Center"
                                                                                    Margin="10 10 10 5" />
-                                                                        <!-- Line Separator -->
-                                                                        <Border Style="{StaticResource LineSeparator}"
-                                                                                Margin="0"/>
-                                                                        <!-- Item Presenter -->
+                                                                        <Border Style="{StaticResource FormSpacer}"/>
                                                                         <ItemsPresenter Margin="10 5 10 10"
                                                                                         VerticalAlignment="Bottom"
                                                                                         HorizontalAlignment="Center"

@@ -11,7 +11,7 @@
       d:DesignHeight="600" d:DesignWidth="500"
       Title="TimerItemSettingsFormPage">
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto" d:DesignStyle="{StaticResource WindowBackgroundControlStyle}">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
 
         <Border Padding="10">
             <Grid HorizontalAlignment="Center"
@@ -30,7 +30,6 @@
                         Panel.ZIndex="1"
                         />
 
-                <!-- Form -->
                 <StackPanel TextBlock.TextAlignment="Center">
 
                     <!-- Form Title -->
@@ -39,14 +38,12 @@
 
                     <!-- Form Subtitle -->
                     <TextBlock Text="Timer"
-                               Style="{StaticResource FormSubtitle}" />
-
-                    <!-- Spacer -->
-                    <Border Style="{StaticResource FormSectionSpacer}" />
+                               Style="{StaticResource FormSubtitle}"
+                               Margin="0 0 0 50" />
 
                     <!-- Timer Title -->
-                    <TextBox Tag="Title"
-                             MaxLength="{Binding FormVM.TitleAllowMaxChar}">
+                    <TextBox Tag="Title" Margin="0 0 0 10"
+                             MaxLength="{Binding TimerItemDataViewModel.TitleAllowMaxChar}">
                         <TextBox.Text>
                             <Binding Path="Title"
                                      UpdateSourceTrigger="PropertyChanged">
@@ -57,19 +54,15 @@
                         </TextBox.Text>
                     </TextBox>
 
-                    <!-- Spacer -->
-                    <Border Style="{StaticResource FormInputVerSpacer}" />
-
-                    <!-- Shortcut & Color wrapper -->
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*" />
                             <ColumnDefinition Width="2*" />
                         </Grid.ColumnDefinitions>
-
+                    
                         <!-- Icon Timer Shortcut -->
-                        <TextBox Tag="Icon Shortcut" Margin="0 0 5 0" Grid.Column="0"
-                                 MaxLength="{Binding FormVM.IconTitleAllowMaxChar}"
+                        <TextBox Tag="Icon Shortcut" Margin="0 0 5 10" Grid.Column="0"
+                                 MaxLength="{Binding TimerItemDataViewModel.IconTitleAllowMaxChar}"
                                  >
                             <TextBox.Text>
                                 <Binding Path="IconTitleShortcut" 
@@ -81,7 +74,7 @@
                             </TextBox.Text>
                         </TextBox>
                         <!-- Icon Timer Color Picker -->
-                        <xctk:ColorPicker Margin="5 0 0 0" Grid.Column="1"
+                        <xctk:ColorPicker Margin="5 0 0 10" Grid.Column="1"
                                           SelectedColor="{Binding IconBackgroundHEX}"
                                           ColorMode="ColorCanvas"
                                           ShowDropDownButton="False"
@@ -93,11 +86,9 @@
                         </xctk:ColorPicker>
                     </Grid>
 
-                    <!-- Spacer -->
-                    <Border Style="{StaticResource FormInputVerSpacer}" />
-
                     <!-- Timer Total Time -->
-                    <xctk:TimeSpanUpDown AllowTextInput="True"
+                    <xctk:TimeSpanUpDown Margin="0 0 0 30"
+                                         AllowTextInput="True"
                                          DefaultValue="00:01:00"
                                          Minimum="00:01:00"
                                          Maximum="2:00:00:00"
@@ -114,16 +105,13 @@
                         </xctk:TimeSpanUpDown.Value>
                     </xctk:TimeSpanUpDown>
 
-                    <!-- Spacer -->
-                    <Border Style="{StaticResource FormItemSpacer}" />
-
                     <!-- Timer Start Countdown -->
                     <TextBlock Text="Start Countdown"
                                FontFamily="{StaticResource LatoRegular}"
                                FontSize="14"
                                Foreground="{StaticResource ForegroundBrushKey}"
                                Margin="0 0 0 5"/>
-                    <DockPanel VerticalAlignment="Center">
+                    <DockPanel VerticalAlignment="Center" Margin="0 0 0 30">
                         <xctk:TimeSpanUpDown Margin="10 0 0 0"
                                              AllowTextInput="True"
                                              DefaultValue="00:00:00"
@@ -150,16 +138,12 @@
                         </Slider>
                     </DockPanel>
 
-                    <!-- Spacer -->
-                    <Border Style="{StaticResource FormItemSpacer}" />
-
-                    <!-- Auto repeat & show in overlay wrapper -->
-                    <Grid>
+                    <Grid Margin="0 0 0 30">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*" />
                             <ColumnDefinition Width="2*" />
                         </Grid.ColumnDefinitions>
-
+                    
                         <!-- Timer Has Loop -->
                         <StackPanel Grid.Column="0" Orientation="Vertical">
                             <TextBlock Text="Auto Repeat (Loop)"
@@ -179,7 +163,7 @@
                                        Margin="0 0 0 5"/>
                             <CheckBox x:Name="ShowInOverlayCheckBox" 
                                       HorizontalAlignment="Center"
-                                      Tag="{Binding FormVM.ShowInOverlay}"
+                                      Tag="{Binding TimerItemDataViewModel.ShowInOverlay}"
                                       >
                                 <CheckBox.IsChecked>
                                     <Binding Path="ShowInOverlay"
@@ -194,16 +178,13 @@
                         </StackPanel>
                     </Grid>
 
-                    <!-- Spacer -->
-                    <Border Style="{StaticResource FormItemSpacer}" />
-
                     <!-- Change Group -->
                     <TextBlock Text="Change Associated Group"
                                FontFamily="{StaticResource LatoRegular}"
                                Foreground="{StaticResource ForegroundBrushKey}"
                                FontSize="14"
                                Margin="0 0 0 5"/>
-                    <ComboBox Name="GroupChangeComboBox"
+                    <ComboBox Name="GroupChangeComboBox" Margin="0 0 0 50"
                               HorizontalAlignment="Center"
                               Tag="{Binding GroupID}">
                         <ComboBox.SelectedItem>
@@ -217,17 +198,15 @@
                         </ComboBox.SelectedItem>
                     </ComboBox>
 
-                    <!-- Spacer -->
-                    <Border Style="{StaticResource FormSectionSpacer}" />
-
                     <!-- Save Changes Button -->
-                    <Button Content="SAVE CHANGES"
+                    <Button Content="SAVE CHANGES" Margin="0 0 0 10"
                             Command="{Binding SaveChangesCommand}"
                             Style="{StaticResource RegularButton}"
                             Padding="10"/>
 
-                    <!-- Line separator -->
-                    <Border Style="{StaticResource LineSeparator}"/>
+                    <!-- Line spacer -->
+                    <Border Margin="0 0 0 10" 
+                            Style="{StaticResource FormSpacer}"/>
 
                     <!-- Delete Timer Button -->
                     <Button Content="Delete Timer"

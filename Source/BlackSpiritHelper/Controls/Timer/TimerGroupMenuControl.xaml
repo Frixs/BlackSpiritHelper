@@ -11,8 +11,7 @@
     <UserControl.Template>
         <ControlTemplate TargetType="UserControl">
 
-            <Grid DataContext="{x:Static core:TimerGroupMenuControlDesignModel.Instance}"
-                  d:DesignStyle="{StaticResource WindowBackgroundPanelStyle}">
+            <Grid DataContext="{x:Static core:TimerGroupMenuControlDesignModel.Instance}">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="110" />

@@ -10,22 +10,19 @@ namespace BlackSpiritHelper.Core
         /// <param name="input">The string.</param>
         /// <param name="underscores">Are underscores allowed?</param>
         /// <param name="spaces">Are spaces allowed?</param>
-        /// <param name="dashes">Are dashes allowed?</param>
         /// <returns></returns>
-        public static bool CheckAlphanumeric(this string input, bool underscores = false, bool spaces = false, bool dashes = false)
+        public static bool CheckAlphanumeric(this string input, bool underscores = false, bool spaces = false)
         {
-            string regChars = "";
+            if (underscores && spaces)
+                return Regex.IsMatch(input, @"^[a-zA-Z0-9_ ]+$");
 
             if (underscores)
-                regChars += "_";
+                return Regex.IsMatch(input, @"^[a-zA-Z0-9_]+$");
 
             if (spaces)
-                regChars += " ";
+                return Regex.IsMatch(input, @"^[a-zA-Z0-9 ]+$");
 
-            if (dashes)
-                regChars += "-";
-
-            return Regex.IsMatch(input, @"^[a-zA-Z0-9" + regChars + @"]+$");
+            return Regex.IsMatch(input, @"^[a-zA-Z0-9_]+$");
         }
 
         /// <summary>
@@ -40,27 +37,6 @@ namespace BlackSpiritHelper.Core
                 return Regex.IsMatch(str, @"^#[A-Fa-f0-9]{6}$");
 
             return Regex.IsMatch(str, @"^[A-Fa-f0-9]{6}$");
-        }
-
-        /// <summary>
-        /// Transfer color HEX string into HEX string without hashmark with standard 6 character format.
-        /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
-        public static string ToHexStringWithoutHashmark(this string str)
-        {
-            string colorString;
-
-            if (str.Length == 9)
-                colorString = str.Substring(3);
-            // Color has hashmark.
-            else if (str.Length == 7)
-                colorString = str.Substring(1);
-            // Color is already in that format.
-            else
-                colorString = str;
-
-            return colorString;
         }
     }
 }

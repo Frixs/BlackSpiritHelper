@@ -199,7 +199,7 @@ namespace BlackSpiritHelper.Core
             // Create Settings View Model with the current group binding.
             TimerGroupSettingsFormPageViewModel vm = new TimerGroupSettingsFormPageViewModel
             {
-                FormVM = this,
+                TimerGroupViewModel = this,
             };
 
             IoC.Application.GoToPage(ApplicationPage.TimerGroupSettingsForm, vm);
@@ -217,7 +217,7 @@ namespace BlackSpiritHelper.Core
         /// <param name="vm">The item.</param>
         public bool AddTimer(TimerItemDataViewModel vm)
         {
-            IoC.Logger.Log($"Adding timer '{vm.Title}' to group '{Title}'...", LogLevel.Debug);
+            IoC.Logger.Log($"Trying to add Timer '{vm.Title}' to group '{Title}'...", LogLevel.Debug);
 
             if (vm == null)
                 return false;
@@ -235,7 +235,7 @@ namespace BlackSpiritHelper.Core
             // Update properties.
             OnPropertyChanged(nameof(CanCreateNewTimer));
 
-            IoC.Logger.Log($"Added timer '{vm.Title}' to group '{Title}'!", LogLevel.Info);
+            IoC.Logger.Log($"Timer '{vm.Title}' added to group '{Title}'!", LogLevel.Info);
             return true;
         }
 
@@ -245,7 +245,7 @@ namespace BlackSpiritHelper.Core
         /// <param name="vm">The item.</param>
         public bool DestroyTimer(TimerItemDataViewModel vm)
         {
-            IoC.Logger.Log($"Destroying timer '{vm.Title}'...", LogLevel.Debug);
+            IoC.Logger.Log($"Trying to destroy Timer '{vm.Title}'...", LogLevel.Debug);
 
             if (vm == null)
                 return false;
@@ -269,7 +269,7 @@ namespace BlackSpiritHelper.Core
             // Update properties.
             OnPropertyChanged(nameof(CanCreateNewTimer));
 
-            IoC.Logger.Log($"Destroyed timer '{title}'!", LogLevel.Info);
+            IoC.Logger.Log($"Timer '{title}' destroyed!", LogLevel.Info);
             return true;
         }
 
@@ -293,7 +293,7 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         /// <param name="title">The group title.</param>
         /// <returns></returns>
-        public static bool ValidateInputs(string title)
+        public static bool ValidateGroupInputs(string title)
         {
             #region Title
 

@@ -9,12 +9,6 @@
              d:DesignHeight="50" d:DesignWidth="200"
              >
 
-    <!--
-        Timer group button
-        +
-        timer item listing
-    -->
-    
     <!-- Derived from OverlayWindow -->
     <StackPanel x:Name="OverlayTimerSection" Orientation="{Binding OverlayOrientation, FallbackValue=Horizontal}"
                 Margin="0">
