@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
 {
-    public class OverlayViewModel : DataContentBaseViewModel
+    public class OverlayViewModel : DataContentBaseViewModel<OverlayViewModel>
     {
         #region Private Members
 

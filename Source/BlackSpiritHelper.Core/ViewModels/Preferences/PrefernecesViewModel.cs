@@ -9,7 +9,7 @@ namespace BlackSpiritHelper.Core
     /// <summary>
     /// User preferences of the application content.
     /// </summary>
-    public class PreferencesViewModel : DataContentBaseViewModel
+    public class PreferencesViewModel : DataContentBaseViewModel<PreferencesViewModel>
     {
         #region Public Properties
 

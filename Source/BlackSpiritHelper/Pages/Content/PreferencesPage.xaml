@@ -303,7 +303,7 @@
                                Foreground="{StaticResource ForegroundBrushKey}"
                                    Margin="0 0 0 5"/>
                     <TextBlock Text="You cannot update this value if any timer runs." 
-                               Visibility="{Binding ApplicationDataContent.TimerDesignModel.IsRunning,
+                               Visibility="{Binding ApplicationDataContent.TimerData.IsRunning,
                                             Source={x:Static local:ViewModelLocator.Instance},
                                             Converter={local:BooleanToVisibilityGoneConverter}}"
                                Foreground="{StaticResource RedBrushKey}"
@@ -314,11 +314,11 @@
                     <xctk:RangeSlider x:Name="TimerNotificationRangeSlider" Margin="0 0 0 5"
                                       Orientation="Horizontal"
                                       Minimum="6"
-                                      LowerValue="{Binding ApplicationDataContent.TimerDesignModel.TimerNotificationTime2Value, 
+                                      LowerValue="{Binding ApplicationDataContent.TimerData.TimerNotificationTime2Value, 
                                                    Mode=TwoWay,
                                                    Source={x:Static local:ViewModelLocator.Instance}}" 
                                       Maximum="59"
-                                      HigherValue="{Binding ApplicationDataContent.TimerDesignModel.TimerNotificationTime1Value, 
+                                      HigherValue="{Binding ApplicationDataContent.TimerData.TimerNotificationTime1Value, 
                                                     Mode=TwoWay,
                                                     Source={x:Static local:ViewModelLocator.Instance}}"
                                       Step="1" />

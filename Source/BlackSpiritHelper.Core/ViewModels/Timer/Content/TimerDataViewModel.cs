@@ -9,7 +9,7 @@ namespace BlackSpiritHelper.Core
     /// View model that represents list of all timer Groups.
     /// Timer Group view model: <see cref="TimerGroupDataViewModel"/>.
     /// </summary>
-    public class TimerViewModel : DataContentBaseViewModel
+    public class TimerDataViewModel : DataContentBaseViewModel<TimerDataViewModel>
     {
         #region Static Limitation Properties
 
@@ -25,7 +25,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// List of timer groups.
         /// </summary>
-        public ObservableCollection<TimerGroupDataViewModel> GroupList { get; set; }
+        public ObservableCollection<TimerGroupDataViewModel> GroupList { get; set; } = new ObservableCollection<TimerGroupDataViewModel>();
 
         /// <summary>
         /// 1st notification time.
@@ -94,9 +94,8 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Default Constructor.
         /// </summary>
-        public TimerViewModel()
+        public TimerDataViewModel()
         {
-            GroupList = new ObservableCollection<TimerGroupDataViewModel>();
         }
 
         /// <summary>

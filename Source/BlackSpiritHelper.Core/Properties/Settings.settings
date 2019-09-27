@@ -5,7 +5,7 @@
     <Setting Name="LastOpenedPage" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="System.Byte" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="TimerDesignModel" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.TimerDesignModel" Scope="User">
+    <Setting Name="TimerData" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.TimerDataViewModel" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="PreferencesDesignModel" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.PreferencesDesignModel" Scope="User">

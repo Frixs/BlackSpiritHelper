@@ -13,7 +13,7 @@
     -->
     
     <Border DataContext="{x:Static core:TimerListControlDesignModel.Instance}">
-        <ItemsControl ItemsSource="{Binding ApplicationDataContent.TimerDesignModel.GroupList,
+        <ItemsControl ItemsSource="{Binding ApplicationDataContent.TimerData.GroupList,
                                     Source={x:Static local:ViewModelLocator.Instance}}">
 
             <ItemsControl.ItemTemplate>

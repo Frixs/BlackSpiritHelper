@@ -9,7 +9,7 @@ namespace BlackSpiritHelper.Core
 {
     /// <summary>
     /// View model that represents timer Group. ViewModel for TimerGroupMenuItemControl.
-    /// List of all groups is in the view model <see cref="TimerViewModel"/>.
+    /// List of all groups is in the view model <see cref="TimerDataViewModel"/>.
     /// It contains list of timers: <see cref="TimerItemDataViewModel"/>.
     /// Data Content.
     /// </summary>

@@ -13,7 +13,7 @@ namespace BlackSpiritHelper.Core
     /// <summary>
     /// TODO:LATER: Code review, simplify code.
     /// </summary>
-    public class ScheduleViewModel : DataContentBaseViewModel
+    public class ScheduleViewModel : DataContentBaseViewModel<ScheduleViewModel>
     {
         #region Static Limitation Properties
 

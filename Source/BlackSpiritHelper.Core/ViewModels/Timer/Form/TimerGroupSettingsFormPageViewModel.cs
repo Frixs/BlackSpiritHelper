@@ -116,7 +116,7 @@ namespace BlackSpiritHelper.Core
             FormVM.Title = Title.Trim();
 
             // Resort groups alphabetically.
-            IoC.DataContent.TimerDesignModel.SortGroupList();
+            IoC.DataContent.TimerData.SortGroupList();
 
             // Log it.
             IoC.Logger.Log($"Settings changed: timer group '{FormVM.Title}'.", LogLevel.Info);
@@ -127,7 +127,7 @@ namespace BlackSpiritHelper.Core
 
         private void DeleteGroup()
         {
-            if (!IoC.DataContent.TimerDesignModel.DestroyGroup(FormVM))
+            if (!IoC.DataContent.TimerData.DestroyGroup(FormVM))
             {
                 // Some error occured during deleting the group.
                 IoC.UI.ShowMessage(new MessageBoxDialogViewModel

@@ -39,12 +39,12 @@ namespace BlackSpiritHelper.Core.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Configuration.SettingsProviderAttribute(typeof(BlackSpiritHelper.Core.CustomSettingsProvider))]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::BlackSpiritHelper.Core.TimerDesignModel TimerDesignModel {
+        public global::BlackSpiritHelper.Core.TimerDataViewModel TimerData {
             get {
-                return ((global::BlackSpiritHelper.Core.TimerDesignModel)(this["TimerDesignModel"]));
+                return ((global::BlackSpiritHelper.Core.TimerDataViewModel)(this["TimerData"]));
             }
             set {
-                this["TimerDesignModel"] = value;
+                this["TimerData"] = value;
             }
         }
         

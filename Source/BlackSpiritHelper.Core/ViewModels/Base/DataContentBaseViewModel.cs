@@ -3,16 +3,27 @@ using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
 {
+    /// <summary>
+    /// TODO desc
+    /// </summary>
     [SettingsSerializeAs(SettingsSerializeAs.Xml)]
     public abstract class DataContentBaseViewModel : BaseViewModel
     {
+        #region Private Members
+
         /// <summary>
         /// If it is false. Setup has not been called and you can check other loading procedures.
         /// </summary>
         private bool mIsSetupDoneFlag = false;
 
+        #endregion
+
+        #region Protected Members
+
         /// <summary>
-        /// TRUE, if the default values should be appended.
+        /// TRUE, Set flag up for creating default properties (calling <see cref="SetDefaults"/>) while creating a new instance with this property.
+        /// Thanks to this, constructor is free for loading from user settings 
+        /// and you can manually call this if user settings does not exists.
         /// </summary>
         protected bool mInitWithDefaultsFlag = false;
 
@@ -21,11 +32,17 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         protected bool mIsUnsetDoneFlag = false;
 
+        #endregion
+
+        #region Public Properties
+
         /// <summary>
         /// Says, if a section is running.
         /// </summary>
         [XmlIgnore]
         public abstract bool IsRunning { get; protected set; }
+
+        #endregion
 
         /// <summary>
         /// Anything you need to do after construction.
@@ -78,5 +95,28 @@ namespace BlackSpiritHelper.Core
         /// Anything you need to do before destroy.
         /// </summary>
         protected abstract void UnsetMethod();
+    }
+
+    /// <summary>
+    /// TODO: desc
+    /// </summary>
+    /// <typeparam name="VM"></typeparam>
+    [SettingsSerializeAs(SettingsSerializeAs.Xml)]
+    public abstract class DataContentBaseViewModel<VM> : DataContentBaseViewModel
+        where VM : DataContentBaseViewModel<VM>, new()
+    {
+        /// <summary>
+        /// TODO: desc
+        /// </summary>
+        public static VM NewDataInstance
+        {
+            get
+            {
+                return new VM
+                {
+                    mInitWithDefaultsFlag = true
+                };
+            }
+        }
     }
 }

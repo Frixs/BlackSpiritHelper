@@ -206,7 +206,7 @@ namespace BlackSpiritHelper
             val.ToolTip = default;
 
             // Timer section check.
-            foreach (TimerGroupDataViewModel g in IoC.DataContent.TimerDesignModel.GroupList)
+            foreach (TimerGroupDataViewModel g in IoC.DataContent.TimerData.GroupList)
             {
                 foreach (TimerItemDataViewModel t in g.TimerList)
                 {

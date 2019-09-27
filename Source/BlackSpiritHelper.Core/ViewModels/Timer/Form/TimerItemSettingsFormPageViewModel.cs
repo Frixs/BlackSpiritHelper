@@ -180,7 +180,7 @@ namespace BlackSpiritHelper.Core
             if (FormVM.GroupID != AssociatedGroupViewModel.ID)
             {
                 // Find and remove timer from old group.
-                if (!IoC.DataContent.TimerDesignModel.GetGroupByID(FormVM.GroupID).TimerList.Remove(mFormVM))
+                if (!IoC.DataContent.TimerData.GetGroupByID(FormVM.GroupID).TimerList.Remove(mFormVM))
                 {
                     // Some error occured during removing the timer from old group.
                     IoC.UI.ShowMessage(new MessageBoxDialogViewModel
@@ -225,7 +225,7 @@ namespace BlackSpiritHelper.Core
                 return;
 
             // Remove timer.
-            if (!IoC.DataContent.TimerDesignModel.GetGroupByID(FormVM.GroupID).DestroyTimer(FormVM))
+            if (!IoC.DataContent.TimerData.GetGroupByID(FormVM.GroupID).DestroyTimer(FormVM))
             {
                 // Some error occured during deleting the timer.
                 IoC.UI.ShowMessage(new MessageBoxDialogViewModel

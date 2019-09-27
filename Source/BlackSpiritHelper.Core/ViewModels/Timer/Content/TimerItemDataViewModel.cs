@@ -542,8 +542,8 @@ namespace BlackSpiritHelper.Core
             }
 
             // Update IsRunning property of the group and timer component itself.
-            IoC.DataContent.TimerDesignModel.GetGroupByID(GroupID).OnPropertyChanged(nameof(IsRunning));
-            IoC.DataContent.TimerDesignModel.OnPropertyChanged(nameof(IsRunning));
+            IoC.DataContent.TimerData.GetGroupByID(GroupID).OnPropertyChanged(nameof(IsRunning));
+            IoC.DataContent.TimerData.OnPropertyChanged(nameof(IsRunning));
 
             // Run the timer.
             mTimer.Start();
@@ -557,8 +557,8 @@ namespace BlackSpiritHelper.Core
             UpdateState(TimerState.Pause);
 
             // Update IsRunning property of the group and timer component itself.
-            IoC.DataContent.TimerDesignModel.GetGroupByID(GroupID).OnPropertyChanged(nameof(IsRunning));
-            IoC.DataContent.TimerDesignModel.OnPropertyChanged(nameof(IsRunning));
+            IoC.DataContent.TimerData.GetGroupByID(GroupID).OnPropertyChanged(nameof(IsRunning));
+            IoC.DataContent.TimerData.OnPropertyChanged(nameof(IsRunning));
 
             mTimer.Stop();
         }
@@ -622,7 +622,7 @@ namespace BlackSpiritHelper.Core
             // ------------------------------
             // 1st Bracket.
             // ------------------------------
-            if (time.TotalSeconds > IoC.DataContent.TimerDesignModel.TimerNotificationTime1)
+            if (time.TotalSeconds > IoC.DataContent.TimerData.TimerNotificationTime1)
             {
                 // Time has changed, try to deactivate if the warning UI is running.
                 TimerTryToDeactivateWarningUI();
@@ -639,7 +639,7 @@ namespace BlackSpiritHelper.Core
             // ------------------------------
             // 2nd Bracket.
             // ------------------------------
-            if (time.TotalSeconds > IoC.DataContent.TimerDesignModel.TimerNotificationTime2)
+            if (time.TotalSeconds > IoC.DataContent.TimerData.TimerNotificationTime2)
             {
                 // Time has changed, try to deactivate if the warning UI is running.
                 TimerTryToDeactivateWarningUI();
@@ -691,8 +691,8 @@ namespace BlackSpiritHelper.Core
         {
             // User time brackets.
             int[] brackets = new int[3] {
-                IoC.DataContent.TimerDesignModel.TimerNotificationTime1,
-                IoC.DataContent.TimerDesignModel.TimerNotificationTime2,
+                IoC.DataContent.TimerData.TimerNotificationTime1,
+                IoC.DataContent.TimerData.TimerNotificationTime2,
                 0
             };
             

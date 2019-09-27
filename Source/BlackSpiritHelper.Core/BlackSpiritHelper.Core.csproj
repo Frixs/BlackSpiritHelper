@@ -150,7 +150,6 @@
     <Compile Include="ViewModels\SideMenu\Design\SideMenuListItemControlDesignModel.cs" />
     <Compile Include="ViewModels\SideMenu\Design\SideMenuListControlDesignModel.cs" />
     <Compile Include="ViewModels\SideMenu\SideMenuListControlViewModel.cs" />
-    <Compile Include="ViewModels\Timer\Content\Design\TimerDesignModel.cs" />
     <Compile Include="ViewModels\Timer\Content\Design\TimerGroupDataDesignModel.cs" />
     <Compile Include="ViewModels\Timer\Content\Design\TimerListControlDesignModel.cs" />
     <Compile Include="ViewModels\Timer\Content\Design\TimerGroupMenuControlDesignModel.cs" />
@@ -158,7 +157,7 @@
     <Compile Include="ViewModels\Timer\Content\TimerListControlViewModel.cs" />
     <Compile Include="ViewModels\Timer\Content\TimerGroupMenuControlViewModel.cs" />
     <Compile Include="ViewModels\Timer\Content\TimerGroupDataViewModel.cs" />
-    <Compile Include="ViewModels\Timer\Content\TimerViewModel.cs" />
+    <Compile Include="ViewModels\Timer\Content\TimerDataViewModel.cs" />
     <Compile Include="ViewModels\Timer\Content\TimerItemDataViewModel.cs" />
     <Compile Include="ViewModels\Timer\Form\Design\TimerGroupSettingsFormPageDesignModel.cs" />
     <Compile Include="ViewModels\Timer\Form\Design\TimerItemSettingsFormPageDesignModel.cs" />
@@ -211,7 +210,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ViewModels\Timer\Control\" />
+    <Folder Include="ViewModels\Timer\Data\" />
+    <Folder Include="ViewModels\Timer\Page\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

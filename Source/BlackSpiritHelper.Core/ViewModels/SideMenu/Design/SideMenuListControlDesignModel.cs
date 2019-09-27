@@ -32,7 +32,7 @@ namespace BlackSpiritHelper.Core
                 {
                     Title = ApplicationPage.Timer.GetDescription(),
                     PageEnum = ApplicationPage.Timer,
-                    DataContent = IoC.DataContent.TimerDesignModel,
+                    DataContent = IoC.DataContent.TimerData,
                 },
                 new SideMenuListItemControlViewModel
                 {

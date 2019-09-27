@@ -65,7 +65,7 @@
                         </Grid.ColumnDefinitions>
                         
                         <!-- Group Menu Content -->
-                        <ItemsControl ItemsSource="{Binding ApplicationDataContent.TimerDesignModel.GroupList,
+                        <ItemsControl ItemsSource="{Binding ApplicationDataContent.TimerData.GroupList,
                                                     Source={x:Static local:ViewModelLocator.Instance}}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -89,7 +89,7 @@
                         <!-- Add Button -->
                         <Button Grid.Column="1" 
                                 Command="{Binding AddGroupCommand}"
-                                Visibility="{Binding ApplicationDataContent.TimerDesignModel.CanCreateNewGroup,
+                                Visibility="{Binding ApplicationDataContent.TimerData.CanCreateNewGroup,
                                              Source={x:Static local:ViewModelLocator.Instance},
                                              Converter={local:BooleanToVisibilityGoneConverter}}"
                                 Content="{StaticResource FontAwesomePlusIcon}"
