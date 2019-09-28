@@ -202,8 +202,19 @@ namespace BlackSpiritHelper.Core
             // Using "String" as default serializeAs.
             foreach (var element in settingElements)
             {
+                var val = InitValueFromFile(element);
+                if (val == null)
+                {
+                    // Some error occured during deserialization user data.
+                    // It dees not handle XML format errors.
+                    // TODO:LATER: Error messsage while loading user settings.
+
+                    // Continue and ignore damaged user data.
+                    continue;
+                }
+
                 // Add the struct into our list of loaded settings.
-                mSettingsDictionary.Add(element.Attribute(NAME).Value, InitValueFromFile(element));
+                mSettingsDictionary.Add(element.Attribute(NAME).Value, (SettingStruct)val);
             }
         }
 
@@ -212,22 +223,25 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         /// <param name="element">Element where the value is stored.</param>
         /// <returns></returns>
-        private SettingStruct InitValueFromFile(XElement element)
+        private SettingStruct? InitValueFromFile(XElement element)
         {
             // Name.
             string name = element.Attribute(NAME) == null ? string.Empty : element.Attribute(NAME).Value;
-
             // SerializeAs.
             string serializeAs = element.Attribute(SERIALIZE_AS) == null ? nameof(String) : element.Attribute(SERIALIZE_AS).Value;
-
             // Value's type.
             Type type = serializeAs.Equals(XML) ? Type.GetType(GetType().Namespace + "." + element.Element(VALUE).Descendants().First().Name.ToString()) : typeof(string);
 
             // Value.
             object value;
+
             // Deserialize Xml.
             if (serializeAs.Equals(XML))
             {
+                // Trying to load unknown type.
+                if (type == null)
+                    return null;
+                // Deserialize object.
                 XmlSerializer xs = new XmlSerializer(type);
                 value = xs.DeserializeAsObject(element.Element(VALUE).Descendants().First().ToString());
             }
