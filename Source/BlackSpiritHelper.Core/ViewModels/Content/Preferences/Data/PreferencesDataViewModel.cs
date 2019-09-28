@@ -133,8 +133,8 @@ namespace BlackSpiritHelper.Core
         private void CreateCommands()
         {
             RunOnStartUpCheckboxCommand = new RelayCommand(async () => await RunOnStartUpCheckboxCommandMethodAsync());
-            ForceToRunAsAdministratorCommand = new RelayCommand(async () => await ForceToRunAsAdministratorAsync());
-            ResetOverlayPositionCommand = new RelayCommand(async () => await ResetOverlayPositionAsync());
+            ForceToRunAsAdministratorCommand = new RelayCommand(async () => await ForceToRunAsAdministratorCommandMethodAsync());
+            ResetOverlayPositionCommand = new RelayCommand(async () => await ResetOverlayPositionCommandMethodAsync());
             ExportLogFileCommand = new RelayCommand(async () => await ExportLogAsync());
         }
 
@@ -182,7 +182,7 @@ namespace BlackSpiritHelper.Core
         /// Set to run the application As Administrator.
         /// </summary>
         /// <returns></returns>
-        private async Task ForceToRunAsAdministratorAsync()
+        private async Task ForceToRunAsAdministratorCommandMethodAsync()
         {
             if (!ForceToRunAsAdministrator)
             {
@@ -202,13 +202,17 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Reset overlay position to defualt.
         /// </summary>
-        private async Task ResetOverlayPositionAsync()
+        private async Task ResetOverlayPositionCommandMethodAsync()
         {
             IoC.DataContent.OverlayDesignModel.PosX = 0;
             IoC.DataContent.OverlayDesignModel.PosY = 0;
 
             await Task.Delay(1);
         }
+
+        #endregion
+
+        #region Private Methods
 
         /// <summary>
         /// Export log file for user.
