@@ -11,7 +11,7 @@
       Title="SchedulePage">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" d:DesignStyle="{StaticResource WindowBackgroundControlStyle}"
-                  DataContext="{Binding ApplicationDataContent.ScheduleDesignModel,
+                  DataContext="{Binding ApplicationDataContent.ScheduleData,
                                 Source={x:Static local:ViewModelLocator.Instance}}">
 
         <Grid>

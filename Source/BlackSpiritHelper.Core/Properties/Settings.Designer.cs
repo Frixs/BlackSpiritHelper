@@ -75,12 +75,12 @@ namespace BlackSpiritHelper.Core.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Configuration.SettingsProviderAttribute(typeof(BlackSpiritHelper.Core.CustomSettingsProvider))]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::BlackSpiritHelper.Core.ScheduleDesignModel ScheduleDesignModel {
+        public global::BlackSpiritHelper.Core.ScheduleDataViewModel ScheduleData {
             get {
-                return ((global::BlackSpiritHelper.Core.ScheduleDesignModel)(this["ScheduleDesignModel"]));
+                return ((global::BlackSpiritHelper.Core.ScheduleDataViewModel)(this["ScheduleData"]));
             }
             set {
-                this["ScheduleDesignModel"] = value;
+                this["ScheduleData"] = value;
             }
         }
         

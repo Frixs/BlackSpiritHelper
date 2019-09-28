@@ -7,9 +7,9 @@ namespace BlackSpiritHelper.Core
 {
     /// <summary>
     /// Previous <see cref="ScheduleTemplateDataViewModel"/>.
-    /// Next <see cref="ScheduleTemplateDayTimeDataViewModel"/>.
+    /// Next <see cref="ScheduleTimeEventDataViewModel"/>.
     /// </summary>
-    public class ScheduleTemplateDayDataViewModel : BaseViewModel
+    public class ScheduleDayDataViewModel : BaseViewModel
     {
         #region Static Limitation Properties
 
@@ -25,7 +25,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// List of all time events.
         /// </summary>
-        private ObservableCollection<ScheduleTemplateDayTimeDataViewModel> mTimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>();
+        private ObservableCollection<ScheduleTimeEventDataViewModel> mTimeList = new ObservableCollection<ScheduleTimeEventDataViewModel>();
 
         #endregion
 
@@ -39,7 +39,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// List of all time events.
         /// </summary>
-        public ObservableCollection<ScheduleTemplateDayTimeDataViewModel> TimeList
+        public ObservableCollection<ScheduleTimeEventDataViewModel> TimeList
         {
             get => mTimeList;
             set
@@ -78,7 +78,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public ScheduleTemplateDayDataViewModel()
+        public ScheduleDayDataViewModel()
         {
             // Create commands.
             CreateCommands();
@@ -110,7 +110,7 @@ namespace BlackSpiritHelper.Core
         {
             IoC.Logger.Log("Adding time-event to schedule...", LogLevel.Debug);
 
-            var timeEvent = new ScheduleTemplateDayTimeDataViewModel();
+            var timeEvent = new ScheduleTimeEventDataViewModel();
             if (hasPresenter)
                 timeEvent.ItemListPresenter = new ObservableCollection<ScheduleItemDataViewModel>();
             else
@@ -130,12 +130,12 @@ namespace BlackSpiritHelper.Core
         {
             IoC.Logger.Log("Removing time-event from schedule...", LogLevel.Debug);
 
-            if (parameter == null || !parameter.GetType().Equals(typeof(ScheduleTemplateDayTimeDataViewModel)))
+            if (parameter == null || !parameter.GetType().Equals(typeof(ScheduleTimeEventDataViewModel)))
             {
                 IoC.Logger.Log($"Wrong type - {parameter.GetType().ToString()}!", LogLevel.Error);
                 return;
             }
-            ScheduleTemplateDayTimeDataViewModel par = (ScheduleTemplateDayTimeDataViewModel)parameter;
+            ScheduleTimeEventDataViewModel par = (ScheduleTimeEventDataViewModel)parameter;
 
             if (TimeList.Remove(par))
                 CanAddEvent = true;

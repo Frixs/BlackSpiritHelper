@@ -10,8 +10,8 @@ using System.Xml.Serialization;
 namespace BlackSpiritHelper.Core
 {
     /// <summary>
-    /// Template model for <see cref="ScheduleViewModel"/>.
-    /// Next <see cref="ScheduleTemplateDayDataViewModel"/>.
+    /// Template model for <see cref="ScheduleDataViewModel"/>.
+    /// Next <see cref="ScheduleDayDataViewModel"/>.
     /// </summary>
     public class ScheduleTemplateDataViewModel : BaseViewModel
     {
@@ -49,7 +49,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Schedule.
         /// </summary>
-        private ObservableCollection<ScheduleTemplateDayDataViewModel> mSchedule;
+        private ObservableCollection<ScheduleDayDataViewModel> mSchedule;
 
         #endregion
 
@@ -110,7 +110,7 @@ namespace BlackSpiritHelper.Core
             {
                 if (IsSchedulePresenterConverted)
                     return IoC.DateTime.TimeZoneToString(TimeZoneInfo.Local, true, true)
-                        + (IoC.DataContent.ScheduleDesignModel.LocalTimeOffsetModifier == TimeSpan.Zero ? string.Empty : $" (Modifier: {IoC.DataContent.ScheduleDesignModel.LocalTimeOffsetModifierString})");
+                        + (IoC.DataContent.ScheduleData.LocalTimeOffsetModifier == TimeSpan.Zero ? string.Empty : $" (Modifier: {IoC.DataContent.ScheduleData.LocalTimeOffsetModifierString})");
                 return IoC.DateTime.TimeZoneToString(TimeZone, true, true);
             }
         }
@@ -118,9 +118,9 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Schedule source.
         /// ---
-        /// Has <see cref="ScheduleTemplateDayTimeDataViewModel.ItemListPresenter"/> set to null.
+        /// Has <see cref="ScheduleTimeEventDataViewModel.ItemListPresenter"/> set to null.
         /// </summary>
-        public ObservableCollection<ScheduleTemplateDayDataViewModel> Schedule
+        public ObservableCollection<ScheduleDayDataViewModel> Schedule
         {
             get => mSchedule;
             set
@@ -138,10 +138,10 @@ namespace BlackSpiritHelper.Core
         /// It is used to xaml presentation.
         /// We need copy, because we are modifying it and we do not want to have possibility to save it as modified.
         /// ---
-        /// Has <see cref="ScheduleTemplateDayTimeDataViewModel.ItemList"/> set to null.
+        /// Has <see cref="ScheduleTimeEventDataViewModel.ItemList"/> set to null.
         /// </summary>
         [XmlIgnore]
-        public ObservableCollection<ScheduleTemplateDayDataViewModel> SchedulePresenter { get; set; }
+        public ObservableCollection<ScheduleDayDataViewModel> SchedulePresenter { get; set; }
 
         /// <summary>
         /// Says, if the template is converted to user's local time zone.
@@ -216,7 +216,7 @@ namespace BlackSpiritHelper.Core
         #region Public Methods
 
         /// <summary>
-        /// Unamrk all marked as <see cref="ScheduleTemplateDayTimeDataViewModel.IsMarkedAsNext"/>.
+        /// Unamrk all marked as <see cref="ScheduleTimeEventDataViewModel.IsMarkedAsNext"/>.
         /// </summary>
         /// <param name="firstOccuranceOnly"></param>
         public void UnmarkAllAsNext(bool firstOccuranceOnly = false)
@@ -226,11 +226,11 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Find <see cref="ScheduleTemplateDayTimeDataViewModel"/> in <see cref="SchedulePresenter"/> and mark it.
+        /// Find <see cref="ScheduleTimeEventDataViewModel"/> in <see cref="SchedulePresenter"/> and mark it.
         /// </summary>
         /// <param name="sourceTimeEvent"></param>
         /// <param name="markSource">Mark source time event item too or not.</param>
-        public void FindAndMarkAsNext(ScheduleTemplateDayTimeDataViewModel sourceTimeEvent, bool markSource)
+        public void FindAndMarkAsNext(ScheduleTimeEventDataViewModel sourceTimeEvent, bool markSource)
         {
             if (sourceTimeEvent == null)
             {
@@ -261,7 +261,7 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         /// <param name="sourceTimeEvent"></param>
         /// <param name="markSource">Mark source time event item too or not.</param>
-        public void FindAndRemarkAsNext(ScheduleTemplateDayTimeDataViewModel sourceTimeEvent, bool markSource)
+        public void FindAndRemarkAsNext(ScheduleTimeEventDataViewModel sourceTimeEvent, bool markSource)
         {
             if (sourceTimeEvent == null)
             {
@@ -281,7 +281,7 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         /// <param name="generatePresenter">Generate presenter or source?</param>
         /// <returns></returns>
-        public ObservableCollection<ScheduleTemplateDayDataViewModel> CreateScheduleCopy(bool generatePresenter)
+        public ObservableCollection<ScheduleDayDataViewModel> CreateScheduleCopy(bool generatePresenter)
         {
             return GenerateNewSchedule(generatePresenter, false);
         }
@@ -293,9 +293,9 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         /// <param name="externalSource"></param>
         /// <returns></returns>
-        public ObservableCollection<ScheduleTemplateDayDataViewModel> CreateScheduleFromPresenter(ObservableCollection<ScheduleTemplateDayDataViewModel> externalSource = null)
+        public ObservableCollection<ScheduleDayDataViewModel> CreateScheduleFromPresenter(ObservableCollection<ScheduleDayDataViewModel> externalSource = null)
         {
-            var schedule = new ObservableCollection<ScheduleTemplateDayDataViewModel>();
+            var schedule = new ObservableCollection<ScheduleDayDataViewModel>();
 
             // Specify source.
             var source = SchedulePresenter;
@@ -308,7 +308,7 @@ namespace BlackSpiritHelper.Core
                 // Current day of SchedulePresenter.
                 var currDay = source[iDay];
                 // Create time list for source.
-                ObservableCollection<ScheduleTemplateDayTimeDataViewModel> timeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>();
+                ObservableCollection<ScheduleTimeEventDataViewModel> timeList = new ObservableCollection<ScheduleTimeEventDataViewModel>();
 
                 // Go through times and create time event list for each day.
                 for (int iTime = 0; iTime < currDay.TimeList.Count; iTime++)
@@ -317,7 +317,7 @@ namespace BlackSpiritHelper.Core
                     var currTimeEvent = currDay.TimeList[iTime];
 
                     // Create time event.
-                    var timeEvent = new ScheduleTemplateDayTimeDataViewModel
+                    var timeEvent = new ScheduleTimeEventDataViewModel
                     {
                         Time = currTimeEvent.Time,
                     };
@@ -342,7 +342,7 @@ namespace BlackSpiritHelper.Core
                 }
 
                 // Add day to the schedule source.
-                schedule.Add(new ScheduleTemplateDayDataViewModel
+                schedule.Add(new ScheduleDayDataViewModel
                 {
                     DayOfWeek = currDay.DayOfWeek,
                     TimeList = timeList,
@@ -360,7 +360,7 @@ namespace BlackSpiritHelper.Core
         {
             for (int iDay = 0; iDay < Schedule.Count; iDay++)
             {
-                Schedule[iDay].TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>(Schedule[iDay].TimeList.OrderBy(o => o.Time));
+                Schedule[iDay].TimeList = new ObservableCollection<ScheduleTimeEventDataViewModel>(Schedule[iDay].TimeList.OrderBy(o => o.Time));
             }
         }
 
@@ -425,7 +425,7 @@ namespace BlackSpiritHelper.Core
         private bool ConvertSchedulePresenterToLocal()
         {
             DateTime todayDate = DateTime.Today;
-            List<ScheduleTemplateDayTimeDataViewModel> alreadyChecked = new List<ScheduleTemplateDayTimeDataViewModel>();
+            List<ScheduleTimeEventDataViewModel> alreadyChecked = new List<ScheduleTimeEventDataViewModel>();
 
             for (int iDay = SchedulePresenter.Count - 1; iDay > -1; iDay--)
             {
@@ -450,7 +450,7 @@ namespace BlackSpiritHelper.Core
 
                     // Transform the date to user's local timezone.
                     DateTime localDate = TimeZoneInfo.ConvertTimeFromUtc(
-                        currDate.UtcDateTime + IoC.DataContent.ScheduleDesignModel.LocalTimeOffsetModifier, // We do not want to convert time with DST offset. For that reason, we use UtcDateTime property. If we so then we need to use TimeZoneInfo.ConvertTimeToUtc .
+                        currDate.UtcDateTime + IoC.DataContent.ScheduleData.LocalTimeOffsetModifier, // We do not want to convert time with DST offset. For that reason, we use UtcDateTime property. If we so then we need to use TimeZoneInfo.ConvertTimeToUtc .
                         TimeZoneInfo.Local
                         );
 
@@ -499,7 +499,7 @@ namespace BlackSpiritHelper.Core
         {
             for (int iDay = 0; iDay < SchedulePresenter.Count; iDay++)
             {
-                SchedulePresenter[iDay].TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>(SchedulePresenter[iDay].TimeList.OrderBy(o => o.Time));
+                SchedulePresenter[iDay].TimeList = new ObservableCollection<ScheduleTimeEventDataViewModel>(SchedulePresenter[iDay].TimeList.OrderBy(o => o.Time));
             }
         }
 
@@ -517,9 +517,9 @@ namespace BlackSpiritHelper.Core
         /// <param name="generatePresenter">Generate presenter or source?</param>
         /// <param name="tempLinkToSource">Should add pointers to source Schedule to point to new schedule?</param>
         /// <returns></returns>
-        private ObservableCollection<ScheduleTemplateDayDataViewModel> GenerateNewSchedule(bool generatePresenter, bool tempLinkToSource = false)
+        private ObservableCollection<ScheduleDayDataViewModel> GenerateNewSchedule(bool generatePresenter, bool tempLinkToSource = false)
         {
-            var schedule = new ObservableCollection<ScheduleTemplateDayDataViewModel>();
+            var schedule = new ObservableCollection<ScheduleDayDataViewModel>();
 
             // Go through days.
             for (int iDay = 0; iDay < Schedule.Count; iDay++)
@@ -527,7 +527,7 @@ namespace BlackSpiritHelper.Core
                 // Current day of Schedule source.
                 var currDay = Schedule[iDay];
                 // Create time list for presenter.
-                ObservableCollection<ScheduleTemplateDayTimeDataViewModel> timeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>();
+                ObservableCollection<ScheduleTimeEventDataViewModel> timeList = new ObservableCollection<ScheduleTimeEventDataViewModel>();
 
                 // Go through times and create time event list for each day.
                 for (int iTime = 0; iTime < currDay.TimeList.Count; iTime++)
@@ -536,7 +536,7 @@ namespace BlackSpiritHelper.Core
                     var currTimeEvent = currDay.TimeList[iTime];
 
                     // Create time event.
-                    var timeEvent = new ScheduleTemplateDayTimeDataViewModel
+                    var timeEvent = new ScheduleTimeEventDataViewModel
                     {
                         Time = currTimeEvent.Time,
                     };
@@ -567,7 +567,7 @@ namespace BlackSpiritHelper.Core
 
                             // Create and add item to the presenter list.
                             itemList.Add(
-                                IoC.DataContent.ScheduleDesignModel.GetItemByName(currItem)
+                                IoC.DataContent.ScheduleData.GetItemByName(currItem)
                                 );
                         }
 
@@ -598,7 +598,7 @@ namespace BlackSpiritHelper.Core
                 }
 
                 // Add day to the schedule presenter.
-                schedule.Add(new ScheduleTemplateDayDataViewModel
+                schedule.Add(new ScheduleDayDataViewModel
                 {
                     DayOfWeek = currDay.DayOfWeek,
                     TimeList = timeList,

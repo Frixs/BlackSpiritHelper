@@ -255,7 +255,7 @@
 
                                                                     <!-- Item input -->
                                                                     <ComboBox Name="ItemComboBox" Grid.Column="0"
-                                                                              ItemsSource="{Binding ApplicationDataContent.ScheduleDesignModel.ItemListPresenter,
+                                                                              ItemsSource="{Binding ApplicationDataContent.ScheduleData.ItemListPresenter,
                                                                                             Source={x:Static local:ViewModelLocator.Instance}}"
                                                                               DisplayMemberPath="Name"
                                                                               SelectionChanged="ItemComboBox_SelectionChanged"

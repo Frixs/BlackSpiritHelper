@@ -125,7 +125,7 @@ namespace BlackSpiritHelper.Core
                 return;
             string par = (string)parameter;
 
-            IoC.DataContent.ScheduleDesignModel.AddItemToIgnoredList(par);
+            IoC.DataContent.ScheduleData.AddItemToIgnoredList(par);
 
             await Task.Delay(1);
         }
@@ -141,7 +141,7 @@ namespace BlackSpiritHelper.Core
                 return;
             string par = (string)parameter;
 
-            IoC.DataContent.ScheduleDesignModel.RemoveItemFromIgnoredList(par);
+            IoC.DataContent.ScheduleData.RemoveItemFromIgnoredList(par);
 
             await Task.Delay(1);
         }
@@ -165,13 +165,13 @@ namespace BlackSpiritHelper.Core
             if (mIgnoreListMoveCounterFlag > 0)
                 return;
 
-            if (!IoC.DataContent.ScheduleDesignModel.IsRunning)
+            if (!IoC.DataContent.ScheduleData.IsRunning)
                 return;
 
-            if (IoC.DataContent.ScheduleDesignModel.SelectingTemplateFlag)
+            if (IoC.DataContent.ScheduleData.SelectingTemplateFlag)
                 return;
 
-            IoC.DataContent.ScheduleDesignModel.FindAndRemarkIgnored();
+            IoC.DataContent.ScheduleData.FindAndRemarkIgnored();
 
             await Task.Delay(1);
         }

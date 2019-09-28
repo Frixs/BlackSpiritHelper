@@ -19,7 +19,7 @@
                                 <Style TargetType="Border">
                                     <Setter Property="Background" Value="{Binding ColorHEX, Converter={local:StringHEXToBrushConverter}}"/>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ApplicationDataContent.ScheduleDesignModel.WarningFlag,
+                                        <DataTrigger Binding="{Binding ApplicationDataContent.ScheduleData.WarningFlag,
                                                            Source={x:Static local:ViewModelLocator.Instance}}" 
                                                  Value="True">
                                             <Setter Property="Background" Value="{StaticResource WarningColorBrushKey}"/>
@@ -51,7 +51,7 @@
                                                             Converter={local:StringHEXToLightOrDarkBrushConverter},
                                                             ConverterParameter={StaticResource ForegroundColorDifference}}"/>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding ApplicationDataContent.ScheduleDesignModel.WarningFlag,
+                                                    <DataTrigger Binding="{Binding ApplicationDataContent.ScheduleData.WarningFlag,
                                                                        Source={x:Static local:ViewModelLocator.Instance}}" 
                                                              Value="True">
                                                         <Setter Property="Foreground" 
@@ -77,7 +77,7 @@
                                                             Converter={local:StringHEXToLightOrDarkBrushConverter},
                                                             ConverterParameter={StaticResource ForegroundColorDifference}}"/>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding ApplicationDataContent.ScheduleDesignModel.WarningFlag,
+                                                    <DataTrigger Binding="{Binding ApplicationDataContent.ScheduleData.WarningFlag,
                                                                        Source={x:Static local:ViewModelLocator.Instance}}" 
                                                              Value="True">
                                                         <Setter Property="Foreground" 

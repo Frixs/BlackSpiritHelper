@@ -48,7 +48,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Schedule binding.
         /// </summary>
-        public ObservableCollection<ScheduleTemplateDayDataViewModel> SchedulePresenter { get; set; }
+        public ObservableCollection<ScheduleDayDataViewModel> SchedulePresenter { get; set; }
 
         #endregion
 
@@ -114,11 +114,11 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void DeleteTemplate()
         {
-            if (IoC.DataContent.ScheduleDesignModel.IsRunning)
+            if (IoC.DataContent.ScheduleData.IsRunning)
                 return;
 
             // Remove schedule.
-            if (!IoC.DataContent.ScheduleDesignModel.DestroyCustomTemplate(FormVM))
+            if (!IoC.DataContent.ScheduleData.DestroyCustomTemplate(FormVM))
             {
                 // Some error occured during deleting the template.
                 IoC.UI.ShowMessage(new MessageBoxDialogViewModel
@@ -142,7 +142,7 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void SaveChanges()
         {
-            if (IoC.DataContent.ScheduleDesignModel.IsRunning)
+            if (IoC.DataContent.ScheduleData.IsRunning)
                 return;
 
             // Trim.
@@ -180,7 +180,7 @@ namespace BlackSpiritHelper.Core
             IoC.Logger.Log($"Settings changed: template '{FormVM.Title}'.", LogLevel.Info);
 
             // Update template title list presenter.
-            IoC.DataContent.ScheduleDesignModel.SetTemplateTitleListPresenter();
+            IoC.DataContent.ScheduleData.SetTemplateTitleListPresenter();
 
             // Move back to the page.
             GoBack();

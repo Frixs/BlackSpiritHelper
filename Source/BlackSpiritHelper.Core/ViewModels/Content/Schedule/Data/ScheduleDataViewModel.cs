@@ -13,7 +13,7 @@ namespace BlackSpiritHelper.Core
     /// <summary>
     /// TODO:LATER: Code review, simplify code.
     /// </summary>
-    public class ScheduleViewModel : DataContentBaseViewModel<ScheduleViewModel>
+    public class ScheduleDataViewModel : DataContentBaseViewModel<ScheduleDataViewModel>
     {
         #region Static Limitation Properties
 
@@ -28,12 +28,12 @@ namespace BlackSpiritHelper.Core
         public static byte AllowedMaxNoOfCustomItems { get; private set; } = 32;
 
         /// <summary>
-        /// Max length for items from <see cref="ScheduleTemplateDayTimeDataViewModel.ItemList"/>.
+        /// Max length for items from <see cref="ScheduleTimeEventDataViewModel.ItemList"/>.
         /// </summary>
         public static byte AllowedItemMaxLength { get; private set; } = 10;
 
         /// <summary>
-        /// Min length for items from <see cref="ScheduleTemplateDayTimeDataViewModel.ItemList"/>.
+        /// Min length for items from <see cref="ScheduleTimeEventDataViewModel.ItemList"/>.
         /// </summary>
         public static byte AllowedItemMinLength { get; private set; } = 2;
 
@@ -427,11 +427,8 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public ScheduleViewModel()
+        public ScheduleDataViewModel()
         {
-            // Set the timer.
-            SetTimer();
-
             // Create commands.
             CreateCommands();
         }
@@ -442,6 +439,32 @@ namespace BlackSpiritHelper.Core
 
         protected override void SetupMethod()
         {
+            // Set the timer.
+            SetTimer();
+
+            // Schedule predefined Item list.
+            AddItem("Kzarka", "fc2121", true);
+            AddItem("Karanda", "004fcf", true);
+            AddItem("Offin", "0087e0", true);
+            AddItem("Nouver", "e68507", true);
+            AddItem("Kutum", "7f07b8", true);
+            AddItem("Vell", "009677", true);
+            AddItem("Garmoth", "d60229", true);
+            AddItem("Quint", "752300", true);
+            AddItem("Muraka", "752300", true);
+
+            // Schedule predefined Template list.
+            AddTemplatePredefined("BDO-EU");
+            AddTemplatePredefined("BDO-JP");
+            AddTemplatePredefined("BDO-KR");
+            AddTemplatePredefined("BDO-MENA");
+            AddTemplatePredefined("BDO-NA");
+            AddTemplatePredefined("BDO-RU");
+            AddTemplatePredefined("BDO-SA");
+            AddTemplatePredefined("BDO-SEA");
+            AddTemplatePredefined("BDO-TH");
+            AddTemplatePredefined("BDO-TW");
+
             // Check duplicity.
             CheckItemDuplicityCustom();
             CheckTemplateDuplicityCustom();
@@ -626,7 +649,7 @@ namespace BlackSpiritHelper.Core
             bool goToNextWeek = false;
             DateTime today = DateTime.Today;
             DateTime nowUtc = new DateTimeOffset(DateTime.Now + LocalTimeOffsetModifier).UtcDateTime;
-            ScheduleTemplateDayTimeDataViewModel lastMatchingTimeItem = null;
+            ScheduleTimeEventDataViewModel lastMatchingTimeItem = null;
             DateTimeOffset lastMatchingDate = default;
 
             // Set notification possibility to default.
@@ -1492,13 +1515,13 @@ namespace BlackSpiritHelper.Core
                 return;
 
             // Create (new) empty template.
-            ObservableCollection<ScheduleTemplateDayDataViewModel> schedule = new ObservableCollection<ScheduleTemplateDayDataViewModel>();
+            ObservableCollection<ScheduleDayDataViewModel> schedule = new ObservableCollection<ScheduleDayDataViewModel>();
             foreach (DayOfWeek day in (DayOfWeek[])Enum.GetValues(typeof(DayOfWeek)))
             {
-                schedule.Add(new ScheduleTemplateDayDataViewModel()
+                schedule.Add(new ScheduleDayDataViewModel()
                 {
                     DayOfWeek = day,
-                    TimeList = new ObservableCollection<ScheduleTemplateDayTimeDataViewModel>(),
+                    TimeList = new ObservableCollection<ScheduleTimeEventDataViewModel>(),
                 });
             }
             ScheduleTemplateDataViewModel vm = new ScheduleTemplateDataViewModel

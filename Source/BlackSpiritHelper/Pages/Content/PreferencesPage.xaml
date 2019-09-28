@@ -245,7 +245,7 @@
                                Foreground="{StaticResource ForegroundBrushKey}"
                                Margin="0 0 0 5"/>
                     <TextBlock Text="You cannot update this value if schedule runs." 
-                               Visibility="{Binding ApplicationDataContent.ScheduleDesignModel.IsRunning,
+                               Visibility="{Binding ApplicationDataContent.ScheduleData.IsRunning,
                                             Source={x:Static local:ViewModelLocator.Instance},
                                             Converter={local:BooleanToVisibilityGoneConverter}}"
                                Foreground="{StaticResource RedBrushKey}"
@@ -256,11 +256,11 @@
                     <xctk:RangeSlider x:Name="ScheduleNotificationRangeSlider" Margin="0 0 0 5"
                                       Orientation="Horizontal"
                                       Minimum="1"
-                                      LowerValue="{Binding ApplicationDataContent.ScheduleDesignModel.TimerNotificationTime2Value, 
+                                      LowerValue="{Binding ApplicationDataContent.ScheduleData.TimerNotificationTime2Value, 
                                                    Mode=TwoWay,
                                                    Source={x:Static local:ViewModelLocator.Instance}}" 
                                       Maximum="180"
-                                      HigherValue="{Binding ApplicationDataContent.ScheduleDesignModel.TimerNotificationTime1Value, 
+                                      HigherValue="{Binding ApplicationDataContent.ScheduleData.TimerNotificationTime1Value, 
                                                     Mode=TwoWay,
                                                     Source={x:Static local:ViewModelLocator.Instance}}"
                                       Step="1" />

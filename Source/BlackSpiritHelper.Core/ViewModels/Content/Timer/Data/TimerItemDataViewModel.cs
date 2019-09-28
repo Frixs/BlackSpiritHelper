@@ -304,9 +304,6 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public TimerItemDataViewModel()
         {
-            // Set the timer.
-            SetTimer();
-
             // Create commands.
             CreateCommands();
         }
@@ -322,6 +319,9 @@ namespace BlackSpiritHelper.Core
             if (mIsSetupDoneFlag)
                 return;
             mIsSetupDoneFlag = true;
+
+            // Set the timer.
+            SetTimer();
 
             // Update time as placeholder, only in ready state.
             if (State == TimerState.Ready)

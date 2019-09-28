@@ -43,7 +43,7 @@
                                                             <DataTrigger Binding="{Binding IsSchedulePresenterConverted}" Value="True">
                                                                 <Setter Property="Content" Value="Local Time View" />
                                                             </DataTrigger>
-                                                            <DataTrigger Binding="{Binding ApplicationDataContent.ScheduleDesignModel.SelectingTemplateFlag,
+                                                            <DataTrigger Binding="{Binding ApplicationDataContent.ScheduleData.SelectingTemplateFlag,
                                                                                    Source={x:Static local:ViewModelLocator.Instance}}" 
                                                                          Value="True">
                                                                 <Setter Property="IsEnabled" Value="False" />

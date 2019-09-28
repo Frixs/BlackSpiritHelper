@@ -22,7 +22,7 @@
         /// <summary>
         /// Data structure for schedule.
         /// </summary>
-        public ScheduleDesignModel ScheduleDesignModel { get; private set; }
+        public ScheduleDataViewModel ScheduleData { get; private set; }
 
         /// <summary>
         /// Data structure for the overlay.
@@ -57,9 +57,9 @@
             TimerData.SetDefaults();
 
             // Schedule.
-            ScheduleDesignModel = IoC.SettingsStorage.ScheduleDesignModel ?? ScheduleDesignModel.Instance;
-            ScheduleDesignModel.Setup();
-            ScheduleDesignModel.SetDefaults();
+            ScheduleData = IoC.SettingsStorage.ScheduleData ?? ScheduleDataViewModel.NewDataInstance;
+            ScheduleData.Setup();
+            ScheduleData.SetDefaults();
 
             // Overlay.
             OverlayDesignModel = IoC.SettingsStorage.OverlayDesignModel ?? OverlayDesignModel.Instance;
@@ -197,7 +197,7 @@
         private void SaveNewScheduleData()
         {
             // Save new data.
-            IoC.SettingsStorage.ScheduleDesignModel = ScheduleDesignModel;
+            IoC.SettingsStorage.ScheduleData = ScheduleData;
         }
 
         /// <summary>
@@ -206,7 +206,7 @@
         private void ClearSavedScheduleData()
         {
             // Clear previous save.
-            IoC.SettingsStorage.ScheduleDesignModel = null;
+            IoC.SettingsStorage.ScheduleData = null;
         }
 
         #endregion

@@ -219,7 +219,7 @@ namespace BlackSpiritHelper
             }
 
             // Schedule section check.
-            if (IoC.DataContent.ScheduleDesignModel.ShowInOverlay && IoC.DataContent.ScheduleDesignModel.IsRunning)
+            if (IoC.DataContent.ScheduleData.ShowInOverlay && IoC.DataContent.ScheduleData.IsRunning)
             {
                 val.Background = mOverlayBackgroundBrush;
                 return;

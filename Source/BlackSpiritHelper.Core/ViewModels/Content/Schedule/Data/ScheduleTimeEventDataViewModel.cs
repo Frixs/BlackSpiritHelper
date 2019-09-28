@@ -7,9 +7,9 @@ namespace BlackSpiritHelper.Core
 {
     /// <summary>
     /// Wrapper of <see cref="ScheduleItemDataViewModel"/> for schedule presenter with particular time.
-    /// Previous <see cref="ScheduleTemplateDayDataViewModel"/>.
+    /// Previous <see cref="ScheduleDayDataViewModel"/>.
     /// </summary>
-    public class ScheduleTemplateDayTimeDataViewModel : BaseViewModel
+    public class ScheduleTimeEventDataViewModel : BaseViewModel
     {
         #region Static Limitation Properties
 
@@ -172,7 +172,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public ScheduleTemplateDayTimeDataViewModel()
+        public ScheduleTimeEventDataViewModel()
         {
             // Create commands.
             CreateCommands();
@@ -206,14 +206,14 @@ namespace BlackSpiritHelper.Core
             // Add item to the list.
             if (addToPresenter)
             {
-                ItemListPresenter.Add(IoC.DataContent.ScheduleDesignModel.ItemPredefinedList[0]);
+                ItemListPresenter.Add(IoC.DataContent.ScheduleData.ItemPredefinedList[0]);
                 // Check limitations.
                 if (ItemListPresenter.Count >= AllowedMaxNoOfItemsInEvent)
                     CanAddItem = false;
             }
             else
             {
-                ItemList.Add(IoC.DataContent.ScheduleDesignModel.ItemPredefinedList[0].Name);
+                ItemList.Add(IoC.DataContent.ScheduleData.ItemPredefinedList[0].Name);
                 // Check limitations.
                 if (ItemList.Count >= AllowedMaxNoOfItemsInEvent)
                     CanAddItem = false;

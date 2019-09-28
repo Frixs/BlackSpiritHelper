@@ -11,7 +11,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Schedule template associated to this settings.
         /// </summary>
-        private ScheduleViewModel mFormVM = null;
+        private ScheduleDataViewModel mFormVM = null;
 
         #endregion
 
@@ -20,7 +20,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Schedule template VM associated to this settings.
         /// </summary>
-        public ScheduleViewModel FormVM
+        public ScheduleDataViewModel FormVM
         {
             get
             {
@@ -94,7 +94,7 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Remove item from <see cref="ScheduleViewModel.ItemCustomList"/>.
+        /// Remove item from <see cref="ScheduleDataViewModel.ItemCustomList"/>.
         /// </summary>
         /// <param name="parameter"></param>
         private void RemoveItem(object parameter)
@@ -115,13 +115,13 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Add new item to <see cref="ScheduleViewModel.ItemCustomList"/>.
+        /// Add new item to <see cref="ScheduleDataViewModel.ItemCustomList"/>.
         /// </summary>
         private void AddItem()
         {
             IoC.Logger.Log("Creating new schedule custom item.", LogLevel.Debug);
 
-            if (!IoC.DataContent.ScheduleDesignModel.CanAddCustomItem)
+            if (!IoC.DataContent.ScheduleData.CanAddCustomItem)
                 return;
 
             if (string.IsNullOrEmpty(NewName))

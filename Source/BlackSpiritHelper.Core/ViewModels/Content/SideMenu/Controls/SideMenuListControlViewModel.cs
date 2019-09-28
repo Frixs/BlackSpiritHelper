@@ -32,7 +32,7 @@ namespace BlackSpiritHelper.Core
                 {
                     Title = ApplicationPage.Schedule.GetDescription(),
                     PageEnum = ApplicationPage.Schedule,
-                    DataContent = IoC.DataContent.ScheduleDesignModel,
+                    DataContent = IoC.DataContent.ScheduleData,
                 },
                 new SideMenuListItemControlViewModel
                 {
