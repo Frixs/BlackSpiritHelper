@@ -114,6 +114,7 @@
                             </ControlTemplate>
                         </ItemsControl.Template>
 
+                        <!-- Item -->
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
 

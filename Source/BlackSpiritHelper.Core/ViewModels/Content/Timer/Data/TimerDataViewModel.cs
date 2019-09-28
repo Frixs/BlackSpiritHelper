@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
@@ -89,6 +91,16 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
+        #region Commands
+
+        /// <summary>
+        /// The command play group.
+        /// </summary>
+        [XmlIgnore]
+        public ICommand AddNewGroupCommand { get; set; }
+
+        #endregion
+
         #region Constructor
 
         /// <summary>
@@ -96,6 +108,8 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public TimerDataViewModel()
         {
+            // Create commands.
+            CreateCommands();
         }
 
         /// <summary>
@@ -135,6 +149,29 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         protected override void UnsetMethod()
         {
+        }
+
+        #endregion
+
+        #region Command Methods
+
+        /// <summary>
+        /// Create commands.
+        /// </summary>
+        private void CreateCommands()
+        {
+            AddNewGroupCommand = new RelayCommand(async () => await AddNewGroupCommandMethodAsync());
+        }
+
+        /// <summary>
+        /// Create a new group with default name.
+        /// </summary>
+        /// <returns></returns>
+        private async Task AddNewGroupCommandMethodAsync()
+        {
+            AddGroup("Untitled Group");
+
+            await Task.Delay(1);
         }
 
         #endregion

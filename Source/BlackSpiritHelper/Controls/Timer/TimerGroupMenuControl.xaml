@@ -87,7 +87,8 @@
 
                         <!-- Add Button -->
                         <Button Grid.Column="1" 
-                                Command="{Binding AddGroupCommand}"
+                                Command="{Binding ApplicationDataContent.TimerData.AddNewGroupCommand,
+                                          Source={x:Static local:ViewModelLocator.Instance}}"
                                 Visibility="{Binding ApplicationDataContent.TimerData.CanCreateNewGroup,
                                              Source={x:Static local:ViewModelLocator.Instance},
                                              Converter={local:BooleanToVisibilityGoneConverter}}"

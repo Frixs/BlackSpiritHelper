@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Timers;
-using System.Windows;
 using System.Windows.Input;
 using System.Xml.Serialization;
 
@@ -103,24 +101,24 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// The group id the timer belongs to.
         /// </summary>
-        public sbyte GroupID { get; set; }
+        public sbyte GroupID { get; set; } = -1;
 
         /// <summary>
         /// Timer title.
         /// </summary>
-        public string Title { get; set; }
+        public string Title { get; set; } = "NoName";
 
         /// <summary>
         /// Text shortcut to show instead of image icon. Only if there is no image icon.
         /// </summary>
-        public string IconTitleShortcut { get; set; }
+        public string IconTitleShortcut { get; set; } = "XXX";
 
         /// <summary>
         /// Icon background if there is no image icon.
         /// Color representation in HEX.
         /// f.e. FA9BC2
         /// </summary>
-        public string IconBackgroundHEX { get; set; }
+        public string IconBackgroundHEX { get; set; } = "000000";
 
         /// <summary>
         /// Formatted time output.
@@ -435,76 +433,58 @@ namespace BlackSpiritHelper.Core
             WarningFlag = !WarningFlag;
         }
 
+        #endregion
+
+        #region Command Methods
+
         /// <summary>
-        /// Update <see cref="TimeCurrent"/> in UI.
+        /// Create commands.
         /// </summary>
-        /// <param name="ts"></param>
-        private void UpdateTimeInUI(TimeSpan ts)
+        private void CreateCommands()
         {
-            // Update UI thread.
-            IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
-            {
-                // Update time text format in UI.
-                TimeCurrent = ts;
-            }));
+            OpenTimerSettingsCommand = new RelayCommand(async () => await OpenTimerSettingsCommandMethodAsync());
+            TimePlusCommand = new RelayCommand(async () => await TimePlusAsync());
+            TimeMinusCommand = new RelayCommand(async () => await TimeMinusAsync());
+            ResetTimerCommand = new RelayCommand(async () => await TimerRestartAsync());
+            SyncCommand = new RelayCommand(async () => await SyncCommandAsync());
+            PlayCommand = new RelayCommand(async () => await PlayAsync());
+            PauseCommand = new RelayCommand(async () => await PauseAsync());
         }
 
         /// <summary>
-        /// Update Timer state parameters.
+        /// Open timer settings.
         /// </summary>
-        /// <param name="state">The state to update.</param>
-        private void UpdateState(TimerState state)
+        /// <returns></returns>
+        private async Task OpenTimerSettingsCommandMethodAsync()
         {
-            switch (state)
+            if (State != TimerState.Ready)
             {
-                case TimerState.Play:
-                    // Play.
-                    State = TimerState.Play;
-                    IsRunning       = true;
-                    IsInCountdown   = false;
-                    IsInFreeze      = false;
-                    return;
+                // Cannot open timer settings while timer is running.
+                await IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                {
+                    Caption = "Ooops...",
+                    Message = $"You cannot open timer settings while timer is in process. {Environment.NewLine}Please reset the timer into default state, first.",
+                    Button = System.Windows.MessageBoxButton.OK,
+                    Icon = System.Windows.MessageBoxImage.Information,
+                });
 
-                case TimerState.Pause:
-                    // Pause.
-                    State = TimerState.Pause;
-                    IsRunning       = false;
-                    IsInFreeze      = false;
-                    return;
-
-                case TimerState.Ready:
-                    // Ready.
-                    State = TimerState.Ready;
-                    IsRunning       = false;
-                    IsInCountdown   = false;
-                    IsInFreeze      = false;
-                    // Reset notification triggers.
-                    TimerResetNotificationEventTriggers();
-                    return;
-
-                case TimerState.Freeze:
-                    // Freeze.
-                    State = TimerState.Freeze;
-                    IsRunning       = false;
-                    IsInFreeze      = true;
-                    return;
-
-                case TimerState.Countdown:
-                    // Countdown.
-                    State = TimerState.Countdown;
-                    IsRunning       = true;
-                    IsInCountdown   = true;
-                    IsInFreeze      = false;
-                    return;
-
-                default:
-                    // Log it.
-                    IoC.Logger.Log("A selected timer state value is out of box!", LogLevel.Error);
-                    // Break debugger.
-                    Debugger.Break();
-                    return;
+                return;
             }
+
+            // Create Settings View Model with the current timer binding.
+            TimerItemSettingsFormPageViewModel vm = new TimerItemSettingsFormPageViewModel
+            {
+                FormVM = this,
+            };
+
+            IoC.Application.GoToPage(ApplicationPage.TimerItemSettingsForm, vm);
+
+            await Task.Delay(1);
         }
+
+        #endregion
+
+        #region Public Methods
 
         /// <summary>
         /// Play the timer.
@@ -550,6 +530,17 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
+        /// Play the timer, command reaction.
+        /// </summary>
+        /// <returns></returns>
+        public async Task PlayAsync()
+        {
+            TimerPlay();
+
+            await Task.Delay(1);
+        }
+
+        /// <summary>
         /// Pause the timer.
         /// </summary>
         public void TimerPause()
@@ -564,6 +555,17 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
+        /// Pause the timer, command reaction.
+        /// </summary>
+        /// <returns></returns>
+        public async Task PauseAsync()
+        {
+            TimerPause();
+
+            await Task.Delay(1);
+        }
+
+        /// <summary>
         /// Freeze the timer.
         /// Used when the application is closed.
         /// </summary>
@@ -571,6 +573,81 @@ namespace BlackSpiritHelper.Core
         {
             UpdateState(TimerState.Freeze);
             mTimer.Stop();
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Update <see cref="TimeCurrent"/> in UI.
+        /// </summary>
+        /// <param name="ts"></param>
+        private void UpdateTimeInUI(TimeSpan ts)
+        {
+            // Update UI thread.
+            IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
+            {
+                // Update time text format in UI.
+                TimeCurrent = ts;
+            }));
+        }
+
+        /// <summary>
+        /// Update Timer state parameters.
+        /// </summary>
+        /// <param name="state">The state to update.</param>
+        private void UpdateState(TimerState state)
+        {
+            switch (state)
+            {
+                case TimerState.Play:
+                    // Play.
+                    State = TimerState.Play;
+                    IsRunning = true;
+                    IsInCountdown = false;
+                    IsInFreeze = false;
+                    return;
+
+                case TimerState.Pause:
+                    // Pause.
+                    State = TimerState.Pause;
+                    IsRunning = false;
+                    IsInFreeze = false;
+                    return;
+
+                case TimerState.Ready:
+                    // Ready.
+                    State = TimerState.Ready;
+                    IsRunning = false;
+                    IsInCountdown = false;
+                    IsInFreeze = false;
+                    // Reset notification triggers.
+                    TimerResetNotificationEventTriggers();
+                    return;
+
+                case TimerState.Freeze:
+                    // Freeze.
+                    State = TimerState.Freeze;
+                    IsRunning = false;
+                    IsInFreeze = true;
+                    return;
+
+                case TimerState.Countdown:
+                    // Countdown.
+                    State = TimerState.Countdown;
+                    IsRunning = true;
+                    IsInCountdown = true;
+                    IsInFreeze = false;
+                    return;
+
+                default:
+                    // Log it.
+                    IoC.Logger.Log("A selected timer state value is out of box!", LogLevel.Error);
+                    // Break debugger.
+                    Debugger.Break();
+                    return;
+            }
         }
 
         /// <summary>
@@ -592,6 +669,17 @@ namespace BlackSpiritHelper.Core
 
             // Update UI.
             UpdateTimeInUI(TimeLeft);
+        }
+
+        /// <summary>
+        /// Restart the timer.
+        /// </summary>
+        /// <returns></returns>
+        private async Task TimerRestartAsync()
+        {
+            TimerRestart();
+
+            await Task.Delay(1);
         }
 
         /// <summary>
@@ -695,7 +783,7 @@ namespace BlackSpiritHelper.Core
                 IoC.DataContent.TimerData.TimerNotificationTime2,
                 0
             };
-            
+
             for (int i = 0; i < mIsFiredNotificationEvent.Length; i++)
                 if (time.TotalSeconds < brackets[i])
                     mIsFiredNotificationEvent[i] = true;
@@ -742,55 +830,6 @@ namespace BlackSpiritHelper.Core
 
             // Stop the event handling.
             mWarningTimer.Stop();
-        }
-
-        #endregion
-
-        #region Command Methods
-
-        /// <summary>
-        /// Create commands.
-        /// </summary>
-        private void CreateCommands()
-        {
-            OpenTimerSettingsCommand = new RelayCommand(async () => await OpenTimerSettingsAsync());
-            TimePlusCommand = new RelayCommand(async () => await TimePlusAsync());
-            TimeMinusCommand = new RelayCommand(async () => await TimeMinusAsync());
-            ResetTimerCommand = new RelayCommand(async () => await ResetTimerAsync());
-            SyncCommand = new RelayCommand(async () => await SyncCommandAsync());
-            PlayCommand = new RelayCommand(async () => await PlayAsync());
-            PauseCommand = new RelayCommand(async () => await PauseAsync());
-        }
-
-        /// <summary>
-        /// Open timer settings.
-        /// </summary>
-        /// <returns></returns>
-        private async Task OpenTimerSettingsAsync()
-        {
-            if (State != TimerState.Ready)
-            {
-                // Cannot open timer settings while timer is running.
-                await IoC.UI.ShowMessage(new MessageBoxDialogViewModel
-                {
-                    Caption = "Ooops...",
-                    Message = $"You cannot open timer settings while timer is in process. {Environment.NewLine}Please reset the timer into default state, first.",
-                    Button = System.Windows.MessageBoxButton.OK,
-                    Icon = System.Windows.MessageBoxImage.Information,
-                });
-
-                return;
-            }
-
-            // Create Settings View Model with the current timer binding.
-            TimerItemSettingsFormPageViewModel vm = new TimerItemSettingsFormPageViewModel
-            {
-                FormVM = this,
-            };
-
-            IoC.Application.GoToPage(ApplicationPage.TimerItemSettingsForm, vm);
-
-            await Task.Delay(1);
         }
 
         /// <summary>
@@ -886,17 +925,6 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Restart the timer command reaction.
-        /// </summary>
-        /// <returns></returns>
-        private async Task ResetTimerAsync()
-        {
-            TimerRestart();
-
-            await Task.Delay(1);
-        }
-
-        /// <summary>
         /// Synchronization command.
         /// Move your timer to min or to max.
         /// </summary>
@@ -929,28 +957,6 @@ namespace BlackSpiritHelper.Core
                 // We are modifying time, the triggers can trigger again.
                 TimerSetNotificationEventTriggers(TimeLeft);
             }
-
-            await Task.Delay(1);
-        }
-
-        /// <summary>
-        /// Play the timer, command reaction.
-        /// </summary>
-        /// <returns></returns>
-        private async Task PlayAsync()
-        {
-            TimerPlay();
-
-            await Task.Delay(1);
-        }
-
-        /// <summary>
-        /// Pause the timer, command reaction.
-        /// </summary>
-        /// <returns></returns>
-        private async Task PauseAsync()
-        {
-            TimerPause();
 
             await Task.Delay(1);
         }

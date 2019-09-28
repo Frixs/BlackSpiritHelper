@@ -39,12 +39,17 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// ID of the group.
         /// </summary>
-        public sbyte ID { get; set; }
+        public sbyte ID { get; set; } = -1;
 
         /// <summary>
         /// Group Title.
         /// </summary>
-        public string Title { get; set; }
+        public string Title { get; set; } = "NoName";
+
+        /// <summary>
+        /// List of timers in the group.
+        /// </summary>
+        public ObservableCollection<TimerItemDataViewModel> TimerList { get; set; } = new ObservableCollection<TimerItemDataViewModel>();
 
         /// <summary>
         /// Button control - says if any of the child timers are active.
@@ -57,11 +62,6 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         [XmlIgnore]
         public bool CanCreateNewTimer => TimerList.Count < AllowedMaxNoOfTimers;
-
-        /// <summary>
-        /// List of timers in the group.
-        /// </summary>
-        public ObservableCollection<TimerItemDataViewModel> TimerList { get; set; }
 
         #endregion
 
@@ -97,8 +97,6 @@ namespace BlackSpiritHelper.Core
 
         public TimerGroupDataViewModel()
         {
-            TimerList = new ObservableCollection<TimerItemDataViewModel>();
-
             // Create commands.
             CreateCommands();
         }
@@ -114,68 +112,15 @@ namespace BlackSpiritHelper.Core
         {
             PlayCommand = new RelayCommand(async () => await PlayAsync());
             PauseCommand = new RelayCommand(async () => await PauseAsync());
-            AddTimerCommand = new RelayCommand(async () => await AddTimerAsync());
-            OpenGroupSettingsCommand = new RelayCommand(async () => await OpenGroupSettingsAsync());
+            AddTimerCommand = new RelayCommand(async () => await AddTimerCommandMethodAsync());
+            OpenGroupSettingsCommand = new RelayCommand(async () => await OpenGroupSettingsCommandMethodAsync());
         }
 
         /// <summary>
-        /// Run the timers in the group.
+        /// Add new timer with default parameters.
         /// </summary>
         /// <returns></returns>
-        private async Task PlayAsync()
-        {
-            // We don't have any timer to run.
-            if (TimerList.Count <= 0)
-                return;
-
-            bool isAnyInFreeze = false;
-
-            // Chech if there is any freezed timer.
-            foreach (TimerItemDataViewModel t in TimerList)
-                if (t.IsInFreeze)
-                {
-                    isAnyInFreeze = true;
-                    break;
-                }
-
-            // If there are freezed timers, run them, not all.
-            // -
-            // Lets run all freezed timers.
-            if (isAnyInFreeze)
-            {
-                foreach (TimerItemDataViewModel t in TimerList)
-                    if (t.IsInFreeze)
-                        t.TimerPlay();
-
-            }
-            // Lets run all timers.
-            else
-            {
-                foreach (TimerItemDataViewModel t in TimerList)
-                    t.TimerPlay();
-            }
-
-            await Task.Delay(1);
-        }
-
-        /// <summary>
-        /// Pause the timers in the group.
-        /// </summary>
-        /// <returns></returns>
-        private async Task PauseAsync()
-        {
-            // We don't have any timer to pause.
-            if (TimerList.Count <= 0)
-                return;
-
-            // Pause all timers in the group.
-            foreach (TimerItemDataViewModel t in TimerList)
-                t.TimerPause();
-
-            await Task.Delay(1);
-        }
-
-        private async Task AddTimerAsync()
+        private async Task AddTimerCommandMethodAsync()
         {
             // Create default timer.
             AddTimer(new TimerItemDataViewModel
@@ -194,7 +139,11 @@ namespace BlackSpiritHelper.Core
             await Task.Delay(1);
         }
 
-        private async Task OpenGroupSettingsAsync()
+        /// <summary>
+        /// Open group settings.
+        /// </summary>
+        /// <returns></returns>
+        private async Task OpenGroupSettingsCommandMethodAsync()
         {
             // Create Settings View Model with the current group binding.
             TimerGroupSettingsFormPageViewModel vm = new TimerGroupSettingsFormPageViewModel
@@ -281,6 +230,67 @@ namespace BlackSpiritHelper.Core
             TimerList = new ObservableCollection<TimerItemDataViewModel>(
                 TimerList.OrderBy(o => o.Title)
                 );
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Play the timers in the group.
+        /// </summary>
+        /// <returns></returns>
+        private async Task PlayAsync()
+        {
+            // We don't have any timer to run.
+            if (TimerList.Count <= 0)
+                return;
+
+            bool isAnyInFreeze = false;
+
+            // Chech if there is any freezed timer.
+            foreach (TimerItemDataViewModel t in TimerList)
+                if (t.IsInFreeze)
+                {
+                    isAnyInFreeze = true;
+                    break;
+                }
+
+            // If there are freezed timers, run them, not all.
+            // -
+            // Lets run all freezed timers.
+            if (isAnyInFreeze)
+            {
+                foreach (TimerItemDataViewModel t in TimerList)
+                    if (t.IsInFreeze)
+                        t.TimerPlay();
+
+            }
+            // Lets run all timers.
+            else
+            {
+                foreach (TimerItemDataViewModel t in TimerList)
+                    t.TimerPlay();
+            }
+
+            await Task.Delay(1);
+        }
+
+        /// <summary>
+        /// Pause the timers in the group.
+        /// </summary>
+        /// <returns></returns>
+        private async Task PauseAsync()
+        {
+            // We don't have any timer to pause.
+            if (TimerList.Count <= 0)
+                return;
+
+            // Pause all timers in the group.
+            foreach (TimerItemDataViewModel t in TimerList)
+                t.TimerPause();
+
+            await Task.Delay(1);
         }
 
         #endregion
