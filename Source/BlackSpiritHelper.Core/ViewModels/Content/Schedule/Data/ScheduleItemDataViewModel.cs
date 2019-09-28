@@ -113,6 +113,39 @@ namespace BlackSpiritHelper.Core
             RemoveItemFromIgnoredCommand = new RelayParameterizedCommand(async (parameter) => await RemoveItemFromIgnoredAsync(parameter));
         }
 
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Update UI schedule for user.
+        /// All procedures will be done after certain time period without user interactions.
+        /// This method is done only if no items is moved from or to ignored list within <see cref="mIgnoreListMoveCounterFlagTime"/>.
+        /// </summary>
+        /// <returns></returns>
+        public static async Task OnItemIgnoredMoveAsync()
+        {
+            mIgnoreListMoveCounterFlag++;
+            await Task.Delay(mIgnoreListMoveCounterFlagTime);
+            mIgnoreListMoveCounterFlag--;
+
+            if (mIgnoreListMoveCounterFlag > 0)
+                return;
+
+            if (!IoC.DataContent.ScheduleData.IsRunning)
+                return;
+
+            if (IoC.DataContent.ScheduleData.SelectingTemplateFlag)
+                return;
+
+            IoC.DataContent.ScheduleData.FindAndRemarkIgnored();
+
+            await Task.Delay(1);
+        }
+
+        #endregion
+
+        #region Private Methods
 
         /// <summary>
         /// Add item to ignore list.
@@ -142,36 +175,6 @@ namespace BlackSpiritHelper.Core
             string par = (string)parameter;
 
             IoC.DataContent.ScheduleData.RemoveItemFromIgnoredList(par);
-
-            await Task.Delay(1);
-        }
-
-        #endregion
-
-        #region Public Methods
-
-        /// <summary>
-        /// Update UI schedule for user.
-        /// All procedures will be done after certain time period without user interactions.
-        /// This method is done only if no items is moved from or to ignored list within <see cref="mIgnoreListMoveCounterFlagTime"/>.
-        /// </summary>
-        /// <returns></returns>
-        public static async Task OnItemIgnoredMoveAsync()
-        {
-            mIgnoreListMoveCounterFlag++;
-            await Task.Delay(mIgnoreListMoveCounterFlagTime);
-            mIgnoreListMoveCounterFlag--;
-
-            if (mIgnoreListMoveCounterFlag > 0)
-                return;
-
-            if (!IoC.DataContent.ScheduleData.IsRunning)
-                return;
-
-            if (IoC.DataContent.ScheduleData.SelectingTemplateFlag)
-                return;
-
-            IoC.DataContent.ScheduleData.FindAndRemarkIgnored();
 
             await Task.Delay(1);
         }

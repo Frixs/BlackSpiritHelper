@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace BlackSpiritHelper.Core
@@ -88,16 +87,16 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void CreateCommands()
         {
-            GoBackCommand = new RelayCommand(() => GoBack());
-            AddItemCommand = new RelayCommand(() => AddItem());
-            RemoveItemCommand = new RelayParameterizedCommand((parameter) => RemoveItem(parameter));
+            GoBackCommand = new RelayCommand(() => GoBackCommandMethod());
+            AddItemCommand = new RelayCommand(() => AddItemCommandMethod());
+            RemoveItemCommand = new RelayParameterizedCommand((parameter) => RemoveItemCommandMethod(parameter));
         }
 
         /// <summary>
         /// Remove item from <see cref="ScheduleDataViewModel.ItemCustomList"/>.
         /// </summary>
         /// <param name="parameter"></param>
-        private void RemoveItem(object parameter)
+        private void RemoveItemCommandMethod(object parameter)
         {
             var par = (ScheduleItemDataViewModel)parameter;
 
@@ -117,7 +116,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Add new item to <see cref="ScheduleDataViewModel.ItemCustomList"/>.
         /// </summary>
-        private void AddItem()
+        private void AddItemCommandMethod()
         {
             IoC.Logger.Log("Creating new schedule custom item.", LogLevel.Debug);
 
@@ -156,7 +155,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Back back command.
         /// </summary>
-        private void GoBack()
+        private void GoBackCommandMethod()
         {
             // Move back to the page.
             IoC.Application.GoToPage(ApplicationPage.Schedule);

@@ -82,6 +82,8 @@ namespace BlackSpiritHelper.Core
             CreateCommands();
         }
 
+        #endregion
+
         /// <summary>
         /// Bind properties to the inputs.
         /// </summary>
@@ -95,8 +97,6 @@ namespace BlackSpiritHelper.Core
             SchedulePresenter = FormVM.CreateScheduleCopy(true);
         }
 
-        #endregion
-
         #region Command Methods
 
         /// <summary>
@@ -104,43 +104,15 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void CreateCommands()
         {
-            SaveChangesCommand = new RelayCommand(() => SaveChanges());
-            DeleteCommand = new RelayCommand(() => DeleteTemplate());
-            GoBackCommand = new RelayCommand(() => GoBack());
-        }
-
-        /// <summary>
-        /// Delete template.
-        /// </summary>
-        private void DeleteTemplate()
-        {
-            if (IoC.DataContent.ScheduleData.IsRunning)
-                return;
-
-            // Remove schedule.
-            if (!IoC.DataContent.ScheduleData.DestroyCustomTemplate(FormVM))
-            {
-                // Some error occured during deleting the template.
-                IoC.UI.ShowMessage(new MessageBoxDialogViewModel
-                {
-                    Caption = "Cannot delete the template!",
-                    Message = $"Unexpected error occured during deleting the template.{Environment.NewLine}" +
-                               "Please, contact the developers to fix the issue.",
-                    Button = System.Windows.MessageBoxButton.OK,
-                    Icon = System.Windows.MessageBoxImage.Warning,
-                });
-
-                return;
-            }
-
-            // Move back to the page.
-            GoBack();
+            SaveChangesCommand = new RelayCommand(() => SaveChangesCommandMethod());
+            DeleteCommand = new RelayCommand(() => DeleteTemplateCommandMethod());
+            GoBackCommand = new RelayCommand(() => GoBackCommandMethod());
         }
 
         /// <summary>
         /// Save settings.
         /// </summary>
-        private void SaveChanges()
+        private void SaveChangesCommandMethod()
         {
             if (IoC.DataContent.ScheduleData.IsRunning)
                 return;
@@ -183,13 +155,41 @@ namespace BlackSpiritHelper.Core
             IoC.DataContent.ScheduleData.SetTemplateTitleListPresenter();
 
             // Move back to the page.
-            GoBack();
+            GoBackCommandMethod();
+        }
+
+        /// <summary>
+        /// Delete template.
+        /// </summary>
+        private void DeleteTemplateCommandMethod()
+        {
+            if (IoC.DataContent.ScheduleData.IsRunning)
+                return;
+
+            // Remove schedule.
+            if (!IoC.DataContent.ScheduleData.DestroyCustomTemplate(FormVM))
+            {
+                // Some error occured during deleting the template.
+                IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                {
+                    Caption = "Cannot delete the template!",
+                    Message = $"Unexpected error occured during deleting the template.{Environment.NewLine}" +
+                               "Please, contact the developers to fix the issue.",
+                    Button = System.Windows.MessageBoxButton.OK,
+                    Icon = System.Windows.MessageBoxImage.Warning,
+                });
+
+                return;
+            }
+
+            // Move back to the page.
+            GoBackCommandMethod();
         }
 
         /// <summary>
         /// Back back command.
         /// </summary>
-        private void GoBack()
+        private void GoBackCommandMethod()
         {
             // Move back to the page.
             IoC.Application.GoToPage(ApplicationPage.Schedule);

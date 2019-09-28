@@ -49,7 +49,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Schedule.
         /// </summary>
-        private ObservableCollection<ScheduleDayDataViewModel> mSchedule;
+        private ObservableCollection<ScheduleDayDataViewModel> mSchedule = null;
 
         #endregion
 
@@ -79,7 +79,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Title of the template (unique).
         /// </summary>
-        public string Title { get; set; }
+        public string Title { get; set; } = "NoTitle";
 
         /// <summary>
         /// Default time zone represented with region enumerate.
@@ -141,7 +141,7 @@ namespace BlackSpiritHelper.Core
         /// Has <see cref="ScheduleTimeEventDataViewModel.ItemList"/> set to null.
         /// </summary>
         [XmlIgnore]
-        public ObservableCollection<ScheduleDayDataViewModel> SchedulePresenter { get; set; }
+        public ObservableCollection<ScheduleDayDataViewModel> SchedulePresenter { get; set; } = null;
 
         /// <summary>
         /// Says, if the template is converted to user's local time zone.

@@ -97,8 +97,6 @@ namespace BlackSpiritHelper.Core
             RemoveEventCommand = new RelayParameterizedCommand((parameter) => RemoveEvent(parameter));
         }
 
-
-
         #endregion
 
         #region Private Methods

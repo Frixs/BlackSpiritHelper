@@ -11,7 +11,7 @@ using System.Xml.Serialization;
 namespace BlackSpiritHelper.Core
 {
     /// <summary>
-    /// TODO:LATER: Code review, simplify code.
+    /// Schedule section main data view-model.
     /// </summary>
     public class ScheduleDataViewModel : DataContentBaseViewModel<ScheduleDataViewModel>
     {
@@ -511,6 +511,152 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
+        #region Command Methods
+
+        /// <summary>
+        /// Create commands.
+        /// </summary>
+        private void CreateCommands()
+        {
+            PlayCommand = new RelayCommand(async () => await PlayAsync());
+            StopCommand = new RelayCommand(async () => await StopAsync());
+
+            AddTemplateCommand = new RelayCommand(async () => await AddNewTemplateCommandMethodAsync());
+            CloneTemplateCommand = new RelayCommand(async () => await CloneTemplateCommandMethodAsync());
+            EditTemplateCommand = new RelayCommand(async () => await OpenTemplateSettingsCommandMethodAsync());
+            ManageItemsCommand = new RelayCommand(async () => await OpenItemsSettingsCommandMethodAsync());
+        }
+
+        /// <summary>
+        /// Open template settings page.
+        /// </summary>
+        /// <returns></returns>
+        private async Task OpenTemplateSettingsCommandMethodAsync()
+        {
+            if (SelectedTemplate.IsPredefined)
+                return;
+
+            // Create Settings View Model with the current template binding.
+            ScheduleTemplateSettingsFormPageViewModel vm = new ScheduleTemplateSettingsFormPageViewModel
+            {
+                FormVM = SelectedTemplate,
+            };
+
+            IoC.Application.GoToPage(ApplicationPage.ScheduleTemplateSettingsForm, vm);
+
+            await Task.Delay(1);
+        }
+
+        /// <summary>
+        /// Add a new empty template to custom list.
+        /// </summary>
+        /// <returns></returns>
+        private async Task AddNewTemplateCommandMethodAsync()
+        {
+            if (!CanAddCustomTemplate)
+                return;
+
+            // Create (new) empty template.
+            ObservableCollection<ScheduleDayDataViewModel> schedule = new ObservableCollection<ScheduleDayDataViewModel>();
+            foreach (DayOfWeek day in (DayOfWeek[])Enum.GetValues(typeof(DayOfWeek)))
+            {
+                schedule.Add(new ScheduleDayDataViewModel()
+                {
+                    DayOfWeek = day,
+                    TimeList = new ObservableCollection<ScheduleTimeEventDataViewModel>(),
+                });
+            }
+            ScheduleTemplateDataViewModel vm = new ScheduleTemplateDataViewModel
+            {
+                LastModifiedString = DateTime.Now.ToString("yyyy-MM-dd"),
+                Title = GetTemplateRandomTitle(),
+                TimeZoneRegion = TimeZoneRegion.UTC,
+                Schedule = schedule,
+            };
+
+            // Add new template.
+            if (AddTemplateCustom(vm) == null)
+            {
+                return;
+            }
+
+            // Init.
+            vm.Init();
+
+            // Select the template.
+            SelectTemplateByName(vm.Title);
+
+            // Update template title list presenter.
+            SetTemplateTitleListPresenter();
+            // Update GUI.
+            OnPropertyChanged(nameof(CanAddCustomTemplate));
+
+            await Task.Delay(1);
+        }
+
+        /// <summary>
+        /// Clone a new template as a custom template.
+        /// </summary>
+        /// <returns></returns>
+        private async Task CloneTemplateCommandMethodAsync()
+        {
+            if (!CanAddCustomTemplate)
+                return;
+
+            string prefix = "-COPY-";
+
+            // Make a deep copy of template object.
+            ScheduleTemplateDataViewModel vm = new ScheduleTemplateDataViewModel
+            {
+                LastModifiedString = DateTime.Now.ToString("yyyy-MM-dd"),
+                Title = GetTemplateRandomTitle(
+                    SelectedTemplate.Title.Contains(prefix)
+                    ? SelectedTemplate.Title.Substring(0, SelectedTemplate.Title.Length - 1)
+                    : SelectedTemplate.Title + prefix
+                    ),
+                TimeZoneRegion = SelectedTemplate.TimeZoneRegion,
+                Schedule = SelectedTemplate.CreateScheduleCopy(false),
+            };
+
+            // Add custom cop template.
+            if (AddTemplateCustom(vm) == null)
+            {
+                return;
+            }
+
+            // Init.
+            vm.Init();
+
+            // Select the template.
+            SelectTemplateByName(vm.Title);
+
+            // Update template title list presenter.
+            SetTemplateTitleListPresenter();
+            // Update GUI.
+            OnPropertyChanged(nameof(CanAddCustomTemplate));
+
+            await Task.Delay(1);
+        }
+
+        /// <summary>
+        /// Open custom items settings page.
+        /// </summary>
+        /// <returns></returns>
+        private async Task OpenItemsSettingsCommandMethodAsync()
+        {
+            // Create Settings View Model with the current template binding.
+            ScheduleItemControlFormPageViewModel vm = new ScheduleItemControlFormPageViewModel
+            {
+                FormVM = this,
+            };
+
+            IoC.Application.GoToPage(ApplicationPage.ScheduleItemControlForm, vm);
+
+            await Task.Delay(1);
+        }
+
+        #endregion
+
         #region Timer Methods
 
         /// <summary>
@@ -596,291 +742,6 @@ namespace BlackSpiritHelper.Core
         private void TimerOnWarningTime(object sender, ElapsedEventArgs e)
         {
             WarningFlag = !WarningFlag;
-        }
-
-        /// <summary>
-        /// Update time in UI thread.
-        /// </summary>
-        /// <param name="ts"></param>
-        private void UpdateTimeInUI(TimeSpan ts)
-        {
-            // Update UI thread.
-            IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
-            {
-                TimeLeftPresenter = ts.ToString(@"%d\.hh\:mm\:ss");
-
-                // Set overlay presenter.
-                if ((int)ts.TotalDays > 1)
-                {
-                    TimeLeftOverlayPresenter = ts.ToString(@"%d\d\ h\h");
-                }
-                else
-                {
-                    if ((int)ts.TotalHours > 0)
-                    {
-                        TimeLeftOverlayPresenter = ts.ToString(@"hh\:mm");
-                    }
-                    else
-                    {
-                        TimeLeftOverlayPresenter = ts.ToString(@"mm\:ss");
-                    }
-                }
-            }));
-        }
-
-        /// <summary>
-        /// Update time with string value in UI thread.
-        /// </summary>
-        /// <param name="ts"></param>
-        private void UpdateTimeInUI(string str)
-        {
-            // Update UI thread.
-            IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
-            {
-                TimeLeftOverlayPresenter = TimeLeftPresenter = str;
-            }));
-        }
-
-        /// <summary>
-        /// Update time to the next target.
-        /// </summary>
-        private bool UpdateTimeTarget()
-        {
-            bool goToNextWeek = false;
-            DateTime today = DateTime.Today;
-            DateTime nowUtc = new DateTimeOffset(DateTime.Now + LocalTimeOffsetModifier).UtcDateTime;
-            ScheduleTimeEventDataViewModel lastMatchingTimeItem = null;
-            DateTimeOffset lastMatchingDate = default;
-
-            // Set notification possibility to default.
-            mNotificateNextTarget = false;
-
-            // Find next time event target.
-            do
-            {
-                DateTime todayWeek = goToNextWeek ? today.AddDays(7) : today;
-
-                // Get.
-                for (int iDay = 0; iDay < SelectedTemplate.Schedule.Count; iDay++)
-                {
-                    var day = SelectedTemplate.Schedule[iDay];
-
-                    DateTimeOffset dt = new DateTimeOffset(todayWeek);
-                    IoC.DateTime.SetTimeZone(ref dt, SelectedTemplate.TimeZone);
-                    dt = dt.AddDays(IoC.DateTime.GetDayDifferenceOffset((int)day.DayOfWeek, (int)todayWeek.DayOfWeek));
-
-                    for (int iTime = 0; iTime < day.TimeList.Count; iTime++)
-                    {
-                        var time = day.TimeList[iTime];
-
-                        dt += time.Time;
-
-                        if (nowUtc < dt.UtcDateTime)
-                            if (lastMatchingTimeItem == null || (lastMatchingTimeItem != null && lastMatchingDate.UtcDateTime > dt.UtcDateTime))
-                            {
-                                lastMatchingTimeItem = time;
-                                lastMatchingDate = dt;
-                            }
-
-                        dt -= time.Time;
-                    }
-                }
-
-                // Go to the next week if there are no items in the current week to take.
-                if (lastMatchingTimeItem == null && !goToNextWeek)
-                    goToNextWeek = true;
-                else
-                    goToNextWeek = false;
-
-            } while (goToNextWeek);
-
-            // Update check.
-            if (lastMatchingTimeItem == null)
-            {
-                IoC.Logger.Log("No Time item found!", LogLevel.Debug);
-                return false;
-            }
-
-            // Set new countdown time.
-            mTimeLeft = lastMatchingDate.UtcDateTime - nowUtc;
-
-            // Manage target time event items.
-            // Clear list first.
-            IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
-            {
-                NextItemPresenterList.Clear();
-            }));
-            // Go thourgh target time event items.
-            for (int i = 0; i < lastMatchingTimeItem.ItemList.Count; i++)
-            {
-                var item = GetItemByName(lastMatchingTimeItem.ItemList[i]);
-                if (item != null)
-                {
-                    // We need to update list in UI thread due to Observable.
-                    IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
-                    {
-                        NextItemPresenterList.Add(item);
-                    }));
-
-                    // Set notification possibility to the next target.
-                    if (!ItemIgnoredList.Contains(item.Name))
-                    {
-                        mNotificateNextTarget = true;
-                    }
-                }
-                else
-                {
-                    IoC.Logger.Log("No item found!", LogLevel.Warning);
-                }
-            }
-
-            // Update notification triggers.
-            TimerSetNotificationEventTriggers(mTimeLeft);
-
-            // Mark as next.
-            SelectedTemplate.FindAndRemarkAsNext(lastMatchingTimeItem, true);
-
-            return true;
-        }
-
-        /// <summary>
-        /// Play "ACTIVE" countdown.
-        /// </summary>
-        private void PlayActiveCountdown()
-        {
-            if (mIsActiveCountdownTime)
-                return;
-            mIsActiveCountdownTime = true;
-
-            mTimeActiveCountdown = TimeSpan.FromSeconds(mTimeActiveCountdownSeconds);
-        }
-
-        /// <summary>
-        /// Stop "ACTIVE" countdown.
-        /// </summary>
-        private void StopActiveCountdown()
-        {
-            if (!mIsActiveCountdownTime)
-                return;
-            mIsActiveCountdownTime = false;
-            mTimeActiveCountdown = TimeSpan.Zero;
-        }
-
-        /// <summary>
-        /// Handle notification events.
-        /// </summary>
-        /// <param name="time"></param>
-        private void HandleNotificationEvents(TimeSpan time)
-        {
-            if (!mNotificateNextTarget)
-                return;
-
-            // ------------------------------
-            // 1st Bracket.
-            // ------------------------------
-            if (time.TotalSeconds > TimerNotificationTime1)
-            {
-                // Time has changed, try to deactivate if the warning UI is running.
-                TimerTryToDeactivateWarningUI();
-                return;
-            }
-
-            // Fire notification event.
-            if (!mIsFiredNotificationEvent[0])
-            {
-                mIsFiredNotificationEvent[0] = true;
-                IoC.Audio.Play(AudioType.AlertLongBefore, AudioPriorityBracket.Pack);
-            }
-
-            // ------------------------------
-            // 2nd Bracket.
-            // ------------------------------
-            if (time.TotalSeconds > TimerNotificationTime2)
-            {
-                // Time has changed, try to deactivate if the warning UI is running.
-                TimerTryToDeactivateWarningUI();
-                return;
-            }
-
-            // Fire notification event.
-            if (!mIsFiredNotificationEvent[1])
-            {
-                mIsFiredNotificationEvent[1] = true;
-                IoC.Audio.Play(AudioType.AlertClockTicking, AudioPriorityBracket.Pack);
-            }
-
-            // Activate WARNING UI event.
-            TimerTryToActivateWarningUI();
-
-            // ------------------------------
-            // 3rd Bracket.
-            // ------------------------------
-            if (time.TotalSeconds > 0)
-            {
-                return;
-            }
-
-            // Fire notification event.
-            if (!mIsFiredNotificationEvent[2])
-            {
-                mIsFiredNotificationEvent[2] = true;
-                IoC.Audio.Play(AudioType.Alert4, AudioPriorityBracket.Pack);
-            }
-
-            // Deactivate WARNING UI event.
-            TimerTryToDeactivateWarningUI();
-        }
-
-        /// <summary>
-        /// Activate WARNING UI event.
-        /// If the event is already running, it cannot be run multiple times.
-        /// </summary>
-        private void TimerTryToActivateWarningUI()
-        {
-            if (mWarningTimer.Enabled)
-                return;
-
-            // Force warning at the beginning immediately.
-            WarningFlag = true;
-
-            // Start the event handling.
-            mWarningTimer.Start();
-        }
-
-        /// <summary>
-        /// Deactivate WARNING UI event.
-        /// If the event is not running, it cannot be stopped.
-        /// </summary>
-        private void TimerTryToDeactivateWarningUI()
-        {
-            if (!mWarningTimer.Enabled)
-                return;
-
-            // Force warning off immediately.
-            WarningFlag = false;
-
-            // Stop the event handling.
-            mWarningTimer.Stop();
-        }
-
-        /// <summary>
-        /// Set notification event triggers according to time left.
-        /// </summary>
-        /// <param name="time">Time according to which to set the triggers.</param>
-        private void TimerSetNotificationEventTriggers(TimeSpan time)
-        {
-            // User time brackets.
-            int[] brackets = new int[3] {
-                TimerNotificationTime1,
-                TimerNotificationTime2,
-                0
-            };
-
-            for (int i = 0; i < mIsFiredNotificationEvent.Length; i++)
-                if (time.TotalSeconds < brackets[i])
-                    mIsFiredNotificationEvent[i] = true;
-                else
-                    mIsFiredNotificationEvent[i] = false;
         }
 
         #endregion
@@ -1272,6 +1133,291 @@ namespace BlackSpiritHelper.Core
         #region Private Methods
 
         /// <summary>
+        /// Update time in UI thread.
+        /// </summary>
+        /// <param name="ts"></param>
+        private void UpdateTimeInUI(TimeSpan ts)
+        {
+            // Update UI thread.
+            IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
+            {
+                TimeLeftPresenter = ts.ToString(@"%d\.hh\:mm\:ss");
+
+                // Set overlay presenter.
+                if ((int)ts.TotalDays > 1)
+                {
+                    TimeLeftOverlayPresenter = ts.ToString(@"%d\d\ h\h");
+                }
+                else
+                {
+                    if ((int)ts.TotalHours > 0)
+                    {
+                        TimeLeftOverlayPresenter = ts.ToString(@"hh\:mm");
+                    }
+                    else
+                    {
+                        TimeLeftOverlayPresenter = ts.ToString(@"mm\:ss");
+                    }
+                }
+            }));
+        }
+
+        /// <summary>
+        /// Update time with string value in UI thread.
+        /// </summary>
+        /// <param name="ts"></param>
+        private void UpdateTimeInUI(string str)
+        {
+            // Update UI thread.
+            IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
+            {
+                TimeLeftOverlayPresenter = TimeLeftPresenter = str;
+            }));
+        }
+
+        /// <summary>
+        /// Update time to the next target.
+        /// </summary>
+        private bool UpdateTimeTarget()
+        {
+            bool goToNextWeek = false;
+            DateTime today = DateTime.Today;
+            DateTime nowUtc = new DateTimeOffset(DateTime.Now + LocalTimeOffsetModifier).UtcDateTime;
+            ScheduleTimeEventDataViewModel lastMatchingTimeItem = null;
+            DateTimeOffset lastMatchingDate = default;
+
+            // Set notification possibility to default.
+            mNotificateNextTarget = false;
+
+            // Find next time event target.
+            do
+            {
+                DateTime todayWeek = goToNextWeek ? today.AddDays(7) : today;
+
+                // Get.
+                for (int iDay = 0; iDay < SelectedTemplate.Schedule.Count; iDay++)
+                {
+                    var day = SelectedTemplate.Schedule[iDay];
+
+                    DateTimeOffset dt = new DateTimeOffset(todayWeek);
+                    IoC.DateTime.SetTimeZone(ref dt, SelectedTemplate.TimeZone);
+                    dt = dt.AddDays(IoC.DateTime.GetDayDifferenceOffset((int)day.DayOfWeek, (int)todayWeek.DayOfWeek));
+
+                    for (int iTime = 0; iTime < day.TimeList.Count; iTime++)
+                    {
+                        var time = day.TimeList[iTime];
+
+                        dt += time.Time;
+
+                        if (nowUtc < dt.UtcDateTime)
+                            if (lastMatchingTimeItem == null || (lastMatchingTimeItem != null && lastMatchingDate.UtcDateTime > dt.UtcDateTime))
+                            {
+                                lastMatchingTimeItem = time;
+                                lastMatchingDate = dt;
+                            }
+
+                        dt -= time.Time;
+                    }
+                }
+
+                // Go to the next week if there are no items in the current week to take.
+                if (lastMatchingTimeItem == null && !goToNextWeek)
+                    goToNextWeek = true;
+                else
+                    goToNextWeek = false;
+
+            } while (goToNextWeek);
+
+            // Update check.
+            if (lastMatchingTimeItem == null)
+            {
+                IoC.Logger.Log("No Time item found!", LogLevel.Debug);
+                return false;
+            }
+
+            // Set new countdown time.
+            mTimeLeft = lastMatchingDate.UtcDateTime - nowUtc;
+
+            // Manage target time event items.
+            // Clear list first.
+            IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
+            {
+                NextItemPresenterList.Clear();
+            }));
+            // Go thourgh target time event items.
+            for (int i = 0; i < lastMatchingTimeItem.ItemList.Count; i++)
+            {
+                var item = GetItemByName(lastMatchingTimeItem.ItemList[i]);
+                if (item != null)
+                {
+                    // We need to update list in UI thread due to Observable.
+                    IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
+                    {
+                        NextItemPresenterList.Add(item);
+                    }));
+
+                    // Set notification possibility to the next target.
+                    if (!ItemIgnoredList.Contains(item.Name))
+                    {
+                        mNotificateNextTarget = true;
+                    }
+                }
+                else
+                {
+                    IoC.Logger.Log("No item found!", LogLevel.Warning);
+                }
+            }
+
+            // Update notification triggers.
+            TimerSetNotificationEventTriggers(mTimeLeft);
+
+            // Mark as next.
+            SelectedTemplate.FindAndRemarkAsNext(lastMatchingTimeItem, true);
+
+            return true;
+        }
+
+        /// <summary>
+        /// Play "ACTIVE" countdown.
+        /// </summary>
+        private void PlayActiveCountdown()
+        {
+            if (mIsActiveCountdownTime)
+                return;
+            mIsActiveCountdownTime = true;
+
+            mTimeActiveCountdown = TimeSpan.FromSeconds(mTimeActiveCountdownSeconds);
+        }
+
+        /// <summary>
+        /// Stop "ACTIVE" countdown.
+        /// </summary>
+        private void StopActiveCountdown()
+        {
+            if (!mIsActiveCountdownTime)
+                return;
+            mIsActiveCountdownTime = false;
+            mTimeActiveCountdown = TimeSpan.Zero;
+        }
+
+        /// <summary>
+        /// Handle notification events.
+        /// </summary>
+        /// <param name="time"></param>
+        private void HandleNotificationEvents(TimeSpan time)
+        {
+            if (!mNotificateNextTarget)
+                return;
+
+            // ------------------------------
+            // 1st Bracket.
+            // ------------------------------
+            if (time.TotalSeconds > TimerNotificationTime1)
+            {
+                // Time has changed, try to deactivate if the warning UI is running.
+                TimerTryToDeactivateWarningUI();
+                return;
+            }
+
+            // Fire notification event.
+            if (!mIsFiredNotificationEvent[0])
+            {
+                mIsFiredNotificationEvent[0] = true;
+                IoC.Audio.Play(AudioType.AlertLongBefore, AudioPriorityBracket.Pack);
+            }
+
+            // ------------------------------
+            // 2nd Bracket.
+            // ------------------------------
+            if (time.TotalSeconds > TimerNotificationTime2)
+            {
+                // Time has changed, try to deactivate if the warning UI is running.
+                TimerTryToDeactivateWarningUI();
+                return;
+            }
+
+            // Fire notification event.
+            if (!mIsFiredNotificationEvent[1])
+            {
+                mIsFiredNotificationEvent[1] = true;
+                IoC.Audio.Play(AudioType.AlertClockTicking, AudioPriorityBracket.Pack);
+            }
+
+            // Activate WARNING UI event.
+            TimerTryToActivateWarningUI();
+
+            // ------------------------------
+            // 3rd Bracket.
+            // ------------------------------
+            if (time.TotalSeconds > 0)
+            {
+                return;
+            }
+
+            // Fire notification event.
+            if (!mIsFiredNotificationEvent[2])
+            {
+                mIsFiredNotificationEvent[2] = true;
+                IoC.Audio.Play(AudioType.Alert4, AudioPriorityBracket.Pack);
+            }
+
+            // Deactivate WARNING UI event.
+            TimerTryToDeactivateWarningUI();
+        }
+
+        /// <summary>
+        /// Activate WARNING UI event.
+        /// If the event is already running, it cannot be run multiple times.
+        /// </summary>
+        private void TimerTryToActivateWarningUI()
+        {
+            if (mWarningTimer.Enabled)
+                return;
+
+            // Force warning at the beginning immediately.
+            WarningFlag = true;
+
+            // Start the event handling.
+            mWarningTimer.Start();
+        }
+
+        /// <summary>
+        /// Deactivate WARNING UI event.
+        /// If the event is not running, it cannot be stopped.
+        /// </summary>
+        private void TimerTryToDeactivateWarningUI()
+        {
+            if (!mWarningTimer.Enabled)
+                return;
+
+            // Force warning off immediately.
+            WarningFlag = false;
+
+            // Stop the event handling.
+            mWarningTimer.Stop();
+        }
+
+        /// <summary>
+        /// Set notification event triggers according to time left.
+        /// </summary>
+        /// <param name="time">Time according to which to set the triggers.</param>
+        private void TimerSetNotificationEventTriggers(TimeSpan time)
+        {
+            // User time brackets.
+            int[] brackets = new int[3] {
+                TimerNotificationTime1,
+                TimerNotificationTime2,
+                0
+            };
+
+            for (int i = 0; i < mIsFiredNotificationEvent.Length; i++)
+                if (time.TotalSeconds < brackets[i])
+                    mIsFiredNotificationEvent[i] = true;
+                else
+                    mIsFiredNotificationEvent[i] = false;
+        }
+
+        /// <summary>
         /// Add predefined template.
         /// No input validation - predefined template.
         /// </summary>
@@ -1465,152 +1611,6 @@ namespace BlackSpiritHelper.Core
             }
 
             return titlePrefix + titleNumber;
-        }
-
-        #endregion
-
-        #region Command Methods
-
-        /// <summary>
-        /// Create commands.
-        /// </summary>
-        private void CreateCommands()
-        {
-            PlayCommand = new RelayCommand(async () => await PlayAsync());
-            StopCommand = new RelayCommand(async () => await StopAsync());
-
-            AddTemplateCommand = new RelayCommand(async () => await AddTemplateAsync());
-            CloneTemplateCommand = new RelayCommand(async () => await CloneTemplateAsync());
-            EditTemplateCommand = new RelayCommand(async () => await OpenTemplateSettingsPageAsync());
-            ManageItemsCommand = new RelayCommand(async () => await OpenItemsSettingsPageAsync());
-        }
-
-        /// <summary>
-        /// Open template settings page.
-        /// </summary>
-        /// <returns></returns>
-        private async Task OpenTemplateSettingsPageAsync()
-        {
-            if (SelectedTemplate.IsPredefined)
-                return;
-
-            // Create Settings View Model with the current template binding.
-            ScheduleTemplateSettingsFormPageViewModel vm = new ScheduleTemplateSettingsFormPageViewModel
-            {
-                FormVM = SelectedTemplate,
-            };
-
-            IoC.Application.GoToPage(ApplicationPage.ScheduleTemplateSettingsForm, vm);
-
-            await Task.Delay(1);
-        }
-
-        /// <summary>
-        /// Add a new empty template to custom list.
-        /// </summary>
-        /// <returns></returns>
-        private async Task AddTemplateAsync()
-        {
-            if (!CanAddCustomTemplate)
-                return;
-
-            // Create (new) empty template.
-            ObservableCollection<ScheduleDayDataViewModel> schedule = new ObservableCollection<ScheduleDayDataViewModel>();
-            foreach (DayOfWeek day in (DayOfWeek[])Enum.GetValues(typeof(DayOfWeek)))
-            {
-                schedule.Add(new ScheduleDayDataViewModel()
-                {
-                    DayOfWeek = day,
-                    TimeList = new ObservableCollection<ScheduleTimeEventDataViewModel>(),
-                });
-            }
-            ScheduleTemplateDataViewModel vm = new ScheduleTemplateDataViewModel
-            {
-                LastModifiedString = DateTime.Now.ToString("yyyy-MM-dd"),
-                Title = GetTemplateRandomTitle(),
-                TimeZoneRegion = TimeZoneRegion.UTC,
-                Schedule = schedule,
-            };
-
-            // Add new template.
-            if (AddTemplateCustom(vm) == null)
-            {
-                return;
-            }
-
-            // Init.
-            vm.Init();
-
-            // Select the template.
-            SelectTemplateByName(vm.Title);
-
-            // Update template title list presenter.
-            SetTemplateTitleListPresenter();
-            // Update GUI.
-            OnPropertyChanged(nameof(CanAddCustomTemplate));
-
-            await Task.Delay(1);
-        }
-
-        /// <summary>
-        /// Clone a new template as a custom template.
-        /// </summary>
-        /// <returns></returns>
-        private async Task CloneTemplateAsync()
-        {
-            if (!CanAddCustomTemplate)
-                return;
-
-            string prefix = "-COPY-";
-
-            // Make a deep copy of template object.
-            ScheduleTemplateDataViewModel vm = new ScheduleTemplateDataViewModel
-            {
-                LastModifiedString = DateTime.Now.ToString("yyyy-MM-dd"),
-                Title = GetTemplateRandomTitle(
-                    SelectedTemplate.Title.Contains(prefix)
-                    ? SelectedTemplate.Title.Substring(0, SelectedTemplate.Title.Length - 1)
-                    : SelectedTemplate.Title + prefix
-                    ),
-                TimeZoneRegion = SelectedTemplate.TimeZoneRegion,
-                Schedule = SelectedTemplate.CreateScheduleCopy(false),
-            };
-
-            // Add custom cop template.
-            if (AddTemplateCustom(vm) == null)
-            {
-                return;
-            }
-
-            // Init.
-            vm.Init();
-
-            // Select the template.
-            SelectTemplateByName(vm.Title);
-
-            // Update template title list presenter.
-            SetTemplateTitleListPresenter();
-            // Update GUI.
-            OnPropertyChanged(nameof(CanAddCustomTemplate));
-
-            await Task.Delay(1);
-        }
-
-        /// <summary>
-        /// Open custom items settings page.
-        /// </summary>
-        /// <returns></returns>
-        private async Task OpenItemsSettingsPageAsync()
-        {
-            // Create Settings View Model with the current template binding.
-            ScheduleItemControlFormPageViewModel vm = new ScheduleItemControlFormPageViewModel
-            {
-                FormVM = this,
-            };
-
-            IoC.Application.GoToPage(ApplicationPage.ScheduleItemControlForm, vm);
-
-            await Task.Delay(1);
         }
 
         #endregion

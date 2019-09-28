@@ -139,12 +139,12 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void CreateCommands()
         {
-            SaveChangesCommand = new RelayCommand(() => SaveChanges());
-            DeleteTimerCommand = new RelayCommand(() => DeleteTimer());
-            GoBackCommand = new RelayCommand(() => GoBack());
+            SaveChangesCommand = new RelayCommand(() => SaveChangesCommandMethod());
+            DeleteTimerCommand = new RelayCommand(() => DeleteTimerCommandMethod());
+            GoBackCommand = new RelayCommand(() => GoBackCommandMethod());
         }
 
-        private void SaveChanges()
+        private void SaveChangesCommandMethod()
         {
             if (FormVM.State != TimerState.Ready)
                 return;
@@ -152,13 +152,13 @@ namespace BlackSpiritHelper.Core
             // Substring the HEX color to the required form.
             // We recieve f.e. #FF000000 and we want to transform it into 000000.
             string iconBackgroundHEX = IconBackgroundHEX.ToHexStringWithoutHashmark();
-            
+
             // Trim.
             string title = Title.Trim();
             string titleShortcut = IconTitleShortcut.Trim();
 
             // Validate inputs.
-            if (!Core.TimerItemDataViewModel.ValidateInputs(FormVM, title, titleShortcut, iconBackgroundHEX, TimeDuration, TimeSpan.FromSeconds(CountdownDuration), ShowInOverlay, AssociatedGroupViewModel, GroupID) 
+            if (!Core.TimerItemDataViewModel.ValidateInputs(FormVM, title, titleShortcut, iconBackgroundHEX, TimeDuration, TimeSpan.FromSeconds(CountdownDuration), ShowInOverlay, AssociatedGroupViewModel, GroupID)
                 || AssociatedGroupViewModel == null)
             {
                 // Some error occured during saving changes of the timer.
@@ -215,10 +215,10 @@ namespace BlackSpiritHelper.Core
             IoC.Logger.Log($"Settings changed: timer '{FormVM.Title}'.", LogLevel.Info);
 
             // Move back to the page.
-            GoBack();
+            GoBackCommandMethod();
         }
 
-        private void DeleteTimer()
+        private void DeleteTimerCommandMethod()
         {
             if (FormVM.State != TimerState.Ready)
                 return;
@@ -240,10 +240,10 @@ namespace BlackSpiritHelper.Core
             }
 
             // Move back to the page.
-            GoBack();
+            GoBackCommandMethod();
         }
 
-        private void GoBack()
+        private void GoBackCommandMethod()
         {
             // Move back to the page.
             IoC.Application.GoToPage(ApplicationPage.Timer);

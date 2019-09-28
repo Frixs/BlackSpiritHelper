@@ -91,12 +91,12 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void CreateCommands()
         {
-            SaveChangesCommand = new RelayCommand(() => SaveChanges());
-            DeleteGroupCommand = new RelayCommand(() => DeleteGroup());
-            GoBackCommand = new RelayCommand(() => GoBack());
+            SaveChangesCommand = new RelayCommand(() => SaveChangesCommandMethod());
+            DeleteGroupCommand = new RelayCommand(() => DeleteGroupCommandMethod());
+            GoBackCommand = new RelayCommand(() => GoBackCommandMethod());
         }
 
-        private void SaveChanges()
+        private void SaveChangesCommandMethod()
         {
             if (!TimerGroupDataViewModel.ValidateInputs(Title))
             {
@@ -122,10 +122,10 @@ namespace BlackSpiritHelper.Core
             IoC.Logger.Log($"Settings changed: timer group '{FormVM.Title}'.", LogLevel.Info);
 
             // Move back to the page.
-            GoBack();
+            GoBackCommandMethod();
         }
 
-        private void DeleteGroup()
+        private void DeleteGroupCommandMethod()
         {
             if (!IoC.DataContent.TimerData.DestroyGroup(FormVM))
             {
@@ -142,10 +142,10 @@ namespace BlackSpiritHelper.Core
             }
 
             // Move back to the page.
-            GoBack();
+            GoBackCommandMethod();
         }
 
-        private void GoBack()
+        private void GoBackCommandMethod()
         {
             // Move back to the page.
             IoC.Application.GoToPage(ApplicationPage.Timer);
