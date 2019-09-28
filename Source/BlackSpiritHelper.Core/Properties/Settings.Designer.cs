@@ -63,12 +63,12 @@ namespace BlackSpiritHelper.Core.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Configuration.SettingsProviderAttribute(typeof(BlackSpiritHelper.Core.CustomSettingsProvider))]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::BlackSpiritHelper.Core.OverlayDesignModel OverlayDesignModel {
+        public global::BlackSpiritHelper.Core.OverlayDataViewModel OverlayData {
             get {
-                return ((global::BlackSpiritHelper.Core.OverlayDesignModel)(this["OverlayDesignModel"]));
+                return ((global::BlackSpiritHelper.Core.OverlayDataViewModel)(this["OverlayData"]));
             }
             set {
-                this["OverlayDesignModel"] = value;
+                this["OverlayData"] = value;
             }
         }
         

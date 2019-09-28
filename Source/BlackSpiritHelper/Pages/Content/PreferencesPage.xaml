@@ -65,7 +65,7 @@
                     <Border Style="{StaticResource FormItemSpacer}" />
                     
                     <!-- Do not open overlay on application start -->
-                    <CheckBox IsChecked="{Binding ApplicationDataContent.OverlayDesignModel.AllowOpenOnStart,
+                    <CheckBox IsChecked="{Binding ApplicationDataContent.OverlayData.AllowOpenOnStart,
                                           Source={x:Static local:ViewModelLocator.Instance}}" 
                               Content="Allow opening the overlay on application start."
                               Foreground="{StaticResource ForegroundBrushKey}"
@@ -163,7 +163,7 @@
                                    FontSize="14"
                                    Foreground="{StaticResource ForegroundBrushKey}"
                                    Margin="0 0 0 5"/>
-                        <ItemsControl ItemsSource="{Binding ApplicationDataContent.OverlayDesignModel.OrientationList,
+                        <ItemsControl ItemsSource="{Binding ApplicationDataContent.OverlayData.OrientationList,
                                                     Source={x:Static local:ViewModelLocator.Instance}}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -173,7 +173,7 @@
                                                    Visibility="Collapsed" />
                                         <RadioButton GroupName="OverlayOrientation"
                                                      Content="{Binding Converter={local:ObjectToStringConverter}}"
-                                                     IsChecked="{Binding ApplicationDataContent.OverlayDesignModel.OverlayOrientation,
+                                                     IsChecked="{Binding ApplicationDataContent.OverlayData.OverlayOrientation,
                                                                  Source={x:Static local:ViewModelLocator.Instance},
                                                                  Converter={local:RadioEnumBooleanConverter}, 
                                                                  ConverterParameter={x:Reference Name=RadioBindedKey}}"
@@ -195,7 +195,7 @@
                                    FontSize="14"
                                    Foreground="{StaticResource ForegroundBrushKey}"
                                    Margin="0 0 0 5"/>
-                        <ItemsControl ItemsSource="{Binding ApplicationDataContent.OverlayDesignModel.OverlaySizeList,
+                        <ItemsControl ItemsSource="{Binding ApplicationDataContent.OverlayData.OverlaySizeList,
                                                     Source={x:Static local:ViewModelLocator.Instance}}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -205,7 +205,7 @@
                                                    Visibility="Collapsed" />
                                         <RadioButton GroupName="OverlaySize"
                                                      Content="{Binding Converter={local:ObjectToStringConverter}}"
-                                                     IsChecked="{Binding ApplicationDataContent.OverlayDesignModel.OverlaySize,
+                                                     IsChecked="{Binding ApplicationDataContent.OverlayData.OverlaySize,
                                                                  Source={x:Static local:ViewModelLocator.Instance},
                                                                  Converter={local:RadioEnumBooleanConverter}, 
                                                                  ConverterParameter={x:Reference Name=RadioBindedKey}}"

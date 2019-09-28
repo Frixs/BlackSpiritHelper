@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
 {
-    public class OverlayViewModel : DataContentBaseViewModel<OverlayViewModel>
+    public class OverlayDataViewModel : DataContentBaseViewModel<OverlayDataViewModel>
     {
         #region Private Members
 
@@ -135,7 +135,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public OverlayViewModel()
+        public OverlayDataViewModel()
         {
             // Create commands.
             CreateCommands();
@@ -171,13 +171,13 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void CreateCommands()
         {
-            LockOverlayDraggingCommand = new RelayCommand(() => LockOverlay());
+            LockOverlayDraggingCommand = new RelayCommand(() => LockOverlayCommandMethod());
         }
 
         /// <summary>
         /// Lock/Unlock Overlay dragging.
         /// </summary>
-        private void LockOverlay()
+        private void LockOverlayCommandMethod()
         {
             IsDraggingLocked = !IsDraggingLocked;
         }

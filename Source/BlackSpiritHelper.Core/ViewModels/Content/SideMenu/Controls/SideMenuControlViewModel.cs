@@ -95,7 +95,7 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task OverlayOpenCloseAsync()
         {
-            if (IoC.DataContent.OverlayDesignModel.IsOpened)
+            if (IoC.DataContent.OverlayData.IsOpened)
                 IoC.UI.OpenOverlay();
             else
                 IoC.UI.CloseOverlay();

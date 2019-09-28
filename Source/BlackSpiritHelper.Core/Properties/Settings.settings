@@ -11,7 +11,7 @@
     <Setting Name="PreferencesData" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.PreferencesDataViewModel" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="OverlayDesignModel" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.OverlayDesignModel" Scope="User">
+    <Setting Name="OverlayData" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.OverlayDataViewModel" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="ScheduleData" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.ScheduleDataViewModel" Scope="User">

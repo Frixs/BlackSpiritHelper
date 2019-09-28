@@ -77,7 +77,7 @@ namespace BlackSpiritHelper
             if (OverlayWindow.Window != null)
                 return;
 
-            IoC.DataContent.OverlayDesignModel.IsOpened = true;
+            IoC.DataContent.OverlayData.IsOpened = true;
 
             OverlayWindow.Window = new OverlayWindow(new WindowInteropHelper(Application.Current.MainWindow).Handle);
             OverlayWindow.Window.Show();
@@ -91,7 +91,7 @@ namespace BlackSpiritHelper
             if (OverlayWindow.Window == null)
                 return;
 
-            IoC.DataContent.OverlayDesignModel.IsOpened = false;
+            IoC.DataContent.OverlayData.IsOpened = false;
 
             OverlayWindow.Window.Close();
             OverlayWindow.Window = null;

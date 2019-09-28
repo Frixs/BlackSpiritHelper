@@ -116,7 +116,7 @@ namespace BlackSpiritHelper
 
         private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (IoC.DataContent.OverlayDesignModel.IsDraggingLocked)
+            if (IoC.DataContent.OverlayData.IsDraggingLocked)
                 return;
 
             // Get clicked object.
@@ -127,7 +127,7 @@ namespace BlackSpiritHelper
 
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
-            if (IoC.DataContent.OverlayDesignModel.IsDraggingLocked)
+            if (IoC.DataContent.OverlayData.IsDraggingLocked)
                 return;
 
             if (e.LeftButton != MouseButtonState.Pressed)
@@ -147,7 +147,7 @@ namespace BlackSpiritHelper
 
         private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (IoC.DataContent.OverlayDesignModel.IsDraggingLocked)
+            if (IoC.DataContent.OverlayData.IsDraggingLocked)
                 return;
 
             // Reset clicked object.

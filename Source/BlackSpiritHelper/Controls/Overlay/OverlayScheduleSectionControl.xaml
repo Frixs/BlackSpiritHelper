@@ -73,7 +73,7 @@
                                 </Style>
                             </Border.Style>
 
-                            <Grid Margin="{Binding ApplicationDataContent.OverlayDesignModel.OverlaySize, 
+                            <Grid Margin="{Binding ApplicationDataContent.OverlayData.OverlaySize, 
                                            Source={x:Static local:ViewModelLocator.Instance},
                                            Converter={local:OverlaySizeMarginValueConverter}, FallbackValue=5}">
 

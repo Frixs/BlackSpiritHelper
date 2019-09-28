@@ -27,7 +27,7 @@
         /// <summary>
         /// Data structure for the overlay.
         /// </summary>
-        public OverlayDesignModel OverlayDesignModel { get; private set; }
+        public OverlayDataViewModel OverlayData { get; private set; }
 
         #endregion
 
@@ -62,9 +62,9 @@
             ScheduleData.SetDefaults();
 
             // Overlay.
-            OverlayDesignModel = IoC.SettingsStorage.OverlayDesignModel ?? OverlayDesignModel.Instance;
-            OverlayDesignModel.Setup();
-            OverlayDesignModel.SetDefaults();
+            OverlayData = IoC.SettingsStorage.OverlayData ?? OverlayDataViewModel.NewDataInstance;
+            OverlayData.Setup();
+            OverlayData.SetDefaults();
         }
 
         /// <summary>
@@ -179,7 +179,7 @@
         private void SaveNewOverlayData()
         {
             // Save new data.
-            IoC.SettingsStorage.OverlayDesignModel = OverlayDesignModel;
+            IoC.SettingsStorage.OverlayData = OverlayData;
         }
 
         /// <summary>
@@ -188,7 +188,7 @@
         private void ClearSavedOverlayData()
         {
             // Clear previous save.
-            IoC.SettingsStorage.OverlayDesignModel = null;
+            IoC.SettingsStorage.OverlayData = null;
         }
 
         /// <summary>

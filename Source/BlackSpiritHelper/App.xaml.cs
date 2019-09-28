@@ -116,7 +116,7 @@ namespace BlackSpiritHelper
                     }
 
                     // Start overlay?
-                    if (IoC.DataContent.OverlayDesignModel.OpenOnStart)
+                    if (IoC.DataContent.OverlayData.OpenOnStart)
                     {
                         IoC.UI.OpenOverlay();
                     }

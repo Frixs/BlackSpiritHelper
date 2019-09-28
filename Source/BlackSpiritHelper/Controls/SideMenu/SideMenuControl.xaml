@@ -52,7 +52,7 @@
                                   Style="{StaticResource OverlayCheckbox}"
                                   HorizontalAlignment="Left" 
                                   VerticalAlignment="Top"
-                                  IsChecked="{Binding ApplicationDataContent.OverlayDesignModel.IsOpened, 
+                                  IsChecked="{Binding ApplicationDataContent.OverlayData.IsOpened, 
                                               Source={x:Static local:ViewModelLocator.Instance}}"
                                   Command="{Binding OverlayOpenCloseCommand}"
                               />
