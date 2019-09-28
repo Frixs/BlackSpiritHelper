@@ -134,15 +134,14 @@
     <Compile Include="ViewModels\Content\DailyCheck\Pages\DailyCheckPageViewModel.cs" />
     <Compile Include="ViewModels\Content\Overlay\Design\OverlayDesignModel.cs" />
     <Compile Include="ViewModels\Content\Overlay\OverlayViewModel.cs" />
-    <Compile Include="ViewModels\Content\Preferences\Design\PreferencesDesignModel.cs" />
     <Compile Include="ViewModels\Structure\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Structure\Base\DataContentBaseViewModel.cs" />
     <Compile Include="ViewModels\Structure\Base\RelayCommand.cs" />
     <Compile Include="ViewModels\Structure\Base\RelayParameterizedCommand.cs" />
     <Compile Include="ViewModels\Content\Schedule\Pages\SchedulePageViewModel.cs" />
     <Compile Include="ViewModels\Structure\Dialogs\MessageBoxDialogViewModel.cs" />
-    <Compile Include="ViewModels\Content\Preferences\PreferencesPageViewModel.cs" />
-    <Compile Include="ViewModels\Content\Preferences\PrefernecesViewModel.cs" />
+    <Compile Include="ViewModels\Content\Preferences\Pages\PreferencesPageViewModel.cs" />
+    <Compile Include="ViewModels\Content\Preferences\Data\PreferencesDataViewModel.cs" />
     <Compile Include="ViewModels\Content\Schedule\Pages\ScheduleItemControlFormPageViewModel.cs" />
     <Compile Include="ViewModels\Content\Schedule\Pages\ScheduleTemplateSettingsFormPageViewModel.cs" />
     <Compile Include="ViewModels\Content\SideMenu\Controls\Design\SideMenuListControlDesignModel.cs" />

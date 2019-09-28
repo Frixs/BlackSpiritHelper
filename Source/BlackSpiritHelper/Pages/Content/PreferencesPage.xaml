@@ -11,7 +11,7 @@
       Title="PreferencesPage" >
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" d:DesignStyle="{StaticResource WindowBackgroundControlStyle}"
-                  DataContext="{Binding ApplicationDataContent.PreferencesDesignModel,
+                  DataContext="{Binding ApplicationDataContent.PreferencesData,
                                 Source={x:Static local:ViewModelLocator.Instance}}">
 
         <Border Padding="10">

@@ -51,12 +51,12 @@ namespace BlackSpiritHelper.Core.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Configuration.SettingsProviderAttribute(typeof(BlackSpiritHelper.Core.CustomSettingsProvider))]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::BlackSpiritHelper.Core.PreferencesDesignModel PreferencesDesignModel {
+        public global::BlackSpiritHelper.Core.PreferencesDataViewModel PreferencesData {
             get {
-                return ((global::BlackSpiritHelper.Core.PreferencesDesignModel)(this["PreferencesDesignModel"]));
+                return ((global::BlackSpiritHelper.Core.PreferencesDataViewModel)(this["PreferencesData"]));
             }
             set {
-                this["PreferencesDesignModel"] = value;
+                this["PreferencesData"] = value;
             }
         }
         

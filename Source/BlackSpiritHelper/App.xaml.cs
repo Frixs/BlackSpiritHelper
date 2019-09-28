@@ -110,7 +110,7 @@ namespace BlackSpiritHelper
                     WindowViewModel.ShowMainWindow();
 
                     // Start in tray?
-                    if (IoC.DataContent.PreferencesDesignModel.StartInTray)
+                    if (IoC.DataContent.PreferencesData.StartInTray)
                     {
                         WindowViewModel.CloseMainWindowToTray();
                     }

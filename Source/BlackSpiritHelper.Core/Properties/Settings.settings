@@ -8,7 +8,7 @@
     <Setting Name="TimerData" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.TimerDataViewModel" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="PreferencesDesignModel" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.PreferencesDesignModel" Scope="User">
+    <Setting Name="PreferencesData" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.PreferencesDataViewModel" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="OverlayDesignModel" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.OverlayDesignModel" Scope="User">

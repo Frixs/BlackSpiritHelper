@@ -9,7 +9,7 @@ namespace BlackSpiritHelper.Core
     /// <summary>
     /// User preferences of the application content.
     /// </summary>
-    public class PreferencesViewModel : DataContentBaseViewModel<PreferencesViewModel>
+    public class PreferencesDataViewModel : DataContentBaseViewModel<PreferencesDataViewModel>
     {
         #region Public Properties
 
@@ -95,7 +95,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public PreferencesViewModel()
+        public PreferencesDataViewModel()
         {
             // Create commands.
             CreateCommands();

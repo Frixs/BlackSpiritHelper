@@ -12,7 +12,7 @@
         /// <summary>
         /// Data structure for the preferences.
         /// </summary>
-        public PreferencesDesignModel PreferencesDesignModel { get; private set; }
+        public PreferencesDataViewModel PreferencesData { get; private set; }
 
         /// <summary>
         /// Data structure for timers with its groups.
@@ -47,9 +47,9 @@
         public void Setup()
         {
             // Preferences.
-            PreferencesDesignModel = IoC.SettingsStorage.PreferencesDesignModel ?? PreferencesDesignModel.Instance;
-            PreferencesDesignModel.Setup();
-            PreferencesDesignModel.SetDefaults();
+            PreferencesData = IoC.SettingsStorage.PreferencesData ?? PreferencesDataViewModel.NewDataInstance;
+            PreferencesData.Setup();
+            PreferencesData.SetDefaults();
 
             // Timer.
             TimerData = IoC.SettingsStorage.TimerData ?? TimerDataViewModel.NewDataInstance;
@@ -128,7 +128,7 @@
             IoC.SettingsStorage.LastOpenedPage = (byte)IoC.Application.CurrentPage;
 
             // Save if user wants to run application As Administrator at startup.
-            IoC.SettingsStorage.ForceToRunAsAdministrator = IoC.DataContent.PreferencesDesignModel.ForceToRunAsAdministrator;
+            IoC.SettingsStorage.ForceToRunAsAdministrator = IoC.DataContent.PreferencesData.ForceToRunAsAdministrator;
         }
 
         /// <summary>
@@ -161,7 +161,7 @@
         private void SaveNewPreferences()
         {
             // Save new data.
-            IoC.SettingsStorage.PreferencesDesignModel = PreferencesDesignModel;
+            IoC.SettingsStorage.PreferencesData = PreferencesData;
         }
 
         /// <summary>
@@ -170,7 +170,7 @@
         private void ClearSavedPreferences()
         {
             // Clear previous save.
-            IoC.SettingsStorage.PreferencesDesignModel = null;
+            IoC.SettingsStorage.PreferencesData = null;
         }
 
         /// <summary>
