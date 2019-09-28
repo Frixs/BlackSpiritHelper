@@ -2,17 +2,23 @@
 
 namespace BlackSpiritHelper.Core
 {
-    public class SideMenuListControlDesignModel : SideMenuListControlViewModel
+    public class SideMenuListControlViewModel : BaseViewModel
     {
-        #region New Instance Getter
+        #region Public Properties
 
-        public static SideMenuListControlDesignModel Instance => new SideMenuListControlDesignModel();
+        /// <summary>
+        /// Menu items.
+        /// </summary>
+        public List<SideMenuListItemControlViewModel> Items { get; set; }
 
         #endregion
 
         #region Constructor
 
-        public SideMenuListControlDesignModel()
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public SideMenuListControlViewModel()
         {
             Items = new List<SideMenuListItemControlViewModel>
             {

@@ -6,12 +6,13 @@
              xmlns:local="clr-namespace:BlackSpiritHelper"
              xmlns:core="clr-namespace:BlackSpiritHelper.Core;assembly=BlackSpiritHelper.Core"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="175">
+             d:DesignHeight="450" d:DesignWidth="175"
+             DataContext="{x:Static core:SideMenuControlDesignModel.Instance}">
 
     <UserControl.Template>
         <ControlTemplate TargetType="UserControl">
 
-            <Grid Grid.Column="0" Panel.ZIndex="2" DataContext="{x:Static core:SideMenuControlDesignModel.Instance}" Background="{StaticResource SideMenuBackgroundBrushKey}">
+            <Grid Grid.Column="0" Panel.ZIndex="2" Background="{StaticResource SideMenuBackgroundBrushKey}">
 
                 <Grid.RowDefinitions>
                     <!-- Icon -->
