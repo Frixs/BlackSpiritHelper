@@ -62,12 +62,12 @@
     <Compile Include="Audio\Implementation\AudioPlayer.cs" />
     <Compile Include="Audio\Implementation\Managers\VoiceAudioManager.cs" />
     <Compile Include="Audio\Implementation\Managers\SoundAudioManager.cs" />
-    <Compile Include="DataModels\ApplicationPage.cs" />
-    <Compile Include="DataModels\TimeZoneRegion.cs" />
-    <Compile Include="DataModels\OverlaySize.cs" />
+    <Compile Include="DataTypes\ApplicationPage.cs" />
+    <Compile Include="DataTypes\TimeZoneRegion.cs" />
+    <Compile Include="DataTypes\OverlaySize.cs" />
     <Compile Include="Audio\Core\AudioType.cs" />
     <Compile Include="Audio\Core\AudioAlertLevel.cs" />
-    <Compile Include="DataModels\TimerState.cs" />
+    <Compile Include="DataTypes\TimerState.cs" />
     <Compile Include="DateTimeZone\DateTimeZoneManager.cs" />
     <Compile Include="Dispatcher\Implementation\DispatcherManager.cs" />
     <Compile Include="Dispatcher\Implementation\DisprUiThread.cs" />
@@ -200,7 +200,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DataModels\Timer\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
