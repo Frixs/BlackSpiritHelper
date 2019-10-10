@@ -63,7 +63,7 @@ namespace BlackSpiritHelper.Core
         public long LastModifiedTicks { get; set; }
 
         /// <summary>
-        /// Setter for <see cref="LastModifiedTicks"/>.
+        /// User settings setter for <see cref="LastModifiedTicks"/>.
         /// </summary>
         public string LastModifiedString
         {

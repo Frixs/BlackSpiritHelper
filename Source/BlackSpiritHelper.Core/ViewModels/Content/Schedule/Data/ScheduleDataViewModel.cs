@@ -265,6 +265,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Offset <see cref="LocalTimeOffsetModifier"/> in string form.
         /// </summary>
+        [XmlIgnore]
         public string LocalTimeOffsetModifierString
         {
             get
