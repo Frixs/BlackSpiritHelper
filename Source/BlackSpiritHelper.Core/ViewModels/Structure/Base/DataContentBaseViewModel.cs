@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 namespace BlackSpiritHelper.Core
 {
     /// <summary>
-    /// TODO desc
+    /// General base ViewModel for root user data.
     /// </summary>
     [SettingsSerializeAs(SettingsSerializeAs.Xml)]
     public abstract class DataContentBaseViewModel : BaseViewModel
@@ -98,7 +98,7 @@ namespace BlackSpiritHelper.Core
     }
 
     /// <summary>
-    /// TODO: desc
+    /// Base ViewModel for root user data.
     /// </summary>
     /// <typeparam name="VM"></typeparam>
     [SettingsSerializeAs(SettingsSerializeAs.Xml)]
@@ -106,7 +106,9 @@ namespace BlackSpiritHelper.Core
         where VM : DataContentBaseViewModel<VM>, new()
     {
         /// <summary>
-        /// TODO: desc
+        /// Create a new data instance.
+        /// This is different from creating the instance through normal constructor. 
+        /// This will additionally mark the instance to run additional procedures after creation in <see cref="ApplicationDataContent"/>.
         /// </summary>
         public static VM NewDataInstance
         {
