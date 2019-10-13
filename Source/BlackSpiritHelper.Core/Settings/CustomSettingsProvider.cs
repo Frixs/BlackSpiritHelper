@@ -205,10 +205,7 @@ namespace BlackSpiritHelper.Core
                 var val = InitValueFromFile(element);
                 if (val == null)
                 {
-                    // Some error occured during deserialization user data.
                     // It dees not handle XML format errors.
-                    // TODO:LATER: Error messsage while loading user settings.
-
                     // Continue and ignore damaged user data.
                     continue;
                 }

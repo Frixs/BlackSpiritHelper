@@ -14,7 +14,7 @@ namespace BlackSpiritHelper
         /// <summary>
         /// Windows tray icon of the application.
         /// ---
-        /// TODO:LATER: Tray icon - We need to access it from IoC to be able to update it from other parts of the code.
+        /// TODO:LATER: Tray icon - not important - We need to access it from IoC to be able to update it from other parts of the code.
         /// </summary>
         private static System.Windows.Forms.NotifyIcon mTrayIcon = null;
 

@@ -15,8 +15,11 @@ namespace BlackSpiritHelper
     /// <summary>
     /// Interaction logic for App.xaml
     /// ---
-    /// TODO:LATER: Application user option to download/check updates.
-    /// TODO:LATER: Auto manage length of log file. Cut the file if it is too large.
+    /// TODO:LATER:APP: more...
+    ///     - Application user option to download/check updates.
+    ///     - Auto manage length of log file. Cut the file if it is too large.
+    ///     - DataViewModel extends DataModel - Move business logic into Model with its fields.
+    ///       Separate ViewModel's command logic from Model's business logic.
     /// </summary>
     public partial class App : Application
     {
