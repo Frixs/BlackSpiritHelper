@@ -186,7 +186,7 @@ namespace BlackSpiritHelper.Core
         /// Helper for <see cref="CountdownDuration"/>.
         /// It is used to set back the value on application load.
         /// </summary>
-        public long CountdownDurationTotalTicks
+        public long CountdownDurationTicks
         {
             get => mCountdownDuration.Ticks;
             set => mCountdownDuration = new TimeSpan(value);

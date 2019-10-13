@@ -199,10 +199,9 @@
     <Content Include="Data\ScheduleSection\Templates\bdo_tw.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="ViewModels\.info.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DataModels\Timer\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
