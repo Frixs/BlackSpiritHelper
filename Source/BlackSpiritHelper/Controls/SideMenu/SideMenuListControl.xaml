@@ -6,16 +6,15 @@
              xmlns:local="clr-namespace:BlackSpiritHelper"
              xmlns:core="clr-namespace:BlackSpiritHelper.Core;assembly=BlackSpiritHelper.Core"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="200">
-    <Grid DataContext="{x:Static core:SideMenuListControlDesignModel.Instance}">
-        <StackPanel>
-            <ItemsControl ItemsSource="{Binding Items}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <local:SideMenuListItemControl />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </StackPanel>
-    </Grid>
+             d:DesignHeight="450" d:DesignWidth="200"
+             DataContext="{x:Static core:SideMenuListControlDesignModel.Instance}">
+    <StackPanel>
+        <ItemsControl ItemsSource="{Binding Items}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <local:SideMenuListItemControl />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </StackPanel>
 </UserControl>

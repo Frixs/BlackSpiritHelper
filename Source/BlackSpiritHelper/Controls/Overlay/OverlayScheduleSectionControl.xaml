@@ -19,7 +19,7 @@
                 Orientation="{Binding DataContext.OverlayOrientation, FallbackValue=Horizontal,
                               RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}"
                 Margin="0"
-                DataContext="{Binding ApplicationDataContent.ScheduleDesignModel,
+                DataContext="{Binding ApplicationDataContent.ScheduleData,
                               Source={x:Static local:ViewModelLocator.Instance}}">
         <StackPanel.Style>
             <Style TargetType="StackPanel">
@@ -73,7 +73,7 @@
                                 </Style>
                             </Border.Style>
 
-                            <Grid Margin="{Binding ApplicationDataContent.OverlayDesignModel.OverlaySize, 
+                            <Grid Margin="{Binding ApplicationDataContent.OverlayData.OverlaySize, 
                                            Source={x:Static local:ViewModelLocator.Instance},
                                            Converter={local:OverlaySizeMarginValueConverter}, FallbackValue=5}">
 

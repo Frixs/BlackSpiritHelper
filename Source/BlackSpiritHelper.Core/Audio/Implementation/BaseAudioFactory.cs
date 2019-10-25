@@ -37,10 +37,10 @@ namespace BlackSpiritHelper.Core
         public void Play(AudioType type, AudioPriorityBracket priority = AudioPriorityBracket.Pack)
         {
             // We do not want to play any audio.
-            if (IoC.DataContent.PreferencesDesignModel.AudioAlertLevel == AudioAlertLevel.None)
+            if (IoC.DataContent.PreferencesData.AudioAlertLevel == AudioAlertLevel.None)
                 return;
 
-            switch (IoC.DataContent.PreferencesDesignModel.AudioAlertLevel)
+            switch (IoC.DataContent.PreferencesData.AudioAlertLevel)
             {
                 // Sound.
                 case AudioAlertLevel.Sound:

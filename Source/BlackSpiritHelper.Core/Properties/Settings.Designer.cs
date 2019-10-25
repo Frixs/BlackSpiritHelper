@@ -39,48 +39,48 @@ namespace BlackSpiritHelper.Core.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Configuration.SettingsProviderAttribute(typeof(BlackSpiritHelper.Core.CustomSettingsProvider))]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::BlackSpiritHelper.Core.TimerDesignModel TimerDesignModel {
+        public global::BlackSpiritHelper.Core.TimerDataViewModel TimerData {
             get {
-                return ((global::BlackSpiritHelper.Core.TimerDesignModel)(this["TimerDesignModel"]));
+                return ((global::BlackSpiritHelper.Core.TimerDataViewModel)(this["TimerData"]));
             }
             set {
-                this["TimerDesignModel"] = value;
+                this["TimerData"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Configuration.SettingsProviderAttribute(typeof(BlackSpiritHelper.Core.CustomSettingsProvider))]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::BlackSpiritHelper.Core.PreferencesDesignModel PreferencesDesignModel {
+        public global::BlackSpiritHelper.Core.PreferencesDataViewModel PreferencesData {
             get {
-                return ((global::BlackSpiritHelper.Core.PreferencesDesignModel)(this["PreferencesDesignModel"]));
+                return ((global::BlackSpiritHelper.Core.PreferencesDataViewModel)(this["PreferencesData"]));
             }
             set {
-                this["PreferencesDesignModel"] = value;
+                this["PreferencesData"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Configuration.SettingsProviderAttribute(typeof(BlackSpiritHelper.Core.CustomSettingsProvider))]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::BlackSpiritHelper.Core.OverlayDesignModel OverlayDesignModel {
+        public global::BlackSpiritHelper.Core.OverlayDataViewModel OverlayData {
             get {
-                return ((global::BlackSpiritHelper.Core.OverlayDesignModel)(this["OverlayDesignModel"]));
+                return ((global::BlackSpiritHelper.Core.OverlayDataViewModel)(this["OverlayData"]));
             }
             set {
-                this["OverlayDesignModel"] = value;
+                this["OverlayData"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Configuration.SettingsProviderAttribute(typeof(BlackSpiritHelper.Core.CustomSettingsProvider))]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::BlackSpiritHelper.Core.ScheduleDesignModel ScheduleDesignModel {
+        public global::BlackSpiritHelper.Core.ScheduleDataViewModel ScheduleData {
             get {
-                return ((global::BlackSpiritHelper.Core.ScheduleDesignModel)(this["ScheduleDesignModel"]));
+                return ((global::BlackSpiritHelper.Core.ScheduleDataViewModel)(this["ScheduleData"]));
             }
             set {
-                this["ScheduleDesignModel"] = value;
+                this["ScheduleData"] = value;
             }
         }
         

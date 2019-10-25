@@ -33,7 +33,7 @@ namespace BlackSpiritHelper.Core
                 // Counter.
                 int c = 1;
                 // Chech conditions.
-                foreach (TimerGroupDataViewModel g in IoC.DataContent.TimerDesignModel.GroupList)
+                foreach (TimerGroupDataViewModel g in IoC.DataContent.TimerData.GroupList)
                     foreach (TimerItemDataViewModel t in g.TimerList)
                         if (t.ShowInOverlay)
                             if (++c > TimerItemDataViewModel.OverlayTimerLimitCount)

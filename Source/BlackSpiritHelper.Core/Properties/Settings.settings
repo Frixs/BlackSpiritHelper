@@ -5,16 +5,16 @@
     <Setting Name="LastOpenedPage" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="System.Byte" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="TimerDesignModel" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.TimerDesignModel" Scope="User">
+    <Setting Name="TimerData" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.TimerDataViewModel" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="PreferencesDesignModel" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.PreferencesDesignModel" Scope="User">
+    <Setting Name="PreferencesData" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.PreferencesDataViewModel" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="OverlayDesignModel" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.OverlayDesignModel" Scope="User">
+    <Setting Name="OverlayData" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.OverlayDataViewModel" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="ScheduleDesignModel" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.ScheduleDesignModel" Scope="User">
+    <Setting Name="ScheduleData" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.ScheduleDataViewModel" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="ForceToRunAsAdministrator" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="System.Boolean" Scope="User">

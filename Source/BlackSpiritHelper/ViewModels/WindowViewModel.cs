@@ -14,7 +14,7 @@ namespace BlackSpiritHelper
         /// <summary>
         /// Windows tray icon of the application.
         /// ---
-        /// TODO:LATER: Tray icon - We need to access it from IoC to be able to update it from other parts of the code.
+        /// TODO:LATER: Tray icon - not important - We need to access it from IoC to be able to update it from other parts of the code.
         /// </summary>
         private static System.Windows.Forms.NotifyIcon mTrayIcon = null;
 
@@ -51,11 +51,6 @@ namespace BlackSpiritHelper
         /// The radius of the edges of the window.
         /// </summary>
         private int mWindowRadius = 0;
-
-        /// <summary>
-        /// Side menu width.
-        /// </summary>
-        private int mSideMenuWidth = 175;
 
         #endregion
 
@@ -154,22 +149,6 @@ namespace BlackSpiritHelper
         /// Overlay to ignore Caption Height.
         /// </summary>
         public int CaptionOverlayHeight { get { return CaptionHeight + 1; } }
-
-        /// <summary>
-        /// Side menu width.
-        /// </summary>
-        public int SideMenuWidth
-        {
-            get
-            {
-                return mSideMenuWidth;
-            }
-            set
-            {
-                mSideMenuWidth = value;
-                OnPropertyChanged(nameof(SideMenuWidth));
-            }
-        }
 
         #endregion
 

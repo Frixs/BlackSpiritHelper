@@ -1,0 +1,14 @@
+﻿Model - ViewModel project structure
+===================================
+* ViewModel/Content		-> Contains application ViewModels.
+* ViewModel/Structure	-> Contains base ViewModels and compotent's ViewModels needed as a base for the application.
+
+ViewModel/Content/<SectionName>
+===============================
+* ViewModel/Content/<SectionName>/Data		-> Represents Models in form of ViewModels (due to complex project structure).
+											-> Design models are not needed.
+* ViewModel/Content/<SectionName>/Pages		-> Each page has own ViewModel which has to be assigned on page create time.
+											-> Has no Design models.
+* ViewModel/Content/<SectionName>/Constrols	-> ViewModels needed only for Control as a separate sub-page with its functions.
+* ViewModel/Content/<SectionName>/*/Design	-> It is used for calling it in Views as DataContext.
+											-> Is used for additional specific functions.

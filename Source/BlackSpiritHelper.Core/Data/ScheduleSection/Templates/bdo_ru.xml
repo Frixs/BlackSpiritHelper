@@ -4,403 +4,403 @@
   <Title>BDO-RU</Title>
   <TimeZoneRegion>RU</TimeZoneRegion>
   <Schedule>
-    <ScheduleTemplateDayDataViewModel>
+    <ScheduleDayDataViewModel>
       <DayOfWeek>Monday</DayOfWeek>
       <TimeList>
-        <ScheduleTemplateDayTimeDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>0</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Karanda</string>
             <string>Kzarka</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>1</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Nouver</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>12</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Kutum</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>14</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Nouver</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>16</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Karanda</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>18</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Kutum</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>23</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Nouver</string>
             <string>Karanda</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
       </TimeList>
-    </ScheduleTemplateDayDataViewModel>
-    <ScheduleTemplateDayDataViewModel>
+    </ScheduleDayDataViewModel>
+    <ScheduleDayDataViewModel>
       <DayOfWeek>Tuesday</DayOfWeek>
       <TimeList>
-        <ScheduleTemplateDayTimeDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>0</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Kzarka</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>1</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Karanda</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>12</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Karanda</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>14</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Kzarka</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>16</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Kutum</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>18</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Karanda</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>23</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Quint</string>
             <string>Muraka</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
       </TimeList>
-    </ScheduleTemplateDayDataViewModel>
-    <ScheduleTemplateDayDataViewModel>
+    </ScheduleDayDataViewModel>
+    <ScheduleDayDataViewModel>
       <DayOfWeek>Wednesday</DayOfWeek>
       <TimeList>
-        <ScheduleTemplateDayTimeDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>0</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Kutum</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>1</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Nouver</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>14</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Karanda</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>16</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Nouver</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>18</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Kzarka</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>23</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Offin</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
       </TimeList>
-    </ScheduleTemplateDayDataViewModel>
-    <ScheduleTemplateDayDataViewModel>
+    </ScheduleDayDataViewModel>
+    <ScheduleDayDataViewModel>
       <DayOfWeek>Thursday</DayOfWeek>
       <TimeList>
-        <ScheduleTemplateDayTimeDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>0</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Karanda</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>1</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Kutum</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>12</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Nouver</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>14</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Kutum</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>16</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Nouver</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>18</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Kzarka</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>23</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Garmoth</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
       </TimeList>
-    </ScheduleTemplateDayDataViewModel>
-    <ScheduleTemplateDayDataViewModel>
+    </ScheduleDayDataViewModel>
+    <ScheduleDayDataViewModel>
       <DayOfWeek>Friday</DayOfWeek>
       <TimeList>
-        <ScheduleTemplateDayTimeDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>0</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Nouver</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>1</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Kzarka</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>12</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Karanda</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>14</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Kutum</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>16</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Nouver</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>18</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Kzarka</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>23</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Offin</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
       </TimeList>
-    </ScheduleTemplateDayDataViewModel>
-    <ScheduleTemplateDayDataViewModel>
+    </ScheduleDayDataViewModel>
+    <ScheduleDayDataViewModel>
       <DayOfWeek>Saturday</DayOfWeek>
       <TimeList>
-        <ScheduleTemplateDayTimeDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>0</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Nouver</string>
             <string>Kzarka</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>1</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Kutum</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>8</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Kzarka</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>10</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Nouver</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>12</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Kutum</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>14</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Quint</string>
             <string>Muraka</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>16</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Karanda</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>18</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Kutum</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
       </TimeList>
-    </ScheduleTemplateDayDataViewModel>
-    <ScheduleTemplateDayDataViewModel>
+    </ScheduleDayDataViewModel>
+    <ScheduleDayDataViewModel>
       <DayOfWeek>Sunday</DayOfWeek>
       <TimeList>
-        <ScheduleTemplateDayTimeDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>0</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Garmoth</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>1</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Kzarka</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>8</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Karanda</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>10</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Kutum</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>12</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Garmoth</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>14</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Kutum</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>16</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Vell</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>18</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Nouver</string>
             <string>Kzarka</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
-        <ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
+        <ScheduleTimeEventDataViewModel>
           <TimeHours>23</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Offin</string>
           </ItemList>
-        </ScheduleTemplateDayTimeDataViewModel>
+        </ScheduleTimeEventDataViewModel>
       </TimeList>
-    </ScheduleTemplateDayDataViewModel>
+    </ScheduleDayDataViewModel>
   </Schedule>
 </ScheduleTemplateDataViewModel>

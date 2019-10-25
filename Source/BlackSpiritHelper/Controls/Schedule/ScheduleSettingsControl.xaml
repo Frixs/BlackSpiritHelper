@@ -50,7 +50,7 @@
                                                     Style="{StaticResource ScheduleButtonRemove}"
                                                     Foreground="{Binding ColorHEX, Converter={local:StringHEXToBrushConverter}}"
                                                     FontFamily="{StaticResource LatoHeavy}"
-                                                    IsEnabled="{Binding ApplicationDataContent.ScheduleDesignModel.IsRunning,
+                                                    IsEnabled="{Binding ApplicationDataContent.ScheduleData.IsRunning,
                                                                 Source={x:Static local:ViewModelLocator.Instance},
                                                                 Converter={local:BooleanInvertConverter}}"
                                                     Padding="10"
@@ -89,7 +89,7 @@
                                                     Style="{StaticResource ScheduleButtonAdd}"
                                                     Foreground="{Binding ColorHEX, Converter={local:StringHEXToBrushConverter}}"
                                                     FontFamily="{StaticResource LatoHeavy}"
-                                                    IsEnabled="{Binding ApplicationDataContent.ScheduleDesignModel.IsRunning,
+                                                    IsEnabled="{Binding ApplicationDataContent.ScheduleData.IsRunning,
                                                                 Source={x:Static local:ViewModelLocator.Instance},
                                                                 Converter={local:BooleanInvertConverter}}"
                                                     Padding="10"
@@ -105,6 +105,6 @@
         </Style>
     </UserControl.Resources>
 
-    <ContentControl d:DataContext="{x:Static core:ScheduleDesignModel.Instance}"
+    <ContentControl d:DataContext="{x:Static core:ScheduleDataDesignModel.Instance}"
                     Style="{StaticResource ContentStyle}" />
 </UserControl>

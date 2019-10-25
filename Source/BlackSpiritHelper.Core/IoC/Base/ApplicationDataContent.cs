@@ -2,7 +2,7 @@
 {
     /// <summary>
     /// Subclass for <see cref="IoC"/>. There you define all application data structures.
-    /// F.e. Timer structure is a bit complex with its groups <see cref="TimerViewModel"/>. You have to bind the same view model to multiple views.
+    /// F.e. Timer structure is a bit complex with its groups <see cref="TimerDataViewModel"/>. You have to bind the same view model to multiple views.
     /// FOr this reason, you define these data structures here to easily access it as a singleton.
     /// </summary>
     public class ApplicationDataContent
@@ -12,22 +12,22 @@
         /// <summary>
         /// Data structure for the preferences.
         /// </summary>
-        public PreferencesDesignModel PreferencesDesignModel { get; private set; }
+        public PreferencesDataViewModel PreferencesData { get; private set; }
 
         /// <summary>
         /// Data structure for timers with its groups.
         /// </summary>
-        public TimerDesignModel TimerDesignModel { get; private set; }
+        public TimerDataViewModel TimerData { get; private set; }
 
         /// <summary>
         /// Data structure for schedule.
         /// </summary>
-        public ScheduleDesignModel ScheduleDesignModel { get; private set; }
+        public ScheduleDataViewModel ScheduleData { get; private set; }
 
         /// <summary>
         /// Data structure for the overlay.
         /// </summary>
-        public OverlayDesignModel OverlayDesignModel { get; private set; }
+        public OverlayDataViewModel OverlayData { get; private set; }
 
         #endregion
 
@@ -47,24 +47,24 @@
         public void Setup()
         {
             // Preferences.
-            PreferencesDesignModel = IoC.SettingsStorage.PreferencesDesignModel ?? PreferencesDesignModel.Instance;
-            PreferencesDesignModel.Setup();
-            PreferencesDesignModel.SetDefaults();
+            PreferencesData = IoC.SettingsStorage.PreferencesData ?? PreferencesDataViewModel.NewDataInstance;
+            PreferencesData.Setup();
+            PreferencesData.SetDefaults();
 
             // Timer.
-            TimerDesignModel = IoC.SettingsStorage.TimerDesignModel ?? TimerDesignModel.Instance;
-            TimerDesignModel.Setup();
-            TimerDesignModel.SetDefaults();
+            TimerData = IoC.SettingsStorage.TimerData ?? TimerDataViewModel.NewDataInstance;
+            TimerData.Setup();
+            TimerData.SetDefaults();
 
             // Schedule.
-            ScheduleDesignModel = IoC.SettingsStorage.ScheduleDesignModel ?? ScheduleDesignModel.Instance;
-            ScheduleDesignModel.Setup();
-            ScheduleDesignModel.SetDefaults();
+            ScheduleData = IoC.SettingsStorage.ScheduleData ?? ScheduleDataViewModel.NewDataInstance;
+            ScheduleData.Setup();
+            ScheduleData.SetDefaults();
 
             // Overlay.
-            OverlayDesignModel = IoC.SettingsStorage.OverlayDesignModel ?? OverlayDesignModel.Instance;
-            OverlayDesignModel.Setup();
-            OverlayDesignModel.SetDefaults();
+            OverlayData = IoC.SettingsStorage.OverlayData ?? OverlayDataViewModel.NewDataInstance;
+            OverlayData.Setup();
+            OverlayData.SetDefaults();
         }
 
         /// <summary>
@@ -108,7 +108,7 @@
             IoC.Logger.Log("User data saved!", LogLevel.Info);
 
             //
-            //XmlSerializer mySerializer = new XmlSerializer(typeof(TimerDesignModel));
+            //XmlSerializer mySerializer = new XmlSerializer(typeof(TimerDataViewModel));
             //StreamWriter myWriter = new StreamWriter("prefs.xml");
             //mySerializer.Serialize(myWriter, xb);
             //myWriter.Close();
@@ -128,7 +128,7 @@
             IoC.SettingsStorage.LastOpenedPage = (byte)IoC.Application.CurrentPage;
 
             // Save if user wants to run application As Administrator at startup.
-            IoC.SettingsStorage.ForceToRunAsAdministrator = IoC.DataContent.PreferencesDesignModel.ForceToRunAsAdministrator;
+            IoC.SettingsStorage.ForceToRunAsAdministrator = IoC.DataContent.PreferencesData.ForceToRunAsAdministrator;
         }
 
         /// <summary>
@@ -137,13 +137,13 @@
         private void SaveNewTimerData()
         {
             // Freeze all running timers, first.
-            foreach (TimerGroupDataViewModel g in TimerDesignModel.GroupList)
+            foreach (TimerGroupDataViewModel g in TimerData.GroupList)
                 foreach (TimerItemDataViewModel t in g.TimerList)
                     if (t.IsRunning)
                         t.TimerFreeze();
 
             // Save new data.
-            IoC.SettingsStorage.TimerDesignModel = TimerDesignModel;
+            IoC.SettingsStorage.TimerData = TimerData;
         }
 
         /// <summary>
@@ -152,7 +152,7 @@
         private void ClearSavedTimerData()
         {
             // Clear previous save.
-            IoC.SettingsStorage.TimerDesignModel = null;
+            IoC.SettingsStorage.TimerData = null;
         }
 
         /// <summary>
@@ -161,7 +161,7 @@
         private void SaveNewPreferences()
         {
             // Save new data.
-            IoC.SettingsStorage.PreferencesDesignModel = PreferencesDesignModel;
+            IoC.SettingsStorage.PreferencesData = PreferencesData;
         }
 
         /// <summary>
@@ -170,7 +170,7 @@
         private void ClearSavedPreferences()
         {
             // Clear previous save.
-            IoC.SettingsStorage.PreferencesDesignModel = null;
+            IoC.SettingsStorage.PreferencesData = null;
         }
 
         /// <summary>
@@ -179,7 +179,7 @@
         private void SaveNewOverlayData()
         {
             // Save new data.
-            IoC.SettingsStorage.OverlayDesignModel = OverlayDesignModel;
+            IoC.SettingsStorage.OverlayData = OverlayData;
         }
 
         /// <summary>
@@ -188,7 +188,7 @@
         private void ClearSavedOverlayData()
         {
             // Clear previous save.
-            IoC.SettingsStorage.OverlayDesignModel = null;
+            IoC.SettingsStorage.OverlayData = null;
         }
 
         /// <summary>
@@ -197,7 +197,7 @@
         private void SaveNewScheduleData()
         {
             // Save new data.
-            IoC.SettingsStorage.ScheduleDesignModel = ScheduleDesignModel;
+            IoC.SettingsStorage.ScheduleData = ScheduleData;
         }
 
         /// <summary>
@@ -206,7 +206,7 @@
         private void ClearSavedScheduleData()
         {
             // Clear previous save.
-            IoC.SettingsStorage.ScheduleDesignModel = null;
+            IoC.SettingsStorage.ScheduleData = null;
         }
 
         #endregion

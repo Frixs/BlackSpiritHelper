@@ -15,8 +15,14 @@ namespace BlackSpiritHelper
     /// <summary>
     /// Interaction logic for App.xaml
     /// ---
-    /// TODO:LATER: Application user option to download/check updates.
-    /// TODO:LATER: Auto manage length of log file. Cut the file if it is too large.
+    /// TODO:LATER:APP: more...
+    ///     - Application user option to download/check updates.
+    ///     - Auto manage length of log file. Cut the file if it is too large.
+    ///     - DataViewModel extends DataModel - Move business logic into Model with its fields.
+    ///       Separate ViewModel's command logic from Model's business logic.
+    ///     - IDisposable can be useful in some situation for destroying Timer instances in sections.
+    ///       External links: https://stackoverflow.com/questions/188688/what-does-the-tilde-before-a-function-name-mean-in-c
+    ///                       https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/partial-classes-and-methods
     /// </summary>
     public partial class App : Application
     {
@@ -110,13 +116,13 @@ namespace BlackSpiritHelper
                     WindowViewModel.ShowMainWindow();
 
                     // Start in tray?
-                    if (IoC.DataContent.PreferencesDesignModel.StartInTray)
+                    if (IoC.DataContent.PreferencesData.StartInTray)
                     {
                         WindowViewModel.CloseMainWindowToTray();
                     }
 
                     // Start overlay?
-                    if (IoC.DataContent.OverlayDesignModel.OpenOnStart)
+                    if (IoC.DataContent.OverlayData.OpenOnStart)
                     {
                         IoC.UI.OpenOverlay();
                     }

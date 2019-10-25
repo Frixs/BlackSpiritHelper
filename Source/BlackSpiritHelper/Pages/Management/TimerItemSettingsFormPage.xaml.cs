@@ -30,9 +30,9 @@ namespace BlackSpiritHelper
             ShowInOverlayCheckBoxRule.CurrentShowOverlayValue = (bool)ShowInOverlayCheckBox.Tag;
 
             // Set ComboBox ItemsSource.
-            GroupChangeComboBox.ItemsSource = IoC.DataContent.TimerDesignModel.GroupList;
+            GroupChangeComboBox.ItemsSource = IoC.DataContent.TimerData.GroupList;
             GroupChangeComboBox.DisplayMemberPath = "Title";
-            GroupChangeComboBox.SelectedIndex = IoC.DataContent.TimerDesignModel.GroupList
+            GroupChangeComboBox.SelectedIndex = IoC.DataContent.TimerData.GroupList
                 .Select((c, i) => new { Group = c, Index = i })
                 .First(o => o.Group.ID == (sbyte)GroupChangeComboBox.Tag)
                 .Index;
