@@ -6,6 +6,15 @@ namespace BlackSpiritHelper.Core
 {
     public class SideMenuControlViewModel : BaseViewModel
     {
+        #region Public Properties
+
+        /// <summary>
+        /// Side menu width.
+        /// </summary>
+        public int SideMenuWidth { get; set; } = 175;
+
+        #endregion
+
         #region Commands
 
         /// <summary>

@@ -52,11 +52,6 @@ namespace BlackSpiritHelper
         /// </summary>
         private int mWindowRadius = 0;
 
-        /// <summary>
-        /// Side menu width.
-        /// </summary>
-        private int mSideMenuWidth = 175;
-
         #endregion
 
         #region Public Properties
@@ -154,22 +149,6 @@ namespace BlackSpiritHelper
         /// Overlay to ignore Caption Height.
         /// </summary>
         public int CaptionOverlayHeight { get { return CaptionHeight + 1; } }
-
-        /// <summary>
-        /// Side menu width.
-        /// </summary>
-        public int SideMenuWidth
-        {
-            get
-            {
-                return mSideMenuWidth;
-            }
-            set
-            {
-                mSideMenuWidth = value;
-                OnPropertyChanged(nameof(SideMenuWidth));
-            }
-        }
 
         #endregion
 
