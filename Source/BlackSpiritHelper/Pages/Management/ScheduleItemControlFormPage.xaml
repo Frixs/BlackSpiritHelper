@@ -121,7 +121,7 @@
                                                           UsingAlphaChannel="False"
                                                           ShowAvailableColors="False"
                                                           ShowStandardColors="False"
-                                                          StandardButtonHeader=""
+                                                          ShowTabHeaders="False"
                                                           Width="70">
                                         </xctk:ColorPicker>
                                     </StackPanel>

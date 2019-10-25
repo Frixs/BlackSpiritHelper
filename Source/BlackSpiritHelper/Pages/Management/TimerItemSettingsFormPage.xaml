@@ -88,8 +88,7 @@
                                           UsingAlphaChannel="False"
                                           ShowAvailableColors="False"
                                           ShowStandardColors="False"
-                                          StandardButtonHeader=""
-                                          >
+                                          ShowTabHeaders="False">
                         </xctk:ColorPicker>
                     </Grid>
 
