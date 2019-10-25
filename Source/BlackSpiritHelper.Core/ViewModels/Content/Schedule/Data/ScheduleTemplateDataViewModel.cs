@@ -89,8 +89,7 @@ namespace BlackSpiritHelper.Core
             get => mTimeZoneRegion;
             set
             {
-                mTimeZoneRegion = value;
-                TimeZone = TimeZoneInfo.FindSystemTimeZoneById(value.GetDescription());
+                mTimeZoneRegion = SetTimeZoneByString(value.GetDescription()) ? value : TimeZoneRegion.UTC;
             }
         }
 
@@ -98,7 +97,7 @@ namespace BlackSpiritHelper.Core
         /// Default time zone.
         /// </summary>
         [XmlIgnore]
-        public TimeZoneInfo TimeZone { get; private set; }
+        public TimeZoneInfo TimeZone { get; private set; } = TimeZoneInfo.Utc;
 
         /// <summary>
         /// Get string representation of the currently applied time zone.
@@ -607,6 +606,27 @@ namespace BlackSpiritHelper.Core
 
             // Return.
             return schedule;
+        }
+
+        /// <summary>
+        /// Set time zone by string ID.
+        /// </summary>
+        /// <param name="id">String id representing time zone.</param>
+        /// <returns></returns>
+        private bool SetTimeZoneByString(string id)
+        {
+            try
+            {
+                TimeZone = TimeZoneInfo.FindSystemTimeZoneById(id);
+            } 
+            catch (Exception)
+            {
+                mTimeZoneRegion = TimeZoneRegion.UTC;
+                TimeZone = TimeZoneInfo.Utc;
+                return false;
+            }
+
+            return true;
         }
 
         #endregion
