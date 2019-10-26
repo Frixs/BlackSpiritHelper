@@ -98,11 +98,11 @@ namespace BlackSpiritHelper.Core.Properties {
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsProviderAttribute(typeof(BlackSpiritHelper.Core.CustomSettingsProvider))]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0,0")]
-        public global::System.Windows.Vector MainWindowSize {
+        public global::BlackSpiritHelper.Core.Vector2Double MainWindowSize {
             get {
-                return ((global::System.Windows.Vector)(this["MainWindowSize"]));
+                return ((global::BlackSpiritHelper.Core.Vector2Double)(this["MainWindowSize"]));
             }
             set {
                 this["MainWindowSize"] = value;

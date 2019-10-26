@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace BlackSpiritHelper.Core
 {
@@ -61,13 +60,13 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Get Application's MainWindow size.
         /// </summary>
-        Vector GetMainWindowSize();
+        Vector2Double GetMainWindowSize();
 
         /// <summary>
         /// Set Application's MainWindow size.
         /// </summary>
         /// <param name="size"></param>
-        void SetMainWindowSize(Vector size);
+        void SetMainWindowSize(Vector2Double size);
 
         /// <summary>
         /// Show MainWindow.

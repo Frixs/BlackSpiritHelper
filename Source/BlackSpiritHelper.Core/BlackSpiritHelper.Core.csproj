@@ -68,9 +68,11 @@
     <Compile Include="Audio\Core\AudioType.cs" />
     <Compile Include="Audio\Core\AudioAlertLevel.cs" />
     <Compile Include="DataTypes\TimerState.cs" />
+    <Compile Include="DataTypes\Vector2Double.cs" />
     <Compile Include="DateTimeZone\DateTimeZoneManager.cs" />
     <Compile Include="Dispatcher\Implementation\DispatcherManager.cs" />
     <Compile Include="Dispatcher\Implementation\DisprUiThread.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Settings\DataProvider.cs" />
     <Compile Include="Settings\SettingsConfiguration.cs" />
     <Compile Include="Utilities\ExpressionHelpers.cs" />

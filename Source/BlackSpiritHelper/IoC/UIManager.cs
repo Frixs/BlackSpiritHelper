@@ -151,16 +151,16 @@ namespace BlackSpiritHelper
         /// <summary>
         /// Get Application's MainWindow size.
         /// </summary>
-        public Vector GetMainWindowSize()
+        public Vector2Double GetMainWindowSize()
         {
-            return new Vector(Application.Current.MainWindow.Width, Application.Current.MainWindow.Height);
+            return new Vector2Double(Application.Current.MainWindow.Width, Application.Current.MainWindow.Height);
         }
 
         /// <summary>
         /// Set Application's MainWindow size.
         /// </summary>
         /// <param name="size"></param>
-        public void SetMainWindowSize(Vector size)
+        public void SetMainWindowSize(Vector2Double size)
         {
             Application.Current.MainWindow.Width = size.X;
             Application.Current.MainWindow.Height = size.Y;

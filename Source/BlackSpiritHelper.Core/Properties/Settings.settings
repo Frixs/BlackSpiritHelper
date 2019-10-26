@@ -20,8 +20,8 @@
     <Setting Name="ForceToRunAsAdministrator" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="MainWindowSize" Type="System.Windows.Vector" Scope="User">
-      <Value Profile="(Default)">0,0</Value>
+    <Setting Name="MainWindowSize" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.Vector2Double" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

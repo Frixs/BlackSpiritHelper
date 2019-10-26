@@ -101,7 +101,8 @@ namespace BlackSpiritHelper
             Current.MainWindow = new MainWindow();
 
             // Set MainWindow size to the size of last opening.
-            IoC.UI.SetMainWindowSize(IoC.SettingsStorage.MainWindowSize);
+            if (IoC.SettingsStorage.MainWindowSize != null) 
+                IoC.UI.SetMainWindowSize(IoC.SettingsStorage.MainWindowSize);
 
             // Run application with pre-start process.
             IoC.Task.Run(async () =>
