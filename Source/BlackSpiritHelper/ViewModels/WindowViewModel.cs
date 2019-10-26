@@ -16,7 +16,7 @@ namespace BlackSpiritHelper
         /// ---
         /// TODO:LATER: Tray icon - not important - We need to access it from IoC to be able to update it from other parts of the code.
         /// </summary>
-        private static System.Windows.Forms.NotifyIcon mTrayIcon = null;
+        public static System.Windows.Forms.NotifyIcon TrayIcon = null;
 
         #endregion
 
@@ -31,11 +31,6 @@ namespace BlackSpiritHelper
         /// The height of the space bar of the window.
         /// </summary>
         private int mSpaceBarHeight = 8;
-
-        /// <summary>
-        /// The height of the title bar.
-        /// </summary>
-        private int mTitleBarHeight = 48;
 
         /// <summary>
         /// The size of the resize border around the window.
@@ -59,12 +54,22 @@ namespace BlackSpiritHelper
         /// <summary>
         /// The size of the resize border around the window.
         /// </summary>
-        public int ResizeBorderSize { get { return mWindow.WindowState == WindowState.Maximized ? 0 : mResizeBorderSize; } set { mResizeBorderSize = value; } }
+        public int ResizeBorderSize 
+        { 
+            get 
+            { 
+                return mWindow.WindowState == WindowState.Maximized ? 0 : mResizeBorderSize; 
+            } 
+            set 
+            { 
+                mResizeBorderSize = value; 
+            } 
+        }
 
         /// <summary>
         /// The thickness of the resize border around the window, taking into account the outer margin.
         /// </summary>
-        public Thickness ResizeBorderThickness { get { return new Thickness(ResizeBorderSize + OuterMarginSize); } }
+        public Thickness ResizeBorderThickness => new Thickness(ResizeBorderSize + OuterMarginSize);
 
         /// <summary>
         /// The margin around the window to allow for a drop shadow.
@@ -84,7 +89,7 @@ namespace BlackSpiritHelper
         /// <summary>
         /// The margin thickness around the window to allow for a drop shadow.
         /// </summary>
-        public Thickness OuterMarginThickness { get { return new Thickness(OuterMarginSize); } }
+        public Thickness OuterMarginThickness => new Thickness(OuterMarginSize);
 
         /// <summary>
         /// The radius of the edges of the window.
@@ -104,17 +109,17 @@ namespace BlackSpiritHelper
         /// <summary>
         /// The radius of the edges of the window.
         /// </summary>
-        public CornerRadius WindowCornerRadius { get { return new CornerRadius(WindowRadius); } }
+        public CornerRadius WindowCornerRadius => new CornerRadius(WindowRadius);
 
         /// <summary>
         /// The height of the title bar.
         /// </summary>
-        public int TitleBarHeight { get { return mTitleBarHeight; } set { mTitleBarHeight = value; } }
+        public int TitleBarHeight { get; set; } = 40;
 
         /// <summary>
         /// The height of the title bar.
         /// </summary>
-        public GridLength TitleBarHeightGridLength { get { return new GridLength(TitleBarHeight); } }
+        public GridLength TitleBarHeightGridLength => new GridLength(TitleBarHeight);
 
         /// <summary>
         /// The height of the space bar of the window.
@@ -128,7 +133,6 @@ namespace BlackSpiritHelper
             set
             {
                 mSpaceBarHeight = value;
-                OnPropertyChanged(nameof(SpaceBarHeight));
                 OnPropertyChanged(nameof(SpaceBarHeightGridLength));
                 OnPropertyChanged(nameof(CaptionHeight));
                 OnPropertyChanged(nameof(CaptionOverlayHeight));
@@ -138,17 +142,17 @@ namespace BlackSpiritHelper
         /// <summary>
         /// The height of the space bar of the window.
         /// </summary>
-        public GridLength SpaceBarHeightGridLength { get { return new GridLength(SpaceBarHeight); } }
+        public GridLength SpaceBarHeightGridLength => new GridLength(SpaceBarHeight);
 
         /// <summary>
         /// The height of the caption of the window - draggable part of the window.
         /// </summary>
-        public int CaptionHeight { get { return mTitleBarHeight + mSpaceBarHeight - ResizeBorderSize; } }
+        public int CaptionHeight => TitleBarHeight + mSpaceBarHeight - ResizeBorderSize;
 
         /// <summary>
         /// Overlay to ignore Caption Height.
         /// </summary>
-        public int CaptionOverlayHeight { get { return CaptionHeight + 1; } }
+        public int CaptionOverlayHeight => CaptionHeight + 1;
 
         #endregion
 
@@ -224,13 +228,13 @@ namespace BlackSpiritHelper
             MaximizeCommand = new RelayCommand(() => mWindow.WindowState ^= WindowState.Maximized);
 
             // Close.
-            ExitCommand = new RelayCommand(() => ExitApplication());
+            ExitCommand = new RelayCommand(() => IoC.Application.Exit());
 
             // Menu.
             MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()));
 
             // Application MainWindow close to Tray.
-            CloseTrayCommand = new RelayCommand(() => CloseMainWindowToTray());
+            CloseTrayCommand = new RelayCommand(() => IoC.UI.CloseMainWindowToTray());
         }
 
         #endregion
@@ -238,82 +242,15 @@ namespace BlackSpiritHelper
         #region Public Static Methods
 
         /// <summary>
-        /// Show MainWindow.
+        /// Dispose <see cref="TrayIcon"/>.
         /// </summary>
-        public static void ShowMainWindow()
+        public static void DisposeTrayIcon()
         {
-            // Activate window if it is visible in background.
-            if (Application.Current.MainWindow.IsVisible)
-            {
-                if (Application.Current.MainWindow.WindowState == WindowState.Minimized)
-                    Application.Current.MainWindow.WindowState = WindowState.Normal;
-
-                Application.Current.MainWindow.Activate();
-            }
-            // Open window if it is closed in tray.
-            else
-            {
-                Application.Current.MainWindow.Show();
-                DisposeTrayIcon();
-            }
-        }
-
-        /// <summary>
-        /// Close MainWindow to Windows tray.
-        /// </summary>
-        public static void CloseMainWindowToTray()
-        {
-            // Create notification tray icon.
-            System.Windows.Forms.NotifyIcon trayIcon = new System.Windows.Forms.NotifyIcon();
-            trayIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon("Resources/Images/Logo/icon_white.ico");
-            trayIcon.DoubleClick += (s, args) => ShowMainWindow();
-            trayIcon.Visible = true;
-            // Create context menu for the notification icon.
-            trayIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
-            trayIcon.ContextMenuStrip.Items.Add("Open Application").Click += (s, e) => ShowMainWindow();
-            trayIcon.ContextMenuStrip.Items.Add("Donate").Click += (s, e) => System.Diagnostics.Process.Start(IoC.Application.DonationURL);
-            trayIcon.ContextMenuStrip.Items.Add("-");
-            trayIcon.ContextMenuStrip.Items.Add("Quit").Click += (s, e) => ExitApplication();
-
-            // Try to dispose previous ion if exists.
-            DisposeTrayIcon();
-            // Assign tray icon.
-            mTrayIcon = trayIcon;
-
-            // Hide MainWindow.
-            Application.Current.MainWindow.Hide(); // A hidden window can be shown again, a closed one not.
-
-            // Save user data on closing appliation to tray.
-            IoC.DataContent.SaveUserData();
-        }
-
-        #endregion
-
-        #region Private Static Methods
-
-        /// <summary>
-        /// Exit application. Close all windows. Dispose.
-        /// </summary>
-        private static void ExitApplication()
-        {
-            // Dispose tray icon.
-            DisposeTrayIcon();
-
-            // Close all windows.
-            for (int intCounter = Application.Current.Windows.Count - 1; intCounter >= 0; intCounter--)
-                Application.Current.Windows[intCounter].Close();
-        }
-
-        /// <summary>
-        /// Dispose <see cref="mTrayIcon"/>.
-        /// </summary>
-        private static void DisposeTrayIcon()
-        {
-            if (mTrayIcon == null)
+            if (TrayIcon == null)
                 return;
 
-            mTrayIcon.Dispose();
-            mTrayIcon = null;
+            TrayIcon.Dispose();
+            TrayIcon = null;
         }
 
         #endregion

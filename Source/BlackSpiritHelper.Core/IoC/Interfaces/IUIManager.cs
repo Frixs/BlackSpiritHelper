@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace BlackSpiritHelper.Core
 {
@@ -8,6 +9,8 @@ namespace BlackSpiritHelper.Core
     /// </summary>
     public interface IUIManager
     {
+        #region Dialog Windows
+
         /// <summary>
         /// DIsplays a single message box to the user.
         /// </summary>
@@ -22,6 +25,10 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         Task ShowFolderBrowserDialog(Action<string> action);
 
+        #endregion
+        
+        #region Overlay Window
+
         /// <summary>
         /// Open overlay window.
         /// </summary>
@@ -31,6 +38,10 @@ namespace BlackSpiritHelper.Core
         /// Close overlay window.
         /// </summary>
         void CloseOverlay();
+
+        #endregion
+        
+        #region Progress Window
 
         /// <summary>
         /// Open progress window.
@@ -42,5 +53,32 @@ namespace BlackSpiritHelper.Core
         /// Close progress window.
         /// </summary>
         void CloseProgressWindow();
+
+        #endregion
+
+        #region Application MainWindow
+
+        /// <summary>
+        /// Get Application's MainWindow size.
+        /// </summary>
+        Vector GetMainWindowSize();
+
+        /// <summary>
+        /// Set Application's MainWindow size.
+        /// </summary>
+        /// <param name="size"></param>
+        void SetMainWindowSize(Vector size);
+
+        /// <summary>
+        /// Show MainWindow.
+        /// </summary>
+        void ShowMainWindow();
+
+        /// <summary>
+        /// Close MainWindow to Windows tray.
+        /// </summary>
+        void CloseMainWindowToTray();
+
+        #endregion
     }
 }

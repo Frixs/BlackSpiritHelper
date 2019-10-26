@@ -100,6 +100,9 @@ namespace BlackSpiritHelper
             // Set application main window.
             Current.MainWindow = new MainWindow();
 
+            // Set MainWindow size to the size of last opening.
+            IoC.UI.SetMainWindowSize(IoC.SettingsStorage.MainWindowSize);
+
             // Run application with pre-start process.
             IoC.Task.Run(async () =>
             {
@@ -113,12 +116,12 @@ namespace BlackSpiritHelper
                 await IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
                 {
                     // Open MainWindow.
-                    WindowViewModel.ShowMainWindow();
+                    IoC.UI.ShowMainWindow();
 
                     // Start in tray?
                     if (IoC.DataContent.PreferencesData.StartInTray)
                     {
-                        WindowViewModel.CloseMainWindowToTray();
+                        IoC.UI.CloseMainWindowToTray();
                     }
 
                     // Start overlay?
@@ -137,21 +140,18 @@ namespace BlackSpiritHelper
         /// <param name="e"></param>
         private void Application_Exit(object sender, ExitEventArgs e)
         {
-            if (!mIsRestartingProcessFlag)
-            {
-                #region Dispose section (on application exit)
+            // Do nothing if the application is going to restart immediately after start.
+            if (mIsRestartingProcessFlag)
+                return;
 
-                // Dispose.
-                IoC.Get<IMouseKeyHook>().Dispose();
+            #region Dispose
 
-                // "Prepare data to die."
-                IoC.DataContent.Unset();
+            WindowViewModel.DisposeTrayIcon();
+            IoC.Get<IMouseKeyHook>().Dispose();
+            // "Prepare data to die."
+            IoC.DataContent.Unset();
 
-                #endregion
-
-                // Save user data before exiting application.
-                IoC.DataContent.SaveUserData();
-            }
+            #endregion
         }
 
         #endregion

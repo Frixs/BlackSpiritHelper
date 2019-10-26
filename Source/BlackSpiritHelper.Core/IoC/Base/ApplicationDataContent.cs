@@ -73,7 +73,6 @@
         /// </summary>
         public void Unset()
         {
-
         }
 
         #endregion
@@ -117,7 +116,9 @@
 
         #endregion
 
-        #region Private Methods
+        #region Private Methods - Save
+
+        #region Application Data
 
         /// <summary>
         /// Save application data.
@@ -129,7 +130,14 @@
 
             // Save if user wants to run application As Administrator at startup.
             IoC.SettingsStorage.ForceToRunAsAdministrator = IoC.DataContent.PreferencesData.ForceToRunAsAdministrator;
+
+            // Save size of the MainWindow.
+            IoC.SettingsStorage.MainWindowSize = IoC.UI.GetMainWindowSize();
         }
+
+        #endregion
+        
+        #region Timer
 
         /// <summary>
         /// Save new Timer Page data.
@@ -155,6 +163,10 @@
             IoC.SettingsStorage.TimerData = null;
         }
 
+        #endregion
+        
+        #region Preferences
+
         /// <summary>
         /// Save new user preferences.
         /// </summary>
@@ -172,6 +184,10 @@
             // Clear previous save.
             IoC.SettingsStorage.PreferencesData = null;
         }
+
+        #endregion
+
+        #region Overlay
 
         /// <summary>
         /// Save new overlay settings.
@@ -191,6 +207,10 @@
             IoC.SettingsStorage.OverlayData = null;
         }
 
+        #endregion
+
+        #region Schedule
+
         /// <summary>
         /// Save new overlay settings.
         /// </summary>
@@ -208,6 +228,8 @@
             // Clear previous save.
             IoC.SettingsStorage.ScheduleData = null;
         }
+
+        #endregion
 
         #endregion
     }

@@ -1,5 +1,5 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
+using System.Windows;
 
 namespace BlackSpiritHelper.Core
 {
@@ -70,7 +70,6 @@ namespace BlackSpiritHelper.Core
         {
             set
             {
-
                 WindowTitle = value.Length > 0 ? WindowTitleDefault + " : " + value : WindowTitleDefault;
             }
         }
@@ -109,12 +108,15 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public ApplicationViewModel()
         {
+            // Set window title.
             WindowTitleDefault = ApplicationName;
 
+            // Set opened page on load.
             CurrentPage = IoC.SettingsStorage.LastOpenedPage > 0 && IoC.SettingsStorage.LastOpenedPage < 100 
                 ? (ApplicationPage)IoC.SettingsStorage.LastOpenedPage 
                 : ApplicationPage.Home;
 
+            // Set Window page postfix.
             SetWindowTitlePostfixOnly = CurrentPage > 0 ? CurrentPage.GetDescription() : "";
         }
 
@@ -141,6 +143,23 @@ namespace BlackSpiritHelper.Core
             // Set window title page name.
             if ((int)page < LoadBackPageValueLimit)
                 SetWindowTitlePostfixOnly = (int)page > 0 ? page.GetDescription() : "";
+        }
+
+        /// <summary>
+        /// Exit application command to close application.
+        /// Use <see cref="App.Application_Exit(object, ExitEventArgs)"/> for procedures on application exit.
+        /// </summary>
+        public void Exit()
+        {
+            // Save user data before exiting application.
+            IoC.DataContent.SaveUserData();
+
+            // Shutdown.
+            Application.Current.Shutdown();
+
+            // Close all windows.
+            //for (int intCounter = Application.Current.Windows.Count - 1; intCounter >= 0; intCounter--)
+            //    Application.Current.Windows[intCounter].Close();
         }
 
         #endregion
