@@ -26,7 +26,7 @@
         
         <!-- Canvas -->
         <Canvas Grid.Row="0" Grid.Column="0" SnapsToDevicePixels="True" UseLayoutRounding="True"
-                DataContext="{Binding ApplicationDataContent.OverlayDesignModel,
+                DataContext="{Binding ApplicationDataContent.OverlayData,
                               Source={x:Static local:ViewModelLocator.Instance}}"
                 >
             

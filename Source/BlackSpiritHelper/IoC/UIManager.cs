@@ -22,6 +22,8 @@ namespace BlackSpiritHelper
 
         #endregion
 
+        #region Dialog Windows
+
         /// <summary>
         /// DIsplays a single message box to the user.
         /// </summary>
@@ -64,10 +66,14 @@ namespace BlackSpiritHelper
                             action(fbd.SelectedPath);
                         }
                     }));
-                    
+
                 }
             });
         }
+
+        #endregion
+
+        #region Overlay Window
 
         /// <summary>
         /// Open overlay window.
@@ -77,7 +83,7 @@ namespace BlackSpiritHelper
             if (OverlayWindow.Window != null)
                 return;
 
-            IoC.DataContent.OverlayDesignModel.IsOpened = true;
+            IoC.DataContent.OverlayData.IsOpened = true;
 
             OverlayWindow.Window = new OverlayWindow(new WindowInteropHelper(Application.Current.MainWindow).Handle);
             OverlayWindow.Window.Show();
@@ -91,7 +97,7 @@ namespace BlackSpiritHelper
             if (OverlayWindow.Window == null)
                 return;
 
-            IoC.DataContent.OverlayDesignModel.IsOpened = false;
+            IoC.DataContent.OverlayData.IsOpened = false;
 
             OverlayWindow.Window.Close();
             OverlayWindow.Window = null;
@@ -100,6 +106,10 @@ namespace BlackSpiritHelper
             GC.WaitForPendingFinalizers();
             GC.Collect();
         }
+
+        #endregion
+
+        #region Progress Window
 
         /// <summary>
         /// Open progress window.
@@ -133,5 +143,79 @@ namespace BlackSpiritHelper
             GC.WaitForPendingFinalizers();
             GC.Collect();
         }
+
+        #endregion
+
+        #region Application MainWindow
+
+        /// <summary>
+        /// Get Application's MainWindow size.
+        /// </summary>
+        public Vector2Double GetMainWindowSize()
+        {
+            return new Vector2Double(Application.Current.MainWindow.Width, Application.Current.MainWindow.Height);
+        }
+
+        /// <summary>
+        /// Set Application's MainWindow size.
+        /// </summary>
+        /// <param name="size"></param>
+        public void SetMainWindowSize(Vector2Double size)
+        {
+            Application.Current.MainWindow.Width = size.X;
+            Application.Current.MainWindow.Height = size.Y;
+        }
+
+        /// <summary>
+        /// Show MainWindow.
+        /// </summary>
+        public void ShowMainWindow()
+        {
+            // Activate window if it is visible in background.
+            if (Application.Current.MainWindow.IsVisible)
+            {
+                if (Application.Current.MainWindow.WindowState == WindowState.Minimized)
+                    Application.Current.MainWindow.WindowState = WindowState.Normal;
+
+                Application.Current.MainWindow.Activate();
+            }
+            // Open window if it is closed in tray.
+            else
+            {
+                Application.Current.MainWindow.Show();
+                WindowViewModel.DisposeTrayIcon();
+            }
+        }
+
+        /// <summary>
+        /// Close MainWindow to Windows tray.
+        /// </summary>
+        public void CloseMainWindowToTray()
+        {
+            // Create notification tray icon.
+            System.Windows.Forms.NotifyIcon trayIcon = new System.Windows.Forms.NotifyIcon();
+            trayIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon("Resources/Images/Logo/icon_white.ico");
+            trayIcon.DoubleClick += (s, args) => ShowMainWindow();
+            trayIcon.Visible = true;
+            // Create context menu for the notification icon.
+            trayIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
+            trayIcon.ContextMenuStrip.Items.Add("Open Application").Click += (s, e) => ShowMainWindow();
+            trayIcon.ContextMenuStrip.Items.Add("Donate").Click += (s, e) => System.Diagnostics.Process.Start(IoC.Application.DonationURL);
+            trayIcon.ContextMenuStrip.Items.Add("-");
+            trayIcon.ContextMenuStrip.Items.Add("Quit").Click += (s, e) => IoC.Application.Exit();
+
+            // Try to dispose previous ion if exists.
+            WindowViewModel.DisposeTrayIcon();
+            // Assign tray icon.
+            WindowViewModel.TrayIcon = trayIcon;
+
+            // Hide MainWindow.
+            Application.Current.MainWindow.Hide(); // A hidden window can be shown again, a closed one not.
+
+            // Save user data on closing appliation to tray.
+            IoC.DataContent.SaveUserData();
+        }
+
+        #endregion
     }
 }

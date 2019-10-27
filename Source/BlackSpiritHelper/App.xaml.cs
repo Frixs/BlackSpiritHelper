@@ -15,8 +15,14 @@ namespace BlackSpiritHelper
     /// <summary>
     /// Interaction logic for App.xaml
     /// ---
-    /// TODO:LATER: Application user option to download/check updates.
-    /// TODO:LATER: Auto manage length of log file. Cut the file if it is too large.
+    /// TODO:LATER:APP: more...
+    ///     - Application user option to download/check updates.
+    ///     - Auto manage length of log file. Cut the file if it is too large.
+    ///     - DataViewModel extends DataModel - Move business logic into Model with its fields.
+    ///       Separate ViewModel's command logic from Model's business logic.
+    ///     - IDisposable can be useful in some situation for destroying Timer instances in sections.
+    ///       External links: https://stackoverflow.com/questions/188688/what-does-the-tilde-before-a-function-name-mean-in-c
+    ///                       https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/partial-classes-and-methods
     /// </summary>
     public partial class App : Application
     {
@@ -76,7 +82,7 @@ namespace BlackSpiritHelper
             OnDeploymentSetup();
 
             // Check for administrator privileges.
-            if (IoC.SettingsStorage.ForceToRunAsAdministrator
+            if (IoC.Application.Cookies.ForceToRunAsAdministrator
                 && !IsRunningAsAdministrator()
                 && !Debugger.IsAttached
                 )
@@ -94,6 +100,9 @@ namespace BlackSpiritHelper
             // Set application main window.
             Current.MainWindow = new MainWindow();
 
+            // Set MainWindow size to the size of last opening.
+            IoC.UI.SetMainWindowSize(IoC.Application.Cookies.MainWindowSize);
+
             // Run application with pre-start process.
             IoC.Task.Run(async () =>
             {
@@ -107,16 +116,16 @@ namespace BlackSpiritHelper
                 await IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
                 {
                     // Open MainWindow.
-                    WindowViewModel.ShowMainWindow();
+                    IoC.UI.ShowMainWindow();
 
                     // Start in tray?
-                    if (IoC.DataContent.PreferencesDesignModel.StartInTray)
+                    if (IoC.DataContent.PreferencesData.StartInTray)
                     {
-                        WindowViewModel.CloseMainWindowToTray();
+                        IoC.UI.CloseMainWindowToTray();
                     }
 
                     // Start overlay?
-                    if (IoC.DataContent.OverlayDesignModel.OpenOnStart)
+                    if (IoC.DataContent.OverlayData.OpenOnStart)
                     {
                         IoC.UI.OpenOverlay();
                     }
@@ -131,21 +140,18 @@ namespace BlackSpiritHelper
         /// <param name="e"></param>
         private void Application_Exit(object sender, ExitEventArgs e)
         {
-            if (!mIsRestartingProcessFlag)
-            {
-                #region Dispose section (on application exit)
+            // Do nothing if the application is going to restart immediately after start.
+            if (mIsRestartingProcessFlag)
+                return;
 
-                // Dispose.
-                IoC.Get<IMouseKeyHook>().Dispose();
+            #region Dispose
 
-                // "Prepare data to die."
-                IoC.DataContent.Unset();
+            WindowViewModel.DisposeTrayIcon();
+            IoC.Get<IMouseKeyHook>().Dispose();
+            // "Prepare data to die."
+            IoC.DataContent.Unset();
 
-                #endregion
-
-                // Save user data before exiting application.
-                IoC.DataContent.SaveUserData();
-            }
+            #endregion
         }
 
         #endregion

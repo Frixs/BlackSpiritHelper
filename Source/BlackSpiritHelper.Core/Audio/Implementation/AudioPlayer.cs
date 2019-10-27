@@ -6,7 +6,7 @@ namespace BlackSpiritHelper.Core
 {
     /// <summary>
     /// Wrapper for the <see cref="MediaPlayer"/>.
-    /// TODO:LATER: Rework Custom Audio Player.
+    /// TODO:LATER: Rework Custom Audio Player - not important atm.
     /// </summary>
     public class AudioPlayer
     {
@@ -127,7 +127,7 @@ namespace BlackSpiritHelper.Core
             mMediaPlayer.Stop();
 
             IsPlaying = true;
-            mMediaPlayer.Volume = IoC.DataContent.PreferencesDesignModel.Volume;
+            mMediaPlayer.Volume = IoC.DataContent.PreferencesData.Volume;
             mMediaPlayer.Play();
         }
 

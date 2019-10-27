@@ -12,7 +12,7 @@ namespace BlackSpiritHelper.Core.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.2.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.3.0.0")]
     public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -26,74 +26,60 @@ namespace BlackSpiritHelper.Core.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Configuration.SettingsProviderAttribute(typeof(BlackSpiritHelper.Core.CustomSettingsProvider))]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public byte LastOpenedPage {
+        public global::BlackSpiritHelper.Core.TimerDataViewModel TimerData {
             get {
-                return ((byte)(this["LastOpenedPage"]));
+                return ((global::BlackSpiritHelper.Core.TimerDataViewModel)(this["TimerData"]));
             }
             set {
-                this["LastOpenedPage"] = value;
+                this["TimerData"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Configuration.SettingsProviderAttribute(typeof(BlackSpiritHelper.Core.CustomSettingsProvider))]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::BlackSpiritHelper.Core.TimerDesignModel TimerDesignModel {
+        public global::BlackSpiritHelper.Core.PreferencesDataViewModel PreferencesData {
             get {
-                return ((global::BlackSpiritHelper.Core.TimerDesignModel)(this["TimerDesignModel"]));
+                return ((global::BlackSpiritHelper.Core.PreferencesDataViewModel)(this["PreferencesData"]));
             }
             set {
-                this["TimerDesignModel"] = value;
+                this["PreferencesData"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Configuration.SettingsProviderAttribute(typeof(BlackSpiritHelper.Core.CustomSettingsProvider))]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::BlackSpiritHelper.Core.PreferencesDesignModel PreferencesDesignModel {
+        public global::BlackSpiritHelper.Core.OverlayDataViewModel OverlayData {
             get {
-                return ((global::BlackSpiritHelper.Core.PreferencesDesignModel)(this["PreferencesDesignModel"]));
+                return ((global::BlackSpiritHelper.Core.OverlayDataViewModel)(this["OverlayData"]));
             }
             set {
-                this["PreferencesDesignModel"] = value;
+                this["OverlayData"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Configuration.SettingsProviderAttribute(typeof(BlackSpiritHelper.Core.CustomSettingsProvider))]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::BlackSpiritHelper.Core.OverlayDesignModel OverlayDesignModel {
+        public global::BlackSpiritHelper.Core.ScheduleDataViewModel ScheduleData {
             get {
-                return ((global::BlackSpiritHelper.Core.OverlayDesignModel)(this["OverlayDesignModel"]));
+                return ((global::BlackSpiritHelper.Core.ScheduleDataViewModel)(this["ScheduleData"]));
             }
             set {
-                this["OverlayDesignModel"] = value;
+                this["ScheduleData"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Configuration.SettingsProviderAttribute(typeof(BlackSpiritHelper.Core.CustomSettingsProvider))]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::BlackSpiritHelper.Core.ScheduleDesignModel ScheduleDesignModel {
+        public global::BlackSpiritHelper.Core.ApplicationCookies ApplicationCookies {
             get {
-                return ((global::BlackSpiritHelper.Core.ScheduleDesignModel)(this["ScheduleDesignModel"]));
+                return ((global::BlackSpiritHelper.Core.ApplicationCookies)(this["ApplicationCookies"]));
             }
             set {
-                this["ScheduleDesignModel"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsProviderAttribute(typeof(BlackSpiritHelper.Core.CustomSettingsProvider))]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ForceToRunAsAdministrator {
-            get {
-                return ((bool)(this["ForceToRunAsAdministrator"]));
-            }
-            set {
-                this["ForceToRunAsAdministrator"] = value;
+                this["ApplicationCookies"] = value;
             }
         }
     }

@@ -17,8 +17,8 @@ namespace BlackSpiritHelper.Core
                 return new ValidationResult(false, "Not a character sequence.");
 
             // Check conditions.
-            if (val.Length < ScheduleViewModel.AllowedItemMinLength || val.Length > ScheduleViewModel.AllowedItemMaxLength)
-                return new ValidationResult(false, $"Please enter a name in the length: {ScheduleViewModel.AllowedItemMinLength} - {ScheduleViewModel.AllowedItemMaxLength}.");
+            if (val.Length < ScheduleDataViewModel.AllowedItemMinLength || val.Length > ScheduleDataViewModel.AllowedItemMaxLength)
+                return new ValidationResult(false, $"Please enter a name in the length: {ScheduleDataViewModel.AllowedItemMinLength} - {ScheduleDataViewModel.AllowedItemMaxLength}.");
 
             // Check allowed characters.
             if (!StringUtils.CheckAlphanumeric(val, false, false, false))

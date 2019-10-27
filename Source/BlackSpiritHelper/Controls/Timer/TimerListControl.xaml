@@ -12,8 +12,8 @@
         Template for all groups with menu and all items
     -->
     
-    <Border DataContext="{x:Static core:TimerListControlDesignModel.Instance}">
-        <ItemsControl ItemsSource="{Binding ApplicationDataContent.TimerDesignModel.GroupList,
+    <Border>
+        <ItemsControl ItemsSource="{Binding ApplicationDataContent.TimerData.GroupList,
                                     Source={x:Static local:ViewModelLocator.Instance}}">
 
             <ItemsControl.ItemTemplate>
@@ -114,6 +114,7 @@
                             </ControlTemplate>
                         </ItemsControl.Template>
 
+                        <!-- Item -->
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
 

@@ -116,7 +116,7 @@ namespace BlackSpiritHelper
 
         private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (IoC.DataContent.OverlayDesignModel.IsDraggingLocked)
+            if (IoC.DataContent.OverlayData.IsDraggingLocked)
                 return;
 
             // Get clicked object.
@@ -127,7 +127,7 @@ namespace BlackSpiritHelper
 
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
-            if (IoC.DataContent.OverlayDesignModel.IsDraggingLocked)
+            if (IoC.DataContent.OverlayData.IsDraggingLocked)
                 return;
 
             if (e.LeftButton != MouseButtonState.Pressed)
@@ -147,7 +147,7 @@ namespace BlackSpiritHelper
 
         private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (IoC.DataContent.OverlayDesignModel.IsDraggingLocked)
+            if (IoC.DataContent.OverlayData.IsDraggingLocked)
                 return;
 
             // Reset clicked object.
@@ -206,7 +206,7 @@ namespace BlackSpiritHelper
             val.ToolTip = default;
 
             // Timer section check.
-            foreach (TimerGroupDataViewModel g in IoC.DataContent.TimerDesignModel.GroupList)
+            foreach (TimerGroupDataViewModel g in IoC.DataContent.TimerData.GroupList)
             {
                 foreach (TimerItemDataViewModel t in g.TimerList)
                 {
@@ -219,7 +219,7 @@ namespace BlackSpiritHelper
             }
 
             // Schedule section check.
-            if (IoC.DataContent.ScheduleDesignModel.ShowInOverlay && IoC.DataContent.ScheduleDesignModel.IsRunning)
+            if (IoC.DataContent.ScheduleData.ShowInOverlay && IoC.DataContent.ScheduleData.IsRunning)
             {
                 val.Background = mOverlayBackgroundBrush;
                 return;

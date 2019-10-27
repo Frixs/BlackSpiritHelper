@@ -11,7 +11,7 @@
       Title="SchedulePage">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" d:DesignStyle="{StaticResource WindowBackgroundControlStyle}"
-                  DataContext="{Binding ApplicationDataContent.ScheduleDesignModel,
+                  DataContext="{Binding ApplicationDataContent.ScheduleData,
                                 Source={x:Static local:ViewModelLocator.Instance}}">
 
         <Grid>
@@ -322,8 +322,11 @@
             </Border>
 
             <!-- Calendar/Schedule -->
-            <local:ScheduleCalendarControl DataContext="{Binding SelectedTemplate}" Grid.Row="1"
-                                            x:Name="Calendar" Visibility="Collapsed" />
+            <local:ScheduleCalendarControl 
+                DataContext="{Binding SelectedTemplate}" 
+                Grid.Row="1"
+                x:Name="Calendar" 
+                Visibility="Collapsed" />
             
             <!-- Schedule Settings -->
             <Border Grid.Row="2"
