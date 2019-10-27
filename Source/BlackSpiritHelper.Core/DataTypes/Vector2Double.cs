@@ -1,6 +1,4 @@
-﻿using System.Configuration;
-
-namespace BlackSpiritHelper.Core
+﻿namespace BlackSpiritHelper.Core
 {
     public class Vector2Double
     {

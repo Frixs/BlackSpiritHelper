@@ -123,6 +123,7 @@
     <Compile Include="ValidationRules\BaseRule.cs" />
     <Compile Include="ValidationRules\Schedule\ScheduleTitleRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerTitleRule.cs" />
+    <Compile Include="ViewModels\Structure\Application\ApplicationCookies.cs" />
     <Compile Include="ViewModels\Structure\Application\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\Structure\Dialogs\ProgressDialogViewModel.cs" />
     <Compile Include="ViewModels\Content\Schedule\Data\Design\ScheduleItemDataDesignModel.cs" />

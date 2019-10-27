@@ -82,7 +82,7 @@ namespace BlackSpiritHelper
             OnDeploymentSetup();
 
             // Check for administrator privileges.
-            if (IoC.SettingsStorage.ForceToRunAsAdministrator
+            if (IoC.Application.Cookies.ForceToRunAsAdministrator
                 && !IsRunningAsAdministrator()
                 && !Debugger.IsAttached
                 )
@@ -101,8 +101,7 @@ namespace BlackSpiritHelper
             Current.MainWindow = new MainWindow();
 
             // Set MainWindow size to the size of last opening.
-            if (IoC.SettingsStorage.MainWindowSize != null) 
-                IoC.UI.SetMainWindowSize(IoC.SettingsStorage.MainWindowSize);
+            IoC.UI.SetMainWindowSize(IoC.Application.Cookies.MainWindowSize);
 
             // Run application with pre-start process.
             IoC.Task.Run(async () =>

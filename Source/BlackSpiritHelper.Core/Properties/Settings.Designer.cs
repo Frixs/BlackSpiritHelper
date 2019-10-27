@@ -26,19 +26,6 @@ namespace BlackSpiritHelper.Core.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Configuration.SettingsProviderAttribute(typeof(BlackSpiritHelper.Core.CustomSettingsProvider))]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public byte LastOpenedPage {
-            get {
-                return ((byte)(this["LastOpenedPage"]));
-            }
-            set {
-                this["LastOpenedPage"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsProviderAttribute(typeof(BlackSpiritHelper.Core.CustomSettingsProvider))]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public global::BlackSpiritHelper.Core.TimerDataViewModel TimerData {
             get {
                 return ((global::BlackSpiritHelper.Core.TimerDataViewModel)(this["TimerData"]));
@@ -87,25 +74,12 @@ namespace BlackSpiritHelper.Core.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Configuration.SettingsProviderAttribute(typeof(BlackSpiritHelper.Core.CustomSettingsProvider))]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ForceToRunAsAdministrator {
+        public global::BlackSpiritHelper.Core.ApplicationCookies ApplicationCookies {
             get {
-                return ((bool)(this["ForceToRunAsAdministrator"]));
+                return ((global::BlackSpiritHelper.Core.ApplicationCookies)(this["ApplicationCookies"]));
             }
             set {
-                this["ForceToRunAsAdministrator"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsProviderAttribute(typeof(BlackSpiritHelper.Core.CustomSettingsProvider))]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::BlackSpiritHelper.Core.Vector2Double MainWindowSize {
-            get {
-                return ((global::BlackSpiritHelper.Core.Vector2Double)(this["MainWindowSize"]));
-            }
-            set {
-                this["MainWindowSize"] = value;
+                this["ApplicationCookies"] = value;
             }
         }
     }

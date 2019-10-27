@@ -106,7 +106,7 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         protected override void SetupMethod()
         {
-            ForceToRunAsAdministrator = IoC.SettingsStorage.ForceToRunAsAdministrator;
+            ForceToRunAsAdministrator = IoC.Application.Cookies.ForceToRunAsAdministrator;
         }
 
         /// <summary>

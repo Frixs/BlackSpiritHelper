@@ -85,7 +85,8 @@
         public void SaveUserData()
         {
             // Clear previously saved data, first.
-            ClearSavedPreferences();
+            ClearSavedAppData();
+            ClearSavedPreferencesData();
             ClearSavedTimerData();
             ClearSavedScheduleData();
             ClearSavedOverlayData();
@@ -94,8 +95,8 @@
             IoC.SettingsStorage.Save();
 
             // Save new data.
-            SaveApplicationData();
-            SaveNewPreferences();
+            SaveNewAppData();
+            SaveNewPreferencesData();
             SaveNewTimerData();
             SaveNewScheduleData();
             SaveNewOverlayData();
@@ -123,16 +124,19 @@
         /// <summary>
         /// Save application data.
         /// </summary>
-        private void SaveApplicationData()
+        private void SaveNewAppData()
         {
-            // Save last opened page.
-            IoC.SettingsStorage.LastOpenedPage = (byte)IoC.Application.CurrentPage;
+            IoC.Application.Cookies.Update();
+            IoC.SettingsStorage.ApplicationCookies = IoC.Application.Cookies;
+        }
 
-            // Save if user wants to run application As Administrator at startup.
-            IoC.SettingsStorage.ForceToRunAsAdministrator = IoC.DataContent.PreferencesData.ForceToRunAsAdministrator;
-
-            // Save size of the MainWindow.
-            IoC.SettingsStorage.MainWindowSize = IoC.UI.GetMainWindowSize();
+        /// <summary>
+        /// Clear saved user preferences.
+        /// </summary>
+        private void ClearSavedAppData()
+        {
+            // Clear previous save.
+            IoC.SettingsStorage.ApplicationCookies = null;
         }
 
         #endregion
@@ -170,7 +174,7 @@
         /// <summary>
         /// Save new user preferences.
         /// </summary>
-        private void SaveNewPreferences()
+        private void SaveNewPreferencesData()
         {
             // Save new data.
             IoC.SettingsStorage.PreferencesData = PreferencesData;
@@ -179,7 +183,7 @@
         /// <summary>
         /// Clear saved user preferences.
         /// </summary>
-        private void ClearSavedPreferences()
+        private void ClearSavedPreferencesData()
         {
             // Clear previous save.
             IoC.SettingsStorage.PreferencesData = null;

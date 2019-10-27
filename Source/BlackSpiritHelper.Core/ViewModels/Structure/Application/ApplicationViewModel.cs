@@ -34,17 +34,23 @@ namespace BlackSpiritHelper.Core
         public string ApplicationName { get; private set; } = "Black Spirit Helper (BETA)";
 
         /// <summary>
-        /// Assembly set of the application.
+        /// Executing assemby of the application.
+        /// ---
+        /// Assembly set.
         /// </summary>
         public Assembly ApplicationExecutingAssembly { get; set; }
 
         /// <summary>
-        /// Assembly application version.
+        /// Application version.
+        /// ---
+        /// Assembly set.
         /// </summary>
         public string ApplicationVersion { get; set; }
 
         /// <summary>
-        /// Assembly copyright.
+        /// Copyright.
+        /// ---
+        /// Assembly set.
         /// </summary>
         public string Copyright { get; set; }
 
@@ -55,11 +61,16 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// Window default title.
+        /// Default name which is set at application start.
+        /// ---
+        /// Constructor set.
         /// </summary>
         public string WindowTitleDefault { get; private set; }
 
         /// <summary>
-        /// Window title.
+        /// Window title - dynamic name - postfix is changing based on opened page.
+        /// ---
+        /// Set in <see cref="SetWindowTitlePostfixOnly"/>.
         /// </summary>
         public string WindowTitle { get; set; }
 
@@ -81,6 +92,12 @@ namespace BlackSpiritHelper.Core
         public int LoadBackPageValueLimit { get; private set; } = 100;
 
         /// <summary>
+        /// Maximal enum value of <see cref="ApplicationPage"/> for content pages.
+        /// The rest are pages that are not accessible as a content (forms etc.).
+        /// </summary>
+        public int ApplicationContentPageValueLimit { get; private set; } = 99;
+
+        /// <summary>
         /// The current page of the application.
         /// </summary>
         public ApplicationPage CurrentPage { get; private set; }
@@ -94,11 +111,11 @@ namespace BlackSpiritHelper.Core
         public BaseViewModel CurrentPageViewModel { get; set; }
 
         /// <summary>
-        /// Maximal enum value of <see cref="ApplicationPage"/> for content pages.
-        /// The rest are pages that are not accessible as a content (forms etc.).
+        /// Data you need immediately after application start and can be loaded without any other needs/references.
+        /// ---
+        /// Constructor set.
         /// </summary>
-        public int ApplicationContentPageValueLimit { get; private set; } = 99;
-
+        public ApplicationCookies Cookies { get; private set; }
         #endregion
 
         #region Constructor
@@ -108,12 +125,15 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public ApplicationViewModel()
         {
-            // Set window title.
+            // Load init setup application data.
+            Cookies = IoC.SettingsStorage.ApplicationCookies ?? new ApplicationCookies();
+
+            // Set default window title by application name.
             WindowTitleDefault = ApplicationName;
 
             // Set opened page on load.
-            CurrentPage = IoC.SettingsStorage.LastOpenedPage > 0 && IoC.SettingsStorage.LastOpenedPage < 100 
-                ? (ApplicationPage)IoC.SettingsStorage.LastOpenedPage 
+            CurrentPage = Cookies.LastOpenedPage > 0 && Cookies.LastOpenedPage < 100 
+                ? (ApplicationPage)Cookies.LastOpenedPage 
                 : ApplicationPage.Home;
 
             // Set Window page postfix.

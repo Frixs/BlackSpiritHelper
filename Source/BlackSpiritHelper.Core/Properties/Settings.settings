@@ -2,9 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="BlackSpiritHelper.Core.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="LastOpenedPage" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="System.Byte" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
     <Setting Name="TimerData" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.TimerDataViewModel" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
@@ -17,10 +14,7 @@
     <Setting Name="ScheduleData" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.ScheduleDataViewModel" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="ForceToRunAsAdministrator" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="MainWindowSize" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.Vector2Double" Scope="User">
+    <Setting Name="ApplicationCookies" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.ApplicationCookies" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>
