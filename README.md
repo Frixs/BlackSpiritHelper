@@ -11,7 +11,7 @@ Black Spirit Helper can **solve your problem!** You can also set the application
 **Black Spirit Helper offers** several features that can manage these things with multiple types of adjustable timers.  
 Oh... I almost forgot to tell you, the application has **own overlay!** So, you can easily track your timers in-game without needs to switch to your desktop.
 ### Is it legal to use?
-Well, Black Spirit Helper does **not** affect any game files. It does **not** track any screen events. It is just an advanced timer. I ask you... is Windows OS build-in timer illegal? It is in the same category as other software like [Discord](https://discordapp.com/), [TeamSpeak](https://www.teamspeak.com), etc.
+Of course! Black Spirit Helper does **not** affect any game files. It does **not** track any screen events. It is just an advanced timer. I ask you... is Windows OS build-in timer illegal? It is in the same category as other software like [Discord](https://discordapp.com/), [TeamSpeak](https://www.teamspeak.com), etc.
 
 ## Table of Contents
 - **[Features](#features)**
@@ -24,14 +24,16 @@ Well, Black Spirit Helper does **not** affect any game files. It does **not** tr
 ## Features
 ### Schedule Section
 This feature allows you to build your own schedule. It can be very useful in any kind of game where you need to track down special events at particular time. The application can start with your operating system, so you will never miss any event again. This section has already some predefined templates, so you do not need to create your own from scratch. For example, there are already predefined templates for [Black Desert Online](https://www.blackdesertonline.com) world boss spawns.  
-**Work in Progress**: The application allows to user to create his own templates with own items. This allows you to update your schedule according to your own needs.
+The application allows to user to create his own templates with own items. This allows you to update your schedule according to your own needs.
 ### Daily Check Section
 **Work in progress.** Set your custom message and Black Spirit Helper will nottify you each time period you set. You have only 2 options... say OK or notify me later. Elegant and simple. ...like a normal alarm clock.  
 In [Black Desert Online](https://www.blackdesertonline.com), you can find it useful for daily boss scrolls pickup or guild daily reward, for example.
 ### Timer Section
 It offers to you to create multiple groups with multiple timers in each. You can control each timer independently, but you can also control multiple timers thanks to group. You can find it useful in all kinds of games whre you need to track self-buffs/food-buffs/potion-buffs at proper time.
 ### Watchdog Section
-**Work in progress.** This feature controls your internet connection to avoid game disconnections over night. I did not think about the solution much yet. Also, the main goal is to make the application legal use. I will inform you about progress in this section in the future.
+**Work in progress.** This feature checks your internet connection, physical device input access and it also checks your game's process to determine, if you game is running or sitting in login screen (stuck in black/disconnection screen).  
+Everything just to avoid game disconnections over night!  
+Based on what happends you can set events like send a message to your favorite platform to inform you about the situation or just simply shutdown/restart your computer.
 
 ## Installation
 #### Requirements
