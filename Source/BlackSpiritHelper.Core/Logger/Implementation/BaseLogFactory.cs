@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Threading;
 
 namespace BlackSpiritHelper.Core
 {
@@ -150,8 +151,52 @@ namespace BlackSpiritHelper.Core
                     new FileInfo(((FileLogger)logger).FilePath)
                     );
             }
-            
+
             return ret;
+        }
+
+        /// <summary>
+        /// Clean all log files.
+        /// Clear very old log messages etc.
+        /// Be very careful with using this method. It can take some time to process it.
+        /// </summary>
+        public void CleanLogFiles()
+        {
+            int maxAllowedLineCount = 5000;
+            short timeout;
+
+            foreach (FileInfo fi in GetLogFiles())
+            {
+                timeout = 10; // tries.
+                while (IoC.File.IsInUse(fi))
+                {
+                    Thread.Sleep(1000); // Wait for some amount of time before another try.
+                    if (timeout > 0)
+                    {
+                        timeout -= 1;
+                    }
+                    else
+                    {
+                        IoC.Logger.Log($"Cannot access log file '{fi.Name}'!", LogLevel.Error);
+                        return;
+                    }
+                }
+
+                // Count lines in the log file.
+                var count = (int)IoC.File.LineCount(fi.FullName);
+
+                // CHeck if the file should be cleaned.
+                if (count > maxAllowedLineCount)
+                {
+                    var lines = IoC.File.ReadLines(fi.FullName);
+
+                    using (var writer = (TextWriter)new StreamWriter(File.Open(fi.FullName, FileMode.Create)))
+                    {
+                        for (int i = count / 2; i < lines.Count; i++)
+                            writer.WriteLine(lines[i]);
+                    }
+                }
+            }
         }
 
         #endregion

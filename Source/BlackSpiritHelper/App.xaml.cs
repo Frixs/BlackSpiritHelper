@@ -144,12 +144,13 @@ namespace BlackSpiritHelper
             if (mIsRestartingProcessFlag)
                 return;
 
+            // All application windows are already closed here.
             #region Dispose
 
+            IoC.Logger.CleanLogFiles(); // Clean log files.
             WindowViewModel.DisposeTrayIcon();
             IoC.Get<IMouseKeyHook>().Dispose();
-            // "Prepare data to die."
-            IoC.DataContent.Unset();
+            IoC.DataContent.Unset(); // "Prepare data to die."
 
             #endregion
         }
