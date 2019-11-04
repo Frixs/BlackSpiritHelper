@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
@@ -31,10 +32,98 @@ namespace BlackSpiritHelper.Core
                 await IoC.Task.Run(() =>
                 {
                     // Write the log message to file.
-                    using (var fileStream = (TextWriter)new StreamWriter(File.Open(path, append ? FileMode.Append : FileMode.Create)))
-                        fileStream.Write(text);
+                    using (var writer = (TextWriter)new StreamWriter(File.Open(path, append ? FileMode.Append : FileMode.Create)))
+                        writer.Write(text);
                 });
             });
+        }
+
+        /// <summary>
+        /// Count lines in the specified file.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public long LineCount(string path)
+        {
+            long lineCount = 0;
+
+            // Normalize path.
+            path = NormalizedPath(path);
+
+            // Resolve to absolute path.
+            path = ResolvePath(path);
+
+            // Count lines.
+            using (var reader = new StreamReader(path))
+            {
+                while (reader.ReadLine() != null)
+                    lineCount++;
+            }
+
+            return lineCount;
+        }
+
+        /// <summary>
+        /// Read all lines from specified file.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public List<string> ReadLines(string path)
+        {
+            var lines = new List<string>();
+
+            // Normalize path.
+            path = NormalizedPath(path);
+
+            // Resolve to absolute path.
+            path = ResolvePath(path);
+
+            // Get lines.
+            using (var reader = new StreamReader(path))
+            {
+                var line = reader.ReadLine();
+                var c = 0;
+                while (line != null)
+                {
+                    lines.Add(line);
+                    line = reader.ReadLine();
+                    c++;
+                }
+            }
+
+            return lines;
+        }
+
+        /// <summary>
+        /// Check if the file is in use or not.
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public bool IsInUse(FileInfo file)
+        {
+            FileStream stream = null;
+            bool isOpened = false;
+
+            try
+            {
+                stream = file.Open(FileMode.Open, FileAccess.Read, FileShare.None);
+            }
+            catch (IOException)
+            {
+                // The file is unavailable because it is:
+                //  - Still being written to.
+                //  - Or being processed by another thread.
+                //  - Or does not exist (has already been processed).
+                isOpened = true;
+            }
+            finally
+            {
+                if (stream != null)
+                    stream.Close();
+            }
+
+            // File is not in use.
+            return isOpened;
         }
 
         /// <summary>

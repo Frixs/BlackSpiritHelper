@@ -63,6 +63,12 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         List<FileInfo> GetLogFiles();
 
+        /// <summary>
+        /// Clean all log files.
+        /// Clear very old log messages etc.
+        /// </summary>
+        void CleanLogFiles();
+
         #endregion
     }
 }
