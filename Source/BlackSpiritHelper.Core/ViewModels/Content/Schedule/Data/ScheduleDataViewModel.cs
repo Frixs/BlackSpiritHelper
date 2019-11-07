@@ -441,7 +441,7 @@ namespace BlackSpiritHelper.Core
         protected override void SetupMethod()
         {
             // Set the timer.
-            SetTimer();
+            SetTimerControl();
 
             // Schedule predefined Item list.
             AddItem("Kzarka", "fc2121", true);
@@ -507,7 +507,7 @@ namespace BlackSpiritHelper.Core
 
         protected override void UnsetMethod()
         {
-            DisposeTimer();
+            DisposeTimerControl();
         }
 
         #endregion
@@ -661,9 +661,9 @@ namespace BlackSpiritHelper.Core
         #region Timer Methods
 
         /// <summary>
-        /// Set the timer.
+        /// Set the timer control.
         /// </summary>
-        private void SetTimer()
+        private void SetTimerControl()
         {
             // Normal timer.
             mTimer = new Timer(1000);
@@ -677,10 +677,10 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Dispose timer calculations.
+        /// Dispose timer control.
         /// Use this only while destroying the instance.
         /// </summary>
-        public void DisposeTimer()
+        public void DisposeTimerControl()
         {
             // Normal timer.
             mTimer.Stop();

@@ -205,7 +205,7 @@ namespace BlackSpiritHelper.Core
                 return false;
 
             // Dispose timer calculations.
-            vm.DisposeTimer();
+            vm.DisposeTimerControl();
 
             // Destroy reference to timer instance.
             vm = null;
