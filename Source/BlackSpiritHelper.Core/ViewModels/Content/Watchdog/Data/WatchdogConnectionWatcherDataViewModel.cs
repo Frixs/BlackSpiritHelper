@@ -1,5 +1,4 @@
 ﻿using BlackSpiritHelper.Core.Data.Interfaces;
-using System;
 using System.Collections.ObjectModel;
 using System.Timers;
 using System.Xml.Serialization;
@@ -7,10 +6,19 @@ using System.Xml.Serialization;
 namespace BlackSpiritHelper.Core
 {
     /// <summary>
-    /// TODO comment
+    /// Connection Watcher handles connection to the internet and connection of processes to TCP/UDP protocols.
     /// </summary>
-    public class WatchdogConnectionControlDataViewModel : AWatchdogConnectionControl
+    public class WatchdogConnectionWatcherDataViewModel : AWatchdogConnectionWatcherBase
     {
+        #region Static Limitation Properties
+
+        /// <summary>
+        /// Max number of process connections in a list that can be created.
+        /// </summary>
+        public static byte AllowedMaxNoOfProcessConnections { get; private set; } = 3;
+
+        #endregion
+
         #region Private Members
 
         /// <summary>
@@ -23,14 +31,16 @@ namespace BlackSpiritHelper.Core
         #region Public Properties
 
         /// <summary>
-        /// TODO comment
+        /// InternetConnection wrapper.
+        /// Handles internet connection.
         /// </summary>
-        public WatchdogInternetConnectionDataViewModel InternetConnection = new WatchdogInternetConnectionDataViewModel();
+        public WatchdogInternetConnectionDataViewModel InternetConnection { get; set; } = new WatchdogInternetConnectionDataViewModel();
 
         /// <summary>
-        /// TODO comment
+        /// Array of multiple Process Connections wrappers.
+        /// Each handle independent process connection to TPC/UDP.
         /// </summary>
-        public ObservableCollection<WatchdogProcessConnectionDataViewModel> ProcessConnections = new ObservableCollection<WatchdogProcessConnectionDataViewModel>();
+        public ObservableCollection<WatchdogProcessConnectionDataViewModel> ProcessConnections { get; set; } = new ObservableCollection<WatchdogProcessConnectionDataViewModel>();
 
         /// <summary>
         /// Tick time for timer loop method.
@@ -40,7 +50,7 @@ namespace BlackSpiritHelper.Core
         public int DelayTickTime { get; set; } = 30000;
 
         /// <summary>
-        /// TODO comment
+        /// Says if the watcher section is running or not.
         /// </summary>
         [XmlIgnore]
         public override bool IsRunning { get; protected set; } = false;
@@ -52,7 +62,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public WatchdogConnectionControlDataViewModel()
+        public WatchdogConnectionWatcherDataViewModel()
         {
         }
 

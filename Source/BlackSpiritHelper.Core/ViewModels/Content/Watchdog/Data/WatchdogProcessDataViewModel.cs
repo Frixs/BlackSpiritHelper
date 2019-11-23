@@ -3,7 +3,7 @@
 namespace BlackSpiritHelper.Core
 {
     /// <summary>
-    /// TODO comment
+    /// Windows process structure model.
     /// </summary>
     public class WatchdogProcessDataViewModel : BaseViewModel
     {

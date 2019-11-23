@@ -3,9 +3,10 @@
 namespace BlackSpiritHelper.Core
 {
     /// <summary>
-    /// TODO comment
+    /// Internet Connection wrapper.
+    /// Serves to <see cref="WatchdogConnectionWatcherDataViewModel"/>.
     /// </summary>
-    public class WatchdogInternetConnectionDataViewModel : AWatchdogConnection
+    public class WatchdogInternetConnectionDataViewModel : AWatchdogConnectionBase
     {
         #region Constructor
 

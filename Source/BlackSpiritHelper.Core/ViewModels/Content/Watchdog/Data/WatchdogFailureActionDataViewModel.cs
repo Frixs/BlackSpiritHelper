@@ -1,7 +1,7 @@
 ﻿namespace BlackSpiritHelper.Core
 {
     /// <summary>
-    /// TODO comment
+    /// Wrapper with action settings on failure.
     /// </summary>
     public class WatchdogFailureActionDataViewModel
     {

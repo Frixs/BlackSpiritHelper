@@ -192,6 +192,18 @@
     <Compile Include="Controls\Timer\TimerListItemControl.xaml.cs">
       <DependentUpon>TimerListItemControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Watchdog\WatchdogConnectionWatcherControl.xaml.cs">
+      <DependentUpon>WatchdogConnectionWatcherControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Watchdog\WatchdogFailureActionControl.xaml.cs">
+      <DependentUpon>WatchdogFailureActionControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Watchdog\WatchdogInternetConnectionControl.xaml.cs">
+      <DependentUpon>WatchdogInternetConnectionControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Watchdog\WatchdogProcessConnectionControl.xaml.cs">
+      <DependentUpon>WatchdogProcessConnectionControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="IoC\UIManager.cs" />
     <Compile Include="IoC\GlobalMouseKeyHookManager.cs" />
     <Compile Include="Pages\BasePage.cs" />
@@ -313,6 +325,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Timer\TimerListItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Watchdog\WatchdogConnectionWatcherControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Watchdog\WatchdogFailureActionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Watchdog\WatchdogInternetConnectionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Watchdog\WatchdogProcessConnectionControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
