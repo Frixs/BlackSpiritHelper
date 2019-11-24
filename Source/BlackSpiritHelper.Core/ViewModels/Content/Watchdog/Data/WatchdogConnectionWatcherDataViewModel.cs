@@ -1,7 +1,9 @@
 ﻿using BlackSpiritHelper.Core.Data.Interfaces;
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Timers;
+using System.Windows.Input;
 using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
@@ -42,7 +44,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Timer control for checks.
         /// </summary>
-        private Timer mCheckLoopTimer;
+        private Timer mCheckLoopTimer; //;
 
         #endregion
 
@@ -101,6 +103,28 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public override WatchdogFailureActionDataViewModel FailureAction { get; set; } = new WatchdogFailureActionDataViewModel();
 
+        /// <summary>
+        /// Progress note gives feedback what is happening during check.
+        /// </summary>
+        [XmlIgnore]
+        public override string ProgressNote { get; protected set; } = "";
+
+        #endregion
+
+        #region Commands
+
+        /// <summary>
+        /// Command to play the watcher.
+        /// </summary>
+        [XmlIgnore]
+        public ICommand PlayCommand { get; set; }
+
+        /// <summary>
+        /// Command to stop the watcher.
+        /// </summary>
+        [XmlIgnore]
+        public ICommand StopCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -110,6 +134,41 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public WatchdogConnectionWatcherDataViewModel()
         {
+            // Create commands.
+            CreateCommands();
+        }
+
+        #endregion
+
+        #region Command Methods
+
+        /// <summary>
+        /// Create commands.
+        /// </summary>
+        private void CreateCommands()
+        {
+            PlayCommand = new RelayCommand(async () => await PlayCommandMethodAsync());
+            StopCommand = new RelayCommand(async () => await StopCommandMethodAsync());
+        }
+
+        /// <summary>
+        /// TODO play method
+        /// </summary>
+        /// <returns></returns>
+        private async Task PlayCommandMethodAsync()
+        {
+            Console.WriteLine("Play");
+            await Task.Delay(1);
+        }
+
+        /// <summary>
+        /// TODO stop method
+        /// </summary>
+        /// <returns></returns>
+        private async Task StopCommandMethodAsync()
+        {
+            Console.WriteLine("Stop");
+            await Task.Delay(1);
         }
 
         #endregion

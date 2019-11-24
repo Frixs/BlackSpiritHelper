@@ -22,5 +22,11 @@ namespace BlackSpiritHelper.Core.Data.Interfaces
         /// Each watcher has own user settings for failure actions.
         /// </summary>
         public abstract WatchdogFailureActionDataViewModel FailureAction { get; set; }
+
+        /// <summary>
+        /// Progress note gives feedback what is happening during check.
+        /// </summary>
+        [XmlIgnore]
+        public abstract string ProgressNote { get; protected set; }
     }
 }

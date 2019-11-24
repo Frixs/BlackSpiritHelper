@@ -78,7 +78,7 @@
                             <ColumnDefinition Width="125" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <!--  Play/Pause BTN  -->
+                        <!--  Play/Stop BTN  -->
                         <Grid Grid.Column="0">
                             <Button
                                 Width="23"
@@ -96,7 +96,7 @@
                                 Height="23"
                                 Margin="0"
                                 VerticalAlignment="Bottom"
-                                Command="{Binding ConnectionWatcher.PauseCommand}"
+                                Command="{Binding ConnectionWatcher.StopCommand}"
                                 Content="{StaticResource FontAwesomePauseIcon}"
                                 FontFamily="{StaticResource FontAwesomeSolid}"
                                 FontSize="9"
@@ -118,7 +118,7 @@
                             FontFamily="{StaticResource LatoMediumItalic}"
                             FontSize="10"
                             Foreground="{StaticResource WatchdogSubForegroundBrushKey}"
-                            Text="(Running...)" />
+                            Text="{Binding ConnectionWatcher.ProgressNote}" />
                     </Grid>
                 </StackPanel>
 
