@@ -8,6 +8,11 @@ namespace BlackSpiritHelper.Core.Data.Interfaces
     public abstract class AWatchdogConnectionWatcherBase : BaseViewModel
     {
         /// <summary>
+        /// Run the watche when the application starts.
+        /// </summary>
+        public abstract bool RunOnApplicationStart { get; set; }
+
+        /// <summary>
         /// Says if the current watcher is running or not.
         /// </summary>
         [XmlIgnore]
@@ -16,6 +21,6 @@ namespace BlackSpiritHelper.Core.Data.Interfaces
         /// <summary>
         /// Each watcher has own user settings for failure actions.
         /// </summary>
-        public WatchdogFailureActionDataViewModel FailureAction { get; set; } = new WatchdogFailureActionDataViewModel();
+        public abstract WatchdogFailureActionDataViewModel FailureAction { get; set; }
     }
 }

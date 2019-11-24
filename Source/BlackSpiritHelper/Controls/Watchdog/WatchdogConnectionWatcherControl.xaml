@@ -14,6 +14,7 @@
     mc:Ignorable="d">
 
     <StackPanel Orientation="Vertical">
+        <!--  Title & Settins Wrapper  -->
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -36,6 +37,7 @@
                 Grid.Column="1"
                 Margin="10,0,0,0"
                 VerticalAlignment="Center"
+                IsChecked="{Binding RunOnApplicationStart}"
                 ToolTip="Run on application start" />
 
             <!--  Delay  -->
@@ -50,78 +52,45 @@
                 <xctk:TimeSpanUpDown
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
+                    IsEnabled="{Binding IsRunning, Converter={local:BooleanInvertConverter}}"
                     Maximum="23:59:59"
-                    Minimum="00:00:00"
-                    Value="0" />
+                    Minimum="00:00:01"
+                    Value="{Binding DelayTime}" />
             </StackPanel>
         </Grid>
 
-        <!--  Internet Check: Checkbox  -->
-        <StackPanel Orientation="Horizontal">
-            <CheckBox Style="{StaticResource CheckBoxLarge}" />
-            <TextBlock
-                Margin="5,0"
-                VerticalAlignment="Center"
-                FontFamily="{StaticResource LatoBold}"
-                FontSize="13"
-                Foreground="{StaticResource WatchdogForegroundBrushKey}"
-                Text="INTERNET CONNECTION" />
+        <StackPanel IsEnabled="{Binding IsRunning, Converter={local:BooleanInvertConverter}}" Orientation="Vertical">
+            <!--  Internet Check: Checkbox  -->
+            <StackPanel Orientation="Horizontal">
+                <CheckBox IsChecked="{Binding InternetConnection.IsSelected}" Style="{StaticResource CheckBoxLarge}" />
+                <TextBlock
+                    Margin="5,0"
+                    VerticalAlignment="Center"
+                    FontFamily="{StaticResource LatoBold}"
+                    FontSize="13"
+                    Foreground="{StaticResource WatchdogForegroundBrushKey}"
+                    Text="INTERNET CONNECTION" />
+            </StackPanel>
+            <!--  Internet Check: Control  -->
+            <local:WatchdogInternetConnectionControl Margin="32,0,0,0" DataContext="{Binding InternetConnection}" />
+
+            <!--  Process Check: Checkbox  -->
+            <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                <CheckBox IsChecked="{Binding ProcessConnection.IsSelected}" Style="{StaticResource CheckBoxLarge}" />
+                <TextBlock
+                    Margin="5,0"
+                    VerticalAlignment="Center"
+                    FontFamily="{StaticResource LatoBold}"
+                    FontSize="13"
+                    Foreground="{StaticResource WatchdogForegroundBrushKey}"
+                    Text="PROCESS CONNECTION" />
+            </StackPanel>
+            <!--  Process Check: Control  -->
+            <local:WatchdogProcessConnectionControl Margin="32,0,0,0" DataContext="{Binding ProcessConnection}" />
+
+            <!--  Failure Action Wrapper  -->
+            <local:WatchdogFailureActionControl Margin="0,10,0,0" DataContext="{Binding FailureAction}" />
         </StackPanel>
-        <!--  Internet Check: Control  -->
-        <local:WatchdogInternetConnectionControl Margin="32,0,0,0" DataContext="{Binding InternetConnection}" />
-
-        <!--  Process Check: Checkbox  -->
-        <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
-            <CheckBox Style="{StaticResource CheckBoxLarge}" />
-            <TextBlock
-                Margin="5,0"
-                VerticalAlignment="Center"
-                FontFamily="{StaticResource LatoBold}"
-                FontSize="13"
-                Foreground="{StaticResource WatchdogForegroundBrushKey}"
-                Text="PROCESS CONNECTION" />
-        </StackPanel>
-        <!--  Process Check: Control List  -->
-        <ItemsControl Focusable="False" ItemsSource="{Binding ProcessConnections}">
-            <ItemsControl.Template>
-                <ControlTemplate>
-
-                    <StackPanel Margin="32,0,0,0" Orientation="Vertical">
-                        <!--  Info Panel  -->
-                        <TextBlock
-                            FontFamily="{StaticResource LatoMediumItalic}"
-                            FontSize="12"
-                            Foreground="{StaticResource WatchdogSubForegroundBrushKey}"
-                            Text="Method checks TCP/UDP state of chosen processes. If there is no connection, it will evaluate your process as inaccessible to the internet. It means, your process does not communicate to the internet. In meaning of games it can mean, your game is running, but your account is probably disconnected and your game is sitting in loading screen."
-                            TextWrapping="Wrap" />
-                        <!--  List of Processes  -->
-                        <ItemsPresenter />
-                        <!--  Add Process Button  -->
-                        <Button
-                            Width="26"
-                            Height="26"
-                            Margin="0,5,0,0"
-                            HorizontalAlignment="Left"
-                            Content="{StaticResource FontAwesomePlusIcon}"
-                            FontFamily="{StaticResource FontAwesomeSolid}"
-                            Style="{StaticResource RegularButton}" />
-                    </StackPanel>
-
-                </ControlTemplate>
-            </ItemsControl.Template>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-
-                    <!--  Process Check: Control  -->
-                    <local:WatchdogProcessConnectionControl Margin="0,5,0,0" />
-
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-
-        <!--  Failure Action Wrapper  -->
-        <local:WatchdogFailureActionControl Margin="0,10,0,0" DataContext="{Binding FailureAction}" />
-
     </StackPanel>
 
 </UserControl>

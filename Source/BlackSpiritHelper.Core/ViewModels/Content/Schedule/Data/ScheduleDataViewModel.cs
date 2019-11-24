@@ -250,7 +250,7 @@ namespace BlackSpiritHelper.Core
         /// Offset modifier for the local time.
         /// </summary>
         [XmlIgnore]
-        public TimeSpan LocalTimeOffsetModifier { get; set; }
+        public TimeSpan LocalTimeOffsetModifier { get; set; } = TimeSpan.Zero;
 
         /// <summary>
         /// <see cref="LocalTimeOffsetModifier"/> Ticks.

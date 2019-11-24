@@ -7,7 +7,7 @@
     xmlns:local="clr-namespace:BlackSpiritHelper"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="WatchdogPage"
-    d:DesignHeight="450"
+    d:DesignHeight="800"
     d:DesignStyle="{StaticResource WindowBackgroundControlStyle}"
     d:DesignWidth="800"
     x:TypeArguments="core:WatchdogPageViewModel"
@@ -19,6 +19,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        <!--  Menu Wrapper  -->
         <Border
             Grid.Row="0"
             Padding="10"

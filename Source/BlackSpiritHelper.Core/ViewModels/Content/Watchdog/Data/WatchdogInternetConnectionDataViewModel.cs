@@ -23,6 +23,11 @@ namespace BlackSpiritHelper.Core
         [XmlIgnore]
         public string ClientCheckAddress { get; set; } = "http://google.com/generate_204";
 
+        /// <summary>
+        /// Says if the check is selected for checking loop.
+        /// </summary>
+        public override bool IsSelected { get; set; } = true;
+
         #endregion
 
         #region Constructor

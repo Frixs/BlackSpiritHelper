@@ -16,13 +16,66 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ContentControl}">
 
-                        <StackPanel Orientation="Horizontal">
-                            <!--  Process Name Input  -->
-                            <TextBox
-                                Width="275"
-                                Style="{StaticResource TextBoxSmall}"
-                                Tag="Enter process name (e.g. BlackDesert64.exe)"
-                                Text="{Binding Process.Name}" />
+                        <StackPanel Orientation="Vertical">
+                            <!--  Info Panel  -->
+                            <TextBlock
+                                FontFamily="{StaticResource LatoMediumItalic}"
+                                FontSize="12"
+                                Foreground="{StaticResource WatchdogSubForegroundBrushKey}"
+                                Text="Method checks TCP/UDP state of chosen processes. If there is no connection, it will evaluate your process as inaccessible to the internet. It means, your process does not communicate to the internet. In meaning of games it can mean, your game is running, but your account is probably disconnected and your game is sitting in loading screen."
+                                TextWrapping="Wrap" />
+
+                            <!--  Process List  -->
+                            <ItemsControl
+                                Focusable="False"
+                                ItemsSource="{Binding ProcessList}"
+                                Tag="{Binding}">
+                                <ItemsControl.Template>
+                                    <ControlTemplate>
+
+                                        <StackPanel Orientation="Vertical">
+                                            <!--  List of Processes  -->
+                                            <ItemsPresenter />
+                                            <!--  Add Process Button  -->
+                                            <Button
+                                                Width="26"
+                                                Height="26"
+                                                Margin="0,5,0,0"
+                                                HorizontalAlignment="Left"
+                                                Command="{Binding AddNewProcessCommand}"
+                                                Content="{StaticResource FontAwesomePlusIcon}"
+                                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                                Style="{StaticResource RegularButton}" />
+                                        </StackPanel>
+
+                                    </ControlTemplate>
+                                </ItemsControl.Template>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+
+                                        <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                                            <!--  Process Name Input  -->
+                                            <TextBox
+                                                Width="275"
+                                                Style="{StaticResource TextBoxSmall}"
+                                                Tag="Enter process name (e.g. BlackDesert64.exe)"
+                                                Text="{Binding Name}" />
+                                            <!--  Remove BTN  -->
+                                            <Button
+                                                Width="16"
+                                                Height="16"
+                                                Margin="5,0,0,0"
+                                                Command="{Binding Tag.RemoveProcessCommand, RelativeSource={RelativeSource AncestorType=ItemsControl, AncestorLevel=1, Mode=FindAncestor}}"
+                                                CommandParameter="{Binding}"
+                                                Content="{StaticResource FontAwesomeTimesIcon}"
+                                                FontFamily="{StaticResource FontAwesomeRegular}"
+                                                FontSize="16"
+                                                Style="{StaticResource RegularButtonNoColor}" />
+                                        </StackPanel>
+
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                         </StackPanel>
 
                     </ControlTemplate>
