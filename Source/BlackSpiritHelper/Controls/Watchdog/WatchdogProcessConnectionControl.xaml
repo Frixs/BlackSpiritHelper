@@ -7,6 +7,7 @@
     xmlns:local="clr-namespace:BlackSpiritHelper"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
+    d:DesignStyle="{StaticResource WindowBackgroundControlStyle}"
     d:DesignWidth="800"
     mc:Ignorable="d">
     <UserControl.Resources>
@@ -15,9 +16,13 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ContentControl}">
 
-                        <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
                             <!--  Process Name Input  -->
-                            <TextBox Text="Text" />
+                            <TextBox
+                                Width="275"
+                                Style="{StaticResource TextBoxSmall}"
+                                Tag="Enter process name (e.g. BlackDesert64.exe)"
+                                Text="{Binding Process.Name}" />
                         </StackPanel>
 
                     </ControlTemplate>
@@ -26,5 +31,8 @@
         </Style>
     </UserControl.Resources>
 
-    <ContentControl d:DataContext="{x:Static core:WatchdogProcessConnectionDataDesignModel.Instance}" Style="{StaticResource ContentStyle}" />
+    <ContentControl
+        d:DataContext="{x:Static core:WatchdogProcessConnectionDataDesignModel.Instance}"
+        Focusable="False"
+        Style="{StaticResource ContentStyle}" />
 </UserControl>

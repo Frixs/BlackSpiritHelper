@@ -25,6 +25,9 @@
     <Color x:Key="WarningForeground">#DFDFEC</Color>
     <SolidColorBrush x:Key="WarningForegroundBrushKey" Color="{StaticResource WarningForeground}" />
 
+    <Color x:Key="DisabledBackground">#88AFAFB8</Color>
+    <SolidColorBrush x:Key="DisabledBackgroundBrushKey" Color="{StaticResource DisabledBackground}" />
+
     <Color x:Key="Foreground">#494949</Color>
     <SolidColorBrush x:Key="ForegroundBrushKey" Color="{StaticResource Foreground}" />
 
@@ -273,6 +276,9 @@
     <!--#region Watchdog-->
     <Color x:Key="WatchdogForeground">#15151A</Color>
     <SolidColorBrush x:Key="WatchdogForegroundBrushKey" Color="{StaticResource WatchdogForeground}" />
+
+    <Color x:Key="WatchdogSubForeground">#888888</Color>
+    <SolidColorBrush x:Key="WatchdogSubForegroundBrushKey" Color="{StaticResource WatchdogSubForeground}" />
     <!--#endregion-->
 
     <!--#region Regular Text Button - Red-->

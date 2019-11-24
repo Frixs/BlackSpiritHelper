@@ -14,10 +14,12 @@
     mc:Ignorable="d">
 
     <!--  Watchdog sections  -->
-    <StackPanel DataContext="{Binding ApplicationDataContent.WatchdogData, Source={x:Static local:ViewModelLocator.Instance}}" Orientation="Vertical">
+    <ScrollViewer DataContext="{Binding ApplicationDataContent.WatchdogData, Source={x:Static local:ViewModelLocator.Instance}}" VerticalScrollBarVisibility="Auto">
 
-        <!--  Connection Watcher  -->
-        <local:WatchdogConnectionWatcherControl />
+        <StackPanel Margin="10" Orientation="Vertical">
+            <!--  Connection Watcher  -->
+            <local:WatchdogConnectionWatcherControl />
+        </StackPanel>
 
-    </StackPanel>
+    </ScrollViewer>
 </local:BasePage>

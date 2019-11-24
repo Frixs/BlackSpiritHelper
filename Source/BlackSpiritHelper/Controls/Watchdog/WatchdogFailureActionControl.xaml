@@ -6,9 +6,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:BlackSpiritHelper"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="450"
+    d:DesignHeight="250"
     d:DesignStyle="{StaticResource WindowBackgroundControlStyle}"
-    d:DesignWidth="800"
+    d:DesignWidth="200"
     mc:Ignorable="d">
     <UserControl.Resources>
         <Style x:Key="ContentStyle" TargetType="{x:Type ContentControl}">
@@ -16,21 +16,39 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ContentControl}">
 
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="On Failure:" />
-                            <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <Border
+                                    Width="26"
+                                    Height="26"
+                                    Background="{StaticResource WatchdogForegroundBrushKey}" />
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
+                                    FontFamily="{StaticResource LatoBold}"
+                                    FontSize="13"
+                                    Foreground="{StaticResource WatchdogForegroundBrushKey}"
+                                    Text="ON FAILURE" />
+                            </StackPanel>
+                            <StackPanel
+                                Margin="32,0,0,0"
+                                HorizontalAlignment="Left"
+                                Orientation="Vertical">
                                 <CheckBox Content="Computer Action" />
                                 <StackPanel Orientation="Vertical">
                                     <RadioButton
+                                        Margin="18,0,0,0"
                                         Content="Restart"
                                         GroupName="FailureAction"
                                         IsChecked="False" />
                                     <RadioButton
+                                        Margin="18,0,0,0"
                                         Content="Shutdown"
                                         GroupName="FailureAction"
                                         IsChecked="False" />
                                 </StackPanel>
                                 <CheckBox Content="Send Message" />
+                                <CheckBox Content="Sound Alert" />
                             </StackPanel>
                         </StackPanel>
 
@@ -40,5 +58,8 @@
         </Style>
     </UserControl.Resources>
 
-    <ContentControl d:DataContext="{x:Static core:WatchdogFailureActionDataDesignModel.Instance}" Style="{StaticResource ContentStyle}" />
+    <ContentControl
+        d:DataContext="{x:Static core:WatchdogFailureActionDataDesignModel.Instance}"
+        Focusable="False"
+        Style="{StaticResource ContentStyle}" />
 </UserControl>

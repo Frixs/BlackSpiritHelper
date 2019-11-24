@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:BlackSpiritHelper"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     d:DesignHeight="450"
     d:DesignStyle="{StaticResource WindowBackgroundControlStyle}"
     d:DesignWidth="800"
@@ -13,30 +14,107 @@
     mc:Ignorable="d">
 
     <StackPanel Orientation="Vertical">
-        <!--  Title  -->
-        <TextBlock
-            VerticalAlignment="Bottom"
-            FontFamily="{StaticResource LatoHeavy}"
-            FontSize="32"
-            Foreground="red"
-            Text="Connection Check" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!--  Title  -->
+            <TextBlock
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                FontFamily="{StaticResource LatoBold}"
+                FontSize="32"
+                Foreground="{StaticResource WatchdogForegroundBrushKey}"
+                Text="Connection Check" />
+
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <TextBlock
+                    Margin="0,0,5,0"
+                    VerticalAlignment="Center"
+                    FontFamily="{StaticResource LatoMediumItalic}"
+                    FontSize="12"
+                    Foreground="{StaticResource WatchdogSubForegroundBrushKey}"
+                    Text="Next check..." />
+                <TextBlock
+                    VerticalAlignment="Center"
+                    FontFamily="{StaticResource LatoRegular}"
+                    FontSize="12"
+                    Foreground="{StaticResource WatchdogSubForegroundBrushKey}"
+                    Text="00:00:00" />
+            </StackPanel>
+
+            <StackPanel Grid.Column="4" Orientation="Horizontal">
+                <!--  Delay  -->
+                <TextBlock
+                    Margin="10,0"
+                    VerticalAlignment="Center"
+                    FontFamily="{StaticResource LatoBold}"
+                    FontSize="14"
+                    Foreground="{StaticResource WatchdogForegroundBrushKey}"
+                    Text="Delay:" />
+                <xctk:TimeSpanUpDown
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Maximum="23:59:59"
+                    Minimum="00:00:00"
+                    Value="0" />
+            </StackPanel>
+        </Grid>
 
         <!--  Internet Check: Checkbox  -->
-        <CheckBox Content="Internet Connection" />
+        <StackPanel Orientation="Horizontal">
+            <CheckBox Style="{StaticResource CheckBoxLarge}" />
+            <TextBlock
+                Margin="5,0"
+                VerticalAlignment="Center"
+                FontFamily="{StaticResource LatoBold}"
+                FontSize="13"
+                Foreground="{StaticResource WatchdogForegroundBrushKey}"
+                Text="INTERNET CONNECTION" />
+        </StackPanel>
         <!--  Internet Check: Control  -->
-        <local:WatchdogInternetConnectionControl DataContext="{Binding InternetConnection}" />
+        <local:WatchdogInternetConnectionControl Margin="32,0,0,0" DataContext="{Binding InternetConnection}" />
 
         <!--  Process Check: Checkbox  -->
-        <CheckBox Content="Process Connection" />
+        <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+            <CheckBox Style="{StaticResource CheckBoxLarge}" />
+            <TextBlock
+                Margin="5,0"
+                VerticalAlignment="Center"
+                FontFamily="{StaticResource LatoBold}"
+                FontSize="13"
+                Foreground="{StaticResource WatchdogForegroundBrushKey}"
+                Text="PROCESS CONNECTION" />
+        </StackPanel>
         <!--  Process Check: Control List  -->
-        <ItemsControl ItemsSource="{Binding ProcessConnections}">
+        <ItemsControl Focusable="False" ItemsSource="{Binding ProcessConnections}">
             <ItemsControl.Template>
                 <ControlTemplate>
 
-                    <StackPanel Orientation="Vertical">
+                    <StackPanel Margin="32,0,0,0" Orientation="Vertical">
+                        <!--  Info Panel  -->
+                        <TextBlock
+                            FontFamily="{StaticResource LatoMediumItalic}"
+                            FontSize="12"
+                            Foreground="{StaticResource WatchdogSubForegroundBrushKey}"
+                            Text="Method checks TCP/UDP state of chosen processes. If there is no connection, it will evaluate your process as inaccessible to the internet. It means, your process does not communicate to the internet. In meaning of games it can mean, your game is running, but your account is probably disconnected and your game is sitting in loading screen."
+                            TextWrapping="Wrap" />
+                        <!--  List of Processes  -->
                         <ItemsPresenter />
                         <!--  Add Process Button  -->
-                        <Button Content="ADD" />
+                        <Button
+                            Width="26"
+                            Height="26"
+                            Margin="0,5,0,0"
+                            HorizontalAlignment="Left"
+                            Content="{StaticResource FontAwesomePlusIcon}"
+                            FontFamily="{StaticResource FontAwesomeSolid}"
+                            Style="{StaticResource RegularButton}" />
                     </StackPanel>
 
                 </ControlTemplate>
@@ -45,14 +123,14 @@
                 <DataTemplate>
 
                     <!--  Process Check: Control  -->
-                    <local:WatchdogProcessConnectionControl />
+                    <local:WatchdogProcessConnectionControl Margin="0,5,0,0" />
 
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
         <!--  Failure Action Wrapper  -->
-        <local:WatchdogFailureActionControl DataContext="{Binding FailureAction}" />
+        <local:WatchdogFailureActionControl Margin="0,10,0,0" DataContext="{Binding FailureAction}" />
 
     </StackPanel>
 

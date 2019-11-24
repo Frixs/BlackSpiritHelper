@@ -269,12 +269,13 @@
         x:Key="CheckBoxLarge"
         BasedOn="{StaticResource BaseStyle}"
         TargetType="{x:Type CheckBox}">
-        <Setter Property="Width" Value="26" />
-        <Setter Property="Height" Value="26" />
+
+        <!--<Setter Property="Margin" Value="-1" />-->
+
         <Style.Resources>
             <Style TargetType="Border">
-                <Setter Property="Width" Value="20" />
-                <Setter Property="Height" Value="20" />
+                <Setter Property="Width" Value="24" />
+                <Setter Property="Height" Value="24" />
             </Style>
             <Style TargetType="Grid">
                 <Setter Property="HorizontalAlignment" Value="Center" />

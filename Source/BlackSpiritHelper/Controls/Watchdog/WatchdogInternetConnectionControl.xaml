@@ -7,6 +7,7 @@
     xmlns:local="clr-namespace:BlackSpiritHelper"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
+    d:DesignStyle="{StaticResource WindowBackgroundControlStyle}"
     d:DesignWidth="800"
     mc:Ignorable="d">
     <UserControl.Resources>
@@ -14,12 +15,69 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ContentControl}">
-                        <TextBlock Text="Yo! Internet!" />
+
+                        <StackPanel Orientation="Vertical">
+                            <!--  Info Panel  -->
+                            <TextBlock
+                                FontFamily="{StaticResource LatoMediumItalic}"
+                                FontSize="12"
+                                Foreground="{StaticResource WatchdogSubForegroundBrushKey}"
+                                Text="Your connection to the internet is tested by 2-factor method. Ping is the pillar way to check the connection. But sometimes, sites refuse ping requests. If the ping fails, there is another check through opening web client. If it fails too, it will make the same checks again after a few seconds. If the second wave of checks fail again, it will evaluate your internet as inaccessible."
+                                TextWrapping="Wrap" />
+
+                            <StackPanel Orientation="Horizontal">
+                                <Grid Margin="0,0,10,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="2*" />
+                                        <RowDefinition Height="2*" />
+                                    </Grid.RowDefinitions>
+                                    <!--  Ping Address - Label  -->
+                                    <TextBlock
+                                        Grid.Row="0"
+                                        Margin="0,5,0,0"
+                                        VerticalAlignment="Center"
+                                        FontFamily="{StaticResource LatoBold}"
+                                        FontSize="12"
+                                        Foreground="{StaticResource WatchdogForegroundBrushKey}"
+                                        Text="Ping address:" />
+                                    <!--  Client Address - Label  -->
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        Margin="0,5,0,0"
+                                        VerticalAlignment="Center"
+                                        FontFamily="{StaticResource LatoBold}"
+                                        FontSize="12"
+                                        Foreground="{StaticResource WatchdogForegroundBrushKey}"
+                                        Text="WebClient address:" />
+                                </Grid>
+                                <StackPanel Orientation="Vertical">
+                                    <!--  Ping Address  -->
+                                    <TextBox
+                                        Width="225"
+                                        Margin="0,5,0,0"
+                                        IsEnabled="False"
+                                        Style="{StaticResource TextBoxSmall}"
+                                        Text="{Binding PingCheckAddress}" />
+                                    <!--  Client Address  -->
+                                    <TextBox
+                                        Width="225"
+                                        Margin="0,5,0,0"
+                                        IsEnabled="False"
+                                        Style="{StaticResource TextBoxSmall}"
+                                        Text="{Binding ClientCheckAddress}" />
+                                </StackPanel>
+
+                            </StackPanel>
+                        </StackPanel>
+
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
     </UserControl.Resources>
 
-    <ContentControl d:DataContext="{x:Static core:WatchdogInternetConnectionDataDesignModel.Instance}" Style="{StaticResource ContentStyle}" />
+    <ContentControl
+        d:DataContext="{x:Static core:WatchdogInternetConnectionDataDesignModel.Instance}"
+        Focusable="False"
+        Style="{StaticResource ContentStyle}" />
 </UserControl>

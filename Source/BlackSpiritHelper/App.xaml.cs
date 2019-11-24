@@ -15,6 +15,7 @@ namespace BlackSpiritHelper
     /// <summary>
     /// Interaction logic for App.xaml
     /// ---
+    /// TODO: Replace Border for Separator TAG
     /// TODO:LATER:APP: more...
     ///     - Application user option to download/check updates.
     ///     - Auto manage length of log file. Cut the file if it is too large.
