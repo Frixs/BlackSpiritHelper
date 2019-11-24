@@ -51,7 +51,7 @@
         </Setter>
     </Style>
 
-    <!--  TextBox with placeholder  -->
+    <!--  TextBox Input (with placeholder)  -->
     <Style BasedOn="{StaticResource BaseStyle}" TargetType="{x:Type TextBox}">
 
         <Setter Property="FontSize" Value="14" />
@@ -84,7 +84,7 @@
                             Padding="{TemplateBinding Padding}"
                             HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                             VerticalAlignment="Center"
-                            FontFamily="{StaticResource LatoThin}"
+                            FontFamily="{StaticResource LatoLight}"
                             Foreground="{StaticResource TextBoxPlaceholderForegroundBrushKey}"
                             IsHitTestVisible="False"
                             Text="{TemplateBinding Tag}">
@@ -116,6 +116,103 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="border" Property="Opacity" Value="0.56" />
+                            <Setter Property="Background" Value="{StaticResource DisabledBackgroundBrushKey}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource TextBoxLineFocusBackgroundBrushKey}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource TextBoxLineFocusBackgroundBrushKey}" />
+                        </Trigger>
+                        <Trigger Property="Validation.HasError" Value="True">
+                            <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)/ErrorContent}" />
+                            <Setter Property="Foreground" Value="{StaticResource TextBoxLineErrorBackgroundBrushKey}" />
+                            <Setter Property="BorderBrush" Value="{StaticResource TextBoxLineErrorBackgroundBrushKey}" />
+                            <Setter TargetName="exclamation" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <!--  Delete default error template  -->
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate />
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+    <!--  TextBox - Small (with placeholder)  -->
+    <Style
+        x:Key="TextBoxSmall"
+        BasedOn="{StaticResource BaseStyle}"
+        TargetType="{x:Type TextBox}">
+
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontFamily" Value="{StaticResource LatoRegular}" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="BorderBrush" Value="{StaticResource TextBoxLineBackgroundBrushKey}" />
+        <Setter Property="BorderThickness" Value="1,1,1,1" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBoxBase}">
+
+                    <Grid>
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="True">
+                            <ScrollViewer
+                                x:Name="PART_ContentHost"
+                                Focusable="False"
+                                HorizontalScrollBarVisibility="Hidden"
+                                VerticalScrollBarVisibility="Hidden" />
+                        </Border>
+
+                        <!--  Placeholder  -->
+                        <TextBlock
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                            VerticalAlignment="Center"
+                            FontFamily="{StaticResource LatoLight}"
+                            Foreground="{StaticResource TextBoxPlaceholderForegroundBrushKey}"
+                            IsHitTestVisible="False"
+                            Text="{TemplateBinding Tag}">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource TemplatedParent}}" Value="">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+
+                        </TextBlock>
+
+                        <!--  Validation exclamation mark  -->
+                        <TextBlock
+                            Name="exclamation"
+                            Margin="0,0,5,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            FontFamily="{StaticResource FontAwesomeSolid}"
+                            Foreground="{StaticResource TextBoxLineErrorBackgroundBrushKey}"
+                            IsHitTestVisible="False"
+                            Text="{StaticResource FontAwesomeExclamationCircleIcon}"
+                            Visibility="Collapsed" />
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="border" Property="Opacity" Value="0.56" />
+                            <Setter Property="Background" Value="{StaticResource DisabledBackgroundBrushKey}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource TextBoxLineFocusBackgroundBrushKey}" />
@@ -165,6 +262,25 @@
                 <Setter Property="BorderBrush" Value="{StaticResource TextBoxLineErrorBackgroundBrushKey}" />
             </Trigger>
         </Style.Triggers>
+    </Style>
+
+    <!--  CheckBox - Large  -->
+    <Style
+        x:Key="CheckBoxLarge"
+        BasedOn="{StaticResource BaseStyle}"
+        TargetType="{x:Type CheckBox}">
+        <Setter Property="Width" Value="26" />
+        <Setter Property="Height" Value="26" />
+        <Style.Resources>
+            <Style TargetType="Border">
+                <Setter Property="Width" Value="20" />
+                <Setter Property="Height" Value="20" />
+            </Style>
+            <Style TargetType="Grid">
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
+        </Style.Resources>
     </Style>
 
     <!--  Radio Input  -->
