@@ -13,13 +13,159 @@
     x:TypeArguments="core:WatchdogPageViewModel"
     mc:Ignorable="d">
 
-    <!--  Watchdog sections  -->
-    <ScrollViewer DataContext="{Binding ApplicationDataContent.WatchdogData, Source={x:Static local:ViewModelLocator.Instance}}" VerticalScrollBarVisibility="Auto">
+    <Grid DataContext="{Binding ApplicationDataContent.WatchdogData, Source={x:Static local:ViewModelLocator.Instance}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="110" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-        <StackPanel Margin="10" Orientation="Vertical">
-            <!--  Connection Watcher  -->
-            <local:WatchdogConnectionWatcherControl />
-        </StackPanel>
+        <Border
+            Grid.Row="0"
+            Padding="10"
+            Panel.ZIndex="1"
+            BorderThickness="0,0,0,0.3">
+            <!--  Underline  -->
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 0">
+                    <GradientStop Offset="0.0" Color="{StaticResource WindowTitleBarDropShadowLine}" />
+                    <GradientStop Offset="1.0" Color="{StaticResource WindowBackground}" />
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+            <!--  Background  -->
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0, 0" EndPoint="0, 1">
+                    <GradientStop Offset="0.4" Color="{StaticResource WindowBackground}" />
+                    <GradientStop Offset="1.0" Color="{StaticResource WatchdogGroupMenuBackground}" />
+                </LinearGradientBrush>
+            </Border.Background>
+            <!--  Drop Shadow  -->
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Style.Triggers>
+                        <!--  Do only when scroll is NOT on top  -->
+                        <DataTrigger Binding="{Binding ElementName=WatchdogScrollViewer, Path=VerticalOffset, Converter={local:IsScrollOnTopByOffsetValueConverter}}" Value="False">
 
-    </ScrollViewer>
+                            <Setter Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect
+                                        BlurRadius="20"
+                                        Direction="270"
+                                        Opacity="0.2"
+                                        ShadowDepth="10"
+                                        Color="{StaticResource WatchdogGroupMenuDropShadowBackground}" />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+
+            <!--  Menu Content  -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <!--  Watchdog section controller  -->
+                <StackPanel Grid.Column="0" Orientation="Vertical">
+                    <!--  Connection Watcher  -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="125" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <!--  Play/Pause BTN  -->
+                        <Grid Grid.Column="0">
+                            <Button
+                                Width="23"
+                                Height="23"
+                                Margin="0"
+                                VerticalAlignment="Bottom"
+                                Command="{Binding ConnectionWatcher.PlayCommand}"
+                                Content="{StaticResource FontAwesomePlayIcon}"
+                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                FontSize="9"
+                                Style="{StaticResource RegularButton}"
+                                Visibility="{Binding ConnectionWatcher.IsRunning, Converter={local:BooleanToVisibilityGoneConverter}, ConverterParameter=True}" />
+                            <Button
+                                Width="23"
+                                Height="23"
+                                Margin="0"
+                                VerticalAlignment="Bottom"
+                                Command="{Binding ConnectionWatcher.PauseCommand}"
+                                Content="{StaticResource FontAwesomePauseIcon}"
+                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                FontSize="9"
+                                Style="{StaticResource RegularButton}"
+                                Visibility="{Binding ConnectionWatcher.IsRunning, Converter={local:BooleanToVisibilityGoneConverter}}" />
+                        </Grid>
+                        <!--  Title  -->
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="5,0,0,0"
+                            VerticalAlignment="Center"
+                            FontFamily="{StaticResource LatoBold}"
+                            FontSize="12"
+                            Text="Connection Check" />
+                        <!--  Note  -->
+                        <TextBlock
+                            Grid.Column="2"
+                            VerticalAlignment="Center"
+                            FontFamily="{StaticResource LatoMediumItalic}"
+                            FontSize="10"
+                            Foreground="{StaticResource WatchdogSubForegroundBrushKey}"
+                            Text="(Running...)" />
+                    </Grid>
+                </StackPanel>
+
+                <!--  Log wrapper  -->
+                <Grid Grid.Column="2">
+                    <!--  Clear Button  -->
+                    <Button
+                        Padding="5,2"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Panel.ZIndex="2"
+                        Background="{StaticResource WatchdogLogBorderBrushKey}"
+                        Content="CLEAR LOG"
+                        FontFamily="{StaticResource LatoHeavy}"
+                        FontSize="8"
+                        Style="{StaticResource RegularButtonNoColor}" />
+                    <!--  Log border  -->
+                    <Border
+                        Width="275"
+                        Panel.ZIndex="1"
+                        Background="{StaticResource WatchdogLogBackgroundBrushKey}"
+                        BorderBrush="{StaticResource WatchdogLogBorderBrushKey}"
+                        BorderThickness="3">
+                        <ScrollViewer Padding="5">
+                            <!--  Items Control for log messages  -->
+                            <TextBlock
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="10"
+                                Foreground="{StaticResource WatchdogLogForegroundBrushKey}"
+                                Text="[12:54] This is log message" />
+                        </ScrollViewer>
+                    </Border>
+                </Grid>
+            </Grid>
+
+        </Border>
+
+        <Border Grid.Row="1" Panel.ZIndex="0">
+            <!--  Watchdog sections  -->
+            <ScrollViewer Name="WatchdogScrollViewer" VerticalScrollBarVisibility="Auto">
+
+                <StackPanel Margin="10" Orientation="Vertical">
+                    <!--  Connection Watcher  -->
+                    <local:WatchdogConnectionWatcherControl />
+                </StackPanel>
+
+            </ScrollViewer>
+        </Border>
+
+    </Grid>
 </local:BasePage>

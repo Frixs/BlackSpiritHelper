@@ -279,6 +279,21 @@
 
     <Color x:Key="WatchdogSubForeground">#888888</Color>
     <SolidColorBrush x:Key="WatchdogSubForegroundBrushKey" Color="{StaticResource WatchdogSubForeground}" />
+
+    <Color x:Key="WatchdogGroupMenuBackground">#f0f0f0</Color>
+    <SolidColorBrush x:Key="WatchdogGroupMenuBackgroundBrushKey" Color="{StaticResource WatchdogGroupMenuBackground}" />
+
+    <Color x:Key="WatchdogGroupMenuDropShadowBackground">#000000</Color>
+    <SolidColorBrush x:Key="WatchdogGroupMenuDropShadowBackgroundBrushKey" Color="{StaticResource WatchdogGroupMenuDropShadowBackground}" />
+
+    <Color x:Key="WatchdogLogForeground">#9095A3</Color>
+    <SolidColorBrush x:Key="WatchdogLogForegroundBrushKey" Color="{StaticResource WatchdogLogForeground}" />
+
+    <Color x:Key="WatchdogLogBorder">#E3E3E3</Color>
+    <SolidColorBrush x:Key="WatchdogLogBorderBrushKey" Color="{StaticResource WatchdogLogBorder}" />
+
+    <Color x:Key="WatchdogLogBackground">#f0f0f0</Color>
+    <SolidColorBrush x:Key="WatchdogLogBackgroundBrushKey" Color="{StaticResource WatchdogLogBackground}" />
     <!--#endregion-->
 
     <!--#region Regular Text Button - Red-->
