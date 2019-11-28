@@ -87,5 +87,19 @@ namespace BlackSpiritHelper.Core
         }
 
         #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// The main method to check conditions.
+        /// </summary>
+        /// <returns></returns>
+        public override bool Check()
+        {
+            System.Console.WriteLine("Process Check");
+            return true;
+        }
+
+        #endregion
     }
 }

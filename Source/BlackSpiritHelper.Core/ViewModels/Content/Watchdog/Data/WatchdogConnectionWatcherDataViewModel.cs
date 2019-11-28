@@ -1,6 +1,5 @@
 ﻿using BlackSpiritHelper.Core.Data.Interfaces;
 using System;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Input;
@@ -11,7 +10,7 @@ namespace BlackSpiritHelper.Core
     /// <summary>
     /// Connection Watcher handles connection to the internet and connection of processes to TCP/UDP protocols.
     /// </summary>
-    public class WatchdogConnectionWatcherDataViewModel : AWatchdogConnectionWatcherBase
+    public class WatchdogConnectionWatcherDataViewModel : AWatchdogWatcherBase
     {
         #region Static Limitation Properties
 
@@ -206,6 +205,19 @@ namespace BlackSpiritHelper.Core
         /// <param name="e"></param>
         private void CheckLoopTimerOnElapsed(object sender, ElapsedEventArgs e)
         {
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Process to check watcher and evaluate what happens based on evaluation.
+        /// </summary>
+        public override void CheckProcess()
+        {
+            InternetConnection.Check();
+            ProcessConnection.Check();
         }
 
         #endregion

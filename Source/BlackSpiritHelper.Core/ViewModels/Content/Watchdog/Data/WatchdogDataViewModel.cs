@@ -1,4 +1,8 @@
-﻿using System.Xml.Serialization;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
 {
@@ -7,6 +11,15 @@ namespace BlackSpiritHelper.Core
     /// </summary>
     public class WatchdogDataViewModel : DataContentBaseViewModel<WatchdogDataViewModel>
     {
+        #region Private Fields
+
+        /// <summary>
+        /// Number of max log messages to be displayed.
+        /// </summary>
+        private int mMaxLogMessages = 100;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -15,10 +28,26 @@ namespace BlackSpiritHelper.Core
         public WatchdogConnectionWatcherDataViewModel ConnectionWatcher { get; set; } = new WatchdogConnectionWatcherDataViewModel();
 
         /// <summary>
+        /// List of log messages.
+        /// </summary>
+        [XmlIgnore]
+        public ObservableCollection<string> LogList { get; set; } = new ObservableCollection<string>();
+
+        /// <summary>
         /// Says, if watchdog section is running.
         /// </summary>
         [XmlIgnore]
         public override bool IsRunning { get; protected set; }
+
+        #endregion
+
+        #region Commands
+
+        /// <summary>
+        /// Command to clear log.
+        /// </summary>
+        [XmlIgnore]
+        public ICommand ClearLogCommand { get; set; }
 
         #endregion
 
@@ -29,6 +58,8 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public WatchdogDataViewModel()
         {
+            // Create commands
+            CreateCommands();
         }
 
         protected override void SetDefaultsMethod()
@@ -48,6 +79,53 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
-        
+        #region Command Methods
+
+        /// <summary>
+        /// Create commands.
+        /// </summary>
+        private void CreateCommands()
+        {
+            ClearLogCommand = new RelayCommand(async () => await ClearLogAsync());
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Add new message to the log.
+        /// The method also keeps the list in proper size.
+        /// </summary>
+        /// <param name="message"></param>
+        public void Log(string message)
+        {
+            var datetime = DateTimeOffset.UtcNow.ToString("dd-MM HH:mm UTC");
+
+            // Keep the list with proper size.
+            if (LogList.Count + 1 > mMaxLogMessages)
+            {
+                LogList.RemoveAt(0);
+            }
+
+            // Add new log message.
+            LogList.Add($"[{datetime}] {message}");
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Clear all the list of logs.
+        /// </summary>
+        /// <returns></returns>
+        private async Task ClearLogAsync()
+        {
+            LogList.Clear();
+            await Task.Delay(1);
+        }
+
+        #endregion
     }
 }

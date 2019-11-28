@@ -5,8 +5,10 @@ namespace BlackSpiritHelper.Core.Data.Interfaces
     /// <summary>
     /// Abstract class as interface for all watchers of Watchdog.
     /// </summary>
-    public abstract class AWatchdogConnectionWatcherBase : BaseViewModel
+    public abstract class AWatchdogWatcherBase : BaseViewModel
     {
+        #region Abstract Properties
+
         /// <summary>
         /// Run the watche when the application starts.
         /// </summary>
@@ -28,5 +30,16 @@ namespace BlackSpiritHelper.Core.Data.Interfaces
         /// </summary>
         [XmlIgnore]
         public abstract string ProgressNote { get; protected set; }
+
+        #endregion
+
+        #region Abstract Methods
+
+        /// <summary>
+        /// Process to check watcher and evaluate what happens based on evaluation.
+        /// </summary>
+        public abstract void CheckProcess();
+
+        #endregion
     }
 }

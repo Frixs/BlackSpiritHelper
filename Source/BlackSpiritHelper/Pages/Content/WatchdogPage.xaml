@@ -131,6 +131,7 @@
                         VerticalAlignment="Top"
                         Panel.ZIndex="2"
                         Background="{StaticResource WatchdogLogBorderBrushKey}"
+                        Command="{Binding ClearLogCommand}"
                         Content="CLEAR LOG"
                         FontFamily="{StaticResource LatoHeavy}"
                         FontSize="8"
@@ -143,12 +144,20 @@
                         BorderBrush="{StaticResource WatchdogLogBorderBrushKey}"
                         BorderThickness="3">
                         <ScrollViewer Padding="5">
-                            <!--  Items Control for log messages  -->
-                            <TextBlock
-                                FontFamily="{StaticResource LatoHeavy}"
-                                FontSize="10"
-                                Foreground="{StaticResource WatchdogLogForegroundBrushKey}"
-                                Text="[12:54] This is log message" />
+                            <ItemsControl ItemsSource="{Binding LogList}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+
+                                        <!--  Items Control for log messages  -->
+                                        <TextBlock
+                                            FontFamily="{StaticResource LatoHeavy}"
+                                            FontSize="10"
+                                            Foreground="{StaticResource WatchdogLogForegroundBrushKey}"
+                                            Text="{Binding}" />
+
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                         </ScrollViewer>
                     </Border>
                 </Grid>

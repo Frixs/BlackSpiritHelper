@@ -128,7 +128,7 @@
     <Compile Include="ViewModels\Content\Watchdog\Data\Design\WatchdogProcessConnectionDataDesignModel.cs" />
     <Compile Include="ViewModels\Content\Watchdog\Data\Design\WatchdogInternetConnectionDataDesignModel.cs" />
     <Compile Include="ViewModels\Content\Watchdog\Data\Interfaces\AWatchdogConnectionBase.cs" />
-    <Compile Include="ViewModels\Content\Watchdog\Data\Interfaces\AWatchdogConnectionWatcherBase.cs" />
+    <Compile Include="ViewModels\Content\Watchdog\Data\Interfaces\AWatchdogWatcherBase.cs" />
     <Compile Include="ViewModels\Content\Watchdog\Data\WatchdogDataViewModel.cs" />
     <Compile Include="ViewModels\Content\Watchdog\Data\WatchdogConnectionWatcherDataViewModel.cs" />
     <Compile Include="ViewModels\Content\Watchdog\Data\WatchdogFailureActionDataViewModel.cs" />
