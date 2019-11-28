@@ -125,6 +125,7 @@ namespace BlackSpiritHelper.Core.Data.Interfaces
 
             // Update state.
             IsRunning = true;
+            IoC.DataContent.WatchdogData.OnPropertyChanged(nameof(IsRunning));
 
             // Update note.
             UpdateProgressNote("Starting...");
@@ -147,6 +148,7 @@ namespace BlackSpiritHelper.Core.Data.Interfaces
         {
             // Update state.
             IsRunning = false;
+            IoC.DataContent.WatchdogData.OnPropertyChanged(nameof(IsRunning));
 
             // Stop the timer.
             mCheckLoopTimer.Stop();

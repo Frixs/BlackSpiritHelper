@@ -1,7 +1,4 @@
 ﻿using BlackSpiritHelper.Core.Data.Interfaces;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Input;
 using System.Xml.Serialization;
@@ -13,15 +10,6 @@ namespace BlackSpiritHelper.Core
     /// </summary>
     public class WatchdogConnectionWatcherDataViewModel : AWatchdogWatcherBase
     {
-        #region Static Limitation Properties
-
-        /// <summary>
-        /// Max number of process connections in a list that can be created.
-        /// </summary>
-        public static byte AllowedMaxNoOfProcessConnections { get; private set; } = 3;
-
-        #endregion
-
         #region Public Properties
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using BlackSpiritHelper.Core.Data.Interfaces;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Xml.Serialization;
@@ -12,12 +13,51 @@ namespace BlackSpiritHelper.Core
     /// </summary>
     public class WatchdogProcessConnectionDataViewModel : AWatchdogConnectionBase
     {
+        #region Static Limitation Properties
+
+        /// <summary>
+        /// Max number of process connections in a list that can be created.
+        /// </summary>
+        public static byte AllowedMaxProcessConnections { get; private set; } = 3;
+
+        #endregion
+
+        #region Private Members
+
+        /// <summary>
+        /// Process list to handle of this wrapper.
+        /// </summary>
+        private ObservableCollection<WatchdogProcessDataViewModel> mProcessList = new ObservableCollection<WatchdogProcessDataViewModel>();
+
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
         /// Process list to handle of this wrapper.
         /// </summary>
-        public ObservableCollection<WatchdogProcessDataViewModel> ProcessList { get; set; } = new ObservableCollection<WatchdogProcessDataViewModel>();
+        public ObservableCollection<WatchdogProcessDataViewModel> ProcessList
+        {
+            get => mProcessList;
+            set
+            {
+                mProcessList = value;
+
+                // This is for initial set (and any other set).
+                if (value.Count >= AllowedMaxProcessConnections)
+                    CanAddNewProcess = false;
+                else
+                    CanAddNewProcess = true;
+            }
+        }
+
+        /// <summary>
+        /// Says if new iem can be added to the list.
+        /// Checks the limit.
+        /// </summary>
+        [XmlIgnore]
+        public bool CanAddNewProcess { get; set; } = true;
 
         /// <summary>
         /// Says if the check is selected for checking loop.
@@ -67,22 +107,45 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// TODO add process
+        /// Add new process item to the list.
         /// </summary>
-        private async Task AddNewProcessCommandMethodAsync() 
+        private async Task AddNewProcessCommandMethodAsync()
         {
-            System.Console.WriteLine("Add");
-            ProcessList.Add(new WatchdogProcessDataViewModel() { Name = "Yo" });
+            // Check space in the list.
+            if (ProcessList.Count + 1 > AllowedMaxProcessConnections)
+            {
+                CanAddNewProcess = false;
+                return;
+            }
+
+            // Add item.
+            ProcessList.Add(new WatchdogProcessDataViewModel());
+
+            // Check space in the list again after addition.
+            if (ProcessList.Count >= AllowedMaxProcessConnections)
+                CanAddNewProcess = false;
+
             await Task.Delay(1);
         }
 
         /// <summary>
-        /// TODO Remove process
+        /// Remove the item from process list.
         /// </summary>
         private async Task RemoveProcessCommandMethodAsync(object parameter)
         {
-            System.Console.WriteLine("Remove");
-            System.Console.WriteLine(((WatchdogProcessDataViewModel)parameter).Name);
+            var itemToRemove = (WatchdogProcessDataViewModel)parameter;
+
+            // Check existence of the item.
+            if (itemToRemove == null)
+            {
+                IoC.Logger.Log($"Null reference while removing item!", LogLevel.Error);
+                return;
+            }
+
+            // Remove item.
+            ProcessList.Remove(itemToRemove);
+            CanAddNewProcess = true;
+
             await Task.Delay(1);
         }
 

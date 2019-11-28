@@ -45,7 +45,8 @@
                                                 Command="{Binding AddNewProcessCommand}"
                                                 Content="{StaticResource FontAwesomePlusIcon}"
                                                 FontFamily="{StaticResource FontAwesomeSolid}"
-                                                Style="{StaticResource RegularButton}" />
+                                                Style="{StaticResource RegularButton}"
+                                                Visibility="{Binding CanAddNewProcess, Converter={local:BooleanToVisibilityGoneConverter}}" />
                                         </StackPanel>
 
                                     </ControlTemplate>

@@ -37,7 +37,11 @@ namespace BlackSpiritHelper.Core
         /// Says, if watchdog section is running.
         /// </summary>
         [XmlIgnore]
-        public override bool IsRunning { get; protected set; }
+        public override bool IsRunning 
+        {
+            get => ConnectionWatcher.IsRunning ? true : false;
+            protected set => throw new NotImplementedException();
+        }
 
         #endregion
 
