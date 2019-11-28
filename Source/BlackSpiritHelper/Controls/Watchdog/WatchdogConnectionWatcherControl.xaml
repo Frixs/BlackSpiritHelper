@@ -40,7 +40,7 @@
                 IsChecked="{Binding RunOnApplicationStart}"
                 ToolTip="Run on application start" />
 
-            <!--  Delay  -->
+            <!--  Interval Time  -->
             <StackPanel Grid.Column="3" Orientation="Horizontal">
                 <TextBlock
                     Margin="10,0"
@@ -48,14 +48,14 @@
                     FontFamily="{StaticResource LatoBold}"
                     FontSize="14"
                     Foreground="{StaticResource WatchdogForegroundBrushKey}"
-                    Text="Delay:" />
+                    Text="Interval:" />
                 <xctk:TimeSpanUpDown
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     IsEnabled="{Binding IsRunning, Converter={local:BooleanInvertConverter}}"
                     Maximum="23:59:59"
                     Minimum="00:00:01"
-                    Value="{Binding DelayTime}" />
+                    Value="{Binding IntervalTime}" />
             </StackPanel>
         </Grid>
 
