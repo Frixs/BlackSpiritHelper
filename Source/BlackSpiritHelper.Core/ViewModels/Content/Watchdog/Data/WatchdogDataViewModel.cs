@@ -37,7 +37,7 @@ namespace BlackSpiritHelper.Core
         /// Says, if watchdog section is running.
         /// </summary>
         [XmlIgnore]
-        public override bool IsRunning 
+        public override bool IsRunning
         {
             get => ConnectionWatcher.IsRunning ? true : false;
             protected set => throw new NotImplementedException();
@@ -106,14 +106,16 @@ namespace BlackSpiritHelper.Core
         {
             var datetime = DateTimeOffset.UtcNow.ToString("dd-MM HH:mm UTC");
 
-            // Keep the list with proper size.
-            if (LogList.Count + 1 > mMaxLogMessages)
+            // UI thread required - due to ObservableCollection.
+            IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
             {
-                LogList.RemoveAt(0);
-            }
+                // Keep the list with proper size.
+                if (LogList.Count + 1 > mMaxLogMessages)
+                    LogList.RemoveAt(0);
 
-            // Add new log message.
-            LogList.Add($"[{datetime}] {message}");
+                // Add new log message.
+                LogList.Add($"[{datetime}] {message}");
+            }));
         }
 
         #endregion
@@ -126,8 +128,11 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task ClearLogAsync()
         {
-            LogList.Clear();
-            await Task.Delay(1);
+            // UI thread required - due to ObservableCollection.
+            await IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
+            {
+                LogList.Clear();
+            }));
         }
 
         #endregion

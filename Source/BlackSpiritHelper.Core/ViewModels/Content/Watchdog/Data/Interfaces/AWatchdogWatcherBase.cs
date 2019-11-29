@@ -42,6 +42,12 @@ namespace BlackSpiritHelper.Core.Data.Interfaces
         /// </summary>
         protected Timer mCheckLoopTimer = null;
 
+        /// <summary>
+        /// Says if the failure action has been already proceeded.
+        /// We dont want to fire the same event on each failure. Only at the time when the failure occurs for the first time.
+        /// </summary>
+        protected bool mIsFailureActionFired = false;
+
         #endregion
 
         #region Public Properties
@@ -77,6 +83,12 @@ namespace BlackSpiritHelper.Core.Data.Interfaces
         [XmlIgnore]
         public string ProgressNote { get; private set; } = "";
 
+        /// <summary>
+        /// Flag for stopping the watcher.
+        /// </summary>
+        [XmlIgnore]
+        public bool StopWatcherFlag { get; private set; } = false;
+
         #endregion
 
         #region Abstract Properties
@@ -107,7 +119,8 @@ namespace BlackSpiritHelper.Core.Data.Interfaces
         /// <param name="note">New note to update</param>
         protected void UpdateProgressNote(string note)
         {
-            if (string.IsNullOrEmpty(note))
+            // If the string is empty/null OR the wather is not running (timer) AND method has no rights to write during stooped timer
+            if (string.IsNullOrEmpty(note) || (!IsRunning && !mCheckLoopTimer.Enabled))
                 ProgressNote = string.Empty;
             else
                 ProgressNote = $"({note})";
@@ -120,12 +133,15 @@ namespace BlackSpiritHelper.Core.Data.Interfaces
         /// <returns></returns>
         protected async Task RunWatcherAsync(TimeSpan interval)
         {
-            // Update interal first.
-            UpdateTimerControlInterval(interval);
+            if (IsRunning)
+                return;
 
             // Update state.
             IsRunning = true;
             IoC.DataContent.WatchdogData.OnPropertyChanged(nameof(IsRunning));
+
+            // Update interal first.
+            UpdateTimerControlInterval(interval);
 
             // Update note.
             UpdateProgressNote("Starting...");
@@ -133,11 +149,13 @@ namespace BlackSpiritHelper.Core.Data.Interfaces
             // Wait the minimal time before first check.
             await Task.Delay(AllowedMinCheckInterval);
 
-            // First check right after start.
-            CheckLoopTimerOnElapsed(null, null);
+            if (!mCheckLoopTimer.Enabled)
+                // First check right after start.
+                CheckLoopTimerOnElapsed(null, null);
 
-            // Start the timer.
-            mCheckLoopTimer.Start();
+            if (!mCheckLoopTimer.Enabled)
+                // Start the timer.
+                mCheckLoopTimer.Start();
         }
 
         /// <summary>
@@ -146,17 +164,29 @@ namespace BlackSpiritHelper.Core.Data.Interfaces
         /// <returns></returns>
         protected async Task StopWatcherAsync()
         {
-            // Update state.
-            IsRunning = false;
-            IoC.DataContent.WatchdogData.OnPropertyChanged(nameof(IsRunning));
+            if (!IsRunning)
+                return;
 
-            // Stop the timer.
-            mCheckLoopTimer.Stop();
+            // We want to safely stop the watcher (timer).
+            // Make a safe delay for stopping without possibility to activate stop multiple times.
+            await RunCommandAsync(() => StopWatcherFlag, async () =>
+            {
+                // Stop the timer.
+                mCheckLoopTimer.Stop();
 
-            // Update note.
-            UpdateProgressNote(string.Empty);
+                // Update note.
+                UpdateProgressNote("Stopping...");
 
-            await Task.Delay(1);
+                // Wait the minimal time.
+                await Task.Delay(AllowedMinCheckInterval);
+
+                // Update state.
+                IsRunning = false;
+                IoC.DataContent.WatchdogData.OnPropertyChanged(nameof(IsRunning));
+
+                // Update note.
+                UpdateProgressNote(string.Empty);
+            });
         }
 
         #endregion

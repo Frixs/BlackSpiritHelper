@@ -51,5 +51,18 @@ namespace BlackSpiritHelper.Core
         }
 
         #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Do all the failure actions.
+        /// </summary>
+        public void Do()
+        {
+            // TODO do failure
+            Console.WriteLine("Failure");
+        }
+
+        #endregion
     }
 }

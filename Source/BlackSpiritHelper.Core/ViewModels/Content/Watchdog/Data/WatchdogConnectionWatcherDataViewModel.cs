@@ -1,4 +1,5 @@
 ﻿using BlackSpiritHelper.Core.Data.Interfaces;
+using System;
 using System.Timers;
 using System.Windows.Input;
 using System.Xml.Serialization;
@@ -93,7 +94,11 @@ namespace BlackSpiritHelper.Core
         /// <param name="e"></param>
         protected override void CheckLoopTimerOnElapsed(object sender, ElapsedEventArgs e)
         {
+            var datetime = DateTimeOffset.UtcNow.ToString("dd-MM HH:mm UTC");
+
+            UpdateProgressNote("Checking...");
             CheckProcess();
+            UpdateProgressNote($"Last check: {datetime}");
         }
 
         #endregion
@@ -105,9 +110,23 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public override void CheckProcess()
         {
-            // TODO
-            InternetConnection.Check();
-            ProcessConnection.Check();
+            bool isOk = true;
+
+            // Check.
+            isOk = isOk ? (InternetConnection.IsSelected ? InternetConnection.Check() : true) : false;
+            isOk = isOk ? (ProcessConnection.IsSelected ? ProcessConnection.Check() : true) : false;
+
+            // Failure hook.
+            if (!isOk && !mIsFailureActionFired)
+            {
+                mIsFailureActionFired = true; // Let know the procedure to do not fire this the same event again until the failure disappear.
+                FailureAction.Do();
+            }
+            // First occurance of recovery from failure.
+            else if (isOk && mIsFailureActionFired)
+            {
+                mIsFailureActionFired = false; // Reset value back to false to be able to record failure event again when occurs.
+            }
         }
 
         #endregion

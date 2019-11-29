@@ -18,7 +18,7 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// Says if the failure action has been already proceeded.
-        /// We dont want to fire te same event on each failure. Only at the time when the failure occurs for the first time.
+        /// We dont want to fire the same event on each failure. Only at the time when the failure occurs for the first time.
         /// </summary>
         private bool mIsFailureActionFired = false;
 
@@ -146,6 +146,7 @@ namespace BlackSpiritHelper.Core
                 catch (Exception)
                 {
                     pingStatus = false;
+                    IoC.Logger.Log("Ping exception = no internet connection", LogLevel.Debug);
                 }
             }
 
@@ -158,17 +159,22 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private bool CheckWebClientConnection()
         {
-            // TODO timeout
+            bool clientStatus = false;
+
+            // TODO timeout web client test
             try
             {
                 using (var client = new WebClient())
                 using (client.OpenRead(ClientCheckAddress))
-                    return true;
+                    return clientStatus = true;
             }
             catch
             {
-                return false;
+                clientStatus = false;
+                IoC.Logger.Log("WebClient exception = no internet connection", LogLevel.Debug);
             }
+
+            return clientStatus;
         }
 
         #endregion
