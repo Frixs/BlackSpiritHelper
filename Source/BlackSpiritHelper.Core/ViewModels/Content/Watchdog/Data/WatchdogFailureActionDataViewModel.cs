@@ -59,8 +59,37 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public void Do()
         {
-            // TODO do failure
-            Console.WriteLine("Failure");
+            HandleSoundAlert();
+            HandleMessageSending();
+            HandleComputerAction();
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Handle computer action event of failure action.
+        /// </summary>
+        private void HandleComputerAction()
+        {
+            // TODO
+        }
+
+        /// <summary>
+        /// Handle sending message to user preferred platform.
+        /// </summary>
+        private void HandleMessageSending()
+        {
+            // TODO
+        }
+
+        /// <summary>
+        /// Handle sound effect of failure action.
+        /// </summary>
+        private void HandleSoundAlert()
+        {
+            // TODO
         }
 
         #endregion

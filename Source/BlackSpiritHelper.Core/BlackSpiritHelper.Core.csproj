@@ -60,7 +60,6 @@
     <Compile Include="Async\AsyncAwaiter.cs" />
     <Compile Include="Audio\Core\AudioPriorityBracket.cs" />
     <Compile Include="Audio\Implementation\AudioPlayer.cs" />
-    <Compile Include="Audio\Implementation\Managers\VoiceAudioManager.cs" />
     <Compile Include="Audio\Implementation\Managers\SoundAudioManager.cs" />
     <Compile Include="DataTypes\ApplicationPage.cs" />
     <Compile Include="DataTypes\TimeZoneRegion.cs" />
