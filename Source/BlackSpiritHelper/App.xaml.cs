@@ -84,7 +84,7 @@ namespace BlackSpiritHelper
 
             // Check for administrator privileges.
             if (IoC.Application.Cookies.ForceToRunAsAdministrator
-                && !IsRunningAsAdministrator()
+                && !IoC.Application.IsRunningAsAdministratorCheck
                 && !Debugger.IsAttached
                 )
             {
@@ -111,7 +111,7 @@ namespace BlackSpiritHelper
                 await OnUpdateSetupAsync();
 
                 // Log it.
-                IoC.Logger.Log("Application starting up" + (IsRunningAsAdministrator() ? " (As Administrator)" : "") + "...", LogLevel.Info);
+                IoC.Logger.Log("Application starting up" + (IoC.Application.IsRunningAsAdministratorCheck ? " (As Administrator)" : "") + "...", LogLevel.Info);
 
                 // Show the main window.
                 await IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
@@ -159,18 +159,6 @@ namespace BlackSpiritHelper
         #endregion
 
         #region Private Methods: As Administrator
-
-        /// <summary>
-        /// Check if the application is running As Administrator or not.
-        /// </summary>
-        /// <returns></returns>
-        private bool IsRunningAsAdministrator()
-        {
-            var wi = WindowsIdentity.GetCurrent();
-            var wp = new WindowsPrincipal(wi);
-
-            return wp.IsInRole(WindowsBuiltInRole.Administrator);
-        }
 
         /// <summary>
         /// Run the application As Administrator.

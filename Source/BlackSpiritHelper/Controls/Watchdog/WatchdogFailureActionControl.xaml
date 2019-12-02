@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="250"
     d:DesignStyle="{StaticResource WindowBackgroundControlStyle}"
-    d:DesignWidth="200"
+    d:DesignWidth="400"
     mc:Ignorable="d">
     <UserControl.Resources>
         <Style x:Key="ContentStyle" TargetType="{x:Type ContentControl}">
@@ -51,7 +51,7 @@
                                                         Visibility="Collapsed" />
                                                     <RadioButton
                                                         Margin="18,0,0,0"
-                                                        Content="{Binding Converter={local:ObjectToStringConverter}}"
+                                                        Content="{Binding Converter={local:EnumDescriptionConverter}}"
                                                         GroupName="FailureAction"
                                                         IsChecked="{Binding Path=DataContext.ComputerAction, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContentControl}}, Converter={local:RadioEnumBooleanConverter}, ConverterParameter={x:Reference Name=RadioBindedKey}}" />
                                                 </Grid>
@@ -60,10 +60,28 @@
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
                                 </StackPanel>
+                                <!--  Computer Action: Warning  -->
+                                <TextBlock
+                                    Margin="0,0,0,10"
+                                    FontFamily="{StaticResource LatoRegular}"
+                                    FontSize="10"
+                                    Foreground="{StaticResource RedBrushKey}"
+                                    Text="Run the application As Administrator for this effect."
+                                    Visibility="{Binding ApplicationViewModel.IsRunningAsAdministratorCheck, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:BooleanToVisibilityGoneConverter}, ConverterParameter=True}" />
                                 <!--  Send Message  -->
                                 <CheckBox Content="Send Message" IsChecked="{Binding IsSendMessageSelected}" />
+                                <!--  Send Message: Warning  -->
+                                <TextBlock
+                                    Margin="0,0,0,10"
+                                    FontFamily="{StaticResource LatoRegular}"
+                                    FontSize="10"
+                                    Foreground="{StaticResource RedBrushKey}"
+                                    Text="Set your connection on the Preferences page for this effect." />
                                 <!--  Sound Alert  -->
-                                <CheckBox Content="Sound Alert" IsChecked="{Binding IsSoundAlertSelected}" />
+                                <CheckBox
+                                    Content="Sound Alert"
+                                    IsChecked="{Binding IsSoundAlertSelected}"
+                                    IsEnabled="{Binding IsComputerActionSelected, Converter={local:BooleanInvertConverter}}" />
                             </StackPanel>
                         </StackPanel>
 

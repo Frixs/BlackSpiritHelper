@@ -143,7 +143,7 @@
                         Background="{StaticResource WatchdogLogBackgroundBrushKey}"
                         BorderBrush="{StaticResource WatchdogLogBorderBrushKey}"
                         BorderThickness="3">
-                        <ScrollViewer Padding="5">
+                        <ScrollViewer Padding="5" HorizontalScrollBarVisibility="Auto">
                             <ItemsControl ItemsSource="{Binding LogList}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>

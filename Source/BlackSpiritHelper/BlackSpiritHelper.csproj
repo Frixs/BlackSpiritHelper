@@ -240,6 +240,7 @@
     <Compile Include="ValueConverters\BaseMultiValueConverter.cs" />
     <Compile Include="ValueConverters\BooleanToContentConverter.cs" />
     <Compile Include="ValueConverters\ContainsLeadingCharConverter.cs" />
+    <Compile Include="ValueConverters\EnumDescriptionConverter.cs" />
     <Compile Include="ValueConverters\Schedule\ScheduleTimeZoneRegionConverter.cs" />
     <Compile Include="ValueConverters\StringHEXLeadingHashConverter.cs" />
     <Compile Include="ValueConverters\SubstringConverter.cs" />
@@ -248,7 +249,7 @@
     <Compile Include="ValueConverters\Timer\TimerListOverlayOnlyConverter.cs" />
     <Compile Include="ValueConverters\TicksToDateStringConverter.cs" />
     <Compile Include="ValueConverters\WarningTimerColorSwapConverter.cs" />
-    <Compile Include="ValueConverters\EnumBooleanConverter.cs" />
+    <Compile Include="ValueConverters\RadioEnumBooleanConverter.cs" />
     <Compile Include="ValueConverters\StringToUppercaseConverter.cs" />
     <Compile Include="ValueConverters\ObjectToStringConverter.cs" />
     <Compile Include="ValueConverters\TimeSpanToStringConverter.cs" />
