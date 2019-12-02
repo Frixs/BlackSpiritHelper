@@ -61,16 +61,23 @@
                                                 Style="{StaticResource TextBoxSmall}"
                                                 Tag="Enter process name (e.g. BlackDesert64.exe)"
                                                 Text="{Binding Name}" />
+                                            <!--  Process KillOnFailure CheckBox  -->
+                                            <CheckBox
+                                                Margin="5,0,0,0"
+                                                VerticalAlignment="Center"
+                                                IsChecked="{Binding KillOnFailure}"
+                                                Style="{StaticResource CheckBoxMedium}"
+                                                ToolTip="Kill On Failure" />
                                             <!--  Remove BTN  -->
                                             <Button
-                                                Width="16"
-                                                Height="16"
-                                                Margin="5,0,0,0"
+                                                Width="14"
+                                                Height="14"
+                                                Margin="15,0,0,0"
                                                 Command="{Binding Tag.RemoveProcessCommand, RelativeSource={RelativeSource AncestorType=ItemsControl, AncestorLevel=1, Mode=FindAncestor}}"
                                                 CommandParameter="{Binding}"
                                                 Content="{StaticResource FontAwesomeTimesIcon}"
                                                 FontFamily="{StaticResource FontAwesomeRegular}"
-                                                FontSize="16"
+                                                FontSize="14"
                                                 Style="{StaticResource RegularButtonNoColor}" />
                                         </StackPanel>
 

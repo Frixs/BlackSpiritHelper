@@ -264,13 +264,29 @@
         </Style.Triggers>
     </Style>
 
+    <!--  CheckBox - Medium  -->
+    <Style
+        x:Key="CheckBoxMedium"
+        BasedOn="{StaticResource BaseStyle}"
+        TargetType="{x:Type CheckBox}">
+
+        <Style.Resources>
+            <Style TargetType="Border">
+                <Setter Property="Width" Value="18" />
+                <Setter Property="Height" Value="18" />
+            </Style>
+            <Style TargetType="Grid">
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
+        </Style.Resources>
+    </Style>
+
     <!--  CheckBox - Large  -->
     <Style
         x:Key="CheckBoxLarge"
         BasedOn="{StaticResource BaseStyle}"
         TargetType="{x:Type CheckBox}">
-
-        <!--<Setter Property="Margin" Value="-1" />-->
 
         <Style.Resources>
             <Style TargetType="Border">

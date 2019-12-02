@@ -14,6 +14,11 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public string Name { get; set; } = "";
 
+        /// <summary>
+        /// Says if the process should be killed on failure.
+        /// </summary>
+        public bool KillOnFailure { get; set; } = false;
+
         #endregion
 
         #region Constructor
