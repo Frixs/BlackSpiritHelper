@@ -39,7 +39,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Each watcher has own user settings for failure actions.
         /// </summary>
-        public override WatchdogFailureActionDataViewModel FailureAction { get; set; } = new WatchdogFailureActionDataViewModel();
+        public override WatchdogFailureRoutineDataViewModel FailureRoutine { get; set; } = new WatchdogFailureRoutineDataViewModel();
 
         #endregion
 
@@ -117,15 +117,15 @@ namespace BlackSpiritHelper.Core
             isOk = isOk ? (ProcessConnection.IsSelected ? ProcessConnection.Check() : true) : false;
 
             // Failure hook.
-            if (!isOk && !mIsFailureActionFired)
+            if (!isOk && !mIsFailureRoutineFired)
             {
-                mIsFailureActionFired = true; // Let know the procedure to do not fire this the same event again until the failure disappear.
-                FailureAction.Do();
+                mIsFailureRoutineFired = true; // Let know the procedure to do not fire this the same event again until the failure disappear.
+                FailureRoutine.Do();
             }
             // First occurance of recovery from failure.
-            else if (isOk && mIsFailureActionFired)
+            else if (isOk && mIsFailureRoutineFired)
             {
-                mIsFailureActionFired = false; // Reset value back to false to be able to record failure event again when occurs.
+                mIsFailureRoutineFired = false; // Reset value back to false to be able to record failure event again when occurs.
             }
         }
 

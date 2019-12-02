@@ -7,7 +7,7 @@ namespace BlackSpiritHelper.Core
     /// <summary>
     /// Wrapper with action settings on failure.
     /// </summary>
-    public class WatchdogFailureActionDataViewModel : BaseViewModel
+    public class WatchdogFailureRoutineDataViewModel : BaseViewModel
     {
         #region Private Members
 
@@ -86,7 +86,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public WatchdogFailureActionDataViewModel()
+        public WatchdogFailureRoutineDataViewModel()
         {
         }
 

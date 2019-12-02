@@ -123,14 +123,14 @@
     <Compile Include="ValidationRules\BaseRule.cs" />
     <Compile Include="ValidationRules\Schedule\ScheduleTitleRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerTitleRule.cs" />
-    <Compile Include="ViewModels\Content\Watchdog\Data\Design\WatchdogFailureActionDataDesignModel.cs" />
+    <Compile Include="ViewModels\Content\Watchdog\Data\Design\WatchdogFailureRoutineDataDesignModel.cs" />
     <Compile Include="ViewModels\Content\Watchdog\Data\Design\WatchdogProcessConnectionDataDesignModel.cs" />
     <Compile Include="ViewModels\Content\Watchdog\Data\Design\WatchdogInternetConnectionDataDesignModel.cs" />
     <Compile Include="ViewModels\Content\Watchdog\Data\Interfaces\AWatchdogConnectionBase.cs" />
     <Compile Include="ViewModels\Content\Watchdog\Data\Interfaces\AWatchdogWatcherBase.cs" />
     <Compile Include="ViewModels\Content\Watchdog\Data\WatchdogDataViewModel.cs" />
     <Compile Include="ViewModels\Content\Watchdog\Data\WatchdogConnectionWatcherDataViewModel.cs" />
-    <Compile Include="ViewModels\Content\Watchdog\Data\WatchdogFailureActionDataViewModel.cs" />
+    <Compile Include="ViewModels\Content\Watchdog\Data\WatchdogFailureRoutineDataViewModel.cs" />
     <Compile Include="ViewModels\Content\Watchdog\Data\WatchdogInternetConnectionDataViewModel.cs" />
     <Compile Include="ViewModels\Content\Watchdog\Data\WatchdogProcessConnectionDataViewModel.cs" />
     <Compile Include="ViewModels\Content\Watchdog\Data\WatchdogProcessDataViewModel.cs" />

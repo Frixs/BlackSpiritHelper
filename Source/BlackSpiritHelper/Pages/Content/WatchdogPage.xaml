@@ -172,6 +172,22 @@
                 <StackPanel Margin="10" Orientation="Vertical">
                     <!--  Connection Watcher  -->
                     <local:WatchdogConnectionWatcherControl />
+
+                    <!--  TODO: Command Runner - Title  -->
+                    <TextBlock
+                        Grid.Column="0"
+                        Margin="0,10,0,0"
+                        VerticalAlignment="Center"
+                        FontFamily="{StaticResource LatoBold}"
+                        FontSize="32"
+                        Foreground="{StaticResource WatchdogForegroundBrushKey}"
+                        Text="Command Runner" />
+                    <TextBlock
+                        FontFamily="{StaticResource LatoMediumItalic}"
+                        FontSize="12"
+                        Foreground="{StaticResource WatchdogSubForegroundBrushKey}"
+                        Text="Work In Progress! E.g. you will be able to kill processes/services or set their priority. In case of Black Desert Online... e.g. it can be useful to kill Coherent UI process or set the game to higher priority."
+                        TextWrapping="Wrap" />
                 </StackPanel>
 
             </ScrollViewer>

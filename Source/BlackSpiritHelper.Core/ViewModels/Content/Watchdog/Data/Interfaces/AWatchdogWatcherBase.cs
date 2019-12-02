@@ -46,7 +46,7 @@ namespace BlackSpiritHelper.Core.Data.Interfaces
         /// Says if the failure action has been already proceeded.
         /// We dont want to fire the same event on each failure. Only at the time when the failure occurs for the first time.
         /// </summary>
-        protected bool mIsFailureActionFired = false;
+        protected bool mIsFailureRoutineFired = false;
 
         #endregion
 
@@ -107,7 +107,7 @@ namespace BlackSpiritHelper.Core.Data.Interfaces
         /// <summary>
         /// Each watcher has own user settings for failure actions.
         /// </summary>
-        public abstract WatchdogFailureActionDataViewModel FailureAction { get; set; }
+        public abstract WatchdogFailureRoutineDataViewModel FailureRoutine { get; set; }
 
         #endregion
 

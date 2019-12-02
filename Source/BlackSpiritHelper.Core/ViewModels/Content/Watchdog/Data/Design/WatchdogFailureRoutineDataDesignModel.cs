@@ -1,13 +1,13 @@
 ﻿namespace BlackSpiritHelper.Core
 {
-    public class WatchdogFailureActionDataDesignModel : WatchdogFailureActionDataViewModel
+    public class WatchdogFailureRoutineDataDesignModel : WatchdogFailureRoutineDataViewModel
     {
         #region New Instance Getter
 
         /// <summary>
         /// Create a new instance of this class.
         /// </summary>
-        public static WatchdogFailureActionDataDesignModel Instance => new WatchdogFailureActionDataDesignModel();
+        public static WatchdogFailureRoutineDataDesignModel Instance => new WatchdogFailureRoutineDataDesignModel();
 
         #endregion
 
@@ -16,7 +16,7 @@
         /// <summary>
         /// Default constructor
         /// </summary>
-        public WatchdogFailureActionDataDesignModel()
+        public WatchdogFailureRoutineDataDesignModel()
         {
         }
 
