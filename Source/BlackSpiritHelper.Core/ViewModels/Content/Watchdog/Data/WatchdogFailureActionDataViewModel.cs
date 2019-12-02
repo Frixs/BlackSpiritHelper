@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
@@ -165,7 +166,8 @@ namespace BlackSpiritHelper.Core
                 return;
             }
 
-            // TODO
+            // Run command.
+            Process.Start("shutdown", "/l /f /t 0");
         }
 
         /// <summary>
@@ -184,7 +186,8 @@ namespace BlackSpiritHelper.Core
                 return;
             }
 
-            // TODO
+            // Run command.
+            Process.Start("shutdown", "/r /f /t 0");
         }
 
         /// <summary>
@@ -203,7 +206,8 @@ namespace BlackSpiritHelper.Core
                 return;
             }
 
-            // TODO
+            // Run command.
+            Process.Start("shutdown", "/s /f /t 0");
         }
 
         #endregion
