@@ -22,7 +22,15 @@
                                 <Border
                                     Width="26"
                                     Height="26"
-                                    Background="{StaticResource WatchdogForegroundBrushKey}" />
+                                    Background="{StaticResource WatchdogForegroundBrushKey}">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                        FontSize="12"
+                                        Foreground="{StaticResource WatchdogGroupMenuBackgroundBrushKey}"
+                                        Text="{StaticResource FontAwesomeBoltIcon}" />
+                                </Border>
                                 <TextBlock
                                     Margin="5,0,0,0"
                                     VerticalAlignment="Center"
@@ -37,9 +45,15 @@
                                 HorizontalAlignment="Left"
                                 Orientation="Vertical">
                                 <!--  Computer Action  -->
-                                <CheckBox Content="Computer Action" IsChecked="{Binding IsComputerActionSelected}" />
+                                <CheckBox
+                                    HorizontalAlignment="Left"
+                                    Content="Computer Action"
+                                    IsChecked="{Binding IsComputerActionSelected}" />
                                 <!--  Computer Action: Radio  -->
-                                <StackPanel IsEnabled="{Binding IsComputerActionSelected}" Orientation="Vertical">
+                                <StackPanel
+                                    HorizontalAlignment="Left"
+                                    IsEnabled="{Binding IsComputerActionSelected}"
+                                    Orientation="Vertical">
                                     <ItemsControl ItemsSource="{Binding ComputerActionList}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
@@ -69,7 +83,10 @@
                                     Text="Run the application As Administrator for this effect."
                                     Visibility="{Binding ApplicationViewModel.IsRunningAsAdministratorCheck, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:BooleanToVisibilityGoneConverter}, ConverterParameter=True}" />
                                 <!--  Send Message  -->
-                                <CheckBox Content="Send Message" IsChecked="{Binding IsSendMessageSelected}" />
+                                <CheckBox
+                                    HorizontalAlignment="Left"
+                                    Content="Send Message"
+                                    IsChecked="{Binding IsSendMessageSelected}" />
                                 <!--  Send Message: Warning  -->
                                 <TextBlock
                                     Margin="0,0,0,10"
@@ -79,6 +96,7 @@
                                     Text="Set your connection on the Preferences page for this effect." />
                                 <!--  Sound Alert  -->
                                 <CheckBox
+                                    HorizontalAlignment="Left"
                                     Content="Sound Alert"
                                     IsChecked="{Binding IsSoundAlertSelected}"
                                     IsEnabled="{Binding IsComputerActionSelected, Converter={local:BooleanInvertConverter}}" />

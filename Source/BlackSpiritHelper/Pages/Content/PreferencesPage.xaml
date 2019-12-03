@@ -154,6 +154,19 @@
                     <Border Style="{StaticResource FormSectionSpacer}" />
 
                     <!--  ==================================================  -->
+                    <!--  Form Subtitle - Connection  -->
+                    <TextBlock Style="{StaticResource FormSubtitle}" Text="Connection" />
+
+                    <!--  Spacer  -->
+                    <Border Style="{StaticResource FormInputVerSpacer}" />
+
+                    <!--  Connection Wrapper  -->
+                    <local:PreferencesConnectionControl DataContext="{Binding Connection}" />
+
+                    <!--  Spacer  -->
+                    <Border Style="{StaticResource FormSectionSpacer}" />
+
+                    <!--  ==================================================  -->
                     <!--  Form Subtitle - Overlay  -->
                     <TextBlock Style="{StaticResource FormSubtitle}" Text="Overlay" />
 

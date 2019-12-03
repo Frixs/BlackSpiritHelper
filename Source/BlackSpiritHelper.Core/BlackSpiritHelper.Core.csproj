@@ -123,6 +123,11 @@
     <Compile Include="ValidationRules\BaseRule.cs" />
     <Compile Include="ValidationRules\Schedule\ScheduleTitleRule.cs" />
     <Compile Include="ValidationRules\Timer\TimerTitleRule.cs" />
+    <Compile Include="ViewModels\Content\Preferences\Data\Design\PreferencesConnDiscordDataDesignModel.cs" />
+    <Compile Include="ViewModels\Content\Preferences\Data\Design\PreferencesConnectionDataDesignModel.cs" />
+    <Compile Include="ViewModels\Content\Preferences\Data\Interfaces\APreferencesConnBaseDataViewModel.cs" />
+    <Compile Include="ViewModels\Content\Preferences\Data\PreferencesConnDiscordDataViewModel.cs" />
+    <Compile Include="ViewModels\Content\Preferences\Data\PreferencesConnectionDataViewModel.cs" />
     <Compile Include="ViewModels\Content\Watchdog\Data\Design\WatchdogFailureRoutineDataDesignModel.cs" />
     <Compile Include="ViewModels\Content\Watchdog\Data\Design\WatchdogProcessConnectionDataDesignModel.cs" />
     <Compile Include="ViewModels\Content\Watchdog\Data\Design\WatchdogInternetConnectionDataDesignModel.cs" />

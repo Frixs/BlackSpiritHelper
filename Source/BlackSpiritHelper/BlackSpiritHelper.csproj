@@ -165,6 +165,12 @@
     <Compile Include="Controls\PageHost.xaml.cs">
       <DependentUpon>PageHost.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Preferences\PreferencesConnDiscordControl.xaml.cs">
+      <DependentUpon>PreferencesConnDiscordControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Preferences\PreferencesConnectionControl.xaml.cs">
+      <DependentUpon>PreferencesConnectionControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Schedule\ScheduleCalendarControl.xaml.cs">
       <DependentUpon>ScheduleCalendarControl.xaml</DependentUpon>
     </Compile>
@@ -290,6 +296,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\PageHost.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Preferences\PreferencesConnDiscordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Preferences\PreferencesConnectionControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
