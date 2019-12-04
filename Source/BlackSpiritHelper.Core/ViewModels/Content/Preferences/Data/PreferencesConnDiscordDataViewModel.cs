@@ -4,6 +4,20 @@ namespace BlackSpiritHelper.Core
 {
     public class PreferencesConnDiscordDataViewModel : APreferencesConnBaseDataViewModel
     {
+        #region Static Limitation Properties
+
+        /// <summary>
+        /// Max length of <see cref="Webhook"/>.
+        /// </summary>
+        public static byte AllowedWebhookMaxLength { get; private set; } = 150;
+
+        /// <summary>
+        /// Max length of <see cref="Username"/>.
+        /// </summary>
+        public static byte AllowedUsernameMaxLength { get; private set; } = 25;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -44,6 +58,23 @@ namespace BlackSpiritHelper.Core
         public override bool SendTextMessage(string message)
         {
             throw new System.NotImplementedException();
+        }
+
+        /// <summary>
+        /// Validate inputs of connection method.
+        /// </summary>
+        /// <returns></returns>
+        public override bool ValidateInputs()
+        {
+            // Webhook.
+            if (!new PreferencesConnDiscordWebhookRule().Validate(Webhook, null).IsValid)
+                return false;
+
+            // Username.
+            if (!new PreferencesConnDiscordUsernameRule().Validate(Username, null).IsValid)
+                return false;
+
+            return true;
         }
 
         #endregion

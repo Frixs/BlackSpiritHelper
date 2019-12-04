@@ -111,6 +111,8 @@
     <Compile Include="Utilities\EnumExtensionMethods.cs" />
     <Compile Include="Utilities\ObjectExtensionMethods.cs" />
     <Compile Include="Utilities\StringUtils.cs" />
+    <Compile Include="ValidationRules\Preferences\PreferencesConnDiscordUsernameRule.cs" />
+    <Compile Include="ValidationRules\Preferences\PreferencesConnDiscordWebhookRule.cs" />
     <Compile Include="ValidationRules\Schedule\ScheduleTimeZoneRegionRule.cs" />
     <Compile Include="ValidationRules\Schedule\ScheduleItemNameRule.cs" />
     <Compile Include="ValidationRules\Timer\TimeMinutesRule.cs" />

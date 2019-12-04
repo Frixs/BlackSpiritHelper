@@ -71,14 +71,32 @@ namespace BlackSpiritHelper.Core
         public abstract bool SendTextMessage(string message);
 
         /// <summary>
+        /// Validate inputs of connection method.
+        /// </summary>
+        /// <returns></returns>
+        public abstract bool ValidateInputs();
+
+        /// <summary>
         /// Activate method as the one ehich user uses.
         /// </summary>
         /// <returns></returns>
         public void ActivateMethod()
         {
-            // TODO: validation stuff
-            Console.WriteLine(Identifier);
+            if (!ValidateInputs())
+            {
+                // Some error occured during validation.
+                IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                {
+                    Caption = "Invalid Inputs!",
+                    Message = $"Some of entered inputs are invalid.",
+                    Button = System.Windows.MessageBoxButton.OK,
+                    Icon = System.Windows.MessageBoxImage.Warning,
+                });
 
+                return;
+            }
+
+            // Activate.
             IoC.DataContent.PreferencesData.Connection.ActivateMethod(Identifier);
         }
 
