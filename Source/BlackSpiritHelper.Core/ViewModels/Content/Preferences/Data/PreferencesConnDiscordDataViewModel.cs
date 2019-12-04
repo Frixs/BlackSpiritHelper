@@ -54,14 +54,26 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Send message to the user's connection.
         /// </summary>
-        /// <param name="message"></param>
-        public override bool SendTextMessage(string message)
+        /// <param name="message">Message to send</param>
+        /// <param name="asap">Send message as soon as it is possible. E.g. the internet connection can be down. Send it once the connection is up.</param>
+        /// <returns>
+        /// Status code:
+        ///     - 0 = OK
+        ///     - 1 = Unexpected error occurred - no internet connection
+        ///     - 2 = Not set active connection
+        /// </returns>
+        public override int SendTextMessage(string message, bool asap = false)
         {
-            throw new System.NotImplementedException();
+            if (!IoC.DataContent.PreferencesData.Connection.IsActive)
+                return 2;
+
+            // TODO: Send message to Discord!
+
+            return 0;
         }
 
         /// <summary>
-        /// Validate inputs of connection method.
+        /// Validate inputs of the connection method.
         /// </summary>
         /// <returns></returns>
         public override bool ValidateInputs()

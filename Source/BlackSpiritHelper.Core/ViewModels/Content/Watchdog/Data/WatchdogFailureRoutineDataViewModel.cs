@@ -132,7 +132,19 @@ namespace BlackSpiritHelper.Core
             if (!IsSendMessageSelected)
                 return;
 
-            // TODO message sending + IsEnaled for XAML from preferences
+            // Log it.
+            IoC.DataContent.WatchdogData.Log("Sending message to user...");
+
+            // Send message.
+            int status = IoC.DataContent.PreferencesData.Connection.ActiveMethod.SendTextMessage("Connection lost!", true);
+
+            // Resolve sending status.
+            if (status == 2)
+                IoC.DataContent.WatchdogData.Log("Message not sent! No active connection.");
+            else if (status == 1)
+                IoC.DataContent.WatchdogData.Log("Cannot send message at the moment.");
+            else
+                IoC.DataContent.WatchdogData.Log("Message successfully sent!");
         }
 
         /// <summary>
@@ -151,7 +163,7 @@ namespace BlackSpiritHelper.Core
         #region Private Methods (Computer Action)
 
         /// <summary>
-        /// TODO
+        /// Force computer to log off user.
         /// </summary>
         private void ComputerLogOff()
         {
@@ -171,7 +183,7 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// TODO
+        /// Force computer to restart.
         /// </summary>
         private void ComputerRestart()
         {
@@ -191,7 +203,7 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// TODO
+        /// Force computer to shutdown.
         /// </summary>
         private void ComputerShutdown()
         {
