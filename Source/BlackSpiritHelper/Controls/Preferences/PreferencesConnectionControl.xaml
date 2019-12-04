@@ -27,10 +27,10 @@
                 <!--  Active Label : Text - Triggers  -->
                 <TextBlock.Style>
                     <Style TargetType="TextBlock">
-                        <Setter Property="Text" Value="{Binding ActiveMethodIdentifier, StringFormat='Active: {0:C}'}" />
+                        <Setter Property="Text" Value="{Binding ActiveMethodIdentifier, Converter={local:EnumDescriptionConverter}, StringFormat='Active: {0:C}'}" />
                         <Setter Property="Foreground" Value="{StaticResource ScheduleAddButtonForegroundBrushKey}" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ActiveMethodIdentifier}" Value="">
+                            <DataTrigger Binding="{Binding ActiveMethodIdentifier}" Value="None">
                                 <Setter Property="Text" Value="NO ACTIVE" />
                                 <Setter Property="Foreground" Value="{StaticResource RedForegroundBrushKey}" />
                             </DataTrigger>
@@ -43,7 +43,7 @@
                 <Style TargetType="Border">
                     <Setter Property="Background" Value="{StaticResource ScheduleAddButtonHoverBrushKey}" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding ActiveMethodIdentifier}" Value="">
+                        <DataTrigger Binding="{Binding ActiveMethodIdentifier}" Value="None">
                             <Setter Property="Background" Value="{StaticResource RedBrushKey}" />
                         </DataTrigger>
                     </Style.Triggers>
@@ -72,8 +72,33 @@
                             Text="DISCORD" />
                     </StackPanel>
                 </TabItem.Header>
-                <!--  Content  -->
-                <local:PreferencesConnDiscordControl />
+                <Grid>
+                    <!--  Content  -->
+                    <Border
+                        Margin="10"
+                        Panel.ZIndex="0"
+                        IsEnabled="{Binding IsActive, Converter={local:BooleanInvertConverter}}">
+                        <local:PreferencesConnDiscordControl DataContext="{Binding MethodDiscord}" />
+                    </Border>
+
+                    <!--  Cover  -->
+                    <Button
+                        Panel.ZIndex="1"
+                        Background="{StaticResource DisabledBackgroundBrushKey}"
+                        Command="{Binding DeactivateCommand}"
+                        Visibility="{Binding IsActive, Converter={local:BooleanToVisibilityGoneConverter}}">
+                        <Button.Style>
+                            <Style BasedOn="{StaticResource Hoverless}" TargetType="Button">
+                                <Setter Property="Opacity" Value="0.6" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Opacity" Value="1" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </Grid>
             </TabItem>
         </TabControl>
     </StackPanel>

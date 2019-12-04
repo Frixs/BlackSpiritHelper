@@ -62,6 +62,7 @@
     <Compile Include="Audio\Implementation\AudioPlayer.cs" />
     <Compile Include="Audio\Implementation\Managers\SoundAudioManager.cs" />
     <Compile Include="DataTypes\ApplicationPage.cs" />
+    <Compile Include="DataTypes\PreferencesConnectionType.cs" />
     <Compile Include="DataTypes\TimeZoneRegion.cs" />
     <Compile Include="DataTypes\OverlaySize.cs" />
     <Compile Include="Audio\Core\AudioType.cs" />

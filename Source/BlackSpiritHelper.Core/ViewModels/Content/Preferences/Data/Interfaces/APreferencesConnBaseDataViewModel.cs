@@ -1,4 +1,7 @@
-﻿using System.Xml.Serialization;
+﻿using System;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
 {
@@ -7,10 +10,20 @@ namespace BlackSpiritHelper.Core
         #region Public Properties
 
         /// <summary>
-        /// Identifier string representing particular connection.
+        /// Identifier representing particular connection.
         /// </summary>
         [XmlIgnore]
-        public abstract string Identifier { get; protected set; }
+        public abstract PreferencesConnectionType Identifier { get; protected set; }
+
+        #endregion
+
+        #region Commands
+
+        /// <summary>
+        /// Command to activate connection.
+        /// </summary>
+        [XmlIgnore]
+        public ICommand ActivateCommand { get; set; }
 
         #endregion
 
@@ -21,6 +34,30 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public APreferencesConnBaseDataViewModel()
         {
+            // Create commands.
+            CreateCommands();
+        }
+
+        #endregion
+
+        #region Command Methods
+
+        /// <summary>
+        /// Create commands.
+        /// </summary>
+        private void CreateCommands()
+        {
+            ActivateCommand = new RelayCommand(async () => await ActivateCommandMethodAsync());
+        }
+
+        /// <summary>
+        /// Activate connection method async wrapper.
+        /// </summary>
+        /// <returns></returns>
+        private async Task ActivateCommandMethodAsync()
+        {
+            ActivateMethod();
+            await Task.Delay(1);
         }
 
         #endregion
@@ -40,6 +77,7 @@ namespace BlackSpiritHelper.Core
         public void ActivateMethod()
         {
             // TODO: validation stuff
+            Console.WriteLine(Identifier);
 
             IoC.DataContent.PreferencesData.Connection.ActivateMethod(Identifier);
         }

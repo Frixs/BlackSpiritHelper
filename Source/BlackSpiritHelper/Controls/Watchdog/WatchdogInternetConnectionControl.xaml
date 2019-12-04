@@ -22,7 +22,7 @@
                                 FontFamily="{StaticResource LatoMediumItalic}"
                                 FontSize="12"
                                 Foreground="{StaticResource WatchdogSubForegroundBrushKey}"
-                                Text="Your connection to the internet is tested by 2-factor method. Ping is the pillar way to check the connection. But sometimes, sites refuse ping requests. If the ping fails, there is another check through opening web client. If it fails too, it will make the same checks again after a few seconds. If the second wave of checks fail again, it will evaluate your internet as inaccessible."
+                                Text="Your connection to the internet is tested by 2-factor method. Ping is the pillar way to check the connection. But sometimes, sites refuse ping requests. If the ping fails, there is another check through opening web client. If it fails too, it will make the same checks again after a few seconds. If the second wave of checks fail again, it will evaluate your internet connection as inaccessible."
                                 TextWrapping="Wrap" />
 
                             <StackPanel Orientation="Horizontal">

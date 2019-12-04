@@ -1,13 +1,26 @@
-﻿namespace BlackSpiritHelper.Core
+﻿using System.Xml.Serialization;
+
+namespace BlackSpiritHelper.Core
 {
     public class PreferencesConnDiscordDataViewModel : APreferencesConnBaseDataViewModel
     {
         #region Public Properties
 
         /// <summary>
-        /// Identifier string representing particular connection.
+        /// Webhook to Discord server.
         /// </summary>
-        public override string Identifier { get; protected set; } = "DISCORD";
+        public string Webhook { get; set; } = "";
+
+        /// <summary>
+        /// Discord username.
+        /// </summary>
+        public string Username { get; set; } = "";
+
+        /// <summary>
+        /// Identifier representing particular connection.
+        /// </summary>
+        [XmlIgnore]
+        public override PreferencesConnectionType Identifier { get; protected set; } = PreferencesConnectionType.Discord;
 
         #endregion
 

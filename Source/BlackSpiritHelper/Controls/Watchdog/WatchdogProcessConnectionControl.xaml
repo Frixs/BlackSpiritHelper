@@ -58,6 +58,7 @@
                                             <!--  Process Name Input  -->
                                             <TextBox
                                                 Width="275"
+                                                MaxLength="50"
                                                 Style="{StaticResource TextBoxSmall}"
                                                 Tag="Enter process name (e.g. BlackDesert64.exe)"
                                                 Text="{Binding Name}" />
