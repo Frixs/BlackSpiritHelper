@@ -8,16 +8,6 @@ namespace BlackSpiritHelper.Core
 {
     public class PreferencesConnectionDataViewModel : BaseViewModel
     {
-        #region Private Members
-
-        /// <summary>
-        /// Active (activated) method's identifier.
-        /// <see cref="ActiveMethodIdentifier"/>.
-        /// </summary>
-        private PreferencesConnectionType mActiveMethodIdentifier = PreferencesConnectionType.None;
-
-        #endregion
-
         #region Public Properties
 
         /// <summary>
@@ -31,15 +21,7 @@ namespace BlackSpiritHelper.Core
         /// Servers loading/saving user data, primarily.
         /// Is synced with value changing of <see cref="ActiveMethod"/>.
         /// </summary>
-        public PreferencesConnectionType ActiveMethodIdentifier
-        {
-            get => mActiveMethodIdentifier;
-            set
-            {
-                mActiveMethodIdentifier = value;
-                ActivateMethod(value);
-            }
-        }
+        public PreferencesConnectionType ActiveMethodIdentifier { get; set; } = PreferencesConnectionType.None;
 
         /// <summary>
         /// Active (activated) method that user uses.
@@ -49,23 +31,26 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// List of all available connections for user.
+        /// Use <seealso cref="Init"/> for initialization.
         /// </summary>
-        public List<APreferencesConnBaseDataViewModel> Methods { get; set; } = new List<APreferencesConnBaseDataViewModel>()
-        {
-            // Discord
-            new PreferencesConnDiscordDataViewModel(),
-        };
+        [XmlIgnore]
+        public List<APreferencesConnBaseDataViewModel> MethodList { get; set; } //; Init - Constructor
+
+        /// <summary>
+        /// Says if <see cref="Init"/> has been fired or not.
+        /// </summary>
+        [XmlIgnore]
+        public bool IsInitialized { get; private set; } = false;
 
         #endregion
 
-        #region Public Properties (Template Only)
+        #region Public Properties (Methods)
 
         /// <summary>
-        /// Discord Method.
-        /// Method shortcut property for template binding only!!!
+        /// Connection method: Discord
+        /// Use <seealso cref="Init"/> for initialization.
         /// </summary>
-        [XmlIgnore]
-        public APreferencesConnBaseDataViewModel MethodDiscord => Methods.FirstOrDefault(o => o.Identifier.Equals(PreferencesConnectionType.Discord));
+        public PreferencesConnDiscordDataViewModel MethodDiscord { get; set; } = new PreferencesConnDiscordDataViewModel();
 
         #endregion
 
@@ -88,6 +73,26 @@ namespace BlackSpiritHelper.Core
         {
             // Create commands.
             CreateCommands();
+        }
+
+        /// <summary>
+        /// This method should be called only once at the beggining for initializing this section.
+        /// Use <see cref="PreferencesDataViewModel.SetupMethod"/>.
+        /// </summary>
+        public void Init()
+        {
+            if (IsInitialized)
+                return;
+            IsInitialized = true;
+
+            // Build list of all methods.
+            MethodList = new List<APreferencesConnBaseDataViewModel>()
+            {
+                MethodDiscord,
+            };
+
+            // Activate user preferred method.
+            ActivateMethod(ActiveMethodIdentifier);
         }
 
         #endregion
@@ -122,9 +127,8 @@ namespace BlackSpiritHelper.Core
         /// <param name="identifier"></param>
         public void ActivateMethod(PreferencesConnectionType identifier)
         {
-            ActiveMethod = Methods.FirstOrDefault(o => o.Identifier.Equals(identifier));
-            mActiveMethodIdentifier = ActiveMethod == null ? PreferencesConnectionType.None : ActiveMethod.Identifier;
-            OnPropertyChanged(nameof(ActiveMethodIdentifier));
+            ActiveMethod = MethodList.FirstOrDefault(o => o.Identifier.Equals(identifier));
+            ActiveMethodIdentifier = ActiveMethod == null ? PreferencesConnectionType.None : ActiveMethod.Identifier;
             OnPropertyChanged(nameof(IsActive));
         }
 
@@ -135,8 +139,7 @@ namespace BlackSpiritHelper.Core
         public void DeactivateMethod()
         {
             ActiveMethod = null;
-            mActiveMethodIdentifier = PreferencesConnectionType.None;
-            OnPropertyChanged(nameof(ActiveMethodIdentifier));
+            ActiveMethodIdentifier = PreferencesConnectionType.None;
             OnPropertyChanged(nameof(IsActive));
         }
 

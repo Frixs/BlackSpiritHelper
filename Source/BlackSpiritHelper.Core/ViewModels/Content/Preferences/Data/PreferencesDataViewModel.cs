@@ -111,7 +111,11 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         protected override void SetupMethod()
         {
+            // Init after application start.
             ForceToRunAsAdministrator = IoC.Application.Cookies.ForceToRunAsAdministrator;
+
+            // Init connection section.
+            Connection.Init();
         }
 
         /// <summary>
