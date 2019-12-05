@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Input;
 using System.Xml.Serialization;
 
@@ -8,6 +10,15 @@ namespace BlackSpiritHelper.Core
 {
     public class PreferencesConnectionDataViewModel : BaseViewModel
     {
+        #region Private Members
+
+        /// <summary>
+        /// Timer for pending messages.
+        /// </summary>
+        private Timer mPendingTimer = null;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -99,6 +110,9 @@ namespace BlackSpiritHelper.Core
 
             // Activate user preferred method.
             ActivateMethod(ActiveMethodIdentifier);
+
+            // Handle pending messages.
+            StartTimerControl();
         }
 
         #endregion
@@ -160,6 +174,93 @@ namespace BlackSpiritHelper.Core
             ActiveMethod = null;
             ActiveMethodIdentifier = PreferencesConnectionType.None;
             OnPropertyChanged(nameof(IsActive));
+        }
+
+        /// <summary>
+        /// Add new pending message.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        public void AddNewPendingMessage(string message)
+        {
+            if (string.IsNullOrEmpty(message))
+                return;
+
+            IoC.Application.Cookies.PendingMessageList.Add(message);
+
+            StartTimerControl();
+        }
+
+        #endregion
+
+        #region Timer Methods
+
+        /// <summary>
+        /// Set the timers.
+        /// </summary>
+        private void StartTimerControl()
+        {
+            if (!IoC.Application.Cookies.PendingMessageList.Any() || mPendingTimer != null)
+                return;
+
+            // Set pending timer.
+            mPendingTimer = new Timer(TimeSpan.FromMinutes(10).TotalMilliseconds);
+            mPendingTimer.Elapsed += PendingTimerOnElapsed;
+            mPendingTimer.AutoReset = false; // Make it fire only once -> Manual firing.
+            mPendingTimer.Start();
+
+            IoC.Logger.Log("Starting timer for pending messages.", LogLevel.Debug);
+        }
+
+        /// <summary>
+        /// Dispose timer calculations.
+        /// Use this only while destroying the instance of the timer.
+        /// </summary>
+        private void StopTimerControl()
+        {
+            if (mPendingTimer == null)
+                return;
+
+            // Pending timer.
+            mPendingTimer.Stop();
+            mPendingTimer.Elapsed -= PendingTimerOnElapsed;
+            mPendingTimer.Dispose();
+            mPendingTimer = null;
+
+            IoC.Logger.Log("Stopping timer for pending messages.", LogLevel.Debug);
+        }
+
+        /// <summary>
+        /// On Tick timer event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PendingTimerOnElapsed(object sender, ElapsedEventArgs e)
+        {
+            var list = IoC.Application.Cookies.PendingMessageList;
+            List<string> itemsToRemove = new List<string>();
+            
+            // Go through pending messages.
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (IsActive)
+                {
+                    if (ActiveMethod.SendTextMessage(list[i]) == 0)
+                        itemsToRemove.Add(list[i]);
+                }
+                else // No point to check messages. We dont have set active connection.
+                {
+                    list.Clear();
+                }
+            }
+
+            // Removation.
+            list = list.Except(itemsToRemove).ToList();
+
+            // Check if the list has any pending messages. If it does, start next cycle.
+            if (list.Any())
+                mPendingTimer.Start();
+            else
+                StopTimerControl();
         }
 
         #endregion

@@ -100,6 +100,8 @@ namespace BlackSpiritHelper.Core
             {
                 // Send data.
                 var response = client.PostAsync(Webhook, content);
+                _ = response.Result; // Ask for result. If there is no internet connection we have to ask to cause exception catch.
+                IoC.Logger.Log($"Message sent!", LogLevel.Debug);
             }
             // Expected.
             catch (AggregateException e)

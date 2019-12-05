@@ -139,9 +139,12 @@ namespace BlackSpiritHelper.Core
             // Log it.
             IoC.DataContent.WatchdogData.Log("Sending message to user...");
 
-            // TODO: specify message based on failure module + DC time.
+            // Get current time to message.
+            var currentTime = DateTimeOffset.UtcNow.ToString("MM-dd HH:mm UTC");
+            string message = $"Connection lost! Accident time: {currentTime}";
+
             // Send message.
-            int status = IoC.DataContent.PreferencesData.Connection.ActiveMethod.SendTextMessage("Connection lost!");
+            int status = IoC.DataContent.PreferencesData.Connection.ActiveMethod.SendTextMessage(message);
 
             // Resolve sending status.
             if (status == 2)
@@ -152,7 +155,7 @@ namespace BlackSpiritHelper.Core
             {
                 IoC.DataContent.WatchdogData.Log("Cannot send message at the moment.");
                 IoC.DataContent.WatchdogData.Log("The message will be sent as soon as the connection is available.");
-                // TODO: Put message to resend loop - messages in Cookies - PreferencesConnection handler.
+                IoC.DataContent.PreferencesData.Connection.AddNewPendingMessage(message);
             }
             else
             {

@@ -130,7 +130,6 @@ namespace BlackSpiritHelper.Core
             else if (isOk && mIsFailureRoutineFired)
             {
                 mIsFailureRoutineFired = false; // Reset value back to false to be able to record failure event again when occurs.
-                FailureRoutine.Do(); // TODO remove line
             }
         }
 
