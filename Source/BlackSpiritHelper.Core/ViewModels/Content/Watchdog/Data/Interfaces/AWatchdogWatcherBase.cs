@@ -210,7 +210,7 @@ namespace BlackSpiritHelper.Core.Data.Interfaces
             // Set check loop timer.
             mCheckLoopTimer = new Timer(1000);
             mCheckLoopTimer.Elapsed += CheckLoopTimerOnElapsed;
-            mCheckLoopTimer.AutoReset = true;
+            mCheckLoopTimer.AutoReset = false; // Make it fire only once -> Manual firing.
         }
 
         /// <summary>

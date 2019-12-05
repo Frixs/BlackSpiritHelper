@@ -48,7 +48,7 @@
                                         FontFamily="{StaticResource LatoBold}"
                                         FontSize="12"
                                         Foreground="{StaticResource WatchdogForegroundBrushKey}"
-                                        Text="WebClient address:" />
+                                        Text="Client request address:" />
                                 </Grid>
                                 <StackPanel Orientation="Vertical">
                                     <!--  Ping Address  -->

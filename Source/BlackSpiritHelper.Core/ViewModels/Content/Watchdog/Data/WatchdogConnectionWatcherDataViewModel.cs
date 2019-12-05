@@ -99,6 +99,10 @@ namespace BlackSpiritHelper.Core
             UpdateProgressNote("Checking...");
             CheckProcess();
             UpdateProgressNote($"Last check: {datetime}");
+
+            // Fire next cycle of the timer.
+            if (IsRunning) // Check if the timer has NOT been stopped during processing current cycle.
+                mCheckLoopTimer.Start();
         }
 
         #endregion
@@ -126,6 +130,7 @@ namespace BlackSpiritHelper.Core
             else if (isOk && mIsFailureRoutineFired)
             {
                 mIsFailureRoutineFired = false; // Reset value back to false to be able to record failure event again when occurs.
+                FailureRoutine.Do(); // TODO remove line
             }
         }
 

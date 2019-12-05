@@ -42,24 +42,28 @@ namespace BlackSpiritHelper.Core
         /// Timeout for each Ping test.
         /// Unit: Milliseconds
         /// </summary>
-        public int PingTimeout { get; set; } = 1000;
+        [XmlIgnore]
+        public int PingTimeout { get; set; } = 1250;
 
         /// <summary>
-        /// Timeout for each WebClient test.
+        /// Timeout for each Client test.
         /// Unit: Milliseconds
         /// </summary>
-        public int WebClientTimeout { get; set; } = 5000;
+        [XmlIgnore]
+        public int ClientTimeout { get; set; } = 5000;
 
         /// <summary>
         /// Should the check perform double-check testing?
         /// </summary>
+        [XmlIgnore]
         public bool DoubleCheck { get; set; } = true;
 
         /// <summary>
         /// Delay for the 2nd (double-check) test.
         /// Unit: Milliseconds
         /// </summary>
-        public int DoubleCheckDelay { get; set; } = 1000;
+        [XmlIgnore]
+        public int DoubleCheckDelay { get; set; } = 4000;
 
         /// <summary>
         /// Says if the check is selected for checking loop.
@@ -83,6 +87,7 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// The main method to check conditions.
+        /// TODO: Triple check - maybe user option X-times check?
         /// </summary>
         /// <returns></returns>
         public override bool Check()
@@ -92,15 +97,17 @@ namespace BlackSpiritHelper.Core
             for (int i = 0; i < (DoubleCheck ? 2 : 1); i++)
             {
                 isOk = true;
-
+                
                 // Do stuff before double check round.
                 if (i > 0)
+                {
                     Thread.Sleep(DoubleCheckDelay);
+                }
 
                 // Check PING first.
                 if (!CheckPingConnection())
-                    // Check WebClient if PING fails.
-                    if (!CheckWebClientConnection())
+                    // Check client test if PING fails.
+                    if (!CheckClientConnection())
                         isOk = false;
 
                 // On failure hook.
@@ -115,6 +122,10 @@ namespace BlackSpiritHelper.Core
                     mIsFailureActionFired = false; // Reset value back to false to be able to record failure event again when occurs.
                     IoC.DataContent.WatchdogData.Log("Internet connection established!");
                 }
+
+                // First try and we are good. No need to double check.
+                if (isOk && i == 0)
+                    break;
             }
 
             return isOk;
@@ -142,11 +153,20 @@ namespace BlackSpiritHelper.Core
                 {
                     PingReply reply = p.Send(PingCheckAddress, PingTimeout, buffer);
                     pingStatus = reply.Status == IPStatus.Success;
+
+                    // Log fail.
+                    if (!pingStatus)
+                        IoC.Logger.Log($"Ping failed with status: {reply.Status.ToString()}", LogLevel.Debug);
                 }
-                catch (Exception)
+                catch (PingException e) // Expected - no internet connection.
                 {
                     pingStatus = false;
-                    IoC.Logger.Log("Ping exception = no internet connection", LogLevel.Debug);
+                    IoC.Logger.Log($"{e.GetType()}: {e.Message} (expected exception)", LogLevel.Debug);
+                }
+                catch (Exception e) // Unexpected.
+                {
+                    pingStatus = false;
+                    IoC.Logger.Log($"{e.GetType()}: {e.Message}", LogLevel.Fatal);
                 }
             }
 
@@ -154,26 +174,41 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Check connection to the internet through <see cref="WebClient"/>.
+        /// Check connection to the internet through <see cref="HttpWebRequest"/>.
+        /// TODO: Optimalize - Change to HttpClient / singleton client.
         /// </summary>
         /// <returns></returns>
-        private bool CheckWebClientConnection()
+        private bool CheckClientConnection()
         {
             bool clientStatus = false;
 
-            // TODO timeout web client test
+            var request = (HttpWebRequest)WebRequest.Create(ClientCheckAddress);
+            request.Timeout = ClientTimeout;
+            HttpWebResponse response = null;
+
             try
             {
-                using (var client = new WebClient())
-                using (client.OpenRead(ClientCheckAddress))
-                    return clientStatus = true;
+                // Try to get response.
+                response = (HttpWebResponse)request.GetResponse();
             }
-            catch
+            catch (WebException e) // No internet connection or timeout.
             {
                 clientStatus = false;
-                IoC.Logger.Log("WebClient exception = no internet connection", LogLevel.Debug);
+                IoC.Logger.Log($"{e.GetType().ToString()}: {e.Message} (expected exception)", LogLevel.Debug);
+            }
+            catch (Exception e) // Unexpected.
+            {
+                clientStatus = false;
+                IoC.Logger.Log($"{e.GetType().ToString()}: {e.Message}", LogLevel.Fatal);
+            }
+            finally
+            {
+                // Free.
+                if (response != null)
+                    response.Close();
             }
 
+            // Return status.
             return clientStatus;
         }
 

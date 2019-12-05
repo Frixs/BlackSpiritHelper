@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
 using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
@@ -56,6 +60,7 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// Send message to the user's connection.
+        /// TODO: Optimalize - Client to singleton.
         /// </summary>
         /// <param name="message">Message to send</param>
         /// <returns>
@@ -71,37 +76,56 @@ namespace BlackSpiritHelper.Core
 
             int status = 0;
 
-            // Create WC.
-            WebClient wc = new WebClient();
-            // Create discord value collection.
-            NameValueCollection discordValues = new NameValueCollection();
+            // Create request.
+            var client = new HttpClient
+            {
+                Timeout = TimeSpan.FromMilliseconds(10000)
+            };
+            FormUrlEncodedContent content = null;
 
+            // Create discord value collection.
+            List<KeyValuePair<string, string>> discordValues = new List<KeyValuePair<string, string>>();
             // Username (BOT).
-            discordValues.Add("username", IoC.Application.ProductName.Replace(" ", ""));
+            discordValues.Add(new KeyValuePair<string, string>("username", IoC.Application.ProductName.Replace(" ", "")));
             // Avatar.
-            discordValues.Add("avatar_url", IoC.Application.LogoURL);
+            discordValues.Add(new KeyValuePair<string, string>("avatar_url", IoC.Application.LogoURL));
             // Message.
-            discordValues.Add("content", $"<@{UserID}> {message}");
+            discordValues.Add(new KeyValuePair<string, string>("content", $"<@{UserID}> {message}"));
+
+            // Encode values.
+            content = new FormUrlEncodedContent(discordValues);
 
             // Solve.
             try
             {
-                // Send message.
-                wc.UploadValues(Webhook, discordValues);
+                // Send data.
+                var response = client.PostAsync(Webhook, content);
             }
-            catch (WebException) // No connection.
+            // Expected.
+            catch (AggregateException e)
             {
-                IoC.Logger.Log("WebException = no connection", LogLevel.Debug);
+                // Go through exceptions.
+                for (int i = 0; i < e.InnerExceptions.Count; i++)
+                {
+                    var ex = e.InnerExceptions[i];
+
+                    if (ex.GetType().Equals(typeof(HttpRequestException)) || ex.GetType().Equals(typeof(TaskCanceledException))) // Expected - no connection OR timeout.
+                        IoC.Logger.Log($"{ex.GetType().ToString()}: {ex.Message} (expected exception)", LogLevel.Verbose);
+                    else // Unexpected.
+                        IoC.Logger.Log($"{ex.GetType().ToString()}: {ex.Message}", LogLevel.Fatal);
+                }
+
                 status = 1;
             }
-            catch (Exception e) // Unexpected.
+            // Unexpected.
+            catch (Exception e)
             {
-                IoC.Logger.Log(e.Message, LogLevel.Fatal);
+                IoC.Logger.Log($"{e.GetType().ToString()}: {e.Message}", LogLevel.Fatal);
                 status = 1;
             }
 
-            // Dispose WC.
-            wc.Dispose();
+            // Dispose.
+            client.Dispose();
 
             // Return status.
             return status;

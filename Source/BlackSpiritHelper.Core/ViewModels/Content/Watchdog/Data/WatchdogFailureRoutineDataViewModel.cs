@@ -152,7 +152,7 @@ namespace BlackSpiritHelper.Core
             {
                 IoC.DataContent.WatchdogData.Log("Cannot send message at the moment.");
                 IoC.DataContent.WatchdogData.Log("The message will be sent as soon as the connection is available.");
-                // TODO: Put message to resend loop.
+                // TODO: Put message to resend loop - messages in Cookies - PreferencesConnection handler.
             }
             else
             {
