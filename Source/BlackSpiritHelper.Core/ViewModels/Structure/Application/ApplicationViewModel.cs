@@ -56,6 +56,11 @@ namespace BlackSpiritHelper.Core
         public string Copyright { get; set; }
 
         /// <summary>
+        /// Logo URL address.
+        /// </summary>
+        public string LogoURL { get; private set; } = "https://raw.githubusercontent.com/Frixs/BlackSpiritHelper/master/Resources/logo_red_text_512.png";
+
+        /// <summary>
         /// Donation URL address.
         /// </summary>
         public string DonationURL { get; private set; } = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QE2V3BNQJVG5W&source=url";

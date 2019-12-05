@@ -104,7 +104,7 @@ namespace BlackSpiritHelper.Core
         /// <param name="message"></param>
         public void Log(string message)
         {
-            var datetime = DateTimeOffset.UtcNow.ToString("dd-MM HH:mm UTC");
+            var datetime = DateTimeOffset.UtcNow.ToString("MM-dd HH:mm UTC");
 
             // UI thread required - due to ObservableCollection.
             IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>

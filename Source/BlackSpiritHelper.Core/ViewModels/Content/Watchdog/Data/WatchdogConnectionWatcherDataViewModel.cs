@@ -94,7 +94,7 @@ namespace BlackSpiritHelper.Core
         /// <param name="e"></param>
         protected override void CheckLoopTimerOnElapsed(object sender, ElapsedEventArgs e)
         {
-            var datetime = DateTimeOffset.UtcNow.ToString("dd-MM HH:mm UTC");
+            var datetime = DateTimeOffset.UtcNow.ToString("MM-dd HH:mm UTC");
 
             UpdateProgressNote("Checking...");
             CheckProcess();

@@ -30,11 +30,11 @@
             Width="225"
             Margin="0,10,0,0"
             MaxLength="{Binding AllowedUsernameMaxLength}"
-            Tag="Username#9999">
+            Tag="User ID">
             <TextBox.Text>
-                <Binding Path="Username" UpdateSourceTrigger="PropertyChanged">
+                <Binding Path="UserID" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <core:PreferencesConnDiscordUsernameRule ValidationStep="UpdatedValue" />
+                        <core:PreferencesConnDiscordUserIdRule ValidationStep="UpdatedValue" />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>

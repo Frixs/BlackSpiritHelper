@@ -116,6 +116,10 @@ namespace BlackSpiritHelper.Core
             if (!IsComputerActionSelected)
                 return;
 
+            // Save userdata before.
+            IoC.DataContent.SaveUserData();
+
+            // Do.
             if (ComputerAction == WatchdogComputerAction.Shutdown)
                 ComputerShutdown();
             if (ComputerAction == WatchdogComputerAction.Restart)
@@ -136,15 +140,22 @@ namespace BlackSpiritHelper.Core
             IoC.DataContent.WatchdogData.Log("Sending message to user...");
 
             // Send message.
-            int status = IoC.DataContent.PreferencesData.Connection.ActiveMethod.SendTextMessage("Connection lost!", true);
+            int status = IoC.DataContent.PreferencesData.Connection.ActiveMethod.SendTextMessage("Connection lost!");
 
             // Resolve sending status.
             if (status == 2)
+            {
                 IoC.DataContent.WatchdogData.Log("Message not sent! No active connection.");
+            }
             else if (status == 1)
+            {
                 IoC.DataContent.WatchdogData.Log("Cannot send message at the moment.");
+                // TODO: Put message to resend loop.
+            }
             else
+            {
                 IoC.DataContent.WatchdogData.Log("Message successfully sent!");
+            }
         }
 
         /// <summary>

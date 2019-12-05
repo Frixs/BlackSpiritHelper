@@ -33,6 +33,16 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
+        /// Check if the string contains only digits.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static bool CheckNumeric(this string input)
+        {
+            return Regex.IsMatch(input, @"^[0-9]+$");
+        }
+
+        /// <summary>
         /// Simple URL check.
         /// </summary>
         /// <param name="input"></param>
