@@ -62,6 +62,12 @@ namespace BlackSpiritHelper.Core
         [XmlIgnore]
         public ICommand DeactivateCommand { get; set; }
 
+        /// <summary>
+        /// Command to go to guide URL.
+        /// </summary>
+        [XmlIgnore]
+        public ICommand GuideLinkCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -105,6 +111,7 @@ namespace BlackSpiritHelper.Core
         private void CreateCommands()
         {
             DeactivateCommand = new RelayCommand(async () => await DeactivateCommandMethodAsync());
+            GuideLinkCommand = new RelayCommand(async () => await GuideLinkCommandMethodAsync());
         }
 
         /// <summary>
@@ -114,6 +121,18 @@ namespace BlackSpiritHelper.Core
         private async Task DeactivateCommandMethodAsync()
         {
             DeactivateMethod();
+            await Task.Delay(1);
+        }
+
+        /// <summary>
+        /// Open guide link.
+        /// </summary>
+        /// <returns></returns>
+        private async Task GuideLinkCommandMethodAsync()
+        {
+            // Open the webpage.
+            System.Diagnostics.Process.Start("https://github.com/Frixs/BlackSpiritHelper/wiki/PreferencesConnection");
+
             await Task.Delay(1);
         }
 

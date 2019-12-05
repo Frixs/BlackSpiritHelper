@@ -139,6 +139,7 @@ namespace BlackSpiritHelper.Core
             // Log it.
             IoC.DataContent.WatchdogData.Log("Sending message to user...");
 
+            // TODO: specify message based on failure module + DC time.
             // Send message.
             int status = IoC.DataContent.PreferencesData.Connection.ActiveMethod.SendTextMessage("Connection lost!");
 
@@ -150,6 +151,7 @@ namespace BlackSpiritHelper.Core
             else if (status == 1)
             {
                 IoC.DataContent.WatchdogData.Log("Cannot send message at the moment.");
+                IoC.DataContent.WatchdogData.Log("The message will be sent as soon as the connection is available.");
                 // TODO: Put message to resend loop.
             }
             else

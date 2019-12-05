@@ -12,44 +12,54 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <StackPanel Orientation="Vertical">
-        <!--  Active Label  -->
-        <Border
-            Margin="0,0,0,10"
-            HorizontalAlignment="Center"
-            CornerRadius="15">
-            <!--  Active Label : Text  -->
-            <TextBlock
-                Margin="12,5"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                FontFamily="{StaticResource LatoHeavy}"
-                FontSize="10">
-                <!--  Active Label : Text - Triggers  -->
-                <TextBlock.Style>
-                    <Style TargetType="TextBlock">
-                        <Setter Property="Text" Value="{Binding ActiveMethodIdentifier, Converter={local:EnumDescriptionConverter}, StringFormat='Active: {0:C}'}" />
-                        <Setter Property="Foreground" Value="{StaticResource ScheduleAddButtonForegroundBrushKey}" />
+        <Grid Margin="0,0,0,10">
+            <!--  Active Label  -->
+            <Border HorizontalAlignment="Center" CornerRadius="15">
+                <!--  Active Label : Text  -->
+                <TextBlock
+                    Margin="12,5"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontFamily="{StaticResource LatoHeavy}"
+                    FontSize="10">
+                    <!--  Active Label : Text - Triggers  -->
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Text" Value="{Binding ActiveMethodIdentifier, Converter={local:EnumDescriptionConverter}, StringFormat='Active: {0:C}'}" />
+                            <Setter Property="Foreground" Value="{StaticResource ScheduleAddButtonForegroundBrushKey}" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ActiveMethodIdentifier}" Value="None">
+                                    <Setter Property="Text" Value="NO ACTIVE" />
+                                    <Setter Property="Foreground" Value="{StaticResource RedForegroundBrushKey}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+                <!--  Active Label- Triggers  -->
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Background" Value="{StaticResource ScheduleAddButtonHoverBrushKey}" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ActiveMethodIdentifier}" Value="None">
-                                <Setter Property="Text" Value="NO ACTIVE" />
-                                <Setter Property="Foreground" Value="{StaticResource RedForegroundBrushKey}" />
+                                <Setter Property="Background" Value="{StaticResource RedBrushKey}" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </TextBlock.Style>
-            </TextBlock>
-            <!--  Active Label- Triggers  -->
-            <Border.Style>
-                <Style TargetType="Border">
-                    <Setter Property="Background" Value="{StaticResource ScheduleAddButtonHoverBrushKey}" />
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding ActiveMethodIdentifier}" Value="None">
-                            <Setter Property="Background" Value="{StaticResource RedBrushKey}" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Border.Style>
-        </Border>
+                </Border.Style>
+            </Border>
+
+            <!--  Guide Link BTN  -->
+            <Button
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Command="{Binding GuideLinkCommand}"
+                Content="{StaticResource FontAwesomeQuestionCircleIcon}"
+                FontFamily="{StaticResource FontAwesomeSolid}"
+                FontSize="17"
+                Style="{StaticResource RegularButtonNoColor}"
+                ToolTip="How it works? Follow this link!" />
+        </Grid>
 
         <!--  Tab Control  -->
         <TabControl>
