@@ -74,8 +74,8 @@
     <Compile Include="Dispatcher\Implementation\DispatcherManager.cs" />
     <Compile Include="Dispatcher\Implementation\DisprUiThread.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="Settings\DataProvider.cs" />
-    <Compile Include="Settings\SettingsConfiguration.cs" />
+    <Compile Include="DataSettingsProviders\DataProvider.cs" />
+    <Compile Include="DataSettingsProviders\SettingsConfiguration.cs" />
     <Compile Include="Utilities\ExpressionHelpers.cs" />
     <Compile Include="File\FileManager.cs" />
     <Compile Include="IoC\Base\ApplicationDataContent.cs" />
@@ -106,7 +106,7 @@
     <Compile Include="Audio\Implementation\AudioPack.cs" />
     <Compile Include="Audio\Implementation\BaseAudioFactory.cs" />
     <Compile Include="Audio\Implementation\BaseAudioManager.cs" />
-    <Compile Include="Settings\CustomSettingsProvider.cs" />
+    <Compile Include="DataSettingsProviders\CustomSettingsProvider.cs" />
     <Compile Include="Task\TaskManager.cs" />
     <Compile Include="Utilities\EnumExtensionMethods.cs" />
     <Compile Include="Utilities\ObjectExtensionMethods.cs" />
