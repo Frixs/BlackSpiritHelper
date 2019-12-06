@@ -111,7 +111,6 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// The main method to check conditions.
-        /// TODO: Triple check - maybe user option X-times check?
         /// </summary>
         /// <returns></returns>
         public override bool Check()
