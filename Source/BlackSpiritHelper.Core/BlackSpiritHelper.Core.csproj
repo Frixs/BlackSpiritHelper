@@ -73,6 +73,7 @@
     <Compile Include="DateTimeZone\DateTimeZoneManager.cs" />
     <Compile Include="Dispatcher\Implementation\DispatcherManager.cs" />
     <Compile Include="Dispatcher\Implementation\DisprUiThread.cs" />
+    <Compile Include="IoC\Interfaces\IWebManager.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="DataSettingsProviders\DataProvider.cs" />
     <Compile Include="DataSettingsProviders\SettingsConfiguration.cs" />
@@ -181,6 +182,9 @@
     <Compile Include="ViewModels\Content\SideMenu\Controls\SideMenuListItemControlViewModel.cs" />
     <Compile Include="ViewModels\Content\SideMenu\Controls\SideMenuControlViewModel.cs" />
     <Compile Include="ViewModels\Content\Watchdog\Pages\WatchdogPageViewModel.cs" />
+    <Compile Include="Web\Core\IClientFactory.cs" />
+    <Compile Include="Web\Implementation\HttpClientFactory.cs" />
+    <Compile Include="Web\Implementation\WebManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

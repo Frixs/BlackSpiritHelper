@@ -62,6 +62,11 @@ namespace BlackSpiritHelper.Core
         public static IDateTimeZone DateTime => Get<IDateTimeZone>();
 
         /// <summary>
+        /// A shortcut to access the <see cref="IWebManager"/>.
+        /// </summary>
+        public static IWebManager Web => Get<IWebManager>();
+
+        /// <summary>
         /// A shortcut to access the <see cref="ApplicationDataContent"/>.
         /// </summary>
         public static ApplicationDataContent DataContent => Get<ApplicationDataContent>();

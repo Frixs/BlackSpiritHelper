@@ -150,6 +150,7 @@ namespace BlackSpiritHelper
             IoC.Logger.CleanLogFiles(); // Clean log files.
             WindowViewModel.DisposeTrayIcon();
             IoC.Get<IMouseKeyHook>().Dispose();
+            IoC.Web.Dispose();
             IoC.DataContent.Unset(); // "Prepare data to die."
 
             #endregion

@@ -1,6 +1,7 @@
 ﻿using BlackSpiritHelper.Core.Data.Interfaces;
 using System;
 using System.Net;
+using System.Net.Http;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading;
@@ -41,6 +42,11 @@ namespace BlackSpiritHelper.Core
         #endregion
 
         #region Private Fields
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        private HttpClient Client = null; //; Constructor - Init method TODO
 
         /// <summary>
         /// Says if the failure action has been already proceeded.
