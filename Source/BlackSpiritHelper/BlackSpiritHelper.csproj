@@ -165,6 +165,12 @@
     <Compile Include="Controls\PageHost.xaml.cs">
       <DependentUpon>PageHost.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Preferences\PreferencesConnDiscordControl.xaml.cs">
+      <DependentUpon>PreferencesConnDiscordControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Preferences\PreferencesConnectionControl.xaml.cs">
+      <DependentUpon>PreferencesConnectionControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Schedule\ScheduleCalendarControl.xaml.cs">
       <DependentUpon>ScheduleCalendarControl.xaml</DependentUpon>
     </Compile>
@@ -191,6 +197,18 @@
     </Compile>
     <Compile Include="Controls\Timer\TimerListItemControl.xaml.cs">
       <DependentUpon>TimerListItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Watchdog\WatchdogConnectionWatcherControl.xaml.cs">
+      <DependentUpon>WatchdogConnectionWatcherControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Watchdog\WatchdogFailureRoutineControl.xaml.cs">
+      <DependentUpon>WatchdogFailureRoutineControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Watchdog\WatchdogInternetConnectionControl.xaml.cs">
+      <DependentUpon>WatchdogInternetConnectionControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Watchdog\WatchdogProcessConnectionControl.xaml.cs">
+      <DependentUpon>WatchdogProcessConnectionControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="IoC\UIManager.cs" />
     <Compile Include="IoC\GlobalMouseKeyHookManager.cs" />
@@ -228,6 +246,7 @@
     <Compile Include="ValueConverters\BaseMultiValueConverter.cs" />
     <Compile Include="ValueConverters\BooleanToContentConverter.cs" />
     <Compile Include="ValueConverters\ContainsLeadingCharConverter.cs" />
+    <Compile Include="ValueConverters\EnumDescriptionConverter.cs" />
     <Compile Include="ValueConverters\Schedule\ScheduleTimeZoneRegionConverter.cs" />
     <Compile Include="ValueConverters\StringHEXLeadingHashConverter.cs" />
     <Compile Include="ValueConverters\SubstringConverter.cs" />
@@ -236,7 +255,7 @@
     <Compile Include="ValueConverters\Timer\TimerListOverlayOnlyConverter.cs" />
     <Compile Include="ValueConverters\TicksToDateStringConverter.cs" />
     <Compile Include="ValueConverters\WarningTimerColorSwapConverter.cs" />
-    <Compile Include="ValueConverters\EnumBooleanConverter.cs" />
+    <Compile Include="ValueConverters\RadioEnumBooleanConverter.cs" />
     <Compile Include="ValueConverters\StringToUppercaseConverter.cs" />
     <Compile Include="ValueConverters\ObjectToStringConverter.cs" />
     <Compile Include="ValueConverters\TimeSpanToStringConverter.cs" />
@@ -280,6 +299,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Preferences\PreferencesConnDiscordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Preferences\PreferencesConnectionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Schedule\ScheduleCalendarControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -313,6 +340,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Timer\TimerListItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Watchdog\WatchdogConnectionWatcherControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Watchdog\WatchdogFailureRoutineControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Watchdog\WatchdogInternetConnectionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Watchdog\WatchdogProcessConnectionControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -434,6 +477,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\Sounds\Alert5_Sound_0.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Sounds\AlertClockTicking_Sound_0.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

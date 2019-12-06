@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Security.Principal;
 using System.Windows;
 
 namespace BlackSpiritHelper.Core
@@ -53,6 +54,11 @@ namespace BlackSpiritHelper.Core
         /// Assembly set.
         /// </summary>
         public string Copyright { get; set; }
+
+        /// <summary>
+        /// Logo URL address.
+        /// </summary>
+        public string LogoURL { get; private set; } = "https://raw.githubusercontent.com/Frixs/BlackSpiritHelper/master/Resources/logo_red_text_512.png";
 
         /// <summary>
         /// Donation URL address.
@@ -116,6 +122,13 @@ namespace BlackSpiritHelper.Core
         /// Constructor set.
         /// </summary>
         public ApplicationCookies Cookies { get; private set; }
+
+        /// <summary>
+        /// Check if the application is running As Administrator or not.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsRunningAsAdministratorCheck => IsRunningAsAdministrator();
+
         #endregion
 
         #region Constructor
@@ -166,7 +179,7 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Exit application command to close application.
+        /// Exit application command to close the application.
         /// Use <see cref="App.Application_Exit(object, ExitEventArgs)"/> for procedures on application exit.
         /// </summary>
         public void Exit()
@@ -180,6 +193,22 @@ namespace BlackSpiritHelper.Core
             // Close all windows.
             //for (int intCounter = Application.Current.Windows.Count - 1; intCounter >= 0; intCounter--)
             //    Application.Current.Windows[intCounter].Close();
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Check if the application is running As Administrator or not.
+        /// </summary>
+        /// <returns></returns>
+        private bool IsRunningAsAdministrator()
+        {
+            var wi = WindowsIdentity.GetCurrent();
+            var wp = new WindowsPrincipal(wi);
+
+            return wp.IsInRole(WindowsBuiltInRole.Administrator);
         }
 
         #endregion

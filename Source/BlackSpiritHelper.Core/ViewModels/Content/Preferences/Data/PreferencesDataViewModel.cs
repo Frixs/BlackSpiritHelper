@@ -43,6 +43,11 @@ namespace BlackSpiritHelper.Core
         public bool RunOnStartupFlag { get; private set; } = false;
 
         /// <summary>
+        /// Connection wrapper that handles connection to 3rd party user's software.
+        /// </summary>
+        public PreferencesConnectionDataViewModel Connection { get; set; } = new PreferencesConnectionDataViewModel();
+
+        /// <summary>
         /// User audio alert level.
         /// </summary>
         public AudioAlertLevel AudioAlertLevel { get; set; } = AudioAlertLevel.Sound;
@@ -106,7 +111,11 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         protected override void SetupMethod()
         {
+            // Init after application start.
             ForceToRunAsAdministrator = IoC.Application.Cookies.ForceToRunAsAdministrator;
+
+            // Init connection section.
+            Connection.Init();
         }
 
         /// <summary>

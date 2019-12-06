@@ -22,7 +22,6 @@ namespace BlackSpiritHelper.Core
         public BaseAudioFactory()
         {
             mAudioManagers.Add(AudioAlertLevel.Sound, new SoundAudioManager());
-            mAudioManagers.Add(AudioAlertLevel.Voice, new VoiceAudioManager());
         }
 
         #endregion
@@ -45,11 +44,6 @@ namespace BlackSpiritHelper.Core
                 // Sound.
                 case AudioAlertLevel.Sound:
                     mAudioManagers[AudioAlertLevel.Sound].PlayAsync(type, priority);
-                    break;
-
-                // Voice.
-                case AudioAlertLevel.Voice:
-                    mAudioManagers[AudioAlertLevel.Voice].PlayAsync(type, priority);
                     break;
 
                 default:

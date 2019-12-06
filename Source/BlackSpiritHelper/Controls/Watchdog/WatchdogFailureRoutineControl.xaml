@@ -1,0 +1,117 @@
+﻿<UserControl
+    x:Class="BlackSpiritHelper.WatchdogFailureRoutineControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:core="clr-namespace:BlackSpiritHelper.Core;assembly=BlackSpiritHelper.Core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:BlackSpiritHelper"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="250"
+    d:DesignStyle="{StaticResource WindowBackgroundControlStyle}"
+    d:DesignWidth="400"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style x:Key="ContentStyle" TargetType="{x:Type ContentControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ContentControl}">
+
+                        <StackPanel Orientation="Vertical">
+                            <!--  Title Bar  -->
+                            <StackPanel Orientation="Horizontal">
+                                <Border
+                                    Width="26"
+                                    Height="26"
+                                    Background="{StaticResource WatchdogForegroundBrushKey}">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                        FontSize="12"
+                                        Foreground="{StaticResource WatchdogGroupMenuBackgroundBrushKey}"
+                                        Text="{StaticResource FontAwesomeBoltIcon}" />
+                                </Border>
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
+                                    FontFamily="{StaticResource LatoBold}"
+                                    FontSize="13"
+                                    Foreground="{StaticResource WatchdogForegroundBrushKey}"
+                                    Text="FAILURE ROUTINE" />
+                            </StackPanel>
+                            <!--  Option Bar  -->
+                            <StackPanel
+                                Margin="32,0,0,0"
+                                HorizontalAlignment="Left"
+                                Orientation="Vertical">
+                                <!--  Computer Action  -->
+                                <CheckBox
+                                    HorizontalAlignment="Left"
+                                    Content="Computer Action"
+                                    IsChecked="{Binding IsComputerActionSelected}" />
+                                <!--  Computer Action: Radio  -->
+                                <StackPanel
+                                    HorizontalAlignment="Left"
+                                    IsEnabled="{Binding IsComputerActionSelected}"
+                                    Orientation="Vertical">
+                                    <ItemsControl ItemsSource="{Binding ComputerActionList}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+
+                                                <Grid>
+                                                    <TextBlock
+                                                        x:Name="RadioBindedKey"
+                                                        Text="{Binding Converter={local:ObjectToStringConverter}}"
+                                                        Visibility="Collapsed" />
+                                                    <RadioButton
+                                                        Margin="18,0,0,0"
+                                                        Content="{Binding Converter={local:EnumDescriptionConverter}}"
+                                                        GroupName="FailureRoutine"
+                                                        IsChecked="{Binding Path=DataContext.ComputerAction, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContentControl}}, Converter={local:RadioEnumBooleanConverter}, ConverterParameter={x:Reference Name=RadioBindedKey}}" />
+                                                </Grid>
+
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                                <!--  Computer Action: Warning  -->
+                                <TextBlock
+                                    Margin="0,0,0,10"
+                                    FontFamily="{StaticResource LatoRegular}"
+                                    FontSize="10"
+                                    Foreground="{StaticResource RedBrushKey}"
+                                    Text="Run the application As Administrator for this effect."
+                                    Visibility="{Binding ApplicationViewModel.IsRunningAsAdministratorCheck, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:BooleanToVisibilityGoneConverter}, ConverterParameter=True}" />
+                                <!--  Send Message  -->
+                                <CheckBox
+                                    HorizontalAlignment="Left"
+                                    Content="Send Message"
+                                    IsChecked="{Binding IsSendMessageSelected}" />
+                                <!--  Send Message: Warning  -->
+                                <TextBlock
+                                    Margin="0,0,0,10"
+                                    FontFamily="{StaticResource LatoRegular}"
+                                    FontSize="10"
+                                    Foreground="{StaticResource RedBrushKey}"
+                                    Text="Set your connection on the Preferences page for this effect."
+                                    Visibility="{Binding ApplicationDataContent.PreferencesData.Connection.IsActive, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:BooleanToVisibilityGoneConverter}, ConverterParameter=True}" />
+                                <!--  Sound Alert  -->
+                                <CheckBox
+                                    HorizontalAlignment="Left"
+                                    Content="Sound Alert"
+                                    IsChecked="{Binding IsSoundAlertSelected}"
+                                    IsEnabled="{Binding IsComputerActionSelected, Converter={local:BooleanInvertConverter}}" />
+                            </StackPanel>
+                        </StackPanel>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <ContentControl
+        d:DataContext="{x:Static core:WatchdogFailureRoutineDataDesignModel.Instance}"
+        Focusable="False"
+        Style="{StaticResource ContentStyle}" />
+</UserControl>
