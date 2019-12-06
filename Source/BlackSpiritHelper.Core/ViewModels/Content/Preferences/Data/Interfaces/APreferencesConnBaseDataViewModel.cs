@@ -77,6 +77,13 @@ namespace BlackSpiritHelper.Core
         public abstract int SendTextMessage(string message);
 
         /// <summary>
+        /// Async version of <see cref="SendTextMessage(string)"/>.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public abstract Task<int> SendTextMessageAsync(string message);
+
+        /// <summary>
         /// Validate inputs of connection method.
         /// </summary>
         /// <returns></returns>

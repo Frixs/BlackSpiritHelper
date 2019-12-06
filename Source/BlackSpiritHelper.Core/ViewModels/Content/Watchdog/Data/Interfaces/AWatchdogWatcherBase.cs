@@ -150,12 +150,18 @@ namespace BlackSpiritHelper.Core.Data.Interfaces
             await Task.Delay(AllowedMinCheckInterval);
 
             if (!mCheckLoopTimer.Enabled)
-                // First check right after start.
-                CheckLoopTimerOnElapsed(null, null);
+            {
+                await IoC.Task.Run(() =>
+                {
+                    // First check right after start.
+                    CheckLoopTimerOnElapsed(null, null);
 
-            if (!mCheckLoopTimer.Enabled)
-                // Start the timer.
-                mCheckLoopTimer.Start();
+                    // CHeck it again, because the check loop takes time.
+                    if (!mCheckLoopTimer.Enabled)
+                        // Start the timer.
+                        mCheckLoopTimer.Start();
+                });
+            }
         }
 
         /// <summary>

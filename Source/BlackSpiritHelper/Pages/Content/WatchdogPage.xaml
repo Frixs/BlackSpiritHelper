@@ -149,15 +149,35 @@
                                     <DataTemplate>
 
                                         <!--  Items Control for log messages  -->
-                                        <TextBlock
+                                        <TextBox
+                                            Margin="0"
+                                            Padding="0"
+                                            Background="Transparent"
+                                            BorderThickness="0"
                                             FontFamily="{StaticResource LatoHeavy}"
                                             FontSize="10"
                                             Foreground="{StaticResource WatchdogLogForegroundBrushKey}"
-                                            Text="{Binding}" />
+                                            IsReadOnly="True"
+                                            Text="{Binding .}" />
 
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
+
+                            <ScrollViewer.Resources>
+                                <Style TargetType="ScrollBar">
+                                    <Style.Triggers>
+                                        <Trigger Property="Orientation" Value="Vertical">
+                                            <Setter Property="MinWidth" Value="10" />
+                                            <Setter Property="Width" Value="10" />
+                                        </Trigger>
+                                        <Trigger Property="Orientation" Value="Horizontal">
+                                            <Setter Property="Height" Value="10" />
+                                            <Setter Property="MinHeight" Value="10" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ScrollViewer.Resources>
                         </ScrollViewer>
                     </Border>
                 </Grid>

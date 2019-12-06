@@ -60,7 +60,6 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// Send message to the user's connection.
-        /// TODO: Optimalize - Client to singleton.
         /// </summary>
         /// <param name="message">Message to send</param>
         /// <returns>
@@ -70,6 +69,19 @@ namespace BlackSpiritHelper.Core
         ///     - 2 = Not set active connection
         /// </returns>
         public override int SendTextMessage(string message)
+        {
+            var response = SendTextMessageAsync(message);
+            response.Wait();
+            return response.Result;
+        }
+
+        /// <summary>
+        /// Async version of <see cref="SendTextMessage(string)"/>.
+        /// TODO: Optimalize - Client to singleton for PreferencesConnection only.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public override async Task<int> SendTextMessageAsync(string message)
         {
             if (!IoC.DataContent.PreferencesData.Connection.IsActive)
                 return 2;
@@ -92,35 +104,27 @@ namespace BlackSpiritHelper.Core
             // Message.
             discordValues.Add(new KeyValuePair<string, string>("content", $"<@{UserID}> {message}"));
 
-            // Encode values.
-            content = new FormUrlEncodedContent(discordValues);
-
             // Solve.
             try
             {
+                // Encode values.
+                content = new FormUrlEncodedContent(discordValues);
+
                 // Send data.
-                var response = client.PostAsync(Webhook, content);
-                _ = response.Result; // Ask for result. If there is no internet connection we have to ask to cause exception catch.
+                await client.PostAsync(Webhook, content);
                 IoC.Logger.Log($"Message sent!", LogLevel.Debug);
             }
-            // Expected.
-            catch (AggregateException e)
+            catch (HttpRequestException e) // Internet connection issues.
             {
-                // Go through exceptions.
-                for (int i = 0; i < e.InnerExceptions.Count; i++)
-                {
-                    var ex = e.InnerExceptions[i];
-
-                    if (ex.GetType().Equals(typeof(HttpRequestException)) || ex.GetType().Equals(typeof(TaskCanceledException))) // Expected - no connection OR timeout.
-                        IoC.Logger.Log($"{ex.GetType().ToString()}: {ex.Message} (expected exception)", LogLevel.Verbose);
-                    else // Unexpected.
-                        IoC.Logger.Log($"{ex.GetType().ToString()}: {ex.Message}", LogLevel.Fatal);
-                }
-
+                IoC.Logger.Log($"{e.GetType().ToString()}: {e.Message} (expected exception)", LogLevel.Verbose);
                 status = 1;
             }
-            // Unexpected.
-            catch (Exception e)
+            catch (TaskCanceledException e) // Timeout.
+            {
+                IoC.Logger.Log($"{e.GetType().ToString()}: {e.Message} (expected exception)", LogLevel.Debug);
+                status = 1;
+            }
+            catch (Exception e) // Unexpected.
             {
                 IoC.Logger.Log($"{e.GetType().ToString()}: {e.Message}", LogLevel.Fatal);
                 status = 1;

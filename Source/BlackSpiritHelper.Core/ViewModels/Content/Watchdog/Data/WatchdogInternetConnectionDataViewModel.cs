@@ -175,7 +175,7 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// Check connection to the internet through <see cref="HttpWebRequest"/>.
-        /// TODO: Optimalize - Change to HttpClient / singleton client.
+        /// TODO: Optimalize - Change to HttpClient / singleton client for InternetConnection only.
         /// </summary>
         /// <returns></returns>
         private bool CheckClientConnection()
