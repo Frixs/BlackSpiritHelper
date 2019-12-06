@@ -58,6 +58,7 @@
     <system:String x:Key="FontAwesomeTimesIcon">&#xf00d;</system:String>
     <system:String x:Key="FontAwesomeTimesCircleIcon">&#xf057;</system:String>
     <system:String x:Key="FontAwesomeBoltIcon">&#xf0e7;</system:String>
+    <system:String x:Key="FontAwesomeCheckDoubleIcon">&#xf560;</system:String>
 
     <system:String x:Key="FontAwesomeGitHubIcon">&#xf09b;</system:String>
     <system:String x:Key="FontAwesomeDiscordIcon">&#xf392;</system:String>

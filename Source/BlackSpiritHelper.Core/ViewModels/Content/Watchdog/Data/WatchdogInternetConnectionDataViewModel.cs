@@ -14,6 +14,32 @@ namespace BlackSpiritHelper.Core
     /// </summary>
     public class WatchdogInternetConnectionDataViewModel : AWatchdogConnectionBase
     {
+        #region Static Limitation Properties
+
+        /// <summary>
+        /// Min possible set multi-check.
+        /// </summary>
+        public static short AllowedMinMultiCheck { get; private set; } = 0;
+
+        /// <summary>
+        /// Max possible set multi-check.
+        /// </summary>
+        public static short AllowedMaxMultiCheck { get; private set; } = 4;
+
+        /// <summary>
+        /// Min possible set timeout.
+        /// Unit: Milliseconds
+        /// </summary>
+        public static int AllowedMinTimeout { get; private set; } = 1;
+
+        /// <summary>
+        /// Max possible set timeout.
+        /// Unit: Milliseconds
+        /// </summary>
+        public static int AllowedMaxTimeout { get; private set; } = 30000;
+
+        #endregion
+
         #region Private Fields
 
         /// <summary>
@@ -42,28 +68,26 @@ namespace BlackSpiritHelper.Core
         /// Timeout for each Ping test.
         /// Unit: Milliseconds
         /// </summary>
-        [XmlIgnore]
         public int PingTimeout { get; set; } = 1250;
 
         /// <summary>
         /// Timeout for each Client test.
         /// Unit: Milliseconds
         /// </summary>
-        [XmlIgnore]
         public int ClientTimeout { get; set; } = 5000;
 
         /// <summary>
-        /// Should the check perform double-check testing?
+        /// Says, how many additional checks have to be performed if the major check fails.
+        /// Value set to 0 means we do not have any additional checks.
         /// </summary>
-        [XmlIgnore]
-        public bool DoubleCheck { get; set; } = true;
+        public short MultiCheck { get; set; } = 2;
 
         /// <summary>
         /// Delay for the 2nd (double-check) test.
         /// Unit: Milliseconds
         /// </summary>
         [XmlIgnore]
-        public int DoubleCheckDelay { get; set; } = 4000;
+        public int MultiCheckDelay { get; set; } = 4000;
 
         /// <summary>
         /// Says if the check is selected for checking loop.
@@ -94,14 +118,14 @@ namespace BlackSpiritHelper.Core
         {
             bool isOk = false;
 
-            for (int i = 0; i < (DoubleCheck ? 2 : 1); i++)
+            for (int i = 0; i < (MultiCheck + 1); i++) // +1 due to major check
             {
                 isOk = true;
                 
-                // Do stuff before double check round.
+                // Do this stuff before additional check round.
                 if (i > 0)
                 {
-                    Thread.Sleep(DoubleCheckDelay);
+                    Thread.Sleep(MultiCheckDelay);
                 }
 
                 // Check PING first.
@@ -111,7 +135,7 @@ namespace BlackSpiritHelper.Core
                         isOk = false;
 
                 // On failure hook.
-                if (!isOk && !mIsFailureActionFired && i > 0)
+                if (!isOk && !mIsFailureActionFired && i > MultiCheck - 1)
                 {
                     mIsFailureActionFired = true; // Let know the procedure to do not fire this the same event again until the failure disappear.
                     IoC.DataContent.WatchdogData.Log("Internet connection lost!");
@@ -123,8 +147,8 @@ namespace BlackSpiritHelper.Core
                     IoC.DataContent.WatchdogData.Log("Internet connection established!");
                 }
 
-                // First try and we are good. No need to double check.
-                if (isOk && i == 0)
+                // Once we are good. No need to additional check.
+                if (isOk)
                     break;
             }
 
@@ -156,7 +180,11 @@ namespace BlackSpiritHelper.Core
 
                     // Log fail.
                     if (!pingStatus)
+                    {
                         IoC.Logger.Log($"Ping failed with status: {reply.Status.ToString()}", LogLevel.Debug);
+                        if (reply.Status.Equals(IPStatus.TimedOut))
+                            IoC.DataContent.WatchdogData.Log("Ping timed out!");
+                    }
                 }
                 catch (PingException e) // Expected - no internet connection.
                 {

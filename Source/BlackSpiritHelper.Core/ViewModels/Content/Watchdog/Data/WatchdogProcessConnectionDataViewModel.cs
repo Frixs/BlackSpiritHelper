@@ -1,6 +1,5 @@
 ﻿using BlackSpiritHelper.Core.Data.Interfaces;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Xml.Serialization;
@@ -159,6 +158,7 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         public override bool Check()
         {
+            // TODO: Process Check
             System.Console.WriteLine("Process Check");
             return true;
         }

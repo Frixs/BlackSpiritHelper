@@ -25,7 +25,7 @@
     <Color x:Key="WarningForeground">#DFDFEC</Color>
     <SolidColorBrush x:Key="WarningForegroundBrushKey" Color="{StaticResource WarningForeground}" />
 
-    <Color x:Key="DisabledBackground">#88AFAFB8</Color>
+    <Color x:Key="DisabledBackground">#88BDBDC3</Color>
     <SolidColorBrush x:Key="DisabledBackgroundBrushKey" Color="{StaticResource DisabledBackground}" />
 
     <Color x:Key="Foreground">#494949</Color>
