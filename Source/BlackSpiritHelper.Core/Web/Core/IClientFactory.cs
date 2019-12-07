@@ -5,22 +5,14 @@ namespace BlackSpiritHelper.Core
     public interface IClientFactory<T> : IDisposable
         where T : new()
     {
-        #region Publi Properties
-
-        /// <summary>
-        /// Major client.
-        /// </summary>
-        T Client { get; }
-
-        #endregion
-
         #region Public Methods
-        
+
         /// <summary>
-        /// New client instance.
+        /// Get <see cref="HttpClient"/> for specific host or add a new one.
         /// </summary>
+        /// <param name="uri">Specified URI to connect to</param>
         /// <returns></returns>
-        T NewClient();
+        T GetClientForHost(Uri uri);
 
         #endregion
     }
