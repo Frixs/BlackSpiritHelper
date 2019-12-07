@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
@@ -42,11 +43,6 @@ namespace BlackSpiritHelper.Core
         #endregion
 
         #region Private Fields
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        private HttpClient Client = null; //; Constructor - Init method TODO
 
         /// <summary>
         /// Says if the failure action has been already proceeded.
@@ -207,42 +203,54 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Check connection to the internet through <see cref="HttpWebRequest"/>.
-        /// TODO: Optimalize - Change to HttpClient / singleton client for InternetConnection only.
+        /// Check connection to the internet through the client.
         /// </summary>
         /// <returns></returns>
         private bool CheckClientConnection()
         {
-            bool clientStatus = false;
+            var response = CheckClientConnectionAsync();
+            response.Wait();
+            return response.Result;
+        }
 
-            var request = (HttpWebRequest)WebRequest.Create(ClientCheckAddress);
-            request.Timeout = ClientTimeout;
-            HttpWebResponse response = null;
+        /// <summary>
+        /// Async version of <see cref="CheckClientConnection"/>.
+        /// </summary>
+        /// <returns></returns>
+        private async Task<bool> CheckClientConnectionAsync()
+        {
+            bool status = true;
 
+            var address = ClientCheckAddress;
+
+            // Get client.
+            var client = IoC.Web.Http.GetClientForHost(new Uri(address));
+            client.Timeout = TimeSpan.FromMilliseconds(ClientTimeout);
+
+            // Solve.
             try
             {
-                // Try to get response.
-                response = (HttpWebResponse)request.GetResponse();
+                // Send data.
+                await client.GetAsync(address);
             }
-            catch (WebException e) // No internet connection or timeout.
+            catch (HttpRequestException e) // Internet connection issues.
             {
-                clientStatus = false;
+                IoC.Logger.Log($"{e.GetType().ToString()}: {e.Message} (expected exception)", LogLevel.Verbose);
+                status = false;
+            }
+            catch (TaskCanceledException e) // Timeout.
+            {
                 IoC.Logger.Log($"{e.GetType().ToString()}: {e.Message} (expected exception)", LogLevel.Debug);
+                status = false;
             }
             catch (Exception e) // Unexpected.
             {
-                clientStatus = false;
                 IoC.Logger.Log($"{e.GetType().ToString()}: {e.Message}", LogLevel.Fatal);
-            }
-            finally
-            {
-                // Free.
-                if (response != null)
-                    response.Close();
+                status = false;
             }
 
             // Return status.
-            return clientStatus;
+            return status;
         }
 
         #endregion

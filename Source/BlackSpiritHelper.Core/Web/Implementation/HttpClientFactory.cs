@@ -134,7 +134,9 @@ namespace BlackSpiritHelper.Core
                     }
                 }
 
-                HttpClientCache.TryRemove(maxKey, out _);
+                ValuePair<HttpClient, short> removedVal;
+                if (HttpClientCache.TryRemove(maxKey, out removedVal))
+                    removedVal.ValueA.Dispose();
             }
         }
 

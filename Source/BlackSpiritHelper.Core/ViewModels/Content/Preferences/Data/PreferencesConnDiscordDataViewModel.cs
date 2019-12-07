@@ -74,7 +74,6 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// Async version of <see cref="SendTextMessage(string)"/>.
-        /// TODO: Optimalize - Client to singleton for PreferencesConnection only.
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
@@ -84,13 +83,11 @@ namespace BlackSpiritHelper.Core
                 return 2;
 
             int status = 0;
+            var address = Webhook;
 
-            // Create request.
-            var client = new HttpClient
-            {
-                Timeout = TimeSpan.FromMilliseconds(10000)
-            };
-            FormUrlEncodedContent content = null;
+            // Get client.
+            var client = IoC.Web.Http.GetClientForHost(new Uri(address));
+            client.Timeout = TimeSpan.FromMilliseconds(10000);
 
             // Create discord value collection.
             List<KeyValuePair<string, string>> discordValues = new List<KeyValuePair<string, string>>();
@@ -105,10 +102,10 @@ namespace BlackSpiritHelper.Core
             try
             {
                 // Encode values.
-                content = new FormUrlEncodedContent(discordValues);
+                FormUrlEncodedContent content = new FormUrlEncodedContent(discordValues);
 
                 // Send data.
-                await client.PostAsync(Webhook, content);
+                await client.PostAsync(address, content);
                 IoC.Logger.Log($"Message sent!", LogLevel.Debug);
             }
             catch (HttpRequestException e) // Internet connection issues.
@@ -126,9 +123,6 @@ namespace BlackSpiritHelper.Core
                 IoC.Logger.Log($"{e.GetType().ToString()}: {e.Message}", LogLevel.Fatal);
                 status = 1;
             }
-
-            // Dispose.
-            client.Dispose();
 
             // Return status.
             return status;
