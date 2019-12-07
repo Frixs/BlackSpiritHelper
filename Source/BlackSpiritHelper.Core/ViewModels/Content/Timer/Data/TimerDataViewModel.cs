@@ -121,7 +121,7 @@ namespace BlackSpiritHelper.Core
             // We need to run setup method manually.
             foreach (TimerGroupDataViewModel g in GroupList)
                 foreach (TimerItemDataViewModel t in g.TimerList)
-                    t.Setup();
+                    t.Init();
         }
 
         /// <summary>

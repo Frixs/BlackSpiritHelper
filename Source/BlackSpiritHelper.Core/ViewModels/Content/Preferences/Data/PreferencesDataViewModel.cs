@@ -20,11 +20,9 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// Run the application As Administrator.
-        /// ---
-        /// This value is set in <see cref="InitRoutine"/>.
         /// </summary>
         [XmlIgnore]
-        public bool ForceToRunAsAdministrator { get; set; }
+        public bool ForceToRunAsAdministrator { get; set; } //; Set in Constructor region
 
         /// <summary>
         /// Start the application in tray.

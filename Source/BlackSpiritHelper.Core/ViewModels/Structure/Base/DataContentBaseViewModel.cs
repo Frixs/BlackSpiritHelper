@@ -7,7 +7,7 @@ namespace BlackSpiritHelper.Core
     /// General base ViewModel for root user data.
     /// </summary>
     [SettingsSerializeAs(SettingsSerializeAs.Xml)]
-    public abstract class DataContentBaseViewModel : BaseViewModel, ISetupable
+    public abstract class DataContentBaseViewModel : BaseViewModel
     {
         #region Private Members
 
@@ -44,7 +44,7 @@ namespace BlackSpiritHelper.Core
 
         #endregion
         
-        #region Methods
+        #region Public Methods
 
         /// <summary>
         /// Anything you need to do after construction.
@@ -57,12 +57,6 @@ namespace BlackSpiritHelper.Core
 
             InitRoutine();
         }
-
-        /// <summary>
-        /// Anything you need to do after construction.
-        /// Can be run only once.
-        /// </summary>
-        protected abstract void InitRoutine();
 
         /// <summary>
         /// Set default values into this instance.
@@ -78,12 +72,6 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Set default values into this instance.
-        /// Can be run only once.
-        /// </summary>
-        protected abstract void SetDefaultsRoutine();
-
-        /// <summary>
         /// Anything you need to do before destroy.
         /// </summary>
         public void Dispose()
@@ -94,6 +82,22 @@ namespace BlackSpiritHelper.Core
 
             DisposeRoutine();
         }
+
+        #endregion
+
+        #region Protected Abstract Methods
+
+        /// <summary>
+        /// Anything you need to do after construction.
+        /// Can be run only once.
+        /// </summary>
+        protected abstract void InitRoutine();
+
+        /// <summary>
+        /// Set default values into this instance.
+        /// Can be run only once.
+        /// </summary>
+        protected abstract void SetDefaultsRoutine();
 
         /// <summary>
         /// Anything you need to do before destroy.

@@ -80,9 +80,10 @@ namespace BlackSpiritHelper.Core
         private TimeSpan mCountdownDuration;
 
         /// <summary>
-        /// Indicates, the timer has loaded and <see cref="Setup"/> method has been called.
+        /// Indicates, the timer has loaded and <see cref="Init"/> method has been called.
         /// If it is false. Setup has not been called and you can check other loading procedures.
-        /// <see cref="Setup"/> doc for more info.
+        /// <see cref="Init"/> doc for more info.
+        /// TODO
         /// </summary>
         private bool mIsSetupDoneFlag = false;
 
@@ -300,7 +301,7 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// Default constructor.
-        /// <see cref="Setup"/> method should be called everytime after creation.
+        /// <see cref="Init"/> method should be called everytime after creation.
         /// </summary>
         public TimerItemDataViewModel()
         {
@@ -308,13 +309,7 @@ namespace BlackSpiritHelper.Core
             CreateCommands();
         }
 
-        /// <summary>
-        /// Setup preparation for <see cref="DataContentBaseViewModel.Init"/> method.
-        /// This should be called only once.
-        /// ---
-        /// Generally, things you cannot initialize while construction, e.g. loading data from <see cref="ApplicationDataContent"/>.
-        /// </summary>
-        public void Setup()
+        public void Init()
         {
             if (mIsSetupDoneFlag)
                 return;
@@ -338,6 +333,10 @@ namespace BlackSpiritHelper.Core
 
             // Set notification triggers on load.
             TimerSetNotificationEventTriggers(TimeLeft);
+        }
+
+        public void Dispose()
+        {
         }
 
         #endregion
