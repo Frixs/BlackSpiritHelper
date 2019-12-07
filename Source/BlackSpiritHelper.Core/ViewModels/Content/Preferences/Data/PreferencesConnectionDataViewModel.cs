@@ -17,6 +17,12 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private Timer mPendingTimer = null;
 
+        /// <summary>
+        /// Interval to check pending messages to resend.
+        /// Unit: Milliseconds
+        /// </summary>
+        private int mPendingInterval = 30000;//600000; // 10 min
+
         #endregion
 
         #region Public Properties
@@ -194,7 +200,7 @@ namespace BlackSpiritHelper.Core
                 return;
 
             // Set pending timer.
-            mPendingTimer = new Timer(TimeSpan.FromMinutes(10).TotalMilliseconds);
+            mPendingTimer = new Timer(mPendingInterval);
             mPendingTimer.Elapsed += PendingTimerOnElapsed;
             mPendingTimer.AutoReset = false; // Make it fire only once -> Manual firing.
             mPendingTimer.Start();
