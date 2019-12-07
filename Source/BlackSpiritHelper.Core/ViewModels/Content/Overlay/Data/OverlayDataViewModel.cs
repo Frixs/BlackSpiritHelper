@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
 {
-    public class OverlayDataViewModel : DataContentBaseViewModel<OverlayDataViewModel>
+    public class OverlayDataViewModel : ADataContentBaseViewModel<OverlayDataViewModel>
     {
         #region Private Members
 
@@ -141,23 +141,14 @@ namespace BlackSpiritHelper.Core
             CreateCommands();
         }
 
-        /// <summary>
-        /// Everythng you need to do after construction.
-        /// </summary>
-        protected override void InitRoutine()
+        protected override void InitRoutine(params object[] parameters)
         {
         }
 
-        /// <summary>
-        /// Set default values into this instance.
-        /// </summary>
         protected override void SetDefaultsRoutine()
         {
         }
 
-        /// <summary>
-        /// Anything you need to do before destroy.
-        /// </summary>
         protected override void DisposeRoutine()
         {
         }

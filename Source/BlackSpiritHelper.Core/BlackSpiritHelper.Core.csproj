@@ -73,7 +73,7 @@
     <Compile Include="DateTimeZone\DateTimeZoneManager.cs" />
     <Compile Include="Dispatcher\Implementation\DispatcherManager.cs" />
     <Compile Include="Dispatcher\Implementation\DisprUiThread.cs" />
-    <Compile Include="Interfaces\ASetupable.cs" />
+    <Compile Include="ViewModels\Structure\Base\ASetupableBaseViewModel.cs" />
     <Compile Include="IoC\Interfaces\IWebManager.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="DataSettingsProviders\DataProvider.cs" />
@@ -158,7 +158,7 @@
     <Compile Include="ViewModels\Content\DailyCheck\Pages\DailyCheckPageViewModel.cs" />
     <Compile Include="ViewModels\Content\Overlay\Data\OverlayDataViewModel.cs" />
     <Compile Include="ViewModels\Structure\Base\BaseViewModel.cs" />
-    <Compile Include="ViewModels\Structure\Base\DataContentBaseViewModel.cs" />
+    <Compile Include="ViewModels\Structure\Base\ADataContentBaseViewModel.cs" />
     <Compile Include="ViewModels\Structure\Base\RelayCommand.cs" />
     <Compile Include="ViewModels\Structure\Base\RelayParameterizedCommand.cs" />
     <Compile Include="ViewModels\Content\Schedule\Pages\SchedulePageViewModel.cs" />

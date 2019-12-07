@@ -11,7 +11,7 @@ namespace BlackSpiritHelper.Core
     /// View model that represents timer. ViewModel for TimerListItemControl.
     /// Data Content.
     /// </summary>
-    public class TimerItemDataViewModel : BaseViewModel
+    public class TimerItemDataViewModel : ASetupableBaseViewModel
     {
         #region Static Limitation Properties
 
@@ -78,14 +78,6 @@ namespace BlackSpiritHelper.Core
         /// Countdown before timer starts total.
         /// </summary>
         private TimeSpan mCountdownDuration;
-
-        /// <summary>
-        /// Indicates, the timer has loaded and <see cref="Init"/> method has been called.
-        /// If it is false. Setup has not been called and you can check other loading procedures.
-        /// <see cref="Init"/> doc for more info.
-        /// TODO
-        /// </summary>
-        private bool mIsSetupDoneFlag = false;
 
         /// <summary>
         /// Array of notification event fire record.
@@ -309,12 +301,8 @@ namespace BlackSpiritHelper.Core
             CreateCommands();
         }
 
-        public void Init()
+        protected override void InitRoutine(params object[] parameters)
         {
-            if (mIsSetupDoneFlag)
-                return;
-            mIsSetupDoneFlag = true;
-
             // Set the timer.
             SetTimerControl();
 
@@ -335,8 +323,9 @@ namespace BlackSpiritHelper.Core
             TimerSetNotificationEventTriggers(TimeLeft);
         }
 
-        public void Dispose()
+        protected override void DisposeRoutine()
         {
+            throw new NotImplementedException();
         }
 
         #endregion

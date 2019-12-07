@@ -8,7 +8,7 @@ namespace BlackSpiritHelper.Core.Data.Interfaces
     /// <summary>
     /// Abstract class as interface for all watchers of Watchdog.
     /// </summary>
-    public abstract class AWatchdogWatcherBase : BaseViewModel
+    public abstract class AWatchdogWatcherBase : ASetupableBaseViewModel
     {
         #region Static Limitation Properties
 
@@ -211,7 +211,7 @@ namespace BlackSpiritHelper.Core.Data.Interfaces
         /// <summary>
         /// Set the timers.
         /// </summary>
-        public void SetTimerControl()
+        protected void SetTimerControl()
         {
             // Set check loop timer.
             mCheckLoopTimer = new Timer(1000);
@@ -223,7 +223,7 @@ namespace BlackSpiritHelper.Core.Data.Interfaces
         /// Dispose timer calculations.
         /// Use this only while destroying the instance of the timer.
         /// </summary>
-        public void DisposeTimerControl()
+        protected void DisposeTimerControl()
         {
             // Check loop timer.
             mCheckLoopTimer.Stop();

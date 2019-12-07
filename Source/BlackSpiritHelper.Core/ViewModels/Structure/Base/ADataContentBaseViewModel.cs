@@ -7,22 +7,8 @@ namespace BlackSpiritHelper.Core
     /// General base ViewModel for root user data.
     /// </summary>
     [SettingsSerializeAs(SettingsSerializeAs.Xml)]
-    public abstract class DataContentBaseViewModel : BaseViewModel
+    public abstract class ADataContentBaseViewModel : ASetupableBaseViewModel
     {
-        #region Private Members
-
-        /// <summary>
-        /// If it is false. Setup has not been called and you can check other loading procedures.
-        /// </summary>
-        private bool mIsSetupDoneFlag = false;
-
-        /// <summary>
-        /// Says, if unset has been already done or not.
-        /// </summary>
-        private bool mIsUnsetDoneFlag = false;
-
-        #endregion
-
         #region Protected Members
 
         /// <summary>
@@ -47,18 +33,6 @@ namespace BlackSpiritHelper.Core
         #region Public Methods
 
         /// <summary>
-        /// Anything you need to do after construction.
-        /// </summary>
-        public void Init()
-        {
-            if (mIsSetupDoneFlag)
-                return;
-            mIsSetupDoneFlag = true;
-
-            InitRoutine();
-        }
-
-        /// <summary>
         /// Set default values into this instance.
         /// </summary>
         public void SetDefaults()
@@ -71,39 +45,15 @@ namespace BlackSpiritHelper.Core
             SetDefaultsRoutine();
         }
 
-        /// <summary>
-        /// Anything you need to do before destroy.
-        /// </summary>
-        public void Dispose()
-        {
-            if (!mIsSetupDoneFlag || mIsUnsetDoneFlag)
-                return;
-            mIsUnsetDoneFlag = true;
-
-            DisposeRoutine();
-        }
-
         #endregion
 
         #region Protected Abstract Methods
-
-        /// <summary>
-        /// Anything you need to do after construction.
-        /// Can be run only once.
-        /// </summary>
-        protected abstract void InitRoutine();
 
         /// <summary>
         /// Set default values into this instance.
         /// Can be run only once.
         /// </summary>
         protected abstract void SetDefaultsRoutine();
-
-        /// <summary>
-        /// Anything you need to do before destroy.
-        /// Can be run only once.
-        /// </summary>
-        protected abstract void DisposeRoutine();
 
         #endregion
     }
@@ -113,8 +63,8 @@ namespace BlackSpiritHelper.Core
     /// </summary>
     /// <typeparam name="VM"></typeparam>
     [SettingsSerializeAs(SettingsSerializeAs.Xml)]
-    public abstract class DataContentBaseViewModel<VM> : DataContentBaseViewModel
-        where VM : DataContentBaseViewModel<VM>, new()
+    public abstract class ADataContentBaseViewModel<VM> : ADataContentBaseViewModel
+        where VM : ADataContentBaseViewModel<VM>, new()
     {
         /// <summary>
         /// Create a new data instance.

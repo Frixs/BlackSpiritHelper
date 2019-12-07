@@ -20,7 +20,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// DataContent model of current content section.
         /// </summary>
-        public DataContentBaseViewModel DataContent { get; set; } = null;
+        public ADataContentBaseViewModel DataContent { get; set; } = null;
 
         #endregion
 

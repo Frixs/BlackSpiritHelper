@@ -13,7 +13,7 @@ namespace BlackSpiritHelper.Core
     /// <summary>
     /// Schedule section main data view-model.
     /// </summary>
-    public class ScheduleDataViewModel : DataContentBaseViewModel<ScheduleDataViewModel>
+    public class ScheduleDataViewModel : ADataContentBaseViewModel<ScheduleDataViewModel>
     {
         #region Static Limitation Properties
 
@@ -438,7 +438,7 @@ namespace BlackSpiritHelper.Core
         {
         }
 
-        protected override void InitRoutine()
+        protected override void InitRoutine(params object[] parameters)
         {
             // Set the timer.
             SetTimerControl();

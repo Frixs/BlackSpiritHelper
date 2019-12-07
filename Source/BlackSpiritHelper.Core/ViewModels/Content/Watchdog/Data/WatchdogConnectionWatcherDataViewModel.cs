@@ -70,6 +70,16 @@ namespace BlackSpiritHelper.Core
             CreateCommands();
         }
 
+        protected override void InitRoutine(params object[] parameters)
+        {
+            SetTimerControl();
+        }
+
+        protected override void DisposeRoutine()
+        {
+            DisposeTimerControl();
+        }
+
         #endregion
 
         #region Command Methods

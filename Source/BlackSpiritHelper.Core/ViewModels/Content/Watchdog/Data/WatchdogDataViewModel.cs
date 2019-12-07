@@ -9,7 +9,7 @@ namespace BlackSpiritHelper.Core
     /// <summary>
     /// Watchdog section data ROOT.
     /// </summary>
-    public class WatchdogDataViewModel : DataContentBaseViewModel<WatchdogDataViewModel>
+    public class WatchdogDataViewModel : ADataContentBaseViewModel<WatchdogDataViewModel>
     {
         #region Private Fields
 
@@ -70,15 +70,14 @@ namespace BlackSpiritHelper.Core
         {
         }
 
-        protected override void InitRoutine()
+        protected override void InitRoutine(params object[] parameters)
         {
-            // Set the timers.
-            ConnectionWatcher.SetTimerControl();
+            ConnectionWatcher.Init();
         }
 
         protected override void DisposeRoutine()
         {
-            ConnectionWatcher.DisposeTimerControl();
+            ConnectionWatcher.Dispose();
         }
 
         #endregion

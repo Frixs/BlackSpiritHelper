@@ -9,7 +9,7 @@ namespace BlackSpiritHelper.Core
     /// <summary>
     /// User preferences of the application content.
     /// </summary>
-    public class PreferencesDataViewModel : DataContentBaseViewModel<PreferencesDataViewModel>
+    public class PreferencesDataViewModel : ADataContentBaseViewModel<PreferencesDataViewModel>
     {
         #region Public Properties
 
@@ -104,10 +104,7 @@ namespace BlackSpiritHelper.Core
             CreateCommands();
         }
 
-        /// <summary>
-        /// Everythng you need to do after construction.
-        /// </summary>
-        protected override void InitRoutine()
+        protected override void InitRoutine(params object[] parameters)
         {
             // Init after application start.
             ForceToRunAsAdministrator = IoC.Application.Cookies.ForceToRunAsAdministrator;

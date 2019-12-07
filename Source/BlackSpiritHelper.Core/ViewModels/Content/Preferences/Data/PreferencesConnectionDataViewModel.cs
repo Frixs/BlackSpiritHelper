@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
 {
-    public class PreferencesConnectionDataViewModel : BaseViewModel
+    public class PreferencesConnectionDataViewModel : ASetupableBaseViewModel
     {
         #region Private Members
 
@@ -46,12 +46,6 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         [XmlIgnore]
         public List<APreferencesConnBaseDataViewModel> MethodList { get; set; } //; Init - Constructor
-
-        /// <summary>
-        /// Says if <see cref="Init"/> has been fired or not.
-        /// </summary>
-        [XmlIgnore]
-        public bool IsInitialized { get; private set; } = false;
 
         #endregion
 
@@ -92,15 +86,8 @@ namespace BlackSpiritHelper.Core
             CreateCommands();
         }
 
-        /// <summary>
-        /// This method should be called only once at the beggining for initializing this section.
-        /// </summary>
-        public void Init()
+        protected override void InitRoutine(params object[] parameters)
         {
-            if (IsInitialized)
-                return;
-            IsInitialized = true;
-
             // Build list of all methods.
             MethodList = new List<APreferencesConnBaseDataViewModel>()
             {
@@ -112,6 +99,11 @@ namespace BlackSpiritHelper.Core
 
             // Handle pending messages.
             StartTimerControl();
+        }
+
+        protected override void DisposeRoutine()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
