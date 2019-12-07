@@ -145,13 +145,21 @@ namespace BlackSpiritHelper
                 return;
 
             // All application windows are already closed here.
-            #region Dispose
 
-            IoC.Logger.CleanLogFiles(); // Clean log files.
+            #region Dispose Here
+
+            // Dispose tray icon.
             WindowViewModel.DisposeTrayIcon();
-            IoC.Get<IMouseKeyHook>().Dispose();
+
+            // Clean log files.
+            IoC.Logger.CleanLogFiles();
+
+            // Dispose IoC modules
             IoC.Web.Dispose();
-            IoC.DataContent.Unset(); // "Prepare data to die."
+            IoC.Get<IMouseKeyHook>().Dispose();
+
+            // "Prepare data to die."
+            IoC.DataContent.Unset();
 
             #endregion
         }
@@ -258,6 +266,9 @@ namespace BlackSpiritHelper
 
             // Bind an audio manager.
             IoC.Kernel.Bind<IAudioFactory>().ToConstant(new BaseAudioFactory());
+
+            // Bind an web manager.
+            IoC.Kernel.Bind<IWebManager>().ToConstant(new WebManager());
 
             // Bind an mouse key hooks.
             IoC.Kernel.Bind<IMouseKeyHook>().ToConstant(new GlobalMouseKeyHookManager());

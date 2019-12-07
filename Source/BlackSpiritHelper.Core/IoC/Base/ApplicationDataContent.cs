@@ -83,7 +83,20 @@
         /// </summary>
         public void Unset()
         {
-            // TODO
+            // Preferences.
+            PreferencesData.Dispose();
+
+            // Timer.
+            TimerData.Dispose();
+
+            // Schedule.
+            ScheduleData.Dispose();
+
+            // Watchdog.
+            WatchdogData.Dispose();
+
+            // Overlay.
+            OverlayData.Dispose();
         }
 
         #endregion

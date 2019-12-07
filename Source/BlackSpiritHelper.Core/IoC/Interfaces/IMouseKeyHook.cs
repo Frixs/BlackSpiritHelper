@@ -1,13 +1,11 @@
-﻿namespace BlackSpiritHelper.Core
+﻿using System;
+
+namespace BlackSpiritHelper.Core
 {
     /// <summary>
     /// Tracks global mouse & keyboard events.
     /// </summary>
-    public interface IMouseKeyHook
+    public interface IMouseKeyHook : IDisposable
     {
-        /// <summary>
-        /// Dispose instance.
-        /// </summary>
-        void Dispose();
     }
 }
