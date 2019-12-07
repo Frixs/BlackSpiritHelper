@@ -7,7 +7,7 @@ namespace BlackSpiritHelper.Core
     /// General base ViewModel for root user data.
     /// </summary>
     [SettingsSerializeAs(SettingsSerializeAs.Xml)]
-    public abstract class DataContentBaseViewModel : BaseViewModel
+    public abstract class DataContentBaseViewModel : BaseViewModel, ISetupable
     {
         #region Private Members
 
@@ -49,19 +49,20 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Anything you need to do after construction.
         /// </summary>
-        public void Setup()
+        public void Init()
         {
             if (mIsSetupDoneFlag)
                 return;
             mIsSetupDoneFlag = true;
 
-            SetupMethod();
+            InitRoutine();
         }
 
         /// <summary>
         /// Anything you need to do after construction.
+        /// Can be run only once.
         /// </summary>
-        protected abstract void SetupMethod();
+        protected abstract void InitRoutine();
 
         /// <summary>
         /// Set default values into this instance.
@@ -73,30 +74,32 @@ namespace BlackSpiritHelper.Core
             mInitWithDefaultsFlag = false;
 
             IoC.Logger.Log("Setting default values...", LogLevel.Debug);
-            SetDefaultsMethod();
+            SetDefaultsRoutine();
         }
 
         /// <summary>
         /// Set default values into this instance.
+        /// Can be run only once.
         /// </summary>
-        protected abstract void SetDefaultsMethod();
+        protected abstract void SetDefaultsRoutine();
 
         /// <summary>
         /// Anything you need to do before destroy.
         /// </summary>
-        public void Unset()
+        public void Dispose()
         {
             if (!mIsSetupDoneFlag || mIsUnsetDoneFlag)
                 return;
             mIsUnsetDoneFlag = true;
 
-            UnsetMethod();
+            DisposeRoutine();
         }
 
         /// <summary>
         /// Anything you need to do before destroy.
+        /// Can be run only once.
         /// </summary>
-        protected abstract void UnsetMethod();
+        protected abstract void DisposeRoutine();
 
         #endregion
     }

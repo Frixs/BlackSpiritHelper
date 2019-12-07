@@ -66,17 +66,17 @@ namespace BlackSpiritHelper.Core
             CreateCommands();
         }
 
-        protected override void SetDefaultsMethod()
+        protected override void SetDefaultsRoutine()
         {
         }
 
-        protected override void SetupMethod()
+        protected override void InitRoutine()
         {
             // Set the timers.
             ConnectionWatcher.SetTimerControl();
         }
 
-        protected override void UnsetMethod()
+        protected override void DisposeRoutine()
         {
             ConnectionWatcher.DisposeTimerControl();
         }

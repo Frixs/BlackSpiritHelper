@@ -53,27 +53,27 @@
         {
             // Preferences.
             PreferencesData = IoC.SettingsStorage.PreferencesData ?? PreferencesDataViewModel.NewDataInstance;
-            PreferencesData.Setup();
+            PreferencesData.Init();
             PreferencesData.SetDefaults();
 
             // Timer.
             TimerData = IoC.SettingsStorage.TimerData ?? TimerDataViewModel.NewDataInstance;
-            TimerData.Setup();
+            TimerData.Init();
             TimerData.SetDefaults();
 
             // Schedule.
             ScheduleData = IoC.SettingsStorage.ScheduleData ?? ScheduleDataViewModel.NewDataInstance;
-            ScheduleData.Setup();
+            ScheduleData.Init();
             ScheduleData.SetDefaults();
 
             // Watchdog.
             WatchdogData = IoC.SettingsStorage.WatchdogData ?? WatchdogDataViewModel.NewDataInstance;
-            WatchdogData.Setup();
+            WatchdogData.Init();
             WatchdogData.SetDefaults();
 
             // Overlay.
             OverlayData = IoC.SettingsStorage.OverlayData ?? OverlayDataViewModel.NewDataInstance;
-            OverlayData.Setup();
+            OverlayData.Init();
             OverlayData.SetDefaults();
         }
 

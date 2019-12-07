@@ -309,7 +309,7 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Setup preparation for <see cref="DataContentBaseViewModel.Setup"/> method.
+        /// Setup preparation for <see cref="DataContentBaseViewModel.Init"/> method.
         /// This should be called only once.
         /// ---
         /// Generally, things you cannot initialize while construction, e.g. loading data from <see cref="ApplicationDataContent"/>.

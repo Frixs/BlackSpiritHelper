@@ -115,7 +115,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Anything you need to do after construction.
         /// </summary>
-        protected override void SetupMethod()
+        protected override void InitRoutine()
         {
             // This is initialization setup after loading from user settings.
             // We need to run setup method manually.
@@ -127,7 +127,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Set default values into this instance.
         /// </summary>
-        protected override void SetDefaultsMethod()
+        protected override void SetDefaultsRoutine()
         {
             TimerGroupDataViewModel g = AddGroup("Default Group");
             g.AddTimer(new TimerItemDataViewModel
@@ -147,7 +147,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Anything you need to do before destroy.
         /// </summary>
-        protected override void UnsetMethod()
+        protected override void DisposeRoutine()
         {
         }
 

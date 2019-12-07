@@ -94,7 +94,7 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// This method should be called only once at the beggining for initializing this section.
-        /// Use <see cref="PreferencesDataViewModel.SetupMethod"/>.
+        /// Use <see cref="PreferencesDataViewModel.InitRoutine"/>.
         /// </summary>
         public void Init()
         {

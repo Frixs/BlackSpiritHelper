@@ -21,7 +21,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Run the application As Administrator.
         /// ---
-        /// This value is set in <see cref="SetupMethod"/>.
+        /// This value is set in <see cref="InitRoutine"/>.
         /// </summary>
         [XmlIgnore]
         public bool ForceToRunAsAdministrator { get; set; }
@@ -109,7 +109,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Everythng you need to do after construction.
         /// </summary>
-        protected override void SetupMethod()
+        protected override void InitRoutine()
         {
             // Init after application start.
             ForceToRunAsAdministrator = IoC.Application.Cookies.ForceToRunAsAdministrator;
@@ -121,14 +121,14 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Set default values into this instance.
         /// </summary>
-        protected override void SetDefaultsMethod()
+        protected override void SetDefaultsRoutine()
         {
         }
 
         /// <summary>
         /// Anything you need to do before destroy.
         /// </summary>
-        protected override void UnsetMethod()
+        protected override void DisposeRoutine()
         {
         }
 

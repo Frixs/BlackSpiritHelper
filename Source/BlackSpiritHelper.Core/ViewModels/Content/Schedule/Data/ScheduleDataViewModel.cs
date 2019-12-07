@@ -434,11 +434,11 @@ namespace BlackSpiritHelper.Core
             CreateCommands();
         }
 
-        protected override void SetDefaultsMethod()
+        protected override void SetDefaultsRoutine()
         {
         }
 
-        protected override void SetupMethod()
+        protected override void InitRoutine()
         {
             // Set the timer.
             SetTimerControl();
@@ -505,7 +505,7 @@ namespace BlackSpiritHelper.Core
                 RunOnLoad = false;
         }
 
-        protected override void UnsetMethod()
+        protected override void DisposeRoutine()
         {
             DisposeTimerControl();
         }

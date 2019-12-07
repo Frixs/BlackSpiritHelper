@@ -144,21 +144,21 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Everythng you need to do after construction.
         /// </summary>
-        protected override void SetupMethod()
+        protected override void InitRoutine()
         {
         }
 
         /// <summary>
         /// Set default values into this instance.
         /// </summary>
-        protected override void SetDefaultsMethod()
+        protected override void SetDefaultsRoutine()
         {
         }
 
         /// <summary>
         /// Anything you need to do before destroy.
         /// </summary>
-        protected override void UnsetMethod()
+        protected override void DisposeRoutine()
         {
         }
 
