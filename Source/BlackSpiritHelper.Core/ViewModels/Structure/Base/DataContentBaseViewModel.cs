@@ -16,21 +16,17 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private bool mIsSetupDoneFlag = false;
 
-        #endregion
-
-        #region Protected Members
-
         /// <summary>
         /// TRUE, Set flag up for creating default properties (calling <see cref="SetDefaults"/>) while creating a new instance with this property.
         /// Thanks to this, constructor is free for loading from user settings 
         /// and you can manually call this if user settings does not exists.
         /// </summary>
-        protected bool mInitWithDefaultsFlag = false;
+        private bool mInitWithDefaultsFlag = false;
 
         /// <summary>
         /// Says, if unset has been already done or not.
         /// </summary>
-        protected bool mIsUnsetDoneFlag = false;
+        private bool mIsUnsetDoneFlag = false;
 
         #endregion
 
@@ -43,6 +39,8 @@ namespace BlackSpiritHelper.Core
         public abstract bool IsRunning { get; protected set; }
 
         #endregion
+        
+        #region Methods
 
         /// <summary>
         /// Anything you need to do after construction.
@@ -95,6 +93,8 @@ namespace BlackSpiritHelper.Core
         /// Anything you need to do before destroy.
         /// </summary>
         protected abstract void UnsetMethod();
+
+        #endregion
     }
 
     /// <summary>
