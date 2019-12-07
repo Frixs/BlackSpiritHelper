@@ -17,16 +17,20 @@ namespace BlackSpiritHelper.Core
         private bool mIsSetupDoneFlag = false;
 
         /// <summary>
+        /// Says, if unset has been already done or not.
+        /// </summary>
+        private bool mIsUnsetDoneFlag = false;
+
+        #endregion
+
+        #region Protected Members
+
+        /// <summary>
         /// TRUE, Set flag up for creating default properties (calling <see cref="SetDefaults"/>) while creating a new instance with this property.
         /// Thanks to this, constructor is free for loading from user settings 
         /// and you can manually call this if user settings does not exists.
         /// </summary>
-        private bool mInitWithDefaultsFlag = false;
-
-        /// <summary>
-        /// Says, if unset has been already done or not.
-        /// </summary>
-        private bool mIsUnsetDoneFlag = false;
+        protected bool mInitWithDefaultsFlag = false;
 
         #endregion
 
