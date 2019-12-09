@@ -21,7 +21,7 @@ namespace BlackSpiritHelper.Core
         /// Interval to check pending messages to resend.
         /// Unit: Milliseconds
         /// </summary>
-        private int mPendingInterval = 30000;//600000; // 10 min
+        private int mPendingInterval = 600000; // 10 min
 
         #endregion
 

@@ -86,8 +86,7 @@ namespace BlackSpiritHelper.Core
             var address = Webhook;
 
             // Get client.
-            var client = IoC.Web.Http.GetClientForHost(new Uri(address));
-            client.Timeout = TimeSpan.FromMilliseconds(10000);
+            var client = IoC.Web.Http.GetClientForHost(new Uri(address), mSendingTimeout);
 
             // Create discord value collection.
             List<KeyValuePair<string, string>> discordValues = new List<KeyValuePair<string, string>>();

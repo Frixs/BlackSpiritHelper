@@ -224,8 +224,7 @@ namespace BlackSpiritHelper.Core
             var address = ClientCheckAddress;
 
             // Get client.
-            var client = IoC.Web.Http.GetClientForHost(new Uri(address));
-            client.Timeout = TimeSpan.FromMilliseconds(ClientTimeout);
+            var client = IoC.Web.Http.GetClientForHost(new Uri(address), ClientTimeout);
 
             // Solve.
             try

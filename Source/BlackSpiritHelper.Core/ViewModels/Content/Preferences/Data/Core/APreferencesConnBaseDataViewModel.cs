@@ -7,6 +7,16 @@ namespace BlackSpiritHelper.Core
 {
     public abstract class APreferencesConnBaseDataViewModel : BaseViewModel
     {
+        #region Protected Members
+
+        /// <summary>
+        /// Timeout for sending message.
+        /// Unit: Milliseconds
+        /// </summary>
+        protected int mSendingTimeout = 10000;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
