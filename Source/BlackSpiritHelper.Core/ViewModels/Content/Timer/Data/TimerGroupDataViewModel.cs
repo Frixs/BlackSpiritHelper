@@ -176,7 +176,7 @@ namespace BlackSpiritHelper.Core
                 return false;
 
             // Run setup if it has not run yet.
-            vm.Setup();
+            vm.Init();
 
             // Add timer to the list.
             TimerList.Add(vm);
@@ -205,7 +205,7 @@ namespace BlackSpiritHelper.Core
                 return false;
 
             // Dispose timer calculations.
-            vm.DisposeTimer();
+            vm.DisposeTimerControl();
 
             // Destroy reference to timer instance.
             vm = null;

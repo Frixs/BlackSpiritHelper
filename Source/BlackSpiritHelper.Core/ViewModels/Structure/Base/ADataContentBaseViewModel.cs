@@ -7,17 +7,8 @@ namespace BlackSpiritHelper.Core
     /// General base ViewModel for root user data.
     /// </summary>
     [SettingsSerializeAs(SettingsSerializeAs.Xml)]
-    public abstract class DataContentBaseViewModel : BaseViewModel
+    public abstract class ADataContentBaseViewModel : ASetupableBaseViewModel
     {
-        #region Private Members
-
-        /// <summary>
-        /// If it is false. Setup has not been called and you can check other loading procedures.
-        /// </summary>
-        private bool mIsSetupDoneFlag = false;
-
-        #endregion
-
         #region Protected Members
 
         /// <summary>
@@ -26,11 +17,6 @@ namespace BlackSpiritHelper.Core
         /// and you can manually call this if user settings does not exists.
         /// </summary>
         protected bool mInitWithDefaultsFlag = false;
-
-        /// <summary>
-        /// Says, if unset has been already done or not.
-        /// </summary>
-        protected bool mIsUnsetDoneFlag = false;
 
         #endregion
 
@@ -43,23 +29,8 @@ namespace BlackSpiritHelper.Core
         public abstract bool IsRunning { get; protected set; }
 
         #endregion
-
-        /// <summary>
-        /// Anything you need to do after construction.
-        /// </summary>
-        public void Setup()
-        {
-            if (mIsSetupDoneFlag)
-                return;
-            mIsSetupDoneFlag = true;
-
-            SetupMethod();
-        }
-
-        /// <summary>
-        /// Anything you need to do after construction.
-        /// </summary>
-        protected abstract void SetupMethod();
+        
+        #region Public Methods
 
         /// <summary>
         /// Set default values into this instance.
@@ -71,30 +42,20 @@ namespace BlackSpiritHelper.Core
             mInitWithDefaultsFlag = false;
 
             IoC.Logger.Log("Setting default values...", LogLevel.Debug);
-            SetDefaultsMethod();
+            SetDefaultsRoutine();
         }
+
+        #endregion
+
+        #region Protected Abstract Methods
 
         /// <summary>
         /// Set default values into this instance.
+        /// Can be run only once.
         /// </summary>
-        protected abstract void SetDefaultsMethod();
+        protected abstract void SetDefaultsRoutine();
 
-        /// <summary>
-        /// Anything you need to do before destroy.
-        /// </summary>
-        public void Unset()
-        {
-            if (!mIsSetupDoneFlag || mIsUnsetDoneFlag)
-                return;
-            mIsUnsetDoneFlag = true;
-
-            UnsetMethod();
-        }
-
-        /// <summary>
-        /// Anything you need to do before destroy.
-        /// </summary>
-        protected abstract void UnsetMethod();
+        #endregion
     }
 
     /// <summary>
@@ -102,8 +63,8 @@ namespace BlackSpiritHelper.Core
     /// </summary>
     /// <typeparam name="VM"></typeparam>
     [SettingsSerializeAs(SettingsSerializeAs.Xml)]
-    public abstract class DataContentBaseViewModel<VM> : DataContentBaseViewModel
-        where VM : DataContentBaseViewModel<VM>, new()
+    public abstract class ADataContentBaseViewModel<VM> : ADataContentBaseViewModel
+        where VM : ADataContentBaseViewModel<VM>, new()
     {
         /// <summary>
         /// Create a new data instance.

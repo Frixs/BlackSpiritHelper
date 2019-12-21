@@ -11,7 +11,7 @@ namespace BlackSpiritHelper.Core
     /// View model that represents list of all timer Groups.
     /// Timer Group view model: <see cref="TimerGroupDataViewModel"/>.
     /// </summary>
-    public class TimerDataViewModel : DataContentBaseViewModel<TimerDataViewModel>
+    public class TimerDataViewModel : ADataContentBaseViewModel<TimerDataViewModel>
     {
         #region Static Limitation Properties
 
@@ -112,22 +112,16 @@ namespace BlackSpiritHelper.Core
             CreateCommands();
         }
 
-        /// <summary>
-        /// Anything you need to do after construction.
-        /// </summary>
-        protected override void SetupMethod()
+        protected override void InitRoutine(params object[] parameters)
         {
             // This is initialization setup after loading from user settings.
             // We need to run setup method manually.
             foreach (TimerGroupDataViewModel g in GroupList)
                 foreach (TimerItemDataViewModel t in g.TimerList)
-                    t.Setup();
+                    t.Init();
         }
 
-        /// <summary>
-        /// Set default values into this instance.
-        /// </summary>
-        protected override void SetDefaultsMethod()
+        protected override void SetDefaultsRoutine()
         {
             TimerGroupDataViewModel g = AddGroup("Default Group");
             g.AddTimer(new TimerItemDataViewModel
@@ -144,10 +138,7 @@ namespace BlackSpiritHelper.Core
             });
         }
 
-        /// <summary>
-        /// Anything you need to do before destroy.
-        /// </summary>
-        protected override void UnsetMethod()
+        protected override void DisposeRoutine()
         {
         }
 

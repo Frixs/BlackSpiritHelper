@@ -1,10 +1,6 @@
 ﻿using BlackSpiritHelper.Core;
 using Gma.System.MouseKeyHook;
-using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using System.Windows.Interop;
 
 namespace BlackSpiritHelper
 {

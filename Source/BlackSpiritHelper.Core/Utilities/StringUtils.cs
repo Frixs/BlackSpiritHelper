@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 
 namespace BlackSpiritHelper.Core
 {
@@ -11,10 +12,13 @@ namespace BlackSpiritHelper.Core
         /// <param name="underscores">Are underscores allowed?</param>
         /// <param name="spaces">Are spaces allowed?</param>
         /// <param name="dashes">Are dashes allowed?</param>
+        /// <param name="specials">Special additional character restriction.</param>
         /// <returns></returns>
-        public static bool CheckAlphanumeric(this string input, bool underscores = false, bool spaces = false, bool dashes = false)
+        public static bool CheckAlphanumeric(this string input, bool underscores = false, bool spaces = false, bool dashes = false, string specials = "")
         {
             string regChars = "";
+
+            regChars += specials;
 
             if (underscores)
                 regChars += "_";
@@ -26,6 +30,27 @@ namespace BlackSpiritHelper.Core
                 regChars += "-";
 
             return Regex.IsMatch(input, @"^[a-zA-Z0-9" + regChars + @"]+$");
+        }
+
+        /// <summary>
+        /// Check if the string contains only digits.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static bool CheckNumeric(this string input)
+        {
+            return Regex.IsMatch(input, @"^[0-9]+$");
+        }
+
+        /// <summary>
+        /// Simple URL check.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static bool CheckURL(this string input)
+        {
+            Uri uriResult;
+            return Uri.TryCreate(input, UriKind.Absolute, out uriResult) && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
         }
 
         /// <summary>

@@ -13,7 +13,7 @@ namespace BlackSpiritHelper.Core
     /// <summary>
     /// Schedule section main data view-model.
     /// </summary>
-    public class ScheduleDataViewModel : DataContentBaseViewModel<ScheduleDataViewModel>
+    public class ScheduleDataViewModel : ADataContentBaseViewModel<ScheduleDataViewModel>
     {
         #region Static Limitation Properties
 
@@ -250,7 +250,7 @@ namespace BlackSpiritHelper.Core
         /// Offset modifier for the local time.
         /// </summary>
         [XmlIgnore]
-        public TimeSpan LocalTimeOffsetModifier { get; set; }
+        public TimeSpan LocalTimeOffsetModifier { get; set; } = TimeSpan.Zero;
 
         /// <summary>
         /// <see cref="LocalTimeOffsetModifier"/> Ticks.
@@ -434,14 +434,14 @@ namespace BlackSpiritHelper.Core
             CreateCommands();
         }
 
-        protected override void SetDefaultsMethod()
+        protected override void SetDefaultsRoutine()
         {
         }
 
-        protected override void SetupMethod()
+        protected override void InitRoutine(params object[] parameters)
         {
             // Set the timer.
-            SetTimer();
+            SetTimerControl();
 
             // Schedule predefined Item list.
             AddItem("Kzarka", "fc2121", true);
@@ -505,9 +505,9 @@ namespace BlackSpiritHelper.Core
                 RunOnLoad = false;
         }
 
-        protected override void UnsetMethod()
+        protected override void DisposeRoutine()
         {
-            DisposeTimer();
+            DisposeTimerControl();
         }
 
         #endregion
@@ -661,9 +661,9 @@ namespace BlackSpiritHelper.Core
         #region Timer Methods
 
         /// <summary>
-        /// Set the timer.
+        /// Set the timer control.
         /// </summary>
-        private void SetTimer()
+        private void SetTimerControl()
         {
             // Normal timer.
             mTimer = new Timer(1000);
@@ -677,10 +677,10 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Dispose timer calculations.
+        /// Dispose timer control.
         /// Use this only while destroying the instance.
         /// </summary>
-        public void DisposeTimer()
+        public void DisposeTimerControl()
         {
             // Normal timer.
             mTimer.Stop();

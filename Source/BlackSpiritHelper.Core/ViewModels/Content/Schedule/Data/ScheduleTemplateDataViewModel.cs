@@ -13,7 +13,7 @@ namespace BlackSpiritHelper.Core
     /// Template model for <see cref="ScheduleDataViewModel"/>.
     /// Next <see cref="ScheduleDayDataViewModel"/>.
     /// </summary>
-    public class ScheduleTemplateDataViewModel : BaseViewModel
+    public class ScheduleTemplateDataViewModel : ASetupableBaseViewModel
     {
         #region Static Limitation Properties
 
@@ -35,16 +35,6 @@ namespace BlackSpiritHelper.Core
         /// Default time zone represented with region enumerate.
         /// </summary>
         private TimeZoneRegion mTimeZoneRegion = TimeZoneRegion.UTC;
-
-        /// <summary>
-        /// Says, if the template is initialized.
-        /// </summary>
-        private bool mIsInitialized = false;
-
-        /// <summary>
-        /// Says if the template is predefined or not.
-        /// </summary>
-        private bool mIsPredefined = false;
 
         /// <summary>
         /// Schedule.
@@ -127,7 +117,7 @@ namespace BlackSpiritHelper.Core
                 mSchedule = value;
 
                 // Update only, if it has been initialized.
-                if (mIsInitialized)
+                if (mIsInitDoneFlag)
                     UpdatePresenter();
             }
         }
@@ -158,7 +148,7 @@ namespace BlackSpiritHelper.Core
         /// Says if the template is predefined or not.
         /// </summary>
         [XmlIgnore]
-        public bool IsPredefined => mIsPredefined;
+        public bool IsPredefined { get; private set; } = false;
 
         #endregion
 
@@ -183,19 +173,16 @@ namespace BlackSpiritHelper.Core
             CreateCommands();
         }
 
-        /// <summary>
-        /// Initialize the instance.
-        /// </summary>
-        /// <param name="isPredefined"></param>
-        public void Init(bool isPredefined = false)
+        protected override void InitRoutine(params object[] parameters)
         {
-            if (mIsInitialized)
-                return;
-            mIsInitialized = true;
-
-            mIsPredefined = isPredefined;
+            IsPredefined = (bool)parameters[0];
             SortSchedule();
             UpdatePresenter();
+        }
+
+        protected override void DisposeRoutine()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

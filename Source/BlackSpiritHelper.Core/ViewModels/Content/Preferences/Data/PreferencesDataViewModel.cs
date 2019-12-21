@@ -9,7 +9,7 @@ namespace BlackSpiritHelper.Core
     /// <summary>
     /// User preferences of the application content.
     /// </summary>
-    public class PreferencesDataViewModel : DataContentBaseViewModel<PreferencesDataViewModel>
+    public class PreferencesDataViewModel : ADataContentBaseViewModel<PreferencesDataViewModel>
     {
         #region Public Properties
 
@@ -20,11 +20,9 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// Run the application As Administrator.
-        /// ---
-        /// This value is set in <see cref="SetupMethod"/>.
         /// </summary>
         [XmlIgnore]
-        public bool ForceToRunAsAdministrator { get; set; }
+        public bool ForceToRunAsAdministrator { get; set; } //; Set in Constructor region
 
         /// <summary>
         /// Start the application in tray.
@@ -41,6 +39,11 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         [XmlIgnore]
         public bool RunOnStartupFlag { get; private set; } = false;
+
+        /// <summary>
+        /// Connection wrapper that handles connection to 3rd party user's software.
+        /// </summary>
+        public PreferencesConnectionDataViewModel Connection { get; set; } = new PreferencesConnectionDataViewModel();
 
         /// <summary>
         /// User audio alert level.
@@ -101,25 +104,26 @@ namespace BlackSpiritHelper.Core
             CreateCommands();
         }
 
-        /// <summary>
-        /// Everythng you need to do after construction.
-        /// </summary>
-        protected override void SetupMethod()
+        protected override void InitRoutine(params object[] parameters)
         {
+            // Init after application start.
             ForceToRunAsAdministrator = IoC.Application.Cookies.ForceToRunAsAdministrator;
+
+            // Init connection section.
+            Connection.Init();
         }
 
         /// <summary>
         /// Set default values into this instance.
         /// </summary>
-        protected override void SetDefaultsMethod()
+        protected override void SetDefaultsRoutine()
         {
         }
 
         /// <summary>
         /// Anything you need to do before destroy.
         /// </summary>
-        protected override void UnsetMethod()
+        protected override void DisposeRoutine()
         {
         }
 

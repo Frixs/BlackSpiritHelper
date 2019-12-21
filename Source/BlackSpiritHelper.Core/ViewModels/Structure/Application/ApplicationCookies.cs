@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System.Collections.Generic;
+using System.Configuration;
 
 namespace BlackSpiritHelper.Core
 {
@@ -31,6 +32,12 @@ namespace BlackSpiritHelper.Core
         /// <see cref="Update"/> only.
         /// </summary>
         public Vector2Double MainWindowSize { get; set; } = new Vector2Double(803, 450);
+
+        /// <summary>
+        /// List of pending messages that cannot be send at the time of need.
+        /// Handler: <see cref="PreferencesDataViewModel.Connection"/>.
+        /// </summary>
+        public List<string> PendingMessageList { get; set; } = new List<string>();
 
         #endregion
 

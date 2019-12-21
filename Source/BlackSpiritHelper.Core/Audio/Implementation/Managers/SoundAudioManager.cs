@@ -51,6 +51,12 @@
                 o.AddAudio(new AudioFile("Alert4_Sound_0.mp3"));
                 return o;
             });
+            // Pack.
+            AddPack(AudioType.Alert5, o =>
+            {
+                o.AddAudio(new AudioFile("Alert5_Sound_0.mp3"));
+                return o;
+            });
         }
 
         #endregion

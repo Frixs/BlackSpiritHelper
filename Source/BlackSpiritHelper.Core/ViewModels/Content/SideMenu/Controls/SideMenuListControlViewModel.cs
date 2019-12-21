@@ -44,7 +44,7 @@ namespace BlackSpiritHelper.Core
                 {
                     Title = ApplicationPage.Watchdog.GetDescription(),
                     PageEnum = ApplicationPage.Watchdog,
-                    // TODO:SectionInit: Watchdog add data content.
+                    DataContent = IoC.DataContent.WatchdogData,
                 },
             };
         }

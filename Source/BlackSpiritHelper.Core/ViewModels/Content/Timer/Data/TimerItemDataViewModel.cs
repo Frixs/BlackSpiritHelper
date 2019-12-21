@@ -11,7 +11,7 @@ namespace BlackSpiritHelper.Core
     /// View model that represents timer. ViewModel for TimerListItemControl.
     /// Data Content.
     /// </summary>
-    public class TimerItemDataViewModel : BaseViewModel
+    public class TimerItemDataViewModel : ASetupableBaseViewModel
     {
         #region Static Limitation Properties
 
@@ -78,13 +78,6 @@ namespace BlackSpiritHelper.Core
         /// Countdown before timer starts total.
         /// </summary>
         private TimeSpan mCountdownDuration;
-
-        /// <summary>
-        /// Indicates, the timer has loaded and <see cref="Setup"/> method has been called.
-        /// If it is false. Setup has not been called and you can check other loading procedures.
-        /// <see cref="Setup"/> doc for more info.
-        /// </summary>
-        private bool mIsSetupDoneFlag = false;
 
         /// <summary>
         /// Array of notification event fire record.
@@ -300,7 +293,7 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// Default constructor.
-        /// <see cref="Setup"/> method should be called everytime after creation.
+        /// <see cref="Init"/> method should be called everytime after creation.
         /// </summary>
         public TimerItemDataViewModel()
         {
@@ -308,20 +301,10 @@ namespace BlackSpiritHelper.Core
             CreateCommands();
         }
 
-        /// <summary>
-        /// Setup preparation for <see cref="DataContentBaseViewModel.Setup"/> method.
-        /// This should be called only once.
-        /// ---
-        /// Generally, things you cannot initialize while construction, e.g. loading data from <see cref="ApplicationDataContent"/>.
-        /// </summary>
-        public void Setup()
+        protected override void InitRoutine(params object[] parameters)
         {
-            if (mIsSetupDoneFlag)
-                return;
-            mIsSetupDoneFlag = true;
-
             // Set the timer.
-            SetTimer();
+            SetTimerControl();
 
             // Update time as placeholder, only in ready state.
             if (State == TimerState.Ready)
@@ -340,14 +323,19 @@ namespace BlackSpiritHelper.Core
             TimerSetNotificationEventTriggers(TimeLeft);
         }
 
+        protected override void DisposeRoutine()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region Timer Methods
 
         /// <summary>
-        /// Set the timer.
+        /// Set timer control.
         /// </summary>
-        private void SetTimer()
+        private void SetTimerControl()
         {
             // Set normal timer.
             mTimer = new Timer(1000);
@@ -361,10 +349,10 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Dispose timer calculations.
+        /// Dispose timer control.
         /// Use this only while destroying the instance of the timer.
         /// </summary>
-        public void DisposeTimer()
+        public void DisposeTimerControl()
         {
             // Normal timer.
             mTimer.Stop();

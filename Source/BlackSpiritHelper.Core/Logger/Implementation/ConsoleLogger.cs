@@ -11,12 +11,6 @@ namespace BlackSpiritHelper.Core
         /// <param name="level">The leve of the message.</param>
         public void Log(string message, LogLevel level)
         {
-            // Save old color.
-            var consoleOldColor = Console.ForegroundColor;
-
-            // Default log color value.
-            var consoleColor = ConsoleColor.White;
-
             // Color console based on level.
             switch (level)
             {
@@ -49,11 +43,11 @@ namespace BlackSpiritHelper.Core
                     break;
             }
 
-            // Set the desired console color.
-            Console.ForegroundColor = consoleColor;
-
             // Write message to console.
             Console.WriteLine(message);
+
+            // Set the console color back to default.
+            Console.ResetColor();
         }
     }
 }

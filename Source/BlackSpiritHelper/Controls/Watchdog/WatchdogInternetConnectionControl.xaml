@@ -1,0 +1,144 @@
+﻿<UserControl
+    x:Class="BlackSpiritHelper.WatchdogInternetConnectionControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:core="clr-namespace:BlackSpiritHelper.Core;assembly=BlackSpiritHelper.Core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:BlackSpiritHelper"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    d:DesignHeight="450"
+    d:DesignStyle="{StaticResource WindowBackgroundControlStyle}"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style x:Key="ContentStyle" TargetType="{x:Type ContentControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ContentControl}">
+
+                        <StackPanel Orientation="Vertical">
+                            <!--  Info Panel  -->
+                            <TextBlock
+                                FontFamily="{StaticResource LatoMediumItalic}"
+                                FontSize="12"
+                                Foreground="{StaticResource WatchdogSubForegroundBrushKey}"
+                                Text="Your connection to the internet is tested by 2-factor method. Ping is the pillar way to check the connection. But sometimes, sites refuse ping requests. If the ping fails, there is another check through opening web client. If it fails too and you have set multi-check (additional checks), it will make the same checks again after a few seconds. If all waves of checks fail, it will evaluate your internet connection as inaccessible."
+                                TextWrapping="Wrap" />
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.Column="0" Margin="0,5,10,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="2*" />
+                                        <RowDefinition Height="2*" />
+                                    </Grid.RowDefinitions>
+                                    <!--  Ping Address - Label  -->
+                                    <TextBlock
+                                        Grid.Row="0"
+                                        VerticalAlignment="Center"
+                                        FontFamily="{StaticResource LatoBold}"
+                                        FontSize="12"
+                                        Foreground="{StaticResource WatchdogForegroundBrushKey}"
+                                        Text="Ping address:" />
+                                    <!--  Client Address - Label  -->
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        Margin="0,5,0,0"
+                                        VerticalAlignment="Center"
+                                        FontFamily="{StaticResource LatoBold}"
+                                        FontSize="12"
+                                        Foreground="{StaticResource WatchdogForegroundBrushKey}"
+                                        Text="Client request address:" />
+                                </Grid>
+                                <StackPanel
+                                    Grid.Column="1"
+                                    Margin="0,5,5,0"
+                                    Orientation="Vertical">
+                                    <!--  Ping Address  -->
+                                    <TextBox
+                                        Width="225"
+                                        IsEnabled="False"
+                                        Style="{StaticResource TextBoxSmall}"
+                                        Text="{Binding PingCheckAddress}" />
+                                    <!--  Client Address  -->
+                                    <TextBox
+                                        Width="225"
+                                        Margin="0,5,0,0"
+                                        IsEnabled="False"
+                                        Style="{StaticResource TextBoxSmall}"
+                                        Text="{Binding ClientCheckAddress}" />
+                                </StackPanel>
+                                <StackPanel
+                                    Grid.Column="2"
+                                    Margin="0,5,0,0"
+                                    Orientation="Vertical">
+                                    <!--  Ping Timeout  -->
+                                    <xctk:IntegerUpDown
+                                        Height="26"
+                                        MinWidth="75"
+                                        FontSize="12"
+                                        Increment="100"
+                                        Maximum="{Binding AllowedMaxTimeout}"
+                                        Minimum="{Binding AllowedMinTimeout}"
+                                        ToolTip="Timeout in milliseconds"
+                                        Value="{Binding PingTimeout}" />
+                                    <!--  Client Timeout  -->
+                                    <xctk:IntegerUpDown
+                                        Height="26"
+                                        MinWidth="75"
+                                        Margin="0,5,0,0"
+                                        FontSize="12"
+                                        Increment="100"
+                                        Maximum="{Binding AllowedMaxTimeout}"
+                                        Minimum="{Binding AllowedMinTimeout}"
+                                        ToolTip="Timeout in milliseconds"
+                                        Value="{Binding ClientTimeout}" />
+                                </StackPanel>
+
+                                <StackPanel
+                                    Grid.Column="4"
+                                    VerticalAlignment="Center"
+                                    Orientation="Vertical">
+                                    <StackPanel Margin="0,2.5,0,0" Orientation="Horizontal">
+                                        <!--  Multi-check (Double-check) - Label  -->
+                                        <TextBlock
+                                            Margin="0,0,10,0"
+                                            VerticalAlignment="Center"
+                                            FontFamily="{StaticResource FontAwesomeSolid}"
+                                            FontSize="16"
+                                            Foreground="{StaticResource WatchdogForegroundBrushKey}"
+                                            Text="{StaticResource FontAwesomeCheckDoubleIcon}"
+                                            ToolTip="Multi-Check" />
+                                        <!--  Multi-check (Double-check)  -->
+                                        <xctk:IntegerUpDown
+                                            MinWidth="50"
+                                            FontSize="12"
+                                            Increment="1"
+                                            Maximum="{Binding AllowedMaxMultiCheck}"
+                                            Minimum="{Binding AllowedMinMultiCheck}"
+                                            ToolTip="Multi-Check"
+                                            Value="{Binding MultiCheck}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <ContentControl
+        d:DataContext="{x:Static core:WatchdogInternetConnectionDataDesignModel.Instance}"
+        Focusable="False"
+        Style="{StaticResource ContentStyle}" />
+</UserControl>

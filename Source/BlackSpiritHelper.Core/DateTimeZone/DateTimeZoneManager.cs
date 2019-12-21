@@ -1,8 +1,10 @@
 ﻿using System;
-using System.Text;
 
 namespace BlackSpiritHelper.Core
 {
+    /// <summary>
+    /// TODO:LATER: Move to Utilities
+    /// </summary>
     public class DateTimeZoneManager : IDateTimeZone
     {
         #region Constructor

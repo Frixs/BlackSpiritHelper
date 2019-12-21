@@ -8,19 +8,9 @@ namespace BlackSpiritHelper.Core
     /// <summary>
     /// Represents the schedule time item - only the name without time - Like Karanda, Nouver etc.
     /// </summary>
-    public class ScheduleItemDataViewModel : BaseViewModel
+    public class ScheduleItemDataViewModel : ASetupableBaseViewModel
     {
         #region Private Properties
-
-        /// <summary>
-        /// Says, if the template is initialized.
-        /// </summary>
-        private bool mIsInitialized = false;
-
-        /// <summary>
-        /// Says if the item is predefined or not.
-        /// </summary>
-        private bool mIsPredefined = false;
 
         /// <summary>
         /// Flag that counts number of changes, but only the one can be done per <see cref="mIgnoreListMoveCounterFlagTime"/> time period.
@@ -56,7 +46,7 @@ namespace BlackSpiritHelper.Core
         /// Says if the item is predefined or not.
         /// </summary>
         [XmlIgnore]
-        public bool IsPredefined => mIsPredefined;
+        public bool IsPredefined { get; private set; } = false;
 
         #endregion
 
@@ -87,17 +77,14 @@ namespace BlackSpiritHelper.Core
             CreateCommands();
         }
 
-        /// <summary>
-        /// Initialize the instance.
-        /// </summary>
-        /// <param name="isPredefined"></param>
-        public void Init(bool isPredefined = false)
+        protected override void InitRoutine(params object[] parameters)
         {
-            if (mIsInitialized)
-                return;
-            mIsInitialized = true;
+            IsPredefined = (bool)parameters[0];
+        }
 
-            mIsPredefined = isPredefined;
+        protected override void DisposeRoutine()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
