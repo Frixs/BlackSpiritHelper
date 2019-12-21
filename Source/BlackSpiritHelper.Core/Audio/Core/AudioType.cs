@@ -31,23 +31,18 @@
         Alert4 = 4,
 
         /// <summary>
-        /// Alert of type 5.
-        /// </summary>
-        Alert5 = 5,
-
-        /// <summary>
         /// Timer alert counting.
         /// </summary>
-        AlertCountdown = 6,
+        AlertCountdown = 5,
 
         /// <summary>
         /// Alert user a lot of time before the event start.
         /// </summary>
-        AlertLongBefore = 7,
+        AlertLongBefore = 6,
 
         /// <summary>
         /// Alert of time ticking.
         /// </summary>
-        AlertClockTicking = 8,
+        AlertClockTicking = 7,
     }
 }

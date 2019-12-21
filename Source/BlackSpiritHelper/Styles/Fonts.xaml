@@ -1,7 +1,6 @@
-﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
     <FontFamily x:Key="LatoRegular">pack://application;,,,/Resources/Fonts/Lato/#Lato Relular</FontFamily>
     <FontFamily x:Key="LatoMediumItalic">pack://application;,,,/Resources/Fonts/Lato/#Lato Medium Italic</FontFamily>
     <FontFamily x:Key="LatoThin">pack://application;,,,/Resources/Fonts/Lato/#Lato Thin</FontFamily>
@@ -16,19 +15,19 @@
     <FontFamily x:Key="FontAwesomeRegular">pack://application;,,,/Resources/Fonts/FontAwesome/#Font Awesome 5 Free Regular</FontFamily>
     <FontFamily x:Key="FontAwesomeBrands">pack://application;,,,/Resources/Fonts/FontAwesome/#Font Awesome 5 Brands Regular</FontFamily>
 
-    <!--  Set default font for these elements  -->
-    <Style x:Key="BaseStyle" TargetType="{x:Type Control}">
+    <!-- Set default font for these elements -->
+    <Style TargetType="{x:Type Control}" x:Key="BaseStyle">
         <Setter Property="FontFamily" Value="{StaticResource LatoLight}" />
     </Style>
 
-    <Style x:Key="BaseTextBlockStyle" TargetType="{x:Type TextBlock}">
+    <Style TargetType="{x:Type TextBlock}" x:Key="BaseTextBlockStyle">
         <Setter Property="FontFamily" Value="{StaticResource LatoLight}" />
     </Style>
 
-    <Style BasedOn="{StaticResource BaseStyle}" TargetType="{x:Type Button}" />
-    <Style BasedOn="{StaticResource BaseStyle}" TargetType="{x:Type Label}" />
-    <Style BasedOn="{StaticResource BaseStyle}" TargetType="{x:Type TextBox}" />
-    <Style BasedOn="{StaticResource BaseTextBlockStyle}" TargetType="{x:Type TextBlock}" />
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}" />
+    <Style TargetType="{x:Type Label}" BasedOn="{StaticResource BaseStyle}" />
+    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseStyle}" />
+    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BaseTextBlockStyle}" />
 
     <system:String x:Key="FontAwesomeChatIcon">&#xf086;</system:String>
     <system:String x:Key="FontAwesomeStopIcon">&#xf04d;</system:String>
@@ -57,9 +56,7 @@
     <system:String x:Key="FontAwesomeVolumeOffIcon">&#xf026;</system:String>
     <system:String x:Key="FontAwesomeTimesIcon">&#xf00d;</system:String>
     <system:String x:Key="FontAwesomeTimesCircleIcon">&#xf057;</system:String>
-    <system:String x:Key="FontAwesomeBoltIcon">&#xf0e7;</system:String>
-    <system:String x:Key="FontAwesomeCheckDoubleIcon">&#xf560;</system:String>
-
+    
     <system:String x:Key="FontAwesomeGitHubIcon">&#xf09b;</system:String>
     <system:String x:Key="FontAwesomeDiscordIcon">&#xf392;</system:String>
     <system:String x:Key="FontAwesomeRedditIcon">&#xf1a1;</system:String>

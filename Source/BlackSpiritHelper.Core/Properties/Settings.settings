@@ -17,8 +17,5 @@
     <Setting Name="ApplicationCookies" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.ApplicationCookies" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="WatchdogData" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.WatchdogDataViewModel" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
   </Settings>
 </SettingsFile>

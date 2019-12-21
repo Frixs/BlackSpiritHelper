@@ -321,7 +321,7 @@ namespace BlackSpiritHelper.Core
             mIsSetupDoneFlag = true;
 
             // Set the timer.
-            SetTimerControl();
+            SetTimer();
 
             // Update time as placeholder, only in ready state.
             if (State == TimerState.Ready)
@@ -345,9 +345,9 @@ namespace BlackSpiritHelper.Core
         #region Timer Methods
 
         /// <summary>
-        /// Set timer control.
+        /// Set the timer.
         /// </summary>
-        private void SetTimerControl()
+        private void SetTimer()
         {
             // Set normal timer.
             mTimer = new Timer(1000);
@@ -361,10 +361,10 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Dispose timer control.
+        /// Dispose timer calculations.
         /// Use this only while destroying the instance of the timer.
         /// </summary>
-        public void DisposeTimerControl()
+        public void DisposeTimer()
         {
             // Normal timer.
             mTimer.Stop();

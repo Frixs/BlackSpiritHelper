@@ -250,7 +250,7 @@ namespace BlackSpiritHelper.Core
         /// Offset modifier for the local time.
         /// </summary>
         [XmlIgnore]
-        public TimeSpan LocalTimeOffsetModifier { get; set; } = TimeSpan.Zero;
+        public TimeSpan LocalTimeOffsetModifier { get; set; }
 
         /// <summary>
         /// <see cref="LocalTimeOffsetModifier"/> Ticks.
@@ -441,7 +441,7 @@ namespace BlackSpiritHelper.Core
         protected override void SetupMethod()
         {
             // Set the timer.
-            SetTimerControl();
+            SetTimer();
 
             // Schedule predefined Item list.
             AddItem("Kzarka", "fc2121", true);
@@ -507,7 +507,7 @@ namespace BlackSpiritHelper.Core
 
         protected override void UnsetMethod()
         {
-            DisposeTimerControl();
+            DisposeTimer();
         }
 
         #endregion
@@ -661,9 +661,9 @@ namespace BlackSpiritHelper.Core
         #region Timer Methods
 
         /// <summary>
-        /// Set the timer control.
+        /// Set the timer.
         /// </summary>
-        private void SetTimerControl()
+        private void SetTimer()
         {
             // Normal timer.
             mTimer = new Timer(1000);
@@ -677,10 +677,10 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Dispose timer control.
+        /// Dispose timer calculations.
         /// Use this only while destroying the instance.
         /// </summary>
-        public void DisposeTimerControl()
+        public void DisposeTimer()
         {
             // Normal timer.
             mTimer.Stop();

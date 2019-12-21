@@ -59,7 +59,7 @@ namespace BlackSpiritHelper.Core
         private async Task GetStartedCommandMethodAsync()
         {
             // Open the webpage.
-            System.Diagnostics.Process.Start("https://github.com/Frixs/BlackSpiritHelper/wiki/GettingStarted");
+            System.Diagnostics.Process.Start("https://github.com/Frixs/BlackSpiritHelper/wiki");
 
             await Task.Delay(1);
         }
