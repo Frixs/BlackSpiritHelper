@@ -145,7 +145,6 @@ namespace BlackSpiritHelper
                 return;
 
             // All application windows are already closed here.
-
             #region Dispose Here
 
             // Dispose tray icon.
@@ -157,7 +156,7 @@ namespace BlackSpiritHelper
             // Dispose IoC modules
             IoC.Web.Dispose();
             IoC.Get<IMouseKeyHook>().Dispose();
-
+            
             // "Prepare data to die."
             IoC.DataContent.Unset();
 
