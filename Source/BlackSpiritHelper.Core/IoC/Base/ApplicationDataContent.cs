@@ -15,11 +15,6 @@
         public PreferencesDataViewModel PreferencesData { get; private set; }
 
         /// <summary>
-        /// Data structure for schedule.
-        /// </summary>
-        public ScheduleDataViewModel ScheduleData { get; private set; }
-
-        /// <summary>
         /// Data structure for timers with its groups.
         /// </summary>
         public TimerDataViewModel TimerData { get; private set; }
@@ -27,7 +22,7 @@
         /// <summary>
         /// Data structure for schedule.
         /// </summary>
-        public WatchdogDataViewModel WatchdogData { get; private set; }
+        public ScheduleDataViewModel ScheduleData { get; private set; }
 
         /// <summary>
         /// Data structure for the overlay.
@@ -36,7 +31,7 @@
 
         #endregion
 
-        #region Constructor & Setup
+        #region Constructor
 
         /// <summary>
         /// Default constructor.
@@ -66,11 +61,6 @@
             ScheduleData.Setup();
             ScheduleData.SetDefaults();
 
-            // Watchdog.
-            WatchdogData = IoC.SettingsStorage.WatchdogData ?? WatchdogDataViewModel.NewDataInstance;
-            WatchdogData.Setup();
-            WatchdogData.SetDefaults();
-
             // Overlay.
             OverlayData = IoC.SettingsStorage.OverlayData ?? OverlayDataViewModel.NewDataInstance;
             OverlayData.Setup();
@@ -97,9 +87,8 @@
             // Clear previously saved data, first.
             ClearSavedAppData();
             ClearSavedPreferencesData();
-            ClearSavedScheduleData();
             ClearSavedTimerData();
-            ClearSavedWatchdogData();
+            ClearSavedScheduleData();
             ClearSavedOverlayData();
 
             // Clear saved data commit.
@@ -108,9 +97,8 @@
             // Save new data.
             SaveNewAppData();
             SaveNewPreferencesData();
-            SaveNewScheduleData();
             SaveNewTimerData();
-            SaveNewWatchdogData();
+            SaveNewScheduleData();
             SaveNewOverlayData();
 
             // Save commit.
@@ -152,29 +140,7 @@
         }
 
         #endregion
-
-        #region Preferences
-
-        /// <summary>
-        /// Save new user preferences.
-        /// </summary>
-        private void SaveNewPreferencesData()
-        {
-            // Save new data.
-            IoC.SettingsStorage.PreferencesData = PreferencesData;
-        }
-
-        /// <summary>
-        /// Clear saved user preferences.
-        /// </summary>
-        private void ClearSavedPreferencesData()
-        {
-            // Clear previous save.
-            IoC.SettingsStorage.PreferencesData = null;
-        }
-
-        #endregion
-
+        
         #region Timer
 
         /// <summary>
@@ -202,47 +168,25 @@
         }
 
         #endregion
-
-        #region Schedule
+        
+        #region Preferences
 
         /// <summary>
-        /// Save new overlay settings.
+        /// Save new user preferences.
         /// </summary>
-        private void SaveNewScheduleData()
+        private void SaveNewPreferencesData()
         {
             // Save new data.
-            IoC.SettingsStorage.ScheduleData = ScheduleData;
+            IoC.SettingsStorage.PreferencesData = PreferencesData;
         }
 
         /// <summary>
-        /// Clear saved Schedule settings.
+        /// Clear saved user preferences.
         /// </summary>
-        private void ClearSavedScheduleData()
+        private void ClearSavedPreferencesData()
         {
             // Clear previous save.
-            IoC.SettingsStorage.ScheduleData = null;
-        }
-
-        #endregion
-
-        #region Watchdog
-
-        /// <summary>
-        /// Save new Watchdog settings.
-        /// </summary>
-        private void SaveNewWatchdogData()
-        {
-            // Save new data.
-            IoC.SettingsStorage.WatchdogData = WatchdogData;
-        }
-
-        /// <summary>
-        /// Clear saved Watchdog settings.
-        /// </summary>
-        private void ClearSavedWatchdogData()
-        {
-            // Clear previous save.
-            IoC.SettingsStorage.WatchdogData = null;
+            IoC.SettingsStorage.PreferencesData = null;
         }
 
         #endregion
@@ -265,6 +209,28 @@
         {
             // Clear previous save.
             IoC.SettingsStorage.OverlayData = null;
+        }
+
+        #endregion
+
+        #region Schedule
+
+        /// <summary>
+        /// Save new overlay settings.
+        /// </summary>
+        private void SaveNewScheduleData()
+        {
+            // Save new data.
+            IoC.SettingsStorage.ScheduleData = ScheduleData;
+        }
+
+        /// <summary>
+        /// Clear saved Schedule settings.
+        /// </summary>
+        private void ClearSavedScheduleData()
+        {
+            // Clear previous save.
+            IoC.SettingsStorage.ScheduleData = null;
         }
 
         #endregion

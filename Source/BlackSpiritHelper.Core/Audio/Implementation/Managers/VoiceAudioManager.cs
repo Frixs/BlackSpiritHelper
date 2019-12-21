@@ -1,13 +1,13 @@
 ﻿namespace BlackSpiritHelper.Core
 {
-    public class SoundAudioManager : BaseAudioManager
+    public class VoiceAudioManager : BaseAudioManager
     {
         #region Constructor
 
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public SoundAudioManager()
+        public VoiceAudioManager()
         {
             // Pack.
             AddPack(AudioType.Alert3, o =>

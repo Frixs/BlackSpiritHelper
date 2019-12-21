@@ -41,10 +41,10 @@ Based on what happends you can set events like send a message to your favorite p
 
 #### Installation process
 1. Download installer -> **[setup.exe](Release/setup.exe?raw=true)**.
-2. Turn off your antivirus. It may cause issues while installation due to you do not have installed my publisher certificate on your computer. You will see me under the name "Unknown Publisher". If you would like to install certificate to prevent this, you can follow the installation [here](https://github.com/Frixs/BlackSpiritHelper/wiki/CertificateInstallation) (It is not required).
+2. Turn off your antivirus. It may cause issues while installation due to you do not have installed my publisher certificate on your computer. You will see me under the name "Unknown Publisher". If you would like to install certificate to prevent this, you can follow the installation [here](https://github.com/Frixs/BlackSpiritHelper/wiki/Certificate-installation) (It is not required).
 3. Run the installer (setup.exe) and follow the installation process.
 4. Your application is installed!
-    - Now, you can check, **[Getting Started](https://github.com/Frixs/BlackSpiritHelper/wiki/GettingStarted)** page!
+    - Now, you can check, [how to get started!](https://github.com/Frixs/BlackSpiritHelper/wiki)
     
 #### Updating your application
 The application automatically tracks a new updates and download them if needed before each start of the application. Use application shortcut created in the start menu or on your desktop to run the application with update check. If you run the application exe file directly, the update check will not run.

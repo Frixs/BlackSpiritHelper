@@ -82,17 +82,5 @@ namespace BlackSpiritHelper.Core.Properties {
                 this["ApplicationCookies"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsProviderAttribute(typeof(BlackSpiritHelper.Core.CustomSettingsProvider))]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::BlackSpiritHelper.Core.WatchdogDataViewModel WatchdogData {
-            get {
-                return ((global::BlackSpiritHelper.Core.WatchdogDataViewModel)(this["WatchdogData"]));
-            }
-            set {
-                this["WatchdogData"] = value;
-            }
-        }
     }
 }

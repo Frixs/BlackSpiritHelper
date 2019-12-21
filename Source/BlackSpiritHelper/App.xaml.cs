@@ -6,6 +6,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Deployment.Application;
+using System.Security.Principal;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,7 +15,6 @@ namespace BlackSpiritHelper
     /// <summary>
     /// Interaction logic for App.xaml
     /// ---
-    /// TODO:LATER: Replace Border for Separator TAG
     /// TODO:LATER:APP: more...
     ///     - Application user option to download/check updates.
     ///     - Auto manage length of log file. Cut the file if it is too large.
@@ -83,7 +83,7 @@ namespace BlackSpiritHelper
 
             // Check for administrator privileges.
             if (IoC.Application.Cookies.ForceToRunAsAdministrator
-                && !IoC.Application.IsRunningAsAdministratorCheck
+                && !IsRunningAsAdministrator()
                 && !Debugger.IsAttached
                 )
             {
@@ -110,7 +110,7 @@ namespace BlackSpiritHelper
                 await OnUpdateSetupAsync();
 
                 // Log it.
-                IoC.Logger.Log("Application starting up" + (IoC.Application.IsRunningAsAdministratorCheck ? " (As Administrator)" : "") + "...", LogLevel.Info);
+                IoC.Logger.Log("Application starting up" + (IsRunningAsAdministrator() ? " (As Administrator)" : "") + "...", LogLevel.Info);
 
                 // Show the main window.
                 await IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
@@ -158,6 +158,18 @@ namespace BlackSpiritHelper
         #endregion
 
         #region Private Methods: As Administrator
+
+        /// <summary>
+        /// Check if the application is running As Administrator or not.
+        /// </summary>
+        /// <returns></returns>
+        private bool IsRunningAsAdministrator()
+        {
+            var wi = WindowsIdentity.GetCurrent();
+            var wp = new WindowsPrincipal(wi);
+
+            return wp.IsInRole(WindowsBuiltInRole.Administrator);
+        }
 
         /// <summary>
         /// Run the application As Administrator.
@@ -237,7 +249,7 @@ namespace BlackSpiritHelper
                     ),
             })
             {
-                LogOutputLevel = Debugger.IsAttached ? LogOutputLevel.Debug : LogOutputLevel.Verbose
+                LogOutputLevel = Debugger.IsAttached ? LogOutputLevel.Debug : LogOutputLevel.Informative
             });
 
             // Bind task manager.
