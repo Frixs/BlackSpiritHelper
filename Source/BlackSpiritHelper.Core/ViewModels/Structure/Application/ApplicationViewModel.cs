@@ -66,7 +66,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Logo URL address.
         /// </summary>
-        public string LogoURL { get; private set; } = "https://raw.githubusercontent.com/Frixs/BlackSpiritHelper/master/Resources/logo_red_text_512.png";
+        public string LogoURL { get; private set; } = "https://raw.githubusercontent.com/Frixs/BlackSpiritHelper/master/Resources/logo_red_512.png";
 
         /// <summary>
         /// Donation URL address.
