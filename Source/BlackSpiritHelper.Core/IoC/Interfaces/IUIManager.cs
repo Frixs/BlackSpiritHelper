@@ -24,8 +24,16 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         Task ShowFolderBrowserDialog(Action<string> action);
 
+        /// <summary>
+        /// Open file browser dialog.
+        /// </summary>
+        /// <param name="action">Action on success/select browser item.</param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        Task ShowFileBrowserDialog(Action<string> action, string filter);
+
         #endregion
-        
+
         #region Overlay Window
 
         /// <summary>

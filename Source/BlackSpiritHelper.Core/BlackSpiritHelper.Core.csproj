@@ -74,6 +74,7 @@
     <Compile Include="DateTimeZone\DateTimeZoneManager.cs" />
     <Compile Include="Dispatcher\Implementation\DispatcherManager.cs" />
     <Compile Include="Dispatcher\Implementation\DisprUiThread.cs" />
+    <Compile Include="ViewModels\Structure\Application\Interfaces\IAppAssembly.cs" />
     <Compile Include="ViewModels\Structure\Base\ASetupableBaseViewModel.cs" />
     <Compile Include="IoC\Interfaces\IWebManager.cs" />
     <Compile Include="Settings.cs" />

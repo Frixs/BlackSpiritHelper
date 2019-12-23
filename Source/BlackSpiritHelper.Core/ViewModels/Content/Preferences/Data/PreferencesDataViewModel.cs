@@ -160,14 +160,14 @@ namespace BlackSpiritHelper.Core
                     {
                         // Set the application executable into Windows register.
                         key.SetValue(
-                            IoC.Application.ApplicationExecutingAssembly.GetName().Name,
+                            IoC.Application.ExecutingAssembly.GetName().Name,
                             Environment.GetFolderPath(Environment.SpecialFolder.Programs) + $"\\{IoC.Application.PublisherName}\\{IoC.Application.ProductName}.appref-ms"
                             );
                     }
                     else
                     {
                         // Delete the application register key from the Windows register.
-                        key.DeleteValue(IoC.Application.ApplicationExecutingAssembly.GetName().Name);
+                        key.DeleteValue(IoC.Application.ExecutingAssembly.GetName().Name);
                     }
                 }
                 catch (Exception ex)

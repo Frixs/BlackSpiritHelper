@@ -58,11 +58,9 @@ If you want, you can **[Donate Me!](https://www.paypal.com/cgi-bin/webscr?cmd=_s
 [GNU General Public License v3.0](https://github.com/Frixs/BlackSpiritHelper/blob/master/LICENSE)
 
 ## TODO List
-- [ ] Daily Check Section.
-- [ ] Voice Alerts.
-- [x] Watchdog Section.
-- [ ] HW Optimalization.
-- [x] Loading info screen.
+- [ ] Daily Check Section
+- [x] Optimalization
+- [x] Loading info/notification screen
 
 ## Release History
 ```

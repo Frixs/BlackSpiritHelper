@@ -1,8 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 using BlackSpiritHelper.Core;
+using Microsoft.Win32;
 
 namespace BlackSpiritHelper
 {
@@ -25,7 +27,8 @@ namespace BlackSpiritHelper
         #region Dialog Windows
 
         /// <summary>
-        /// DIsplays a single message box to the user.
+        /// Displays a single message box to the user.
+        /// TODO: Change into custom notification - Custom panel preparation already in MainWindow.xaml
         /// </summary>
         /// <param name="viewModel">The view model.</param>
         /// <returns></returns>
@@ -46,7 +49,7 @@ namespace BlackSpiritHelper
         }
 
         /// <summary>
-        /// Open file browser dialog.
+        /// Open folder browser dialog.
         /// </summary>
         /// <param name="action">Action on success/select browser item.</param>
         /// <returns></returns>
@@ -67,6 +70,28 @@ namespace BlackSpiritHelper
                         }
                     }));
 
+                }
+            });
+        }
+
+        /// <summary>
+        /// Open file browser dialog.
+        /// </summary>
+        /// <param name="action">Action on success/select browser item.</param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public Task ShowFileBrowserDialog(Action<string> action, string filter)
+        {
+            return IoC.Task.Run(() =>
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = filter;
+                openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                openFileDialog.Multiselect = false;
+
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    action(openFileDialog.FileName);
                 }
             });
         }

@@ -12,6 +12,34 @@ namespace BlackSpiritHelper.Core
         #region Public Properties
 
         /// <summary>
+        /// Methods from App assembly - main class.
+        /// ---
+        /// Assembly set.
+        /// </summary>
+        public IAppAssembly AppAssembly { get; set; } //;
+
+        /// <summary>
+        /// Executing assemby of the application.
+        /// ---
+        /// Assembly set.
+        /// </summary>
+        public Assembly ExecutingAssembly { get; set; } //;
+
+        /// <summary>
+        /// Application version.
+        /// ---
+        /// Assembly set.
+        /// </summary>
+        public string ApplicationVersion { get; set; } //;
+
+        /// <summary>
+        /// Copyright.
+        /// ---
+        /// Assembly set.
+        /// </summary>
+        public string Copyright { get; set; } //;
+
+        /// <summary>
         /// Application product name.
         /// Represents how the Windows shortcuts will be named, e.g.
         /// ---
@@ -31,29 +59,9 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// Application Title/Name.
+        /// What user can see in the app UI.
         /// </summary>
-        public string ApplicationName { get; private set; } = "Black Spirit Helper (BETA)";
-
-        /// <summary>
-        /// Executing assemby of the application.
-        /// ---
-        /// Assembly set.
-        /// </summary>
-        public Assembly ApplicationExecutingAssembly { get; set; }
-
-        /// <summary>
-        /// Application version.
-        /// ---
-        /// Assembly set.
-        /// </summary>
-        public string ApplicationVersion { get; set; }
-
-        /// <summary>
-        /// Copyright.
-        /// ---
-        /// Assembly set.
-        /// </summary>
-        public string Copyright { get; set; }
+        public string ApplicationName { get; private set; } = "Black Spirit Helper";
 
         /// <summary>
         /// Logo URL address.
@@ -71,14 +79,14 @@ namespace BlackSpiritHelper.Core
         /// ---
         /// Constructor set.
         /// </summary>
-        public string WindowTitleDefault { get; private set; }
+        public string WindowTitleDefault { get; private set; } //;
 
         /// <summary>
         /// Window title - dynamic name - postfix is changing based on opened page.
         /// ---
         /// Set in <see cref="SetWindowTitlePostfixOnly"/>.
         /// </summary>
-        public string WindowTitle { get; set; }
+        public string WindowTitle { get; set; } //;
 
         /// <summary>
         /// Window title change only postfix.
@@ -106,7 +114,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// The current page of the application.
         /// </summary>
-        public ApplicationPage CurrentPage { get; private set; }
+        public ApplicationPage CurrentPage { get; private set; } //;
 
         /// <summary>
         /// The view model to use for the current page when the <see cref="CurrentPage"/> changes.
@@ -114,14 +122,14 @@ namespace BlackSpiritHelper.Core
         ///       It is simply used to set the view model of the current page at the time it chages.
         ///       In other words, we can pass data to the new page.
         /// </summary>
-        public BaseViewModel CurrentPageViewModel { get; set; }
+        public BaseViewModel CurrentPageViewModel { get; set; } //;
 
         /// <summary>
         /// Data you need immediately after application start and can be loaded without any other needs/references.
         /// ---
         /// Constructor set.
         /// </summary>
-        public ApplicationCookies Cookies { get; private set; }
+        public ApplicationCookies Cookies { get; private set; } //;
 
         /// <summary>
         /// Check if the application is running As Administrator or not.

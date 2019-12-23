@@ -218,8 +218,12 @@ namespace BlackSpiritHelper
             IoC.Setup(args);
 
             #region Set Application Properties
+
+            // App assembly.
+            IoC.Application.AppAssembly = new AppAssembly();
+
             // Bind Executing Assembly.
-            IoC.Application.ApplicationExecutingAssembly = Assembly.GetExecutingAssembly();
+            IoC.Application.ExecutingAssembly = Assembly.GetExecutingAssembly();
 
             // Bind AssemblyInfo version.
             IoC.Application.ApplicationVersion = ApplicationDeployment.IsNetworkDeployed
@@ -228,6 +232,7 @@ namespace BlackSpiritHelper
 
             // Bind AssemblyInfo copyright.
             IoC.Application.Copyright = FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).LegalCopyright;
+
             #endregion
         }
 
@@ -241,7 +246,7 @@ namespace BlackSpiritHelper
             IoC.Kernel.Bind<ILogFactory>().ToConstant(new BaseLogFactory(new[]
             {
                 new FileLogger(
-                    ((AssemblyTitleAttribute)IoC.Application.ApplicationExecutingAssembly.GetCustomAttribute(typeof(AssemblyTitleAttribute))).Title.Replace(' ', '_').ToLower() + "_log.log"
+                    ((AssemblyTitleAttribute)IoC.Application.ExecutingAssembly.GetCustomAttribute(typeof(AssemblyTitleAttribute))).Title.Replace(' ', '_').ToLower() + "_log.log"
                     ),
             })
             {
@@ -372,7 +377,7 @@ namespace BlackSpiritHelper
                 IoC.Logger.Log("Update successfully finished!", LogLevel.Info);
 
                 // Restart application.
-                Restart();
+                IoC.Application.AppAssembly.Restart();
             }
             // Otherwise do if the updating failed.
             else
@@ -401,7 +406,7 @@ namespace BlackSpiritHelper
                     RegistryKey myKey = myUninstallKey.OpenSubKey(mySubKeyNames[i], true);
                     object myValue = myKey.GetValue("DisplayName");
                     if (
-                        myValue != null && myValue.ToString() == ((AssemblyTitleAttribute)IoC.Application.ApplicationExecutingAssembly.GetCustomAttribute(typeof(AssemblyTitleAttribute))).Title
+                        myValue != null && myValue.ToString() == ((AssemblyTitleAttribute)IoC.Application.ExecutingAssembly.GetCustomAttribute(typeof(AssemblyTitleAttribute))).Title
                         )
                     {
                         myKey.SetValue("DisplayIcon", iconSourcePath);
@@ -410,16 +415,6 @@ namespace BlackSpiritHelper
                 }
             }
             catch (Exception) { }
-        }
-
-        /// <summary>
-        /// Restart application.
-        /// </summary>
-        private void Restart()
-        {
-            // from System.Windows.Forms.dll
-            System.Windows.Forms.Application.Restart();
-            Current.Shutdown();
         }
 
         #endregion

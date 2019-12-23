@@ -12,6 +12,7 @@ namespace BlackSpiritHelper.Core
 {
     /// <summary>
     /// Schedule section main data view-model.
+    /// TODO: Sync function for timer. E.g. It gets unsync during computer sleep.
     /// </summary>
     public class ScheduleDataViewModel : ADataContentBaseViewModel<ScheduleDataViewModel>
     {

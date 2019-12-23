@@ -1,5 +1,6 @@
 ﻿using BlackSpiritHelper.Core.Data.Interfaces;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Xml.Serialization;
@@ -158,9 +159,77 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         public override bool Check()
         {
-            // TODO: Process Check
-            System.Console.WriteLine("Process Check");
-            return true;
+            bool ret = true;
+
+            for (int i = 0; i < mProcessList.Count; i++)
+            {
+                // Get process.
+                Process p = mProcessList[i].FindProcess();
+                // Check if the process exists.
+                if (p == null)
+                {
+                    IoC.DataContent.WatchdogData.Log($"No process found under the name \"{mProcessList[i].Name}\"!");
+                    continue;
+                }
+
+                // Check the presence in the net table.
+                if (!CheckProcessPresenceInNet(p.Id))
+                {
+                    IoC.DataContent.WatchdogData.Log($"Process \"{mProcessList[i].Name}\" does not have any presence in the net!");
+                    ret = false;
+                    // Kill the process if the process supposed to be killed.
+                    if (mProcessList[i].KillOnFailure)
+                    {
+                        IoC.DataContent.WatchdogData.Log($"Killing \"{mProcessList[i].Name}\" process...");
+                        p.Kill();
+                    }
+                }
+            }
+
+            return ret;
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Check presence of PID in netstat.
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <returns></returns>
+        private bool CheckProcessPresenceInNet(int pid)
+        {
+            int lineCount = 0;
+            ProcessStartInfo psi = new ProcessStartInfo("cmd");
+
+            psi.Arguments = $"/c netstat /a /o /n | findstr /r {pid}$";
+
+            psi.CreateNoWindow = true;
+            psi.ErrorDialog = false;
+            psi.UseShellExecute = false;
+            psi.RedirectStandardOutput = true;
+            psi.RedirectStandardError = true;
+
+            Process process = new Process();
+
+            process.EnableRaisingEvents = true;
+            process.StartInfo = psi;
+            process.OutputDataReceived += (s, e) =>
+            {
+                if (!string.IsNullOrEmpty(e.Data)) // Some lines might be null
+                    lineCount++;
+            };
+            //process.ErrorDataReceived += (s, e) => { netstatLines.Add(e.Data); }; // For debug construction only. We dont want to print error, because we are counting lines with good output only.
+
+            process.Start();
+
+            process.BeginOutputReadLine();
+            //process.BeginErrorReadLine();
+
+            process.WaitForExit();
+
+            return lineCount > 0;
         }
 
         #endregion

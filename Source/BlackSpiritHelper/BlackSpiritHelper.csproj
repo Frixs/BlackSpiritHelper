@@ -210,6 +210,7 @@
     <Compile Include="Controls\Watchdog\WatchdogProcessConnectionControl.xaml.cs">
       <DependentUpon>WatchdogProcessConnectionControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IoC\AppAssembly.cs" />
     <Compile Include="IoC\UIManager.cs" />
     <Compile Include="IoC\GlobalMouseKeyHookManager.cs" />
     <Compile Include="Pages\BasePage.cs" />
@@ -540,42 +541,42 @@
   <ItemGroup>
     <PublishFile Include="Xceed.Wpf.AvalonDock">
       <Visible>False</Visible>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Exclude</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="Xceed.Wpf.AvalonDock.Themes.Aero">
       <Visible>False</Visible>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Exclude</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="Xceed.Wpf.AvalonDock.Themes.Metro">
       <Visible>False</Visible>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Exclude</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="Xceed.Wpf.AvalonDock.Themes.VS2010">
       <Visible>False</Visible>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Exclude</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
   </ItemGroup>

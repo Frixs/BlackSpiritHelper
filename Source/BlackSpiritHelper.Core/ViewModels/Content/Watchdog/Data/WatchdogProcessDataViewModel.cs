@@ -1,4 +1,5 @@
-﻿using System.Xml.Serialization;
+﻿using System.Diagnostics;
+using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
 {
@@ -28,6 +29,26 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public WatchdogProcessDataViewModel()
         {
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Find process by the current instance fields.
+        /// </summary>
+        /// <returns>Null for no results or error, otherwise no null object</returns>
+        public Process FindProcess()
+        {
+            Process ret = null;
+
+            // Get processes coinciding with the name.
+            Process[] foundProcesses = Process.GetProcessesByName(Name);
+            // We know, we want the only 1 process.
+            ret = foundProcesses.Length > 0 ? foundProcesses[0] : ret;
+
+            return ret;
         }
 
         #endregion
