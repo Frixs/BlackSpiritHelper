@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
@@ -236,9 +235,6 @@ namespace BlackSpiritHelper
 
             // Hide MainWindow.
             Application.Current.MainWindow.Hide(); // A hidden window can be shown again, a closed one not.
-
-            // Save user data on closing appliation to tray.
-            IoC.DataContent.SaveUserData();
         }
 
         #endregion
