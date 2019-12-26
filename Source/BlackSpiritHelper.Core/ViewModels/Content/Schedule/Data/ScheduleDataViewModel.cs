@@ -1334,7 +1334,7 @@ namespace BlackSpiritHelper.Core
                 IoC.Audio.Play(AudioType.AlertLongBefore, AudioPriorityBracket.Pack);
                 if (SendMessage)
                 {
-                    string message = $"{string.Join(", ", NextItemPresenterList.Select(o => o.Name))} starts in {TimerNotificationTime1Value} minutes!";
+                    string message = $"{string.Join(", ", NextItemPresenterList.Select(o => o.Name))} - starts in {TimerNotificationTime1Value} minutes!";
                     IoC.DataContent.PreferencesData.Connection.SendTextMessage(message);
                 }
             }
@@ -1356,7 +1356,7 @@ namespace BlackSpiritHelper.Core
                 IoC.Audio.Play(AudioType.AlertClockTicking, AudioPriorityBracket.Pack);
                 if (SendMessage)
                 {
-                    string message = $"{string.Join(", ", NextItemPresenterList.Select(o => o.Name))} starts in {TimerNotificationTime2Value} minutes!";
+                    string message = $"{string.Join(", ", NextItemPresenterList.Select(o => o.Name))} - starts in {TimerNotificationTime2Value} minutes!";
                     IoC.DataContent.PreferencesData.Connection.SendTextMessage(message);
                 }
             }
@@ -1379,7 +1379,7 @@ namespace BlackSpiritHelper.Core
                 IoC.Audio.Play(AudioType.Alert4, AudioPriorityBracket.Pack);
                 if (SendMessage)
                 {
-                    string message = $"{string.Join(", ", NextItemPresenterList.Select(o => o.Name))} just started!";
+                    string message = $"{string.Join(", ", NextItemPresenterList.Select(o => o.Name))} - just started!";
                     IoC.DataContent.PreferencesData.Connection.SendTextMessage(message);
                 }
             }
