@@ -1,4 +1,4 @@
-﻿﻿# Black Spirit Helper
+# Black Spirit Helper
 
 <p align="center">
     <img src="Resources/logo_red_text_512.png" alt="Logo Black Spirit Helper" width="256" style="text-align:center;">
