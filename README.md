@@ -1,4 +1,4 @@
-﻿# Black Spirit Helper
+﻿﻿# Black Spirit Helper
 
 <p align="center">
     <img src="Resources/logo_red_text_512.png" alt="Logo Black Spirit Helper" width="256" style="text-align:center;">
@@ -10,6 +10,8 @@ Or... are you finding hard to track all the tasks you want to do in-game?
 Black Spirit Helper can **solve your problem!** You can also set the application to start with your operating system to do not miss any task you want to do, accidentally.  
 **Black Spirit Helper offers** several features that can manage these things with multiple types of adjustable timers.  
 Oh... I almost forgot to tell you, the application has **own overlay!** So, you can easily track your timers in-game without needs to switch to your desktop.
+### Overlay?!#
+Yes! Black Spirit Helper offers overlay! So, you do not need to switch to your desktop and then back to your game anymore! Enjoy your game comfortably without switching to system desktop.
 ### Is it legal to use?
 Of course! Black Spirit Helper does **not** affect any game files. It does **not** track any screen events. It is just an advanced timer. I ask you... is Windows OS build-in timer illegal? It is in the same category as other software like [Discord](https://discordapp.com/), [TeamSpeak](https://www.teamspeak.com), etc.
 
@@ -40,14 +42,7 @@ Based on what happends you can set events like send a message to your favorite p
 - **Windows**: .NET 4.7.2+
 
 #### Installation process
-1. Download installer -> **[setup.exe](Release/setup.exe?raw=true)**.
-2. Turn off your antivirus. It may cause issues while installation due to you do not have installed my publisher certificate on your computer. You will see me under the name "Unknown Publisher". If you would like to install certificate to prevent this, you can follow the installation [here](https://github.com/Frixs/BlackSpiritHelper/wiki/CertificateInstallation) (It is not required).
-3. Run the installer (setup.exe) and follow the installation process.
-4. Your application is installed!
-    - Now, you can check, **[Getting Started](https://github.com/Frixs/BlackSpiritHelper/wiki/GettingStarted)** page!
-    
-#### Updating your application
-The application automatically tracks a new updates and download them if needed before each start of the application. Use application shortcut created in the start menu or on your desktop to run the application with update check. If you run the application exe file directly, the update check will not run.
+Follow the instructions **[here](https://github.com/Frixs/BlackSpiritHelper/wiki/Installation)**!
 
 ## Credits
 #### Author
