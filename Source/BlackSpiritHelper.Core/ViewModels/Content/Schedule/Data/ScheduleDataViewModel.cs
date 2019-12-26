@@ -317,6 +317,7 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// 1st notification time.
+        /// In milliseconds.
         /// </summary>
         public int TimerNotificationTime1 { get; set; } = 3600;
 
@@ -369,6 +370,11 @@ namespace BlackSpiritHelper.Core
         /// Says if the section should be in the overlay.
         /// </summary>
         public bool ShowInOverlay { get; set; } = false;
+
+        /// <summary>
+        /// Says if the user wants to send message via connection.
+        /// </summary>
+        public bool SendMessage { get; set; } = false;
 
         /// <summary>
         /// Can you add a new custom template?
@@ -1326,6 +1332,11 @@ namespace BlackSpiritHelper.Core
             {
                 mIsFiredNotificationEvent[0] = true;
                 IoC.Audio.Play(AudioType.AlertLongBefore, AudioPriorityBracket.Pack);
+                if (SendMessage)
+                {
+                    string message = $"{string.Join(", ", NextItemPresenterList.Select(o => o.Name))} starts in {TimerNotificationTime1Value} minutes!";
+                    IoC.DataContent.PreferencesData.Connection.SendTextMessage(message);
+                }
             }
 
             // ------------------------------
@@ -1343,6 +1354,11 @@ namespace BlackSpiritHelper.Core
             {
                 mIsFiredNotificationEvent[1] = true;
                 IoC.Audio.Play(AudioType.AlertClockTicking, AudioPriorityBracket.Pack);
+                if (SendMessage)
+                {
+                    string message = $"{string.Join(", ", NextItemPresenterList.Select(o => o.Name))} starts in {TimerNotificationTime2Value} minutes!";
+                    IoC.DataContent.PreferencesData.Connection.SendTextMessage(message);
+                }
             }
 
             // Activate WARNING UI event.
@@ -1361,6 +1377,11 @@ namespace BlackSpiritHelper.Core
             {
                 mIsFiredNotificationEvent[2] = true;
                 IoC.Audio.Play(AudioType.Alert4, AudioPriorityBracket.Pack);
+                if (SendMessage)
+                {
+                    string message = $"{string.Join(", ", NextItemPresenterList.Select(o => o.Name))} just started!";
+                    IoC.DataContent.PreferencesData.Connection.SendTextMessage(message);
+                }
             }
 
             // Deactivate WARNING UI event.

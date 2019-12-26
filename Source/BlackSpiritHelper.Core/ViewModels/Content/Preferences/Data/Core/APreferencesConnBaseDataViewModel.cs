@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
 {
-    public abstract class APreferencesConnBaseDataViewModel : BaseViewModel
+    public abstract class APreferencesConnBaseDataViewModel : BaseViewModel, IPreferencesConnectionMethods
     {
         #region Protected Members
 
@@ -82,7 +82,7 @@ namespace BlackSpiritHelper.Core
         /// Status code:
         ///     - 0 = OK
         ///     - 1 = Unexpected error occurred - no internet connection
-        ///     - 2 = Not set active connection
+        ///     - 2 = Not set active connection - No Check in this method !!!!! - This is subclass of this manager <see cref="PreferencesConnectionDataViewModel"/>
         /// </returns>
         public abstract int SendTextMessage(string message);
 

@@ -144,7 +144,7 @@ namespace BlackSpiritHelper.Core
             string message = $"Connection lost! Accident time: {currentTime}";
 
             // Send message.
-            int status = IoC.DataContent.PreferencesData.Connection.ActiveMethod.SendTextMessage(message);
+            int status = IoC.DataContent.PreferencesData.Connection.SendTextMessage(message);
 
             // Resolve sending status.
             if (status == 2)

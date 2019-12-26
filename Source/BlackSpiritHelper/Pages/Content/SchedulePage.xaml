@@ -303,7 +303,39 @@
                                 IsChecked="{Binding ShowInOverlay}"
                                 Style="{StaticResource CheckBoxLarge}" />
                         </Grid>
-                        <!--  4th row - Custom items menu  -->
+                        <!--  4rd row - Send Message checkbox  -->
+                        <Grid HorizontalAlignment="Right">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <StackPanel
+                                Grid.Row="0"
+                                HorizontalAlignment="Right"
+                                Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="10,0"
+                                    VerticalAlignment="Center"
+                                    FontFamily="{StaticResource LatoBold}"
+                                    FontSize="14"
+                                    Foreground="{StaticResource ScheduleForegroundBrushKey}"
+                                    Text="Send Message:" />
+                                <!--  Send Message CheckBox  -->
+                                <CheckBox IsChecked="{Binding SendMessage}" Style="{StaticResource CheckBoxLarge}" />
+                            </StackPanel>
+                            <!--  Send Message: Warning  -->
+                            <TextBlock
+                                Grid.Row="1"
+                                HorizontalAlignment="Right"
+                                FontFamily="{StaticResource LatoRegular}"
+                                FontSize="10"
+                                Foreground="{StaticResource RedBrushKey}"
+                                Text="Set your connection on the Preferences page for this effect."
+                                Visibility="{Binding ApplicationDataContent.PreferencesData.Connection.IsActive, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:BooleanToVisibilityGoneConverter}, ConverterParameter=True}" />
+
+                        </Grid>
+                        <!--  5th row - Custom items menu  -->
                         <Grid Margin="0,10,0,0" HorizontalAlignment="Right">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />

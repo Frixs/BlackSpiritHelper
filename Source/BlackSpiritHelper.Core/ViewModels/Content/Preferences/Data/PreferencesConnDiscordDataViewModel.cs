@@ -63,7 +63,7 @@ namespace BlackSpiritHelper.Core
         /// Status code:
         ///     - 0 = OK
         ///     - 1 = Unexpected error occurred - no internet connection
-        ///     - 2 = Not set active connection
+        ///     - 2 = Not set active connection - No Check in this method !!!!! - This is subclass of this manager <see cref="PreferencesConnectionDataViewModel"/>
         /// </returns>
         public override int SendTextMessage(string message)
         {
@@ -79,9 +79,6 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         public override async Task<int> SendTextMessageAsync(string message)
         {
-            if (!IoC.DataContent.PreferencesData.Connection.IsActive)
-                return 2;
-
             int status = 0;
             var address = Webhook;
 
