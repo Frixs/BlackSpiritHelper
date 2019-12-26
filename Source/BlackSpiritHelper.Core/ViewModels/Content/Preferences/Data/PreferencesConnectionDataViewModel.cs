@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
 {
-    public class PreferencesConnectionDataViewModel : ASetupableBaseViewModel
+    public class PreferencesConnectionDataViewModel : ASetupableBaseViewModel, IPreferencesConnectionMethods
     {
         #region Private Members
 
@@ -23,6 +23,11 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private int mPendingInterval = 600000; // 10 min
 
+        /// <summary>
+        /// Active (activated) method that user uses.
+        /// </summary>
+        private APreferencesConnBaseDataViewModel mActiveMethod { get; set; } = null;
+
         #endregion
 
         #region Public Properties
@@ -31,20 +36,14 @@ namespace BlackSpiritHelper.Core
         /// Says if the application has set active connection or not.
         /// </summary>
         [XmlIgnore]
-        public bool IsActive => ActiveMethod == null ? false : true;
+        public bool IsActive => mActiveMethod == null ? false : true;
 
         /// <summary>
         /// Active (activated) method's identifier - <see cref="APreferencesConnBaseDataViewModel.Identifier"/>.
         /// Servers loading/saving user data, primarily.
-        /// Is synced with value changing of <see cref="ActiveMethod"/>.
+        /// Is synced with value changing of <see cref="mActiveMethod"/>.
         /// </summary>
         public PreferencesConnectionType ActiveMethodIdentifier { get; set; } = PreferencesConnectionType.None;
-
-        /// <summary>
-        /// Active (activated) method that user uses.
-        /// </summary>
-        [XmlIgnore]
-        public APreferencesConnBaseDataViewModel ActiveMethod { get; set; } = null;
 
         /// <summary>
         /// List of all available connections for user.
@@ -152,13 +151,44 @@ namespace BlackSpiritHelper.Core
         #region Public Methods
 
         /// <summary>
+        /// Send message to the user's connection.
+        /// </summary>
+        /// <param name="message">Message to send</param>
+        /// <returns>
+        /// Status code:
+        ///     - 0 = OK
+        ///     - 1 = Unexpected error occurred - no internet connection
+        ///     - 2 = Not set active connection
+        /// </returns>
+        public int SendTextMessage(string message)
+        {
+            var response = SendTextMessageAsync(message);
+            response.Wait();
+            return response.Result;
+        }
+
+        /// <summary>
+        /// Async version of <see cref="SendTextMessage(string)"/>.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public async Task<int> SendTextMessageAsync(string message)
+        {
+            if (!IsActive)
+                return 2;
+
+            var ret = await mActiveMethod.SendTextMessageAsync(message);
+            return ret;
+        }
+
+        /// <summary>
         /// Activate new connection method as the one which user uses.
         /// </summary>
         /// <param name="identifier"></param>
         public void ActivateMethod(PreferencesConnectionType identifier)
         {
-            ActiveMethod = MethodList.FirstOrDefault(o => o.Identifier.Equals(identifier));
-            ActiveMethodIdentifier = ActiveMethod == null ? PreferencesConnectionType.None : ActiveMethod.Identifier;
+            mActiveMethod = MethodList.FirstOrDefault(o => o.Identifier.Equals(identifier));
+            ActiveMethodIdentifier = mActiveMethod == null ? PreferencesConnectionType.None : mActiveMethod.Identifier;
             OnPropertyChanged(nameof(IsActive));
         }
 
@@ -168,7 +198,7 @@ namespace BlackSpiritHelper.Core
         /// <param name="identifier"></param>
         public void DeactivateMethod()
         {
-            ActiveMethod = null;
+            mActiveMethod = null;
             ActiveMethodIdentifier = PreferencesConnectionType.None;
             OnPropertyChanged(nameof(IsActive));
         }
@@ -241,7 +271,7 @@ namespace BlackSpiritHelper.Core
             {
                 if (IsActive)
                 {
-                    if (ActiveMethod.SendTextMessage(list[i]) == 0)
+                    if (mActiveMethod.SendTextMessage(list[i]) == 0)
                         itemsToRemove.Add(list[i]);
                 }
                 else // No point to check messages. We dont have set active connection.

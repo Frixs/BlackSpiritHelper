@@ -63,6 +63,7 @@
     <Compile Include="Audio\Implementation\Managers\SoundAudioManager.cs" />
     <Compile Include="DataTypes\ApplicationPage.cs" />
     <Compile Include="DataTypes\ValuePair.cs" />
+    <Compile Include="ViewModels\Content\Preferences\Data\Core\IPreferencesConnectionMethods.cs" />
     <Compile Include="ViewModels\Content\Preferences\Data\Core\PreferencesConnectionType.cs" />
     <Compile Include="DataTypes\TimeZoneRegion.cs" />
     <Compile Include="ViewModels\Content\Overlay\Data\Core\OverlaySize.cs" />
