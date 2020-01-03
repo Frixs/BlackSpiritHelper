@@ -53,7 +53,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Limitation for max timers on overlay <see cref="ShowInOverlay"/>.
         /// </summary>
-        public static byte OverlayTimerLimitCount { get; private set; } = 6;
+        public static byte OverlayTimerLimitCount { get; private set; } = 8;
 
         #endregion
 
