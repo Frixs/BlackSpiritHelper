@@ -25,12 +25,12 @@ Of course! Black Spirit Helper does **not** affect any game files. It does **not
 
 ## Features
 ### Timer Section
+It offers to you to create multiple groups with multiple timers in each. You can control each timer independently, and you can also control multiple timers with group control.  
+Custom overlay time to set, in-game overlay control and much more! You can find it useful in all kinds of games whre you need to track self-buffs/food-buffs/potion-buffs at proper time.
+### Schedule Section
 This feature allows you to build your own schedule. Set timezone where you are currently - it recalculates time when you are abroad. Sound alerts and 3rd party message alerts (e.g. Discord).  
 Very useful in any kind of games where you need to track down whatever at proper time. The application can start with your operating system, so you will never miss any event again. Contains predefined templates of popular games, you do not need to create your own from scratch.  
 Create your own templates with your own items which suits your needs!
-### Timer Section
-It offers to you to create multiple groups with multiple timers in each. You can control each timer independently, and you can also control multiple timers with group control.  
-Custom overlay time to set, in-game overlay control and much more! You can find it useful in all kinds of games whre you need to track self-buffs/food-buffs/potion-buffs at proper time.
 ### Watchdog Section
 This feature checks your internet connection and it also checks your game's process to determine, if your game is running or sitting in login screen (stuck in black/disconnection screen). Set alerts to inform you what happend. Capable to set routine options to proceed on failure. It also offers manager to prioritize your game or kill unsuitable processes.  
 Everything just to avoid game disconnections over night!  
