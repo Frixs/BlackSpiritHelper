@@ -80,6 +80,12 @@ namespace BlackSpiritHelper.Core
         public ICommand PauseCommand { get; set; }
 
         /// <summary>
+        /// The command to reset all timers in the group.
+        /// </summary>
+        [XmlIgnore]
+        public ICommand ResetTimersCommand { get; set; }
+
+        /// <summary>
         /// The command to add new timer to the group.
         /// </summary>
         [XmlIgnore]
@@ -112,8 +118,23 @@ namespace BlackSpiritHelper.Core
         {
             PlayCommand = new RelayCommand(async () => await PlayAsync());
             PauseCommand = new RelayCommand(async () => await PauseAsync());
+            ResetTimersCommand = new RelayCommand(async () => await ResetTimersCommandMethodAsync());
             AddTimerCommand = new RelayCommand(async () => await AddTimerCommandMethodAsync());
             OpenGroupSettingsCommand = new RelayCommand(async () => await OpenGroupSettingsCommandMethodAsync());
+        }
+
+        /// <summary>
+        /// Restart all timers in the group.
+        /// </summary>
+        /// <returns></returns>
+        private async Task ResetTimersCommandMethodAsync()
+        {
+            for (int i = 0; i < TimerList.Count; i++)
+            {
+                TimerList[i].TimerRestart();
+            }
+
+            await Task.Delay(1);
         }
 
         /// <summary>

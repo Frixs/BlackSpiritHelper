@@ -433,10 +433,10 @@ namespace BlackSpiritHelper.Core
             OpenTimerSettingsCommand = new RelayCommand(async () => await OpenTimerSettingsCommandMethodAsync());
             TimePlusCommand = new RelayCommand(async () => await TimePlusAsync());
             TimeMinusCommand = new RelayCommand(async () => await TimeMinusAsync());
-            ResetTimerCommand = new RelayCommand(async () => await TimerRestartAsync());
+            ResetTimerCommand = new RelayCommand(async () => await ResetTimerCommandMethodAsync());
             SyncCommand = new RelayCommand(async () => await SyncCommandAsync());
             PlayCommand = new RelayCommand(async () => await PlayAsync());
-            PauseCommand = new RelayCommand(async () => await PauseAsync());
+            PauseCommand = new RelayCommand(async () => await PauseCommandMethodAsync());
         }
 
         /// <summary>
@@ -466,6 +466,28 @@ namespace BlackSpiritHelper.Core
             };
 
             IoC.Application.GoToPage(ApplicationPage.TimerItemSettingsForm, vm);
+
+            await Task.Delay(1);
+        }
+
+        /// <summary>
+        /// Pause the timer, command reaction.
+        /// </summary>
+        /// <returns></returns>
+        private async Task PauseCommandMethodAsync()
+        {
+            TimerPause();
+
+            await Task.Delay(1);
+        }
+
+        /// <summary>
+        /// Restart the timer.
+        /// </summary>
+        /// <returns></returns>
+        private async Task ResetTimerCommandMethodAsync()
+        {
+            TimerRestart();
 
             await Task.Delay(1);
         }
@@ -543,17 +565,6 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Pause the timer, command reaction.
-        /// </summary>
-        /// <returns></returns>
-        public async Task PauseAsync()
-        {
-            TimerPause();
-
-            await Task.Delay(1);
-        }
-
-        /// <summary>
         /// Freeze the timer.
         /// Used when the application is closed.
         /// </summary>
@@ -561,6 +572,27 @@ namespace BlackSpiritHelper.Core
         {
             UpdateState(TimerState.Freeze);
             mTimer.Stop();
+        }
+
+        /// <summary>
+        /// Restart the timer.
+        /// </summary>
+        public void TimerRestart()
+        {
+            TimerPause();
+
+            // Reset warning flag to default.
+            TimerTryToDeactivateWarningUI();
+
+            // Update state.
+            UpdateState(TimerState.Ready);
+
+            // Reset time.
+            TimeLeft = new TimeSpan(TimeDuration.Ticks);
+            CountdownLeft = new TimeSpan(CountdownDuration.Ticks);
+
+            // Update UI.
+            UpdateTimeInUI(TimeLeft);
         }
 
         #endregion
@@ -636,38 +668,6 @@ namespace BlackSpiritHelper.Core
                     Debugger.Break();
                     return;
             }
-        }
-
-        /// <summary>
-        /// Restart the timer.
-        /// </summary>
-        private void TimerRestart()
-        {
-            TimerPause();
-
-            // Reset warning flag to default.
-            TimerTryToDeactivateWarningUI();
-
-            // Update state.
-            UpdateState(TimerState.Ready);
-
-            // Reset time.
-            TimeLeft = new TimeSpan(TimeDuration.Ticks);
-            CountdownLeft = new TimeSpan(CountdownDuration.Ticks);
-
-            // Update UI.
-            UpdateTimeInUI(TimeLeft);
-        }
-
-        /// <summary>
-        /// Restart the timer.
-        /// </summary>
-        /// <returns></returns>
-        private async Task TimerRestartAsync()
-        {
-            TimerRestart();
-
-            await Task.Delay(1);
         }
 
         /// <summary>

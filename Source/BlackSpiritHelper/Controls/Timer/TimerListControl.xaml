@@ -1,20 +1,21 @@
-﻿<UserControl x:Class="BlackSpiritHelper.TimerListControl"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:BlackSpiritHelper"
-             xmlns:core="clr-namespace:BlackSpiritHelper.Core;assembly=BlackSpiritHelper.Core"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+﻿<UserControl
+    x:Class="BlackSpiritHelper.TimerListControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:core="clr-namespace:BlackSpiritHelper.Core;assembly=BlackSpiritHelper.Core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:BlackSpiritHelper"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
 
     <!--
         Template for all groups with menu and all items
     -->
-    
+
     <Border>
-        <ItemsControl ItemsSource="{Binding ApplicationDataContent.TimerData.GroupList,
-                                    Source={x:Static local:ViewModelLocator.Instance}}">
+        <ItemsControl ItemsSource="{Binding ApplicationDataContent.TimerData.GroupList, Source={x:Static local:ViewModelLocator.Instance}}">
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
@@ -23,22 +24,21 @@
 
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <WrapPanel Orientation="Horizontal" Margin="5 0" />
+                                <WrapPanel Margin="5,0" Orientation="Horizontal" />
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
 
                         <ItemsControl.Template>
                             <ControlTemplate>
-                                
-                                <!-- Group list -->
-                                <Grid Background="{StaticResource TimerGroupListBackgroundBrushKey}" Margin="10 0 10 10">
+
+                                <!--  Group list  -->
+                                <Grid Margin="10,0,10,10" Background="{StaticResource TimerGroupListBackgroundBrushKey}">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="50" />
                                         <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>
 
-                                    <Grid Grid.Row="0"
-                                          Background="{StaticResource TimerGroupListMenuBackgroundBrushKey}">
+                                    <Grid Grid.Row="0" Background="{StaticResource TimerGroupListMenuBackgroundBrushKey}">
 
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" />
@@ -47,83 +47,94 @@
                                         </Grid.ColumnDefinitions>
 
                                         <StackPanel Grid.Column="0" Orientation="Horizontal">
-                                            <!-- Group Play/Pause Button -->
+                                            <!--  Group Play/Pause Button  -->
                                             <Grid>
-                                                <Button Content="{StaticResource FontAwesomePlayIcon}"
-                                                        Visibility="{Binding IsRunning,
-                                                                     Converter={local:BooleanToVisibilityGoneConverter},
-                                                                     ConverterParameter=True}"
-                                                        FontFamily="{StaticResource FontAwesomeSolid}"
-                                                        Style="{StaticResource RegularButton}" 
-                                                        Command="{Binding PlayCommand}"
-                                                        FontSize="10"
-                                                        Width="30"
-                                                        Height="30"
-                                                        Margin="10" />
-                                                <Button Content="{StaticResource FontAwesomePauseIcon}"
-                                                        Visibility="{Binding IsRunning,
-                                                                     Converter={local:BooleanToVisibilityGoneConverter}}"
-                                                        FontFamily="{StaticResource FontAwesomeSolid}"
-                                                        Style="{StaticResource RegularButton}" 
-                                                        Command="{Binding PauseCommand}"
-                                                        FontSize="10"
-                                                        Width="30"
-                                                        Height="30"
-                                                        Margin="10" />
+                                                <Button
+                                                    Width="30"
+                                                    Height="30"
+                                                    Margin="10"
+                                                    Command="{Binding PlayCommand}"
+                                                    Content="{StaticResource FontAwesomePlayIcon}"
+                                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                                    FontSize="10"
+                                                    Style="{StaticResource RegularButton}"
+                                                    Visibility="{Binding IsRunning, Converter={local:BooleanToVisibilityGoneConverter}, ConverterParameter=True}" />
+                                                <Button
+                                                    Width="30"
+                                                    Height="30"
+                                                    Margin="10"
+                                                    Command="{Binding PauseCommand}"
+                                                    Content="{StaticResource FontAwesomePauseIcon}"
+                                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                                    FontSize="10"
+                                                    Style="{StaticResource RegularButton}"
+                                                    Visibility="{Binding IsRunning, Converter={local:BooleanToVisibilityGoneConverter}}" />
                                             </Grid>
-                                            
-                                            <!-- Group Name -->
-                                            <TextBlock Text="{Binding Title}" 
-                                                       Foreground="{StaticResource TimerGroupListMenuTitleForegroundBrushKey}"
-                                                       FontFamily="{StaticResource LatoHeavy}"
-                                                       FontSize="18"
-                                                       VerticalAlignment="Center"/>
+
+                                            <!--  Group Name  -->
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                FontFamily="{StaticResource LatoHeavy}"
+                                                FontSize="18"
+                                                Foreground="{StaticResource TimerGroupListMenuTitleForegroundBrushKey}"
+                                                Text="{Binding Title}" />
                                         </StackPanel>
 
                                         <StackPanel Grid.Column="2" Orientation="Horizontal">
-                                            <!-- Add Button -->
-                                            <Button Content="{StaticResource FontAwesomePlusIcon}"
-                                                    FontFamily="{StaticResource FontAwesomeSolid}"
-                                                    Style="{StaticResource RegularButton}"
-                                                    Visibility="{Binding CanCreateNewTimer, Converter={local:BooleanToVisibilityGoneConverter}}"
-                                                    Command="{Binding AddTimerCommand}"
-                                                    Margin="0 10 10 10"
-                                                    Width="30"
-                                                    Height="30"
-                                                    VerticalAlignment="Center"
-                                                    FontSize="10" />
-                                            
-                                            <!-- Group Settings Button -->
-                                            <Button Content="{StaticResource FontAwesomeCogIcon}"
-                                                    FontFamily="{StaticResource FontAwesomeSolid}"
-                                                    Style="{StaticResource RegularButton}"
-                                                    Command="{Binding OpenGroupSettingsCommand}"
-                                                    Margin="0 10 10 10"
-                                                    Width="30"
-                                                    Height="30"
-                                                    VerticalAlignment="Center"
-                                                    FontSize="10" />
+                                            <!--  Reset Button  -->
+                                            <Button
+                                                Width="30"
+                                                Height="30"
+                                                Margin="0,10,10,10"
+                                                VerticalAlignment="Center"
+                                                Command="{Binding ResetTimersCommand}"
+                                                Content="{StaticResource FontAwesomeRestartIcon}"
+                                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                                FontSize="10"
+                                                Style="{StaticResource RegularButtonRed}" />
+
+                                            <!--  Add Button  -->
+                                            <Button
+                                                Width="30"
+                                                Height="30"
+                                                Margin="0,10,10,10"
+                                                VerticalAlignment="Center"
+                                                Command="{Binding AddTimerCommand}"
+                                                Content="{StaticResource FontAwesomePlusIcon}"
+                                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                                FontSize="10"
+                                                Style="{StaticResource RegularButton}"
+                                                Visibility="{Binding CanCreateNewTimer, Converter={local:BooleanToVisibilityGoneConverter}}" />
+
+                                            <!--  Group Settings Button  -->
+                                            <Button
+                                                Width="30"
+                                                Height="30"
+                                                Margin="0,10,10,10"
+                                                VerticalAlignment="Center"
+                                                Command="{Binding OpenGroupSettingsCommand}"
+                                                Content="{StaticResource FontAwesomeCogIcon}"
+                                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                                FontSize="10"
+                                                Style="{StaticResource RegularButton}" />
                                         </StackPanel>
-                                        
+
                                         <!-- <Button Content="{Binding /GroupID}" /> -->
                                     </Grid>
-                                    
-                                    <ItemsPresenter Grid.Row="1" Margin="0 5" />
+
+                                    <ItemsPresenter Grid.Row="1" Margin="0,5" />
                                 </Grid>
-                                
+
                             </ControlTemplate>
                         </ItemsControl.Template>
 
-                        <!-- Item -->
+                        <!--  Item  -->
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
 
-                                <!-- Group list ITEM -->
-                                <local:TimerListItemControl 
-                                    Width="280" 
-                                    Height="150"
-                                    />
-                                
+                                <!--  Group list ITEM  -->
+                                <local:TimerListItemControl Width="280" Height="150" />
+
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
@@ -133,5 +144,5 @@
 
         </ItemsControl>
     </Border>
-    
+
 </UserControl>
