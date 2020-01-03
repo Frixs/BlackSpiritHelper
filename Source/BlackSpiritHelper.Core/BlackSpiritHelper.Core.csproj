@@ -158,7 +158,6 @@
     <Compile Include="ViewModels\Content\Schedule\Data\ScheduleDayDataViewModel.cs" />
     <Compile Include="ViewModels\Content\Schedule\Data\ScheduleDataViewModel.cs" />
     <Compile Include="ViewModels\Content\Schedule\Data\Design\ScheduleDataDesignModel.cs" />
-    <Compile Include="ViewModels\Content\DailyCheck\Pages\DailyCheckPageViewModel.cs" />
     <Compile Include="ViewModels\Content\Overlay\Data\OverlayDataViewModel.cs" />
     <Compile Include="ViewModels\Structure\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Structure\Base\ADataContentBaseViewModel.cs" />

@@ -31,12 +31,6 @@ namespace BlackSpiritHelper.Core
         Schedule = 3,
 
         /// <summary>
-        /// The Daily Check page.
-        /// </summary>
-        [Description("Daily Check")]
-        DailyCheck = 4,
-
-        /// <summary>
         /// The Settings page.
         /// </summary>
         Preferences = 10,

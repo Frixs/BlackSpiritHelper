@@ -31,9 +31,6 @@ namespace BlackSpiritHelper
                 case ApplicationPage.Schedule:
                     return new SchedulePage();
 
-                case ApplicationPage.DailyCheck:
-                    return new DailyCheckPage();
-
                 case ApplicationPage.Preferences:
                     return new PreferencesPage();
 
@@ -76,9 +73,6 @@ namespace BlackSpiritHelper
 
             if (page is SchedulePage)
                 return ApplicationPage.Schedule;
-
-            if (page is DailyCheckPage)
-                return ApplicationPage.DailyCheck;
 
             if (page is PreferencesPage)
                 return ApplicationPage.Preferences;
