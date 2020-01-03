@@ -24,12 +24,6 @@ namespace BlackSpiritHelper.Core
             {
                 new SideMenuListItemControlViewModel
                 {
-                    Title = ApplicationPage.DailyCheck.GetDescription(),
-                    PageEnum = ApplicationPage.DailyCheck,
-                    // TODO:SectionInit: DailyCheck add data content.
-                },
-                new SideMenuListItemControlViewModel
-                {
                     Title = ApplicationPage.Schedule.GetDescription(),
                     PageEnum = ApplicationPage.Schedule,
                     DataContent = IoC.DataContent.ScheduleData,
