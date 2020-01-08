@@ -13,7 +13,7 @@ Oh... I almost forgot to tell you, the application has **own overlay!** So, you 
 ### Overlay?!#
 Yes! Black Spirit Helper offers overlay! So, you do not need to switch to your desktop and then back to your game anymore! Enjoy your game comfortably without switching to system desktop.
 ### Is it legal to use?
-Of course! Black Spirit Helper does **not** affect any game files. It does **not** track any screen events. It is just an advanced timer. I ask you... is Windows OS build-in timer illegal? It is in the same category as other software like [Discord](https://discordapp.com/), [TeamSpeak](https://www.teamspeak.com), etc.
+Of course! Black Spirit Helper does **not** affect any game files. It does **not** track any screen events. It is just an advanced timer. I ask you... is Windows OS build-in timer illegal? It is in the same category as other software like [Discord](https://discordapp.com/), [TeamSpeak](https://www.teamspeak.com), etc. - For more info you can check [this](https://github.com/Frixs/BlackSpiritHelper/wiki/LegalUseProof) page!
 
 ## Table of Contents
 - **[Features](#features)**
@@ -32,7 +32,7 @@ This feature allows you to build your own schedule. Set timezone where you are c
 Very useful in any kind of games where you need to track down whatever at proper time. The application can start with your operating system, so you will never miss any event again. Contains predefined templates of popular games, you do not need to create your own from scratch.  
 Create your own templates with your own items which suits your needs!
 ### Watchdog Section
-This feature checks your internet connection and it also checks your game's process to determine, if your game is running or sitting in login screen (stuck in black/disconnection screen). Set alerts to inform you what happend. Capable to set routine options to proceed on failure. It also offers manager to prioritize your game or kill unsuitable processes.  
+This feature checks your internet connection and it also checks your game's process to determine, if your game is running or sitting in login screen (stuck in black/disconnection screen). Set alerts to inform you what happend. Capable to set routine options to proceed on failure (e.g. shutdown your PC). It also offers manager to prioritize your game or kill unsuitable processes.  
 Everything just to avoid game disconnections over night!  
 Based on what happends you can set events like send a message to your favorite platform to inform you about the situation or just simply shutdown/restart your computer.
 
