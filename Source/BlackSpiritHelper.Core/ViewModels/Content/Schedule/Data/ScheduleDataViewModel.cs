@@ -589,7 +589,7 @@ namespace BlackSpiritHelper.Core
             }
 
             // Init.
-            vm.Init();
+            vm.Init(false);
 
             // Select the template.
             SelectTemplateByName(vm.Title);
@@ -633,7 +633,7 @@ namespace BlackSpiritHelper.Core
             }
 
             // Init.
-            vm.Init();
+            vm.Init(false);
 
             // Select the template.
             SelectTemplateByName(vm.Title);
