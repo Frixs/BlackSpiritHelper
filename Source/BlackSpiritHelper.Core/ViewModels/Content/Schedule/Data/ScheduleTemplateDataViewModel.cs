@@ -173,8 +173,17 @@ namespace BlackSpiritHelper.Core
             CreateCommands();
         }
 
+        /// <summary>
+        /// Init routine.
+        /// </summary>
+        /// <param name="parameters">
+        ///     [0] = IsPredefined
+        /// </param>
         protected override void InitRoutine(params object[] parameters)
         {
+            if (!(parameters.Length > 0))
+                IoC.Logger.Log("No required parameters!", LogLevel.Fatal);
+
             IsPredefined = (bool)parameters[0];
             SortSchedule();
             UpdatePresenter();

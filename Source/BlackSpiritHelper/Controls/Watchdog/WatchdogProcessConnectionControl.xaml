@@ -60,7 +60,7 @@
                                                 Width="275"
                                                 MaxLength="50"
                                                 Style="{StaticResource TextBoxSmall}"
-                                                Tag="Enter process name (e.g. BlackDesert64.exe)"
+                                                Tag="Enter process name (e.g. BlackDesert64[.exe])"
                                                 Text="{Binding Name}" />
                                             <!--  Process KillOnFailure CheckBox  -->
                                             <CheckBox
