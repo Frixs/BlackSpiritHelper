@@ -11,6 +11,38 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <UserControl.Resources>
+        <!--  Button Layout : OK  -->
+        <DataTemplate x:Key="okTemplate">
+            <Button
+                Padding="15,5,15,5"
+                HorizontalAlignment="Center"
+                Command="{Binding OkCommand}"
+                Content="OK"
+                FontFamily="{StaticResource LatoHeavy}"
+                Style="{StaticResource RegularButtonYellow}" />
+        </DataTemplate>
+        <!--  Button Layout : YES/NO  -->
+        <DataTemplate x:Key="yesNoTemplate">
+            <StackPanel Orientation="Horizontal">
+                <Button
+                    Padding="15,5,15,5"
+                    HorizontalAlignment="Center"
+                    Command="{Binding YesCommand}"
+                    Content="YES"
+                    FontFamily="{StaticResource LatoHeavy}"
+                    Style="{StaticResource RegularButtonYellow}" />
+                <Button
+                    Margin="30,0,0,0"
+                    Padding="15,5,15,5"
+                    HorizontalAlignment="Center"
+                    Command="{Binding NoCommand}"
+                    Content="NO"
+                    FontFamily="{StaticResource LatoHeavy}"
+                    Style="{StaticResource RegularButtonYellow}" />
+            </StackPanel>
+        </DataTemplate>
+
+        <!--  Content  -->
         <Style x:Key="ContentStyle" TargetType="{x:Type ContentControl}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -25,15 +57,36 @@
                                 FontSize="22"
                                 Foreground="{StaticResource RedForegroundAltBrushKey}"
                                 Text="{Binding Title}" />
-                            <!--  Message  -->
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                FontFamily="{StaticResource LatoMediumItalic}"
-                                FontSize="14"
-                                Foreground="{StaticResource RedForegroundBrushKey}"
-                                Text="{Binding Message}"
-                                TextAlignment="Left"
-                                TextWrapping="Wrap" />
+                            <!--  Message Wrapper  -->
+                            <ScrollViewer
+                                Height="200"
+                                Margin="10,0,10,0"
+                                VerticalScrollBarVisibility="Auto">
+                                <!--  Message  -->
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    FontFamily="{StaticResource LatoMediumItalic}"
+                                    FontSize="14"
+                                    Foreground="{StaticResource RedForegroundBrushKey}"
+                                    Text="{Binding Message}"
+                                    TextAlignment="Left"
+                                    TextWrapping="Wrap" />
+                            </ScrollViewer>
+                            <!--  Button Layout  -->
+                            <ContentControl>
+                                <ContentControl.Style>
+                                    <Style TargetType="ContentControl">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Result}" Value="Ok">
+                                                <Setter Property="ContentTemplate" Value="{StaticResource okTemplate}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Result}" Value="YesNo">
+                                                <Setter Property="ContentTemplate" Value="{StaticResource yesNoTemplate}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ContentControl.Style>
+                            </ContentControl>
                         </StackPanel>
 
                     </ControlTemplate>
