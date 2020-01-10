@@ -8,24 +8,39 @@ namespace BlackSpiritHelper.Core
     /// Represents notification context of notification UI.
     /// List of all notifications and calling notifications can be found in <see cref="IoC.UI"/>
     /// </summary>
-    public class NotificationBoxDialogViewModel
+    public class NotificationBoxDialogViewModel : BaseViewModel
     {
         #region Public Properties
 
         /// <summary>
-        /// TODO
+        /// Notification Title
         /// </summary>
         public string Title { get; set; } = "NOTIFICATION";
 
         /// <summary>
-        /// TODO
+        /// Message context
         /// </summary>
         public string Message { get; set; } = "Message placeholder!";
 
         /// <summary>
-        /// TODO
+        /// Type of the button layout
         /// </summary>
         public NotificationBoxResult Result { get; set; } = NotificationBoxResult.Ok;
+
+        /// <summary>
+        /// Run this action on <see cref="NotificationBoxResult.Ok"/> successful result from notification box.
+        /// </summary>
+        public Action OkAction { get; set; } = delegate { };
+
+        /// <summary>
+        /// Run this action on <see cref="NotificationBoxResult.YesNo"/> positive - Yes - result from notification box.
+        /// </summary>
+        public Action YesAction { get; set; } = delegate { };
+
+        /// <summary>
+        /// Run this action on <see cref="NotificationBoxResult.YesNo"/> negative - No - result from notification box.
+        /// </summary>
+        public Action NoAction { get; set; } = delegate { };
 
         #endregion
 
@@ -69,13 +84,59 @@ namespace BlackSpiritHelper.Core
         private void CreateCommands()
         {
             OkCommand = new RelayCommand(async () => await OkCommandMethodAsync());
-            YesCommand = new RelayCommand(async () => await OkCommandMethodAsync());
-            NoCommand = new RelayCommand(async () => await OkCommandMethodAsync());
+            YesCommand = new RelayCommand(async () => await YesCommandMethodAsync());
+            NoCommand = new RelayCommand(async () => await NoCommandMethodAsync());
         }
 
-        private Task OkCommandMethodAsync()
+        /// <summary>
+        /// NO command routine
+        /// </summary>
+        /// <returns></returns>
+        private async Task NoCommandMethodAsync()
         {
-            throw new NotImplementedException();
+            NoAction();
+
+            Remove();
+
+            await Task.Delay(1);
+        }
+
+        /// <summary>
+        /// YES command routine
+        /// </summary>
+        /// <returns></returns>
+        private async Task YesCommandMethodAsync()
+        {
+            YesAction();
+
+            Remove();
+
+            await Task.Delay(1);
+        }
+
+        /// <summary>
+        /// OK command routine
+        /// </summary>
+        /// <returns></returns>
+        private async Task OkCommandMethodAsync()
+        {
+            OkAction();
+
+            Remove();
+
+            await Task.Delay(1);
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Remove this instance of notification box from the list of notifications.
+        /// </summary>
+        private void Remove()
+        {
+            IoC.UI.NotificationArea.RemoveNotification(this);
         }
 
         #endregion

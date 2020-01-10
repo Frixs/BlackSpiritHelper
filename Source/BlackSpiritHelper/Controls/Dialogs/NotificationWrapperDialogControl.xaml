@@ -14,6 +14,8 @@
             <Border
                 MinWidth="400"
                 MinHeight="100"
+                MaxWidth="750"
+                MaxHeight="400"
                 Padding="10"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"

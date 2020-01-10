@@ -6,9 +6,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:BlackSpiritHelper"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="450"
+    d:DesignHeight="345"
     d:DesignStyle="{StaticResource WindowBackgroundRedControlStyle}"
-    d:DesignWidth="800"
+    d:DesignWidth="730"
     mc:Ignorable="d">
     <UserControl.Resources>
         <!--  Button Layout : OK  -->
@@ -59,8 +59,8 @@
                                 Text="{Binding Title}" />
                             <!--  Message Wrapper  -->
                             <ScrollViewer
-                                Height="200"
-                                Margin="10,0,10,0"
+                                MaxHeight="257"
+                                Margin="10,0,10,10"
                                 VerticalScrollBarVisibility="Auto">
                                 <!--  Message  -->
                                 <TextBlock
@@ -73,7 +73,7 @@
                                     TextWrapping="Wrap" />
                             </ScrollViewer>
                             <!--  Button Layout  -->
-                            <ContentControl>
+                            <ContentControl Content="{Binding}">
                                 <ContentControl.Style>
                                     <Style TargetType="ContentControl">
                                         <Style.Triggers>

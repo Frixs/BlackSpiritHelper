@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace BlackSpiritHelper.Core
@@ -12,13 +11,21 @@ namespace BlackSpiritHelper.Core
         #region Public Properties
 
         /// <summary>
-        /// TODO
+        /// Notification area contains and serves detailed events about notifications.
+        /// You can open a new notification by calling method here <see cref="ShowNotification(NotificationBoxDialogViewModel)"/>
         /// </summary>
-        ObservableCollection<NotificationBoxDialogViewModel> NotificationList { get; }
+        NotificationAreaDialogViewModel NotificationArea { get; }
 
         #endregion
 
         #region Dialog Windows
+
+        /// <summary>
+        /// Show a notification to a user.
+        /// </summary>
+        /// <param name="viewModel"></param>
+        /// <returns></returns>
+        Task ShowNotification(NotificationBoxDialogViewModel viewModel);
 
         /// <summary>
         /// DIsplays a single message box to the user.

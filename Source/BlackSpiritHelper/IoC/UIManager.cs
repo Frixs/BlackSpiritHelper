@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
@@ -16,9 +15,10 @@ namespace BlackSpiritHelper
         #region Public Properties
 
         /// <summary>
-        /// TODO
+        /// Notification area contains and serves detailed events about notifications.
+        /// You can open a new notification by calling method here <see cref="ShowNotification(NotificationBoxDialogViewModel)"/>
         /// </summary>
-        public ObservableCollection<NotificationBoxDialogViewModel> NotificationList { get; set; } = new ObservableCollection<NotificationBoxDialogViewModel>();
+        public NotificationAreaDialogViewModel NotificationArea { get; } = new NotificationAreaDialogViewModel();
 
         #endregion
 
@@ -29,15 +29,24 @@ namespace BlackSpiritHelper
         /// </summary>
         public UIManager()
         {
-            NotificationList.Add(new NotificationBoxDialogViewModel()
-            {
-                Title = "Hello",
-            });
         }
 
         #endregion
 
         #region Dialog Windows
+
+        /// <summary>
+        /// Show a notification to a user.
+        /// </summary>
+        /// <param name="viewModel"></param>
+        /// <returns></returns>
+        public Task ShowNotification(NotificationBoxDialogViewModel viewModel)
+        {
+            return IoC.Task.Run(() =>
+            {
+                NotificationArea.AddNotification(viewModel);
+            });
+        }
 
         /// <summary>
         /// Displays a single message box to the user.
