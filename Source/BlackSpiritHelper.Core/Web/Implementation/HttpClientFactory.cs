@@ -9,6 +9,11 @@ namespace BlackSpiritHelper.Core
 {
     /// <summary>
     /// Wrapper around <see cref="HttpClient"/> to prevent known exceptions.
+    /// Generally, we ave list of clients we use. If we ask for next connection we take client from our list. 
+    /// Each connection represents combination of address and its parameters (e.g. timeout etc.). 
+    /// If we look for client from our list we choose based on similarity of our connection.
+    /// E.g. If we want to connect to google.com we look for google.com with the same parameters in the list.
+    /// Because we can have 2 clients pointing to google.com, but with different parameters.
     /// ===
     /// References:
     /// Discussion: HttpClient work-around solution: https://github.com/aspnet/Extensions/issues/1345
@@ -86,7 +91,7 @@ namespace BlackSpiritHelper.Core
             // Format URI
             var addressPattern = $"{uri.Scheme}://{uri.DnsSafeHost}:{uri.Port}";
 
-            // Search key
+            // Search key - more in class desription
             var key = new KeyParams(addressPattern, parameters);
 
             // Trigger to clean cache
@@ -238,7 +243,7 @@ namespace BlackSpiritHelper.Core
             private void SetParameters(params object[] parameters)
             {
                 // Timeout.
-                Timeout = 0 < parameters.Length ? (int)parameters[0] : 0;
+                Timeout = parameters.Length > 0 ? (int)parameters[0] : 0;
             }
 
             #endregion
