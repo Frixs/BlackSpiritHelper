@@ -30,22 +30,6 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public NotificationAreaDialogViewModel()
         {
-            // TODO: remove test objects
-            AddNotification(new NotificationBoxDialogViewModel()
-            {
-                Title = "NOTIFIKACE S DLOUHOU ZPRÁVOU",
-                Message = "První řádek zprávy,\n\n\n\n\n\n\n\n\n\ndwdw\n\n\n\n\\n\n\n\n\nwfwafwawwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-            });
-            AddNotification(new NotificationBoxDialogViewModel()
-            {
-                Title = "Hello je druhý",
-                Message = "Xa Xa Xa",
-                Result = NotificationBoxResult.YesNo,
-                YesAction = () =>
-                {
-                    System.Console.WriteLine("AHOJ!");
-                },
-            });
         }
 
         #endregion

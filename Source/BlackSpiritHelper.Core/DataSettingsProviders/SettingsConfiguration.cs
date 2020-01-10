@@ -49,11 +49,17 @@ namespace BlackSpiritHelper.Core
         public static readonly string RemoteDataDirRelPath = @"Source/BlackSpiritHelper.Core/Data/";
 
         /// <summary>
-        /// Remote data directory lication path.
+        /// Remote data directory location path.
         /// </summary>
         public static readonly string RemoteDataDirPath = Path.Combine(
             @"https://api.github.com/repos/Frixs/BlackSpiritHelper/contents/",
             RemoteDataDirRelPath
             );
+
+        /// <summary>
+        /// Remote patch notes URL file path.
+        /// TODO: change to master
+        /// </summary>
+        public static readonly string RemotePatchNotesFilePath = @"https://raw.githubusercontent.com/Frixs/BlackSpiritHelper/dev/Release/patch_notes.dat";
     }
 }

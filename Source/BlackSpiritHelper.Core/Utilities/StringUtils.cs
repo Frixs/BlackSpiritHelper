@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace BlackSpiritHelper.Core
@@ -86,6 +87,38 @@ namespace BlackSpiritHelper.Core
                 colorString = str;
 
             return colorString;
+        }
+
+        /// <summary>
+        /// Remove N lines from the beginning of the string.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string RemoveFirstLines(this string str, int nLines)
+        {
+            var lines = Regex.Split(str, "\r\n|\r|\n").Skip(nLines);
+            return string.Join(Environment.NewLine, lines.ToArray());
+        }
+
+        /// <summary>
+        /// Get N lines from the beginning of the string.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string GetFirstLines(this string str, int nLines)
+        {
+            var lines = Regex.Split(str, "\r\n|\r|\n");
+            var newLines = new string[nLines];
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                if (i >= nLines)
+                    break;
+
+                newLines[i] = lines[i];
+            }
+
+            return string.Join(Environment.NewLine, newLines.ToArray());
         }
     }
 }

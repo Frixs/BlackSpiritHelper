@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
@@ -45,6 +47,73 @@ namespace BlackSpiritHelper
             return IoC.Task.Run(() =>
             {
                 NotificationArea.AddNotification(viewModel);
+            });
+        }
+
+        /// <summary>
+        /// Show a notification containing patch notes to a user.
+        /// </summary>
+        /// <param name="onlyWhenNew">True: shows patch notes only when the first line of patch notes file which represents latest news, is newer.</param>
+        /// <returns></returns>
+        public Task ShowPatchNotes(bool onlyWhenNew)
+        {
+            return IoC.Task.Run(async () =>
+            {
+                // Get client.
+                var client = IoC.Web.Http.GetClientForHost(new Uri(SettingsConfiguration.RemotePatchNotesFilePath));
+                string message = string.Empty;
+                bool isOk = false;
+
+                // Get data.
+                try
+                {
+                    // Read data.
+                    message = await client.GetStringAsync(SettingsConfiguration.RemotePatchNotesFilePath);
+                    IoC.Logger.Log($"Patch Notes has been read successfully!", LogLevel.Debug);
+                    isOk = true;
+                }
+                catch (HttpRequestException e) // Internet connection issues.
+                {
+                    IoC.Logger.Log($"{e.GetType().ToString()}: {e.Message} (expected exception)", LogLevel.Verbose);
+                }
+                catch (TaskCanceledException e) // Timeout.
+                {
+                    IoC.Logger.Log($"{e.GetType().ToString()}: {e.Message} (expected exception)", LogLevel.Debug);
+                }
+                catch (Exception e) // Unexpected.
+                {
+                    IoC.Logger.Log($"{e.GetType().ToString()}: {e.Message}", LogLevel.Fatal);
+                }
+
+                // We have data OK
+                if (isOk)
+                {
+                    // Get first line of the message = date of latest news
+                    DateTime date;
+                    DateTime.TryParseExact(message.GetFirstLines(1).Replace(" ", ""), "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
+
+                    // Compare user's date of last patch notes show with the latest news date.
+                    if (DateTime.Compare(IoC.Application.Cookies.PatchNotesLatestReviewDate, date) < 0)
+                    {
+                        // Remove first line of the message
+                        message = message.RemoveFirstLines(1);
+
+                        // Create notification view model
+                        var vm = new NotificationBoxDialogViewModel()
+                        {
+                            Title = "PATCH NOTES",
+                            Message = message,
+                            Result = NotificationBoxResult.Ok,
+                            OkAction = () =>
+                            {
+                                IoC.Application.Cookies.PatchNotesLatestReviewDate = DateTime.Today;
+                            },
+                        };
+
+                        // Create notification
+                        NotificationArea.AddNotification(vm);
+                    }
+                }
             });
         }
 

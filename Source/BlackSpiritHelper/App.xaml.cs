@@ -118,6 +118,9 @@ namespace BlackSpiritHelper
                     // Open MainWindow.
                     IoC.UI.ShowMainWindow();
 
+                    // Patch Notes.
+                    IoC.UI.ShowPatchNotes(true);
+
                     // Start in tray?
                     if (IoC.DataContent.PreferencesData.StartInTray)
                     {

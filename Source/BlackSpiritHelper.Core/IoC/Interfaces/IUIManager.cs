@@ -28,6 +28,13 @@ namespace BlackSpiritHelper.Core
         Task ShowNotification(NotificationBoxDialogViewModel viewModel);
 
         /// <summary>
+        /// Show a notification containing patch notes to a user.
+        /// </summary>
+        /// <param name="onlyWhenNew">True: shows patch notes only when the first line of patch notes file which represents latest news, is newer.</param>
+        /// <returns></returns>
+        Task ShowPatchNotes(bool onlyWhenNew);
+
+        /// <summary>
         /// DIsplays a single message box to the user.
         /// </summary>
         /// <param name="viewModel">The view model.</param>
