@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace BlackSpiritHelper.Core
@@ -8,6 +9,15 @@ namespace BlackSpiritHelper.Core
     /// </summary>
     public interface IUIManager
     {
+        #region Public Properties
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        ObservableCollection<NotificationBoxDialogViewModel> NotificationList { get; }
+
+        #endregion
+
         #region Dialog Windows
 
         /// <summary>

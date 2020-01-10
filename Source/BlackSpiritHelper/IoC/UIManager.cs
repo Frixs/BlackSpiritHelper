@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
@@ -12,6 +13,15 @@ namespace BlackSpiritHelper
     /// </summary>
     public class UIManager : IUIManager
     {
+        #region Public Properties
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        public ObservableCollection<NotificationBoxDialogViewModel> NotificationList { get; set; } = new ObservableCollection<NotificationBoxDialogViewModel>();
+
+        #endregion
+
         #region Constructor
 
         /// <summary>
@@ -19,6 +29,10 @@ namespace BlackSpiritHelper
         /// </summary>
         public UIManager()
         {
+            NotificationList.Add(new NotificationBoxDialogViewModel()
+            {
+                Title = "Hello",
+            });
         }
 
         #endregion

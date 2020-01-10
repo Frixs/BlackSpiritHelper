@@ -150,6 +150,15 @@
     <Compile Include="AttachedProperties\BaseAttachedProperty.cs" />
     <Compile Include="AttachedProperties\FrameworkElementAnimationAttachedProperties.cs" />
     <Compile Include="AttachedProperties\NoFrameHistory.cs" />
+    <Compile Include="Controls\Dialogs\NotificationAreaDialogControl.xaml.cs">
+      <DependentUpon>NotificationAreaDialogControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Dialogs\NotificationBoxDialogControl.xaml.cs">
+      <DependentUpon>NotificationBoxDialogControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Dialogs\NotificationWrapperDialogControl.xaml.cs">
+      <DependentUpon>NotificationWrapperDialogControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Overlay\OverlayScheduleSectionControl.xaml.cs">
       <DependentUpon>OverlayScheduleSectionControl.xaml</DependentUpon>
     </Compile>
@@ -277,6 +286,18 @@
     <Compile Include="Windows\OverlayWindow.xaml.cs">
       <DependentUpon>OverlayWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\Dialogs\NotificationAreaDialogControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Dialogs\NotificationBoxDialogControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Dialogs\NotificationWrapperDialogControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Overlay\OverlayScheduleSectionControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

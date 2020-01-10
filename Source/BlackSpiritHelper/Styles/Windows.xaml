@@ -19,6 +19,10 @@
     <Style x:Key="WindowBackgroundControlStyle" TargetType="{x:Type Control}">
         <Setter Property="Background" Value="{StaticResource WindowBackgroundBrushKey}" />
     </Style>
+    <!--  Window RED background style color  -->
+    <Style x:Key="WindowBackgroundRedControlStyle" TargetType="{x:Type Control}">
+        <Setter Property="Background" Value="{StaticResource RedBrushKey}" />
+    </Style>
 
     <!--  ScrollViewer with horizontal scroll on top  -->
     <ControlTemplate x:Key="ScrollViewerHorizontalOnTopTemplate" TargetType="{x:Type ScrollViewer}">
