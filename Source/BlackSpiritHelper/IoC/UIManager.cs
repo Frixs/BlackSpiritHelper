@@ -102,6 +102,7 @@ namespace BlackSpiritHelper
                         var vm = new NotificationBoxDialogViewModel()
                         {
                             Title = "PATCH NOTES",
+                            MessageFormatting = true,
                             Message = message,
                             Result = NotificationBoxResult.Ok,
                             OkAction = () =>

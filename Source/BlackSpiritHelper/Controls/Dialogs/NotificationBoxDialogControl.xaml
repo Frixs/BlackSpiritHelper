@@ -65,13 +65,23 @@
                                 <!--  Message  -->
                                 <TextBlock
                                     HorizontalAlignment="Center"
-                                    local:InlineList.Value="{Binding Message}"
                                     FontFamily="{StaticResource LatoRegular}"
                                     FontSize="14"
                                     Foreground="{StaticResource RedForegroundBrushKey}"
                                     TextAlignment="Left"
-                                    TextWrapping="Wrap" />
-
+                                    TextWrapping="Wrap">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="local:InlineList.Value" Value="{Binding Message}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding MessageFormatting}" Value="False">
+                                                    <Setter Property="local:InlineList.Value" Value="{x:Null}" />
+                                                    <Setter Property="Text" Value="{Binding Message}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                             </ScrollViewer>
                             <!--  Button Layout  -->
                             <ContentControl Content="{Binding}">

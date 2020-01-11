@@ -1,8 +1,9 @@
-﻿using System.IO;
+﻿using BlackSpiritHelper.Core;
+using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
-using System.Windows.Markup;
 using System.Xml;
 
 namespace BlackSpiritHelper
@@ -27,8 +28,17 @@ namespace BlackSpiritHelper
             // Inject to inlines
             using (var xmlReader = XmlReader.Create(new StringReader(formattedText)))
             {
-                var result = (Span)XamlReader.Load(xmlReader);
-                tb.Inlines.Add(result);
+                try
+                {
+                    var result = (Span)System.Xaml.XamlServices.Load(xmlReader);
+                    tb.Inlines.Add(result);
+                }
+                catch (Exception ex)
+                {
+                    // Error in XAML markdown
+                    tb.Inlines.Add(formattedText);
+                    IoC.Logger.Log($"{ex.GetType().ToString()}: {ex.Message}", LogLevel.Error);
+                }
             }
         }
     }

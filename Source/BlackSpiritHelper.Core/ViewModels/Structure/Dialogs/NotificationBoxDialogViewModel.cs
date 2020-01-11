@@ -30,15 +30,17 @@ namespace BlackSpiritHelper.Core
         public string Title { get; set; } = "NOTIFICATION";
 
         /// <summary>
+        /// Should be message formatted?
+        /// </summary>
+        public bool MessageFormatting { get; set; } = false;
+
+        /// <summary>
         /// Message context
         /// </summary>
         public string Message
         {
             get => mMessage;
-            set
-            {
-                mMessage = Format(value);
-            }
+            set => mMessage = MessageFormatting ? Format(value) : value;
         }
 
         /// <summary>
@@ -211,25 +213,36 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private string FormatLineIntoXaml(string line)
         {
+            // Empty line.
+            if (line.Equals(string.Empty))
+            {
+                return string.Empty;
+            }
+
+            // Line break/skip
+            if (line.StartsWith("<br/>"))
+            {
+                line = @"<LineBreak />";
+            }
             // Header 2
-            if (line.StartsWith("## "))
+            else if (line.StartsWith("## "))
             {
                 line = line.Replace("## ", "");
-                line = $@"<Run Text=""{line}"" FontFamily=""{{StaticResource LatoHeavyItalic}}"" FontSize=""35"" />";
+                line = $@"<Run Text=""{line}"" FontFamily=""{{StaticResource LatoHeavy}}"" TextDecorations=""Underline"" FontSize=""20"" /><LineBreak />";
             }
             // Header 3
             else if (line.StartsWith("### "))
             {
                 line = line.Replace("### ", "");
-                line = $@"<Run Text=""{line}"" FontFamily=""{{StaticResource LatoHeavyItalic}}"" FontSize=""30"" />";
+                line = $@"<LineBreak /><Run Text=""{line}"" FontFamily=""{{StaticResource LatoHeavy}}"" FontSize=""18"" />";
             }
             // Header 4
             else if (line.StartsWith("#### "))
             {
                 line = line.Replace("#### ", "");
-                line = $@"<Run Text=""{line}"" FontFamily=""{{StaticResource LatoHeavyItalic}}"" FontSize=""25"" />";
+                line = $@"<LineBreak /><Run Text=""{line}"" FontFamily=""{{StaticResource LatoHeavy}}"" FontSize=""16"" />";
             }
-
+            
             // Comment - Line comments only!!!
             if (line.StartsWith("<!-- "))
             {
@@ -237,6 +250,7 @@ namespace BlackSpiritHelper.Core
             }
 
             // Hyperlink
+            #region Hyperlink
             Regex regex = new Regex(@"\[(?<text>.*?)\]\((?<link>.*?)\)", RegexOptions.Compiled);
             foreach (Match match in regex.Matches(line))
             {
@@ -248,17 +262,22 @@ namespace BlackSpiritHelper.Core
 
                 var aStringBuilder = new StringBuilder(line);
                 aStringBuilder.Remove(text_start - 1, len);
-                aStringBuilder.Insert(text_start - 1, $@"<Hyperlink NavigateUri=""{link}"" Command=""{{Binding HyperlinkCommand}}"" CommandParameter=""{link}"">{text}</Hyperlink>");
+                //aStringBuilder.Insert(text_start - 1, $@"<Hyperlink NavigateUri=""{link}"" Command=""{{Binding HyperlinkCommand}}"" CommandParameter=""{link}"" FontFamily=""{{StaticResource LatoHeavy}}"" Foreground=""{{StaticResource RedForegroundAltBrushKey}}"" TextDecorations=""Underline"">{text}</Hyperlink>");
+                aStringBuilder.Insert(text_start - 1, $@"<Hyperlink NavigateUri=""{link}"" FontFamily=""{{StaticResource LatoHeavy}}"" Foreground=""{{StaticResource RedForegroundAltBrushKey}}"" TextDecorations=""Underline"">{text}</Hyperlink>");
 
                 line = aStringBuilder.ToString();
             }
+            #endregion
 
             // Bold Text
+            #region Bold Text
             bool bBold = false;
             for (int i = 0; i < line.Length; i++)
             {
+                // Contains star?
                 if (line[i].Equals('*'))
                 {
+                    // Contains next char star?
                     if (i + 1 < line.Length && line[i + 1].Equals('*'))
                     {
                         var aStringBuilder = new StringBuilder(line);
@@ -277,12 +296,15 @@ namespace BlackSpiritHelper.Core
                     }
                 }
             }
+            // If there is missing end tag
             if (bBold)
             {
                 line += @"</Span>";
             }
+            #endregion
 
             // Underline Text
+            #region Underline Text
             bool bUnderline = false;
             for (int i = 0; i < line.Length; i++)
             {
@@ -310,8 +332,10 @@ namespace BlackSpiritHelper.Core
             {
                 line += @"</Span>";
             }
+            #endregion
 
             // Italic Text
+            #region Italic Text
             bool bItalic = false;
             for (int i = 0; i < line.Length; i++)
             {
@@ -336,12 +360,11 @@ namespace BlackSpiritHelper.Core
             {
                 line += @"</Span>";
             }
-
-
-            Console.WriteLine(line);
+            #endregion
+            
             return line;
         }
-
+        
         #endregion
     }
 }
