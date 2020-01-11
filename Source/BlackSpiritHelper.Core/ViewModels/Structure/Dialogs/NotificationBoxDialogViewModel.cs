@@ -208,6 +208,10 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// Format string into xaml version.
+        /// There is several tags:
+        /// Span, Bold, Italic, Underline, Run and LineBreak.
+        /// If you want add a new one, check InlineList attacked property definition.
+        /// Hypertext has additional binding there. It needs to know all tags which can contain Inlines as childs.
         /// </summary>
         /// <param name="line"></param>
         /// <returns></returns>
@@ -250,6 +254,8 @@ namespace BlackSpiritHelper.Core
             }
 
             // Hyperlink
+            // Hyperlinks does not fire opening event for internet browser by default.
+            // There is additional click event binding in InlineList attached property.
             #region Hyperlink
             Regex regex = new Regex(@"\[(?<text>.*?)\]\((?<link>.*?)\)", RegexOptions.Compiled);
             foreach (Match match in regex.Matches(line))
@@ -262,8 +268,7 @@ namespace BlackSpiritHelper.Core
 
                 var aStringBuilder = new StringBuilder(line);
                 aStringBuilder.Remove(text_start - 1, len);
-                //aStringBuilder.Insert(text_start - 1, $@"<Hyperlink NavigateUri=""{link}"" Command=""{{Binding HyperlinkCommand}}"" CommandParameter=""{link}"" FontFamily=""{{StaticResource LatoHeavy}}"" Foreground=""{{StaticResource RedForegroundAltBrushKey}}"" TextDecorations=""Underline"">{text}</Hyperlink>");
-                aStringBuilder.Insert(text_start - 1, $@"<Hyperlink NavigateUri=""{link}"" FontFamily=""{{StaticResource LatoHeavy}}"" Foreground=""{{StaticResource RedForegroundAltBrushKey}}"" TextDecorations=""Underline"">{text}</Hyperlink>");
+                aStringBuilder.Insert(text_start - 1, $@"<Hyperlink NavigateUri=""{link}"" ToolTip=""{link}"" FontFamily=""{{StaticResource LatoHeavy}}"" Foreground=""{{StaticResource RedForegroundAltBrushKey}}"" TextDecorations=""Underline"">{text}</Hyperlink>");
 
                 line = aStringBuilder.ToString();
             }
@@ -284,11 +289,11 @@ namespace BlackSpiritHelper.Core
                         aStringBuilder.Remove(i, 2);
                         if (bBold)
                         {
-                            aStringBuilder.Insert(i, @"</Span>");
+                            aStringBuilder.Insert(i, @"</Bold>");
                         }
                         else
                         {
-                            aStringBuilder.Insert(i, @"<Span FontFamily=""{StaticResource LatoHeavy}"">");
+                            aStringBuilder.Insert(i, @"<Bold>");
                         }
                         line = aStringBuilder.ToString();
 
@@ -299,7 +304,7 @@ namespace BlackSpiritHelper.Core
             // If there is missing end tag
             if (bBold)
             {
-                line += @"</Span>";
+                line += @"</Bold>";
             }
             #endregion
 
@@ -316,11 +321,11 @@ namespace BlackSpiritHelper.Core
                         aStringBuilder.Remove(i, 2);
                         if (bUnderline)
                         {
-                            aStringBuilder.Insert(i, @"</Span>");
+                            aStringBuilder.Insert(i, @"</Underline>");
                         }
                         else
                         {
-                            aStringBuilder.Insert(i, @"<Span TextDecorations=""Underline"">");
+                            aStringBuilder.Insert(i, @"<Underline>");
                         }
                         line = aStringBuilder.ToString();
 
@@ -330,7 +335,7 @@ namespace BlackSpiritHelper.Core
             }
             if (bUnderline)
             {
-                line += @"</Span>";
+                line += @"</Underline>";
             }
             #endregion
 
@@ -345,11 +350,11 @@ namespace BlackSpiritHelper.Core
                     aStringBuilder.Remove(i, 1);
                     if (bItalic)
                     {
-                        aStringBuilder.Insert(i, @"</Span>");
+                        aStringBuilder.Insert(i, @"</Italic>");
                     }
                     else
                     {
-                        aStringBuilder.Insert(i, @"<Span FontStyle=""Italic"">");
+                        aStringBuilder.Insert(i, @"<Italic>");
                     }
                     line = aStringBuilder.ToString();
 
@@ -358,7 +363,7 @@ namespace BlackSpiritHelper.Core
             }
             if (bItalic)
             {
-                line += @"</Span>";
+                line += @"</Italic>";
             }
             #endregion
             
