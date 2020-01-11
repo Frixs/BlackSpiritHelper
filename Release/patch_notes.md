@@ -4,7 +4,7 @@
 <!-- ================================================== -->
 <!-- Rest of file is actual content to show with markdown similar to GitHub one. -->
 <!-- -------------------------------------------------- -->
-<!-- <!-- ... --> : at the beginning of a line signalize comment of this file. This line will not be shown to user. -->
+<!-- At the beginning of a line signalize comment of this file. This line will not be shown to user. Like this line is made. -->
 <!-- ## : at the beginning of a line signalize Header Level 1. -->
 <!-- ### : at the beginning of a line signalize Header Level 2. -->
 <!-- #### : at the beginning of a line signalize Header Level 3. -->
@@ -24,6 +24,7 @@ I'm working on this _to make __you__ inform_ about the app!
 
 #### I'm relugar
 But not like this
-
+- List 1
+- List 2
 
 2 spaces?
