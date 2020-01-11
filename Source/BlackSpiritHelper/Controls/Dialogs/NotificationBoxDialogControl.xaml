@@ -65,12 +65,13 @@
                                 <!--  Message  -->
                                 <TextBlock
                                     HorizontalAlignment="Center"
-                                    FontFamily="{StaticResource LatoMediumItalic}"
+                                    local:InlineList.Value="{Binding Message}"
+                                    FontFamily="{StaticResource LatoRegular}"
                                     FontSize="14"
                                     Foreground="{StaticResource RedForegroundBrushKey}"
-                                    Text="{Binding Message}"
                                     TextAlignment="Left"
                                     TextWrapping="Wrap" />
+
                             </ScrollViewer>
                             <!--  Button Layout  -->
                             <ContentControl Content="{Binding}">

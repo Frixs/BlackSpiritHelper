@@ -60,6 +60,6 @@ namespace BlackSpiritHelper.Core
         /// Remote patch notes URL file path.
         /// TODO: change to master
         /// </summary>
-        public static readonly string RemotePatchNotesFilePath = @"https://raw.githubusercontent.com/Frixs/BlackSpiritHelper/dev/Release/patch_notes.dat";
+        public static readonly string RemotePatchNotesFilePath = @"https://raw.githubusercontent.com/Frixs/BlackSpiritHelper/dev/Release/patch_notes.md";
     }
 }

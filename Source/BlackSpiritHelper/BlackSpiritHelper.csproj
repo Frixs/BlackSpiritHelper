@@ -149,6 +149,7 @@
     <Compile Include="Animations\StoryboardHelpers.cs" />
     <Compile Include="AttachedProperties\BaseAttachedProperty.cs" />
     <Compile Include="AttachedProperties\FrameworkElementAnimationAttachedProperties.cs" />
+    <Compile Include="AttachedProperties\InlineList.cs" />
     <Compile Include="AttachedProperties\NoFrameHistory.cs" />
     <Compile Include="Controls\Dialogs\NotificationAreaDialogControl.xaml.cs">
       <DependentUpon>NotificationAreaDialogControl.xaml</DependentUpon>
