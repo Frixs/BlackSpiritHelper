@@ -10,18 +10,38 @@
 <!-- [text](url) : Can be anywhere in the text. Transform text into URL link. -->
 <!-- \ : escape formatting characters. -->
 <!-- -------------------------------------------------- -->
-## 1.3.0.4
-Test patch notes
-This is next line with [this](https://www.google.com) link
+## 1.3.1.0 (12/01/2020)
+**Pull: [#22](https://github.com/Frixs/BlackSpiritHelper/pull/22)**
+- Updated Home page info
+- Added custom notification structure
+- PatchNotes & News remote file loading
+- Notification formatting
+- Updated all dialogs
+<br/>
 
-We __have__ space above and **[THIS](https://www.google.com) is _bold_** link
+## 1.3.0.4 (09/01/2020)
+**Pull: [#21](https://github.com/Frixs/BlackSpiritHelper/pull/21)**
+- Schedule Custom Template creation, bug fixed
+- Unnecessary subversion delete
+<br/>
 
-### Features:
-I'm working on this _to make __you__ inform_ about the app!
+## 1.3.0.3 (03/01/2020)
+**Pull: [#20](https://github.com/Frixs/BlackSpiritHelper/pull/20)**
+- Removed DailyCheck section - no need for future
+- Promo update
+- Added restart BTN for groups
+- Added ShowInOverlay indicator for Timer
+- Overlay size changed: 6 -> 8
+<br/>
 
-#### I'm relugar
-But not like this
-- List 1
-- List 2
+## 1.3.0.2 (26/12/2019)
+**Pull: [#19](https://github.com/Frixs/BlackSpiritHelper/pull/19)**
+- Schedule SendMessage option added: Discord
+- Schedule SendMessage bug fixes
+- Saving on try close, removed -bug causing
+<br/>
 
-2 spaces?
+## 1.3.0.0 (23/12/2019)
+- Watchdog MVP released
+- Import/Export user settings
+- Website/promo released
