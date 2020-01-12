@@ -1,8 +1,4 @@
-﻿<!-- 2020-01-09 -->
-<!-- First line signals last update for desktop app - in comment brackets, -->
-<!-- to know when to show content of this file to user. -->
-<!-- ================================================== -->
-<!-- Rest of file is actual content to show with markdown similar to GitHub one. -->
+﻿<!-- Content to show with markdown similar to GitHub one. -->
 <!-- -------------------------------------------------- -->
 <!-- At the beginning of a line signalize comment of this file. This line will not be shown to user. Like this line is made. -->
 <!-- ## : at the beginning of a line signalize Header Level 1. -->

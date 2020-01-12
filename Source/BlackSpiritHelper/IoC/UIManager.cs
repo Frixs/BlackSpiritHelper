@@ -53,9 +53,8 @@ namespace BlackSpiritHelper
         /// <summary>
         /// Show a notification containing patch notes to a user.
         /// </summary>
-        /// <param name="onlyWhenNew">True: shows patch notes only when the first line of patch notes file which represents latest news, is newer.</param>
         /// <returns></returns>
-        public Task ShowPatchNotes(bool onlyWhenNew)
+        public Task ShowPatchNotes()
         {
             return IoC.Task.Run(async () =>
             {
@@ -88,33 +87,20 @@ namespace BlackSpiritHelper
                 // We have data OK
                 if (isOk)
                 {
-                    // Get first line of the message = date of latest news
-                    DateTime date;
-                    DateTime.TryParseExact(message.GetFirstLines(1).Replace(@"<!--", "").Replace(@"-->", "").Replace(" ", ""), 
-                        "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
+                    // Remove first line of the message
+                    message = message.RemoveFirstLines(1);
 
-                    // Compare user's date of last patch notes show with the latest news date.
-                    if (DateTime.Compare(IoC.Application.Cookies.PatchNotesLatestReviewDate, date) < 0)
+                    // Create notification view model
+                    var vm = new NotificationBoxDialogViewModel()
                     {
-                        // Remove first line of the message
-                        message = message.RemoveFirstLines(1);
+                        Title = "PATCH NOTES",
+                        MessageFormatting = true,
+                        Message = message,
+                        Result = NotificationBoxResult.Ok,
+                    };
 
-                        // Create notification view model
-                        var vm = new NotificationBoxDialogViewModel()
-                        {
-                            Title = "PATCH NOTES",
-                            MessageFormatting = true,
-                            Message = message,
-                            Result = NotificationBoxResult.Ok,
-                            OkAction = () =>
-                            {
-                                IoC.Application.Cookies.PatchNotesLatestReviewDate = DateTime.Today;
-                            },
-                        };
-
-                        // Create notification
-                        NotificationArea.AddNotification(vm);
-                    }
+                    // Create notification
+                    NotificationArea.AddNotification(vm);
                 }
             });
         }
@@ -160,30 +146,40 @@ namespace BlackSpiritHelper
                     // Get first line of the message = date of latest news
                     DateTime date;
                     DateTime.TryParseExact(
-                        message.GetFirstLines(1).Replace(@"<!--", "").Replace(@"-->", "").Replace(" ", ""), 
+                        message.GetFirstLines(1).Replace(@"<!--", "").Replace(@"-->", "").Replace(" ", ""),
                         "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
-
+                    
                     // Compare user's date of last news show with the latest news date.
-                    if (DateTime.Compare(IoC.Application.Cookies.NewsLatestReviewDate, date) < 0)
+                    // To show the notification, the remote date has to be greater than the one saved in the cookies and the saved one cannot be equal to today's date.
+                    if (!onlyWhenNew 
+                        || (DateTime.Compare(IoC.Application.Cookies.NewsLatestReviewDate, date) < 0
+                            && DateTime.Compare(IoC.Application.Cookies.NewsLatestReviewDate, DateTime.Today) != 0)
+                            )
                     {
-                        // Remove first line of the message
-                        message = message.RemoveFirstLines(1);
-
-                        // Create notification view model
-                        var vm = new NotificationBoxDialogViewModel()
+                        // If user download the app and the news are not up-to-date. Don!t show them and update default user's review time to today's date.
+                        if (DateTime.Compare(date, DateTime.Today) < 0)
                         {
-                            Title = "NEWS",
-                            MessageFormatting = true,
-                            Message = message,
-                            Result = NotificationBoxResult.Ok,
-                            OkAction = () =>
+                            IoC.Application.Cookies.NewsLatestReviewDate = DateTime.Today;
+                        }
+                        // Otherwise, show notification.
+                        else
+                        {
+                            // Create notification view model
+                            var vm = new NotificationBoxDialogViewModel()
                             {
-                                IoC.Application.Cookies.NewsLatestReviewDate = DateTime.Today;
-                            },
-                        };
+                                Title = "NEWS",
+                                MessageFormatting = true,
+                                Message = message,
+                                Result = NotificationBoxResult.Ok,
+                                OkAction = () =>
+                                {
+                                    IoC.Application.Cookies.NewsLatestReviewDate = DateTime.Today;
+                                },
+                            };
 
-                        // Create notification
-                        NotificationArea.AddNotification(vm);
+                            // Create notification
+                            NotificationArea.AddNotification(vm);
+                        }
                     }
                 }
             });
@@ -191,7 +187,6 @@ namespace BlackSpiritHelper
 
         /// <summary>
         /// Displays a single message box to the user.
-        /// TODO: Change into custom notification - Custom panel preparation already in MainWindow.xaml
         /// </summary>
         /// <param name="viewModel">The view model.</param>
         /// <returns></returns>

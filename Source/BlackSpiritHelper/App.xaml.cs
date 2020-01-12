@@ -107,7 +107,7 @@ namespace BlackSpiritHelper
             IoC.Task.Run(async () =>
             {
                 // Setup on application update.
-                await OnUpdateSetupAsync();
+                bool bNewUpdate = await OnUpdateSetupAsync();
 
                 // Log it.
                 IoC.Logger.Log("Application starting up" + (IoC.Application.IsRunningAsAdministratorCheck ? " (As Administrator)" : "") + "...", LogLevel.Info);
@@ -136,7 +136,8 @@ namespace BlackSpiritHelper
                     IoC.UI.ShowNews(true);
 
                     // Patch Notes.
-                    IoC.UI.ShowPatchNotes(true);
+                    if (bNewUpdate)
+                        IoC.UI.ShowPatchNotes();
 
                     // Start in tray?
                     if (IoC.DataContent.PreferencesData.StartInTray)
@@ -323,11 +324,11 @@ namespace BlackSpiritHelper
         /// <summary>
         /// This method is fired on each version update or application first deployment.
         /// </summary>
-        /// <returns></returns>
-        private async Task OnUpdateSetupAsync()
+        /// <returns>Was the update fired?</returns>
+        private async Task<bool> OnUpdateSetupAsync()
         {
             if (Debugger.IsAttached)
-                return;
+                return false;
 
             int userDelayMs = 500;
             bool procedureFailure = false;
@@ -341,7 +342,7 @@ namespace BlackSpiritHelper
 
             // If the file exists, do nothing.
             if (File.Exists(filePath))
-                return;
+                return false;
 
             // if the file does not exist, we need to run on update procedure.
             IoC.Logger.Log("Starting update procedure...", LogLevel.Info);
@@ -404,6 +405,8 @@ namespace BlackSpiritHelper
             {
                 IoC.Logger.Log("Unable to update!", LogLevel.Warning);
             }
+
+            return true;
         }
 
         /// <summary>

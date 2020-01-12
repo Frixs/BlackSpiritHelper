@@ -43,31 +43,10 @@ namespace BlackSpiritHelper.Core
         public List<string> PendingMessageList { get; set; } = new List<string>();
 
         /// <summary>
-        /// Says, what is the latest time of patch notes review by the user.
-        /// It is for routine which checks user's value with the one online.
-        /// If the online values gets updated, it fires the event.
-        /// </summary>
-        [XmlIgnore]
-        public DateTime PatchNotesLatestReviewDate { get; set; } = DateTime.MinValue;
-
-        /// <summary>
-        /// String version of <see cref="PatchNotesLatestReviewDate"/>.
-        /// </summary>
-        public string PatchNotesLatestReviewDateStr
-        {
-            get => PatchNotesLatestReviewDate.ToString("yyyy-MM-dd");
-            set
-            {
-                DateTime date;
-                DateTime.TryParseExact(value, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
-                PatchNotesLatestReviewDate = date;
-            }
-        }
-
-        /// <summary>
         /// Says, what is the latest time of news review by the user.
         /// It is for routine which checks user's value with the one online.
         /// If the online values gets updated, it fires the event.
+        /// It shows the news until it reaches the remote date.
         /// </summary>
         [XmlIgnore]
         public DateTime NewsLatestReviewDate { get; set; } = DateTime.MinValue;
