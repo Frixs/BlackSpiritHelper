@@ -58,14 +58,12 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// Remote patch notes URL file path.
-        /// TODO: change to master
         /// </summary>
-        public static readonly string RemotePatchNotesFilePath = @"https://raw.githubusercontent.com/Frixs/BlackSpiritHelper/dev/Release/patch_notes.md";
+        public static readonly string RemotePatchNotesFilePath = @"https://raw.githubusercontent.com/Frixs/BlackSpiritHelper/master/Release/patch_notes.md";
 
         /// <summary>
         /// Remote news URL file path.
-        /// TODO: change to master
         /// </summary>
-        public static readonly string RemoteNewsFilePath = @"https://raw.githubusercontent.com/Frixs/BlackSpiritHelper/dev/Release/news.md";
+        public static readonly string RemoteNewsFilePath = @"https://raw.githubusercontent.com/Frixs/BlackSpiritHelper/master/Release/news.md";
     }
 }

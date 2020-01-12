@@ -448,12 +448,11 @@ namespace BlackSpiritHelper.Core
             if (State != TimerState.Ready)
             {
                 // Cannot open timer settings while timer is running.
-                await IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                await IoC.UI.ShowNotification(new NotificationBoxDialogViewModel()
                 {
-                    Caption = "Ooops...",
-                    Message = $"You cannot open timer settings while timer is in process. {Environment.NewLine}Please reset the timer into default state, first.",
-                    Button = System.Windows.MessageBoxButton.OK,
-                    Icon = System.Windows.MessageBoxImage.Information,
+                    Title = "OOOPS...",
+                    Message = $"You cannot open the timer settings while the timer is in process.{Environment.NewLine}Please, reset the timer into default state first.",
+                    Result = NotificationBoxResult.Ok,
                 });
 
                 return;

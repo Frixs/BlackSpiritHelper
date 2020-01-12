@@ -134,12 +134,11 @@ namespace BlackSpiritHelper.Core
             if (FormVM.AddItem(name, colorHex, false) == null)
             {
                 // Some error occured during adding item.
-                IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                IoC.UI.ShowNotification(new NotificationBoxDialogViewModel()
                 {
-                    Caption = "Error occured!",
-                    Message = $"The name of the item is already defined or some of entered parameters are invalid. Please check them again.{Environment.NewLine}",
-                    Button = System.Windows.MessageBoxButton.OK,
-                    Icon = System.Windows.MessageBoxImage.Warning,
+                    Title = "ERROR OCCURRED!",
+                    Message = $"The name of the item is already defined or some of the entered values are invalid. Please, check them again.",
+                    Result = NotificationBoxResult.Ok,
                 });
 
                 return;

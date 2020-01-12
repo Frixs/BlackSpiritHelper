@@ -23,10 +23,9 @@
         </DataTemplate>
         <!--  Button Layout : YES/NO  -->
         <DataTemplate x:Key="yesNoTemplate">
-            <StackPanel Orientation="Horizontal">
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <Button
                     Padding="15,5,15,5"
-                    HorizontalAlignment="Center"
                     Command="{Binding YesCommand}"
                     Content="YES"
                     FontFamily="{StaticResource LatoHeavy}"
@@ -34,7 +33,6 @@
                 <Button
                     Margin="30,0,0,0"
                     Padding="15,5,15,5"
-                    HorizontalAlignment="Center"
                     Command="{Binding NoCommand}"
                     Content="NO"
                     FontFamily="{StaticResource LatoHeavy}"
@@ -72,11 +70,12 @@
                                     TextWrapping="Wrap">
                                     <TextBlock.Style>
                                         <Style TargetType="TextBlock">
-                                            <Setter Property="local:InlineList.Value" Value="{Binding Message}" />
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding MessageFormatting}" Value="False">
-                                                    <Setter Property="local:InlineList.Value" Value="{x:Null}" />
                                                     <Setter Property="Text" Value="{Binding Message}" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding MessageFormatting}" Value="True">
+                                                    <Setter Property="local:InlineList.Value" Value="{Binding Message}" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>

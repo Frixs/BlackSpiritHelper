@@ -101,12 +101,12 @@ namespace BlackSpiritHelper.Core
             if (!TimerGroupDataViewModel.ValidateInputs(Title))
             {
                 // Some error occured during saving changes of the group.
-                IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                IoC.UI.ShowNotification(new NotificationBoxDialogViewModel()
                 {
-                    Caption = "Invalid Parameters!",
-                    Message = $"Some of entered parameters are invalid. {Environment.NewLine}Group Name can contain only letters and numbers, {TimerGroupDataViewModel.TitleAllowMinChar} characters at minimum and {TimerGroupDataViewModel.TitleAllowMaxChar} characters at maximum.",
-                    Button = System.Windows.MessageBoxButton.OK,
-                    Icon = System.Windows.MessageBoxImage.Warning,
+                    Title = "INVALID VALUES",
+                    Message = $"Some of the entered values are invalid.{Environment.NewLine}" +
+                              $"Group Name can contain only letters and numbers, {TimerGroupDataViewModel.TitleAllowMinChar} characters at minimum and {TimerGroupDataViewModel.TitleAllowMaxChar} characters at maximum.",
+                    Result = NotificationBoxResult.Ok,
                 });
 
                 return;
@@ -133,7 +133,8 @@ namespace BlackSpiritHelper.Core
                 IoC.UI.ShowMessage(new MessageBoxDialogViewModel
                 {
                     Caption = "Cannot delete the group!",
-                    Message = $"The group is not empty or it is the last existing group! {Environment.NewLine}Please, remove all the timers in the group first. {Environment.NewLine}Number of timers in this group is {FormVM.TimerList.Count}.",
+                    Message = $"The group is not empty or it is the last existing group!{Environment.NewLine}" +
+                              $"Please, remove all the timers in the group first.{Environment.NewLine}Number of timers in this group is {FormVM.TimerList.Count}.",
                     Button = System.Windows.MessageBoxButton.OK,
                     Icon = System.Windows.MessageBoxImage.Warning,
                 });
