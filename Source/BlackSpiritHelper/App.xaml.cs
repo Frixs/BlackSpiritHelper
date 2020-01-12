@@ -54,7 +54,7 @@ namespace BlackSpiritHelper
             {
                 IoC.Logger.Log($"An unhandled exception occurred: ({e.GetType().ToString()}) {e.Exception.Message}", LogLevel.Fatal);
             }
-            MessageBox.Show($"An unhandled exception just occurred: {e.Exception.Message}. {Environment.NewLine}Please, contact the developers to fix the issue.", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show($"An unhandled exception just occurred: {e.Exception.Message}.{Environment.NewLine}Please, contact the developers to fix the issue.", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Warning);
 
             e.Handled = true;
         }
@@ -107,7 +107,7 @@ namespace BlackSpiritHelper
             IoC.Task.Run(async () =>
             {
                 // Setup on application update.
-                await OnUpdateSetupAsync();
+                bool bNewUpdate = await OnUpdateSetupAsync();
 
                 // Log it.
                 IoC.Logger.Log("Application starting up" + (IoC.Application.IsRunningAsAdministratorCheck ? " (As Administrator)" : "") + "...", LogLevel.Info);
@@ -117,6 +117,13 @@ namespace BlackSpiritHelper
                 {
                     // Open MainWindow.
                     IoC.UI.ShowMainWindow();
+
+                    // News.
+                    IoC.UI.ShowNews(true);
+
+                    // Patch Notes.
+                    if (bNewUpdate)
+                        IoC.UI.ShowPatchNotes();
 
                     // Start in tray?
                     if (IoC.DataContent.PreferencesData.StartInTray)
@@ -156,7 +163,7 @@ namespace BlackSpiritHelper
             // Dispose IoC modules
             IoC.Web.Dispose();
             IoC.Get<IMouseKeyHook>().Dispose();
-            
+
             // "Prepare data to die."
             IoC.DataContent.Unset();
 
@@ -303,11 +310,11 @@ namespace BlackSpiritHelper
         /// <summary>
         /// This method is fired on each version update or application first deployment.
         /// </summary>
-        /// <returns></returns>
-        private async Task OnUpdateSetupAsync()
+        /// <returns>Was the update fired?</returns>
+        private async Task<bool> OnUpdateSetupAsync()
         {
             if (Debugger.IsAttached)
-                return;
+                return false;
 
             int userDelayMs = 500;
             bool procedureFailure = false;
@@ -321,7 +328,7 @@ namespace BlackSpiritHelper
 
             // If the file exists, do nothing.
             if (File.Exists(filePath))
-                return;
+                return false;
 
             // if the file does not exist, we need to run on update procedure.
             IoC.Logger.Log("Starting update procedure...", LogLevel.Info);
@@ -384,6 +391,8 @@ namespace BlackSpiritHelper
             {
                 IoC.Logger.Log("Unable to update!", LogLevel.Warning);
             }
+
+            return true;
         }
 
         /// <summary>

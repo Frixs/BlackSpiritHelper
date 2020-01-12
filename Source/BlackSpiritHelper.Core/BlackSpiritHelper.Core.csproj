@@ -149,6 +149,10 @@
     <Compile Include="ViewModels\Content\Watchdog\Data\WatchdogProcessDataViewModel.cs" />
     <Compile Include="ViewModels\Structure\Application\ApplicationCookies.cs" />
     <Compile Include="ViewModels\Structure\Application\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Structure\Dialogs\Core\NotificationBoxResult.cs" />
+    <Compile Include="ViewModels\Structure\Dialogs\Design\NotificationBoxDialogDesignModel.cs" />
+    <Compile Include="ViewModels\Structure\Dialogs\NotificationAreaDialogViewModel.cs" />
+    <Compile Include="ViewModels\Structure\Dialogs\NotificationBoxDialogViewModel.cs" />
     <Compile Include="ViewModels\Structure\Dialogs\ProgressDialogViewModel.cs" />
     <Compile Include="ViewModels\Content\Schedule\Data\Design\ScheduleItemDataDesignModel.cs" />
     <Compile Include="ViewModels\Content\Schedule\Data\Design\ScheduleTemplateDataDesignModel.cs" />

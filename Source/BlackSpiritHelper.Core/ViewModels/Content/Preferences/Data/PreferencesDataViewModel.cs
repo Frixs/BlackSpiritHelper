@@ -194,12 +194,11 @@ namespace BlackSpiritHelper.Core
                 return;
             }
 
-            await IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+            await IoC.UI.ShowNotification(new NotificationBoxDialogViewModel()
             {
-                Caption = "Restart the application.",
-                Message = $"In order to take an effect, you need to restart the application.",
-                Button = System.Windows.MessageBoxButton.OK,
-                Icon = System.Windows.MessageBoxImage.Information,
+                Title = "RESTART REQUIRED",
+                Message = $"In order to take the effect, you have to restart the application.",
+                Result = NotificationBoxResult.Ok,
             });
         }
 

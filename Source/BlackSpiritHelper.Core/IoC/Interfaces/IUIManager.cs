@@ -8,7 +8,37 @@ namespace BlackSpiritHelper.Core
     /// </summary>
     public interface IUIManager
     {
+        #region Public Properties
+
+        /// <summary>
+        /// Notification area contains and serves detailed events about notifications.
+        /// You can open a new notification by calling method here <see cref="ShowNotification(NotificationBoxDialogViewModel)"/>
+        /// </summary>
+        NotificationAreaDialogViewModel NotificationArea { get; }
+
+        #endregion
+
         #region Dialog Windows
+
+        /// <summary>
+        /// Show a notification to a user.
+        /// </summary>
+        /// <param name="viewModel"></param>
+        /// <returns></returns>
+        Task ShowNotification(NotificationBoxDialogViewModel viewModel);
+
+        /// <summary>
+        /// Show a notification containing patch notes to a user.
+        /// </summary>
+        /// <returns></returns>
+        Task ShowPatchNotes();
+
+        /// <summary>
+        /// Show a notification containing news to a user.
+        /// </summary>
+        /// <param name="onlyWhenNew">True: shows patch notes only when the first line of news file which represents latest news, is newer.</param>
+        /// <returns></returns>
+        Task ShowNews(bool onlyWhenNew);
 
         /// <summary>
         /// DIsplays a single message box to the user.

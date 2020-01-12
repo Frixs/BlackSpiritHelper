@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
@@ -12,6 +14,16 @@ namespace BlackSpiritHelper
     /// </summary>
     public class UIManager : IUIManager
     {
+        #region Public Properties
+
+        /// <summary>
+        /// Notification area contains and serves detailed events about notifications.
+        /// You can open a new notification by calling method here <see cref="ShowNotification(NotificationBoxDialogViewModel)"/>
+        /// </summary>
+        public NotificationAreaDialogViewModel NotificationArea { get; } = new NotificationAreaDialogViewModel();
+
+        #endregion
+
         #region Constructor
 
         /// <summary>
@@ -26,8 +38,155 @@ namespace BlackSpiritHelper
         #region Dialog Windows
 
         /// <summary>
+        /// Show a notification to a user.
+        /// </summary>
+        /// <param name="viewModel"></param>
+        /// <returns></returns>
+        public Task ShowNotification(NotificationBoxDialogViewModel viewModel)
+        {
+            return IoC.Task.Run(() =>
+            {
+                NotificationArea.AddNotification(viewModel);
+            });
+        }
+
+        /// <summary>
+        /// Show a notification containing patch notes to a user.
+        /// </summary>
+        /// <returns></returns>
+        public Task ShowPatchNotes()
+        {
+            return IoC.Task.Run(async () =>
+            {
+                // Get client.
+                var client = IoC.Web.Http.GetClientForHost(new Uri(SettingsConfiguration.RemotePatchNotesFilePath));
+                string message = string.Empty;
+                bool isOk = false;
+
+                // Get data.
+                try
+                {
+                    // Read data.
+                    message = await client.GetStringAsync(SettingsConfiguration.RemotePatchNotesFilePath);
+                    IoC.Logger.Log($"Patch Notes has been read successfully!", LogLevel.Debug);
+                    isOk = true;
+                }
+                catch (HttpRequestException e) // Internet connection issues.
+                {
+                    IoC.Logger.Log($"{e.GetType().ToString()}: {e.Message} (expected exception)", LogLevel.Verbose);
+                }
+                catch (TaskCanceledException e) // Timeout.
+                {
+                    IoC.Logger.Log($"{e.GetType().ToString()}: {e.Message} (expected exception)", LogLevel.Debug);
+                }
+                catch (Exception e) // Unexpected.
+                {
+                    IoC.Logger.Log($"{e.GetType().ToString()}: {e.Message}", LogLevel.Fatal);
+                }
+
+                // We have data OK
+                if (isOk)
+                {
+                    // Remove first line of the message
+                    message = message.RemoveFirstLines(1);
+
+                    // Create notification view model
+                    var vm = new NotificationBoxDialogViewModel()
+                    {
+                        Title = "PATCH NOTES",
+                        MessageFormatting = true,
+                        Message = message,
+                        Result = NotificationBoxResult.Ok,
+                    };
+
+                    // Create notification
+                    NotificationArea.AddNotification(vm);
+                }
+            });
+        }
+
+        /// <summary>
+        /// Show a notification containing news to a user.
+        /// </summary>
+        /// <param name="onlyWhenNew">True: shows patch notes only when the first line of news file which represents latest news, is newer.</param>
+        /// <returns></returns>
+        public Task ShowNews(bool onlyWhenNew)
+        {
+            return IoC.Task.Run(async () =>
+            {
+                // Get client.
+                var client = IoC.Web.Http.GetClientForHost(new Uri(SettingsConfiguration.RemoteNewsFilePath));
+                string message = string.Empty;
+                bool isOk = false;
+
+                // Get data.
+                try
+                {
+                    // Read data.
+                    message = await client.GetStringAsync(SettingsConfiguration.RemoteNewsFilePath);
+                    IoC.Logger.Log($"News has been read successfully!", LogLevel.Debug);
+                    isOk = true;
+                }
+                catch (HttpRequestException e) // Internet connection issues.
+                {
+                    IoC.Logger.Log($"{e.GetType().ToString()}: {e.Message} (expected exception)", LogLevel.Verbose);
+                }
+                catch (TaskCanceledException e) // Timeout.
+                {
+                    IoC.Logger.Log($"{e.GetType().ToString()}: {e.Message} (expected exception)", LogLevel.Debug);
+                }
+                catch (Exception e) // Unexpected.
+                {
+                    IoC.Logger.Log($"{e.GetType().ToString()}: {e.Message}", LogLevel.Fatal);
+                }
+
+                // We have data OK
+                if (isOk)
+                {
+                    // Get first line of the message = date of latest news
+                    DateTime date;
+                    DateTime.TryParseExact(
+                        message.GetFirstLines(1).Replace(@"<!--", "").Replace(@"-->", "").Replace(" ", ""),
+                        "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
+                    
+                    // Compare user's date of last news show with the latest news date.
+                    // To show the notification, the remote date has to be greater than the one saved in the cookies and the saved one cannot be equal to today's date.
+                    if (!onlyWhenNew 
+                        || (DateTime.Compare(IoC.Application.Cookies.NewsLatestReviewDate, date) < 0
+                            && DateTime.Compare(IoC.Application.Cookies.NewsLatestReviewDate, DateTime.Today) != 0)
+                            )
+                    {
+                        // If user download the app and the news are not up-to-date. Don!t show them and update default user's review time to today's date.
+                        if (DateTime.Compare(date, DateTime.Today) < 0)
+                        {
+                            IoC.Application.Cookies.NewsLatestReviewDate = DateTime.Today;
+                        }
+                        // Otherwise, show notification.
+                        else
+                        {
+                            // Create notification view model
+                            var vm = new NotificationBoxDialogViewModel()
+                            {
+                                Title = "NEWS",
+                                MessageFormatting = true,
+                                Message = message,
+                                Result = NotificationBoxResult.Ok,
+                                OkAction = () =>
+                                {
+                                    IoC.Application.Cookies.NewsLatestReviewDate = DateTime.Today;
+                                },
+                            };
+
+                            // Create notification
+                            NotificationArea.AddNotification(vm);
+                        }
+                    }
+                }
+            });
+        }
+
+        /// <summary>
         /// Displays a single message box to the user.
-        /// TODO: Change into custom notification - Custom panel preparation already in MainWindow.xaml
         /// </summary>
         /// <param name="viewModel">The view model.</param>
         /// <returns></returns>

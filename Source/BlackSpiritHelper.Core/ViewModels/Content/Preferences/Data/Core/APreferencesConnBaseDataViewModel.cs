@@ -108,12 +108,11 @@ namespace BlackSpiritHelper.Core
             if (!ValidateInputs())
             {
                 // Some error occured during validation.
-                IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                IoC.UI.ShowNotification(new NotificationBoxDialogViewModel()
                 {
-                    Caption = "Invalid Inputs!",
-                    Message = $"Some of entered inputs are invalid.",
-                    Button = System.Windows.MessageBoxButton.OK,
-                    Icon = System.Windows.MessageBoxImage.Warning,
+                    Title = "INVALID VALUES",
+                    Message = $"Some of the entered values are invalid.",
+                    Result = NotificationBoxResult.Ok,
                 });
 
                 return;

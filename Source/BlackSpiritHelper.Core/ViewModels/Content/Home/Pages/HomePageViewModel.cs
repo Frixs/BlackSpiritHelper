@@ -148,16 +148,15 @@ namespace BlackSpiritHelper.Core
                 fiNew.CopyTo(SettingsConfiguration.UserConfigPath);
 
                 // Confirm dialog to restart the app.
-                IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                IoC.UI.ShowNotification(new NotificationBoxDialogViewModel()
                 {
-                    Caption = "Restart required",
-                    Message = $"To apply new user settings, you need to restart the application.{Environment.NewLine}Do you want to restart the application now?",
-                    Button = System.Windows.MessageBoxButton.YesNo,
-                    Icon = System.Windows.MessageBoxImage.Question,
+                    Title = "RESTART REQUIRED",
+                    Message = $"To apply new user settings, you have to restart the application.{Environment.NewLine}Do you want to restart the application now?",
+                    Result = NotificationBoxResult.YesNo,
                     YesAction = () =>
                     {
                         IoC.Application.AppAssembly.Restart();
-                    }
+                    },
                 });
 
             }, "Config files (*.config)|*.config|All files (*.*)|*.*");

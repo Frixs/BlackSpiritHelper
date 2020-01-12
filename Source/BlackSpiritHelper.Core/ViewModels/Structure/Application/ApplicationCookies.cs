@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
+using System.Xml.Serialization;
 
 namespace BlackSpiritHelper.Core
 {
@@ -38,6 +41,34 @@ namespace BlackSpiritHelper.Core
         /// Handler: <see cref="PreferencesDataViewModel.Connection"/>.
         /// </summary>
         public List<string> PendingMessageList { get; set; } = new List<string>();
+
+        /// <summary>
+        /// Says, what is the latest time of news review by the user.
+        /// It is for routine which checks user's value with the one online.
+        /// If the online values gets updated, it fires the event.
+        /// It shows the news until it reaches the remote date.
+        /// </summary>
+        [XmlIgnore]
+        public DateTime NewsLatestReviewDate { get; set; } = DateTime.MinValue;
+
+        /// <summary>
+        /// String version of <see cref="NewsLatestReviewDate"/>.
+        /// </summary>
+        public string NewsLatestReviewDateStr
+        {
+            get => NewsLatestReviewDate.ToString("yyyy-MM-dd");
+            set
+            {
+                DateTime date;
+                DateTime.TryParseExact(value, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
+                NewsLatestReviewDate = date;
+            }
+        }
+
+        /// <summary>
+        /// Says, if the app has been already firstly launched or not.
+        /// </summary>
+        public bool AlreadyFirstlyLaunched { get; set; } = false;
 
         #endregion
 

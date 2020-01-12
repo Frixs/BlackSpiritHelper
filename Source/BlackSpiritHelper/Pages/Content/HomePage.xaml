@@ -46,7 +46,7 @@
                             Padding="10"
                             HorizontalAlignment="Center"
                             Command="{Binding GetStartedCommand}"
-                            Content="Wiki Introduction"
+                            Content="Wiki Resources"
                             Style="{StaticResource RegularButton}" />
                         <!--  Import Settings Button  -->
                         <Button
@@ -83,7 +83,7 @@
                         FontFamily="{StaticResource LatoLightItalic}"
                         FontSize="14"
                         Foreground="{StaticResource FormTitleForegroundAltBrushKey}"
-                        Text="I will be very grateful and happy for any form of support from you. :-)"
+                        Text="I will be very appreciative and I will be very glad for any form of support from you! :-)"
                         TextAlignment="Center"
                         TextWrapping="Wrap" />
 
@@ -111,7 +111,7 @@
                         FontFamily="{StaticResource LatoLightItalic}"
                         FontSize="14"
                         Foreground="{StaticResource FormTitleForegroundAltBrushKey}"
-                        Text="Do you have an idea, how to improve the application? You can use contact information below to send your idea to the author!"
+                        Text="Do you have an idea, how to improve the app? You can use the contact information below to send your idea to the author!"
                         TextAlignment="Center"
                         TextWrapping="Wrap" />
 

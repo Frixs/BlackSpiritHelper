@@ -54,53 +54,7 @@
                                 </Border>
 
                                 <!--  Main window Overlay - loading screen  -->
-                                <Grid Panel.ZIndex="100" Visibility="Collapsed">
-                                    <Grid.Background>
-                                        <SolidColorBrush Opacity="0.85" Color="{StaticResource Red}" />
-                                    </Grid.Background>
-                                    <Border
-                                        MinWidth="400"
-                                        MinHeight="150"
-                                        Padding="10"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Background="{StaticResource RedBrushKey}">
-                                        <StackPanel
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Orientation="Vertical">
-                                            <!--  Logo  -->
-                                            <Image
-                                                Height="35"
-                                                HorizontalAlignment="Center"
-                                                Source="{StaticResource logo_whiteDrawingImage}" />
-                                            <!--  Title  -->
-                                            <TextBlock
-                                                Margin="0,0,0,10"
-                                                HorizontalAlignment="Center"
-                                                FontFamily="{StaticResource LatoHeavy}"
-                                                FontSize="22"
-                                                Foreground="{StaticResource RedForegroundAltBrushKey}"
-                                                Text="NOTIFICATION" />
-                                            <!--  Message  -->
-                                            <TextBlock
-                                                HorizontalAlignment="Center"
-                                                FontFamily="{StaticResource LatoMediumItalic}"
-                                                FontSize="14"
-                                                Foreground="{StaticResource RedForegroundBrushKey}"
-                                                Text="Message"
-                                                TextAlignment="Left"
-                                                TextWrapping="Wrap" />
-                                        </StackPanel>
-                                        <!--  Window's Drop Shadow  -->
-                                        <Border.Effect>
-                                            <DropShadowEffect
-                                                BlurRadius="10"
-                                                Opacity="0.25"
-                                                ShadowDepth="0" />
-                                        </Border.Effect>
-                                    </Border>
-                                </Grid>
+                                <local:NotificationAreaDialogControl />
 
                                 <!--  The main window content  -->
                                 <Grid>

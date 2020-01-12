@@ -24,6 +24,11 @@ namespace BlackSpiritHelper
         /// </summary>
         public static ApplicationDataContent ApplicationDataContent => IoC.DataContent;
 
+        /// <summary>
+        /// The application UI data.
+        /// </summary>
+        public static IUIManager ApplicationUIManager => IoC.UI;
+
         #endregion
     }
 }

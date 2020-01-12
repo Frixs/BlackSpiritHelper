@@ -124,12 +124,11 @@ namespace BlackSpiritHelper.Core
             if (!Core.ScheduleTemplateDataViewModel.ValidateInputs(FormVM, title, TimeZoneRegion))
             {
                 // Some error occured during saving changes of the timer.
-                IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                IoC.UI.ShowNotification(new NotificationBoxDialogViewModel()
                 {
-                    Caption = "Invalid Parameters!",
-                    Message = $"Some of entered parameters are invalid. Please check them again.{Environment.NewLine}",
-                    Button = System.Windows.MessageBoxButton.OK,
-                    Icon = System.Windows.MessageBoxImage.Warning,
+                    Title = "INVALID VALUES",
+                    Message = $"Some of the entered values are invalid. Please check them again.",
+                    Result = NotificationBoxResult.Ok,
                 });
 
                 return;
@@ -173,8 +172,8 @@ namespace BlackSpiritHelper.Core
                 IoC.UI.ShowMessage(new MessageBoxDialogViewModel
                 {
                     Caption = "Cannot delete the template!",
-                    Message = $"Unexpected error occured during deleting the template.{Environment.NewLine}" +
-                               "Please, contact the developers to fix the issue.",
+                    Message = $"Unexpected error occurred during deleting the template.{Environment.NewLine}" +
+                              "Please, contact the developers to fix the issue.",
                     Button = System.Windows.MessageBoxButton.OK,
                     Icon = System.Windows.MessageBoxImage.Warning,
                 });

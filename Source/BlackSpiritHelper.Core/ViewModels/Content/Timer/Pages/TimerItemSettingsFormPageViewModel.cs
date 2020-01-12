@@ -162,12 +162,11 @@ namespace BlackSpiritHelper.Core
                 || AssociatedGroupViewModel == null)
             {
                 // Some error occured during saving changes of the timer.
-                IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                IoC.UI.ShowNotification(new NotificationBoxDialogViewModel()
                 {
-                    Caption = "Invalid Parameters!",
-                    Message = $"Some of entered parameters are invalid. Please check them again.{Environment.NewLine}",
-                    Button = System.Windows.MessageBoxButton.OK,
-                    Icon = System.Windows.MessageBoxImage.Warning,
+                    Title = "INVALID VALUES",
+                    Message = $"Some of entered values are invalid. Please, check them again.",
+                    Result = NotificationBoxResult.Ok,
                 });
 
                 return;
@@ -184,8 +183,8 @@ namespace BlackSpiritHelper.Core
                     // Some error occured during removing the timer from old group.
                     IoC.UI.ShowMessage(new MessageBoxDialogViewModel
                     {
-                        Caption = "An unexpected error occured!",
-                        Message = $"Unexpected error while removing the timer from the old group. Please contact the developers to fix the issue.{Environment.NewLine}",
+                        Caption = "Unexpected error",
+                        Message = $"Unexpected error occurred while removing the timer from the old group. Please contact the developers to fix the issue.{Environment.NewLine}",
                         Button = System.Windows.MessageBoxButton.OK,
                         Icon = System.Windows.MessageBoxImage.Warning,
                     });
@@ -230,7 +229,7 @@ namespace BlackSpiritHelper.Core
                 IoC.UI.ShowMessage(new MessageBoxDialogViewModel
                 {
                     Caption = "Cannot delete the timer!",
-                    Message = $"Unexpected error occured during deleting the timer.{Environment.NewLine}" +
+                    Message = $"Unexpected error occurred during deleting the timer.{Environment.NewLine}" +
                                "Please, contact the developers to fix the issue.",
                     Button = System.Windows.MessageBoxButton.OK,
                     Icon = System.Windows.MessageBoxImage.Warning,
