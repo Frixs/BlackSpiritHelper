@@ -118,6 +118,23 @@ namespace BlackSpiritHelper
                     // Open MainWindow.
                     IoC.UI.ShowMainWindow();
 
+                    // Welcome message
+                    if (!IoC.Application.Cookies.AlreadyFirstlyLaunched)
+                        IoC.UI.ShowNotification(new NotificationBoxDialogViewModel()
+                        {
+                            Title = "WELCOME!",
+                            MessageFormatting = true,
+                            Message = "## Feedback",
+                            Result = NotificationBoxResult.Ok,
+                            OkAction = () =>
+                            {
+                                IoC.Application.Cookies.AlreadyFirstlyLaunched = true;
+                            },
+                        });
+
+                    // News.
+                    IoC.UI.ShowNews(true);
+
                     // Patch Notes.
                     IoC.UI.ShowPatchNotes(true);
 
@@ -159,7 +176,7 @@ namespace BlackSpiritHelper
             // Dispose IoC modules
             IoC.Web.Dispose();
             IoC.Get<IMouseKeyHook>().Dispose();
-            
+
             // "Prepare data to die."
             IoC.DataContent.Unset();
 

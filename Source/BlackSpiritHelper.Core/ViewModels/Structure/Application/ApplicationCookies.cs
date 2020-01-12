@@ -44,6 +44,8 @@ namespace BlackSpiritHelper.Core
 
         /// <summary>
         /// Says, what is the latest time of patch notes review by the user.
+        /// It is for routine which checks user's value with the one online.
+        /// If the online values gets updated, it fires the event.
         /// </summary>
         [XmlIgnore]
         public DateTime PatchNotesLatestReviewDate { get; set; } = DateTime.MinValue;
@@ -61,6 +63,33 @@ namespace BlackSpiritHelper.Core
                 PatchNotesLatestReviewDate = date;
             }
         }
+
+        /// <summary>
+        /// Says, what is the latest time of news review by the user.
+        /// It is for routine which checks user's value with the one online.
+        /// If the online values gets updated, it fires the event.
+        /// </summary>
+        [XmlIgnore]
+        public DateTime NewsLatestReviewDate { get; set; } = DateTime.MinValue;
+
+        /// <summary>
+        /// String version of <see cref="NewsLatestReviewDate"/>.
+        /// </summary>
+        public string NewsLatestReviewDateStr
+        {
+            get => NewsLatestReviewDate.ToString("yyyy-MM-dd");
+            set
+            {
+                DateTime date;
+                DateTime.TryParseExact(value, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
+                NewsLatestReviewDate = date;
+            }
+        }
+
+        /// <summary>
+        /// Says, if the app has been already firstly launched or not.
+        /// </summary>
+        public bool AlreadyFirstlyLaunched { get; set; } = false;
 
         #endregion
 

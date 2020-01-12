@@ -82,7 +82,12 @@ namespace BlackSpiritHelper
             return null;
         }
 
-        void Hyperlink_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Hypertext click event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Hyperlink_Click(object sender, RoutedEventArgs e)
         {
             Process.Start(new ProcessStartInfo(((Hyperlink)sender).NavigateUri.AbsoluteUri));
             e.Handled = true;

@@ -90,7 +90,8 @@ namespace BlackSpiritHelper
                 {
                     // Get first line of the message = date of latest news
                     DateTime date;
-                    DateTime.TryParseExact(message.GetFirstLines(1).Replace(" ", ""), "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
+                    DateTime.TryParseExact(message.GetFirstLines(1).Replace(@"<!--", "").Replace(@"-->", "").Replace(" ", ""), 
+                        "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
 
                     // Compare user's date of last patch notes show with the latest news date.
                     if (DateTime.Compare(IoC.Application.Cookies.PatchNotesLatestReviewDate, date) < 0)
@@ -108,6 +109,76 @@ namespace BlackSpiritHelper
                             OkAction = () =>
                             {
                                 IoC.Application.Cookies.PatchNotesLatestReviewDate = DateTime.Today;
+                            },
+                        };
+
+                        // Create notification
+                        NotificationArea.AddNotification(vm);
+                    }
+                }
+            });
+        }
+
+        /// <summary>
+        /// Show a notification containing news to a user.
+        /// </summary>
+        /// <param name="onlyWhenNew">True: shows patch notes only when the first line of news file which represents latest news, is newer.</param>
+        /// <returns></returns>
+        public Task ShowNews(bool onlyWhenNew)
+        {
+            return IoC.Task.Run(async () =>
+            {
+                // Get client.
+                var client = IoC.Web.Http.GetClientForHost(new Uri(SettingsConfiguration.RemoteNewsFilePath));
+                string message = string.Empty;
+                bool isOk = false;
+
+                // Get data.
+                try
+                {
+                    // Read data.
+                    message = await client.GetStringAsync(SettingsConfiguration.RemoteNewsFilePath);
+                    IoC.Logger.Log($"News has been read successfully!", LogLevel.Debug);
+                    isOk = true;
+                }
+                catch (HttpRequestException e) // Internet connection issues.
+                {
+                    IoC.Logger.Log($"{e.GetType().ToString()}: {e.Message} (expected exception)", LogLevel.Verbose);
+                }
+                catch (TaskCanceledException e) // Timeout.
+                {
+                    IoC.Logger.Log($"{e.GetType().ToString()}: {e.Message} (expected exception)", LogLevel.Debug);
+                }
+                catch (Exception e) // Unexpected.
+                {
+                    IoC.Logger.Log($"{e.GetType().ToString()}: {e.Message}", LogLevel.Fatal);
+                }
+
+                // We have data OK
+                if (isOk)
+                {
+                    // Get first line of the message = date of latest news
+                    DateTime date;
+                    DateTime.TryParseExact(
+                        message.GetFirstLines(1).Replace(@"<!--", "").Replace(@"-->", "").Replace(" ", ""), 
+                        "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
+
+                    // Compare user's date of last news show with the latest news date.
+                    if (DateTime.Compare(IoC.Application.Cookies.NewsLatestReviewDate, date) < 0)
+                    {
+                        // Remove first line of the message
+                        message = message.RemoveFirstLines(1);
+
+                        // Create notification view model
+                        var vm = new NotificationBoxDialogViewModel()
+                        {
+                            Title = "NEWS",
+                            MessageFormatting = true,
+                            Message = message,
+                            Result = NotificationBoxResult.Ok,
+                            OkAction = () =>
+                            {
+                                IoC.Application.Cookies.NewsLatestReviewDate = DateTime.Today;
                             },
                         };
 

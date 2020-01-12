@@ -282,6 +282,12 @@ namespace BlackSpiritHelper.Core
                 // Contains star?
                 if (line[i].Equals('*'))
                 {
+                    // Escape.
+                    if (i > 0 && line[i - 1].Equals(@"\"))
+                    {
+                        continue;
+                    }
+
                     // Contains next char star?
                     if (i + 1 < line.Length && line[i + 1].Equals('*'))
                     {
@@ -315,6 +321,12 @@ namespace BlackSpiritHelper.Core
             {
                 if (line[i].Equals('_'))
                 {
+                    // Escape.
+                    if (i > 0 && line[i - 1].Equals(@"\"))
+                    {
+                        continue;
+                    }
+
                     if (i + 1 < line.Length && line[i + 1].Equals('_'))
                     {
                         var aStringBuilder = new StringBuilder(line);
@@ -346,6 +358,12 @@ namespace BlackSpiritHelper.Core
             {
                 if (line[i].Equals('_'))
                 {
+                    // Escape.
+                    if (i > 0 && line[i - 1].Equals(@"\"))
+                    {
+                        continue;
+                    }
+
                     var aStringBuilder = new StringBuilder(line);
                     aStringBuilder.Remove(i, 1);
                     if (bItalic)

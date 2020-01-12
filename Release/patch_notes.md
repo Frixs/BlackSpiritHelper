@@ -1,5 +1,5 @@
-﻿2020-01-09
-<!-- First line signals last update for desktop app, -->
+﻿<!-- 2020-01-09 -->
+<!-- First line signals last update for desktop app - in comment brackets, -->
 <!-- to know when to show content of this file to user. -->
 <!-- ================================================== -->
 <!-- Rest of file is actual content to show with markdown similar to GitHub one. -->
@@ -12,6 +12,7 @@
 <!-- _ : Can be anywhere in the text. Makes the text italic. It has to have ending part too. -->
 <!-- __ : Can be anywhere in the text. Makes the text underline. It has to have ending part too. -->
 <!-- [text](url) : Can be anywhere in the text. Transform text into URL link. -->
+<!-- \ : escape formatting characters. -->
 <!-- -------------------------------------------------- -->
 ## 1.3.0.4
 Test patch notes

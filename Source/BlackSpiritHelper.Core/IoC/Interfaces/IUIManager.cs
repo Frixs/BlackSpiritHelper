@@ -35,6 +35,13 @@ namespace BlackSpiritHelper.Core
         Task ShowPatchNotes(bool onlyWhenNew);
 
         /// <summary>
+        /// Show a notification containing news to a user.
+        /// </summary>
+        /// <param name="onlyWhenNew">True: shows patch notes only when the first line of news file which represents latest news, is newer.</param>
+        /// <returns></returns>
+        Task ShowNews(bool onlyWhenNew);
+
+        /// <summary>
         /// DIsplays a single message box to the user.
         /// </summary>
         /// <param name="viewModel">The view model.</param>
