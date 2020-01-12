@@ -14,7 +14,7 @@
 **Pull: [#22](https://github.com/Frixs/BlackSpiritHelper/pull/22)**
 - Updated Home page info
 - Added custom notification structure
-- PatchNotes & News remote file loading
+- PatchNotes and News remote file loading
 - Notification formatting
 - Updated all dialogs
 <br/>
