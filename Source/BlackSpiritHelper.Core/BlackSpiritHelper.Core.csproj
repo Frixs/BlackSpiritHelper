@@ -61,6 +61,7 @@
     <Compile Include="Audio\Core\AudioPriorityBracket.cs" />
     <Compile Include="Audio\Implementation\AudioPlayer.cs" />
     <Compile Include="Audio\Implementation\Managers\SoundAudioManager.cs" />
+    <Compile Include="DataTypes\ApplicationArgument.cs" />
     <Compile Include="DataTypes\ApplicationPage.cs" />
     <Compile Include="DataTypes\ValuePair.cs" />
     <Compile Include="ViewModels\Content\Preferences\Data\Core\IPreferencesConnectionMethods.cs" />
