@@ -88,7 +88,7 @@ namespace BlackSpiritHelper
                 && !Debugger.IsAttached
                 )
             {
-                if (RunAsAdministrator())
+                if (RunAsAdministrator()) // It restarts the app.
                     return;
             }
 

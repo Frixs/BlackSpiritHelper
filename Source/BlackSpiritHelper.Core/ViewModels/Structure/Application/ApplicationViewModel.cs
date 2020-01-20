@@ -258,6 +258,9 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void DisposeAppRoutine()
         {
+            if (mTimer == null)
+                return;
+
             mTimer.Stop();
             mTimer.Elapsed -= TimerOnElapsed;
             mTimer.Dispose();
