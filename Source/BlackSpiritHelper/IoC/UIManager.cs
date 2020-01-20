@@ -359,8 +359,6 @@ namespace BlackSpiritHelper
             {
                 if (Application.Current.MainWindow.WindowState == WindowState.Minimized)
                     Application.Current.MainWindow.WindowState = WindowState.Normal;
-
-                Application.Current.MainWindow.Activate();
             }
             // Open window if it is closed in tray.
             else
@@ -368,6 +366,11 @@ namespace BlackSpiritHelper
                 Application.Current.MainWindow.Show();
                 WindowViewModel.DisposeTrayIcon();
             }
+
+            // Activate window.
+            Application.Current.MainWindow.Activate();
+            // Try to  bring focus to the window.
+            Application.Current.MainWindow.Focus();
         }
 
         /// <summary>

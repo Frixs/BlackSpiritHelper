@@ -423,7 +423,7 @@
     <Color x:Key="OverlayPlayButtonBackground">#00000000</Color>
     <SolidColorBrush x:Key="OverlayPlayButtonBackgroundBrushKey" Color="{StaticResource OverlayPlayButtonBackground}" />
 
-    <Color x:Key="OverlayPlayButtonForeground">#3Fec1e24</Color>
+    <Color x:Key="OverlayPlayButtonForeground">#70EC1E24</Color>
     <SolidColorBrush x:Key="OverlayPlayButtonForegroundBrushKey" Color="{StaticResource OverlayPlayButtonForeground}" />
 
     <Color x:Key="OverlayPlayButtonHover">#B62125</Color>
@@ -437,7 +437,7 @@
     <Color x:Key="OverlayPauseButtonBackground">#00000000</Color>
     <SolidColorBrush x:Key="OverlayPauseButtonBackgroundBrushKey" Color="{StaticResource OverlayPauseButtonBackground}" />
 
-    <Color x:Key="OverlayPauseButtonForeground">#3F2FB018</Color>
+    <Color x:Key="OverlayPauseButtonForeground">#702FB018</Color>
     <SolidColorBrush x:Key="OverlayPauseButtonForegroundBrushKey" Color="{StaticResource OverlayPauseButtonForeground}" />
 
     <Color x:Key="OverlayPauseButtonHover">#257516</Color>

@@ -10,22 +10,29 @@
 <!-- [text](url) : Can be anywhere in the text. Transform text into URL link. -->
 <!-- \ : escape formatting characters. -->
 <!-- -------------------------------------------------- -->
-## 1.3.1.0 (12/01/2020)
+## v1.3.1.1 (2020-01-20)
+**Pull: [#23](https://github.com/Frixs/BlackSpiritHelper/pull/23)**
+- Added anonymous active user counter
+- Added MainWindow button into the overlay
+- PatchNotes and News showing, bug fixed
+<br/>
+
+## v1.3.1.0 (2020-01-12)
 **Pull: [#22](https://github.com/Frixs/BlackSpiritHelper/pull/22)**
 - Updated Home page info
 - Added custom notification structure
-- PatchNotes & News remote file loading
+- PatchNotes and News remote file loading
 - Notification formatting
 - Updated all dialogs
 <br/>
 
-## 1.3.0.4 (09/01/2020)
+## v1.3.0.4 (2020-01-09)
 **Pull: [#21](https://github.com/Frixs/BlackSpiritHelper/pull/21)**
 - Schedule Custom Template creation, bug fixed
 - Unnecessary subversion delete
 <br/>
 
-## 1.3.0.3 (03/01/2020)
+## v1.3.0.3 (2020-01-03)
 **Pull: [#20](https://github.com/Frixs/BlackSpiritHelper/pull/20)**
 - Removed DailyCheck section - no need for future
 - Promo update
@@ -34,14 +41,14 @@
 - Overlay size changed: 6 -> 8
 <br/>
 
-## 1.3.0.2 (26/12/2019)
+## v1.3.0.2 (2019-12-26)
 **Pull: [#19](https://github.com/Frixs/BlackSpiritHelper/pull/19)**
 - Schedule SendMessage option added: Discord
 - Schedule SendMessage bug fixes
 - Saving on try close, removed -bug causing
 <br/>
 
-## 1.3.0.0 (23/12/2019)
+## v1.3.0.0 (2019-12-23)
 - Watchdog MVP released
 - Import/Export user settings
 - Website/promo released

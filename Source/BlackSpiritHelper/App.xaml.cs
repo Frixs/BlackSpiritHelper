@@ -76,7 +76,8 @@ namespace BlackSpiritHelper
             InitEarlyErrorList();
 
             // Configuration setup.
-            ApplicationPropertySetup(CompileArguments(e.Args));
+            var argsCompiled = CompileArguments(e.Args);
+            ApplicationPropertySetup(argsCompiled);
 
             // Setup on application deployment.
             OnDeploymentSetup();
@@ -108,6 +109,12 @@ namespace BlackSpiritHelper
             {
                 // Setup on application update.
                 bool bNewUpdate = await OnUpdateSetupAsync();
+                // Restart on new update.
+                if (bNewUpdate)
+                {
+                    IoC.Application.AppAssembly.Restart($"{ApplicationArgument.UpdateRestart.ToString()}=true");
+                    return;
+                }
 
                 // Log it.
                 IoC.Logger.Log("Application starting up" + (IoC.Application.IsRunningAsAdministratorCheck ? " (As Administrator)" : "") + "...", LogLevel.Info);
@@ -122,7 +129,7 @@ namespace BlackSpiritHelper
                     IoC.UI.ShowNews(true);
 
                     // Patch Notes.
-                    if (bNewUpdate)
+                    if (argsCompiled.ContainsKey(ApplicationArgument.UpdateRestart.ToString()))
                         IoC.UI.ShowPatchNotes();
 
                     // Start in tray?
@@ -136,6 +143,12 @@ namespace BlackSpiritHelper
                     {
                         IoC.UI.OpenOverlay();
                     }
+
+                    // Initialize the app routine.
+                    IoC.Application.InitAppRoutine();
+
+                    // Active user counter update
+                    IoC.Application.AppAssembly.UpdateActiveUserCounter();
                 }));
             });
         }
@@ -153,6 +166,9 @@ namespace BlackSpiritHelper
 
             // All application windows are already closed here.
             #region Dispose Here
+
+            // Dispose Application.
+            IoC.Application.Dispose();
 
             // Dispose tray icon.
             WindowViewModel.DisposeTrayIcon();
@@ -187,7 +203,7 @@ namespace BlackSpiritHelper
             processInfo.UseShellExecute = true;
             processInfo.Verb = "runas";
 
-            processInfo.Arguments = "Version=" + (ApplicationDeployment.IsNetworkDeployed
+            processInfo.Arguments = ApplicationArgument.Version.ToString() + "=" + (ApplicationDeployment.IsNetworkDeployed
                 ? ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString()
                 : FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion);
 
@@ -235,7 +251,7 @@ namespace BlackSpiritHelper
             // Bind AssemblyInfo version.
             IoC.Application.ApplicationVersion = ApplicationDeployment.IsNetworkDeployed
                 ? ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString()
-                : (args.ContainsKey("Version") ? args["Version"] : FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion);
+                : (args.ContainsKey(ApplicationArgument.Version.ToString()) ? args[ApplicationArgument.Version.ToString()] : FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion);
 
             // Bind AssemblyInfo copyright.
             IoC.Application.Copyright = FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).LegalCopyright;
@@ -382,9 +398,6 @@ namespace BlackSpiritHelper
                 File.Create(filePath).Dispose();
 
                 IoC.Logger.Log("Update successfully finished!", LogLevel.Info);
-
-                // Restart application.
-                IoC.Application.AppAssembly.Restart();
             }
             // Otherwise do if the updating failed.
             else

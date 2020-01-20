@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Xml.Serialization;
@@ -128,6 +129,12 @@ namespace BlackSpiritHelper.Core
         [XmlIgnore]
         public ICommand LockOverlayDraggingCommand { get; set; }
 
+        /// <summary>
+        /// The command to show main window.
+        /// </summary>
+        [XmlIgnore]
+        public ICommand ShowMainWindowCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -163,6 +170,7 @@ namespace BlackSpiritHelper.Core
         private void CreateCommands()
         {
             LockOverlayDraggingCommand = new RelayCommand(() => LockOverlayCommandMethod());
+            ShowMainWindowCommand = new RelayCommand(async () => await ShowMainWindowCommandMethodAsync());
         }
 
         /// <summary>
@@ -171,6 +179,16 @@ namespace BlackSpiritHelper.Core
         private void LockOverlayCommandMethod()
         {
             IsDraggingLocked = !IsDraggingLocked;
+        }
+
+        /// <summary>
+        /// Trigger to show main window.
+        /// </summary>
+        private async Task ShowMainWindowCommandMethodAsync()
+        {
+            IoC.UI.ShowMainWindow();
+
+            await Task.Delay(1);
         }
 
         #endregion

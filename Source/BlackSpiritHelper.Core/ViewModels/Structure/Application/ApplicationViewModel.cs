@@ -1,5 +1,7 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Security.Principal;
+using System.Timers;
 using System.Windows;
 
 namespace BlackSpiritHelper.Core
@@ -7,8 +9,22 @@ namespace BlackSpiritHelper.Core
     /// <summary>
     /// The application state as a view model.
     /// </summary>
-    public class ApplicationViewModel : BaseViewModel
+    public class ApplicationViewModel : BaseViewModel, IDisposable
     {
+        #region Private Members
+
+        /// <summary>
+        /// Timer control for the app routine.
+        /// </summary>
+        private Timer mTimer = null;
+
+        /// <summary>
+        /// App routine's last registered date to be able to determine next day.
+        /// </summary>
+        private DateTime mAppRoutineLastRegisteredDate = DateTime.Now;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -161,6 +177,11 @@ namespace BlackSpiritHelper.Core
             SetWindowTitlePostfixOnly = CurrentPage > 0 ? CurrentPage.GetDescription() : "";
         }
 
+        public void Dispose()
+        {
+            DisposeAppRoutine();
+        }
+
         #endregion
 
         #region Public Methods
@@ -203,6 +224,19 @@ namespace BlackSpiritHelper.Core
             //    Application.Current.Windows[intCounter].Close();
         }
 
+        /// <summary>
+        /// Initialize the app routine timer.
+        /// </summary>
+        public void InitAppRoutine()
+        {
+            if (mTimer != null)
+                return;
+
+            mTimer = new Timer(TimeSpan.FromMinutes(60).TotalMilliseconds);
+            mTimer.Elapsed += TimerOnElapsed;
+            mTimer.AutoReset = true;
+        }
+
         #endregion
 
         #region Private Methods
@@ -217,6 +251,45 @@ namespace BlackSpiritHelper.Core
             var wp = new WindowsPrincipal(wi);
 
             return wp.IsInRole(WindowsBuiltInRole.Administrator);
+        }
+
+        /// <summary>
+        /// Dispose the app routine timer.
+        /// </summary>
+        private void DisposeAppRoutine()
+        {
+            mTimer.Stop();
+            mTimer.Elapsed -= TimerOnElapsed;
+            mTimer.Dispose();
+            mTimer = null;
+        }
+
+        #endregion
+
+        #region App Routine ElapsedMethod
+
+        /// <summary>
+        /// This is routine for the whole app.
+        /// Check out <see cref="InitAppRoutine"/> for more details about timing.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TimerOnElapsed(object sender, ElapsedEventArgs e)
+        {
+            // Log it.
+            IoC.Logger.Log("Running the app routine.", LogLevel.Debug);
+
+            // Trigger for the next day. New day has come.
+            if (mAppRoutineLastRegisteredDate.Day != DateTime.Now.Day)
+            {
+                // Update the registered date.
+                mAppRoutineLastRegisteredDate = DateTime.Now;
+
+                // routine here
+            }
+
+            // Active user counter update
+            AppAssembly.UpdateActiveUserCounter();
         }
 
         #endregion
