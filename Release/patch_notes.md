@@ -10,6 +10,13 @@
 <!-- [text](url) : Can be anywhere in the text. Transform text into URL link. -->
 <!-- \ : escape formatting characters. -->
 <!-- -------------------------------------------------- -->
+## v1.3.1.1 (2020-01-20)
+**Pull: [#23](https://github.com/Frixs/BlackSpiritHelper/pull/23)**
+- Added anonymous active user counter
+- Added MainWindow button into the overlay
+- PatchNotes and News showing, bug fixed
+<br/>
+
 ## v1.3.1.0 (2020-01-12)
 **Pull: [#22](https://github.com/Frixs/BlackSpiritHelper/pull/22)**
 - Updated Home page info
