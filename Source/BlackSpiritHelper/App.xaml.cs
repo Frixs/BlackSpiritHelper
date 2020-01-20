@@ -143,6 +143,12 @@ namespace BlackSpiritHelper
                     {
                         IoC.UI.OpenOverlay();
                     }
+
+                    // Initialize the app routine.
+                    IoC.Application.InitAppRoutine();
+
+                    // Active user counter update
+                    IoC.Application.AppAssembly.UpdateActiveUserCounter();
                 }));
             });
         }
@@ -160,6 +166,9 @@ namespace BlackSpiritHelper
 
             // All application windows are already closed here.
             #region Dispose Here
+
+            // Dispose Application.
+            IoC.Application.Dispose();
 
             // Dispose tray icon.
             WindowViewModel.DisposeTrayIcon();

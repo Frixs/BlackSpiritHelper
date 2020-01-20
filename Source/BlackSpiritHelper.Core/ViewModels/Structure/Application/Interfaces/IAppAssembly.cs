@@ -7,5 +7,10 @@
         /// </summary>
         /// <param name="args">Arguments in string form to pass for a new start of the app</param>
         void Restart(string args = "");
+
+        /// <summary>
+        /// Update active user counter. Anonymous approach.
+        /// </summary>
+        void UpdateActiveUserCounter();
     }
 }

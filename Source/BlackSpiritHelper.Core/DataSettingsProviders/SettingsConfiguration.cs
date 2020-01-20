@@ -65,5 +65,10 @@ namespace BlackSpiritHelper.Core
         /// Remote news URL file path.
         /// </summary>
         public static readonly string RemoteNewsFilePath = @"https://raw.githubusercontent.com/Frixs/BlackSpiritHelper/master/Release/news.md";
+
+        /// <summary>
+        /// Update active user conter URL.
+        /// </summary>
+        public static readonly string UpdateActiveUserCounterURL = @"https://us-central1-blackspirithelper.cloudfunctions.net/registerConnection";
     }
 }
