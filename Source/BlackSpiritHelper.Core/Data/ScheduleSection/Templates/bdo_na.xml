@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ScheduleTemplateDataViewModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <LastModifiedString>2019-08-22</LastModifiedString>
+  <LastModifiedString>2020-06-25</LastModifiedString>
   <Title>BDO-NA</Title>
   <TimeZoneRegion>NA</TimeZoneRegion>
   <Schedule>
@@ -156,13 +156,14 @@
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
             <string>Kutum</string>
+            <string>Offin</string>
           </ItemList>
         </ScheduleTimeEventDataViewModel>
         <ScheduleTimeEventDataViewModel>
           <TimeHours>17</TimeHours>
           <TimeMinutes>0</TimeMinutes>
           <ItemList>
-            <string>Offin</string>
+            <string>Vell</string>
           </ItemList>
         </ScheduleTimeEventDataViewModel>
         <ScheduleTimeEventDataViewModel>
