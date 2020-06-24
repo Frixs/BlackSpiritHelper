@@ -16,7 +16,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Max number of events in 1 particular day.
         /// </summary>
-        public static byte AllowedMaxNoOfEventsInDay { get; private set; } = 10;
+        public static byte AllowedMaxNoOfEventsInDay { get; private set; } = 15;
 
         #endregion
 
