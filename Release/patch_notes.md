@@ -10,6 +10,12 @@
 <!-- [text](url) : Can be anywhere in the text. Transform text into URL link. -->
 <!-- \ : escape formatting characters. -->
 <!-- -------------------------------------------------- -->
+## v1.3.2.0 (2020-06-25)
+**Pull: [#23](https://github.com/Frixs/BlackSpiritHelper/pull/25)**
+- Schedule: Increased limit of items in each day from 10 to 15
+- Updated EU/NA BDO boss template for Schedule
+<br/>
+
 ## v1.3.1.1 (2020-01-20)
 **Pull: [#23](https://github.com/Frixs/BlackSpiritHelper/pull/23)**
 - Added anonymous active user counter
