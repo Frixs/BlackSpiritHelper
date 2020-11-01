@@ -174,6 +174,11 @@ namespace BlackSpiritHelper
         public ICommand ExitCommand { get; set; }
 
         /// <summary>
+        /// The command to save settings
+        /// </summary>
+        public ICommand SaveSettingsCommand { get; set; }
+
+        /// <summary>
         /// The command to close the window to tray.
         /// </summary>
         public ICommand CloseTrayCommand { get; set; }
@@ -232,6 +237,9 @@ namespace BlackSpiritHelper
 
             // Menu.
             MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()));
+
+            // Save settings
+            SaveSettingsCommand = new RelayCommand(() => IoC.Application.AppAssembly.Restart($"{ApplicationArgument.SaveSettings}="));
 
             // Application MainWindow close to Tray.
             CloseTrayCommand = new RelayCommand(() => IoC.UI.CloseMainWindowToTray());

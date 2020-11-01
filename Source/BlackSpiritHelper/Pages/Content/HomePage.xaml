@@ -83,7 +83,7 @@
                         FontFamily="{StaticResource LatoLightItalic}"
                         FontSize="14"
                         Foreground="{StaticResource FormTitleForegroundAltBrushKey}"
-                        Text="I will be very appreciative and I will be very glad for any form of support from you! :-)"
+                        Text="I appreciate any form of support from you! :-)"
                         TextAlignment="Center"
                         TextWrapping="Wrap" />
 

@@ -88,7 +88,7 @@ namespace BlackSpiritHelper
                 && !Debugger.IsAttached
                 )
             {
-                if (RunAsAdministrator()) // It restarts the app.
+                if (RunAsAdministrator(string.Join(" ", e.Args))) // It restarts the app.
                     return;
             }
 
@@ -124,6 +124,16 @@ namespace BlackSpiritHelper
                 {
                     // Open MainWindow.
                     IoC.UI.ShowMainWindow();
+
+                    // Let user know the setting has been saved
+                    if (argsCompiled.ContainsKey(ApplicationArgument.SaveSettings.ToString()))
+                        IoC.UI.NotificationArea.AddNotification(new NotificationBoxDialogViewModel()
+                        {
+                            Title = "SETTINGS SAVED",
+                            MessageFormatting = false,
+                            Message = "Application data settings have been saved!",
+                            Result = NotificationBoxResult.Ok,
+                        });
 
                     // News.
                     IoC.UI.ShowNews(true);
@@ -193,8 +203,9 @@ namespace BlackSpiritHelper
         /// <summary>
         /// Run the application As Administrator.
         /// </summary>
+        /// <param name="passedArguments">Arguments to pass to admin process</param>
         /// <returns>If true, applicationwil restart to administrator mode. The return is just for making sure and possibility to stop the code process.</returns>
-        private bool RunAsAdministrator()
+        private bool RunAsAdministrator(string passedArguments = "")
         {
             // It is not possible to launch a ClickOnce app as administrator directly, so instead we launch the app as administrator in a new process.
             var processInfo = new ProcessStartInfo(Assembly.GetExecutingAssembly().CodeBase);
@@ -203,7 +214,7 @@ namespace BlackSpiritHelper
             processInfo.UseShellExecute = true;
             processInfo.Verb = "runas";
 
-            processInfo.Arguments = ApplicationArgument.Version.ToString() + "=" + (ApplicationDeployment.IsNetworkDeployed
+            processInfo.Arguments = passedArguments + " " + ApplicationArgument.Version.ToString() + "=" + (ApplicationDeployment.IsNetworkDeployed
                 ? ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString()
                 : FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion);
 
