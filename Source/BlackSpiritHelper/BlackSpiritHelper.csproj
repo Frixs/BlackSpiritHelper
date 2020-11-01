@@ -260,6 +260,7 @@
     <Compile Include="ValueConverters\SubstringConverter.cs" />
     <Compile Include="ValueConverters\Overlay\OverlaySizeMarginValueConverter.cs" />
     <Compile Include="ValueConverters\InvertBooleanConverter.cs" />
+    <Compile Include="ValueConverters\Timer\TimerListGroupOverlayOnlyConverter.cs" />
     <Compile Include="ValueConverters\Timer\TimerListOverlayOnlyConverter.cs" />
     <Compile Include="ValueConverters\TicksToDateStringConverter.cs" />
     <Compile Include="ValueConverters\WarningTimerColorSwapConverter.cs" />

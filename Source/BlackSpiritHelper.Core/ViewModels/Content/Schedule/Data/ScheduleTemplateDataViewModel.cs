@@ -20,7 +20,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Max <see cref="Title"/> length rule.
         /// </summary>
-        public static byte AllowedTitleMaxLength { get; private set; } = 10;
+        public static byte AllowedTitleMaxLength { get; private set; } = 15;
 
         /// <summary>
         /// Min <see cref="Title"/> length rule.
