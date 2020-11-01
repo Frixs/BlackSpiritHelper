@@ -214,6 +214,12 @@ img {
     text-decoration: none;
 }
 
+@media (min-width: 992px) {
+    .nav-extern-link {
+        margin-left: 10px;
+    }
+}
+
 .nav-link.disabled {
     color: #6c757d;
     pointer-events: none;
