@@ -10,6 +10,11 @@
 <!-- [text](url) : Can be anywhere in the text. Transform text into URL link. -->
 <!-- \ : escape formatting characters. -->
 <!-- -------------------------------------------------- -->
+## v1.3.3.1 (2020-11-01)
+**Pull: [#30](https://github.com/Frixs/BlackSpiritHelper/pull/30)**
+- Timer can now be adjusted 10 times faster by holding Shift while clicking on +/- buttons
+<br/>
+
 ## v1.3.3.0 (2020-11-01)
 **Pull: [#29](https://github.com/Frixs/BlackSpiritHelper/pull/29)**
 - Timer Group checkbox - IgnoreInOverlay
