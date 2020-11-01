@@ -1,0 +1,302 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="BlackSpiritHelper.exe" version="1.3.3.2" publicKeyToken="1401b615ed85def6" language="en" processorArchitecture="msil" type="win32" />
+  <description asmv2:iconFile="icon_red.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="BlackSpiritHelper" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <commandLine file="BlackSpiritHelper.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet version="1" class="System.Security.NamedPermissionSet" Name="LocalIntranet" Description="Default rights given to applications on the local intranet" Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!-- UAC Manifest Options
+             If you want to change the Windows User Account Control level replace the 
+             requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+            Specifying requestedExecutionLevel element will disable file and registry virtualization. 
+            Remove this element if your application requires this virtualization for backwards
+            compatibility.
+        -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BlackSpiritHelper.exe" size="12657960">
+      <assemblyIdentity name="BlackSpiritHelper" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>vBCWN3eNZ3oL0um6mf+tMtwFp3E2b1QjGhoaLQkIjvE=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BlackSpiritHelper.Core.dll" size="262144">
+      <assemblyIdentity name="BlackSpiritHelper.Core" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>g3qkuxLAAJQKlI/teACfF9LI19PW9OIwdnR1WjIH2e0=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Gma.System.MouseKeyHook.dll" size="57344">
+      <assemblyIdentity name="Gma.System.MouseKeyHook" version="5.6.130.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>pnpCQBNUTIJwwSYz4uHih81c8LPy6B6NggSzegPaWe8=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Microsoft.Windows.Shell.dll" size="153088">
+      <assemblyIdentity name="Microsoft.Windows.Shell" version="3.0.1.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>07ecZra2VuLadjPPJcNX22PUVNH630knoUHsO6uApVk=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Newtonsoft.Json.dll" size="700336">
+      <assemblyIdentity name="Newtonsoft.Json" version="12.0.0.0" publicKeyToken="30AD4FE6B2A6AEED" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>f5ErKKB8Im4L46z7L1fwUFOKugEA+h8L8sOfGh8dqBQ=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Ninject.dll" size="138752">
+      <assemblyIdentity name="Ninject" version="3.3.4.0" publicKeyToken="C7192DC5380945E7" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>AcyAoWMj9WGRWWAT7vHefkMnHW+ZH0dAsfzFGV2Ktb0=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Xceed.Wpf.AvalonDock.dll" size="485376">
+      <assemblyIdentity name="Xceed.Wpf.AvalonDock" version="4.0.0.0" publicKeyToken="3E4669D2F30244F4" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>8v8Abvyihmo+KPltD8okpamkIco/qSGW9e1NbZc056k=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Xceed.Wpf.AvalonDock.Themes.Aero.dll" size="105472">
+      <assemblyIdentity name="Xceed.Wpf.AvalonDock.Themes.Aero" version="4.0.0.0" publicKeyToken="3E4669D2F30244F4" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>hC+WVxrH19NEsK5C5UaC1GRF6aZ9k67dyUh5iDxvu5U=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Xceed.Wpf.AvalonDock.Themes.Metro.dll" size="97280">
+      <assemblyIdentity name="Xceed.Wpf.AvalonDock.Themes.Metro" version="4.0.0.0" publicKeyToken="3E4669D2F30244F4" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>3q06fKSuGTgcRdAJbNBQjgSAWxS+FbFgJyPH6XdDRrk=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Xceed.Wpf.AvalonDock.Themes.VS2010.dll" size="104448">
+      <assemblyIdentity name="Xceed.Wpf.AvalonDock.Themes.VS2010" version="4.0.0.0" publicKeyToken="3E4669D2F30244F4" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>QsBxgK8TUXtIHN3KEg6/MEisZAusk+ABIZru0WFgfcM=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Xceed.Wpf.Toolkit.dll" size="1409024">
+      <assemblyIdentity name="Xceed.Wpf.Toolkit" version="4.0.0.0" publicKeyToken="3E4669D2F30244F4" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>cJjRrR4hP43GQKewQM02sHDA24wqKUSH2tifdV0iX1o=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="BlackSpiritHelper.exe.config" size="234">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>PcKz7eADFF3VPsAOId3cf5mvnveMFAEHYkAHMe6OdLk=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="icon_red.ico" size="24838">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>4GHvbnvYBbJHuyApZEx5/sPKPtbJse4Lzi2nLezJwyU=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\Images\Logo\icon_red.ico" size="24838">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>4GHvbnvYBbJHuyApZEx5/sPKPtbJse4Lzi2nLezJwyU=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\Images\Logo\icon_white.ico" size="32988">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>GkD9sxtEJxcLY9IMVDnxnjXaY7nEpyytZTf4AE/LY40=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\Sounds\Alert1_Sound_0.mp3" size="31487">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>Pd9Q3t7JKb7VwObFSosBTAbwmiHfmeaVLkDd0YXusPU=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\Sounds\Alert2_Sound_0.mp3" size="100446">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>9Hr+t0uSHdfJjcdKwcnZYUQp2XzrujQLsqAANz3CrH0=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\Sounds\Alert3_Sound_0.mp3" size="94172">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>4bGZE5QaJjYFBBWMFh3/abwn8IELO3Ur8rIS4T1mZ3c=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\Sounds\Alert4_Sound_0.mp3" size="89889">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>qznf+vRV0d+5E2lgUDE8zToJaLDqJLRWGIe2VcPI79Q=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\Sounds\Alert5_Sound_0.mp3" size="221447">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>Fr67lZ5le1d5EtyfNcjs9B5bt4oi7dg60IBJBYR3OL0=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\Sounds\AlertClockTicking_Sound_0.mp3" size="124675">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>lENGIzBm+JiIqrloUQWctw9duBhUAhr7BMahlbzz7qs=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\Sounds\AlertCounting_Sound_0.mp3" size="44999">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>5mmOx2FHEym1oza7RUmhr9JnSdk6RFpTkCTbyex1S44=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\Sounds\AlertLongBefore_Sound_0.mp3" size="357677">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>5f5f6vmsghu8Ya+bj36+gIwkous9UhbecXUujBgrxIU=</dsig:DigestValue>
+    </hash>
+  </file>
+  <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
+    <application>
+      <!-- A list of the Windows versions that this application has been tested on
+           and is designed to work with. Uncomment the appropriate elements
+           and Windows will automatically select the most compatible environment. -->
+      <!-- Windows Vista -->
+      <!--<supportedOS Id="{e2011457-1546-43c5-a5fe-008deee3d3f0}" />-->
+      <!-- Windows 7 -->
+      <!--<supportedOS Id="{35138b9a-5d96-4fbd-8e2d-a2440225f93a}" />-->
+      <!-- Windows 8 -->
+      <!--<supportedOS Id="{4a2f28e3-53b9-4441-ba9c-d69d4a4a6e38}" />-->
+      <!-- Windows 8.1 -->
+      <!--<supportedOS Id="{1f676c76-80e1-4239-95bb-83d0f6d0da78}" />-->
+      <!-- Windows 10 -->
+      <supportedOS Id="{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}" />
+    </application>
+  </compatibility>
+<publisherIdentity name="CN=frixs.github.io/BlackSpiritHelper" issuerKeyHash="10f5140bfd4dbc4d128f07f3fa450fe1103e09be" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>bNfFIUPQp1BeuqMoDpa0Uo1LoK+xA/XdcI64dhQhYyU=</DigestValue></Reference></SignedInfo><SignatureValue>Nci6LkjteyA4hM8S7gxvuEzpDpCRLLprk8dxnHacfHd2Ig2/hwFQ4IDBfD7WXN+jOUPob2QyiM00fMVcyKOXB4b4ByBwUdArtWwRuorq3HOziNGBlpRRoT9FDDr15JUmXUT3mT2DBExozh+03/l/K5qi//TvPG+L4YPoQ5wnsa99h6qDDhgIIORK0851ef009dFszM3WpdVRg5+WpsXSC3nYwiXGOHWHrScM/jBNF0aHIyBGDEyzI16OPiLvPcMwfvOMeAsWYuB/kCjOeFpVBgyUYbdpUdiFehY+il/loF8v7+rLyEWwXZanz7RVYhJOTbiqw1aMufm9LpQLuTuT4w==</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>6HvFJsxRcZlMN+VDmspXzJxuOTwuELoqO3lp1oINH8xPAZ/8m1mSp/ImfPNfEG8212AdkvU7tv0Np7raAqS/+yyD26yzb2IGy4eOlTlo7IVdQJKpvjGcigocaMQofuSQWwr+eFDqldoyIPxFc765ayD94JTIalv9YpP2RDHeucSdWHjdDxGE6RHUTU1dsSg/jZaTZ3ZmdaJ/u7S9r9rMw69SAn4y5CxM/1CvENFe9U+MAN78TlGk1bFYUz+NL7exF3nQ7m5/+/EaVSADkklEsq9zbB181DVJvlvf52dxFSRbT2UmTEIbzgqr0m3tPN/gPrultcSjpC8HnYUU5dfIFQ==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="2563211476b88e70ddf503b1afa04b8d52b4960e28a3ba5e50a7d04321c5d76c" Description="" Url=""><as:assemblyIdentity name="BlackSpiritHelper.exe" version="1.3.3.2" publicKeyToken="1401b615ed85def6" language="en" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=frixs.github.io/BlackSpiritHelper</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>FfX/MR9Lzk8S5+AdaiHYfBmbK2PXnORCEnvJcn3HdD8=</DigestValue></Reference></SignedInfo><SignatureValue>3as/qFVXtWLHGZVfGHaBXHm3wojjbJUqhwkyccs3WAgv7tr4fHxa0UBm0qCr8QTNo7snWX+DyCMZK0/+SPgZyXYI7BE3lq5yTiMOSgGgShTmxebznDOiHDEn+Yz+3BMoqV8ntkY9exJmc8Rp8RKH6Z540MSJ9zCQMinHVRS2GkuplIrf6O244klO6O6d7Lmk1o0ltb+PApXEh6PxPhM71iXmmJCnnoVUV3zwdhnKBUC3wclNLAFfCyqyIHLevlk7rSZ/rsHNoAxKDOTF4uq+zFrcxTseLgQ6cfEasgXsaT6OA4bCpBgKy94vy3Qg3YU/Z1zTII/7KCoZ2R0RDWcTLA==</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>6HvFJsxRcZlMN+VDmspXzJxuOTwuELoqO3lp1oINH8xPAZ/8m1mSp/ImfPNfEG8212AdkvU7tv0Np7raAqS/+yyD26yzb2IGy4eOlTlo7IVdQJKpvjGcigocaMQofuSQWwr+eFDqldoyIPxFc765ayD94JTIalv9YpP2RDHeucSdWHjdDxGE6RHUTU1dsSg/jZaTZ3ZmdaJ/u7S9r9rMw69SAn4y5CxM/1CvENFe9U+MAN78TlGk1bFYUz+NL7exF3nQ7m5/+/EaVSADkklEsq9zbB181DVJvlvf52dxFSRbT2UmTEIbzgqr0m3tPN/gPrultcSjpC8HnYUU5dfIFQ==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIDVjCCAj6gAwIBAgIQQS208LNoO5lMF3KZoeIGhzANBgkqhkiG9w0BAQsFADAsMSowKAYDVQQDDCFmcml4cy5naXRodWIuaW8vQmxhY2tTcGlyaXRIZWxwZXIwHhcNMjAxMTAxMDQyMDE0WhcNMjExMTAxMDQ0MDE0WjAsMSowKAYDVQQDDCFmcml4cy5naXRodWIuaW8vQmxhY2tTcGlyaXRIZWxwZXIwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDoe8UmzFFxmUw35UOaylfMnG45PC4Quio7eWnWgg0fzE8Bn/ybWZKn8iZ8818QbzbXYB2S9Tu2/Q2nutoCpL/7LIPbrLNvYgbLh46VOWjshV1Akqm+MZyKChxoxCh+5JBbCv54UOqV2jIg/EVzvrlrIP3glMhqW/1ik/ZEMd65xJ1YeN0PEYTpEdRNTV2xKD+NlpNndmZ1on+7tL2v2szDr1ICfjLkLEz/UK8Q0V71T4wA3vxOUaTVsVhTP40vt7EXedDubn/78RpVIAOSSUSyr3NsHXzUNUm+W9/nZ3EVJFtPZSZMQhvOCqvSbe083+A+u6W1xKOkLwedhRTl18gVAgMBAAGjdDByMA4GA1UdDwEB/wQEAwIHgDATBgNVHSUEDDAKBggrBgEFBQcDAzAsBgNVHREEJTAjgiFmcml4cy5naXRodWIuaW8vQmxhY2tTcGlyaXRIZWxwZXIwHQYDVR0OBBYEFBD1FAv9TbxNEo8H8/pFD+EQPgm+MA0GCSqGSIb3DQEBCwUAA4IBAQB21+xyjcGjChjfZ/7OE75pBL3BLw3cs9/cBZqq2I15Xa9V5TA+pa3W4G8eJeIoSdgkOFSHQ86hy3gA9LEOKCGxiM0kHpmfsglRyQO0smuqFBtWwvCBHwLOkudNYPkjltiWnlesYpsP0TLa0SP5f1rxqkfPaVs0cxqpn+6RRnnAXfsos6+174B/urFBVldjq8DP2GeJEbPjhwgW/AEpEFG3oJJSLFT/syvxQPA8MdeLhtetLWgROn9gda1l/HnGsdGQhbRdJM6BMfCvp/2CXOBXRi4W5t7xaBfJkWVnUZDqSoW8Izr45ct714qf9z7M79DYVtqMV3EOnq/+JfDu4jN1</X509Certificate></X509Data></KeyInfo><Object><as:Timestamp>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</as:Timestamp></Object></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

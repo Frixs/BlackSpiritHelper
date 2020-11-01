@@ -125,8 +125,12 @@ namespace BlackSpiritHelper
                     // Open MainWindow.
                     IoC.UI.ShowMainWindow();
 
+                    bool letKnowSettingsSave = argsCompiled.ContainsKey(ApplicationArgument.SaveSettings.ToString());
+                    bool wasUpdateRestart = argsCompiled.ContainsKey(ApplicationArgument.UpdateRestart.ToString());
+
                     // Let user know the setting has been saved
-                    if (argsCompiled.ContainsKey(ApplicationArgument.SaveSettings.ToString()))
+                    if (letKnowSettingsSave)
+                    {
                         IoC.UI.NotificationArea.AddNotification(new NotificationBoxDialogViewModel()
                         {
                             Title = "SETTINGS SAVED",
@@ -134,16 +138,19 @@ namespace BlackSpiritHelper
                             Message = "Application data settings have been saved!",
                             Result = NotificationBoxResult.Ok,
                         });
+                    }
 
                     // News.
                     IoC.UI.ShowNews(true);
 
                     // Patch Notes.
-                    if (argsCompiled.ContainsKey(ApplicationArgument.UpdateRestart.ToString()))
+                    if (wasUpdateRestart)
+                    {
                         IoC.UI.ShowPatchNotes();
+                    }
 
-                    // Start in tray?
-                    if (IoC.DataContent.PreferencesData.StartInTray)
+                    // Start in tray? (Do not let it start in tray over letting user important message)
+                    else if (IoC.DataContent.PreferencesData.StartInTray && !letKnowSettingsSave && !wasUpdateRestart)
                     {
                         IoC.UI.CloseMainWindowToTray();
                     }
