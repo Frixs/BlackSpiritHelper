@@ -10,6 +10,14 @@
 <!-- [text](url) : Can be anywhere in the text. Transform text into URL link. -->
 <!-- \ : escape formatting characters. -->
 <!-- -------------------------------------------------- -->
+## v1.3.3.0 (2020-11-01)
+**Pull: [#29](https://github.com/Frixs/BlackSpiritHelper/pull/29)**
+- Timer Group checkbox - IgnoreInOverlay
+- Timer Group can now be deleted without need to be empty
+- Save Settings button
+- Show Patch Notes button
+<br/>
+
 ## v1.3.2.0 (2020-06-25)
 **Pull: [#28](https://github.com/Frixs/BlackSpiritHelper/pull/28)**
 - Schedule: Increased limit of items in each day from 10 to 15
