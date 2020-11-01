@@ -59,6 +59,7 @@
                             <ScrollViewer
                                 MaxHeight="257"
                                 Margin="10,0,10,10"
+                                Padding="10,0,10,0"
                                 VerticalScrollBarVisibility="Auto">
                                 <!--  Message  -->
                                 <TextBlock
