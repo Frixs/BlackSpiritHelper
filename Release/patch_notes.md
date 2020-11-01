@@ -27,7 +27,7 @@
 ## v1.3.1.1 (2020-01-20)
 **Pull: [#23](https://github.com/Frixs/BlackSpiritHelper/pull/23)**
 - Added anonymous active user counter (no personal data are kept)
-- The link shows number of users using the app within 24 hours https://us-central1-blackspirithelper.cloudfunctions.net/collectNumOfConnections
+- The link shows number of users using the app within 24 hours: https://us-central1-blackspirithelper.cloudfunctions.net/collectNumOfConnections
 - Added MainWindow button into the overlay
 - PatchNotes and News showing, bug fixed
 <br/>

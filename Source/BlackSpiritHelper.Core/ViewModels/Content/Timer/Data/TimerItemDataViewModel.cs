@@ -258,10 +258,22 @@ namespace BlackSpiritHelper.Core
         public ICommand TimePlusCommand { get; set; }
 
         /// <summary>
+        /// The command to increase time in the timer (10x).
+        /// </summary>
+        [XmlIgnore]
+        public ICommand TimePlusBulkCommand { get; set; }
+
+        /// <summary>
         /// The command to decrease time in the timer.
         /// </summary>
         [XmlIgnore]
         public ICommand TimeMinusCommand { get; set; }
+
+        /// <summary>
+        /// The command to decrease time in the timer (10x).
+        /// </summary>
+        [XmlIgnore]
+        public ICommand TimeMinusBulkCommand { get; set; }
 
         /// <summary>
         /// The command to reset timer.
@@ -431,8 +443,10 @@ namespace BlackSpiritHelper.Core
         private void CreateCommands()
         {
             OpenTimerSettingsCommand = new RelayCommand(async () => await OpenTimerSettingsCommandMethodAsync());
-            TimePlusCommand = new RelayCommand(async () => await TimePlusAsync());
-            TimeMinusCommand = new RelayCommand(async () => await TimeMinusAsync());
+            TimePlusCommand = new RelayCommand(async () => await TimePlusAsync(false));
+            TimePlusBulkCommand = new RelayCommand(async () => await TimePlusAsync(true));
+            TimeMinusCommand = new RelayCommand(async () => await TimeMinusAsync(false));
+            TimeMinusBulkCommand = new RelayCommand(async () => await TimeMinusAsync(true));
             ResetTimerCommand = new RelayCommand(async () => await ResetTimerCommandMethodAsync());
             SyncCommand = new RelayCommand(async () => await SyncCommandAsync());
             PlayCommand = new RelayCommand(async () => await PlayAsync());
@@ -823,12 +837,12 @@ namespace BlackSpiritHelper.Core
         /// Increase time.
         /// </summary>
         /// <returns></returns>
-        private async Task TimePlusAsync()
+        private async Task TimePlusAsync(bool bulkAdd)
         {
             if (!IsRunning)
                 return;
 
-            TimeSpan tAdd = TimeSpan.FromSeconds(30);
+            TimeSpan tAdd = TimeSpan.FromSeconds(30 * (bulkAdd ? 10 : 1));
             TimeSpan tAfterChange;
 
             // Countdown.
@@ -869,12 +883,12 @@ namespace BlackSpiritHelper.Core
         /// Decrease time.
         /// </summary>
         /// <returns></returns>
-        private async Task TimeMinusAsync()
+        private async Task TimeMinusAsync(bool bulkSubtract)
         {
             if (!IsRunning)
                 return;
 
-            TimeSpan tSubtract = TimeSpan.FromSeconds(30);
+            TimeSpan tSubtract = TimeSpan.FromSeconds(30 * (bulkSubtract ? 10 : 1));
             TimeSpan tAfterChange;
 
             // Countdown.
