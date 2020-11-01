@@ -247,7 +247,7 @@ namespace BlackSpiritHelper
             ShowPatchNotesCommand = new RelayCommand(() => IoC.UI.ShowPatchNotes());
 
             // Save settings
-            SaveSettingsCommand = new RelayCommand(() => IoC.Application.AppAssembly.Restart($"{ApplicationArgument.SaveSettings}="));
+            SaveSettingsCommand = new RelayCommand(() => IoC.Application.AppAssembly.Restart($"{ApplicationArgument.SaveSettings}=", true));
 
             // Application MainWindow close to Tray.
             CloseTrayCommand = new RelayCommand(() => IoC.UI.CloseMainWindowToTray());

@@ -26,18 +26,15 @@ namespace BlackSpiritHelper
 
         #region Interface Methods
 
-        /// <summary>
-        /// Restart the application.
-        /// </summary>
-        /// <param name="args">Arguments in string form to pass for a new start of the app</param>
-        public void Restart(string args = "")
+        /// <inheritdoc/>
+        public void Restart(string args = "", bool saveSettings = false)
         {
             IoC.Logger.Log($"Restarting the application...", LogLevel.Info);
 
             if (string.IsNullOrEmpty(args))
-                NativeRestart();
+                NativeRestart(saveSettings);
             else
-                ArgumentRestart(args);
+                ArgumentRestart(args, saveSettings);
         }
 
         /// <summary>
@@ -82,13 +79,14 @@ namespace BlackSpiritHelper
         /// <summary>
         /// Native restart option made for WPF.
         /// </summary>
-        private void NativeRestart()
+        /// <param name="saveSettings">Indicates if the settings should be saved on app restart or not</param>
+        private void NativeRestart(bool saveSettings)
         {
             IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
             {
                 // from System.Windows.Forms.dll
                 System.Windows.Forms.Application.Restart();
-                Application.Current.Shutdown();
+                IoC.Application.Exit(saveSettings);
             }));
         }
 
@@ -97,7 +95,8 @@ namespace BlackSpiritHelper
         /// Posibility to pass parameters.
         /// </summary>
         /// <param name="args"></param>
-        private void ArgumentRestart(string args)
+        /// <param name="saveSettings">Indicates if the settings should be saved on app restart or not</param>
+        private void ArgumentRestart(string args, bool saveSettings)
         {
             IoC.Dispatcher.UI.BeginInvokeOrDie((Action)(() =>
             {
@@ -118,7 +117,7 @@ namespace BlackSpiritHelper
                 }
 
                 // Shutdown the current process.
-                Application.Current.Shutdown();
+                IoC.Application.Exit(saveSettings);
             }));
         }
 

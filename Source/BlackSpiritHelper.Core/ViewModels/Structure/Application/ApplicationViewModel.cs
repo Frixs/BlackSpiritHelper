@@ -169,8 +169,8 @@ namespace BlackSpiritHelper.Core
             WindowTitleDefault = ApplicationName;
 
             // Set opened page on load.
-            CurrentPage = Cookies.LastOpenedPage > 0 && Cookies.LastOpenedPage < 100 
-                ? (ApplicationPage)Cookies.LastOpenedPage 
+            CurrentPage = Cookies.LastOpenedPage > 0 && Cookies.LastOpenedPage < 100
+                ? (ApplicationPage)Cookies.LastOpenedPage
                 : ApplicationPage.Home;
 
             // Set Window page postfix.
@@ -211,10 +211,12 @@ namespace BlackSpiritHelper.Core
         /// Exit application command to close the application.
         /// Use <see cref="App.Application_Exit(object, ExitEventArgs)"/> for procedures on application exit.
         /// </summary>
-        public void Exit()
+        /// <param name="saveSettings">Indicates if the settings should be saved on app restart or not (default: True)</param>
+        public void Exit(bool saveSettings = true)
         {
-            // Save user data before exiting application.
-            IoC.DataContent.SaveUserData();
+            if (saveSettings)
+                // Save user data before exiting application.
+                IoC.DataContent.SaveUserData();
 
             // Shutdown.
             Application.Current.Shutdown();
