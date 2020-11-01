@@ -11,14 +11,15 @@
 <!-- \ : escape formatting characters. -->
 <!-- -------------------------------------------------- -->
 ## v1.3.2.0 (2020-06-25)
-**Pull: [#25](https://github.com/Frixs/BlackSpiritHelper/pull/25)**
+**Pull: [#28](https://github.com/Frixs/BlackSpiritHelper/pull/28)**
 - Schedule: Increased limit of items in each day from 10 to 15
 - Updated EU/NA BDO boss template for Schedule
 <br/>
 
 ## v1.3.1.1 (2020-01-20)
 **Pull: [#23](https://github.com/Frixs/BlackSpiritHelper/pull/23)**
-- Added anonymous active user counter
+- Added anonymous active user counter (no personal data are kept)
+- The link shows number of users using the app within 24 hours https://us-central1-blackspirithelper.cloudfunctions.net/collectNumOfConnections
 - Added MainWindow button into the overlay
 - PatchNotes and News showing, bug fixed
 <br/>

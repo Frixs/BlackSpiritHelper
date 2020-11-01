@@ -18,5 +18,10 @@
         /// Reading values is not required. It exists in arguments = True, it does not exists in arguments = False
         /// </summary>
         UpdateRestart,
+
+        /// <summary>
+        /// Indicates saving settings by a user
+        /// </summary>
+        SaveSettings,
     }
 }

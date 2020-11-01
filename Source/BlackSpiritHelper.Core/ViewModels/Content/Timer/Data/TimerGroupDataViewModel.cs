@@ -47,6 +47,25 @@ namespace BlackSpiritHelper.Core
         public string Title { get; set; } = "NoName";
 
         /// <summary>
+        /// Ignore the group in the overlay
+        /// </summary>
+        public bool IgnoreInOverlay { get; set; }
+
+        /// <summary>
+        /// Ignore the group in the overlay - update timer data group list property changed setter
+        /// </summary>
+        [XmlIgnore]
+        public bool IgnoreInOverlayUpdate
+        {
+            get => IgnoreInOverlay;
+            set
+            {
+                IgnoreInOverlay = value;
+                IoC.DataContent.TimerData.OnPropertyChanged(nameof(IoC.DataContent.TimerData.GroupList));
+            }
+        }
+
+        /// <summary>
         /// List of timers in the group.
         /// </summary>
         public ObservableCollection<TimerItemDataViewModel> TimerList { get; set; } = new ObservableCollection<TimerItemDataViewModel>();
@@ -210,7 +229,7 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Delete the group permanently.
+        /// Delete the timer permanently.
         /// </summary>
         /// <param name="vm">The item.</param>
         public bool DestroyTimer(TimerItemDataViewModel vm)
@@ -220,8 +239,12 @@ namespace BlackSpiritHelper.Core
             if (vm == null)
                 return false;
 
+            // CHeck if the timer is running or not...
+            if (vm.IsRunning)
+                return false;
+
             var title = vm.Title;
-            // Remove the group from the list.
+            // Remove the timer from the list.
             if (!TimerList.Remove(vm))
                 return false;
 

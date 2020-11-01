@@ -154,6 +154,26 @@
                                                 <StackPanel Grid.Column="1" Orientation="Horizontal">
                                                     <Button
                                                         Margin="0,0,10,0"
+                                                        Command="{Binding ShowPatchNotesCommand}"
+                                                        Style="{StaticResource WindowsSubControlButton}">
+                                                        <TextBlock
+                                                            FontFamily="{StaticResource FontAwesomeSolid}"
+                                                            FontSize="14"
+                                                            Text="{StaticResource FontAwesomeClipboardCheckIcon}"
+                                                            ToolTip="Show Patch Notes" />
+                                                    </Button>
+                                                    <Button
+                                                        Margin="0,0,10,0"
+                                                        Command="{Binding SaveSettingsCommand}"
+                                                        Style="{StaticResource WindowsSubControlButton}">
+                                                        <TextBlock
+                                                            FontFamily="{StaticResource LatoBold}"
+                                                            FontSize="10"
+                                                            Text="SAVE SETTINGS"
+                                                            ToolTip="Save data settings of the current app state (data saving is also made on application close)" />
+                                                    </Button>
+                                                    <Button
+                                                        Margin="0,0,10,0"
                                                         Command="{Binding CloseTrayCommand}"
                                                         Style="{StaticResource WindowsSubControlButton}">
                                                         <TextBlock
