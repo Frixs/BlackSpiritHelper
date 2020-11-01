@@ -219,13 +219,18 @@ namespace BlackSpiritHelper.Core
             if (vm == null)
                 return false;
 
-            // CHeck it does not contain any timer.
-            if (vm.TimerList.Count > 0)
+            // CHeck if the group is running or not...
+            if (vm.IsRunning)
                 return false;
 
             // Check it is not the last group. There should be always at least 1 group.
             if (GroupList.Count <= 1)
                 return false;
+
+            // Destroy all timers in the group first...
+            for (int i = 0; i < vm.TimerList.Count; ++i)
+                if (!vm.DestroyTimer(vm.TimerList[i]))
+                    return false;
 
             var title = vm.Title;
             // Remove the group from the list.

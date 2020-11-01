@@ -133,8 +133,8 @@ namespace BlackSpiritHelper.Core
                 IoC.UI.ShowMessage(new MessageBoxDialogViewModel
                 {
                     Caption = "Cannot delete the group!",
-                    Message = $"The group is not empty or it is the last existing group!{Environment.NewLine}" +
-                              $"Please, remove all the timers in the group first.{Environment.NewLine}Number of timers in this group is {FormVM.TimerList.Count}.",
+                    Message = $"The group is running timers or it is the last existing group!{Environment.NewLine}" +
+                              $"Please, stop all the timers in the group first.{Environment.NewLine}Number of timers in this group is {FormVM.TimerList.Count}.",
                     Button = System.Windows.MessageBoxButton.OK,
                     Icon = System.Windows.MessageBoxImage.Warning,
                 });

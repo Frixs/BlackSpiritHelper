@@ -210,7 +210,7 @@ namespace BlackSpiritHelper.Core
         }
 
         /// <summary>
-        /// Delete the group permanently.
+        /// Delete the timer permanently.
         /// </summary>
         /// <param name="vm">The item.</param>
         public bool DestroyTimer(TimerItemDataViewModel vm)
@@ -220,8 +220,12 @@ namespace BlackSpiritHelper.Core
             if (vm == null)
                 return false;
 
+            // CHeck if the timer is running or not...
+            if (vm.IsRunning)
+                return false;
+
             var title = vm.Title;
-            // Remove the group from the list.
+            // Remove the timer from the list.
             if (!TimerList.Remove(vm))
                 return false;
 
