@@ -4,53 +4,45 @@ using System.Diagnostics;
 
 namespace BlackSpiritHelper.Core
 {
-    public class AudioPack
+    /// <summary>
+    /// Audio sample can handle multiple audio files. 
+    /// It is the main part of the audio packs. 
+    /// It should contain the same category of audio files like multiple version of the same type of audio to make audio variable.
+    /// </summary>
+    public sealed class AudioSample
     {
         #region Private Members
 
         /// <summary>
-        /// Audio player of the manager.
+        /// Audio player of this sample
         /// </summary>
-        private AudioPlayer mAudioPlayer = new AudioPlayer();
+        private readonly AudioPlayer mAudioPlayer = new AudioPlayer();
 
         /// <summary>
-        /// List of all audio files in this pack.
+        /// List of all audio files in this sample
         /// </summary>
-        private List<AudioFile> mList;
-
-        /// <summary>
-        /// Type of this audio pack.
-        /// </summary>
-        private AudioType mType = AudioType.None;
+        private readonly List<AudioFile> mAudioFiles;
 
         #endregion
 
         #region Public Properties
 
         /// <summary>
-        /// Type of this audio pack.
+        /// Type of this audio sample
         /// </summary>
-        public AudioType Type {
-            get => mType;
-            set
-            {
-                if (mType != AudioType.None)
-                    return;
-                // Can be set only once.
-                mType = value;
-            }
-        }
+        public AudioSampleType Type { get; }
 
         #endregion
 
         #region Constructor
 
         /// <summary>
-        /// Default constructor.
+        /// Default constructor
         /// </summary>
-        public AudioPack()
+        public AudioSample(AudioSampleType type)
         {
-            mList = new List<AudioFile>();
+            Type = type;
+            mAudioFiles = new List<AudioFile>();
         }
 
         #endregion
@@ -60,18 +52,18 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Play audio according to priority.
         /// </summary>
-        /// <param name="priority"></param>
-        public void Play(AudioPriorityBracket priority)
+        public void Play()
         {
-            // Check if media player is not busy.
+            // Check if media player is busy...
             if (mAudioPlayer.IsPlaying)
+                // Ignore then...
                 return;
 
-            // Play audio if it is in the correct priority bracket.
-            if (priority == AudioPriorityBracket.Pack)
+            var audioFile = GetAudioFile();
+            if (audioFile != null)
             {
-                mAudioPlayer.OpenAndPlay(GetAudio().URI);
-                return;
+                // Play the audio
+                mAudioPlayer.Play(audioFile.URI);
             }
         }
 
@@ -87,31 +79,32 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Get random audio from the pack.
         /// </summary>
-        public AudioFile GetAudio()
+        /// <returns>AudioFile or null</returns>
+        public AudioFile GetAudioFile()
         {
             // List has no items.
-            if (mList.Count <= 0)
+            if (mAudioFiles.Count <= 0)
             {
                 // Log it.
-                IoC.Logger.Log($"Cannot find any audio in audio pack '{Type.ToString()}'!", LogLevel.Error);
+                IoC.Logger.Log($"Cannot find any audio in audio sample '{Type}'!", LogLevel.Error);
                 return null;
             }
 
             // List has only 1 item.
-            if (mList.Count == 1)
-                return mList[0];
+            if (mAudioFiles.Count == 1)
+                return mAudioFiles[0];
 
             // List has multiple items.
             Random rnd = new Random();
-            int r = rnd.Next(mList.Count);
-            return mList[r];
+            int r = rnd.Next(mAudioFiles.Count);
+            return mAudioFiles[r];
         }
 
         /// <summary>
         /// Add file into the pack.
         /// </summary>
         /// <param name="file"></param>
-        public void AddAudio(AudioFile file)
+        public void AddAudioFile(AudioFile file)
         {
             if (file == null)
             {
@@ -121,7 +114,7 @@ namespace BlackSpiritHelper.Core
                 return;
             }
 
-            mList.Add(file);
+            mAudioFiles.Add(file);
         }
 
         #endregion

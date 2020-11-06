@@ -171,7 +171,7 @@ namespace BlackSpiritHelper.Core
             if (!IsSoundAlertSelected)
                 return;
 
-            IoC.Audio.Play(AudioType.Alert5, AudioPriorityBracket.Pack);
+            IoC.Audio.Play(AudioSampleType.Alert5, AudioPriorityBracket.Sample);
         }
 
         #endregion

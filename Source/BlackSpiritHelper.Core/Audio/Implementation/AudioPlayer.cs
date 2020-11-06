@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Reflection;
 using System.Windows.Media;
 
 namespace BlackSpiritHelper.Core
@@ -8,30 +9,15 @@ namespace BlackSpiritHelper.Core
     /// Wrapper for the <see cref="MediaPlayer"/>.
     /// TODO:LATER: Rework Custom Audio Player - not important atm.
     /// </summary>
-    public class AudioPlayer
+    public sealed class AudioPlayer
     {
         #region Private Members
 
-        private MediaPlayer mMediaPlayer;
+        private readonly MediaPlayer mMediaPlayer;
 
         #endregion
 
         #region Public Properties
-
-        /// <summary>
-        /// Position of the player.
-        /// </summary>
-        public TimeSpan Position
-        {
-            get
-            {
-                return mMediaPlayer.Position;
-            }
-            set
-            {
-                mMediaPlayer.Position = value;
-            }
-        }
 
         /// <summary>
         /// Says, if the player is currently playing any media.
@@ -43,12 +29,12 @@ namespace BlackSpiritHelper.Core
         #region Constructor
 
         /// <summary>
-        /// Default constructor.
+        /// Default constructor
         /// </summary>
         public AudioPlayer()
         {
             mMediaPlayer = new MediaPlayer();
-            
+
             // Start events.
             StartEvents();
         }
@@ -70,7 +56,7 @@ namespace BlackSpiritHelper.Core
             // On media failed.
             mMediaPlayer.MediaFailed += (o, args) =>
             {
-                IoC.Logger.Log($"Failed to open audio file: {mMediaPlayer.Source}", LogLevel.Error);
+                IoC.Logger.Log($"Media failed. Source: '{mMediaPlayer.Source}'", LogLevel.Error);
                 Debugger.Break();
             };
         }
@@ -80,15 +66,24 @@ namespace BlackSpiritHelper.Core
         #region Public Methods
 
         /// <summary>
-        /// Open (<see cref="Open(Uri)"/>) and Play (<see cref="Play"/>).
+        /// Open (<see cref="OpenAudio(Uri)"/>) and Play (<see cref="Play"/>).
         /// </summary>
         /// <param name="source"></param>
-        public void OpenAndPlay(Uri source)
+        public void Play(Uri source)
         {
+            if (source == null || source.ToString().Length == 0)
+            {
+                IoC.Logger.Log($"Invalid audio URI! Audio will not be played!", LogLevel.Error);
+                return;
+            }
+
             IoC.Dispatcher.BeginInvoke(mMediaPlayer.Dispatcher, (Action)(() =>
             {
-                Open(source);
-                Play();
+                // Reset position.
+                mMediaPlayer.Stop();
+
+                OpenAudio(source);
+                StartPlay();
             }));
         }
 
@@ -100,9 +95,8 @@ namespace BlackSpiritHelper.Core
             IoC.Dispatcher.BeginInvoke(mMediaPlayer.Dispatcher, (Action)(() =>
             {
                 mMediaPlayer.Stop();
+                IsPlaying = false;
             }));
-            
-            IsPlaying = false;
         }
 
         #endregion
@@ -113,7 +107,7 @@ namespace BlackSpiritHelper.Core
         /// Opens the given <see cref="Uri"/> for the given media playback.
         /// </summary>
         /// <param name="source"></param>
-        private void Open(Uri source)
+        private void OpenAudio(Uri source)
         {
             mMediaPlayer.Open(source);
         }
@@ -121,11 +115,8 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Play media.
         /// </summary>
-        private void Play()
+        private void StartPlay()
         {
-            // Reset position.
-            mMediaPlayer.Stop();
-
             IsPlaying = true;
             mMediaPlayer.Volume = IoC.DataContent.PreferencesData.Volume;
             mMediaPlayer.Play();

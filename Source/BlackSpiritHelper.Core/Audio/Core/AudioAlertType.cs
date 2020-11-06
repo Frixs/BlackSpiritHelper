@@ -1,9 +1,9 @@
 ﻿namespace BlackSpiritHelper.Core
 {
     /// <summary>
-    /// Audio alert.
+    /// Type of audio alert
     /// </summary>
-    public enum AudioAlertLevel
+    public enum AudioAlertType
     {
         /// <summary>
         /// No audio alerts.
@@ -11,8 +11,8 @@
         None = 0,
 
         /// <summary>
-        /// Sound audio alerts.
+        /// Standard sound audio alerts.
         /// </summary>
-        Sound = 1,
+        Standard = 1,
     }
 }

@@ -60,7 +60,7 @@
     <Compile Include="Async\AsyncAwaiter.cs" />
     <Compile Include="Audio\Core\AudioPriorityBracket.cs" />
     <Compile Include="Audio\Implementation\AudioPlayer.cs" />
-    <Compile Include="Audio\Implementation\Managers\SoundAudioManager.cs" />
+    <Compile Include="Audio\Implementation\Managers\StandardAudioPack.cs" />
     <Compile Include="DataTypes\ApplicationArgument.cs" />
     <Compile Include="DataTypes\ApplicationPage.cs" />
     <Compile Include="DataTypes\ValuePair.cs" />
@@ -68,8 +68,8 @@
     <Compile Include="ViewModels\Content\Preferences\Data\Core\PreferencesConnectionType.cs" />
     <Compile Include="DataTypes\TimeZoneRegion.cs" />
     <Compile Include="ViewModels\Content\Overlay\Data\Core\OverlaySize.cs" />
-    <Compile Include="Audio\Core\AudioType.cs" />
-    <Compile Include="Audio\Core\AudioAlertLevel.cs" />
+    <Compile Include="Audio\Core\AudioSampleType.cs" />
+    <Compile Include="Audio\Core\AudioAlertType.cs" />
     <Compile Include="ViewModels\Content\Timer\Data\Core\TimerState.cs" />
     <Compile Include="DataTypes\Vector2Double.cs" />
     <Compile Include="ViewModels\Content\Watchdog\Data\Core\WatchdogComputerAction.cs" />
@@ -107,11 +107,11 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Audio\Core\IAudioManager.cs" />
+    <Compile Include="Audio\Core\IAudioPack.cs" />
     <Compile Include="Audio\Implementation\AudioFile.cs" />
-    <Compile Include="Audio\Implementation\AudioPack.cs" />
+    <Compile Include="Audio\Implementation\AudioSample.cs" />
     <Compile Include="Audio\Implementation\BaseAudioFactory.cs" />
-    <Compile Include="Audio\Implementation\BaseAudioManager.cs" />
+    <Compile Include="Audio\Implementation\BaseAudioPack.cs" />
     <Compile Include="DataSettingsProviders\CustomSettingsProvider.cs" />
     <Compile Include="Task\TaskManager.cs" />
     <Compile Include="Utilities\EnumExtensionMethods.cs" />

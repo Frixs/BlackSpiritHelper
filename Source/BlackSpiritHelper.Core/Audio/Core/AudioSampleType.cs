@@ -3,7 +3,7 @@
     /// <summary>
     /// Audio Type.
     /// </summary>
-    public enum AudioType
+    public enum AudioSampleType
     {
         /// <summary>
         /// Default value. /No value.
