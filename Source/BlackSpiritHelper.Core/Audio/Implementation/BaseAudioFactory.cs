@@ -3,14 +3,17 @@ using System.Diagnostics;
 
 namespace BlackSpiritHelper.Core
 {
+    /// <summary>
+    /// Base audio factory handling the whole app audio system
+    /// </summary>
     public class BaseAudioFactory : IAudioFactory
     {
         #region Protected Members
 
         /// <summary>
-        /// The list of <see cref="IAudioManager"/> in this factory.
+        /// The list of <see cref="IAudioPack"/> in this factory.
         /// </summary>
-        protected Dictionary<AudioAlertLevel, IAudioManager> mAudioManagers = new Dictionary<AudioAlertLevel, IAudioManager>();
+        protected Dictionary<AudioAlertType, IAudioPack> mAudioPacks = new Dictionary<AudioAlertType, IAudioPack>();
 
         #endregion
 
@@ -21,29 +24,25 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         public BaseAudioFactory()
         {
-            mAudioManagers.Add(AudioAlertLevel.Sound, new SoundAudioManager());
+            mAudioPacks.Add(AudioAlertType.Standard, new StandardAudioPack());
         }
 
         #endregion
 
         #region Public Methods
 
-        /// <summary>
-        /// Play the audio according to type and priority.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="priority"></param>
-        public void Play(AudioType type, AudioPriorityBracket priority = AudioPriorityBracket.Pack)
+        /// <inheritdoc/>
+        public void Play(AudioSampleType type, AudioPriorityBracket priority = AudioPriorityBracket.Sample)
         {
             // We do not want to play any audio.
-            if (IoC.DataContent.PreferencesData.AudioAlertLevel == AudioAlertLevel.None)
+            if (IoC.DataContent.PreferencesData.AudioAlertType == AudioAlertType.None)
                 return;
 
-            switch (IoC.DataContent.PreferencesData.AudioAlertLevel)
+            switch (IoC.DataContent.PreferencesData.AudioAlertType)
             {
-                // Sound.
-                case AudioAlertLevel.Sound:
-                    mAudioManagers[AudioAlertLevel.Sound].PlayAsync(type, priority);
+                // Standard.
+                case AudioAlertType.Standard:
+                    mAudioPacks[AudioAlertType.Standard].Play(type, priority);
                     break;
 
                 default:

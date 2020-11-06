@@ -1331,7 +1331,7 @@ namespace BlackSpiritHelper.Core
             if (!mIsFiredNotificationEvent[0])
             {
                 mIsFiredNotificationEvent[0] = true;
-                IoC.Audio.Play(AudioType.AlertLongBefore, AudioPriorityBracket.Pack);
+                IoC.Audio.Play(AudioSampleType.AlertLongBefore, AudioPriorityBracket.Sample);
                 if (SendMessage)
                 {
                     string message = $"{string.Join(", ", NextItemPresenterList.Select(o => o.Name))} - starts in {TimerNotificationTime1Value} minutes!";
@@ -1353,7 +1353,7 @@ namespace BlackSpiritHelper.Core
             if (!mIsFiredNotificationEvent[1])
             {
                 mIsFiredNotificationEvent[1] = true;
-                IoC.Audio.Play(AudioType.AlertClockTicking, AudioPriorityBracket.Pack);
+                IoC.Audio.Play(AudioSampleType.AlertClockTicking, AudioPriorityBracket.Sample);
                 if (SendMessage)
                 {
                     string message = $"{string.Join(", ", NextItemPresenterList.Select(o => o.Name))} - starts in {TimerNotificationTime2Value} minutes!";
@@ -1376,7 +1376,7 @@ namespace BlackSpiritHelper.Core
             if (!mIsFiredNotificationEvent[2])
             {
                 mIsFiredNotificationEvent[2] = true;
-                IoC.Audio.Play(AudioType.Alert4, AudioPriorityBracket.Pack);
+                IoC.Audio.Play(AudioSampleType.Alert4, AudioPriorityBracket.Sample);
                 if (SendMessage)
                 {
                     string message = $"{string.Join(", ", NextItemPresenterList.Select(o => o.Name))} - just started!";

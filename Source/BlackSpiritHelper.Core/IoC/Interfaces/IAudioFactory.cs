@@ -6,10 +6,10 @@
     public interface IAudioFactory
     {
         /// <summary>
-        /// Play the audio according to type.
+        /// Play the audio according to type and priority
         /// </summary>
-        /// <param name="type"></param>
-        /// <param name="priority"></param>
-        void Play(AudioType type, AudioPriorityBracket priority = AudioPriorityBracket.Pack);
+        /// <param name="type">The type</param>
+        /// <param name="priority">The priority</param>
+        void Play(AudioSampleType type, AudioPriorityBracket priority = AudioPriorityBracket.Sample);
     }
 }

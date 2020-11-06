@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     Title="PreferencesPage"
-    d:DesignHeight="1000"
+    d:DesignHeight="1920"
     d:DesignWidth="500"
     x:TypeArguments="core:PreferencesPageViewModel"
     mc:Ignorable="d">
@@ -119,7 +119,7 @@
                             FontSize="14"
                             Foreground="{StaticResource ForegroundBrushKey}"
                             Text="Audio Alert" />
-                        <ItemsControl ItemsSource="{Binding AudioAlertLevelList}">
+                        <ItemsControl ItemsSource="{Binding AudioAlertTypeList}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
@@ -130,7 +130,7 @@
                                         <RadioButton
                                             Content="{Binding Converter={local:ObjectToStringConverter}}"
                                             GroupName="AudioAlerts"
-                                            IsChecked="{Binding Path=DataContext.AudioAlertLevel, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ScrollViewer}}, Converter={local:RadioEnumBooleanConverter}, ConverterParameter={x:Reference Name=RadioBindedKey}}" />
+                                            IsChecked="{Binding Path=DataContext.AudioAlertType, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ScrollViewer}}, Converter={local:RadioEnumBooleanConverter}, ConverterParameter={x:Reference Name=RadioBindedKey}}" />
                                     </Grid>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -356,6 +356,41 @@
                     <!--  Spacer  -->
                     <Border Style="{StaticResource FormSectionSpacer}" />
 
+                    <!--  Installation Directory  -->
+                    <TextBlock
+                        Margin="0"
+                        FontFamily="{StaticResource LatoRegular}"
+                        FontSize="12"
+                        Foreground="{StaticResource ForegroundLightBrushKey}"
+                        Text="Installation Directory" />
+                    <TextBox
+                        Margin="0"
+                        Padding="5,0,5,5"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        FontSize="10"
+                        Foreground="{StaticResource ForegroundLightBrushKey}"
+                        IsReadOnly="True"
+                        Text="{Binding InstallationDirectory, Mode=OneTime}" />
+                    <!--  Data Directory  -->
+                    <TextBlock
+                        Margin="0"
+                        FontFamily="{StaticResource LatoRegular}"
+                        FontSize="12"
+                        Foreground="{StaticResource ForegroundLightBrushKey}"
+                        Text="Data Directory" />
+                    <TextBox
+                        Margin="0"
+                        Padding="5,0,5,5"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        FontSize="10"
+                        Foreground="{StaticResource ForegroundLightBrushKey}"
+                        IsReadOnly="True"
+                        Text="{Binding DataDirectory, Mode=OneTime}" />
+
+                    <!--  Spacer  -->
+                    <Border Style="{StaticResource FormInputVerSpacer}" />
                 </StackPanel>
 
             </Grid>

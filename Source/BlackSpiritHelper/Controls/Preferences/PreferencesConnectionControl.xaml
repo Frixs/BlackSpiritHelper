@@ -29,7 +29,7 @@
                             <Setter Property="Foreground" Value="{StaticResource ScheduleAddButtonForegroundBrushKey}" />
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding ActiveMethodIdentifier}" Value="None">
-                                    <Setter Property="Text" Value="NO ACTIVE" />
+                                    <Setter Property="Text" Value="INACTIVE" />
                                     <Setter Property="Foreground" Value="{StaticResource RedForegroundBrushKey}" />
                                 </DataTrigger>
                             </Style.Triggers>

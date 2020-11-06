@@ -31,6 +31,9 @@
     <Color x:Key="Foreground">#494949</Color>
     <SolidColorBrush x:Key="ForegroundBrushKey" Color="{StaticResource Foreground}" />
 
+    <Color x:Key="ForegroundLight">#A8A8A8</Color>
+    <SolidColorBrush x:Key="ForegroundLightBrushKey" Color="{StaticResource ForegroundLight}" />
+
     <system:String x:Key="ForegroundColorDifference">e7e7e7|24242b</system:String>
     <!--#endregion-->
 

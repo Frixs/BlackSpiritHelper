@@ -2,7 +2,7 @@
 
 namespace BlackSpiritHelper.Core
 {
-    public class AudioFile
+    public sealed class AudioFile
     {
         #region Public Properties
 

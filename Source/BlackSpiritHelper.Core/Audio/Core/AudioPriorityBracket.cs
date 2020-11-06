@@ -7,21 +7,20 @@
     {
         /// <summary>
         /// Normal priority.
-        /// Cannot call multiple audio packs of the same type.
+        /// One one audio file can be played at the time in single audio sample of an audio pack (Multiple audio samples can be played in single audio pack at the same time).
         /// </summary>
-        Pack = 0,
+        Sample = 0,
 
         /// <summary>
         /// High priority.
-        /// Only one audio file can be called at the time.
+        /// Only one audio file can be played at the time in single audio pack.
         /// </summary>
-        Manager = 1,
+        Pack = 1,
 
         /// <summary>
         /// High priority.
-        /// Only one audio file can be called at the time.
-        /// Stops all sound effects.
+        /// Only one audio file can be played at the time in single audio pack (can override the currently played one).
         /// </summary>
-        ManagerForce = 2,
+        PackForce = 2,
     }
 }

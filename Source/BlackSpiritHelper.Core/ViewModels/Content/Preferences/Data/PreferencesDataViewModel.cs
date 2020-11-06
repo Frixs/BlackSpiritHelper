@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Xml.Serialization;
@@ -48,13 +49,13 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// User audio alert level.
         /// </summary>
-        public AudioAlertLevel AudioAlertLevel { get; set; } = AudioAlertLevel.Sound;
+        public AudioAlertType AudioAlertType { get; set; } = AudioAlertType.Standard;
 
         /// <summary>
         /// List of all types of audio alerts.
         /// </summary>
         [XmlIgnore]
-        public AudioAlertLevel[] AudioAlertLevelList { get; private set; } = (AudioAlertLevel[])Enum.GetValues(typeof(AudioAlertLevel));
+        public AudioAlertType[] AudioAlertTypeList { get; private set; } = (AudioAlertType[])Enum.GetValues(typeof(AudioAlertType));
 
         [XmlIgnore]
         public override bool IsRunning
@@ -62,6 +63,18 @@ namespace BlackSpiritHelper.Core
             get => false;
             protected set => throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Installation directory of the app to show the user
+        /// </summary>
+        [XmlIgnore]
+        public string InstallationDirectory => Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+
+        /// <summary>
+        /// Data directory of the app to show the user
+        /// </summary>
+        [XmlIgnore]
+        public string DataDirectory => SettingsConfiguration.UserConfigDirPath;
 
         #endregion
 
