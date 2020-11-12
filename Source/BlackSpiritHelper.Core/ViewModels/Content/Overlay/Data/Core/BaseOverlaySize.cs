@@ -4,7 +4,7 @@
     /// Overlay size
     /// Height (<see cref="OverlayOrientation.Horizontal"/>) or Width (<see cref="OverlayOrientation.Vertical"/>).
     /// </summary>
-    public enum OverlaySize
+    public enum BaseOverlaySize
     {
         /// <summary>
         /// Small. 

@@ -220,8 +220,8 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private async Task ResetOverlayPositionCommandMethodAsync()
         {
-            IoC.DataContent.OverlayData.PosX = 0;
-            IoC.DataContent.OverlayData.PosY = 0;
+            IoC.DataContent.OverlayData.BaseOverlay.PosX = 0;
+            IoC.DataContent.OverlayData.BaseOverlay.PosY = 0;
 
             await Task.Delay(1);
         }

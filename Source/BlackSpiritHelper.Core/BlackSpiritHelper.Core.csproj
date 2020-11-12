@@ -61,13 +61,14 @@
     <Compile Include="Audio\Core\AudioPriorityBracket.cs" />
     <Compile Include="Audio\Implementation\AudioPlayer.cs" />
     <Compile Include="Audio\Implementation\Managers\StandardAudioPack.cs" />
+    <Compile Include="ViewModels\Content\Overlay\Data\OverlayBaseDataViewModel.cs" />
     <Compile Include="DataTypes\ApplicationArgument.cs" />
     <Compile Include="DataTypes\ApplicationPage.cs" />
     <Compile Include="DataTypes\ValuePair.cs" />
     <Compile Include="ViewModels\Content\Preferences\Data\Core\IPreferencesConnectionMethods.cs" />
     <Compile Include="ViewModels\Content\Preferences\Data\Core\PreferencesConnectionType.cs" />
     <Compile Include="DataTypes\TimeZoneRegion.cs" />
-    <Compile Include="ViewModels\Content\Overlay\Data\Core\OverlaySize.cs" />
+    <Compile Include="ViewModels\Content\Overlay\Data\Core\BaseOverlaySize.cs" />
     <Compile Include="Audio\Core\AudioSampleType.cs" />
     <Compile Include="Audio\Core\AudioAlertType.cs" />
     <Compile Include="ViewModels\Content\Timer\Data\Core\TimerState.cs" />
@@ -235,7 +236,9 @@
     </Content>
     <None Include="ViewModels\.info.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DataModels\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\BlackSpiritHelper\packages\Fody.6.3.0\build\Fody.targets" Condition="Exists('..\BlackSpiritHelper\packages\Fody.6.3.0\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

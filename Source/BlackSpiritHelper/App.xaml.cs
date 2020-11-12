@@ -18,8 +18,9 @@ namespace BlackSpiritHelper
     /// TODO:LATER:APP: more...
     ///     - Application user option to download/check updates.
     ///     - Auto manage length of log file. Cut the file if it is too large.
-    ///     - DataViewModel extends DataModel - Move business logic into Model with its fields.
+    ///     - !!! DataViewModel extends DataModel - Move business logic into Model with its fields.
     ///       Separate ViewModel's command logic from Model's business logic.
+    ///       Make DataModels separate - each view (Page/Controls) should have unique VM that contains coresponding data.
     ///     - IDisposable can be useful in some situation for destroying Timer instances in sections.
     ///       External links: https://stackoverflow.com/questions/188688/what-does-the-tilde-before-a-function-name-mean-in-c
     ///                       https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/partial-classes-and-methods

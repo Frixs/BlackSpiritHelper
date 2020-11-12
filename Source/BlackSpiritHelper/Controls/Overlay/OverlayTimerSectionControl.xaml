@@ -20,7 +20,7 @@
     <StackPanel
         x:Name="OverlayTimerSection"
         Margin="0"
-        Orientation="{Binding OverlayOrientation, FallbackValue=Horizontal}">
+        Orientation="{Binding BaseOverlay.OverlayOrientation, FallbackValue=Horizontal}">
 
         <!--  Group control stack panel  -->
         <ItemsControl ItemsSource="{Binding ApplicationDataContent.TimerData.GroupList, Converter={local:TimerListGroupOverlayOnlyConverter}, Source={x:Static local:ViewModelLocator.Instance}}">
@@ -28,7 +28,7 @@
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <!--  Wrap Groups into stack panel  -->
-                    <StackPanel Orientation="{Binding DataContext.OverlayOrientation, FallbackValue=Horizontal, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}" />
+                    <StackPanel Orientation="{Binding DataContext.BaseOverlay.OverlayOrientation, FallbackValue=Horizontal, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
 
@@ -40,7 +40,7 @@
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <!--  Wrap Timers into stack panel  -->
-                                <StackPanel Orientation="{Binding DataContext.OverlayOrientation, FallbackValue=Horizontal, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}" />
+                                <StackPanel Orientation="{Binding DataContext.BaseOverlay.OverlayOrientation, FallbackValue=Horizontal, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}" />
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
 
@@ -48,9 +48,9 @@
                             <ControlTemplate>
 
                                 <!--  Template  -->
-                                <StackPanel Orientation="{Binding DataContext.OverlayOrientation, FallbackValue=Horizontal, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}">
+                                <StackPanel Orientation="{Binding DataContext.BaseOverlay.OverlayOrientation, FallbackValue=Horizontal, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}">
                                     <!--  Group Play/Pause Button  -->
-                                    <Grid Width="{Binding Path=DataContext.OverlaySizeStyleValue, FallbackValue=50, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}" Height="{Binding Path=DataContext.OverlaySizeStyleValue, FallbackValue=50, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}">
+                                    <Grid Width="{Binding Path=DataContext.BaseOverlay.SizeValue, FallbackValue=50, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}" Height="{Binding Path=DataContext.BaseOverlay.SizeValue, FallbackValue=50, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}">
                                         <!--  Play  -->
                                         <Button
                                             Command="{Binding PlayCommand}"
@@ -96,7 +96,7 @@
                             <DataTemplate>
 
                                 <!--  Timer item  -->
-                                <local:OverlayTimerSectionItemControl Width="{Binding Path=DataContext.OverlaySizeStyleValue, FallbackValue=50, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}" Height="{Binding Path=DataContext.OverlaySizeStyleValue, FallbackValue=50, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}" />
+                                <local:OverlayTimerSectionItemControl Width="{Binding Path=DataContext.BaseOverlay.SizeValue, FallbackValue=50, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}" Height="{Binding Path=DataContext.BaseOverlay.SizeValue, FallbackValue=50, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}" />
 
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
