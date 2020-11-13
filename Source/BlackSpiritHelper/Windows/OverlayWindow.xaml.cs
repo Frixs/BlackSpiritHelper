@@ -120,7 +120,7 @@ namespace BlackSpiritHelper
                 return;
 
             // Get clicked object.
-            Mouse.Capture(OverlayObject);
+            Mouse.Capture(sender as FrameworkElement);
             // Get relative mouse position within overlay object.
             mOverlayObjectMouseRelPos = e.GetPosition(sender as UIElement);
         }
@@ -134,11 +134,11 @@ namespace BlackSpiritHelper
                 return;
 
             // Set X axis.
-            Canvas.SetLeft(OverlayObject as FrameworkElement,
+            Canvas.SetLeft(sender as FrameworkElement,
                 e.GetPosition(null).X - mOverlayObjectMouseRelPos.X
                 );
             // Set Y axis.
-            Canvas.SetTop(OverlayObject as FrameworkElement,
+            Canvas.SetTop(sender as FrameworkElement,
                 e.GetPosition(null).Y - mOverlayObjectMouseRelPos.Y
                 );
 

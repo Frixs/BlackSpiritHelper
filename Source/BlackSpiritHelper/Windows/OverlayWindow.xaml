@@ -34,9 +34,10 @@
 
             <!--  Canvas Content - Base Overlay  -->
             <Border
-                x:Name="OverlayObject"
+                x:Name="BaseOverlayObject"
                 Canvas.Left="{Binding BaseOverlay.PosX, Mode=TwoWay}"
                 Canvas.Top="{Binding BaseOverlay.PosY, Mode=TwoWay}"
+                Panel.ZIndex="10"
                 MouseLeftButtonDown="OnMouseLeftButtonDown"
                 MouseLeftButtonUp="OnMouseLeftButtonUp"
                 MouseMove="OnMouseMove">
@@ -52,7 +53,6 @@
                         </Style.Triggers>
                     </Style>
                 </Border.Style>
-
                 <Grid>
                     <!--  Draggable Border - IsDraggable Border  -->
                     <Rectangle StrokeThickness="2">
@@ -60,7 +60,7 @@
                             <Style TargetType="Rectangle">
                                 <Setter Property="Stroke" Value="Transparent" />
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsMouseOver, ElementName=OverlayObject}" Value="True">
+                                    <DataTrigger Binding="{Binding IsMouseOver, ElementName=BaseOverlayObject}" Value="True">
                                         <Setter Property="Stroke" Value="{StaticResource DraggableZoneBrushKey}" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding IsDraggingLocked}" Value="True">
@@ -160,7 +160,7 @@
                                 <Style TargetType="StackPanel">
                                     <Setter Property="Visibility" Value="Hidden" />
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsMouseOver, ElementName=OverlayObject}" Value="True">
+                                        <DataTrigger Binding="{Binding IsMouseOver, ElementName=BaseOverlayObject}" Value="True">
                                             <Setter Property="Visibility" Value="Visible" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -221,6 +221,49 @@
                 </Grid>
             </Border>
 
+            <!--  Canvas Content - Screen Share Overlay  -->
+            <Border
+                x:Name="ScreenShareOverlayObject"
+                Canvas.Left="{Binding ScreenShareOverlay.PosX, Mode=TwoWay}"
+                Canvas.Top="{Binding ScreenShareOverlay.PosY, Mode=TwoWay}"
+                Panel.ZIndex="1"
+                MouseLeftButtonDown="OnMouseLeftButtonDown"
+                MouseLeftButtonUp="OnMouseLeftButtonUp"
+                MouseMove="OnMouseMove">
+                <!--  Draggable Border Background  -->
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource DraggableZoneBrushKey}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <Grid>
+                    <!--  Draggable Border - IsDraggable Border  -->
+                    <Rectangle StrokeThickness="2">
+                        <Rectangle.Style>
+                            <Style TargetType="Rectangle">
+                                <Setter Property="Stroke" Value="Transparent" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsMouseOver, ElementName=ScreenShareOverlayObject}" Value="True">
+                                        <Setter Property="Stroke" Value="{StaticResource DraggableZoneBrushKey}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsDraggingLocked}" Value="True">
+                                        <Setter Property="Stroke" Value="Transparent" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                    <Image
+                        Margin="25"
+                        Focusable="False"
+                        Source="https://www.wpf-tutorial.com/Images/ArticleImages/1/basic-controls/image_control_basic_url.png" />
+                </Grid>
+            </Border>
         </Canvas>
     </Grid>
 

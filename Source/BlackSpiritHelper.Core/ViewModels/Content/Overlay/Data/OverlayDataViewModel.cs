@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Xml.Serialization;
@@ -66,6 +67,11 @@ namespace BlackSpiritHelper.Core
         public OverlayBaseDataViewModel BaseOverlay { get; set; } = new OverlayBaseDataViewModel();
 
         /// <summary>
+        /// TODO
+        /// </summary>
+        public OverlayScreenShareDataViewModel ScreenShareOverlay { get; set; } = new OverlayScreenShareDataViewModel();
+
+        /// <summary>
         /// List of all types of <see cref="Orientation"/>.
         /// </summary>
         [XmlIgnore]
@@ -83,6 +89,13 @@ namespace BlackSpiritHelper.Core
             get => false;
             protected set => throw new NotImplementedException();
         }
+
+        #endregion
+
+        #region Command Flags
+
+        private bool mLockOverlayDraggingCommandFlag { get; set; }
+        private bool mShowMainWindowCommandFlag { get; set; }
 
         #endregion
 
@@ -134,24 +147,32 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void CreateCommands()
         {
-            LockOverlayDraggingCommand = new RelayCommand(() => LockOverlayCommandMethod());
-            ShowMainWindowCommand = new RelayCommand(ShowMainWindowCommandMethod);
+            LockOverlayDraggingCommand = new RelayCommand(async () => await LockOverlayCommandMethodAsync());
+            ShowMainWindowCommand = new RelayCommand(async () => await ShowMainWindowCommandMethodAsync());
         }
 
         /// <summary>
         /// Lock/Unlock Overlay dragging.
         /// </summary>
-        private void LockOverlayCommandMethod()
+        private async Task LockOverlayCommandMethodAsync()
         {
-            IsDraggingLocked = !IsDraggingLocked;
+            await RunCommandAsync(() => mLockOverlayDraggingCommandFlag, async () =>
+            {
+                IsDraggingLocked = !IsDraggingLocked;
+                await Task.Delay(1);
+            });
         }
 
         /// <summary>
         /// Trigger to show main window.
         /// </summary>
-        private void ShowMainWindowCommandMethod()
+        private async Task ShowMainWindowCommandMethodAsync()
         {
-            IoC.UI.ShowMainWindow();
+            await RunCommandAsync(() => mShowMainWindowCommandFlag, async () =>
+            {
+                IoC.UI.ShowMainWindow();
+                await Task.Delay(1);
+            });
         }
 
         #endregion

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace BlackSpiritHelper.Core
@@ -49,6 +50,12 @@ namespace BlackSpiritHelper.Core
         /// Schedule binding.
         /// </summary>
         public ObservableCollection<ScheduleDayDataViewModel> SchedulePresenter { get; set; }
+
+        #endregion
+
+        #region Command Flags
+
+        private bool mModifyFlag { get; set; }
 
         #endregion
 
@@ -104,85 +111,95 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void CreateCommands()
         {
-            SaveChangesCommand = new RelayCommand(() => SaveChangesCommandMethod());
-            DeleteCommand = new RelayCommand(() => DeleteTemplateCommandMethod());
+            SaveChangesCommand = new RelayCommand(async () => await SaveChangesCommandMethodAsync());
+            DeleteCommand = new RelayCommand(async () => await DeleteTemplateCommandMethodAsync());
             GoBackCommand = new RelayCommand(() => GoBackCommandMethod());
         }
 
         /// <summary>
         /// Save settings.
         /// </summary>
-        private void SaveChangesCommandMethod()
+        private async Task SaveChangesCommandMethodAsync()
         {
-            if (IoC.DataContent.ScheduleData.IsRunning)
-                return;
-
-            // Trim.
-            string title = Title.Trim();
-
-            // Validate inputs.
-            if (!Core.ScheduleTemplateDataViewModel.ValidateInputs(FormVM, title, TimeZoneRegion))
+            await RunCommandAsync(() => mModifyFlag, async () =>
             {
-                // Some error occured during saving changes of the timer.
-                IoC.UI.ShowNotification(new NotificationBoxDialogViewModel()
+                if (IoC.DataContent.ScheduleData.IsRunning)
+                    return;
+
+                // Trim.
+                string title = Title.Trim();
+
+                // Validate inputs.
+                if (!Core.ScheduleTemplateDataViewModel.ValidateInputs(FormVM, title, TimeZoneRegion))
                 {
-                    Title = "INVALID VALUES",
-                    Message = $"Some of the entered values are invalid. Please check them again.",
-                    Result = NotificationBoxResult.Ok,
-                });
+                    // Some error occured during saving changes of the timer.
+                    _ = IoC.UI.ShowNotification(new NotificationBoxDialogViewModel()
+                    {
+                        Title = "INVALID VALUES",
+                        Message = $"Some of the entered values are invalid. Please check them again.",
+                        Result = NotificationBoxResult.Ok,
+                    });
 
-                return;
-            }
+                    return;
+                }
 
-            // Save changes.
-            #region Save changes
+                // Save changes.
+                #region Save changes
 
-            FormVM.LastModifiedTicks = DateTime.Now.Ticks;
-            FormVM.Title = title;
-            FormVM.TimeZoneRegion = TimeZoneRegion;
-            FormVM.Schedule = FormVM.CreateScheduleFromPresenter(SchedulePresenter);
+                FormVM.LastModifiedTicks = DateTime.Now.Ticks;
+                FormVM.Title = title;
+                FormVM.TimeZoneRegion = TimeZoneRegion;
+                FormVM.Schedule = FormVM.CreateScheduleFromPresenter(SchedulePresenter);
 
-            #endregion
+                #endregion
 
-            // Sort schedule.
-            FormVM.SortSchedule();
+                // Sort schedule.
+                FormVM.SortSchedule();
 
-            // Log it.
-            IoC.Logger.Log($"Settings changed: template '{FormVM.Title}'.", LogLevel.Info);
+                // Log it.
+                IoC.Logger.Log($"Settings changed: template '{FormVM.Title}'.", LogLevel.Info);
 
-            // Update template title list presenter.
-            IoC.DataContent.ScheduleData.SetTemplateTitleListPresenter();
+                // Update template title list presenter.
+                IoC.DataContent.ScheduleData.SetTemplateTitleListPresenter();
 
-            // Move back to the page.
-            GoBackCommandMethod();
+                // Move back to the page.
+                GoBackCommandMethod();
+
+                await Task.Delay(1);
+            });
         }
 
         /// <summary>
         /// Delete template.
         /// </summary>
-        private void DeleteTemplateCommandMethod()
+        private async Task DeleteTemplateCommandMethodAsync()
         {
-            if (IoC.DataContent.ScheduleData.IsRunning)
-                return;
-
-            // Remove schedule.
-            if (!IoC.DataContent.ScheduleData.DestroyCustomTemplate(FormVM))
+            await RunCommandAsync(() => mModifyFlag, async () =>
             {
-                // Some error occured during deleting the template.
-                IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                if (IoC.DataContent.ScheduleData.IsRunning)
+                    return;
+
+                // Remove schedule.
+                if (!IoC.DataContent.ScheduleData.DestroyCustomTemplate(FormVM))
                 {
-                    Caption = "Cannot delete the template!",
-                    Message = $"Unexpected error occurred during deleting the template.{Environment.NewLine}" +
-                              "Please, contact the developers to fix the issue.",
-                    Button = System.Windows.MessageBoxButton.OK,
-                    Icon = System.Windows.MessageBoxImage.Warning,
-                });
+                    // Some error occured during deleting the template.
+                    _ = IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                    {
+                        Caption = "Cannot delete the template!",
+                        Message = $"Unexpected error occurred during deleting the template.{Environment.NewLine}" +
+                                  "Please, contact the developers to fix the issue.",
+                        Button = System.Windows.MessageBoxButton.OK,
+                        Icon = System.Windows.MessageBoxImage.Warning,
+                    });
 
-                return;
-            }
+                    return;
+                }
 
-            // Move back to the page.
-            GoBackCommandMethod();
+                // Move back to the page.
+                GoBackCommandMethod();
+
+                await Task.Delay(1);
+            });
         }
 
         /// <summary>

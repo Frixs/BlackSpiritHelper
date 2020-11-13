@@ -27,6 +27,12 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
+        #region Command Flags
+
+        private bool mActivateCommandFlag { get; set; }
+
+        #endregion
+
         #region Commands
 
         /// <summary>
@@ -66,8 +72,11 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task ActivateCommandMethodAsync()
         {
-            ActivateMethod();
-            await Task.Delay(1);
+            await RunCommandAsync(() => mActivateCommandFlag, async () =>
+            {
+                ActivateMethod();
+                await Task.Delay(1);
+            });
         }
 
         #endregion

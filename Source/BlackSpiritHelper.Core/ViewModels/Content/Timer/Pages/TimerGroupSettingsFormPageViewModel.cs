@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace BlackSpiritHelper.Core
@@ -38,6 +39,12 @@ namespace BlackSpiritHelper.Core
         /// Title binding.
         /// </summary>
         public string Title { get; set; }
+
+        #endregion
+
+        #region Command Flags
+
+        private bool mModifyCommandFlag { get; set; }
 
         #endregion
 
@@ -91,59 +98,69 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void CreateCommands()
         {
-            SaveChangesCommand = new RelayCommand(() => SaveChangesCommandMethod());
-            DeleteGroupCommand = new RelayCommand(() => DeleteGroupCommandMethod());
+            SaveChangesCommand = new RelayCommand(async () => await SaveChangesCommandMethodAsync());
+            DeleteGroupCommand = new RelayCommand(async () => await DeleteGroupCommandMethodAsync());
             GoBackCommand = new RelayCommand(() => GoBackCommandMethod());
         }
 
-        private void SaveChangesCommandMethod()
+        private async Task SaveChangesCommandMethodAsync()
         {
-            if (!TimerGroupDataViewModel.ValidateInputs(Title))
+            await RunCommandAsync(() => mModifyCommandFlag, async () =>
             {
-                // Some error occured during saving changes of the group.
-                IoC.UI.ShowNotification(new NotificationBoxDialogViewModel()
+                if (!TimerGroupDataViewModel.ValidateInputs(Title))
                 {
-                    Title = "INVALID VALUES",
-                    Message = $"Some of the entered values are invalid.{Environment.NewLine}" +
-                              $"Group Name can contain only letters and numbers, {TimerGroupDataViewModel.TitleAllowMinChar} characters at minimum and {TimerGroupDataViewModel.TitleAllowMaxChar} characters at maximum.",
-                    Result = NotificationBoxResult.Ok,
-                });
+                    // Some error occured during saving changes of the group.
+                    _ = IoC.UI.ShowNotification(new NotificationBoxDialogViewModel()
+                    {
+                        Title = "INVALID VALUES",
+                        Message = $"Some of the entered values are invalid.{Environment.NewLine}" +
+                                  $"Group Name can contain only letters and numbers, {TimerGroupDataViewModel.TitleAllowMinChar} characters at minimum and {TimerGroupDataViewModel.TitleAllowMaxChar} characters at maximum.",
+                        Result = NotificationBoxResult.Ok,
+                    });
 
-                return;
-            }
+                    return;
+                }
 
-            // Save changes.
-            FormVM.Title = Title.Trim();
+                // Save changes.
+                FormVM.Title = Title.Trim();
 
-            // Resort groups alphabetically.
-            IoC.DataContent.TimerData.SortGroupList();
+                // Resort groups alphabetically.
+                IoC.DataContent.TimerData.SortGroupList();
 
-            // Log it.
-            IoC.Logger.Log($"Settings changed: timer group '{FormVM.Title}'.", LogLevel.Info);
+                // Log it.
+                IoC.Logger.Log($"Settings changed: timer group '{FormVM.Title}'.", LogLevel.Info);
 
-            // Move back to the page.
-            GoBackCommandMethod();
+                // Move back to the page.
+                GoBackCommandMethod();
+
+                await Task.Delay(1);
+            });
         }
 
-        private void DeleteGroupCommandMethod()
+        private async Task DeleteGroupCommandMethodAsync()
         {
-            if (!IoC.DataContent.TimerData.DestroyGroup(FormVM))
+            await RunCommandAsync(() => mModifyCommandFlag, async () =>
             {
-                // Some error occured during deleting the group.
-                IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                if (!IoC.DataContent.TimerData.DestroyGroup(FormVM))
                 {
-                    Caption = "Cannot delete the group!",
-                    Message = $"The group is running timers or it is the last existing group!{Environment.NewLine}" +
-                              $"Please, stop all the timers in the group first.{Environment.NewLine}Number of timers in this group is {FormVM.TimerList.Count}.",
-                    Button = System.Windows.MessageBoxButton.OK,
-                    Icon = System.Windows.MessageBoxImage.Warning,
-                });
+                    // Some error occured during deleting the group.
+                    _ = IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                    {
+                        Caption = "Cannot delete the group!",
+                        Message = $"The group is running timers or it is the last existing group!{Environment.NewLine}" +
+                                  $"Please, stop all the timers in the group first.{Environment.NewLine}Number of timers in this group is {FormVM.TimerList.Count}.",
+                        Button = System.Windows.MessageBoxButton.OK,
+                        Icon = System.Windows.MessageBoxImage.Warning,
+                    });
 
-                return;
-            }
+                    return;
+                }
 
-            // Move back to the page.
-            GoBackCommandMethod();
+                // Move back to the page.
+                GoBackCommandMethod();
+
+                await Task.Delay(1);
+            });
         }
 
         private void GoBackCommandMethod()

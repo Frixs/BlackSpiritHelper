@@ -91,6 +91,12 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
+        #region Command Flags
+
+        private bool mAddNewGroupCommandFlag { get; set; }
+
+        #endregion
+
         #region Commands
 
         /// <summary>
@@ -160,9 +166,11 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task AddNewGroupCommandMethodAsync()
         {
-            AddGroup("Untitled Group");
-
-            await Task.Delay(1);
+            await RunCommandAsync(() => mAddNewGroupCommandFlag, async () =>
+            {
+                AddGroup("Untitled Group");
+                await Task.Delay(1);
+            });
         }
 
         #endregion

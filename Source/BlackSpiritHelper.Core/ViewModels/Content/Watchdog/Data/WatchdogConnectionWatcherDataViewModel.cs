@@ -1,5 +1,6 @@
 ﻿using BlackSpiritHelper.Core.Data.Interfaces;
 using System;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Input;
 using System.Xml.Serialization;
@@ -40,6 +41,12 @@ namespace BlackSpiritHelper.Core
         /// Each watcher has own user settings for failure actions.
         /// </summary>
         public override WatchdogFailureRoutineDataViewModel FailureRoutine { get; set; } = new WatchdogFailureRoutineDataViewModel();
+
+        #endregion
+
+        #region Command Flags
+
+        private bool mModifyCommandFlag { get; set; }
 
         #endregion
 
@@ -89,8 +96,24 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void CreateCommands()
         {
-            PlayCommand = new RelayCommand(async () => await RunWatcherAsync(IntervalTime));
-            StopCommand = new RelayCommand(async () => await StopWatcherAsync());
+            PlayCommand = new RelayCommand(async () => await PlayCommandMethodAsync());
+            StopCommand = new RelayCommand(async () => await StopCommandMethodAsync());
+        }
+
+        private async Task PlayCommandMethodAsync()
+        {
+            await RunCommandAsync(() => mModifyCommandFlag, async () =>
+            {
+                await RunWatcherAsync(IntervalTime);
+            });
+        }
+
+        private async Task StopCommandMethodAsync()
+        {
+            await RunCommandAsync(() => mModifyCommandFlag, async () =>
+            {
+                await StopWatcherAsync();
+            });
         }
 
         #endregion

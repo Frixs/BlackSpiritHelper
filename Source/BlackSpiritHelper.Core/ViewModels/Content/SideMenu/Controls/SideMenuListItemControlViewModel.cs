@@ -24,6 +24,12 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
+        #region Command Flags
+
+        private bool mOpenPageCommandFlag { get; set; }
+
+        #endregion
+
         #region Commands
 
         /// <summary>
@@ -57,9 +63,11 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task OpenPageAsync()
         {
-            IoC.Application.GoToPage(PageEnum);
-
-            await Task.Delay(1);
+            await RunCommandAsync(() => mOpenPageCommandFlag, async () =>
+            {
+                IoC.Application.GoToPage(PageEnum);
+                await Task.Delay(1);
+            });
         }
     }
 }

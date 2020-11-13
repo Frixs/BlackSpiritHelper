@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace BlackSpiritHelper.Core
@@ -12,6 +11,14 @@ namespace BlackSpiritHelper.Core
         /// Side menu width.
         /// </summary>
         public int SideMenuWidth { get; set; } = 175;
+
+        #endregion
+
+        #region Command Flags
+
+        private bool mOpenPageCommandFlag { get; set; }
+        private bool mOpenDonateLinkCommandFlag { get; set; }
+        private bool mOpenOverlayCommandFlag { get; set; }
 
         #endregion
 
@@ -71,9 +78,11 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task OpenHomePageAsync()
         {
-            IoC.Application.GoToPage(ApplicationPage.Home);
-
-            await Task.Delay(1);
+            await RunCommandAsync(() => mOpenPageCommandFlag, async () =>
+            {
+                IoC.Application.GoToPage(ApplicationPage.Home);
+                await Task.Delay(1);
+            });
         }
 
         /// <summary>
@@ -82,9 +91,11 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task OpenPreferencesPageAsync()
         {
-            IoC.Application.GoToPage(ApplicationPage.Preferences);
-
-            await Task.Delay(1);
+            await RunCommandAsync(() => mOpenPageCommandFlag, async () =>
+            {
+                IoC.Application.GoToPage(ApplicationPage.Preferences);
+                await Task.Delay(1);
+            });
         }
 
         /// <summary>
@@ -92,10 +103,12 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private async Task AuthorDonateLinkMethodAsync()
         {
-            // Open the webpage.
-            System.Diagnostics.Process.Start(IoC.Application.DonationURL);
-
-            await Task.Delay(1);
+            await RunCommandAsync(() => mOpenDonateLinkCommandFlag, async () =>
+            {
+                // Open the webpage.
+                System.Diagnostics.Process.Start(IoC.Application.DonationURL);
+                await Task.Delay(1);
+            });
         }
 
         /// <summary>
@@ -104,12 +117,15 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task OverlayOpenCloseAsync()
         {
-            if (IoC.DataContent.OverlayData.IsOpened)
-                IoC.UI.OpenOverlay();
-            else
-                IoC.UI.CloseOverlay();
+            await RunCommandAsync(() => mOpenOverlayCommandFlag, async () =>
+            {
+                if (IoC.DataContent.OverlayData.IsOpened)
+                    IoC.UI.OpenOverlay();
+                else
+                    IoC.UI.CloseOverlay();
 
-            await Task.Delay(1);
+                await Task.Delay(1);
+            });
         }
 
         #endregion

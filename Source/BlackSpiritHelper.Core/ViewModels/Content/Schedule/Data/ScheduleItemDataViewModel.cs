@@ -50,6 +50,13 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
+        #region Command Flags
+
+        private bool mAddItemToIgnoredCommandFlag { get; set; }
+        private bool mRemoveItemFromIgnoredCommandFlag { get; set; }
+
+        #endregion
+
         #region Commands
 
         /// <summary>
@@ -105,8 +112,24 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void CreateCommands()
         {
-            AddItemToIgnoredCommand = new RelayParameterizedCommand(async (parameter) => await AddItemToIgnoredAsync(parameter));
-            RemoveItemFromIgnoredCommand = new RelayParameterizedCommand(async (parameter) => await RemoveItemFromIgnoredAsync(parameter));
+            AddItemToIgnoredCommand = new RelayParameterizedCommand(async (parameter) => await AddItemToIgnoredCommandMethodAsync(parameter));
+            RemoveItemFromIgnoredCommand = new RelayParameterizedCommand(async (parameter) => await RemoveItemFromIgnoredCommandMethodAsync(parameter));
+        }
+
+        private async Task AddItemToIgnoredCommandMethodAsync(object parameter)
+        {
+            await RunCommandAsync(() => mAddItemToIgnoredCommandFlag, async () =>
+            {
+                await AddItemToIgnoredAsync(parameter);
+            });
+        }
+
+        private async Task RemoveItemFromIgnoredCommandMethodAsync(object parameter)
+        {
+            await RunCommandAsync(() => mRemoveItemFromIgnoredCommandFlag, async () =>
+            {
+                await RemoveItemFromIgnoredAsync(parameter);
+            });
         }
 
         #endregion

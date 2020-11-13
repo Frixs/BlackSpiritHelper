@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace BlackSpiritHelper.Core
@@ -38,6 +39,12 @@ namespace BlackSpiritHelper.Core
         /// Name of item to add.
         /// </summary>
         public string NewName { get; set; }
+
+        #endregion
+
+        #region Command Flags
+
+        private bool mModifyFlag { get; set; }
 
         #endregion
 
@@ -88,67 +95,77 @@ namespace BlackSpiritHelper.Core
         private void CreateCommands()
         {
             GoBackCommand = new RelayCommand(() => GoBackCommandMethod());
-            AddItemCommand = new RelayCommand(() => AddItemCommandMethod());
-            RemoveItemCommand = new RelayParameterizedCommand((parameter) => RemoveItemCommandMethod(parameter));
+            AddItemCommand = new RelayCommand(async () => await AddItemCommandMethodAsync());
+            RemoveItemCommand = new RelayParameterizedCommand(async (parameter) => await RemoveItemCommandMethodAsync(parameter));
         }
 
         /// <summary>
         /// Remove item from <see cref="ScheduleDataViewModel.ItemCustomList"/>.
         /// </summary>
         /// <param name="parameter"></param>
-        private void RemoveItemCommandMethod(object parameter)
+        private async Task RemoveItemCommandMethodAsync(object parameter)
         {
-            var par = (ScheduleItemDataViewModel)parameter;
-
-            IoC.Logger.Log($"Removing schedule custom item '{par}'...", LogLevel.Debug);
-
-            // Remove.
-            if (!FormVM.DestroyCustomItem(par))
+            await RunCommandAsync(() => mModifyFlag, async () =>
             {
-                IoC.Logger.Log($"Error occured during removing schedule custom item '{par}'!", LogLevel.Error);
-                return;
-            }
+                var par = (ScheduleItemDataViewModel)parameter;
 
-            // Log it.
-            IoC.Logger.Log($"Removed schedule custom item '{par}'.", LogLevel.Info);
+                IoC.Logger.Log($"Removing schedule custom item '{par}'...", LogLevel.Debug);
+
+                // Remove.
+                if (!FormVM.DestroyCustomItem(par))
+                {
+                    IoC.Logger.Log($"Error occured during removing schedule custom item '{par}'!", LogLevel.Error);
+                    return;
+                }
+
+                // Log it.
+                IoC.Logger.Log($"Removed schedule custom item '{par}'.", LogLevel.Info);
+
+                await Task.Delay(1);
+            });
         }
 
         /// <summary>
         /// Add new item to <see cref="ScheduleDataViewModel.ItemCustomList"/>.
         /// </summary>
-        private void AddItemCommandMethod()
+        private async Task AddItemCommandMethodAsync()
         {
-            IoC.Logger.Log("Creating new schedule custom item.", LogLevel.Debug);
-
-            if (!IoC.DataContent.ScheduleData.CanAddCustomItem)
-                return;
-
-            if (string.IsNullOrEmpty(NewName))
-                return;
-
-            // Trim.
-            string name = NewName.Trim();
-            string colorHex = "000000";
-
-            // Add item.
-            if (FormVM.AddItem(name, colorHex, false) == null)
+            await RunCommandAsync(() => mModifyFlag, async () =>
             {
-                // Some error occured during adding item.
-                IoC.UI.ShowNotification(new NotificationBoxDialogViewModel()
+                IoC.Logger.Log("Creating new schedule custom item.", LogLevel.Debug);
+
+                if (!IoC.DataContent.ScheduleData.CanAddCustomItem)
+                    return;
+
+                if (string.IsNullOrEmpty(NewName))
+                    return;
+
+                // Trim.
+                string name = NewName.Trim();
+                string colorHex = "000000";
+
+                // Add item.
+                if (FormVM.AddItem(name, colorHex, false) == null)
                 {
-                    Title = "ERROR OCCURRED!",
-                    Message = $"The name of the item is already defined or some of the entered values are invalid. Please, check them again.",
-                    Result = NotificationBoxResult.Ok,
-                });
+                    // Some error occured during adding item.
+                    _ = IoC.UI.ShowNotification(new NotificationBoxDialogViewModel()
+                    {
+                        Title = "ERROR OCCURRED!",
+                        Message = $"The name of the item is already defined or some of the entered values are invalid. Please, check them again.",
+                        Result = NotificationBoxResult.Ok,
+                    });
 
-                return;
-            }
+                    return;
+                }
 
-            // Log it.
-            IoC.Logger.Log($"Created new schedule custom item '{name}'.", LogLevel.Info);
+                // Log it.
+                IoC.Logger.Log($"Created new schedule custom item '{name}'.", LogLevel.Info);
 
-            // Sort list.
-            FormVM.SortItemCustomList();
+                // Sort list.
+                FormVM.SortItemCustomList();
+
+                await Task.Delay(1);
+            });
         }
 
         /// <summary>

@@ -66,6 +66,12 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
+        #region Command Flags
+
+        private bool mModifyCommandFlag { get; set; }
+
+        #endregion
+
         #region Commands
 
         /// <summary>
@@ -111,21 +117,24 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private async Task AddNewProcessCommandMethodAsync()
         {
-            // Check space in the list.
-            if (ProcessList.Count + 1 > AllowedMaxProcessConnections)
+            await RunCommandAsync(() => mModifyCommandFlag, async () =>
             {
-                CanAddNewProcess = false;
-                return;
-            }
+                // Check space in the list.
+                if (ProcessList.Count + 1 > AllowedMaxProcessConnections)
+                {
+                    CanAddNewProcess = false;
+                    return;
+                }
 
-            // Add item.
-            ProcessList.Add(new WatchdogProcessDataViewModel());
+                // Add item.
+                ProcessList.Add(new WatchdogProcessDataViewModel());
 
-            // Check space in the list again after addition.
-            if (ProcessList.Count >= AllowedMaxProcessConnections)
-                CanAddNewProcess = false;
+                // Check space in the list again after addition.
+                if (ProcessList.Count >= AllowedMaxProcessConnections)
+                    CanAddNewProcess = false;
 
-            await Task.Delay(1);
+                await Task.Delay(1);
+            });
         }
 
         /// <summary>
@@ -133,20 +142,23 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private async Task RemoveProcessCommandMethodAsync(object parameter)
         {
-            var itemToRemove = (WatchdogProcessDataViewModel)parameter;
-
-            // Check existence of the item.
-            if (itemToRemove == null)
+            await RunCommandAsync(() => mModifyCommandFlag, async () =>
             {
-                IoC.Logger.Log($"Null reference while removing item!", LogLevel.Error);
-                return;
-            }
+                var itemToRemove = (WatchdogProcessDataViewModel)parameter;
 
-            // Remove item.
-            ProcessList.Remove(itemToRemove);
-            CanAddNewProcess = true;
+                // Check existence of the item.
+                if (itemToRemove == null)
+                {
+                    IoC.Logger.Log($"Null reference while removing item!", LogLevel.Error);
+                    return;
+                }
 
-            await Task.Delay(1);
+                // Remove item.
+                ProcessList.Remove(itemToRemove);
+                CanAddNewProcess = true;
+
+                await Task.Delay(1);
+            });
         }
 
         #endregion

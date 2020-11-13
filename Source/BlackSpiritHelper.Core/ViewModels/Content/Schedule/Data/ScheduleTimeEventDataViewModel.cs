@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Xml.Serialization;
 
@@ -149,6 +150,13 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
+        #region Command Flags
+
+        private bool mAddItemCommandFlag { get; set; }
+        private bool mRemoveItemCommandFlag { get; set; }
+
+        #endregion
+
         #region Commands
 
         /// <summary>
@@ -187,8 +195,26 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void CreateCommands()
         {
-            AddItemCommand = new RelayCommand(() => AddItem(true));
-            RemoveItemCommand = new RelayParameterizedCommand((parameter) => RemoveItem(true, parameter));
+            AddItemCommand = new RelayCommand(async () => await AddItemCommandMethodAsync());
+            RemoveItemCommand = new RelayParameterizedCommand(async (parameter) => await RemoveItemCommandMethodAsync(parameter));
+        }
+
+        private async Task AddItemCommandMethodAsync()
+        {
+            await RunCommandAsync(() => mAddItemCommandFlag, async () =>
+            {
+                AddItem(true);
+                await Task.Delay(1);
+            });
+        }
+
+        private async Task RemoveItemCommandMethodAsync(object parameter)
+        {
+            await RunCommandAsync(() => mRemoveItemCommandFlag, async () =>
+            {
+                RemoveItem(true, parameter);
+                await Task.Delay(1);
+            });
         }
 
         #endregion
