@@ -67,9 +67,21 @@ namespace BlackSpiritHelper.Core
         public OverlayBaseDataViewModel BaseOverlay { get; set; } = new OverlayBaseDataViewModel();
 
         /// <summary>
-        /// TODO
+        /// Screen share data view model
         /// </summary>
         public OverlayScreenShareDataViewModel ScreenShareOverlay { get; set; } = new OverlayScreenShareDataViewModel();
+
+        /// <summary>
+        /// Indicates if the scren share is active/visible
+        /// </summary>
+        [XmlIgnore]
+        public bool IsScreenShareActive { get; private set; } = false;
+
+        /// <summary>
+        /// Currently share window (pointer)
+        /// </summary>
+        [XmlIgnore]
+        public IntPtr CurrentScreenShareWindowPtr { get; private set; } = IntPtr.Zero;
 
         /// <summary>
         /// List of all types of <see cref="Orientation"/>.
@@ -179,7 +191,27 @@ namespace BlackSpiritHelper.Core
 
         #region Public Methods
 
-        // TODO ---
+        /// <summary>
+        /// Activate screen share
+        /// </summary>
+        /// <param name="windowPtr">Window pointer to of the window to share</param>
+        public void ActiveScreenShare(IntPtr windowPtr)
+        {
+            // Deactivate it first to be able to activate a new session
+            DeactiveScreenShare();
+
+            IsScreenShareActive = true;
+            CurrentScreenShareWindowPtr = windowPtr;
+        }
+
+        /// <summary>
+        /// Deactivate screen share
+        /// </summary>
+        public void DeactiveScreenShare()
+        {
+            IsScreenShareActive = false;
+            CurrentScreenShareWindowPtr = IntPtr.Zero;
+        }
 
         #endregion
     }

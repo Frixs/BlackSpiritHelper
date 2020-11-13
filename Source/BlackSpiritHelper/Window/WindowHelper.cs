@@ -52,7 +52,7 @@ namespace BlackSpiritHelper
         /// <returns></returns>
         public static Image CaptureWindow(IntPtr handle)
         {
-            // get te hDC of the target window
+            // get the hDC of the target window
             IntPtr hdcSrc = User32.GetWindowDC(handle);
             // get the size
             User32.RECT windowRect = new User32.RECT();

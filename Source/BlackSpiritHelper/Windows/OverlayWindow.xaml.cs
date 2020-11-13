@@ -1,10 +1,15 @@
 ﻿using BlackSpiritHelper.Core;
 using System;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace BlackSpiritHelper
 {
@@ -28,6 +33,11 @@ namespace BlackSpiritHelper
         #endregion
 
         #region Private Members
+
+        /// <summary>
+        /// Thread reference to the screen share processing thread
+        /// </summary>
+        private Thread mScreenShareThreadProcess = null;
 
         /// <summary>
         /// Target window handle where to open overlay window.
@@ -229,6 +239,72 @@ namespace BlackSpiritHelper
             val.Background = mOverlayBackgroundBrushNoItems;
             val.ToolTip = "No items to display.";
             return;
+        }
+
+        /// <summary>
+        /// When <see cref="IoC.DataContent.OverlayData.IsScreenShareActive"/> is changed
+        /// </summary>
+        private void ScreenShareOverlayObject_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            bool value = (bool)e.NewValue;
+
+            if (value)
+                StartCapture();
+            else
+                StopCapture();
+        }
+
+        #endregion
+
+        #region ScreenShare Capture
+
+        private void StartCapture()
+        {
+            StopCapture();
+            mScreenShareThreadProcess = new Thread(ProcessCapture);
+            mScreenShareThreadProcess.Start();
+        }
+
+        private void StopCapture()
+        {
+            if (mScreenShareThreadProcess != null)
+                mScreenShareThreadProcess.Abort();
+        }
+
+        /// <summary>
+        /// Thread processing method for screen share
+        /// </summary>
+        private void ProcessCapture()
+        {
+            IntPtr ptr = IoC.DataContent.OverlayData.CurrentScreenShareWindowPtr;
+
+            while (true)
+            {
+                var capture = WindowHelper.CaptureWindow(ptr);
+
+                // UI thread required
+                Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, (Action)(() =>
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        capture.Save(ms, ImageFormat.Bmp);
+                        ms.Seek(0, SeekOrigin.Begin);
+
+                        var bitmapImage = new BitmapImage();
+                        bitmapImage.BeginInit();
+                        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmapImage.StreamSource = ms;
+                        bitmapImage.EndInit();
+
+                        ScreenShareImage.Source = bitmapImage;
+                    }
+                }));
+
+                Thread.Sleep(1000);
+
+                if (mScreenShareThreadProcess == null)
+                    break;
+            }
         }
 
         #endregion

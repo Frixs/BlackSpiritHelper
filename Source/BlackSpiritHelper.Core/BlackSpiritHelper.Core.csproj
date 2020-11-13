@@ -48,6 +48,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -61,6 +62,7 @@
     <Compile Include="Audio\Core\AudioPriorityBracket.cs" />
     <Compile Include="Audio\Implementation\AudioPlayer.cs" />
     <Compile Include="Audio\Implementation\Managers\StandardAudioPack.cs" />
+    <Compile Include="IoC\Interfaces\IWindowInfo.cs" />
     <Compile Include="ViewModels\Content\Overlay\Data\OverlayBaseDataViewModel.cs" />
     <Compile Include="DataTypes\ApplicationArgument.cs" />
     <Compile Include="DataTypes\ApplicationPage.cs" />

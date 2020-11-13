@@ -223,6 +223,7 @@
     <Compile Include="IoC\AppAssembly.cs" />
     <Compile Include="IoC\UIManager.cs" />
     <Compile Include="IoC\GlobalMouseKeyHookManager.cs" />
+    <Compile Include="IoC\WindowInfo.cs" />
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Pages\Content\SchedulePage.xaml.cs">
       <DependentUpon>SchedulePage.xaml</DependentUpon>
@@ -275,8 +276,9 @@
     <Compile Include="ValueConverters\IoCConverter.cs" />
     <Compile Include="ValueConverters\StringHEXToLightOrDarkBrushConverter.cs" />
     <Compile Include="ValueConverters\StringHEXToBrushConverter.cs" />
-    <Compile Include="ViewModels\ProgressWindowViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelLocator.cs" />
+    <Compile Include="ViewModelsWPF\ProgressWindowViewModel.cs" />
+    <Compile Include="ViewModelsWPF\ViewModelLocator.cs" />
+    <Compile Include="ViewModelsWPF\WindowViewModel.cs" />
     <Compile Include="Windows\ProgressWindow.xaml.cs">
       <DependentUpon>ProgressWindow.xaml</DependentUpon>
     </Compile>
@@ -284,7 +286,6 @@
     <Compile Include="Window\WindowResizer.cs" />
     <Compile Include="ValueConverters\ApplicationPageHelpers.cs" />
     <Compile Include="ValueConverters\BaseValueConverter.cs" />
-    <Compile Include="ViewModels\WindowViewModel.cs" />
     <Compile Include="Windows\OverlayWindow.xaml.cs">
       <DependentUpon>OverlayWindow.xaml</DependentUpon>
     </Compile>

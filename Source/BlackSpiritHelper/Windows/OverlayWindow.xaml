@@ -227,9 +227,12 @@
                 Canvas.Left="{Binding ScreenShareOverlay.PosX, Mode=TwoWay}"
                 Canvas.Top="{Binding ScreenShareOverlay.PosY, Mode=TwoWay}"
                 Panel.ZIndex="1"
+                IsEnabled="{Binding IsScreenShareActive}"
+                IsEnabledChanged="ScreenShareOverlayObject_IsEnabledChanged"
                 MouseLeftButtonDown="OnMouseLeftButtonDown"
                 MouseLeftButtonUp="OnMouseLeftButtonUp"
-                MouseMove="OnMouseMove">
+                MouseMove="OnMouseMove"
+                Visibility="{Binding IsScreenShareActive, Converter={local:BooleanToVisibilityGoneConverter}}">
                 <!--  Draggable Border Background  -->
                 <Border.Style>
                     <Style TargetType="Border">
@@ -259,9 +262,13 @@
                         </Rectangle.Style>
                     </Rectangle>
                     <Image
+                        x:Name="ScreenShareImage"
+                        MinWidth="10"
+                        MinHeight="10"
+                        MaxWidth="1280"
+                        MaxHeight="720"
                         Margin="25"
-                        Focusable="False"
-                        Source="https://www.wpf-tutorial.com/Images/ArticleImages/1/basic-controls/image_control_basic_url.png" />
+                        Focusable="False" />
                 </Grid>
             </Border>
         </Canvas>

@@ -55,11 +55,18 @@
                         </Grid.RowDefinitions>
 
                         <!--  ShareScreen Overlay selection  -->
-                        <Button
+                        <ComboBox
+                            Grid.Row="0"
                             Margin="0,0,0,10"
-                            Command="{Binding SelectScreenShareWindowCommand}"
-                            CommandParameter="Sourcetree"
-                            Content="Select" />
+                            DropDownOpened="AvailableWindowsCombo_DropDownOpened"
+                            Loaded="AvailableWindowsCombo_Loaded"
+                            SelectionChanged="AvailableWindowsCombo_SelectionChanged">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
 
                         <!--  Show Overlay  -->
                         <Grid Grid.Row="1">

@@ -126,26 +126,42 @@ namespace BlackSpiritHelper.Core
             await RunCommandAsync(() => mManageOverlayCommandFlag, async () =>
             {
                 if (IoC.DataContent.OverlayData.IsOpened)
+                {
                     IoC.UI.OpenOverlay();
+                }
                 else
+                {
                     IoC.UI.CloseOverlay();
+                    IoC.DataContent.OverlayData.DeactiveScreenShare();
+                }
 
                 await Task.Delay(1);
             });
         }
 
+        /// <summary>
+        /// Select window to share
+        /// </summary>
+        /// <param name="parameter">Window title represented as string</param>
+        /// <returns></returns>
         private async Task SelectScreenShareWindowCommandMethodAsync(object parameter)
         {
             await RunCommandAsync(() => mManageOverlayCommandFlag, async () =>
             {
-                // TODO ---
-                var xaxa = WindowHelper.EnumVisibleWindows();
-                IntPtr ptr = default;
-                foreach (var i in xaxa)
-                    if (i.Value.Contains("Sourcetree"))
-                        ptr = i.Key;
-                var x = WindowHelper.CaptureWindow(ptr);
-                Debugger.Break();
+                string s = parameter as string;
+
+                if (!string.IsNullOrEmpty(s))
+                {
+                    var ptr = IoC.WInfo.GetWindowPtr(s);
+                    if (ptr != null)
+                        IoC.DataContent.OverlayData.ActiveScreenShare(ptr.Value);
+                    else
+                        IoC.DataContent.OverlayData.DeactiveScreenShare();
+                }
+                else
+                {
+                    IoC.DataContent.OverlayData.DeactiveScreenShare();
+                }
 
                 await Task.Delay(1);
             });

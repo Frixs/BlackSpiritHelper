@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using BlackSpiritHelper.Core;
+using System.Collections.Generic;
+using System.Windows.Controls;
 
 namespace BlackSpiritHelper
 {
@@ -15,5 +17,32 @@ namespace BlackSpiritHelper
         }
 
         #endregion
+
+        private void AvailableWindowsCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var items = e.AddedItems;
+            if (items.Count > 0)
+                ((SideMenuControlViewModel)DataContext).SelectScreenShareWindowCommand.Execute(items[0].ToString());
+        }
+
+        private void AvailableWindowsCombo_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            LoadAvailableWindowsIntoCombo(sender);
+        }
+
+        private void AvailableWindowsCombo_DropDownOpened(object sender, System.EventArgs e)
+        {
+            LoadAvailableWindowsIntoCombo(sender);
+        }
+
+        private void LoadAvailableWindowsIntoCombo(object sender)
+        {
+            var data = new List<string>();
+            data.Add("");
+            data.AddRange(IoC.WInfo.EnumVisibleWindows());
+
+            ((ComboBox)sender).ItemsSource = data;
+            ((ComboBox)sender).SelectedIndex = 0;
+        }
     }
 }

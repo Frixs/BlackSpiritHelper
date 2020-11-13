@@ -304,20 +304,23 @@ namespace BlackSpiritHelper
             // Bind a file manager.
             IoC.Kernel.Bind<IFileManager>().ToConstant(new FileManager());
 
-            // Bind a UI Manager.
+            // Bind an UI Manager.
             IoC.Kernel.Bind<IUIManager>().ToConstant(new UIManager());
 
-            // Bind an datetime (with time zones) manager.
+            // Bind a datetime (with time zones) manager.
             IoC.Kernel.Bind<IDateTimeZone>().ToConstant(new DateTimeZoneManager());
 
             // Bind an audio manager.
             IoC.Kernel.Bind<IAudioFactory>().ToConstant(new BaseAudioFactory());
 
-            // Bind an web manager.
+            // Bind a web manager.
             IoC.Kernel.Bind<IWebManager>().ToConstant(new WebManager());
 
-            // Bind an mouse key hooks.
+            // Bind a mouse key hooks.
             IoC.Kernel.Bind<IMouseKeyHook>().ToConstant(new GlobalMouseKeyHookManager());
+
+            // Bind a share.
+            IoC.Kernel.Bind<IWindowInfo>().ToConstant(new WindowInfo());
 
             // Bind Application data content view models.
             IoC.Kernel.Bind<ApplicationDataContent>().ToConstant(new ApplicationDataContent());

@@ -1,6 +1,5 @@
 ﻿using Ninject;
 using System.Collections.Generic;
-using System.Windows;
 
 namespace BlackSpiritHelper.Core
 {
@@ -65,6 +64,11 @@ namespace BlackSpiritHelper.Core
         /// A shortcut to access the <see cref="IWebManager"/>.
         /// </summary>
         public static IWebManager Web => Get<IWebManager>();
+
+        /// <summary>
+        /// A shortcut to access the <see cref="IWindowInfo"/>.
+        /// </summary>
+        public static IWindowInfo WInfo => Get<IWindowInfo>();
 
         /// <summary>
         /// A shortcut to access the <see cref="ApplicationDataContent"/>.
