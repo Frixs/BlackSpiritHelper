@@ -18,7 +18,7 @@ namespace BlackSpiritHelper.Core
 
         private bool mOpenPageCommandFlag { get; set; }
         private bool mOpenDonateLinkCommandFlag { get; set; }
-        private bool mOpenOverlayCommandFlag { get; set; }
+        private bool mManageOverlayCommandFlag { get; set; }
 
         #endregion
 
@@ -43,6 +43,11 @@ namespace BlackSpiritHelper.Core
         /// The command to open/close overlay.
         /// </summary>
         public ICommand OverlayOpenCloseCommand { get; set; }
+
+        /// <summary>
+        /// The command to select screen share window
+        /// </summary>
+        public ICommand SelectScreenShareWindowCommand { get; set; }
 
         #endregion
 
@@ -70,6 +75,7 @@ namespace BlackSpiritHelper.Core
             OpenPreferencesPageCommand = new RelayCommand(async () => await OpenPreferencesPageAsync());
             AuthorDonateLinkCommand = new RelayCommand(async () => await AuthorDonateLinkMethodAsync());
             OverlayOpenCloseCommand = new RelayCommand(async () => await OverlayOpenCloseAsync());
+            SelectScreenShareWindowCommand = new RelayParameterizedCommand(async (parameter) => await SelectScreenShareWindowCommandMethodAsync(parameter));
         }
 
         /// <summary>
@@ -117,12 +123,29 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task OverlayOpenCloseAsync()
         {
-            await RunCommandAsync(() => mOpenOverlayCommandFlag, async () =>
+            await RunCommandAsync(() => mManageOverlayCommandFlag, async () =>
             {
                 if (IoC.DataContent.OverlayData.IsOpened)
                     IoC.UI.OpenOverlay();
                 else
                     IoC.UI.CloseOverlay();
+
+                await Task.Delay(1);
+            });
+        }
+
+        private async Task SelectScreenShareWindowCommandMethodAsync(object parameter)
+        {
+            await RunCommandAsync(() => mManageOverlayCommandFlag, async () =>
+            {
+                // TODO ---
+                var xaxa = WindowHelper.EnumVisibleWindows();
+                IntPtr ptr = default;
+                foreach (var i in xaxa)
+                    if (i.Value.Contains("Sourcetree"))
+                        ptr = i.Key;
+                var x = WindowHelper.CaptureWindow(ptr);
+                Debugger.Break();
 
                 await Task.Delay(1);
             });

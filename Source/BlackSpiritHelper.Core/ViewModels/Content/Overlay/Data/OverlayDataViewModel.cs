@@ -176,5 +176,11 @@ namespace BlackSpiritHelper.Core
         }
 
         #endregion
+
+        #region Public Methods
+
+        // TODO ---
+
+        #endregion
     }
 }

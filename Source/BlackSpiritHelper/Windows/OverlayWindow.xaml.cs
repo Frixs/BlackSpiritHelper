@@ -1,9 +1,9 @@
-﻿using System;
+﻿using BlackSpiritHelper.Core;
+using System;
 using System.Windows;
-using System.Windows.Interop;
-using BlackSpiritHelper.Core;
-using System.Windows.Input;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 
 namespace BlackSpiritHelper

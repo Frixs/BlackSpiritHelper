@@ -1,91 +1,116 @@
-﻿<UserControl x:Class="BlackSpiritHelper.SideMenuControl"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:BlackSpiritHelper"
-             xmlns:core="clr-namespace:BlackSpiritHelper.Core;assembly=BlackSpiritHelper.Core"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="175"
-             DataContext="{x:Static core:SideMenuControlDesignModel.Instance}">
+﻿<UserControl
+    x:Class="BlackSpiritHelper.SideMenuControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:core="clr-namespace:BlackSpiritHelper.Core;assembly=BlackSpiritHelper.Core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:BlackSpiritHelper"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="175"
+    DataContext="{x:Static core:SideMenuControlDesignModel.Instance}"
+    mc:Ignorable="d">
 
     <UserControl.Template>
         <ControlTemplate TargetType="UserControl">
 
-            <Grid Grid.Column="0" Panel.ZIndex="2" Background="{StaticResource SideMenuBackgroundBrushKey}">
+            <Grid
+                Grid.Column="0"
+                Panel.ZIndex="2"
+                Background="{StaticResource SideMenuBackgroundBrushKey}">
 
                 <Grid.RowDefinitions>
-                    <!-- Icon -->
+                    <!--  Icon  -->
                     <RowDefinition Height="112" />
-                    <!-- Menu -->
+                    <!--  Menu  -->
                     <RowDefinition Height="*" />
-                    <!-- Overlay Management -->
-                    <RowDefinition Height="50" />
-                    <!-- Footer -->
+                    <!--  Overlay Management  -->
+                    <RowDefinition Height="Auto" />
+                    <!--  Footer  -->
                     <RowDefinition Height="60" />
 
                 </Grid.RowDefinitions>
 
-                <!-- Icon -->
+                <!--  Icon  -->
                 <Grid Grid.Row="0" Panel.ZIndex="1">
-                    <Button Style="{StaticResource ApplcationButton}"
-                            Command="{Binding OpenHomePageCommand}">
+                    <Button Command="{Binding OpenHomePageCommand}" Style="{StaticResource ApplcationButton}">
                         <Image Source="/BlackSpiritHelper;component/Resources/Images/Logo/logo_red_text_512.png" />
                     </Button>
                 </Grid>
 
-                <!-- Menu -->
-                <ScrollViewer VerticalScrollBarVisibility="Hidden" Grid.Row="1">
+                <!--  Menu  -->
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden">
                     <ContentPresenter />
                 </ScrollViewer>
 
-                <!-- Overlay Management -->
-                <Border Grid.Row="2" Padding="10"
-                        Background="{StaticResource SideMenuBackgroundDarkBrushKey}">
+                <!--  Overlay Management  -->
+                <Border
+                    Grid.Row="2"
+                    Padding="10"
+                    Background="{StaticResource SideMenuBackgroundDarkBrushKey}">
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <!-- Overlay Checkbox -->
-                        <CheckBox Content="Show Overlay" Grid.Column="0"
-                                  Style="{StaticResource OverlayCheckbox}"
-                                  HorizontalAlignment="Left" 
-                                  VerticalAlignment="Top"
-                                  IsChecked="{Binding ApplicationDataContent.OverlayData.IsOpened, 
-                                              Source={x:Static local:ViewModelLocator.Instance}}"
-                                  Command="{Binding OverlayOpenCloseCommand}"
-                              />
-                        <TextBlock Text="{StaticResource FontAwesomeQuestionCircleIcon}" Grid.Column="1"
-                                   ToolTip="TIP: To interact with the overlay, hold left ALT key."
-                                   FontFamily="{StaticResource FontAwesomeSolid}"
-                                   FontSize="18"
-                                   Foreground="{StaticResource SideMenuForegroundDarkBrushKey}"
-                                   VerticalAlignment="Center"/>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="30" />
+                        </Grid.RowDefinitions>
+
+                        <!--  ShareScreen Overlay selection  -->
+                        <Button
+                            Margin="0,0,0,10"
+                            Command="{Binding SelectScreenShareWindowCommand}"
+                            CommandParameter="Sourcetree"
+                            Content="Select" />
+
+                        <!--  Show Overlay  -->
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <!--  Overlay Checkbox  -->
+                            <CheckBox
+                                Grid.Column="0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Command="{Binding OverlayOpenCloseCommand}"
+                                Content="Show Overlay"
+                                IsChecked="{Binding ApplicationDataContent.OverlayData.IsOpened, Source={x:Static local:ViewModelLocator.Instance}}"
+                                Style="{StaticResource OverlayCheckbox}" />
+                            <TextBlock
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                FontSize="18"
+                                Foreground="{StaticResource SideMenuForegroundDarkBrushKey}"
+                                Text="{StaticResource FontAwesomeQuestionCircleIcon}"
+                                ToolTip="TIP: To interact with the overlay, hold L.ALT key." />
+                        </Grid>
                     </Grid>
                 </Border>
 
-                <!-- Footer -->
-                <Border Grid.Row="3" Padding="10"
-                        Background="{StaticResource SideMenuBackgroundDarkestBrushKey}">
+                <!--  Footer  -->
+                <Border
+                    Grid.Row="3"
+                    Padding="10"
+                    Background="{StaticResource SideMenuBackgroundDarkestBrushKey}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <!-- Author DONATE Link -->
-                        <Button Content="DONATE" Grid.Column="0"
-                                Command="{Binding AuthorDonateLinkCommand}"
-                                Padding="10"
-                                Margin="0 0 10 0">
+                        <!--  Author DONATE Link  -->
+                        <Button
+                            Grid.Column="0"
+                            Margin="0,0,10,0"
+                            Padding="10"
+                            Command="{Binding AuthorDonateLinkCommand}"
+                            Content="DONATE">
                             <Button.Style>
-                                <Style TargetType="Button" BasedOn="{StaticResource DonateButton}">
+                                <Style BasedOn="{StaticResource DonateButton}" TargetType="Button">
                                     <Setter Property="Visibility" Value="Visible" />
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ApplicationViewModel.CurrentPage,
-                                                               Source={x:Static local:ViewModelLocator.Instance}}" 
-                                                     Value="Home">
+                                        <DataTrigger Binding="{Binding ApplicationViewModel.CurrentPage, Source={x:Static local:ViewModelLocator.Instance}}" Value="Home">
                                             <Setter Property="Visibility" Value="Collapsed" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -93,19 +118,18 @@
                             </Button.Style>
                         </Button>
 
-                        <!-- Preferences Button -->
-                        <Button Content="{StaticResource FontAwesomeCogIcon}"
-                                Command="{Binding OpenPreferencesPageCommand}" 
-                                FontFamily="{StaticResource FontAwesomeSolid}"
-                                FontSize="18"
-                                MinWidth="40">
+                        <!--  Preferences Button  -->
+                        <Button
+                            MinWidth="40"
+                            Command="{Binding OpenPreferencesPageCommand}"
+                            Content="{StaticResource FontAwesomeCogIcon}"
+                            FontFamily="{StaticResource FontAwesomeSolid}"
+                            FontSize="18">
                             <Button.Style>
-                                <Style TargetType="Button" BasedOn="{StaticResource SideMenuButton}">
+                                <Style BasedOn="{StaticResource SideMenuButton}" TargetType="Button">
                                     <Setter Property="Grid.Column" Value="2" />
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ApplicationViewModel.CurrentPage,
-                                                               Source={x:Static local:ViewModelLocator.Instance}}" 
-                                                     Value="Home">
+                                        <DataTrigger Binding="{Binding ApplicationViewModel.CurrentPage, Source={x:Static local:ViewModelLocator.Instance}}" Value="Home">
                                             <Setter Property="Grid.Column" Value="0" />
                                         </DataTrigger>
                                     </Style.Triggers>

@@ -15,6 +15,7 @@
         /// </summary>
         public double PosY { get; set; } = 0;
 
+        // TODO ---
         public float Scale { get; set; } = 1;
 
         public float Opacity { get; set; } = 1;
