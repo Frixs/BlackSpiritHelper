@@ -81,7 +81,7 @@ namespace BlackSpiritHelper.Core
         /// Currently share window (pointer)
         /// </summary>
         [XmlIgnore]
-        public IntPtr CurrentScreenShareWindowPtr { get; private set; } = IntPtr.Zero;
+        public IntPtr CurrentScreenShareProcessHandle { get; private set; } = IntPtr.Zero;
 
         /// <summary>
         /// List of all types of <see cref="Orientation"/>.
@@ -194,14 +194,14 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Activate screen share
         /// </summary>
-        /// <param name="windowPtr">Window pointer to of the window to share</param>
-        public void ActiveScreenShare(IntPtr windowPtr)
+        /// <param name="windowHandle">Window pointer to of the window to share</param>
+        public void ActiveScreenShare(IntPtr windowHandle)
         {
             // Deactivate it first to be able to activate a new session
             DeactiveScreenShare();
 
             IsScreenShareActive = true;
-            CurrentScreenShareWindowPtr = windowPtr;
+            CurrentScreenShareProcessHandle = windowHandle;
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace BlackSpiritHelper.Core
         public void DeactiveScreenShare()
         {
             IsScreenShareActive = false;
-            CurrentScreenShareWindowPtr = IntPtr.Zero;
+            CurrentScreenShareProcessHandle = IntPtr.Zero;
         }
 
         #endregion

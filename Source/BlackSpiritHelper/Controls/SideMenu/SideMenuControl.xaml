@@ -60,10 +60,11 @@
                             Margin="0,0,0,10"
                             DropDownOpened="AvailableWindowsCombo_DropDownOpened"
                             Loaded="AvailableWindowsCombo_Loaded"
-                            SelectionChanged="AvailableWindowsCombo_SelectionChanged">
+                            SelectionChanged="AvailableWindowsCombo_SelectionChanged"
+                            Visibility="{Binding ApplicationDataContent.OverlayData.IsOpened, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:BooleanToVisibilityGoneConverter}}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding}" />
+                                    <TextBlock Text="{Binding ProcessName}" />
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>

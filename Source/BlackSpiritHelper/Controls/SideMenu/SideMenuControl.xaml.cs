@@ -1,5 +1,6 @@
 ﻿using BlackSpiritHelper.Core;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Controls;
 
 namespace BlackSpiritHelper
@@ -22,7 +23,7 @@ namespace BlackSpiritHelper
         {
             var items = e.AddedItems;
             if (items.Count > 0)
-                ((SideMenuControlViewModel)DataContext).SelectScreenShareWindowCommand.Execute(items[0].ToString());
+                ((SideMenuControlViewModel)DataContext).SelectScreenShareWindowCommand.Execute(items[0]);
         }
 
         private void AvailableWindowsCombo_Loaded(object sender, System.Windows.RoutedEventArgs e)
@@ -37,9 +38,9 @@ namespace BlackSpiritHelper
 
         private void LoadAvailableWindowsIntoCombo(object sender)
         {
-            var data = new List<string>();
-            data.Add("");
-            data.AddRange(IoC.WInfo.EnumVisibleWindows());
+            var data = new List<Process>();
+            data.Add(null);
+            data.AddRange(IoC.WInfo.EnumProcessesWithWindows());
 
             ((ComboBox)sender).ItemsSource = data;
             ((ComboBox)sender).SelectedIndex = 0;

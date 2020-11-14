@@ -1,13 +1,13 @@
 ﻿using BlackSpiritHelper.Core;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
+using System.Deployment.Application;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using System.Windows;
-using System.Deployment.Application;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace BlackSpiritHelper
 {
@@ -72,6 +72,9 @@ namespace BlackSpiritHelper
         {
             // Let the base application do what it needs.
             base.OnStartup(e);
+
+            // TODO --- hardware acceleration
+            //RenderOptions.ProcessRenderMode = System.Windows.Interop.RenderMode.SoftwareOnly;
 
             // Initialize early error list.
             InitEarlyErrorList();

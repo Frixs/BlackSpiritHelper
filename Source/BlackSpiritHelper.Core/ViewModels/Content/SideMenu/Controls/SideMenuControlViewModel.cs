@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace BlackSpiritHelper.Core
@@ -142,26 +143,20 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Select window to share
         /// </summary>
-        /// <param name="parameter">Window title represented as string</param>
+        /// <param name="parameter">Process representing object to capture</param>
         /// <returns></returns>
         private async Task SelectScreenShareWindowCommandMethodAsync(object parameter)
         {
             await RunCommandAsync(() => mManageOverlayCommandFlag, async () =>
             {
-                string s = parameter as string;
+                Process p = parameter as Process;
 
-                if (!string.IsNullOrEmpty(s))
-                {
-                    var ptr = IoC.WInfo.GetWindowPtr(s);
-                    if (ptr != null)
-                        IoC.DataContent.OverlayData.ActiveScreenShare(ptr.Value);
-                    else
-                        IoC.DataContent.OverlayData.DeactiveScreenShare();
-                }
+                if (p != null)
+                    // Activate screen share
+                    IoC.DataContent.OverlayData.ActiveScreenShare(p.MainWindowHandle);
                 else
-                {
+                    // Deactivate screen share
                     IoC.DataContent.OverlayData.DeactiveScreenShare();
-                }
 
                 await Task.Delay(1);
             });

@@ -1,6 +1,6 @@
 ﻿using BlackSpiritHelper.Core;
-using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace BlackSpiritHelper
@@ -11,20 +11,12 @@ namespace BlackSpiritHelper
     public class WindowInfo : IWindowInfo
     {
         /// <inheritdoc/>
-        public IntPtr? GetWindowPtr(string windowTitle)
+        public IEnumerable<Process> EnumProcessesWithWindows()
         {
-            var windowEnum = WindowHelper.EnumVisibleWindows();
-            foreach (var i in windowEnum)
-                if (i.Value.Equals(windowTitle))
-                    return i.Key;
-            return null;
-        }
-
-        /// <inheritdoc/>
-        public IList<string> EnumVisibleWindows()
-        {
-            var windows = WindowHelper.EnumVisibleWindows();
-            return windows.Select(o => o.Value).ToList();
+            var processesWithWindows = from p in Process.GetProcesses()
+                                       where !string.IsNullOrWhiteSpace(p.MainWindowTitle) && WindowHelper.IsWindowValidForCapture(p.MainWindowHandle)
+                                       select p;
+            return processesWithWindows;
         }
     }
 }

@@ -276,11 +276,12 @@ namespace BlackSpiritHelper
         /// </summary>
         private void ProcessCapture()
         {
-            IntPtr ptr = IoC.DataContent.OverlayData.CurrentScreenShareWindowPtr;
+            IntPtr hwnd = IoC.DataContent.OverlayData.CurrentScreenShareProcessHandle;
 
             while (true)
             {
-                var capture = WindowHelper.CaptureWindow(ptr);
+                var capture = WindowHelper.CaptureWindow(hwnd);
+                //var capture = WindowHelper.PrintWindow(hwnd);
 
                 // UI thread required
                 Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, (Action)(() =>
@@ -293,14 +294,17 @@ namespace BlackSpiritHelper
                         var bitmapImage = new BitmapImage();
                         bitmapImage.BeginInit();
                         bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                        //bitmapImage.DecodePixelHeight = 255;
                         bitmapImage.StreamSource = ms;
                         bitmapImage.EndInit();
+                        bitmapImage.Freeze();
 
                         ScreenShareImage.Source = bitmapImage;
                     }
+                    //ScreenShareImage.Source = capture;
                 }));
 
-                Thread.Sleep(1000);
+                Thread.Sleep(34);
 
                 if (mScreenShareThreadProcess == null)
                     break;

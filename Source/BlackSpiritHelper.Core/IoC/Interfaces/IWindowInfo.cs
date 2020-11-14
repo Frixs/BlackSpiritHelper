@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace BlackSpiritHelper.Core
 {
@@ -9,16 +10,9 @@ namespace BlackSpiritHelper.Core
     public interface IWindowInfo
     {
         /// <summary>
-        /// Get the pointer to the window by giving window title
+        /// Enum all processes with windows
         /// </summary>
-        /// <param name="windowTitle">The window title</param>
-        /// <returns>Window Pointer</returns>
-        IntPtr? GetWindowPtr(string windowTitle);
-
-        /// <summary>
-        /// Enum all visible window titles
-        /// </summary>
-        /// <returns>List of visible window titles</returns>
-        IList<string> EnumVisibleWindows();
+        /// <returns>List of processes</returns>
+        IEnumerable<Process> EnumProcessesWithWindows();
     }
 }
