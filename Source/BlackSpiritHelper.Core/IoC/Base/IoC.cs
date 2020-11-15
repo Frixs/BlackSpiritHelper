@@ -66,11 +66,6 @@ namespace BlackSpiritHelper.Core
         public static IWebManager Web => Get<IWebManager>();
 
         /// <summary>
-        /// A shortcut to access the <see cref="IWindowInfo"/>.
-        /// </summary>
-        public static IWindowInfo WInfo => Get<IWindowInfo>();
-
-        /// <summary>
         /// A shortcut to access the <see cref="ApplicationDataContent"/>.
         /// </summary>
         public static ApplicationDataContent DataContent => Get<ApplicationDataContent>();

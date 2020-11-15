@@ -55,19 +55,56 @@
                         </Grid.RowDefinitions>
 
                         <!--  ShareScreen Overlay selection  -->
-                        <ComboBox
+                        <Grid
                             Grid.Row="0"
+                            Height="30"
                             Margin="0,0,0,10"
-                            DropDownOpened="AvailableWindowsCombo_DropDownOpened"
-                            Loaded="AvailableWindowsCombo_Loaded"
-                            SelectionChanged="AvailableWindowsCombo_SelectionChanged"
                             Visibility="{Binding ApplicationDataContent.OverlayData.IsOpened, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:BooleanToVisibilityGoneConverter}}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding ProcessName}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <!--  Select Window  -->
+                            <ComboBox
+                                x:Name="WindowComboBox"
+                                Grid.Column="0"
+                                DropDownOpened="ComboBox_DropDownOpened_Window"
+                                Loaded="ComboBox_Loaded_Window"
+                                SelectionChanged="ComboBox_SelectionChanged_Window">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding ProcessName}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <!--  Select Monitor  -->
+                            <ComboBox
+                                x:Name="MonitorComboBox"
+                                Grid.Column="1"
+                                Margin="10,0,0,0"
+                                DropDownOpened="ComboBox_DropDownOpened_Monitor"
+                                Loaded="ComboBox_Loaded_Monitor"
+                                SelectionChanged="ComboBox_SelectionChanged_Monitor">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding DeviceName}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <!--  Stop Capture BTN  -->
+                            <Button
+                                Grid.Column="2"
+                                Width="30"
+                                Height="30"
+                                HorizontalAlignment="Right"
+                                Command="{Binding StopScreenCaptureCommand}"
+                                Content="{StaticResource FontAwesomeCogIcon}"
+                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                FontSize="14"
+                                Style="{StaticResource SideMenuButton}"
+                                Visibility="{Binding ApplicationDataContent.OverlayData.IsScreenCaptureActive, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:BooleanToVisibilityGoneConverter}}" />
+                        </Grid>
 
                         <!--  Show Overlay  -->
                         <Grid Grid.Row="1">

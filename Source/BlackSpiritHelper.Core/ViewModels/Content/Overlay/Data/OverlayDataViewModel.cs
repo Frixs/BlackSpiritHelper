@@ -67,21 +67,24 @@ namespace BlackSpiritHelper.Core
         public OverlayBaseDataViewModel BaseOverlay { get; set; } = new OverlayBaseDataViewModel();
 
         /// <summary>
-        /// Screen share data view model
+        /// Screen capture data view model
         /// </summary>
-        public OverlayScreenShareDataViewModel ScreenShareOverlay { get; set; } = new OverlayScreenShareDataViewModel();
+        public OverlayScreenCaptureDataViewModel ScreenCaptureOverlay { get; set; } = new OverlayScreenCaptureDataViewModel();
 
         /// <summary>
         /// Indicates if the scren share is active/visible
         /// </summary>
         [XmlIgnore]
-        public bool IsScreenShareActive { get; private set; } = false;
+        public bool IsScreenCaptureActive { get; private set; } = false;
 
         /// <summary>
         /// Currently share window (pointer)
         /// </summary>
+        /// <remarks>
+        ///     Has value only if IsScreenCaptureActive == true
+        /// </remarks>
         [XmlIgnore]
-        public IntPtr CurrentScreenShareProcessHandle { get; private set; } = IntPtr.Zero;
+        public ScreenCaptureHandle ScreenCaptureHandleData { get; private set; } = null;
 
         /// <summary>
         /// List of all types of <see cref="Orientation"/>.
@@ -192,25 +195,25 @@ namespace BlackSpiritHelper.Core
         #region Public Methods
 
         /// <summary>
-        /// Activate screen share
+        /// Activate screen capture
         /// </summary>
-        /// <param name="windowHandle">Window pointer to of the window to share</param>
-        public void ActiveScreenShare(IntPtr windowHandle)
+        /// <param name="sch">Window/Monitor handle data</param>
+        public void ActiveCaptureShare(ScreenCaptureHandle sch)
         {
             // Deactivate it first to be able to activate a new session
-            DeactiveScreenShare();
+            DeactiveScreenCapture();
 
-            IsScreenShareActive = true;
-            CurrentScreenShareProcessHandle = windowHandle;
+            ScreenCaptureHandleData = sch;
+            IsScreenCaptureActive = true;
         }
 
         /// <summary>
-        /// Deactivate screen share
+        /// Deactivate screen capture
         /// </summary>
-        public void DeactiveScreenShare()
+        public void DeactiveScreenCapture()
         {
-            IsScreenShareActive = false;
-            CurrentScreenShareProcessHandle = IntPtr.Zero;
+            IsScreenCaptureActive = false;
+            ScreenCaptureHandleData = null;
         }
 
         #endregion

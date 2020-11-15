@@ -1,4 +1,5 @@
 ﻿using BlackSpiritHelper.Core;
+using Composition.WindowsRuntimeHelpers;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
+using Windows.System;
 
 namespace BlackSpiritHelper
 {
@@ -59,6 +61,17 @@ namespace BlackSpiritHelper
 
             e.Handled = true;
         }
+
+        #endregion
+
+        #region Constructor
+
+        public App()
+        {
+            _controller = CoreMessagingHelper.CreateDispatcherQueueControllerForCurrentThread();
+        }
+
+        private DispatcherQueueController _controller;
 
         #endregion
 
@@ -321,9 +334,6 @@ namespace BlackSpiritHelper
 
             // Bind a mouse key hooks.
             IoC.Kernel.Bind<IMouseKeyHook>().ToConstant(new GlobalMouseKeyHookManager());
-
-            // Bind a share.
-            IoC.Kernel.Bind<IWindowInfo>().ToConstant(new WindowInfo());
 
             // Bind Application data content view models.
             IoC.Kernel.Bind<ApplicationDataContent>().ToConstant(new ApplicationDataContent());

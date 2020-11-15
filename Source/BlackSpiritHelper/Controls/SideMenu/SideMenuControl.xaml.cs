@@ -1,7 +1,8 @@
 ﻿using BlackSpiritHelper.Core;
-using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows.Controls;
+using Windows.Foundation.Metadata;
 
 namespace BlackSpiritHelper
 {
@@ -10,6 +11,13 @@ namespace BlackSpiritHelper
     /// </summary>
     public partial class SideMenuControl : UserControl
     {
+        #region Private Members
+
+        private ComboBox mWindowComboBox;
+        private ComboBox mMonitorComboBox;
+
+        #endregion
+
         #region Constructor
 
         public SideMenuControl()
@@ -19,31 +27,89 @@ namespace BlackSpiritHelper
 
         #endregion
 
-        private void AvailableWindowsCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /// <summary>
+        /// Window Combo - SelectionChanged
+        /// </summary>
+        private void ComboBox_SelectionChanged_Window(object sender, SelectionChangedEventArgs e)
         {
+            mMonitorComboBox.SelectedIndex = -1;
+
             var items = e.AddedItems;
             if (items.Count > 0)
-                ((SideMenuControlViewModel)DataContext).SelectScreenShareWindowCommand.Execute(items[0]);
+                ((SideMenuControlViewModel)DataContext).SelectScreenCaptureWindowCommand.Execute(new ScreenCaptureHandle(((Process)items[0]).MainWindowHandle, true));
         }
 
-        private void AvailableWindowsCombo_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        /// <summary>
+        /// Window Combo - DropDownOpened
+        /// </summary>
+        private void ComboBox_DropDownOpened_Window(object sender, System.EventArgs e)
         {
-            LoadAvailableWindowsIntoCombo(sender);
+            ComboBox_Loaded_Window(sender, null);
         }
 
-        private void AvailableWindowsCombo_DropDownOpened(object sender, System.EventArgs e)
+        /// <summary>
+        /// Window Combo - Loaded
+        /// </summary>
+        private void ComboBox_Loaded_Window(object sender, System.Windows.RoutedEventArgs e)
         {
-            LoadAvailableWindowsIntoCombo(sender);
+            mWindowComboBox = (ComboBox)sender;
+
+            if (ApiInformation.IsApiContractPresent(typeof(Windows.Foundation.UniversalApiContract).FullName, 8))
+            {
+                var processesWithWindows = from p in Process.GetProcesses()
+                                           where !string.IsNullOrWhiteSpace(p.MainWindowTitle) && WindowEnumerationHelper.IsWindowValidForCapture(p.MainWindowHandle)
+                                           select p;
+                ((ComboBox)sender).ItemsSource = processesWithWindows;
+                ((ComboBox)sender).IsEnabled = true;
+            }
+            else
+            {
+                ((ComboBox)sender).IsEnabled = false;
+            }
+
+            if (e != null)
+                ((ComboBox)sender).SelectedIndex = -1;
         }
 
-        private void LoadAvailableWindowsIntoCombo(object sender)
+        /// <summary>
+        /// Monitor Combo - SelectionChanged
+        /// </summary>
+        private void ComboBox_SelectionChanged_Monitor(object sender, SelectionChangedEventArgs e)
         {
-            var data = new List<Process>();
-            data.Add(null);
-            data.AddRange(IoC.WInfo.EnumProcessesWithWindows());
+            mWindowComboBox.SelectedIndex = -1;
 
-            ((ComboBox)sender).ItemsSource = data;
-            ((ComboBox)sender).SelectedIndex = 0;
+            var items = e.AddedItems;
+            if (items.Count > 0)
+                ((SideMenuControlViewModel)DataContext).SelectScreenCaptureWindowCommand.Execute(new ScreenCaptureHandle(((MonitorInfo)items[0]).Hmon, false));
+        }
+
+        /// <summary>
+        /// Monitor Combo - DropDownOpened
+        /// </summary>
+        private void ComboBox_DropDownOpened_Monitor(object sender, System.EventArgs e)
+        {
+            ComboBox_Loaded_Monitor(sender, null);
+        }
+
+        /// <summary>
+        /// Monitor Combo - Loaded
+        /// </summary>
+        private void ComboBox_Loaded_Monitor(object sender, System.Windows.RoutedEventArgs e)
+        {
+            mMonitorComboBox = (ComboBox)sender;
+
+            if (ApiInformation.IsApiContractPresent(typeof(Windows.Foundation.UniversalApiContract).FullName, 8))
+            {
+                ((ComboBox)sender).ItemsSource = MonitorEnumerationHelper.GetMonitors();
+                ((ComboBox)sender).IsEnabled = true;
+            }
+            else
+            {
+                ((ComboBox)sender).IsEnabled = false;
+            }
+
+            if (e != null)
+                ((ComboBox)sender).SelectedIndex = -1;
         }
     }
 }

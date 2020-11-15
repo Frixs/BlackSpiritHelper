@@ -1,19 +1,19 @@
 ﻿namespace BlackSpiritHelper.Core
 {
     /// <summary>
-    /// TODO
+    /// Overlay screen capture data
     /// </summary>
-    public class OverlayScreenShareDataViewModel
+    public class OverlayScreenCaptureDataViewModel
     {
         /// <summary>
         /// X axis position of the overlay object.
         /// </summary>
-        public double PosX { get; set; } = 0;
+        public float PosX { get; set; } = 0;
 
         /// <summary>
         /// Y axis position of the overlay object.
         /// </summary>
-        public double PosY { get; set; } = 0;
+        public float PosY { get; set; } = 0;
 
         // TODO ---
         public float Scale { get; set; } = 1;

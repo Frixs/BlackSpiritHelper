@@ -223,8 +223,8 @@ namespace BlackSpiritHelper.Core
             IoC.DataContent.OverlayData.BaseOverlay.PosX = 0;
             IoC.DataContent.OverlayData.BaseOverlay.PosY = 0;
 
-            IoC.DataContent.OverlayData.ScreenShareOverlay.PosX = 0;
-            IoC.DataContent.OverlayData.ScreenShareOverlay.PosY = 0;
+            IoC.DataContent.OverlayData.ScreenCaptureOverlay.PosX = 0;
+            IoC.DataContent.OverlayData.ScreenCaptureOverlay.PosY = 0;
 
             await Task.Delay(1);
         }

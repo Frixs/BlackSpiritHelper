@@ -1,15 +1,15 @@
 ﻿using BlackSpiritHelper.Core;
+using Composition.WindowsRuntimeHelpers;
 using System;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Threading;
+using System.Diagnostics;
+using System.Numerics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Threading;
+using Windows.Graphics.Capture;
+using Windows.UI.Composition;
 
 namespace BlackSpiritHelper
 {
@@ -35,14 +35,20 @@ namespace BlackSpiritHelper
         #region Private Members
 
         /// <summary>
-        /// Thread reference to the screen share processing thread
+        /// Current window handle
         /// </summary>
-        private Thread mScreenShareThreadProcess = null;
+        private IntPtr mWindowHandle;
+
+        // Scree capture handlers
+        private Compositor mCaptureCompositor;
+        private Windows.UI.Composition.CompositionTarget mCaptureCompositionTarget;
+        private Windows.UI.Composition.ContainerVisual mCaptureCompositionRootContainer;
+        private OverlayScreenCaptureCaptureHandler mCaptureHandler;
 
         /// <summary>
-        /// Target window handle where to open overlay window.
+        /// TODO .
         /// </summary>
-        private IntPtr mTargetWindowHandle;
+        private int mDragBorderMargin = 25;
 
         /// <summary>
         /// Says if the overlay window is ok to show.
@@ -57,25 +63,29 @@ namespace BlackSpiritHelper
         /// <summary>
         /// Brush background overlay color.
         /// </summary>
-        private Brush mOverlayBackgroundBrush;
+        private readonly Brush mOverlayBackgroundBrush;
 
         /// <summary>
         /// Brush background overlay color if there are no items.
         /// </summary>
-        private Brush mOverlayBackgroundBrushNoItems;
+        private readonly Brush mOverlayBackgroundBrushNoItems;
 
         #endregion
 
         #region Constructor
 
-        public OverlayWindow(IntPtr targetWindowReference)
+        public OverlayWindow()
         {
-            mTargetWindowHandle = targetWindowReference;
             InitializeComponent();
 
             // Set brush colors.
             mOverlayBackgroundBrush = (Brush)FindResource("TransparentBrushKey");
             mOverlayBackgroundBrushNoItems = (Brush)FindResource("RedBrushKey");
+
+#if DEBUG
+            // Force graphicscapture.dll to load.
+            var picker = new GraphicsCapturePicker();
+#endif
         }
 
         #endregion
@@ -84,11 +94,12 @@ namespace BlackSpiritHelper
 
         private void Window_Initialized(object sender, EventArgs e)
         {
-            IntPtr overlayWindowHandle = new WindowInteropHelper(this).Handle;
+            IntPtr hWndMainApp = new WindowInteropHelper(Application.Current.MainWindow).Handle;
+            IntPtr hWndOverlay = new WindowInteropHelper(this).Handle;
 
-            if (mTargetWindowHandle.Equals(IntPtr.Zero))
+            if (hWndMainApp == IntPtr.Zero)
             {
-                IoC.Logger.Log("Target window not found!", LogLevel.Error);
+                IoC.Logger.Log("App main window not found!", LogLevel.Error);
                 mIsOverlayOk = false;
                 return;
             }
@@ -98,7 +109,7 @@ namespace BlackSpiritHelper
             ShowInTaskbar = false;
             Topmost = true;
 
-            SetOverlayPosition(overlayWindowHandle, mTargetWindowHandle);
+            SetOverlayPosition(hWndOverlay, hWndMainApp);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -111,6 +122,17 @@ namespace BlackSpiritHelper
 
             // Maximize the window.
             WindowState = WindowState.Maximized;
+
+            // Save window handle
+            var interopWindow = new WindowInteropHelper(this);
+            mWindowHandle = interopWindow.Handle;
+
+            InitScreenCaptureComposition();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            StopCapture();
         }
 
         protected override void OnSourceInitialized(EventArgs e)
@@ -124,6 +146,9 @@ namespace BlackSpiritHelper
 
         #region Drag Overlay Methods
 
+        /// <summary>
+        /// On MOUSE-DOWN
+        /// </summary>
         private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (IoC.DataContent.OverlayData.IsDraggingLocked)
@@ -135,6 +160,9 @@ namespace BlackSpiritHelper
             mOverlayObjectMouseRelPos = e.GetPosition(sender as UIElement);
         }
 
+        /// <summary>
+        /// On MOUSE-MOVE
+        /// </summary>
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
             if (IoC.DataContent.OverlayData.IsDraggingLocked)
@@ -152,9 +180,15 @@ namespace BlackSpiritHelper
                 e.GetPosition(null).Y - mOverlayObjectMouseRelPos.Y
                 );
 
+            // TODO .
+            mCaptureCompositionRootContainer.Offset = new Vector3(IoC.DataContent.OverlayData.ScreenCaptureOverlay.PosX + mDragBorderMargin, IoC.DataContent.OverlayData.ScreenCaptureOverlay.PosY + mDragBorderMargin, 0);
+
             // e.GetPosition((sender as FrameworkElement).Parent as FrameworkElement).Y
         }
 
+        /// <summary>
+        /// On MOUSE-UP
+        /// </summary>
         private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (IoC.DataContent.OverlayData.IsDraggingLocked)
@@ -173,13 +207,11 @@ namespace BlackSpiritHelper
         /// <summary>
         /// Create overlay window on the position of target window.
         /// </summary>
-        /// <param name="overlayWindowHandle">Overlay window handle.</param>
-        /// <param name="targetWindowHandle">Target window handle.</param>
-        private void SetOverlayPosition(IntPtr overlayWindowHandle, IntPtr targetWindowHandle)
+        /// <param name="hwndOverlay">Overlay window handle.</param>
+        /// <param name="hwndMainApp">Target window handle.</param>
+        private void SetOverlayPosition(IntPtr hwndOverlay, IntPtr hwndMainApp)
         {
-            System.Windows.Forms.Screen screen = null;
-
-            screen = System.Windows.Forms.Screen.FromHandle(targetWindowHandle);
+            System.Windows.Forms.Screen screen = System.Windows.Forms.Screen.FromHandle(hwndMainApp);
 
             WindowState = WindowState.Normal; // Reset.
 
@@ -242,9 +274,9 @@ namespace BlackSpiritHelper
         }
 
         /// <summary>
-        /// When <see cref="IoC.DataContent.OverlayData.IsScreenShareActive"/> is changed
+        /// When <see cref="IoC.DataContent.OverlayData.IsScreenCaptureActive"/> got changed
         /// </summary>
-        private void ScreenShareOverlayObject_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void ScreenCaptureOverlayObject_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             bool value = (bool)e.NewValue;
 
@@ -256,59 +288,90 @@ namespace BlackSpiritHelper
 
         #endregion
 
-        #region ScreenShare Capture
+        #region ScreenCapture Capture
 
-        private void StartCapture()
+        private void InitScreenCaptureComposition()
         {
-            StopCapture();
-            mScreenShareThreadProcess = new Thread(ProcessCapture);
-            mScreenShareThreadProcess.Start();
-        }
+            var controlsWidth = System.Windows.Forms.Screen.FromHandle(mWindowHandle).Bounds.Width / 2f;
+            var controlsHeight = System.Windows.Forms.Screen.FromHandle(mWindowHandle).Bounds.Height / 2f;
 
-        private void StopCapture()
-        {
-            if (mScreenShareThreadProcess != null)
-                mScreenShareThreadProcess.Abort();
+            // Create the compositor.
+            mCaptureCompositor = new Compositor();
+
+            // Create a target for the window.
+            mCaptureCompositionTarget = mCaptureCompositor.CreateDesktopWindowTarget(mWindowHandle, false);
+
+            // Attach the root visual.
+            mCaptureCompositionRootContainer = mCaptureCompositor.CreateContainerVisual();
+            mCaptureCompositionRootContainer.RelativeSizeAdjustment = Vector2.Zero;
+            mCaptureCompositionRootContainer.RelativeOffsetAdjustment = Vector3.Zero;
+            mCaptureCompositionRootContainer.Size = new Vector2(controlsWidth, controlsHeight);
+            mCaptureCompositionRootContainer.Offset = new Vector3(IoC.DataContent.OverlayData.ScreenCaptureOverlay.PosX + mDragBorderMargin, IoC.DataContent.OverlayData.ScreenCaptureOverlay.PosY + mDragBorderMargin, 0);
+            mCaptureCompositionRootContainer.AnchorPoint = new Vector2(0, 0);
+            mCaptureCompositionRootContainer.Scale = new Vector3(1, 1, 0);
+            mCaptureCompositionRootContainer.Opacity = 0.9f;
+            mCaptureCompositionTarget.Root = mCaptureCompositionRootContainer;
+
+            // Setup the rest of the sample application.
+            mCaptureHandler = new OverlayScreenCaptureCaptureHandler(mCaptureCompositor);
+            mCaptureCompositionRootContainer.Children.InsertAtTop(mCaptureHandler.Visual);
+
+            ScreenCaptureCanvas.Width = controlsWidth;
+            ScreenCaptureCanvas.Height = controlsHeight;
         }
 
         /// <summary>
-        /// Thread processing method for screen share
+        /// Start screen capture
         /// </summary>
-        private void ProcessCapture()
+        private void StartCapture()
         {
-            IntPtr hwnd = IoC.DataContent.OverlayData.CurrentScreenShareProcessHandle;
-
-            while (true)
+            var sch = IoC.DataContent.OverlayData.ScreenCaptureHandleData;
+            if (sch == null)
             {
-                var capture = WindowHelper.CaptureWindow(hwnd);
-                //var capture = WindowHelper.PrintWindow(hwnd);
-
-                // UI thread required
-                Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, (Action)(() =>
-                {
-                    using (var ms = new MemoryStream())
-                    {
-                        capture.Save(ms, ImageFormat.Bmp);
-                        ms.Seek(0, SeekOrigin.Begin);
-
-                        var bitmapImage = new BitmapImage();
-                        bitmapImage.BeginInit();
-                        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                        //bitmapImage.DecodePixelHeight = 255;
-                        bitmapImage.StreamSource = ms;
-                        bitmapImage.EndInit();
-                        bitmapImage.Freeze();
-
-                        ScreenShareImage.Source = bitmapImage;
-                    }
-                    //ScreenShareImage.Source = capture;
-                }));
-
-                Thread.Sleep(34);
-
-                if (mScreenShareThreadProcess == null)
-                    break;
+                IoC.Logger.Log("Undefined screen capture handle!", LogLevel.Error);
+                return;
             }
+
+            // Stop capture first
+            StopCapture();
+
+            // Window
+            if (sch.isWindow)
+            {
+                try
+                {
+                    GraphicsCaptureItem item = CaptureHelper.CreateItemForWindow(sch.handle);
+                    if (item != null)
+                        mCaptureHandler.StartCaptureFromItem(item);
+                }
+                catch (Exception)
+                {
+                    IoC.Logger.Log($"Hwnd 0x{sch.handle.ToInt32():X8} is not valid for capture!", LogLevel.Warning);
+                }
+            }
+            // Monitor
+            else
+            {
+                try
+                {
+                    GraphicsCaptureItem item = CaptureHelper.CreateItemForMonitor(sch.handle);
+                    if (item != null)
+                        mCaptureHandler.StartCaptureFromItem(item);
+                }
+                catch (Exception)
+                {
+                    IoC.Logger.Log($"Hmon 0x{sch.handle.ToInt32():X8} is not valid for capture!", LogLevel.Warning);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Stop screen capture
+        /// </summary>
+        private void StopCapture()
+        {
+            mCaptureHandler?.StopCapture();
+            IoC.Logger.Log($"Screen capture has stoped!", LogLevel.Debug);
         }
 
         #endregion

@@ -10,12 +10,12 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// X axis position of the overlay object.
         /// </summary>
-        public double PosX { get; set; } = 0;
+        public float PosX { get; set; } = 0;
 
         /// <summary>
         /// Y axis position of the overlay object.
         /// </summary>
-        public double PosY { get; set; } = 0;
+        public float PosY { get; set; } = 0;
 
         /// <summary>
         /// Overlay orientation.
