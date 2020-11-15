@@ -1,4 +1,5 @@
-﻿//  ---------------------------------------------------------------------------------
+﻿//  Followed example: https://github.com/microsoft/Windows.UI.Composition-Win32-Samples/tree/master/dotnet/WPF/ScreenCapture
+//  ---------------------------------------------------------------------------------
 //  Copyright (c) Microsoft Corporation.  All rights reserved.
 // 
 //  The MIT License (MIT)

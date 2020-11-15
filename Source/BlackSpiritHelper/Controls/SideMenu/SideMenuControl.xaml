@@ -71,7 +71,10 @@
                                 Grid.Column="0"
                                 DropDownOpened="ComboBox_DropDownOpened_Window"
                                 Loaded="ComboBox_Loaded_Window"
-                                SelectionChanged="ComboBox_SelectionChanged_Window">
+                                SelectionChanged="ComboBox_SelectionChanged_Window"
+                                Style="{StaticResource ComboBoxButton}"
+                                Tag="{StaticResource FontAwesomeWindowRestoreIcon}"
+                                ToolTip="Available windows to capture">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding ProcessName}" />
@@ -85,7 +88,10 @@
                                 Margin="10,0,0,0"
                                 DropDownOpened="ComboBox_DropDownOpened_Monitor"
                                 Loaded="ComboBox_Loaded_Monitor"
-                                SelectionChanged="ComboBox_SelectionChanged_Monitor">
+                                SelectionChanged="ComboBox_SelectionChanged_Monitor"
+                                Style="{StaticResource ComboBoxButton}"
+                                Tag="{StaticResource FontAwesomeDesktopIcon}"
+                                ToolTip="Available monitors to capture">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding DeviceName}" />
@@ -99,10 +105,12 @@
                                 Height="30"
                                 HorizontalAlignment="Right"
                                 Command="{Binding StopScreenCaptureCommand}"
-                                Content="{StaticResource FontAwesomeCogIcon}"
+                                Content="{StaticResource FontAwesomeWindowCloseIcon}"
                                 FontFamily="{StaticResource FontAwesomeSolid}"
                                 FontSize="14"
-                                Style="{StaticResource SideMenuButton}"
+                                IsEnabled="{Binding ApplicationDataContent.OverlayData.IsScreenCaptureActive, Source={x:Static local:ViewModelLocator.Instance}}"
+                                IsEnabledChanged="Button_IsEnabledChanged"
+                                Style="{StaticResource SideMenuButtonDark}"
                                 Visibility="{Binding ApplicationDataContent.OverlayData.IsScreenCaptureActive, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:BooleanToVisibilityGoneConverter}}" />
                         </Grid>
 
@@ -110,7 +118,7 @@
                         <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="30" />
                             </Grid.ColumnDefinitions>
                             <!--  Overlay Checkbox  -->
                             <CheckBox
@@ -123,12 +131,13 @@
                                 Style="{StaticResource OverlayCheckbox}" />
                             <TextBlock
                                 Grid.Column="1"
+                                HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 FontFamily="{StaticResource FontAwesomeSolid}"
                                 FontSize="18"
                                 Foreground="{StaticResource SideMenuForegroundDarkBrushKey}"
                                 Text="{StaticResource FontAwesomeQuestionCircleIcon}"
-                                ToolTip="TIP: To interact with the overlay, hold L.ALT key." />
+                                ToolTip="Hold down L.ALT key to interact with the overlay." />
                         </Grid>
                     </Grid>
                 </Border>

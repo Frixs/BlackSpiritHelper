@@ -32,8 +32,6 @@ namespace BlackSpiritHelper
         /// </summary>
         private void ComboBox_SelectionChanged_Window(object sender, SelectionChangedEventArgs e)
         {
-            mMonitorComboBox.SelectedIndex = -1;
-
             var items = e.AddedItems;
             if (items.Count > 0)
                 ((SideMenuControlViewModel)DataContext).SelectScreenCaptureWindowCommand.Execute(new ScreenCaptureHandle(((Process)items[0]).MainWindowHandle, true));
@@ -44,6 +42,7 @@ namespace BlackSpiritHelper
         /// </summary>
         private void ComboBox_DropDownOpened_Window(object sender, System.EventArgs e)
         {
+            ((SideMenuControlViewModel)DataContext).StopScreenCaptureCommand.Execute(null);
             ComboBox_Loaded_Window(sender, null);
         }
 
@@ -69,6 +68,11 @@ namespace BlackSpiritHelper
 
             if (e != null)
                 ((ComboBox)sender).SelectedIndex = -1;
+            else
+            {
+                mWindowComboBox.SelectedIndex = -1;
+                mMonitorComboBox.SelectedIndex = -1;
+            }
         }
 
         /// <summary>
@@ -76,8 +80,6 @@ namespace BlackSpiritHelper
         /// </summary>
         private void ComboBox_SelectionChanged_Monitor(object sender, SelectionChangedEventArgs e)
         {
-            mWindowComboBox.SelectedIndex = -1;
-
             var items = e.AddedItems;
             if (items.Count > 0)
                 ((SideMenuControlViewModel)DataContext).SelectScreenCaptureWindowCommand.Execute(new ScreenCaptureHandle(((MonitorInfo)items[0]).Hmon, false));
@@ -88,6 +90,7 @@ namespace BlackSpiritHelper
         /// </summary>
         private void ComboBox_DropDownOpened_Monitor(object sender, System.EventArgs e)
         {
+            ((SideMenuControlViewModel)DataContext).StopScreenCaptureCommand.Execute(null);
             ComboBox_Loaded_Monitor(sender, null);
         }
 
@@ -110,6 +113,25 @@ namespace BlackSpiritHelper
 
             if (e != null)
                 ((ComboBox)sender).SelectedIndex = -1;
+            else
+            {
+                mWindowComboBox.SelectedIndex = -1;
+                mMonitorComboBox.SelectedIndex = -1;
+            }
+        }
+
+        /// <summary>
+        /// On isScreenCaptureActive change
+        /// </summary>
+        private void Button_IsEnabledChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
+        {
+            if (!(bool)e.NewValue)
+            {
+                if (mWindowComboBox != null)
+                    mWindowComboBox.SelectedIndex = -1;
+                if (mMonitorComboBox != null)
+                    mMonitorComboBox.SelectedIndex = -1;
+            }
         }
     }
 }

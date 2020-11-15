@@ -371,7 +371,6 @@ namespace BlackSpiritHelper
         private void StopCapture()
         {
             mCaptureHandler?.StopCapture();
-            IoC.Logger.Log($"Screen capture has stoped!", LogLevel.Debug);
         }
 
         #endregion

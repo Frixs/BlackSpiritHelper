@@ -109,6 +109,7 @@
     <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -263,6 +264,7 @@
     <Compile Include="ValueConverters\BooleanToContentConverter.cs" />
     <Compile Include="ValueConverters\ContainsLeadingCharConverter.cs" />
     <Compile Include="ValueConverters\EnumDescriptionConverter.cs" />
+    <Compile Include="ValueConverters\IsNullConverter.cs" />
     <Compile Include="ValueConverters\Schedule\ScheduleTimeZoneRegionConverter.cs" />
     <Compile Include="ValueConverters\StringHEXLeadingHashConverter.cs" />
     <Compile Include="ValueConverters\SubstringConverter.cs" />
