@@ -262,6 +262,13 @@
                             </Style>
                         </Rectangle.Style>
                     </Rectangle>
+                    <!--  Value Position Y Trigger  -->
+                    <Slider
+                        Width="0"
+                        Height="0"
+                        ValueChanged="Slider_ValueChanged_PosY"
+                        Visibility="Hidden"
+                        Value="{Binding ScreenCaptureOverlay.PosY, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
                     <!--  Value Scale Trigger  -->
                     <Slider
                         Width="0"

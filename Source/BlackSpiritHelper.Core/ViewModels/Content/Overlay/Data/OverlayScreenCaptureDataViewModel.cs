@@ -3,7 +3,7 @@
     /// <summary>
     /// Overlay screen capture data
     /// </summary>
-    public class OverlayScreenCaptureDataViewModel
+    public class OverlayScreenCaptureDataViewModel : BaseViewModel
     {
         #region Static Limitation Properties
 

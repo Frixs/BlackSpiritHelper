@@ -303,6 +303,23 @@ namespace BlackSpiritHelper
         }
 
         /// <summary>
+        /// PosX update trigger
+        /// </summary>
+        private void Slider_ValueChanged_PosY(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (mOverlayData == null)
+                return;
+
+            // We do not want to update position here - but we want to catch only certain position change events
+            // Y resets after X - so do Y because X is already reset - otherwise Y would be still unreset
+            if (mOverlayData.ScreenCaptureOverlay.PosY == 0) // Reset Position BTN - resets to zero
+            {
+                // Update position of screen capture surface
+                UpdateCaptureCompositionOffset(mOverlayData.ScreenCaptureOverlay.PosX, mOverlayData.ScreenCaptureOverlay.PosY);
+            }
+        }
+
+        /// <summary>
         /// Scale update trigger
         /// </summary>
         private void Slider_ValueChanged_Scale(object sender, RoutedPropertyChangedEventArgs<double> e)
