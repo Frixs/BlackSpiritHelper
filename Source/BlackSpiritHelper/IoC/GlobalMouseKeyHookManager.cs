@@ -8,7 +8,15 @@ namespace BlackSpiritHelper
     {
         #region Private Members
 
+        /// <summary>
+        /// Hook eventer
+        /// </summary>
         private IKeyboardMouseEvents mGlobalHook;
+
+        /// <summary>
+        /// Interaction key for overlay
+        /// </summary>
+        private Keys mOverlayInteractionKey = Keys.LMenu;
 
         #endregion
 
@@ -28,6 +36,45 @@ namespace BlackSpiritHelper
         public void Dispose()
         {
             Unsubscribe();
+        }
+
+        #endregion
+
+        #region Interface Methods
+
+        /// <inheritdoc/>
+        public void SetOverlayInteractionKey(OverlayInteractionKey key)
+        {
+            switch (key)
+            {
+                case OverlayInteractionKey.LeftAlt:
+                    mOverlayInteractionKey = Keys.LMenu;
+                    break;
+
+                case OverlayInteractionKey.RightAlt:
+                    mOverlayInteractionKey = Keys.RMenu;
+                    break;
+
+                case OverlayInteractionKey.LeftControl:
+                    mOverlayInteractionKey = Keys.LControlKey;
+                    break;
+
+                case OverlayInteractionKey.RightControl:
+                    mOverlayInteractionKey = Keys.RControlKey;
+                    break;
+
+                case OverlayInteractionKey.LeftShift:
+                    mOverlayInteractionKey = Keys.LShiftKey;
+                    break;
+
+                case OverlayInteractionKey.RightShift:
+                    mOverlayInteractionKey = Keys.RShiftKey;
+                    break;
+
+                default:
+                    IoC.Logger.Log("No key specified!", LogLevel.Warning);
+                    break;
+            }
         }
 
         #endregion
@@ -89,17 +136,15 @@ namespace BlackSpiritHelper
         /// <summary>
         /// Overlay set transparecy.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void ActionOverlaySetTransparent(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode != Keys.LMenu)
+            if (e.KeyCode != mOverlayInteractionKey)
                 return;
-            
+
             // If the key was not pressed, it is not the action we are looking for to disable.
-            if (!e.Alt)
+            if (!IsOverlayInteractionKeyPressed(e))
                 return;
-            
+
             if (OverlayWindow.Window == null || OverlayWindow.IsActionTransparent)
                 return;
 
@@ -110,21 +155,47 @@ namespace BlackSpiritHelper
         /// <summary>
         /// Overlay unset transparecy.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void ActionOverlayUnsetTransparent(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode != Keys.LMenu)
+            if (e.KeyCode != mOverlayInteractionKey)
                 return;
-            
-            if (e.Alt)
+
+            if (IsOverlayInteractionKeyPressed(e))
                 return;
-            
+
             if (OverlayWindow.Window == null || !OverlayWindow.IsActionTransparent)
                 return;
 
             OverlayWindow.IsActionTransparent = false;
             OverlayWindow.Window.UnsetWindowExTransparent();
+        }
+
+        #endregion
+
+        #region Helper Methods
+
+        /// <summary>
+        /// Select the appropriate key based on user selected overlay interaction key and evaluate press
+        /// </summary>
+        /// <param name="e">event args from event method</param>
+        private bool IsOverlayInteractionKeyPressed(KeyEventArgs e)
+        {
+            bool result = false;
+
+            if (mOverlayInteractionKey == Keys.LMenu)
+                result = e.Alt;
+            else if (mOverlayInteractionKey == Keys.RMenu)
+                result = e.Alt;
+            else if (mOverlayInteractionKey == Keys.LControlKey)
+                result = e.Control;
+            else if (mOverlayInteractionKey == Keys.RControlKey)
+                result = e.Control;
+            else if (mOverlayInteractionKey == Keys.LShiftKey)
+                result = e.Shift;
+            else if (mOverlayInteractionKey == Keys.RShiftKey)
+                result = e.Shift;
+            
+            return result;
         }
 
         #endregion

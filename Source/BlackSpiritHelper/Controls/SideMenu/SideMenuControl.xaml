@@ -143,7 +143,7 @@
                                 FontSize="18"
                                 Foreground="{StaticResource SideMenuForegroundDarkBrushKey}"
                                 Text="{StaticResource FontAwesomeQuestionCircleIcon}"
-                                ToolTip="Hold down L.ALT key to interact with the overlay." />
+                                ToolTip="Hold down the configured key to interact with the overlay. You can configure the key in the preference page." />
                         </Grid>
                     </Grid>
                 </Border>

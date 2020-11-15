@@ -62,6 +62,7 @@
     <Compile Include="Audio\Core\AudioPriorityBracket.cs" />
     <Compile Include="Audio\Implementation\AudioPlayer.cs" />
     <Compile Include="Audio\Implementation\Managers\StandardAudioPack.cs" />
+    <Compile Include="DataTypes\OverlayInteractionKey.cs" />
     <Compile Include="DataTypes\ScreenCaptureHandle.cs" />
     <Compile Include="ViewModels\Content\Overlay\Data\OverlayBaseDataViewModel.cs" />
     <Compile Include="DataTypes\ApplicationArgument.cs" />

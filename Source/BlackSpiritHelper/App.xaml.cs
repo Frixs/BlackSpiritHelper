@@ -332,7 +332,7 @@ namespace BlackSpiritHelper
             // Bind a mouse key hooks.
             IoC.Kernel.Bind<IMouseKeyHook>().ToConstant(new GlobalMouseKeyHookManager());
 
-            // Bind Application data content view models.
+            // Bind Application data content view models. Always at the ned of binding.
             IoC.Kernel.Bind<ApplicationDataContent>().ToConstant(new ApplicationDataContent());
             IoC.DataContent.Setup();
         }

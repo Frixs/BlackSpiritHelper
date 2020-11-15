@@ -299,6 +299,25 @@
                     <!--  Spacer  -->
                     <Border Style="{StaticResource FormItemSpacer}" />
 
+                    <!--  Change Group  -->
+                    <TextBlock
+                        Margin="0,0,0,5"
+                        FontFamily="{StaticResource LatoRegular}"
+                        FontSize="14"
+                        Foreground="{StaticResource ForegroundBrushKey}"
+                        Text="Interaction Key" />
+                    <ComboBox
+                        HorizontalAlignment="Center"
+                        ItemsSource="{Binding OverlayInteractionKeyList}"
+                        SelectionChanged="ComboBox_SelectionChanged">
+                        <ComboBox.SelectedItem>
+                            <Binding Path="OverlayInteractionKey" UpdateSourceTrigger="PropertyChanged" />
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+
+                    <!--  Spacer  -->
+                    <Border Style="{StaticResource FormItemSpacer}" />
+
                     <!--  Reset overlay position  -->
                     <Button
                         Padding="10"
