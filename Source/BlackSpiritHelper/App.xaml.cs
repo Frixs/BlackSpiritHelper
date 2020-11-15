@@ -16,7 +16,7 @@ namespace BlackSpiritHelper
     /// <summary>
     /// Interaction logic for App.xaml
     /// ---
-    /// TODO:LATER: Replace Border for Separator TAG
+    /// TODO:LATER: Replace Border separator by Separator TAG
     /// TODO:LATER:APP: more...
     ///     - Application user option to download/check updates.
     ///     - Auto manage length of log file. Cut the file if it is too large.
@@ -85,9 +85,6 @@ namespace BlackSpiritHelper
         {
             // Let the base application do what it needs.
             base.OnStartup(e);
-
-            // TODO --- hardware acceleration
-            //RenderOptions.ProcessRenderMode = System.Windows.Interop.RenderMode.SoftwareOnly;
 
             // Initialize early error list.
             InitEarlyErrorList();

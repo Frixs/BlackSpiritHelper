@@ -5,6 +5,16 @@
     /// </summary>
     public class OverlayScreenCaptureDataViewModel
     {
+        #region Static Limitation Properties
+
+        public static float LimitScale_Max => 1f;
+        public static float LimitScale_Min => 0.1f;
+
+        public static float LimitOpacity_Max => 1f;
+        public static float LimitOpacity_Min => 0.3f;
+
+        #endregion
+
         /// <summary>
         /// X axis position of the overlay object.
         /// </summary>
@@ -15,9 +25,14 @@
         /// </summary>
         public float PosY { get; set; } = 0;
 
-        // TODO ---
-        public float Scale { get; set; } = 1;
+        /// <summary>
+        /// Scale of the capture surface
+        /// </summary>
+        public float Scale { get; set; } = 0.4f;
 
-        public float Opacity { get; set; } = 1;
+        /// <summary>
+        /// Opacity of the capture surface
+        /// </summary>
+        public float Opacity { get; set; } = 0.95f;
     }
 }

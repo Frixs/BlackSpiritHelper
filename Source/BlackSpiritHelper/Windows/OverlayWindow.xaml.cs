@@ -46,9 +46,9 @@ namespace BlackSpiritHelper
         private OverlayScreenCaptureCaptureHandler mCaptureHandler;
 
         /// <summary>
-        /// TODO .
+        /// Overlay data reference
         /// </summary>
-        private int mDragBorderMargin = 25;
+        private OverlayDataViewModel mOverlayData;
 
         /// <summary>
         /// Says if the overlay window is ok to show.
@@ -70,6 +70,11 @@ namespace BlackSpiritHelper
         /// </summary>
         private readonly Brush mOverlayBackgroundBrushNoItems;
 
+        /// <summary>
+        /// Max size of the screen capture
+        /// </summary>
+        private Vector2 mScreenCaptureMaxSize;
+
         #endregion
 
         #region Constructor
@@ -81,11 +86,6 @@ namespace BlackSpiritHelper
             // Set brush colors.
             mOverlayBackgroundBrush = (Brush)FindResource("TransparentBrushKey");
             mOverlayBackgroundBrushNoItems = (Brush)FindResource("RedBrushKey");
-
-#if DEBUG
-            // Force graphicscapture.dll to load.
-            var picker = new GraphicsCapturePicker();
-#endif
         }
 
         #endregion
@@ -95,7 +95,6 @@ namespace BlackSpiritHelper
         private void Window_Initialized(object sender, EventArgs e)
         {
             IntPtr hWndMainApp = new WindowInteropHelper(Application.Current.MainWindow).Handle;
-            IntPtr hWndOverlay = new WindowInteropHelper(this).Handle;
 
             if (hWndMainApp == IntPtr.Zero)
             {
@@ -104,12 +103,15 @@ namespace BlackSpiritHelper
                 return;
             }
 
+            // Save reference to overlay data
+            mOverlayData = IoC.DataContent.OverlayData;
+
             //this.Background = new SolidColorBrush(Colors.LightGray); // For DEBUG.
             ResizeMode = ResizeMode.NoResize;
             ShowInTaskbar = false;
             Topmost = true;
 
-            SetOverlayPosition(hWndOverlay, hWndMainApp);
+            SetOverlayPosition(hWndMainApp);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -127,6 +129,7 @@ namespace BlackSpiritHelper
             var interopWindow = new WindowInteropHelper(this);
             mWindowHandle = interopWindow.Handle;
 
+            // Init screen capture functions
             InitScreenCaptureComposition();
         }
 
@@ -151,13 +154,13 @@ namespace BlackSpiritHelper
         /// </summary>
         private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (IoC.DataContent.OverlayData.IsDraggingLocked)
+            if (mOverlayData.IsDraggingLocked)
                 return;
 
             // Get clicked object.
             Mouse.Capture(sender as FrameworkElement);
             // Get relative mouse position within overlay object.
-            mOverlayObjectMouseRelPos = e.GetPosition(sender as UIElement);
+            mOverlayObjectMouseRelPos = e.GetPosition(sender as FrameworkElement);
         }
 
         /// <summary>
@@ -165,10 +168,14 @@ namespace BlackSpiritHelper
         /// </summary>
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
-            if (IoC.DataContent.OverlayData.IsDraggingLocked)
+            if (mOverlayData.IsDraggingLocked)
                 return;
 
             if (e.LeftButton != MouseButtonState.Pressed)
+                return;
+
+            // Relative position was not registered yet
+            if (mOverlayObjectMouseRelPos.X < 0 || mOverlayObjectMouseRelPos.Y < 0)
                 return;
 
             // Set X axis.
@@ -180,10 +187,20 @@ namespace BlackSpiritHelper
                 e.GetPosition(null).Y - mOverlayObjectMouseRelPos.Y
                 );
 
-            // TODO .
-            mCaptureCompositionRootContainer.Offset = new Vector3(IoC.DataContent.OverlayData.ScreenCaptureOverlay.PosX + mDragBorderMargin, IoC.DataContent.OverlayData.ScreenCaptureOverlay.PosY + mDragBorderMargin, 0);
-
             // e.GetPosition((sender as FrameworkElement).Parent as FrameworkElement).Y
+        }
+
+        /// <summary>
+        /// On MOUSE-MOVE - specific for screen capture
+        /// </summary>
+        private void ScreenCaptureOverlayObject_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton != MouseButtonState.Pressed)
+                return;
+
+            OnMouseMove(sender, e);
+            // Update position of screen capture surface
+            UpdateCaptureCompositionOffset(mOverlayData.ScreenCaptureOverlay.PosX, mOverlayData.ScreenCaptureOverlay.PosY);
         }
 
         /// <summary>
@@ -191,13 +208,13 @@ namespace BlackSpiritHelper
         /// </summary>
         private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (IoC.DataContent.OverlayData.IsDraggingLocked)
+            if (mOverlayData.IsDraggingLocked)
                 return;
 
             // Reset clicked object.
             Mouse.Capture(null);
             // Reset position.
-            mOverlayObjectMouseRelPos = default;
+            mOverlayObjectMouseRelPos = new Point(-1, -1);
         }
 
         #endregion
@@ -207,9 +224,8 @@ namespace BlackSpiritHelper
         /// <summary>
         /// Create overlay window on the position of target window.
         /// </summary>
-        /// <param name="hwndOverlay">Overlay window handle.</param>
         /// <param name="hwndMainApp">Target window handle.</param>
-        private void SetOverlayPosition(IntPtr hwndOverlay, IntPtr hwndMainApp)
+        private void SetOverlayPosition(IntPtr hwndMainApp)
         {
             System.Windows.Forms.Screen screen = System.Windows.Forms.Screen.FromHandle(hwndMainApp);
 
@@ -274,7 +290,7 @@ namespace BlackSpiritHelper
         }
 
         /// <summary>
-        /// When <see cref="IoC.DataContent.OverlayData.IsScreenCaptureActive"/> got changed
+        /// When <see cref="mOverlayData.IsScreenCaptureActive"/> got changed
         /// </summary>
         private void ScreenCaptureOverlayObject_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -286,14 +302,38 @@ namespace BlackSpiritHelper
                 StopCapture();
         }
 
+        /// <summary>
+        /// Scale update trigger
+        /// </summary>
+        private void Slider_ValueChanged_Scale(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (mOverlayData != null)
+                UpdateCaptureCompositionScale(mOverlayData.ScreenCaptureOverlay.Scale);
+        }
+
+        /// <summary>
+        /// Opacity update trigger
+        /// </summary>
+        private void Slider_ValueChanged_Opacity(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (mOverlayData != null)
+                UpdateCaptureCompositionOpacity(mOverlayData.ScreenCaptureOverlay.Opacity);
+        }
+
         #endregion
 
         #region ScreenCapture Capture
 
+        /// <summary>
+        /// Initialize screen capture in the window
+        /// </summary>
         private void InitScreenCaptureComposition()
         {
-            var controlsWidth = System.Windows.Forms.Screen.FromHandle(mWindowHandle).Bounds.Width / 2f;
-            var controlsHeight = System.Windows.Forms.Screen.FromHandle(mWindowHandle).Bounds.Height / 2f;
+            // Maximal size of the scrreen capture surface
+            mScreenCaptureMaxSize = new Vector2(
+                System.Windows.Forms.Screen.FromHandle(mWindowHandle).Bounds.Width / 2f,
+                System.Windows.Forms.Screen.FromHandle(mWindowHandle).Bounds.Height / 2f
+                );
 
             // Create the compositor.
             mCaptureCompositor = new Compositor();
@@ -305,19 +345,56 @@ namespace BlackSpiritHelper
             mCaptureCompositionRootContainer = mCaptureCompositor.CreateContainerVisual();
             mCaptureCompositionRootContainer.RelativeSizeAdjustment = Vector2.Zero;
             mCaptureCompositionRootContainer.RelativeOffsetAdjustment = Vector3.Zero;
-            mCaptureCompositionRootContainer.Size = new Vector2(controlsWidth, controlsHeight);
-            mCaptureCompositionRootContainer.Offset = new Vector3(IoC.DataContent.OverlayData.ScreenCaptureOverlay.PosX + mDragBorderMargin, IoC.DataContent.OverlayData.ScreenCaptureOverlay.PosY + mDragBorderMargin, 0);
+            mCaptureCompositionRootContainer.Size = mScreenCaptureMaxSize;
+            UpdateCaptureCompositionOffset(mOverlayData.ScreenCaptureOverlay.PosX, mOverlayData.ScreenCaptureOverlay.PosY);
+            UpdateCaptureCompositionScale(mOverlayData.ScreenCaptureOverlay.Scale);
+            UpdateCaptureCompositionOpacity(mOverlayData.ScreenCaptureOverlay.Opacity);
             mCaptureCompositionRootContainer.AnchorPoint = new Vector2(0, 0);
-            mCaptureCompositionRootContainer.Scale = new Vector3(1, 1, 0);
-            mCaptureCompositionRootContainer.Opacity = 0.9f;
             mCaptureCompositionTarget.Root = mCaptureCompositionRootContainer;
 
             // Setup the rest of the sample application.
             mCaptureHandler = new OverlayScreenCaptureCaptureHandler(mCaptureCompositor);
             mCaptureCompositionRootContainer.Children.InsertAtTop(mCaptureHandler.Visual);
+        }
 
-            ScreenCaptureCanvas.Width = controlsWidth;
-            ScreenCaptureCanvas.Height = controlsHeight;
+        /// <summary>
+        /// Update offset of the capture surface
+        /// </summary>
+        private void UpdateCaptureCompositionOffset(float x, float y)
+        {
+            if (mCaptureCompositionRootContainer == null)
+                return;
+
+            mCaptureCompositionRootContainer.Offset = new Vector3(
+                x + 25,
+                y + 25,
+                0
+                );
+        }
+
+        /// <summary>
+        /// Update scale of the capture surface
+        /// </summary>
+        private void UpdateCaptureCompositionScale(float scale)
+        {
+            if (mCaptureCompositionRootContainer == null)
+                return;
+
+            mCaptureCompositionRootContainer.Scale = new Vector3(scale, scale, 0);
+
+            ScreenCaptureCanvas.Width = mScreenCaptureMaxSize.X * scale;
+            ScreenCaptureCanvas.Height = mScreenCaptureMaxSize.Y * scale;
+        }
+
+        /// <summary>
+        /// Update opacity of the capture surface
+        /// </summary>
+        private void UpdateCaptureCompositionOpacity(float opacity)
+        {
+            if (mCaptureCompositionRootContainer == null)
+                return;
+
+            mCaptureCompositionRootContainer.Opacity = opacity;
         }
 
         /// <summary>
@@ -325,7 +402,7 @@ namespace BlackSpiritHelper
         /// </summary>
         private void StartCapture()
         {
-            var sch = IoC.DataContent.OverlayData.ScreenCaptureHandleData;
+            var sch = mOverlayData.ScreenCaptureHandleData;
             if (sch == null)
             {
                 IoC.Logger.Log("Undefined screen capture handle!", LogLevel.Error);

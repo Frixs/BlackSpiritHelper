@@ -232,7 +232,7 @@
                 IsEnabledChanged="ScreenCaptureOverlayObject_IsEnabledChanged"
                 MouseLeftButtonDown="OnMouseLeftButtonDown"
                 MouseLeftButtonUp="OnMouseLeftButtonUp"
-                MouseMove="OnMouseMove"
+                MouseMove="ScreenCaptureOverlayObject_MouseMove"
                 Visibility="{Binding IsScreenCaptureActive, Converter={local:BooleanToVisibilityGoneConverter}}">
                 <!--  Draggable Border Background  -->
                 <Border.Style>
@@ -262,6 +262,20 @@
                             </Style>
                         </Rectangle.Style>
                     </Rectangle>
+                    <!--  Value Scale Trigger  -->
+                    <Slider
+                        Width="0"
+                        Height="0"
+                        ValueChanged="Slider_ValueChanged_Scale"
+                        Visibility="Hidden"
+                        Value="{Binding ScreenCaptureOverlay.Scale, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                    <!--  Value Opacity Trigger  -->
+                    <Slider
+                        Width="0"
+                        Height="0"
+                        ValueChanged="Slider_ValueChanged_Opacity"
+                        Visibility="Hidden"
+                        Value="{Binding ScreenCaptureOverlay.Opacity, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
                     <!--  Capture Preview  -->
                     <Border Padding="25">
                         <!--  Screen Canvas  -->

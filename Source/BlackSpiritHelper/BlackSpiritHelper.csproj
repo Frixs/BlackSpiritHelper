@@ -264,6 +264,7 @@
     <Compile Include="ValueConverters\BooleanToContentConverter.cs" />
     <Compile Include="ValueConverters\ContainsLeadingCharConverter.cs" />
     <Compile Include="ValueConverters\EnumDescriptionConverter.cs" />
+    <Compile Include="ValueConverters\MultiplyConverter.cs" />
     <Compile Include="ValueConverters\IsNullConverter.cs" />
     <Compile Include="ValueConverters\Schedule\ScheduleTimeZoneRegionConverter.cs" />
     <Compile Include="ValueConverters\StringHEXLeadingHashConverter.cs" />

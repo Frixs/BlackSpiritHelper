@@ -168,7 +168,7 @@
 
                     <!--  ==================================================  -->
                     <!--  Form Subtitle - Overlay  -->
-                    <TextBlock Style="{StaticResource FormSubtitle}" Text="Base Overlay" />
+                    <TextBlock Style="{StaticResource FormSubtitle}" Text="Overlay" />
 
                     <!--  Spacer  -->
                     <Border Style="{StaticResource FormInputVerSpacer}" />
@@ -227,6 +227,74 @@
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </StackPanel>
+
+                    <!--  Spacer  -->
+                    <Border Style="{StaticResource FormItemSpacer}" />
+
+                    <!--  Screen Capture Scale  -->
+                    <TextBlock
+                        Margin="0,0,0,5"
+                        FontFamily="{StaticResource LatoRegular}"
+                        FontSize="14"
+                        Foreground="{StaticResource ForegroundBrushKey}"
+                        Text="Screen Capture Scale" />
+                    <Grid HorizontalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="200" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            Width="40"
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Center"
+                            FontFamily="{StaticResource LatoLight}"
+                            FontSize="14"
+                            Foreground="{StaticResource ForegroundBrushKey}"
+                            Text="{Binding ApplicationDataContent.OverlayData.ScreenCaptureOverlay.Scale, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:MultiplyConverter}, ConverterParameter=100, StringFormat={}{0}%}" />
+                        <Slider
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            IsSnapToTickEnabled="True"
+                            Maximum="{Binding ApplicationDataContent.OverlayData.ScreenCaptureOverlay.LimitScale_Max, Mode=OneTime, Source={x:Static local:ViewModelLocator.Instance}}"
+                            Minimum="{Binding ApplicationDataContent.OverlayData.ScreenCaptureOverlay.LimitScale_Min, Mode=OneTime, Source={x:Static local:ViewModelLocator.Instance}}"
+                            TickFrequency="0.01"
+                            Value="{Binding ApplicationDataContent.OverlayData.ScreenCaptureOverlay.Scale, Source={x:Static local:ViewModelLocator.Instance}}" />
+                    </Grid>
+
+                    <!--  Spacer  -->
+                    <Border Style="{StaticResource FormItemSpacer}" />
+
+                    <!--  Screen Capture Opacity  -->
+                    <TextBlock
+                        Margin="0,0,0,5"
+                        FontFamily="{StaticResource LatoRegular}"
+                        FontSize="14"
+                        Foreground="{StaticResource ForegroundBrushKey}"
+                        Text="Screen Capture Opacity" />
+                    <Grid HorizontalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="200" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            Width="40"
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Center"
+                            FontFamily="{StaticResource LatoLight}"
+                            FontSize="14"
+                            Foreground="{StaticResource ForegroundBrushKey}"
+                            Text="{Binding ApplicationDataContent.OverlayData.ScreenCaptureOverlay.Opacity, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:MultiplyConverter}, ConverterParameter=100, StringFormat={}{0}%}" />
+                        <Slider
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            IsSnapToTickEnabled="True"
+                            Maximum="{Binding ApplicationDataContent.OverlayData.ScreenCaptureOverlay.LimitOpacity_Max, Mode=OneTime, Source={x:Static local:ViewModelLocator.Instance}}"
+                            Minimum="{Binding ApplicationDataContent.OverlayData.ScreenCaptureOverlay.LimitOpacity_Min, Mode=OneTime, Source={x:Static local:ViewModelLocator.Instance}}"
+                            TickFrequency="0.01"
+                            Value="{Binding ApplicationDataContent.OverlayData.ScreenCaptureOverlay.Opacity, Source={x:Static local:ViewModelLocator.Instance}}" />
+                    </Grid>
 
                     <!--  Spacer  -->
                     <Border Style="{StaticResource FormItemSpacer}" />
