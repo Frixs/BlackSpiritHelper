@@ -793,7 +793,7 @@
                         </BulletDecorator.Bullet>
                         <!--  Content/Text  -->
                         <ContentPresenter
-                            Margin="5,1,0,0"
+                            Margin="5,0,0,0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             RecognizesAccessKey="True"

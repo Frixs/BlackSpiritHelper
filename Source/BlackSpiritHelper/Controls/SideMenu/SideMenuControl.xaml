@@ -126,9 +126,15 @@
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Command="{Binding OverlayOpenCloseCommand}"
-                                Content="Show Overlay"
                                 IsChecked="{Binding ApplicationDataContent.OverlayData.IsOpened, Source={x:Static local:ViewModelLocator.Instance}}"
-                                Style="{StaticResource OverlayCheckbox}" />
+                                Style="{StaticResource OverlayCheckbox}">
+                                <TextBlock
+                                    Margin="0,1,0,0"
+                                    FontFamily="{StaticResource LatoHeavy}"
+                                    FontSize="14"
+                                    Foreground="{StaticResource SideMenuForegroundBrushKey}"
+                                    Text="Show Overlay" />
+                            </CheckBox>
                             <TextBlock
                                 Grid.Column="1"
                                 HorizontalAlignment="Center"

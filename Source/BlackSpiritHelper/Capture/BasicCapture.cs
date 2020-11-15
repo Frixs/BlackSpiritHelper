@@ -79,6 +79,9 @@ namespace BlackSpiritHelper
             __session = __framePool.CreateCaptureSession(i);
             __lastSize = i.Size;
 
+            // Disable mouse cursor to be visible
+            __session.IsCursorCaptureEnabled = false;
+
             __framePool.FrameArrived += OnFrameArrived;
         }
 
