@@ -10,7 +10,7 @@
 <!-- [text](url) : Can be anywhere in the text. Transform text into URL link. -->
 <!-- \ : escape formatting characters. -->
 <!-- -------------------------------------------------- -->
-## v1.4.0.0 (2020-11-17)
+## v1.4.1.0 (2020-11-16)
 **Pull: [#32](https://github.com/Frixs/BlackSpiritHelper/pull/32)**
 - Screen Capture feature added
 - Option to set custom overlay interaction key added
