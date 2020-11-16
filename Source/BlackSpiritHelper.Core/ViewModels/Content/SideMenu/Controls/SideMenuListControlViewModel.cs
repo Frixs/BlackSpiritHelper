@@ -24,6 +24,13 @@ namespace BlackSpiritHelper.Core
             {
                 new SideMenuListItemControlViewModel
                 {
+                    Title = ApplicationPage.ApmCalculator.GetDescription(),
+                    PageEnum = ApplicationPage.ApmCalculator,
+                    // TODO: APM
+                    //DataContent = IoC.DataContent.ApmCalculatorData,
+                },
+                new SideMenuListItemControlViewModel
+                {
                     Title = ApplicationPage.Schedule.GetDescription(),
                     PageEnum = ApplicationPage.Schedule,
                     DataContent = IoC.DataContent.ScheduleData,

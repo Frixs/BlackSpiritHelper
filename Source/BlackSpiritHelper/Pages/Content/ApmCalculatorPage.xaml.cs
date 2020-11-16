@@ -3,11 +3,11 @@
 namespace BlackSpiritHelper
 {
     /// <summary>
-    /// Interaction logic for TimerPage.xaml
+    /// Interaction logic for ApmCalculatorPage.xaml
     /// </summary>
-    public partial class TimerPage : BasePage<TimerPageViewModel>
+    public partial class ApmCalculatorPage : BasePage<ApmCalculatorPageViewModel>
     {
-        public TimerPage()
+        public ApmCalculatorPage()
         {
             InitializeComponent();
         }

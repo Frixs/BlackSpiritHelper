@@ -7,7 +7,7 @@ using System.Windows.Input;
 namespace BlackSpiritHelper.Core
 {
     /// <summary>
-    /// The View Model for the custom flat window.
+    /// The View Model for the Home page
     /// </summary>
     public class HomePageViewModel : BaseViewModel
     {

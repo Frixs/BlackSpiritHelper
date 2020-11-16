@@ -233,6 +233,9 @@
     <Compile Include="IoC\UIManager.cs" />
     <Compile Include="IoC\GlobalMouseKeyHookManager.cs" />
     <Compile Include="Pages\BasePage.cs" />
+    <Compile Include="Pages\Content\ApmCalculatorPage.xaml.cs">
+      <DependentUpon>ApmCalculatorPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Content\SchedulePage.xaml.cs">
       <DependentUpon>SchedulePage.xaml</DependentUpon>
     </Compile>
@@ -390,6 +393,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Watchdog\WatchdogProcessConnectionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Content\ApmCalculatorPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
