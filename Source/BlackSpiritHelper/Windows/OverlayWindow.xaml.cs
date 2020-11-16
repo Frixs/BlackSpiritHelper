@@ -168,26 +168,7 @@ namespace BlackSpiritHelper
         /// </summary>
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
-            if (mOverlayData.IsDraggingLocked)
-                return;
-
-            if (e.LeftButton != MouseButtonState.Pressed)
-                return;
-
-            // Relative position was not registered yet
-            if (mOverlayObjectMouseRelPos.X < 0 || mOverlayObjectMouseRelPos.Y < 0)
-                return;
-
-            // Set X axis.
-            Canvas.SetLeft(sender as FrameworkElement,
-                e.GetPosition(null).X - mOverlayObjectMouseRelPos.X
-                );
-            // Set Y axis.
-            Canvas.SetTop(sender as FrameworkElement,
-                e.GetPosition(null).Y - mOverlayObjectMouseRelPos.Y
-                );
-
-            // e.GetPosition((sender as FrameworkElement).Parent as FrameworkElement).Y
+            OnMouseMoveProcess(sender, e);
         }
 
         /// <summary>
@@ -195,12 +176,9 @@ namespace BlackSpiritHelper
         /// </summary>
         private void ScreenCaptureOverlayObject_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton != MouseButtonState.Pressed)
-                return;
-
-            OnMouseMove(sender, e);
-            // Update position of screen capture surface
-            UpdateCaptureCompositionOffset(mOverlayData.ScreenCaptureOverlay.PosX, mOverlayData.ScreenCaptureOverlay.PosY);
+            if (OnMouseMoveProcess(sender, e))
+                // Update position of screen capture surface
+                UpdateCaptureCompositionOffset(mOverlayData.ScreenCaptureOverlay.PosX, mOverlayData.ScreenCaptureOverlay.PosY);
         }
 
         /// <summary>
@@ -215,6 +193,36 @@ namespace BlackSpiritHelper
             Mouse.Capture(null);
             // Reset position.
             mOverlayObjectMouseRelPos = new Point(-1, -1);
+        }
+
+        /// <summary>
+        /// Handle mouse movement
+        /// </summary>
+        /// <returns>TRUE if movement was handled, FALSE otherwise</returns>
+        private bool OnMouseMoveProcess(object sender, MouseEventArgs e)
+        {
+            if (mOverlayData.IsDraggingLocked)
+                return false;
+
+            if (e.LeftButton != MouseButtonState.Pressed)
+                return false;
+
+            // Relative position was not registered yet
+            if (mOverlayObjectMouseRelPos.X < 0 || mOverlayObjectMouseRelPos.Y < 0)
+                return false;
+
+            // Set X axis.
+            Canvas.SetLeft(sender as FrameworkElement,
+                e.GetPosition(null).X - mOverlayObjectMouseRelPos.X
+                );
+            // Set Y axis.
+            Canvas.SetTop(sender as FrameworkElement,
+                e.GetPosition(null).Y - mOverlayObjectMouseRelPos.Y
+                );
+
+            // e.GetPosition((sender as FrameworkElement).Parent as FrameworkElement).Y
+
+            return true;
         }
 
         #endregion
