@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Windows.Controls;
 
 namespace BlackSpiritHelper.Core
@@ -21,8 +22,8 @@ namespace BlackSpiritHelper.Core
                 return new ValidationResult(false, $"Please enter a name in the maximum length of {PreferencesConnDiscordDataViewModel.AllowedUsernameMaxLength} characters.");
 
             // Check allowed characters.
-            if (!StringUtils.CheckNumeric(val))
-                return new ValidationResult(false, "Illegal characters. User ID can contain only digits.");
+            if (!Regex.IsMatch(val, @"^((\<\@([0-9]|\&)+\>)|(\@everyone|\@here))$"))
+                return new ValidationResult(false, "Illegal characters. User ID must follow the format ('<@id>').");
 
             return ValidationResult.ValidResult;
         }
