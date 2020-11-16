@@ -39,6 +39,13 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
+        <TextBlock
+            Margin="0,5,0,0"
+            HorizontalAlignment="Center"
+            FontFamily="{StaticResource LatoLightItalic}"
+            FontSize="11"
+            Foreground="{StaticResource ForegroundLightBrushKey}"
+            Text="User ID field can also be set to any Role ID or wildcards like 'everyone'" />
         <!--  Activation BTN  -->
         <Button
             Margin="0,10,0,0"

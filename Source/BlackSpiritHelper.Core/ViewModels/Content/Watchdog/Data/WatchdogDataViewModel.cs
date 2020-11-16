@@ -45,6 +45,12 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
+        #region Command Flags
+
+        private bool mModifyCommandFlag { get; set; }
+
+        #endregion
+
         #region Commands
 
         /// <summary>
@@ -89,7 +95,15 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void CreateCommands()
         {
-            ClearLogCommand = new RelayCommand(async () => await ClearLogAsync());
+            ClearLogCommand = new RelayCommand(async () => await ClearLogCommandMethodAsync());
+        }
+
+        private async Task ClearLogCommandMethodAsync()
+        {
+            await RunCommandAsync(() => mModifyCommandFlag, async () =>
+            {
+                await ClearLogAsync();
+            });
         }
 
         #endregion

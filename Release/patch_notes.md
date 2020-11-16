@@ -10,6 +10,14 @@
 <!-- [text](url) : Can be anywhere in the text. Transform text into URL link. -->
 <!-- \ : escape formatting characters. -->
 <!-- -------------------------------------------------- -->
+## v1.4.1.0 (2020-11-16)
+**Pull: [#32](https://github.com/Frixs/BlackSpiritHelper/pull/32)**
+- Screen Capture feature added
+- Option to set custom overlay interaction key added
+- Discord messaging - User ID field: Added option to input Role ID or wildcards like 'everyone'
+- User input handling improvements
+<br/>
+
 ## v1.3.3.1 (2020-11-01)
 **Pull: [#30](https://github.com/Frixs/BlackSpiritHelper/pull/30)**
 - Timers can now be adjusted 10-times faster by holding Shift button while clicking on plus/minus buttons

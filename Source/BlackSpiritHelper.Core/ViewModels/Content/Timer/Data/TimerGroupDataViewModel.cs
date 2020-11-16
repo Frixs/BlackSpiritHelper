@@ -84,6 +84,13 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
+        #region Command Flags
+
+        private bool mPlayPauseCommandFlag { get; set; }
+        private bool mModifyCommandFlag { get; set; }
+
+        #endregion
+
         #region Commands
 
         /// <summary>
@@ -135,11 +142,27 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void CreateCommands()
         {
-            PlayCommand = new RelayCommand(async () => await PlayAsync());
-            PauseCommand = new RelayCommand(async () => await PauseAsync());
+            PlayCommand = new RelayCommand(async () => await PlayCommandMethodAsync());
+            PauseCommand = new RelayCommand(async () => await PauseCommandMethodAsync());
             ResetTimersCommand = new RelayCommand(async () => await ResetTimersCommandMethodAsync());
             AddTimerCommand = new RelayCommand(async () => await AddTimerCommandMethodAsync());
             OpenGroupSettingsCommand = new RelayCommand(async () => await OpenGroupSettingsCommandMethodAsync());
+        }
+
+        private async Task PlayCommandMethodAsync()
+        {
+            await RunCommandAsync(() => mPlayPauseCommandFlag, async () =>
+            {
+                await PlayAsync();
+            });
+        }
+
+        private async Task PauseCommandMethodAsync()
+        {
+            await RunCommandAsync(() => mPlayPauseCommandFlag, async () =>
+            {
+                await PauseAsync();
+            });
         }
 
         /// <summary>
@@ -148,12 +171,12 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task ResetTimersCommandMethodAsync()
         {
-            for (int i = 0; i < TimerList.Count; i++)
+            await RunCommandAsync(() => mModifyCommandFlag, async () =>
             {
-                TimerList[i].TimerRestart();
-            }
-
-            await Task.Delay(1);
+                for (int i = 0; i < TimerList.Count; i++)
+                    TimerList[i].TimerRestart();
+                await Task.Delay(1);
+            });
         }
 
         /// <summary>
@@ -162,21 +185,24 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task AddTimerCommandMethodAsync()
         {
-            // Create default timer.
-            AddTimer(new TimerItemDataViewModel
+            await RunCommandAsync(() => mModifyCommandFlag, async () =>
             {
-                GroupID = ID,
-                Title = "Untitled Timer",
-                IconTitleShortcut = "X",
-                IconBackgroundHEX = "FFFFFF",
-                TimeDuration = new TimeSpan(0, 1, 0),
-                CountdownDuration = TimeSpan.FromSeconds(0),
-                State = TimerState.Ready,
-                IsLoopActive = false,
-                ShowInOverlay = false,
-            });
+                // Create default timer.
+                AddTimer(new TimerItemDataViewModel
+                {
+                    GroupID = ID,
+                    Title = "Untitled Timer",
+                    IconTitleShortcut = "X",
+                    IconBackgroundHEX = "FFFFFF",
+                    TimeDuration = new TimeSpan(0, 1, 0),
+                    CountdownDuration = TimeSpan.FromSeconds(0),
+                    State = TimerState.Ready,
+                    IsLoopActive = false,
+                    ShowInOverlay = false,
+                });
 
-            await Task.Delay(1);
+                await Task.Delay(1);
+            });
         }
 
         /// <summary>
@@ -185,15 +211,18 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task OpenGroupSettingsCommandMethodAsync()
         {
-            // Create Settings View Model with the current group binding.
-            TimerGroupSettingsFormPageViewModel vm = new TimerGroupSettingsFormPageViewModel
+            await RunCommandAsync(() => mModifyCommandFlag, async () =>
             {
-                FormVM = this,
-            };
+                // Create Settings View Model with the current group binding.
+                TimerGroupSettingsFormPageViewModel vm = new TimerGroupSettingsFormPageViewModel
+                {
+                    FormVM = this,
+                };
 
-            IoC.Application.GoToPage(ApplicationPage.TimerGroupSettingsForm, vm);
+                IoC.Application.GoToPage(ApplicationPage.TimerGroupSettingsForm, vm);
 
-            await Task.Delay(1);
+                await Task.Delay(1);
+            });
         }
 
         #endregion

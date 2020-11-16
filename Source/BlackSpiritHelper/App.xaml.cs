@@ -1,25 +1,28 @@
 ﻿using BlackSpiritHelper.Core;
+using Composition.WindowsRuntimeHelpers;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
+using System.Deployment.Application;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using System.Windows;
-using System.Deployment.Application;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows;
+using Windows.System;
 
 namespace BlackSpiritHelper
 {
     /// <summary>
     /// Interaction logic for App.xaml
     /// ---
-    /// TODO:LATER: Replace Border for Separator TAG
+    /// TODO:LATER: Replace Border separator by Separator TAG
     /// TODO:LATER:APP: more...
     ///     - Application user option to download/check updates.
     ///     - Auto manage length of log file. Cut the file if it is too large.
-    ///     - DataViewModel extends DataModel - Move business logic into Model with its fields.
+    ///     - !!! DataViewModel extends DataModel - Move business logic into Model with its fields.
     ///       Separate ViewModel's command logic from Model's business logic.
+    ///       Make DataModels separate - each view (Page/Controls) should have unique VM that contains coresponding data.
     ///     - IDisposable can be useful in some situation for destroying Timer instances in sections.
     ///       External links: https://stackoverflow.com/questions/188688/what-does-the-tilde-before-a-function-name-mean-in-c
     ///                       https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/partial-classes-and-methods
@@ -58,6 +61,17 @@ namespace BlackSpiritHelper
 
             e.Handled = true;
         }
+
+        #endregion
+
+        #region Constructor
+
+        public App()
+        {
+            _controller = CoreMessagingHelper.CreateDispatcherQueueControllerForCurrentThread();
+        }
+
+        private DispatcherQueueController _controller;
 
         #endregion
 
@@ -303,22 +317,22 @@ namespace BlackSpiritHelper
             // Bind a file manager.
             IoC.Kernel.Bind<IFileManager>().ToConstant(new FileManager());
 
-            // Bind a UI Manager.
+            // Bind an UI Manager.
             IoC.Kernel.Bind<IUIManager>().ToConstant(new UIManager());
 
-            // Bind an datetime (with time zones) manager.
+            // Bind a datetime (with time zones) manager.
             IoC.Kernel.Bind<IDateTimeZone>().ToConstant(new DateTimeZoneManager());
 
             // Bind an audio manager.
             IoC.Kernel.Bind<IAudioFactory>().ToConstant(new BaseAudioFactory());
 
-            // Bind an web manager.
+            // Bind a web manager.
             IoC.Kernel.Bind<IWebManager>().ToConstant(new WebManager());
 
-            // Bind an mouse key hooks.
+            // Bind a mouse key hooks.
             IoC.Kernel.Bind<IMouseKeyHook>().ToConstant(new GlobalMouseKeyHookManager());
 
-            // Bind Application data content view models.
+            // Bind Application data content view models. Always at the ned of binding.
             IoC.Kernel.Bind<ApplicationDataContent>().ToConstant(new ApplicationDataContent());
             IoC.DataContent.Setup();
         }

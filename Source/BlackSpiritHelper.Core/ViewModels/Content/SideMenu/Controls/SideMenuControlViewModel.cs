@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace BlackSpiritHelper.Core
@@ -12,6 +11,14 @@ namespace BlackSpiritHelper.Core
         /// Side menu width.
         /// </summary>
         public int SideMenuWidth { get; set; } = 175;
+
+        #endregion
+
+        #region Command Flags
+
+        private bool mOpenPageCommandFlag { get; set; }
+        private bool mOpenDonateLinkCommandFlag { get; set; }
+        private bool mManageOverlayCommandFlag { get; set; }
 
         #endregion
 
@@ -36,6 +43,16 @@ namespace BlackSpiritHelper.Core
         /// The command to open/close overlay.
         /// </summary>
         public ICommand OverlayOpenCloseCommand { get; set; }
+
+        /// <summary>
+        /// The command to select screen capture handle
+        /// </summary>
+        public ICommand SelectScreenCaptureWindowCommand { get; set; }
+        
+        /// <summary>
+        /// The command to stop screen capture
+        /// </summary>
+        public ICommand StopScreenCaptureCommand { get; set; }
 
         #endregion
 
@@ -63,28 +80,32 @@ namespace BlackSpiritHelper.Core
             OpenPreferencesPageCommand = new RelayCommand(async () => await OpenPreferencesPageAsync());
             AuthorDonateLinkCommand = new RelayCommand(async () => await AuthorDonateLinkMethodAsync());
             OverlayOpenCloseCommand = new RelayCommand(async () => await OverlayOpenCloseAsync());
+            SelectScreenCaptureWindowCommand = new RelayParameterizedCommand(async (parameter) => await SelectScreenCaptureWindowCommandMethodAsync(parameter));
+            StopScreenCaptureCommand = new RelayCommand(async () => await StopScreenCaptureCommandMethodAsync());
         }
 
         /// <summary>
         /// Open home page command task.
         /// </summary>
-        /// <returns></returns>
         private async Task OpenHomePageAsync()
         {
-            IoC.Application.GoToPage(ApplicationPage.Home);
-
-            await Task.Delay(1);
+            await RunCommandAsync(() => mOpenPageCommandFlag, async () =>
+            {
+                IoC.Application.GoToPage(ApplicationPage.Home);
+                await Task.Delay(1);
+            });
         }
 
         /// <summary>
         /// Open preferences page command task.
         /// </summary>
-        /// <returns></returns>
         private async Task OpenPreferencesPageAsync()
         {
-            IoC.Application.GoToPage(ApplicationPage.Preferences);
-
-            await Task.Delay(1);
+            await RunCommandAsync(() => mOpenPageCommandFlag, async () =>
+            {
+                IoC.Application.GoToPage(ApplicationPage.Preferences);
+                await Task.Delay(1);
+            });
         }
 
         /// <summary>
@@ -92,24 +113,66 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private async Task AuthorDonateLinkMethodAsync()
         {
-            // Open the webpage.
-            System.Diagnostics.Process.Start(IoC.Application.DonationURL);
-
-            await Task.Delay(1);
+            await RunCommandAsync(() => mOpenDonateLinkCommandFlag, async () =>
+            {
+                // Open the webpage.
+                System.Diagnostics.Process.Start(IoC.Application.DonationURL);
+                await Task.Delay(1);
+            });
         }
 
         /// <summary>
         /// Open/Close overlay process.
         /// </summary>
-        /// <returns></returns>
         private async Task OverlayOpenCloseAsync()
         {
-            if (IoC.DataContent.OverlayData.IsOpened)
-                IoC.UI.OpenOverlay();
-            else
-                IoC.UI.CloseOverlay();
+            await RunCommandAsync(() => mManageOverlayCommandFlag, async () =>
+            {
+                if (IoC.DataContent.OverlayData.IsOpened)
+                {
+                    IoC.UI.OpenOverlay();
+                }
+                else
+                {
+                    IoC.UI.CloseOverlay();
+                    IoC.DataContent.OverlayData.DeactiveScreenCapture();
+                }
 
-            await Task.Delay(1);
+                await Task.Delay(1);
+            });
+        }
+
+        /// <summary>
+        /// Select capturing object to share
+        /// </summary>
+        /// <param name="parameter">Process representing object to capture</param>
+        private async Task SelectScreenCaptureWindowCommandMethodAsync(object parameter)
+        {
+            await RunCommandAsync(() => mManageOverlayCommandFlag, async () =>
+            {
+                if (parameter is ScreenCaptureHandle sch)
+                    // Activate screen capture
+                    IoC.DataContent.OverlayData.ActiveCaptureShare(sch);
+                else
+                    // Deactivate screen capture
+                    IoC.DataContent.OverlayData.DeactiveScreenCapture();
+
+                await Task.Delay(1);
+            });
+        }
+
+        /// <summary>
+        /// Stop screen capture
+        /// </summary>
+        private async Task StopScreenCaptureCommandMethodAsync()
+        {
+            await RunCommandAsync(() => mManageOverlayCommandFlag, async () =>
+            {
+                // Deactivate screen capture
+                IoC.DataContent.OverlayData.DeactiveScreenCapture();
+
+                await Task.Delay(1);
+            });
         }
 
         #endregion

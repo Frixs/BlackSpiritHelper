@@ -191,8 +191,8 @@
                                             Visibility="Collapsed" />
                                         <RadioButton
                                             Content="{Binding Converter={local:ObjectToStringConverter}}"
-                                            GroupName="OverlayOrientation"
-                                            IsChecked="{Binding ApplicationDataContent.OverlayData.OverlayOrientation, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:RadioEnumBooleanConverter}, ConverterParameter={x:Reference Name=RadioBindedKey}}" />
+                                            GroupName="BaseOverlayOrientation"
+                                            IsChecked="{Binding ApplicationDataContent.OverlayData.BaseOverlay.OverlayOrientation, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:RadioEnumBooleanConverter}, ConverterParameter={x:Reference Name=RadioBindedKey}}" />
                                     </Grid>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -202,7 +202,7 @@
                     <!--  Spacer  -->
                     <Border Style="{StaticResource FormItemSpacer}" />
 
-                    <!--  Overlay Size  -->
+                    <!--  Base Overlay Size  -->
                     <StackPanel HorizontalAlignment="Center">
                         <TextBlock
                             Margin="0,0,0,5"
@@ -210,7 +210,7 @@
                             FontSize="14"
                             Foreground="{StaticResource ForegroundBrushKey}"
                             Text="Size" />
-                        <ItemsControl ItemsSource="{Binding ApplicationDataContent.OverlayData.OverlaySizeList, Source={x:Static local:ViewModelLocator.Instance}}">
+                        <ItemsControl ItemsSource="{Binding ApplicationDataContent.OverlayData.BaseOverlaySizeList, Source={x:Static local:ViewModelLocator.Instance}}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
@@ -220,13 +220,100 @@
                                             Visibility="Collapsed" />
                                         <RadioButton
                                             Content="{Binding Converter={local:ObjectToStringConverter}}"
-                                            GroupName="OverlaySize"
-                                            IsChecked="{Binding ApplicationDataContent.OverlayData.OverlaySize, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:RadioEnumBooleanConverter}, ConverterParameter={x:Reference Name=RadioBindedKey}}" />
+                                            GroupName="BaseOverlaySize"
+                                            IsChecked="{Binding ApplicationDataContent.OverlayData.BaseOverlay.Size, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:RadioEnumBooleanConverter}, ConverterParameter={x:Reference Name=RadioBindedKey}}" />
                                     </Grid>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </StackPanel>
+
+                    <!--  Spacer  -->
+                    <Border Style="{StaticResource FormItemSpacer}" />
+
+                    <!--  Screen Capture Scale  -->
+                    <TextBlock
+                        Margin="0,0,0,5"
+                        FontFamily="{StaticResource LatoRegular}"
+                        FontSize="14"
+                        Foreground="{StaticResource ForegroundBrushKey}"
+                        Text="Screen Capture Scale" />
+                    <Grid HorizontalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="200" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            Width="40"
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Center"
+                            FontFamily="{StaticResource LatoLight}"
+                            FontSize="14"
+                            Foreground="{StaticResource ForegroundBrushKey}"
+                            Text="{Binding ApplicationDataContent.OverlayData.ScreenCaptureOverlay.Scale, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:MultiplyConverter}, ConverterParameter=100, StringFormat={}{0}%}" />
+                        <Slider
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            IsSnapToTickEnabled="True"
+                            Maximum="{Binding ApplicationDataContent.OverlayData.ScreenCaptureOverlay.LimitScale_Max, Mode=OneTime, Source={x:Static local:ViewModelLocator.Instance}}"
+                            Minimum="{Binding ApplicationDataContent.OverlayData.ScreenCaptureOverlay.LimitScale_Min, Mode=OneTime, Source={x:Static local:ViewModelLocator.Instance}}"
+                            TickFrequency="0.01"
+                            Value="{Binding ApplicationDataContent.OverlayData.ScreenCaptureOverlay.Scale, Source={x:Static local:ViewModelLocator.Instance}}" />
+                    </Grid>
+
+                    <!--  Spacer  -->
+                    <Border Style="{StaticResource FormItemSpacer}" />
+
+                    <!--  Screen Capture Opacity  -->
+                    <TextBlock
+                        Margin="0,0,0,5"
+                        FontFamily="{StaticResource LatoRegular}"
+                        FontSize="14"
+                        Foreground="{StaticResource ForegroundBrushKey}"
+                        Text="Screen Capture Opacity" />
+                    <Grid HorizontalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="200" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            Width="40"
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Center"
+                            FontFamily="{StaticResource LatoLight}"
+                            FontSize="14"
+                            Foreground="{StaticResource ForegroundBrushKey}"
+                            Text="{Binding ApplicationDataContent.OverlayData.ScreenCaptureOverlay.Opacity, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:MultiplyConverter}, ConverterParameter=100, StringFormat={}{0}%}" />
+                        <Slider
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            IsSnapToTickEnabled="True"
+                            Maximum="{Binding ApplicationDataContent.OverlayData.ScreenCaptureOverlay.LimitOpacity_Max, Mode=OneTime, Source={x:Static local:ViewModelLocator.Instance}}"
+                            Minimum="{Binding ApplicationDataContent.OverlayData.ScreenCaptureOverlay.LimitOpacity_Min, Mode=OneTime, Source={x:Static local:ViewModelLocator.Instance}}"
+                            TickFrequency="0.01"
+                            Value="{Binding ApplicationDataContent.OverlayData.ScreenCaptureOverlay.Opacity, Source={x:Static local:ViewModelLocator.Instance}}" />
+                    </Grid>
+
+                    <!--  Spacer  -->
+                    <Border Style="{StaticResource FormItemSpacer}" />
+
+                    <!--  Change Group  -->
+                    <TextBlock
+                        Margin="0,0,0,5"
+                        FontFamily="{StaticResource LatoRegular}"
+                        FontSize="14"
+                        Foreground="{StaticResource ForegroundBrushKey}"
+                        Text="Interaction Key" />
+                    <ComboBox
+                        HorizontalAlignment="Center"
+                        ItemsSource="{Binding OverlayInteractionKeyList}"
+                        SelectionChanged="ComboBox_SelectionChanged">
+                        <ComboBox.SelectedItem>
+                            <Binding Path="OverlayInteractionKey" UpdateSourceTrigger="PropertyChanged" />
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
 
                     <!--  Spacer  -->
                     <Border Style="{StaticResource FormItemSpacer}" />

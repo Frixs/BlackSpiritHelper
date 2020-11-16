@@ -65,6 +65,12 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
+        #region Command Flags
+
+        private bool mActionCommandFlag { get; set; }
+
+        #endregion
+
         #region Commands
 
         /// <summary>
@@ -122,16 +128,19 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task HyperlinkCommandCommandMethodAsync(object parameter)
         {
-            try
+            await RunCommandAsync(() => mActionCommandFlag, async () =>
             {
-                System.Diagnostics.Process.Start((string)parameter);
-            }
-            catch (Exception)
-            {
-                //; Invalid URL
-            }
+                try
+                {
+                    System.Diagnostics.Process.Start((string)parameter);
+                }
+                catch (Exception)
+                {
+                    //; Invalid URL
+                }
 
-            await Task.Delay(1);
+                await Task.Delay(1);
+            });
         }
 
         /// <summary>
@@ -140,11 +149,14 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task NoCommandMethodAsync()
         {
-            NoAction();
+            await RunCommandAsync(() => mActionCommandFlag, async () =>
+            {
+                NoAction();
 
-            Remove();
+                Remove();
 
-            await Task.Delay(1);
+                await Task.Delay(1);
+            });
         }
 
         /// <summary>
@@ -153,11 +165,14 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task YesCommandMethodAsync()
         {
-            YesAction();
+            await RunCommandAsync(() => mActionCommandFlag, async () =>
+            {
+                YesAction();
 
-            Remove();
+                Remove();
 
-            await Task.Delay(1);
+                await Task.Delay(1);
+            });
         }
 
         /// <summary>
@@ -166,11 +181,14 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task OkCommandMethodAsync()
         {
-            OkAction();
+            await RunCommandAsync(() => mActionCommandFlag, async () =>
+            {
+                OkAction();
 
-            Remove();
+                Remove();
 
-            await Task.Delay(1);
+                await Task.Delay(1);
+            });
         }
 
         #endregion
@@ -246,7 +264,7 @@ namespace BlackSpiritHelper.Core
                 line = line.Replace("#### ", "");
                 line = $@"<LineBreak /><Run Text=""{line}"" FontFamily=""{{StaticResource LatoHeavy}}"" FontSize=""16"" />";
             }
-            
+
             // Comment - Line comments only!!!
             if (line.StartsWith("<!-- "))
             {
@@ -384,10 +402,10 @@ namespace BlackSpiritHelper.Core
                 line += @"</Italic>";
             }
             #endregion
-            
+
             return line;
         }
-        
+
         #endregion
     }
 }

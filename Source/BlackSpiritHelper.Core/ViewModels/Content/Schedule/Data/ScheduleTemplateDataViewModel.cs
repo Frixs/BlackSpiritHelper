@@ -152,6 +152,10 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
+        #region Command Flags
+
+        #endregion
+
         #region Commands
 
         /// <summary>
@@ -204,6 +208,29 @@ namespace BlackSpiritHelper.Core
         private void CreateCommands()
         {
             ToggleLocalCalendarTimeCommand = new RelayCommand(async () => await ToggleScheduleTimeZoneViewAsync());
+        }
+
+        /// <summary>
+        /// Toggle converted mode of schedule with possibility to show user schedule in his local time (if he is not in the local zone).
+        /// </summary>
+        private async Task ToggleScheduleTimeZoneViewAsync()
+        {
+            await RunCommandAsync(() => IsSchedulePresenterConvertedFlag, async () =>
+            {
+                if (IsSchedulePresenterConverted)
+                {
+                    if (ConvertSchedulePresenterToGivenTimeZone())
+                        IsSchedulePresenterConverted = false;
+                }
+                else
+                {
+                    if (ConvertSchedulePresenterToLocal())
+                        IsSchedulePresenterConverted = true;
+                }
+
+
+                await Task.Delay(1);
+            });
         }
 
         #endregion
@@ -388,29 +415,6 @@ namespace BlackSpiritHelper.Core
                     }
                 }
             }
-        }
-
-        /// <summary>
-        /// Toggle converted mode of schedule with possibility to show user schedule in his local time (if he is not in the local zone).
-        /// </summary>
-        private async Task ToggleScheduleTimeZoneViewAsync()
-        {
-            await RunCommandAsync(() => IsSchedulePresenterConvertedFlag, async () =>
-            {
-                if (IsSchedulePresenterConverted)
-                {
-                    if (ConvertSchedulePresenterToGivenTimeZone())
-                        IsSchedulePresenterConverted = false;
-                }
-                else
-                {
-                    if (ConvertSchedulePresenterToLocal())
-                        IsSchedulePresenterConverted = true;
-                }
-
-
-                await Task.Delay(1);
-            });
         }
 
         /// <summary>

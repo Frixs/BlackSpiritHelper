@@ -1,5 +1,4 @@
 ﻿using BlackSpiritHelper.Core;
-using System.Windows.Controls;
 
 namespace BlackSpiritHelper
 {

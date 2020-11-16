@@ -1,6 +1,5 @@
 ﻿using Ninject;
 using System.Collections.Generic;
-using System.Windows;
 
 namespace BlackSpiritHelper.Core
 {

@@ -128,7 +128,7 @@
     <Color x:Key="SideMenuBackgroundDarkest">#232429</Color>
     <SolidColorBrush x:Key="SideMenuBackgroundDarkestBrushKey" Color="{StaticResource SideMenuBackgroundDarkest}" />
 
-    <Color x:Key="SideMenuForegroundDark">#17181B</Color>
+    <Color x:Key="SideMenuForegroundDark">#43474F</Color>
     <SolidColorBrush x:Key="SideMenuForegroundDarkBrushKey" Color="{StaticResource SideMenuForegroundDark}" />
 
     <Color x:Key="SideMenuForeground">#93979f</Color>
@@ -142,6 +142,15 @@
 
     <Color x:Key="SideMenuButtonAction">#303644</Color>
     <SolidColorBrush x:Key="SideMenuButtonActionBrushKey" Color="{StaticResource SideMenuButtonAction}" />
+
+    <Color x:Key="SideMenuButtonDarkBackground">#232429</Color>
+    <SolidColorBrush x:Key="SideMenuButtonDarkBackgroundBrushKey" Color="{StaticResource SideMenuButtonDarkBackground}" />
+
+    <Color x:Key="SideMenuButtonDarkHover">#17181B</Color>
+    <SolidColorBrush x:Key="SideMenuButtonDarkHoverBrushKey" Color="{StaticResource SideMenuButtonDarkHover}" />
+
+    <Color x:Key="SideMenuButtonDarkAction">#242B39</Color>
+    <SolidColorBrush x:Key="SideMenuButtonDarkActionBrushKey" Color="{StaticResource SideMenuButtonDarkAction}" />
 
     <Color x:Key="SideMenuListButtonBackground">#36393f</Color>
     <SolidColorBrush x:Key="SideMenuListButtonBackgroundBrushKey" Color="{StaticResource SideMenuListButtonBackground}" />

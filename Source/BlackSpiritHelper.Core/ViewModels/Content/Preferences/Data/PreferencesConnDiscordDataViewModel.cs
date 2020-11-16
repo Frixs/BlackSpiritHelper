@@ -86,13 +86,15 @@ namespace BlackSpiritHelper.Core
             var client = IoC.Web.Http.GetClientForHost(new Uri(address), mSendingTimeout);
 
             // Create discord value collection.
-            List<KeyValuePair<string, string>> discordValues = new List<KeyValuePair<string, string>>();
-            // Username (BOT).
-            discordValues.Add(new KeyValuePair<string, string>("username", IoC.Application.ProductName.Replace(" ", "")));
-            // Avatar.
-            discordValues.Add(new KeyValuePair<string, string>("avatar_url", IoC.Application.LogoURL));
-            // Message.
-            discordValues.Add(new KeyValuePair<string, string>("content", $"<@{UserID}> {message}"));
+            var discordValues = new List<KeyValuePair<string, string>>
+            {
+                // Username (BOT).
+                new KeyValuePair<string, string>("username", IoC.Application.ProductName.Replace(" ", "")),
+                // Avatar.
+                new KeyValuePair<string, string>("avatar_url", IoC.Application.LogoURL),
+                // Message.
+                new KeyValuePair<string, string>("content", $"{UserID} {message}")
+            };
 
             // Solve.
             try

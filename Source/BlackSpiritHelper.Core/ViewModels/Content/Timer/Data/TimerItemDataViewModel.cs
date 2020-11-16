@@ -243,6 +243,12 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
+        #region Command Flags
+
+        private bool mModifyCommandFlag { get; set; }
+
+        #endregion
+
         #region Commands
 
         /// <summary>
@@ -378,7 +384,7 @@ namespace BlackSpiritHelper.Core
             mWarningTimer.Dispose();
             mWarningTimer = null;
         }
-        
+
         /// <summary>
         /// On Tick timer event.
         /// </summary>
@@ -443,13 +449,13 @@ namespace BlackSpiritHelper.Core
         private void CreateCommands()
         {
             OpenTimerSettingsCommand = new RelayCommand(async () => await OpenTimerSettingsCommandMethodAsync());
-            TimePlusCommand = new RelayCommand(async () => await TimePlusAsync(false));
-            TimePlusBulkCommand = new RelayCommand(async () => await TimePlusAsync(true));
-            TimeMinusCommand = new RelayCommand(async () => await TimeMinusAsync(false));
-            TimeMinusBulkCommand = new RelayCommand(async () => await TimeMinusAsync(true));
+            TimePlusCommand = new RelayCommand(async () => await TimePlusCommandMethodAsync());
+            TimePlusBulkCommand = new RelayCommand(async () => await TimePlusBulkCommandMethodAsync());
+            TimeMinusCommand = new RelayCommand(async () => await TimeMinusCommandMethodAsync());
+            TimeMinusBulkCommand = new RelayCommand(async () => await TimeMinusBulkCommandMethodAsync());
             ResetTimerCommand = new RelayCommand(async () => await ResetTimerCommandMethodAsync());
-            SyncCommand = new RelayCommand(async () => await SyncCommandAsync());
-            PlayCommand = new RelayCommand(async () => await PlayAsync());
+            SyncCommand = new RelayCommand(async () => await SyncCommandMethodAsync());
+            PlayCommand = new RelayCommand(async () => await PlayCommandMethodAsync());
             PauseCommand = new RelayCommand(async () => await PauseCommandMethodAsync());
         }
 
@@ -459,39 +465,63 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task OpenTimerSettingsCommandMethodAsync()
         {
-            if (State != TimerState.Ready)
+            await RunCommandAsync(() => mModifyCommandFlag, async () =>
             {
-                // Cannot open timer settings while timer is running.
-                await IoC.UI.ShowNotification(new NotificationBoxDialogViewModel()
+                if (State != TimerState.Ready)
                 {
-                    Title = "OOOPS...",
-                    Message = $"You cannot open the timer settings while the timer is in process.{Environment.NewLine}Please, reset the timer into default state first.",
-                    Result = NotificationBoxResult.Ok,
-                });
+                    // Cannot open timer settings while timer is running.
+                    await IoC.UI.ShowNotification(new NotificationBoxDialogViewModel()
+                    {
+                        Title = "OOOPS...",
+                        Message = $"You cannot open the timer settings while the timer is in process.{Environment.NewLine}Please, reset the timer into default state first.",
+                        Result = NotificationBoxResult.Ok,
+                    });
 
-                return;
-            }
+                    return;
+                }
 
-            // Create Settings View Model with the current timer binding.
-            TimerItemSettingsFormPageViewModel vm = new TimerItemSettingsFormPageViewModel
-            {
-                FormVM = this,
-            };
+                // Create Settings View Model with the current timer binding.
+                TimerItemSettingsFormPageViewModel vm = new TimerItemSettingsFormPageViewModel
+                {
+                    FormVM = this,
+                };
 
-            IoC.Application.GoToPage(ApplicationPage.TimerItemSettingsForm, vm);
+                IoC.Application.GoToPage(ApplicationPage.TimerItemSettingsForm, vm);
 
-            await Task.Delay(1);
+                await Task.Delay(1);
+            });
         }
 
-        /// <summary>
-        /// Pause the timer, command reaction.
-        /// </summary>
-        /// <returns></returns>
-        private async Task PauseCommandMethodAsync()
+        private async Task TimePlusCommandMethodAsync()
         {
-            TimerPause();
+            await RunCommandAsync(() => mModifyCommandFlag, async () =>
+            {
+                await TimePlusAsync(false);
+            });
+        }
 
-            await Task.Delay(1);
+        private async Task TimePlusBulkCommandMethodAsync()
+        {
+            await RunCommandAsync(() => mModifyCommandFlag, async () =>
+            {
+                await TimePlusAsync(true);
+            });
+        }
+
+        private async Task TimeMinusCommandMethodAsync()
+        {
+            await RunCommandAsync(() => mModifyCommandFlag, async () =>
+            {
+                await TimeMinusAsync(false);
+            });
+        }
+
+        private async Task TimeMinusBulkCommandMethodAsync()
+        {
+            await RunCommandAsync(() => mModifyCommandFlag, async () =>
+            {
+                await TimeMinusAsync(true);
+            });
         }
 
         /// <summary>
@@ -500,9 +530,40 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task ResetTimerCommandMethodAsync()
         {
-            TimerRestart();
+            await RunCommandAsync(() => mModifyCommandFlag, async () =>
+            {
+                TimerRestart();
+                await Task.Delay(1);
+            });
+        }
 
-            await Task.Delay(1);
+        private async Task SyncCommandMethodAsync()
+        {
+            await RunCommandAsync(() => mModifyCommandFlag, async () =>
+            {
+                await SyncCommandAsync();
+            });
+        }
+
+        private async Task PlayCommandMethodAsync()
+        {
+            await RunCommandAsync(() => mModifyCommandFlag, async () =>
+            {
+                await PlayAsync();
+            });
+        }
+
+        /// <summary>
+        /// Pause the timer, command reaction.
+        /// </summary>
+        /// <returns></returns>
+        private async Task PauseCommandMethodAsync()
+        {
+            await RunCommandAsync(() => mModifyCommandFlag, async () =>
+            {
+                TimerPause();
+                await Task.Delay(1);
+            });
         }
 
         #endregion

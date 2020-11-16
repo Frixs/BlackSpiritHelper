@@ -31,6 +31,9 @@ namespace BlackSpiritHelper
                 case ApplicationPage.Schedule:
                     return new SchedulePage();
 
+                case ApplicationPage.ApmCalculator:
+                    return new ApmCalculatorPage();
+
                 case ApplicationPage.Preferences:
                     return new PreferencesPage();
 
@@ -73,6 +76,9 @@ namespace BlackSpiritHelper
 
             if (page is SchedulePage)
                 return ApplicationPage.Schedule;
+
+            if (page is ApmCalculatorPage)
+                return ApplicationPage.ApmCalculator;
 
             if (page is PreferencesPage)
                 return ApplicationPage.Preferences;

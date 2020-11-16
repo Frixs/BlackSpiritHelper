@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace BlackSpiritHelper.Core
@@ -28,7 +29,7 @@ namespace BlackSpiritHelper.Core
             set
             {
                 mFormVM = value;
-                
+
                 // Bind properties to the inputs.
                 BindProperties();
             }
@@ -81,6 +82,12 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
+        #region Command Flags
+
+        private bool mModifyCommandFlag { get; set; }
+
+        #endregion
+
         #region Commands
 
         /// <summary>
@@ -121,15 +128,15 @@ namespace BlackSpiritHelper.Core
             if (FormVM == null)
                 return;
 
-            Title                           = FormVM.Title;
-            IconTitleShortcut               = FormVM.IconTitleShortcut;
-            IconBackgroundHEX               = "#" + FormVM.IconBackgroundHEX;
-            TimeDuration                    = FormVM.TimeDuration;
-            CountdownDuration               = FormVM.CountdownDuration.TotalSeconds;
-            IsLoopActive                    = FormVM.IsLoopActive;
-            ShowInOverlay                   = FormVM.ShowInOverlay;
-            GroupID                         = FormVM.GroupID;
-            AssociatedGroupViewModel        = null;
+            Title = FormVM.Title;
+            IconTitleShortcut = FormVM.IconTitleShortcut;
+            IconBackgroundHEX = "#" + FormVM.IconBackgroundHEX;
+            TimeDuration = FormVM.TimeDuration;
+            CountdownDuration = FormVM.CountdownDuration.TotalSeconds;
+            IsLoopActive = FormVM.IsLoopActive;
+            ShowInOverlay = FormVM.ShowInOverlay;
+            GroupID = FormVM.GroupID;
+            AssociatedGroupViewModel = null;
         }
 
         #region Command Methods
@@ -139,107 +146,120 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void CreateCommands()
         {
-            SaveChangesCommand = new RelayCommand(() => SaveChangesCommandMethod());
-            DeleteTimerCommand = new RelayCommand(() => DeleteTimerCommandMethod());
+            SaveChangesCommand = new RelayCommand(async () => await SaveChangesCommandMethodAsync());
+            DeleteTimerCommand = new RelayCommand(async () => await DeleteTimerCommandMethodAsync());
             GoBackCommand = new RelayCommand(() => GoBackCommandMethod());
         }
 
-        private void SaveChangesCommandMethod()
+        private async Task SaveChangesCommandMethodAsync()
         {
-            if (FormVM.State != TimerState.Ready)
-                return;
-
-            // Substring the HEX color to the required form.
-            // We recieve f.e. #FF000000 and we want to transform it into 000000.
-            string iconBackgroundHEX = IconBackgroundHEX.ToHexStringWithoutHashmark();
-
-            // Trim.
-            string title = Title.Trim();
-            string titleShortcut = IconTitleShortcut.Trim();
-
-            // Validate inputs.
-            if (!Core.TimerItemDataViewModel.ValidateInputs(FormVM, title, titleShortcut, iconBackgroundHEX, TimeDuration, TimeSpan.FromSeconds(CountdownDuration), ShowInOverlay, AssociatedGroupViewModel, GroupID)
-                || AssociatedGroupViewModel == null)
+            await RunCommandAsync(() => mModifyCommandFlag, async () =>
             {
-                // Some error occured during saving changes of the timer.
-                IoC.UI.ShowNotification(new NotificationBoxDialogViewModel()
+                if (FormVM.State != TimerState.Ready)
+                    return;
+
+                // Substring the HEX color to the required form.
+                // We recieve f.e. #FF000000 and we want to transform it into 000000.
+                string iconBackgroundHEX = IconBackgroundHEX.ToHexStringWithoutHashmark();
+
+                // Trim.
+                string title = Title.Trim();
+                string titleShortcut = IconTitleShortcut.Trim();
+
+                // Validate inputs.
+                if (!Core.TimerItemDataViewModel.ValidateInputs(FormVM, title, titleShortcut, iconBackgroundHEX, TimeDuration, TimeSpan.FromSeconds(CountdownDuration), ShowInOverlay, AssociatedGroupViewModel, GroupID)
+                    || AssociatedGroupViewModel == null)
                 {
-                    Title = "INVALID VALUES",
-                    Message = $"Some of entered values are invalid. Please, check them again.",
-                    Result = NotificationBoxResult.Ok,
-                });
-
-                return;
-            }
-
-            // Save changes.
-            #region Save changes
-
-            if (FormVM.GroupID != AssociatedGroupViewModel.ID)
-            {
-                // Find and remove timer from old group.
-                if (!IoC.DataContent.TimerData.GetGroupByID(FormVM.GroupID).TimerList.Remove(mFormVM))
-                {
-                    // Some error occured during removing the timer from old group.
-                    IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                    // Some error occured during saving changes of the timer.
+                    _ = IoC.UI.ShowNotification(new NotificationBoxDialogViewModel()
                     {
-                        Caption = "Unexpected error",
-                        Message = $"Unexpected error occurred while removing the timer from the old group. Please contact the developers to fix the issue.{Environment.NewLine}",
+                        Title = "INVALID VALUES",
+                        Message = $"Some of entered values are invalid. Please, check them again.",
+                        Result = NotificationBoxResult.Ok,
+                    });
+
+                    return;
+                }
+
+                // Save changes.
+                #region Save changes
+
+                if (FormVM.GroupID != AssociatedGroupViewModel.ID)
+                {
+                    // Find and remove timer from old group.
+                    if (!IoC.DataContent.TimerData.GetGroupByID(FormVM.GroupID).TimerList.Remove(mFormVM))
+                    {
+                        // Some error occured during removing the timer from old group.
+                        _ = IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                        {
+                            Caption = "Unexpected error",
+                            Message = $"Unexpected error occurred while removing the timer from the old group. Please contact the developers to fix the issue.{Environment.NewLine}",
+                            Button = System.Windows.MessageBoxButton.OK,
+                            Icon = System.Windows.MessageBoxImage.Warning,
+                        });
+
+                        return;
+                    }
+                    // Add timer to the new group.
+                    AssociatedGroupViewModel.TimerList.Add(mFormVM);
+                    // Set group ID.
+                    FormVM.GroupID = AssociatedGroupViewModel.ID;
+
+                }
+                FormVM.Title = title;
+                FormVM.IconTitleShortcut = titleShortcut;
+                FormVM.IconBackgroundHEX = iconBackgroundHEX;
+                FormVM.TimeDuration = TimeDuration;
+                FormVM.CountdownDuration = TimeSpan.FromSeconds(CountdownDuration);
+                FormVM.IsLoopActive = IsLoopActive;
+                FormVM.ShowInOverlay = ShowInOverlay;
+
+                #endregion
+
+                // Resort timer list alphabetically.
+                AssociatedGroupViewModel.SortTimerList();
+
+                // Log it.
+                IoC.Logger.Log($"Settings changed: timer '{FormVM.Title}'.", LogLevel.Info);
+
+                // Make sure it is updated
+                IoC.DataContent.TimerData.OnPropertyChanged(nameof(IoC.DataContent.TimerData.GroupList));
+
+                // Move back to the page.
+                GoBackCommandMethod();
+
+                await Task.Delay(1);
+            });
+        }
+
+        private async Task DeleteTimerCommandMethodAsync()
+        {
+            await RunCommandAsync(() => mModifyCommandFlag, async () =>
+            {
+                if (FormVM.State != TimerState.Ready)
+                    return;
+
+                // Remove timer.
+                if (!IoC.DataContent.TimerData.GetGroupByID(FormVM.GroupID).DestroyTimer(FormVM))
+                {
+                    // Some error occured during deleting the timer.
+                    _ = IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                    {
+                        Caption = "Cannot delete the timer!",
+                        Message = $"Unexpected error occurred during deleting the timer.{Environment.NewLine}" +
+                                   "Please, contact the developers to fix the issue.",
                         Button = System.Windows.MessageBoxButton.OK,
                         Icon = System.Windows.MessageBoxImage.Warning,
                     });
 
                     return;
                 }
-                // Add timer to the new group.
-                AssociatedGroupViewModel.TimerList.Add(mFormVM);
-                // Set group ID.
-                FormVM.GroupID = AssociatedGroupViewModel.ID;
 
-            }
-            FormVM.Title = title;
-            FormVM.IconTitleShortcut = titleShortcut;
-            FormVM.IconBackgroundHEX = iconBackgroundHEX;
-            FormVM.TimeDuration = TimeDuration;
-            FormVM.CountdownDuration = TimeSpan.FromSeconds(CountdownDuration);
-            FormVM.IsLoopActive = IsLoopActive;
-            FormVM.ShowInOverlay = ShowInOverlay;
+                // Move back to the page.
+                GoBackCommandMethod();
 
-            #endregion
-
-            // Resort timer list alphabetically.
-            AssociatedGroupViewModel.SortTimerList();
-
-            // Log it.
-            IoC.Logger.Log($"Settings changed: timer '{FormVM.Title}'.", LogLevel.Info);
-
-            // Move back to the page.
-            GoBackCommandMethod();
-        }
-
-        private void DeleteTimerCommandMethod()
-        {
-            if (FormVM.State != TimerState.Ready)
-                return;
-
-            // Remove timer.
-            if (!IoC.DataContent.TimerData.GetGroupByID(FormVM.GroupID).DestroyTimer(FormVM))
-            {
-                // Some error occured during deleting the timer.
-                IoC.UI.ShowMessage(new MessageBoxDialogViewModel
-                {
-                    Caption = "Cannot delete the timer!",
-                    Message = $"Unexpected error occurred during deleting the timer.{Environment.NewLine}" +
-                               "Please, contact the developers to fix the issue.",
-                    Button = System.Windows.MessageBoxButton.OK,
-                    Icon = System.Windows.MessageBoxImage.Warning,
-                });
-
-                return;
-            }
-
-            // Move back to the page.
-            GoBackCommandMethod();
+                await Task.Delay(1);
+            });
         }
 
         private void GoBackCommandMethod()

@@ -390,6 +390,13 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
+        #region Command Flags
+
+        private bool mPlayStopCommandFlags { get; set; }
+        private bool mManageCommandFlags { get; set; }
+
+        #endregion
+
         #region Commands
 
         /// <summary>
@@ -526,13 +533,29 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void CreateCommands()
         {
-            PlayCommand = new RelayCommand(async () => await PlayAsync());
-            StopCommand = new RelayCommand(async () => await StopAsync());
+            PlayCommand = new RelayCommand(async () => await PlayCommandMethodAsync());
+            StopCommand = new RelayCommand(async () => await StopCommandMethodAsync());
 
             AddTemplateCommand = new RelayCommand(async () => await AddNewTemplateCommandMethodAsync());
             CloneTemplateCommand = new RelayCommand(async () => await CloneTemplateCommandMethodAsync());
             EditTemplateCommand = new RelayCommand(async () => await OpenTemplateSettingsCommandMethodAsync());
             ManageItemsCommand = new RelayCommand(async () => await OpenItemsSettingsCommandMethodAsync());
+        }
+
+        private async Task PlayCommandMethodAsync()
+        {
+            await RunCommandAsync(() => mPlayStopCommandFlags, async () =>
+            {
+                await PlayAsync();
+            });
+        }
+
+        private async Task StopCommandMethodAsync()
+        {
+            await RunCommandAsync(() => mPlayStopCommandFlags, async () =>
+            {
+                await StopAsync();
+            });
         }
 
         /// <summary>
@@ -541,18 +564,21 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task OpenTemplateSettingsCommandMethodAsync()
         {
-            if (SelectedTemplate.IsPredefined)
-                return;
-
-            // Create Settings View Model with the current template binding.
-            ScheduleTemplateSettingsFormPageViewModel vm = new ScheduleTemplateSettingsFormPageViewModel
+            await RunCommandAsync(() => mManageCommandFlags, async () =>
             {
-                FormVM = SelectedTemplate,
-            };
+                if (SelectedTemplate.IsPredefined)
+                    return;
 
-            IoC.Application.GoToPage(ApplicationPage.ScheduleTemplateSettingsForm, vm);
+                // Create Settings View Model with the current template binding.
+                ScheduleTemplateSettingsFormPageViewModel vm = new ScheduleTemplateSettingsFormPageViewModel
+                {
+                    FormVM = SelectedTemplate,
+                };
 
-            await Task.Delay(1);
+                IoC.Application.GoToPage(ApplicationPage.ScheduleTemplateSettingsForm, vm);
+
+                await Task.Delay(1);
+            });
         }
 
         /// <summary>
@@ -561,45 +587,48 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task AddNewTemplateCommandMethodAsync()
         {
-            if (!CanAddCustomTemplate)
-                return;
-
-            // Create (new) empty template.
-            ObservableCollection<ScheduleDayDataViewModel> schedule = new ObservableCollection<ScheduleDayDataViewModel>();
-            foreach (DayOfWeek day in (DayOfWeek[])Enum.GetValues(typeof(DayOfWeek)))
+            await RunCommandAsync(() => mManageCommandFlags, async () =>
             {
-                schedule.Add(new ScheduleDayDataViewModel()
+                if (!CanAddCustomTemplate)
+                    return;
+
+                // Create (new) empty template.
+                ObservableCollection<ScheduleDayDataViewModel> schedule = new ObservableCollection<ScheduleDayDataViewModel>();
+                foreach (DayOfWeek day in (DayOfWeek[])Enum.GetValues(typeof(DayOfWeek)))
                 {
-                    DayOfWeek = day,
-                    TimeList = new ObservableCollection<ScheduleTimeEventDataViewModel>(),
-                });
-            }
-            ScheduleTemplateDataViewModel vm = new ScheduleTemplateDataViewModel
-            {
-                LastModifiedString = DateTime.Now.ToString("yyyy-MM-dd"),
-                Title = GetTemplateRandomTitle(),
-                TimeZoneRegion = TimeZoneRegion.UTC,
-                Schedule = schedule,
-            };
+                    schedule.Add(new ScheduleDayDataViewModel()
+                    {
+                        DayOfWeek = day,
+                        TimeList = new ObservableCollection<ScheduleTimeEventDataViewModel>(),
+                    });
+                }
+                ScheduleTemplateDataViewModel vm = new ScheduleTemplateDataViewModel
+                {
+                    LastModifiedString = DateTime.Now.ToString("yyyy-MM-dd"),
+                    Title = GetTemplateRandomTitle(),
+                    TimeZoneRegion = TimeZoneRegion.UTC,
+                    Schedule = schedule,
+                };
 
-            // Add new template.
-            if (AddTemplateCustom(vm) == null)
-            {
-                return;
-            }
+                // Add new template.
+                if (AddTemplateCustom(vm) == null)
+                {
+                    return;
+                }
 
-            // Init.
-            vm.Init(false);
+                // Init.
+                vm.Init(false);
 
-            // Select the template.
-            SelectTemplateByName(vm.Title);
+                // Select the template.
+                SelectTemplateByName(vm.Title);
 
-            // Update template title list presenter.
-            SetTemplateTitleListPresenter();
-            // Update GUI.
-            OnPropertyChanged(nameof(CanAddCustomTemplate));
+                // Update template title list presenter.
+                SetTemplateTitleListPresenter();
+                // Update GUI.
+                OnPropertyChanged(nameof(CanAddCustomTemplate));
 
-            await Task.Delay(1);
+                await Task.Delay(1);
+            });
         }
 
         /// <summary>
@@ -608,42 +637,45 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task CloneTemplateCommandMethodAsync()
         {
-            if (!CanAddCustomTemplate)
-                return;
-
-            string prefix = "-COPY-";
-
-            // Make a deep copy of template object.
-            ScheduleTemplateDataViewModel vm = new ScheduleTemplateDataViewModel
+            await RunCommandAsync(() => mManageCommandFlags, async () =>
             {
-                LastModifiedString = DateTime.Now.ToString("yyyy-MM-dd"),
-                Title = GetTemplateRandomTitle(
-                    SelectedTemplate.Title.Contains(prefix)
-                    ? SelectedTemplate.Title.Substring(0, SelectedTemplate.Title.Length - 1)
-                    : SelectedTemplate.Title + prefix
-                    ),
-                TimeZoneRegion = SelectedTemplate.TimeZoneRegion,
-                Schedule = SelectedTemplate.CreateScheduleCopy(false),
-            };
+                if (!CanAddCustomTemplate)
+                    return;
 
-            // Add custom cop template.
-            if (AddTemplateCustom(vm) == null)
-            {
-                return;
-            }
+                string prefix = "-COPY-";
 
-            // Init.
-            vm.Init(false);
+                // Make a deep copy of template object.
+                ScheduleTemplateDataViewModel vm = new ScheduleTemplateDataViewModel
+                {
+                    LastModifiedString = DateTime.Now.ToString("yyyy-MM-dd"),
+                    Title = GetTemplateRandomTitle(
+                        SelectedTemplate.Title.Contains(prefix)
+                        ? SelectedTemplate.Title.Substring(0, SelectedTemplate.Title.Length - 1)
+                        : SelectedTemplate.Title + prefix
+                        ),
+                    TimeZoneRegion = SelectedTemplate.TimeZoneRegion,
+                    Schedule = SelectedTemplate.CreateScheduleCopy(false),
+                };
 
-            // Select the template.
-            SelectTemplateByName(vm.Title);
+                // Add custom cop template.
+                if (AddTemplateCustom(vm) == null)
+                {
+                    return;
+                }
 
-            // Update template title list presenter.
-            SetTemplateTitleListPresenter();
-            // Update GUI.
-            OnPropertyChanged(nameof(CanAddCustomTemplate));
+                // Init.
+                vm.Init(false);
 
-            await Task.Delay(1);
+                // Select the template.
+                SelectTemplateByName(vm.Title);
+
+                // Update template title list presenter.
+                SetTemplateTitleListPresenter();
+                // Update GUI.
+                OnPropertyChanged(nameof(CanAddCustomTemplate));
+
+                await Task.Delay(1);
+            });
         }
 
         /// <summary>
@@ -652,15 +684,18 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task OpenItemsSettingsCommandMethodAsync()
         {
-            // Create Settings View Model with the current template binding.
-            ScheduleItemControlFormPageViewModel vm = new ScheduleItemControlFormPageViewModel
+            await RunCommandAsync(() => mManageCommandFlags, async () =>
             {
-                FormVM = this,
-            };
+                // Create Settings View Model with the current template binding.
+                ScheduleItemControlFormPageViewModel vm = new ScheduleItemControlFormPageViewModel
+                {
+                    FormVM = this,
+                };
 
-            IoC.Application.GoToPage(ApplicationPage.ScheduleItemControlForm, vm);
+                IoC.Application.GoToPage(ApplicationPage.ScheduleItemControlForm, vm);
 
-            await Task.Delay(1);
+                await Task.Delay(1);
+            });
         }
 
         #endregion
@@ -1106,7 +1141,7 @@ namespace BlackSpiritHelper.Core
         {
             if (string.IsNullOrEmpty(itemName))
                 return false;
-            
+
             return RemoveItemFromIgnoredList(GetItemByName(itemName));
         }
 

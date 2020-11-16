@@ -57,24 +57,34 @@ namespace BlackSpiritHelper.Core
         public bool OpenOnStart { get; set; } = false;
 
         /// <summary>
-        /// X axis position of the overlay object.
-        /// </summary>
-        public double PosX { get; set; } = 0;
-
-        /// <summary>
-        /// Y axis position of the overlay object.
-        /// </summary>
-        public double PosY { get; set; } = 0;
-
-        /// <summary>
         /// Says, if the dragging with overlay object is locked or not.
         /// </summary>
         public bool IsDraggingLocked { get; set; } = false;
 
         /// <summary>
-        /// Overlay orientation.
+        /// Base Overlay data view model
         /// </summary>
-        public Orientation OverlayOrientation { get; set; } = Orientation.Horizontal;
+        public OverlayBaseDataViewModel BaseOverlay { get; set; } = new OverlayBaseDataViewModel();
+
+        /// <summary>
+        /// Screen capture data view model
+        /// </summary>
+        public OverlayScreenCaptureDataViewModel ScreenCaptureOverlay { get; set; } = new OverlayScreenCaptureDataViewModel();
+
+        /// <summary>
+        /// Indicates if the scren share is active/visible
+        /// </summary>
+        [XmlIgnore]
+        public bool IsScreenCaptureActive { get; private set; } = false;
+
+        /// <summary>
+        /// Currently share window (pointer)
+        /// </summary>
+        /// <remarks>
+        ///     Has value only if IsScreenCaptureActive == true
+        /// </remarks>
+        [XmlIgnore]
+        public ScreenCaptureHandle ScreenCaptureHandleData { get; private set; } = null;
 
         /// <summary>
         /// List of all types of <see cref="Orientation"/>.
@@ -83,34 +93,10 @@ namespace BlackSpiritHelper.Core
         public Orientation[] OrientationList { get; private set; } = (Orientation[])Enum.GetValues(typeof(Orientation));
 
         /// <summary>
-        /// Overlay size.
-        /// <see cref="OverlaySize"/> handles the sizes in pixels.
-        /// </summary>
-        public OverlaySize OverlaySize { get; set; } = OverlaySize.Normal;
-
-        /// <summary>
         /// List of all types of <see cref="OverlaySize"/>.
         /// </summary>
         [XmlIgnore]
-        public OverlaySize[] OverlaySizeList { get; private set; } = (OverlaySize[])Enum.GetValues(typeof(OverlaySize));
-
-        /// <summary>
-        /// Get pixel size string for style application.
-        /// </summary>
-        [XmlIgnore]
-        public double OverlaySizeStyleValue => (double)OverlaySize;
-
-        /// <summary>
-        /// Get pixel size string for Width style application.
-        /// </summary>
-        [XmlIgnore]
-        public double OverlaySizeStyleWidthValue => GetUserPreferredOverlaySizeWidthStyleValue();
-
-        /// <summary>
-        /// Get pixel size string for Height style application.
-        /// </summary>
-        [XmlIgnore]
-        public double OverlaySizeStyleHeightValue => GetUserPreferredOverlaySizeHeightStyleValue();
+        public BaseOverlaySize[] BaseOverlaySizeList { get; private set; } = (BaseOverlaySize[])Enum.GetValues(typeof(BaseOverlaySize));
 
         [XmlIgnore]
         public override bool IsRunning
@@ -118,6 +104,13 @@ namespace BlackSpiritHelper.Core
             get => false;
             protected set => throw new NotImplementedException();
         }
+
+        #endregion
+
+        #region Command Flags
+
+        private bool mLockOverlayDraggingCommandFlag { get; set; }
+        private bool mShowMainWindowCommandFlag { get; set; }
 
         #endregion
 
@@ -169,16 +162,20 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void CreateCommands()
         {
-            LockOverlayDraggingCommand = new RelayCommand(() => LockOverlayCommandMethod());
+            LockOverlayDraggingCommand = new RelayCommand(async () => await LockOverlayCommandMethodAsync());
             ShowMainWindowCommand = new RelayCommand(async () => await ShowMainWindowCommandMethodAsync());
         }
 
         /// <summary>
         /// Lock/Unlock Overlay dragging.
         /// </summary>
-        private void LockOverlayCommandMethod()
+        private async Task LockOverlayCommandMethodAsync()
         {
-            IsDraggingLocked = !IsDraggingLocked;
+            await RunCommandAsync(() => mLockOverlayDraggingCommandFlag, async () =>
+            {
+                IsDraggingLocked = !IsDraggingLocked;
+                await Task.Delay(1);
+            });
         }
 
         /// <summary>
@@ -186,37 +183,37 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private async Task ShowMainWindowCommandMethodAsync()
         {
-            IoC.UI.ShowMainWindow();
-
-            await Task.Delay(1);
+            await RunCommandAsync(() => mShowMainWindowCommandFlag, async () =>
+            {
+                IoC.UI.ShowMainWindow();
+                await Task.Delay(1);
+            });
         }
 
         #endregion
 
-        #region Private Methods
+        #region Public Methods
 
         /// <summary>
-        /// Transform size according to orientation into Width style value.
+        /// Activate screen capture
         /// </summary>
-        /// <returns></returns>
-        private double GetUserPreferredOverlaySizeWidthStyleValue()
+        /// <param name="sch">Window/Monitor handle data</param>
+        public void ActiveCaptureShare(ScreenCaptureHandle sch)
         {
-            if (OverlayOrientation == Orientation.Vertical)
-                return (double)OverlaySize;
+            // Deactivate it first to be able to activate a new session
+            DeactiveScreenCapture();
 
-            return double.NaN; // Auto.
+            ScreenCaptureHandleData = sch;
+            IsScreenCaptureActive = true;
         }
 
         /// <summary>
-        /// Transform size according to orientation into Height style value.
+        /// Deactivate screen capture
         /// </summary>
-        /// <returns></returns>
-        private double GetUserPreferredOverlaySizeHeightStyleValue()
+        public void DeactiveScreenCapture()
         {
-            if (OverlayOrientation == Orientation.Horizontal)
-                return (double)OverlaySize;
-
-            return double.NaN; // Auto.
+            IsScreenCaptureActive = false;
+            ScreenCaptureHandleData = null;
         }
 
         #endregion

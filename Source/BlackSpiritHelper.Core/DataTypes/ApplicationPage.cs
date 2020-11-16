@@ -31,6 +31,12 @@ namespace BlackSpiritHelper.Core
         Schedule = 3,
 
         /// <summary>
+        /// The APM calculator page
+        /// </summary>
+        [Description("APM")]
+        ApmCalculator = 4,
+
+        /// <summary>
         /// The Settings page.
         /// </summary>
         Preferences = 10,

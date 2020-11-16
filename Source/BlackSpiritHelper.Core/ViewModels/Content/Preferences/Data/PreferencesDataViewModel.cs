@@ -36,12 +36,6 @@ namespace BlackSpiritHelper.Core
         public double Volume { get; set; } = 0.5;
 
         /// <summary>
-        /// RunOnStartup Flag for locking.
-        /// </summary>
-        [XmlIgnore]
-        public bool RunOnStartupFlag { get; private set; } = false;
-
-        /// <summary>
         /// Connection wrapper that handles connection to 3rd party user's software.
         /// </summary>
         public PreferencesConnectionDataViewModel Connection { get; set; } = new PreferencesConnectionDataViewModel();
@@ -50,6 +44,26 @@ namespace BlackSpiritHelper.Core
         /// User audio alert level.
         /// </summary>
         public AudioAlertType AudioAlertType { get; set; } = AudioAlertType.Standard;
+
+        /// <summary>
+        /// Selected overlay interaction key
+        /// </summary>
+        /// <remarks>
+        ///     Hooking is set in preference page code-behind
+        /// </remarks>
+        public OverlayInteractionKey OverlayInteractionKey { get; set; } = OverlayInteractionKey.LeftAlt;
+
+        /// <summary>
+        /// RunOnStartup Flag for locking.
+        /// </summary>
+        [XmlIgnore]
+        public bool RunOnStartupFlag { get; private set; } = false;
+
+        /// <summary>
+        /// List of all overlay interaction keys
+        /// </summary>
+        [XmlIgnore]
+        public OverlayInteractionKey[] OverlayInteractionKeyList { get; private set; } = (OverlayInteractionKey[])Enum.GetValues(typeof(OverlayInteractionKey));
 
         /// <summary>
         /// List of all types of audio alerts.
@@ -220,8 +234,11 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private async Task ResetOverlayPositionCommandMethodAsync()
         {
-            IoC.DataContent.OverlayData.PosX = 0;
-            IoC.DataContent.OverlayData.PosY = 0;
+            IoC.DataContent.OverlayData.BaseOverlay.PosX = 0;
+            IoC.DataContent.OverlayData.BaseOverlay.PosY = 0;
+
+            IoC.DataContent.OverlayData.ScreenCaptureOverlay.PosX = 0;
+            IoC.DataContent.OverlayData.ScreenCaptureOverlay.PosY = 0;
 
             await Task.Delay(1);
         }

@@ -8,6 +8,7 @@
     Title="{Binding ApplicationViewModel.ApplicationName, Source={x:Static local:ViewModelLocator.Instance}, StringFormat='{}{0} - Overlay', FallbackValue='Title Placeholder'}"
     AllowsTransparency="True"
     Background="Transparent"
+    Closed="Window_Closed"
     Icon="/BlackSpiritHelper;component/icon_white.ico"
     Initialized="Window_Initialized"
     Loaded="Window_Loaded"
@@ -32,15 +33,17 @@
             SnapsToDevicePixels="True"
             UseLayoutRounding="True">
 
-            <!--  Canvas Content  -->
+            <!--  Canvas Content - Base Overlay  -->
             <Border
-                x:Name="OverlayObject"
-                Canvas.Left="{Binding PosX, Mode=TwoWay}"
-                Canvas.Top="{Binding PosY, Mode=TwoWay}"
+                x:Name="BaseOverlayObject"
+                Canvas.Left="{Binding BaseOverlay.PosX, Mode=TwoWay}"
+                Canvas.Top="{Binding BaseOverlay.PosY, Mode=TwoWay}"
+                Panel.ZIndex="10"
                 MouseLeftButtonDown="OnMouseLeftButtonDown"
                 MouseLeftButtonUp="OnMouseLeftButtonUp"
                 MouseMove="OnMouseMove">
 
+                <!--  Draggable Border Background  -->
                 <Border.Style>
                     <Style TargetType="Border">
                         <Setter Property="Background" Value="Transparent" />
@@ -51,15 +54,14 @@
                         </Style.Triggers>
                     </Style>
                 </Border.Style>
-
                 <Grid>
-                    <!--  Border  -->
+                    <!--  Draggable Border - IsDraggable Border  -->
                     <Rectangle StrokeThickness="2">
                         <Rectangle.Style>
                             <Style TargetType="Rectangle">
                                 <Setter Property="Stroke" Value="Transparent" />
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsMouseOver, ElementName=OverlayObject}" Value="True">
+                                    <DataTrigger Binding="{Binding IsMouseOver, ElementName=BaseOverlayObject}" Value="True">
                                         <Setter Property="Stroke" Value="{StaticResource DraggableZoneBrushKey}" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding IsDraggingLocked}" Value="True">
@@ -71,65 +73,10 @@
                     </Rectangle>
 
                     <!--  Overlay Object Content Wrapper  -->
-                    <StackPanel Orientation="{Binding OverlayOrientation, FallbackValue=Horizontal}">
+                    <StackPanel Orientation="{Binding BaseOverlay.OverlayOrientation, FallbackValue=Horizontal}">
 
                         <!--  Overlay Object Item Wrapper  -->
                         <Button Padding="0" Focusable="False">
-
-                            <!--  Content  -->
-                            <StackPanel
-                                x:Name="OverlayContentWrapper"
-                                Width="{Binding OverlaySizeStyleWidthValue, FallbackValue=Auto}"
-                                Height="{Binding OverlaySizeStyleHeightValue, FallbackValue=50}"
-                                MinWidth="{Binding OverlaySizeStyleValue, FallbackValue=50}"
-                                MinHeight="{Binding OverlaySizeStyleValue, FallbackValue=50}"
-                                Orientation="{Binding OverlayOrientation, FallbackValue=Horizontal}"
-                                SizeChanged="OverlayContentWrapper_SizeChanged">
-
-                                <!--  Content - Instances of overlay representation  -->
-
-                                <!--  Timer section  -->
-                                <local:OverlayTimerSectionControl Width="{Binding OverlaySizeStyleWidthValue, FallbackValue=Auto}" Height="{Binding OverlaySizeStyleHeightValue, FallbackValue=50}">
-                                    <local:OverlayTimerSectionControl.Style>
-                                        <Style TargetType="local:OverlayTimerSectionControl">
-                                            <Setter Property="Margin" Value="0,0,10,0" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding OverlayOrientation}" Value="Vertical">
-                                                    <Setter Property="Margin" Value="0,0,0,10" />
-                                                </DataTrigger>
-                                                <Trigger Property="ActualWidth" Value="0">
-                                                    <Setter Property="Margin" Value="0" />
-                                                </Trigger>
-                                                <Trigger Property="ActualHeight" Value="0">
-                                                    <Setter Property="Margin" Value="0" />
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </local:OverlayTimerSectionControl.Style>
-                                </local:OverlayTimerSectionControl>
-
-                                <!--  Schedule section  -->
-                                <local:OverlayScheduleSectionControl Width="{Binding OverlaySizeStyleWidthValue, FallbackValue=Auto}" Height="{Binding OverlaySizeStyleHeightValue, FallbackValue=50}">
-                                    <local:OverlayScheduleSectionControl.Style>
-                                        <Style TargetType="local:OverlayScheduleSectionControl">
-                                            <Setter Property="Margin" Value="0,0,10,0" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding OverlayOrientation}" Value="Vertical">
-                                                    <Setter Property="Margin" Value="0,0,0,10" />
-                                                </DataTrigger>
-                                                <Trigger Property="ActualWidth" Value="0">
-                                                    <Setter Property="Margin" Value="0" />
-                                                </Trigger>
-                                                <Trigger Property="ActualHeight" Value="0">
-                                                    <Setter Property="Margin" Value="0" />
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </local:OverlayScheduleSectionControl.Style>
-                                </local:OverlayScheduleSectionControl>
-
-                            </StackPanel>
-
                             <!--  Drop Shadow & Margin Box  -->
                             <Button.Style>
                                 <Style BasedOn="{StaticResource Hoverless}" TargetType="Button">
@@ -145,22 +92,76 @@
                                     <!--  Margin  -->
                                     <Setter Property="Margin" Value="25,25,15,25" />
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding OverlayOrientation}" Value="Vertical">
+                                        <DataTrigger Binding="{Binding BaseOverlay.OverlayOrientation}" Value="Vertical">
                                             <Setter Property="Margin" Value="25,25,25,15" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Button.Style>
 
+                            <!--  Content  -->
+                            <StackPanel
+                                x:Name="OverlayContentWrapper"
+                                Width="{Binding BaseOverlay.SizeWidthValue, FallbackValue=Auto}"
+                                Height="{Binding BaseOverlay.SizeHeightValue, FallbackValue=50}"
+                                MinWidth="{Binding BaseOverlay.SizeValue, FallbackValue=50}"
+                                MinHeight="{Binding BaseOverlay.SizeValue, FallbackValue=50}"
+                                Orientation="{Binding BaseOverlay.OverlayOrientation, FallbackValue=Horizontal}"
+                                SizeChanged="OverlayContentWrapper_SizeChanged">
+
+                                <!--  Content - Instances of overlay representation  -->
+
+                                <!--  Timer section  -->
+                                <local:OverlayTimerSectionControl Width="{Binding BaseOverlay.SizeWidthValue, FallbackValue=Auto}" Height="{Binding BaseOverlay.SizeHeightValue, FallbackValue=50}">
+                                    <local:OverlayTimerSectionControl.Style>
+                                        <Style TargetType="local:OverlayTimerSectionControl">
+                                            <Setter Property="Margin" Value="0,0,10,0" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding BaseOverlay.OverlayOrientation}" Value="Vertical">
+                                                    <Setter Property="Margin" Value="0,0,0,10" />
+                                                </DataTrigger>
+                                                <Trigger Property="ActualWidth" Value="0">
+                                                    <Setter Property="Margin" Value="0" />
+                                                </Trigger>
+                                                <Trigger Property="ActualHeight" Value="0">
+                                                    <Setter Property="Margin" Value="0" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </local:OverlayTimerSectionControl.Style>
+                                </local:OverlayTimerSectionControl>
+
+                                <!--  Schedule section  -->
+                                <local:OverlayScheduleSectionControl Width="{Binding BaseOverlay.SizeWidthValue, FallbackValue=Auto}" Height="{Binding BaseOverlay.SizeHeightValue, FallbackValue=50}">
+                                    <local:OverlayScheduleSectionControl.Style>
+                                        <Style TargetType="local:OverlayScheduleSectionControl">
+                                            <Setter Property="Margin" Value="0,0,10,0" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding BaseOverlay.OverlayOrientation}" Value="Vertical">
+                                                    <Setter Property="Margin" Value="0,0,0,10" />
+                                                </DataTrigger>
+                                                <Trigger Property="ActualWidth" Value="0">
+                                                    <Setter Property="Margin" Value="0" />
+                                                </Trigger>
+                                                <Trigger Property="ActualHeight" Value="0">
+                                                    <Setter Property="Margin" Value="0" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </local:OverlayScheduleSectionControl.Style>
+                                </local:OverlayScheduleSectionControl>
+
+                            </StackPanel>
+
                         </Button>
 
                         <!--  Overlay Object Control Wrapper  -->
-                        <StackPanel Orientation="{Binding OverlayOrientation, FallbackValue=Horizontal}">
+                        <StackPanel Orientation="{Binding BaseOverlay.OverlayOrientation, FallbackValue=Horizontal}">
                             <StackPanel.Style>
                                 <Style TargetType="StackPanel">
                                     <Setter Property="Visibility" Value="Hidden" />
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsMouseOver, ElementName=OverlayObject}" Value="True">
+                                        <DataTrigger Binding="{Binding IsMouseOver, ElementName=BaseOverlayObject}" Value="True">
                                             <Setter Property="Visibility" Value="Visible" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -181,7 +182,7 @@
                                     <Style BasedOn="{StaticResource RegularButtonNoColor}" TargetType="Button">
                                         <Setter Property="Margin" Value="0,0,10,0" />
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding OverlayOrientation}" Value="Vertical">
+                                            <DataTrigger Binding="{Binding BaseOverlay.OverlayOrientation}" Value="Vertical">
                                                 <Setter Property="Margin" Value="0,0,0,10" />
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -221,6 +222,79 @@
                 </Grid>
             </Border>
 
+            <!--  Canvas Content - Screen Capture Overlay  -->
+            <Border
+                x:Name="ScreenCaptureOverlayObject"
+                Canvas.Left="{Binding ScreenCaptureOverlay.PosX, Mode=TwoWay}"
+                Canvas.Top="{Binding ScreenCaptureOverlay.PosY, Mode=TwoWay}"
+                Panel.ZIndex="1"
+                IsEnabled="{Binding IsScreenCaptureActive}"
+                IsEnabledChanged="ScreenCaptureOverlayObject_IsEnabledChanged"
+                MouseLeftButtonDown="OnMouseLeftButtonDown"
+                MouseLeftButtonUp="OnMouseLeftButtonUp"
+                MouseMove="ScreenCaptureOverlayObject_MouseMove"
+                Visibility="{Binding IsScreenCaptureActive, Converter={local:BooleanToVisibilityGoneConverter}}">
+                <!--  Draggable Border Background  -->
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource DraggableZoneBrushKey}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <Grid>
+                    <!--  Draggable Border - IsDraggable Border  -->
+                    <Rectangle StrokeThickness="2">
+                        <Rectangle.Style>
+                            <Style TargetType="Rectangle">
+                                <Setter Property="Stroke" Value="Transparent" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsMouseOver, ElementName=ScreenCaptureOverlayObject}" Value="True">
+                                        <Setter Property="Stroke" Value="{StaticResource DraggableZoneBrushKey}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsDraggingLocked}" Value="True">
+                                        <Setter Property="Stroke" Value="Transparent" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                    <!--  Value Position Y Trigger  -->
+                    <Slider
+                        Width="0"
+                        Height="0"
+                        ValueChanged="Slider_ValueChanged_PosY"
+                        Visibility="Hidden"
+                        Value="{Binding ScreenCaptureOverlay.PosY, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                    <!--  Value Scale Trigger  -->
+                    <Slider
+                        Width="0"
+                        Height="0"
+                        ValueChanged="Slider_ValueChanged_Scale"
+                        Visibility="Hidden"
+                        Value="{Binding ScreenCaptureOverlay.Scale, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                    <!--  Value Opacity Trigger  -->
+                    <Slider
+                        Width="0"
+                        Height="0"
+                        ValueChanged="Slider_ValueChanged_Opacity"
+                        Visibility="Hidden"
+                        Value="{Binding ScreenCaptureOverlay.Opacity, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                    <!--  Capture Preview  -->
+                    <Border Padding="25">
+                        <!--  Screen Canvas  -->
+                        <Rectangle
+                            x:Name="ScreenCaptureCanvas"
+                            Width="10"
+                            Height="10"
+                            Fill="#01000000"
+                            Focusable="False" />
+                    </Border>
+                </Grid>
+            </Border>
         </Canvas>
     </Grid>
 

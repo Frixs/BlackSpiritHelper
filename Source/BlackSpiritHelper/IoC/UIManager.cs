@@ -268,7 +268,7 @@ namespace BlackSpiritHelper
 
             IoC.DataContent.OverlayData.IsOpened = true;
 
-            OverlayWindow.Window = new OverlayWindow(new WindowInteropHelper(Application.Current.MainWindow).Handle);
+            OverlayWindow.Window = new OverlayWindow();
             OverlayWindow.Window.Show();
         }
 

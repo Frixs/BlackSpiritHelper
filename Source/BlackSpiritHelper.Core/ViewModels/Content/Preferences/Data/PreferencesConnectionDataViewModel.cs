@@ -64,6 +64,13 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
+        #region Command Flags
+
+        private bool mDeactivateCommandFlag { get; set; }
+        private bool mGuideLinkCommandFlag { get; set; }
+
+        #endregion
+
         #region Commands
 
         /// <summary>
@@ -130,8 +137,11 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task DeactivateCommandMethodAsync()
         {
-            DeactivateMethod();
-            await Task.Delay(1);
+            await RunCommandAsync(() => mDeactivateCommandFlag, async () =>
+            {
+                DeactivateMethod();
+                await Task.Delay(1);
+            });
         }
 
         /// <summary>
@@ -140,10 +150,12 @@ namespace BlackSpiritHelper.Core
         /// <returns></returns>
         private async Task GuideLinkCommandMethodAsync()
         {
-            // Open the webpage.
-            System.Diagnostics.Process.Start("https://github.com/Frixs/BlackSpiritHelper/wiki/PreferencesConnection");
-
-            await Task.Delay(1);
+            await RunCommandAsync(() => mGuideLinkCommandFlag, async () =>
+            {
+                // Open the webpage.
+                System.Diagnostics.Process.Start("https://github.com/Frixs/BlackSpiritHelper/wiki/PreferencesConnection");
+                await Task.Delay(1);
+            });
         }
 
         #endregion
@@ -265,7 +277,7 @@ namespace BlackSpiritHelper.Core
         {
             var list = IoC.Application.Cookies.PendingMessageList;
             List<string> itemsToRemove = new List<string>();
-            
+
             // Go through pending messages.
             for (int i = 0; i < list.Count; i++)
             {
