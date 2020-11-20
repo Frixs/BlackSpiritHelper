@@ -23,18 +23,22 @@ namespace BlackSpiritHelper.Core
         #region Public Properties
 
         /// <summary>
-        /// Says, if a section is running.
+        /// Indicates the section is running.
         /// </summary>
         [XmlIgnore]
         public abstract bool IsRunning { get; protected set; }
 
         #endregion
-        
+
         #region Public Methods
 
         /// <summary>
-        /// Set default values into this instance.
+        /// Set default values into this instance only for the first call of this method.
+        /// By default, this method will not proceed unless the <see cref="mInitWithDefaultsFlag"/> is manually set ON.
         /// </summary>
+        /// <remarks>
+        ///     It is called only when <see cref="mInitWithDefaultsFlag"/> is initialized as TRUE
+        /// </remarks>
         public void SetDefaults()
         {
             if (!mInitWithDefaultsFlag)
@@ -50,8 +54,8 @@ namespace BlackSpiritHelper.Core
         #region Protected Abstract Methods
 
         /// <summary>
-        /// Set default values into this instance.
-        /// Can be run only once.
+        /// Default settings that should be set if a completely new instance is intialized without any previous user settings.
+        /// It should not be called internally/manually but only by <see cref="SetDefaults"/>
         /// </summary>
         protected abstract void SetDefaultsRoutine();
 

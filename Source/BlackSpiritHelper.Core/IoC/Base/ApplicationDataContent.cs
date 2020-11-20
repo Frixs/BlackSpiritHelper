@@ -49,6 +49,11 @@
         /// <summary>
         /// Option to load user data on application load in order you want.
         /// </summary>
+        /// <remarks>
+        ///     Try to get data of each section... 
+        ///     if the data cannot be loaded, create a new data instance with triggered <see cref="ADataContentBaseViewModel.SetDefaults"/> method.
+        ///     The method should be called only during initialization here!
+        /// </remarks>
         public void Setup()
         {
             // Preferences.
