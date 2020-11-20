@@ -13,7 +13,7 @@
     mc:Ignorable="d">
 
     <Grid d:DesignStyle="{StaticResource WindowBackgroundPanelStyle}">
-        <Border Padding="10">
+        <Border Padding="10" DataContext="{Binding ApplicationDataContent.PreferencesData, Source={x:Static local:ViewModelLocator.Instance}}">
             <StackPanel Orientation="Vertical">
                 <TextBlock
                     Grid.Column="0"

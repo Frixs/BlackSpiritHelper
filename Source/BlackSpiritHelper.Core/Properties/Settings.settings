@@ -20,5 +20,8 @@
     <Setting Name="WatchdogData" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.WatchdogDataViewModel" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="ApmCalculatorData" Provider="BlackSpiritHelper.Core.CustomSettingsProvider" Type="BlackSpiritHelper.Core.ApmCalculatorDataViewModel" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

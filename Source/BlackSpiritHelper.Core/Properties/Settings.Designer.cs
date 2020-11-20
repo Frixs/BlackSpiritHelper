@@ -12,7 +12,7 @@ namespace BlackSpiritHelper.Core.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.3.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0")]
     public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -92,6 +92,18 @@ namespace BlackSpiritHelper.Core.Properties {
             }
             set {
                 this["WatchdogData"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsProviderAttribute(typeof(BlackSpiritHelper.Core.CustomSettingsProvider))]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::BlackSpiritHelper.Core.ApmCalculatorDataViewModel ApmCalculatorData {
+            get {
+                return ((global::BlackSpiritHelper.Core.ApmCalculatorDataViewModel)(this["ApmCalculatorData"]));
+            }
+            set {
+                this["ApmCalculatorData"] = value;
             }
         }
     }

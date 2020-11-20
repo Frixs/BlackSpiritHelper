@@ -64,6 +64,7 @@
     <Compile Include="Audio\Implementation\Managers\StandardAudioPack.cs" />
     <Compile Include="DataTypes\OverlayInteractionKey.cs" />
     <Compile Include="DataTypes\ScreenCaptureHandle.cs" />
+    <Compile Include="ViewModels\Content\ApmCalculator\Data\ApmCalculatorDataViewModel.cs" />
     <Compile Include="ViewModels\Content\ApmCalculator\Pages\ApmCalculatorPageViewModel.cs" />
     <Compile Include="ViewModels\Content\Overlay\Data\OverlayBaseDataViewModel.cs" />
     <Compile Include="DataTypes\ApplicationArgument.cs" />
