@@ -160,7 +160,7 @@
                                 FontFamily="{StaticResource LatoHeavy}"
                                 FontSize="32"
                                 Foreground="{StaticResource ForegroundBrushKey}"
-                                Text="{Binding CurrentSession.AverageApm}" />
+                                Text="{Binding CurrentSession.AverageApm, StringFormat='{}{0:#,0.#}'}" />
                             <TextBlock
                                 Grid.Row="1"
                                 HorizontalAlignment="Center"
@@ -225,7 +225,7 @@
                                 FontFamily="{StaticResource LatoHeavy}"
                                 FontSize="32"
                                 Foreground="{StaticResource ForegroundBrushKey}"
-                                Text="{Binding CurrentSession.HighestApm}" />
+                                Text="{Binding CurrentSession.HighestApm, StringFormat='{}{0:#,0.#}'}" />
                             <TextBlock
                                 Grid.Row="1"
                                 HorizontalAlignment="Center"
@@ -252,7 +252,7 @@
                                 FontFamily="{StaticResource LatoHeavy}"
                                 FontSize="32"
                                 Foreground="{StaticResource ForegroundBrushKey}"
-                                Text="{Binding CurrentSession.TotalActions}" />
+                                Text="{Binding CurrentSession.TotalActions, StringFormat='{}{0:#,0.#}'}" />
                             <TextBlock
                                 Grid.Row="1"
                                 HorizontalAlignment="Center"
@@ -560,21 +560,21 @@
                                 FontFamily="{StaticResource LatoHeavy}"
                                 FontSize="14"
                                 Foreground="{StaticResource ForegroundBrushKey}"
-                                Text="{Binding LastSession.AverageApm}" />
+                                Text="{Binding LastSession.AverageApm, StringFormat='{}{0:#,0.#}'}" />
                             <TextBlock
                                 Margin="0,5,0,0"
                                 HorizontalAlignment="Left"
                                 FontFamily="{StaticResource LatoHeavy}"
                                 FontSize="14"
                                 Foreground="{StaticResource ForegroundBrushKey}"
-                                Text="{Binding LastSession.HighestApm}" />
+                                Text="{Binding LastSession.HighestApm, StringFormat='{}{0:#,0.#}'}" />
                             <TextBlock
                                 Margin="0,5,0,0"
                                 HorizontalAlignment="Left"
                                 FontFamily="{StaticResource LatoHeavy}"
                                 FontSize="14"
                                 Foreground="{StaticResource ForegroundBrushKey}"
-                                Text="{Binding LastSession.TotalActions}" />
+                                Text="{Binding LastSession.TotalActions, StringFormat='{}{0:#,0.#}'}" />
                         </StackPanel>
                     </Grid>
 
