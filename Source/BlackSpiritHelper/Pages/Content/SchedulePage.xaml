@@ -331,7 +331,7 @@
                                 FontFamily="{StaticResource LatoRegular}"
                                 FontSize="10"
                                 Foreground="{StaticResource RedBrushKey}"
-                                Text="Set your connection on the Preferences page for this effect."
+                                Text="Set your preferred connection on the Preferences page for using this feature."
                                 Visibility="{Binding ApplicationDataContent.PreferencesData.Connection.IsActive, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:BooleanToVisibilityGoneConverter}, ConverterParameter=True}" />
 
                         </Grid>

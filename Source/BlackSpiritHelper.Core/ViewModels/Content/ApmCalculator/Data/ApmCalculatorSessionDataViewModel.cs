@@ -27,17 +27,17 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Saves the highest APM
         /// </summary>
-        public ushort HighestApm { get; set; }
+        public uint HighestApm { get; set; }
 
         /// <summary>
         /// Current APM
         /// </summary>
-        public ushort CurrentApm { get; set; }
+        public uint CurrentApm { get; set; }
 
         /// <summary>
         /// Average APM
         /// </summary>
-        public ushort AverageApm => (ushort)Math.Round(TotalActions / ElapsedTime.TotalMinutes);
+        public uint AverageApm => (uint)Math.Round(TotalActions / ElapsedTime.TotalMinutes);
 
         /// <summary>
         /// Total elapsed time of the session
@@ -83,7 +83,7 @@ namespace BlackSpiritHelper.Core
             mApmCounter.Enqueue(DateTime.UtcNow);
 
             // Set the current APM
-            CurrentApm = (ushort)mApmCounter.Count;
+            CurrentApm = (uint)mApmCounter.Count;
 
             // Check for the highest APM...
             if (CurrentApm > HighestApm)

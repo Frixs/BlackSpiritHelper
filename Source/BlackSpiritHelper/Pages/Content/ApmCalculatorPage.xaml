@@ -19,6 +19,8 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
@@ -579,7 +581,7 @@
                     </Grid>
 
                     <!--  Last Session Data - Tracking  -->
-                    <Grid Grid.Row="3" Margin="0,5,0,0">
+                    <Grid Grid.Row="2" Margin="0,5,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*" />
                             <ColumnDefinition Width="2*" />
@@ -716,6 +718,51 @@
                                 </TextBlock.Style>
                             </TextBlock>
                         </StackPanel>
+                    </Grid>
+                </Grid>
+                <!--  Spacer  -->
+                <StackPanel Grid.Row="3" Orientation="Vertical">
+                    <Border Style="{StaticResource FormItemSpacer}" />
+                    <Border Style="{StaticResource LineSeparator}" />
+                    <Border Style="{StaticResource FormItemSpacer}" />
+                </StackPanel>
+                <!--  Settings Panel  -->
+                <Grid Grid.Row="4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!--  AsAdministrator warning  -->
+                    <TextBlock
+                        Grid.Row="0"
+                        Margin="0,0,0,10"
+                        HorizontalAlignment="Center"
+                        FontFamily="{StaticResource LatoRegular}"
+                        FontSize="10"
+                        Foreground="{StaticResource RedBrushKey}"
+                        Text="The application is not running As Administrator. It may not register the inputs while focusing on a different application window."
+                        Visibility="{Binding ApplicationViewModel.IsRunningAsAdministratorCheck, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:BooleanToVisibilityGoneConverter}, ConverterParameter=True}" />
+
+                    <!--  Show In Overlay  -->
+                    <Grid Grid.Row="1" MinWidth="100">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <CheckBox
+                            Grid.Row="0"
+                            Margin="0,0,0,5"
+                            IsChecked="{Binding ShowInOverlay}"
+                            Style="{StaticResource CheckBoxLarge}" />
+                        <TextBlock
+                            Grid.Row="1"
+                            HorizontalAlignment="Center"
+                            FontFamily="{StaticResource LatoHeavy}"
+                            FontSize="10"
+                            Foreground="{StaticResource ForegroundLightBrushKey}"
+                            Text="SHOW IN OVERLAY" />
                     </Grid>
                 </Grid>
             </Grid>

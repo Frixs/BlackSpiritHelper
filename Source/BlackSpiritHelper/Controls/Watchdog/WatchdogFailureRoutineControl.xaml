@@ -80,7 +80,7 @@
                                     FontFamily="{StaticResource LatoRegular}"
                                     FontSize="10"
                                     Foreground="{StaticResource RedBrushKey}"
-                                    Text="Run the application As Administrator for this effect."
+                                    Text="Run the application As Administrator for using this feature."
                                     Visibility="{Binding ApplicationViewModel.IsRunningAsAdministratorCheck, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:BooleanToVisibilityGoneConverter}, ConverterParameter=True}" />
                                 <!--  Send Message  -->
                                 <CheckBox
@@ -93,7 +93,7 @@
                                     FontFamily="{StaticResource LatoRegular}"
                                     FontSize="10"
                                     Foreground="{StaticResource RedBrushKey}"
-                                    Text="Set your connection on the Preferences page for this effect."
+                                    Text="Set your preferred connection on the Preferences page for using this feature."
                                     Visibility="{Binding ApplicationDataContent.PreferencesData.Connection.IsActive, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:BooleanToVisibilityGoneConverter}, ConverterParameter=True}" />
                                 <!--  Sound Alert  -->
                                 <CheckBox

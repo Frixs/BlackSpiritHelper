@@ -131,6 +131,26 @@
                                     </local:OverlayTimerSectionControl.Style>
                                 </local:OverlayTimerSectionControl>
 
+                                <!--  Apm Calculator section  -->
+                                <local:OverlayApmCalculatorSectionControl Width="{Binding BaseOverlay.SizeWidthValue, FallbackValue=Auto}" Height="{Binding BaseOverlay.SizeHeightValue, FallbackValue=50}">
+                                    <local:OverlayApmCalculatorSectionControl.Style>
+                                        <Style TargetType="local:OverlayApmCalculatorSectionControl">
+                                            <Setter Property="Margin" Value="0,0,10,0" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding BaseOverlay.OverlayOrientation}" Value="Vertical">
+                                                    <Setter Property="Margin" Value="0,0,0,10" />
+                                                </DataTrigger>
+                                                <Trigger Property="ActualWidth" Value="0">
+                                                    <Setter Property="Margin" Value="0" />
+                                                </Trigger>
+                                                <Trigger Property="ActualHeight" Value="0">
+                                                    <Setter Property="Margin" Value="0" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </local:OverlayApmCalculatorSectionControl.Style>
+                                </local:OverlayApmCalculatorSectionControl>
+
                                 <!--  Schedule section  -->
                                 <local:OverlayScheduleSectionControl Width="{Binding BaseOverlay.SizeWidthValue, FallbackValue=Auto}" Height="{Binding BaseOverlay.SizeHeightValue, FallbackValue=50}">
                                     <local:OverlayScheduleSectionControl.Style>

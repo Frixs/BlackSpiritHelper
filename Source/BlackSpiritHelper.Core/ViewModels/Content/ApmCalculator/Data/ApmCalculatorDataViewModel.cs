@@ -47,6 +47,11 @@ namespace BlackSpiritHelper.Core
         #region Public Properties
 
         /// <summary>
+        /// Says if the section should be in the overlay.
+        /// </summary>
+        public bool ShowInOverlay { get; set; } = false;
+
+        /// <summary>
         /// Indication of tracking keyboard
         /// </summary>
         public bool TrackKeyboard { get; set; } = true;

@@ -254,8 +254,6 @@ namespace BlackSpiritHelper
         /// Set Overlay content if there are no items.
         /// TODO:LATER: Think about changing this to automatic procedure. We do not want to add or update this check everytime, we change the condition in code or if we add a new section.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void OverlayContentWrapper_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             StackPanel val;
@@ -282,6 +280,13 @@ namespace BlackSpiritHelper
                         return;
                     }
                 }
+            }
+
+            // Apm Calculator section check.
+            if (IoC.DataContent.ApmCalculatorData.ShowInOverlay)
+            {
+                val.Background = mOverlayBackgroundBrush;
+                return;
             }
 
             // Schedule section check.

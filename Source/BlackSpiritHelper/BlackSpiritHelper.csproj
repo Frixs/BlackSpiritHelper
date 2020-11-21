@@ -169,6 +169,9 @@
     <Compile Include="Controls\Dialogs\NotificationWrapperDialogControl.xaml.cs">
       <DependentUpon>NotificationWrapperDialogControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Overlay\OverlayApmCalculatorSectionControl.xaml.cs">
+      <DependentUpon>OverlayApmCalculatorSectionControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Overlay\OverlayScheduleSectionControl.xaml.cs">
       <DependentUpon>OverlayScheduleSectionControl.xaml</DependentUpon>
     </Compile>
@@ -314,6 +317,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Dialogs\NotificationWrapperDialogControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Overlay\OverlayApmCalculatorSectionControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
