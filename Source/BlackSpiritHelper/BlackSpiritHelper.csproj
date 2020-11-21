@@ -264,6 +264,7 @@
       <DependentUpon>TimerItemSettingsFormPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ValueConverters\BaseMultiValueConverter.cs" />
+    <Compile Include="ValueConverters\GreaterThanConverter.cs" />
     <Compile Include="ValueConverters\BooleanToContentConverter.cs" />
     <Compile Include="ValueConverters\ContainsLeadingCharConverter.cs" />
     <Compile Include="ValueConverters\EnumDescriptionConverter.cs" />
