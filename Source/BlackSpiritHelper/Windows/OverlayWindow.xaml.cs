@@ -1,7 +1,6 @@
 ﻿using BlackSpiritHelper.Core;
 using Composition.WindowsRuntimeHelpers;
 using System;
-using System.Diagnostics;
 using System.Numerics;
 using System.Windows;
 using System.Windows.Controls;
@@ -272,12 +271,15 @@ namespace BlackSpiritHelper
             // Timer section check.
             foreach (TimerGroupDataViewModel g in IoC.DataContent.TimerData.GroupList)
             {
-                foreach (TimerItemDataViewModel t in g.TimerList)
+                if (!g.IgnoreInOverlay)
                 {
-                    if (t.ShowInOverlay)
+                    foreach (TimerItemDataViewModel t in g.TimerList)
                     {
-                        val.Background = mOverlayBackgroundBrush;
-                        return;
+                        if (t.ShowInOverlay)
+                        {
+                            val.Background = mOverlayBackgroundBrush;
+                            return;
+                        }
                     }
                 }
             }
