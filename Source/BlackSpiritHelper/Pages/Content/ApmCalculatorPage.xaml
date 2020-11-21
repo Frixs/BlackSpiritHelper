@@ -33,6 +33,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
@@ -40,7 +41,7 @@
                     <Image
                         Grid.RowSpan="10"
                         Width="125"
-                        Margin="0,5,0,0"
+                        Margin="0,-48,0,0"
                         Opacity="0.1"
                         Source="/BlackSpiritHelper;component/Resources/Images/Logo/logo_red_text_512.png" />
 
@@ -145,7 +146,7 @@
                             <ColumnDefinition Width="2*" />
                         </Grid.ColumnDefinitions>
 
-                        <!--  Average APM  -->
+                        <!--  Current APM  -->
                         <Grid
                             Grid.Column="0"
                             MinWidth="225"
@@ -162,14 +163,14 @@
                                 FontFamily="{StaticResource LatoHeavy}"
                                 FontSize="32"
                                 Foreground="{StaticResource ForegroundBrushKey}"
-                                Text="{Binding CurrentSession.AverageApm, StringFormat='{}{0:#,0.#}'}" />
+                                Text="{Binding CurrentSession.CurrentApm, StringFormat='{}{0:#,0.#}'}" />
                             <TextBlock
                                 Grid.Row="1"
                                 HorizontalAlignment="Center"
                                 FontFamily="{StaticResource LatoHeavy}"
                                 FontSize="14"
                                 Foreground="{StaticResource ForegroundLightBrushKey}"
-                                Text="AVERAGE APM" />
+                                Text="CURRENT APM" />
                         </Grid>
 
                         <!--  Elapsed Time  -->
@@ -265,11 +266,38 @@
                         </Grid>
                     </Grid>
 
-                    <!--  Spacer  -->
-                    <Border Grid.Row="5" Style="{StaticResource FormItemSpacer}" />
+                    <!--  3rd Information Wrapper  -->
+                    <Grid Grid.Row="5">
+                        <!--  Average APM  -->
+                        <Grid MinWidth="225" HorizontalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
 
-                    <!--  3nd Information Wrapper  -->
-                    <Grid Grid.Row="6">
+                            <TextBlock
+                                Grid.Row="0"
+                                HorizontalAlignment="Center"
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="32"
+                                Foreground="{StaticResource ForegroundBrushKey}"
+                                Text="{Binding CurrentSession.AverageApm, StringFormat='{}{0:#,0.#}'}" />
+                            <TextBlock
+                                Grid.Row="1"
+                                HorizontalAlignment="Center"
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="14"
+                                Foreground="{StaticResource ForegroundLightBrushKey}"
+                                Text="AVERAGE APM" />
+                        </Grid>
+
+                    </Grid>
+
+                    <!--  Spacer  -->
+                    <Border Grid.Row="6" Style="{StaticResource FormItemSpacer}" />
+
+                    <!--  4th Information Wrapper  -->
+                    <Grid Grid.Row="7">
 
                         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                             <!--  Track Keyboard  -->

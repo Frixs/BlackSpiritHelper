@@ -184,7 +184,7 @@
                     <TextBlock
                         FontFamily="{StaticResource LatoHeavy}"
                         FontSize="14"
-                        Text="{Binding CurrentSession.AverageApm, StringFormat='{}{0:#,0.#}'}">
+                        Text="{Binding CurrentSession.CurrentApm, StringFormat='{}{0:#,0.#}'}">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
                                 <Setter Property="Foreground" Value="{StaticResource ScheduleOverlayForegroundBrushKey}" />
