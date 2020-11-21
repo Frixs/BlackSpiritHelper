@@ -8,28 +8,764 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="ApmCalculatorPage"
     d:DesignHeight="450"
+    d:DesignStyle="{StaticResource WindowBackgroundControlStyle}"
     d:DesignWidth="800"
     x:TypeArguments="core:ApmCalculatorPageViewModel"
     mc:Ignorable="d">
 
-    <Grid d:DesignStyle="{StaticResource WindowBackgroundPanelStyle}">
-        <Border Padding="10">
-            <StackPanel Orientation="Vertical">
-                <TextBlock
-                    Grid.Column="0"
-                    Margin="0,10,0,0"
-                    VerticalAlignment="Center"
-                    FontFamily="{StaticResource LatoHeavy}"
-                    FontSize="32"
-                    Foreground="{StaticResource WatchdogForegroundBrushKey}"
-                    Text="APM Calculator" />
-                <TextBlock
-                    FontFamily="{StaticResource LatoMediumItalic}"
-                    FontSize="12"
-                    Foreground="{StaticResource WatchdogSubForegroundBrushKey}"
-                    Text="Soon! This feature allows calculating average APM (Action-Per-Minute) during a runnable session."
-                    TextWrapping="Wrap" />
-            </StackPanel>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Border Padding="10" DataContext="{Binding ApplicationDataContent.ApmCalculatorData, Source={x:Static local:ViewModelLocator.Instance}}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!--  Current Session  -->
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!--  Image Watermark  -->
+                    <Image
+                        Grid.RowSpan="10"
+                        Width="125"
+                        Margin="0,5,0,0"
+                        Opacity="0.1"
+                        Source="/BlackSpiritHelper;component/Resources/Images/Logo/logo_red_text_512.png" />
+
+                    <!--  Title  -->
+                    <Grid Grid.Row="0">
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontFamily="{StaticResource LatoHeavy}"
+                            FontSize="32"
+                            Foreground="{StaticResource ForegroundBrushKey}">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Text" Value="START NEW SESSION" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding IsRunning}" Value="False" />
+                                                <Condition Binding="{Binding CurrentSession.TotalActions}" Value="0" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Text" Value="START NEW SESSION" />
+                                        </MultiDataTrigger>
+                                        <DataTrigger Binding="{Binding IsRunning}" Value="True">
+                                            <Setter Property="Text" Value="CURRENT SESSION" />
+                                        </DataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding IsRunning}" Value="False" />
+                                                <Condition Binding="{Binding CurrentSession.TotalActions, Converter={local:GreaterThanConverter}, ConverterParameter='0'}" Value="True" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Text" Value="SESSION RESULTS" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+
+                    <!--  Controls  -->
+                    <Grid Grid.Row="1">
+                        <!--  Play Button  -->
+                        <Button
+                            Width="40"
+                            Height="40"
+                            Command="{Binding PlayCommand}"
+                            Content="{StaticResource FontAwesomePlayIcon}"
+                            FontFamily="{StaticResource FontAwesomeSolid}"
+                            FontSize="18">
+                            <Button.Style>
+                                <Style BasedOn="{StaticResource RegularButtonNoColor}" TargetType="{x:Type Button}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding IsRunning}" Value="False" />
+                                                <Condition Binding="{Binding CurrentSession.TotalActions}" Value="0" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <!--  Stop Button  -->
+                        <Button
+                            Width="40"
+                            Height="40"
+                            Command="{Binding StopCommand}"
+                            Content="{StaticResource FontAwesomeStopIcon}"
+                            FontFamily="{StaticResource FontAwesomeSolid}"
+                            FontSize="18"
+                            Style="{StaticResource RegularButtonNoColor}"
+                            Visibility="{Binding IsRunning, Converter={local:BooleanToVisibilityConverter}, ConverterParameter=True}" />
+                        <!--  Restart Button  -->
+                        <Button
+                            Width="40"
+                            Height="40"
+                            Command="{Binding RestartCommand}"
+                            Content="{StaticResource FontAwesomeRestartIcon}"
+                            FontFamily="{StaticResource FontAwesomeSolid}"
+                            FontSize="18">
+                            <Button.Style>
+                                <Style BasedOn="{StaticResource RegularButtonNoColor}" TargetType="{x:Type Button}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding IsRunning}" Value="False" />
+                                                <Condition Binding="{Binding CurrentSession.TotalActions, Converter={local:GreaterThanConverter}, ConverterParameter='0'}" Value="True" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </Grid>
+
+                    <!--  1st Information Wrapper  -->
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="2*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!--  Average APM  -->
+                        <Grid
+                            Grid.Column="0"
+                            MinWidth="225"
+                            Margin="0,0,50,0"
+                            HorizontalAlignment="Right">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock
+                                Grid.Row="0"
+                                HorizontalAlignment="Center"
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="32"
+                                Foreground="{StaticResource ForegroundBrushKey}"
+                                Text="{Binding CurrentSession.AverageApm, StringFormat='{}{0:#,0.#}'}" />
+                            <TextBlock
+                                Grid.Row="1"
+                                HorizontalAlignment="Center"
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="14"
+                                Foreground="{StaticResource ForegroundLightBrushKey}"
+                                Text="AVERAGE APM" />
+                        </Grid>
+
+                        <!--  Elapsed Time  -->
+                        <Grid
+                            Grid.Column="1"
+                            MinWidth="225"
+                            Margin="50,0,0,0"
+                            HorizontalAlignment="Left">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock
+                                Grid.Row="0"
+                                HorizontalAlignment="Center"
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="32"
+                                Foreground="{StaticResource ForegroundBrushKey}"
+                                Text="{Binding CurrentSession.ElapsedTime, Converter={local:TimeSpanToStringConverter}, ConverterParameter='hms'}" />
+                            <TextBlock
+                                Grid.Row="1"
+                                HorizontalAlignment="Center"
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="14"
+                                Foreground="{StaticResource ForegroundLightBrushKey}"
+                                Text="ELAPSED TIME" />
+                        </Grid>
+                    </Grid>
+
+                    <!--  Spacer  -->
+                    <Border Grid.Row="3" Style="{StaticResource FormItemSpacer}" />
+
+                    <!--  2nd Information Wrapper  -->
+                    <Grid Grid.Row="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="2*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!--  Highest APM  -->
+                        <Grid
+                            Grid.Column="0"
+                            MinWidth="225"
+                            Margin="0,0,50,0"
+                            HorizontalAlignment="Right">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock
+                                Grid.Row="0"
+                                HorizontalAlignment="Center"
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="32"
+                                Foreground="{StaticResource ForegroundBrushKey}"
+                                Text="{Binding CurrentSession.HighestApm, StringFormat='{}{0:#,0.#}'}" />
+                            <TextBlock
+                                Grid.Row="1"
+                                HorizontalAlignment="Center"
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="14"
+                                Foreground="{StaticResource ForegroundLightBrushKey}"
+                                Text="HIGHEST APM" />
+                        </Grid>
+
+                        <!--  Total Actions  -->
+                        <Grid
+                            Grid.Column="1"
+                            MinWidth="225"
+                            Margin="50,0,0,0"
+                            HorizontalAlignment="Left">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock
+                                Grid.Row="0"
+                                HorizontalAlignment="Center"
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="32"
+                                Foreground="{StaticResource ForegroundBrushKey}"
+                                Text="{Binding CurrentSession.TotalActions, StringFormat='{}{0:#,0.#}'}" />
+                            <TextBlock
+                                Grid.Row="1"
+                                HorizontalAlignment="Center"
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="14"
+                                Foreground="{StaticResource ForegroundLightBrushKey}"
+                                Text="TOTAL ACTIONS" />
+                        </Grid>
+                    </Grid>
+
+                    <!--  Spacer  -->
+                    <Border Grid.Row="5" Style="{StaticResource FormItemSpacer}" />
+
+                    <!--  3nd Information Wrapper  -->
+                    <Grid Grid.Row="6">
+
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <!--  Track Keyboard  -->
+                            <Grid MinWidth="100">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <CheckBox
+                                    Grid.Row="0"
+                                    Margin="0,0,0,5"
+                                    IsChecked="{Binding TrackKeyboard}">
+                                    <CheckBox.Style>
+                                        <Style BasedOn="{StaticResource CheckBoxLarge}" TargetType="{x:Type CheckBox}">
+                                            <Setter Property="IsEnabled" Value="False" />
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding IsRunning}" Value="False" />
+                                                        <Condition Binding="{Binding CurrentSession.TotalActions}" Value="0" />
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="IsEnabled" Value="True" />
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </CheckBox.Style>
+                                </CheckBox>
+                                <TextBlock
+                                    Grid.Row="1"
+                                    HorizontalAlignment="Center"
+                                    FontFamily="{StaticResource LatoHeavy}"
+                                    FontSize="10"
+                                    Foreground="{StaticResource ForegroundLightBrushKey}"
+                                    Text="KEYBOARD" />
+                            </Grid>
+
+                            <!--  Track Mouse Click  -->
+                            <Grid MinWidth="100">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <CheckBox
+                                    Grid.Row="0"
+                                    Margin="0,0,0,5"
+                                    IsChecked="{Binding TrackMouseClick}">
+                                    <CheckBox.Style>
+                                        <Style BasedOn="{StaticResource CheckBoxLarge}" TargetType="{x:Type CheckBox}">
+                                            <Setter Property="IsEnabled" Value="False" />
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding IsRunning}" Value="False" />
+                                                        <Condition Binding="{Binding CurrentSession.TotalActions}" Value="0" />
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="IsEnabled" Value="True" />
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </CheckBox.Style>
+                                </CheckBox>
+                                <TextBlock
+                                    Grid.Row="1"
+                                    HorizontalAlignment="Center"
+                                    FontFamily="{StaticResource LatoHeavy}"
+                                    FontSize="10"
+                                    Foreground="{StaticResource ForegroundLightBrushKey}"
+                                    Text="MOUSE CLICK" />
+                            </Grid>
+
+                            <!--  Track Mouse Double Click  -->
+                            <Grid MinWidth="100">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <CheckBox
+                                    Grid.Row="0"
+                                    Margin="0,0,0,5"
+                                    IsChecked="{Binding TrackMouseDoubleClick}">
+                                    <CheckBox.Style>
+                                        <Style BasedOn="{StaticResource CheckBoxLarge}" TargetType="{x:Type CheckBox}">
+                                            <Setter Property="IsEnabled" Value="False" />
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding IsRunning}" Value="False" />
+                                                        <Condition Binding="{Binding CurrentSession.TotalActions}" Value="0" />
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="IsEnabled" Value="True" />
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </CheckBox.Style>
+                                </CheckBox>
+                                <TextBlock
+                                    Grid.Row="1"
+                                    HorizontalAlignment="Center"
+                                    FontFamily="{StaticResource LatoHeavy}"
+                                    FontSize="10"
+                                    Foreground="{StaticResource ForegroundLightBrushKey}"
+                                    Text="MOUSE DOUBLE CLICK" />
+                            </Grid>
+
+                            <!--  Track Mouse Wheel  -->
+                            <Grid MinWidth="100">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <CheckBox
+                                    Grid.Row="0"
+                                    Margin="0,0,0,5"
+                                    IsChecked="{Binding TrackMouseWheel}">
+                                    <CheckBox.Style>
+                                        <Style BasedOn="{StaticResource CheckBoxLarge}" TargetType="{x:Type CheckBox}">
+                                            <Setter Property="IsEnabled" Value="False" />
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding IsRunning}" Value="False" />
+                                                        <Condition Binding="{Binding CurrentSession.TotalActions}" Value="0" />
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="IsEnabled" Value="True" />
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </CheckBox.Style>
+                                </CheckBox>
+                                <TextBlock
+                                    Grid.Row="1"
+                                    HorizontalAlignment="Center"
+                                    FontFamily="{StaticResource LatoHeavy}"
+                                    FontSize="10"
+                                    Foreground="{StaticResource ForegroundLightBrushKey}"
+                                    Text="MOUSE WHEEL" />
+                            </Grid>
+
+                            <!--  Track Mouse Drag  -->
+                            <Grid MinWidth="100">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <CheckBox
+                                    Grid.Row="0"
+                                    Margin="0,0,0,5"
+                                    IsChecked="{Binding TrackMouseDrag}">
+                                    <CheckBox.Style>
+                                        <Style BasedOn="{StaticResource CheckBoxLarge}" TargetType="{x:Type CheckBox}">
+                                            <Setter Property="IsEnabled" Value="False" />
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding IsRunning}" Value="False" />
+                                                        <Condition Binding="{Binding CurrentSession.TotalActions}" Value="0" />
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="IsEnabled" Value="True" />
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </CheckBox.Style>
+                                </CheckBox>
+                                <TextBlock
+                                    Grid.Row="1"
+                                    HorizontalAlignment="Center"
+                                    FontFamily="{StaticResource LatoHeavy}"
+                                    FontSize="10"
+                                    Foreground="{StaticResource ForegroundLightBrushKey}"
+                                    Text="MOUSE DRAG" />
+                            </Grid>
+                        </StackPanel>
+
+                    </Grid>
+                </Grid>
+                <!--  Spacer  -->
+                <StackPanel Grid.Row="1" Orientation="Vertical">
+                    <StackPanel.Style>
+                        <Style TargetType="{x:Type StackPanel}">
+                            <Setter Property="Visibility" Value="Visible" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding LastSession}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+
+                    <Border Style="{StaticResource FormItemSpacer}" />
+                    <Border Style="{StaticResource LineSeparator}" />
+                    <Border Style="{StaticResource FormItemSpacer}" />
+                </StackPanel>
+                <!--  Last Session  -->
+                <Grid Grid.Row="2">
+                    <Grid.Style>
+                        <Style TargetType="{x:Type Grid}">
+                            <Setter Property="Visibility" Value="Visible" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding LastSession}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!--  Image Watermark  -->
+                    <Image
+                        Grid.RowSpan="10"
+                        Width="125"
+                        Margin="0,35,175,0"
+                        VerticalAlignment="Top"
+                        Opacity="0.1"
+                        Source="/BlackSpiritHelper;component/Resources/Images/Logo/logo_red_text_512.png" />
+
+                    <!--  Title  -->
+                    <Grid Grid.Row="0">
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontFamily="{StaticResource LatoBold}"
+                            FontSize="26"
+                            Foreground="{StaticResource ForegroundBrushKey}"
+                            Text="LAST SESSION" />
+                    </Grid>
+
+                    <!--  Last Session Data  -->
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="2*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel
+                            Grid.Column="0"
+                            Margin="0,0,5,0"
+                            Orientation="Vertical">
+                            <TextBlock
+                                Margin="0,5,0,0"
+                                HorizontalAlignment="Right"
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="14"
+                                Foreground="{StaticResource ForegroundLightBrushKey}"
+                                Text="ELAPSED TIME" />
+                            <TextBlock
+                                Margin="0,5,0,0"
+                                HorizontalAlignment="Right"
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="14"
+                                Foreground="{StaticResource ForegroundLightBrushKey}"
+                                Text="AVERAGE APM" />
+                            <TextBlock
+                                Margin="0,5,0,0"
+                                HorizontalAlignment="Right"
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="14"
+                                Foreground="{StaticResource ForegroundLightBrushKey}"
+                                Text="HIGHEST APM" />
+                            <TextBlock
+                                Margin="0,5,0,0"
+                                HorizontalAlignment="Right"
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="14"
+                                Foreground="{StaticResource ForegroundLightBrushKey}"
+                                Text="TOTAL ACTIONS" />
+                        </StackPanel>
+
+                        <StackPanel
+                            Grid.Column="1"
+                            Margin="5,0,0,0"
+                            Orientation="Vertical">
+                            <TextBlock
+                                Margin="0,5,0,0"
+                                HorizontalAlignment="Left"
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="14"
+                                Foreground="{StaticResource ForegroundBrushKey}"
+                                Text="{Binding LastSession.ElapsedTime, Converter={local:TimeSpanToStringConverter}, ConverterParameter='hms'}" />
+                            <TextBlock
+                                Margin="0,5,0,0"
+                                HorizontalAlignment="Left"
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="14"
+                                Foreground="{StaticResource ForegroundBrushKey}"
+                                Text="{Binding LastSession.AverageApm, StringFormat='{}{0:#,0.#}'}" />
+                            <TextBlock
+                                Margin="0,5,0,0"
+                                HorizontalAlignment="Left"
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="14"
+                                Foreground="{StaticResource ForegroundBrushKey}"
+                                Text="{Binding LastSession.HighestApm, StringFormat='{}{0:#,0.#}'}" />
+                            <TextBlock
+                                Margin="0,5,0,0"
+                                HorizontalAlignment="Left"
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="14"
+                                Foreground="{StaticResource ForegroundBrushKey}"
+                                Text="{Binding LastSession.TotalActions, StringFormat='{}{0:#,0.#}'}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <!--  Last Session Data - Tracking  -->
+                    <Grid Grid.Row="2" Margin="0,5,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="2*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel
+                            Grid.Column="0"
+                            Margin="0,0,5,0"
+                            Orientation="Vertical">
+                            <TextBlock
+                                Margin="0,5,0,0"
+                                HorizontalAlignment="Right"
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="10"
+                                Foreground="{StaticResource ForegroundLightBrushKey}"
+                                Text="KEYBOARD" />
+                            <TextBlock
+                                Margin="0,5,0,0"
+                                HorizontalAlignment="Right"
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="10"
+                                Foreground="{StaticResource ForegroundLightBrushKey}"
+                                Text="MOUSE CLICK" />
+                            <TextBlock
+                                Margin="0,5,0,0"
+                                HorizontalAlignment="Right"
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="10"
+                                Foreground="{StaticResource ForegroundLightBrushKey}"
+                                Text="MOUSE DOUBLE CLICK" />
+                            <TextBlock
+                                Margin="0,5,0,0"
+                                HorizontalAlignment="Right"
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="10"
+                                Foreground="{StaticResource ForegroundLightBrushKey}"
+                                Text="MOUSE WHEEL" />
+                            <TextBlock
+                                Margin="0,5,0,0"
+                                HorizontalAlignment="Right"
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="10"
+                                Foreground="{StaticResource ForegroundLightBrushKey}"
+                                Text="MOUSE DRAG" />
+                        </StackPanel>
+
+                        <StackPanel
+                            Grid.Column="1"
+                            Margin="5,0,0,0"
+                            Orientation="Vertical">
+                            <TextBlock
+                                Margin="0,5,0,0"
+                                HorizontalAlignment="Left"
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="10"
+                                Foreground="{StaticResource ForegroundBrushKey}">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Text" Value="No" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding LastSession.TrackKeyboard}" Value="True">
+                                                <Setter Property="Text" Value="Yes" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <TextBlock
+                                Margin="0,5,0,0"
+                                HorizontalAlignment="Left"
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="10"
+                                Foreground="{StaticResource ForegroundBrushKey}">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Text" Value="No" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding LastSession.TrackMouseClick}" Value="True">
+                                                <Setter Property="Text" Value="Yes" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <TextBlock
+                                Margin="0,5,0,0"
+                                HorizontalAlignment="Left"
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="10"
+                                Foreground="{StaticResource ForegroundBrushKey}">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Text" Value="No" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding LastSession.TrackMouseDoubleClick}" Value="True">
+                                                <Setter Property="Text" Value="Yes" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <TextBlock
+                                Margin="0,5,0,0"
+                                HorizontalAlignment="Left"
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="10"
+                                Foreground="{StaticResource ForegroundBrushKey}">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Text" Value="No" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding LastSession.TrackMouseWheel}" Value="True">
+                                                <Setter Property="Text" Value="Yes" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <TextBlock
+                                Margin="0,5,0,0"
+                                HorizontalAlignment="Left"
+                                FontFamily="{StaticResource LatoHeavy}"
+                                FontSize="10"
+                                Foreground="{StaticResource ForegroundBrushKey}">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Text" Value="No" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding LastSession.TrackMouseDrag}" Value="True">
+                                                <Setter Property="Text" Value="Yes" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+                <!--  Spacer  -->
+                <StackPanel Grid.Row="3" Orientation="Vertical">
+                    <Border Style="{StaticResource FormItemSpacer}" />
+                    <Border Style="{StaticResource LineSeparator}" />
+                    <Border Style="{StaticResource FormItemSpacer}" />
+                </StackPanel>
+                <!--  Settings Panel  -->
+                <Grid Grid.Row="4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!--  AsAdministrator warning  -->
+                    <TextBlock
+                        Grid.Row="0"
+                        Margin="0,0,0,10"
+                        HorizontalAlignment="Center"
+                        FontFamily="{StaticResource LatoRegular}"
+                        FontSize="10"
+                        Foreground="{StaticResource RedBrushKey}"
+                        Text="The application is not running As Administrator. It may not register the inputs while focusing on a different application window."
+                        Visibility="{Binding ApplicationViewModel.IsRunningAsAdministratorCheck, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:BooleanToVisibilityGoneConverter}, ConverterParameter=True}" />
+
+                    <!--  Show In Overlay  -->
+                    <Grid Grid.Row="1" MinWidth="100">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <CheckBox
+                            Grid.Row="0"
+                            Margin="0,0,0,5"
+                            IsChecked="{Binding ShowInOverlay}"
+                            Style="{StaticResource CheckBoxLarge}" />
+                        <TextBlock
+                            Grid.Row="1"
+                            HorizontalAlignment="Center"
+                            FontFamily="{StaticResource LatoHeavy}"
+                            FontSize="10"
+                            Foreground="{StaticResource ForegroundLightBrushKey}"
+                            Text="SHOW IN OVERLAY" />
+                    </Grid>
+                </Grid>
+            </Grid>
         </Border>
-    </Grid>
+    </ScrollViewer>
 </local:BasePage>

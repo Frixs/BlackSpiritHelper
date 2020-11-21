@@ -10,6 +10,11 @@
 <!-- [text](url) : Can be anywhere in the text. Transform text into URL link. -->
 <!-- \ : escape formatting characters. -->
 <!-- -------------------------------------------------- -->
+## v1.4.2.0 (2020-11-21)
+**Pull: [#33](https://github.com/Frixs/BlackSpiritHelper/pull/33)**
+- APM Calculator section added
+<br/>
+
 ## v1.4.1.0 (2020-11-16)
 **Pull: [#32](https://github.com/Frixs/BlackSpiritHelper/pull/32)**
 - Screen Capture feature added

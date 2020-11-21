@@ -4,6 +4,13 @@ using System.Windows.Forms;
 
 namespace BlackSpiritHelper
 {
+    /// <summary>
+    /// The application global user interaction hook manager
+    /// <para>
+    ///     The manager tracks the minimum needed interaction for the proper application use.
+    ///     The application does not track user communication and there is no intention to do it.
+    /// </para>
+    /// </summary>
     public class GlobalMouseKeyHookManager : IMouseKeyHook
     {
         #region Private Members
@@ -17,6 +24,11 @@ namespace BlackSpiritHelper
         /// Interaction key for overlay
         /// </summary>
         private Keys mOverlayInteractionKey = Keys.LMenu;
+
+        /// <summary>
+        /// APM Calculator session data reference that are currently subsbribed
+        /// </summary>
+        private ApmCalculatorSessionDataViewModel mApmCalculatorSessionData;
 
         #endregion
 
@@ -77,6 +89,35 @@ namespace BlackSpiritHelper
             }
         }
 
+        /// <inheritdoc/>
+        public void SubscribeApmCalculatorEvents(ApmCalculatorSessionDataViewModel sessionData)
+        {
+            mApmCalculatorSessionData = sessionData;
+
+            if (mApmCalculatorSessionData.TrackKeyboard)
+                mGlobalHook.KeyUp += ApmCalculator_KeyUp;
+            if (mApmCalculatorSessionData.TrackMouseClick)
+                mGlobalHook.MouseClick += ApmCalculator_MouseClick;
+            if (mApmCalculatorSessionData.TrackMouseDoubleClick)
+                mGlobalHook.MouseDoubleClick += ApmCalculator_MouseDoubleClick;
+            if (mApmCalculatorSessionData.TrackMouseWheel)
+                mGlobalHook.MouseWheel += ApmCalculator_MouseWheel;
+            if (mApmCalculatorSessionData.TrackMouseDrag)
+                mGlobalHook.MouseDragFinished += ApmCalculator_MouseDragFinished;
+        }
+
+        /// <inheritdoc/>
+        public void UnsubscribeApmCalculatorEvents()
+        {
+            mGlobalHook.KeyUp -= ApmCalculator_KeyUp;
+            mGlobalHook.MouseClick -= ApmCalculator_MouseClick;
+            mGlobalHook.MouseDoubleClick -= ApmCalculator_MouseDoubleClick;
+            mGlobalHook.MouseWheel -= ApmCalculator_MouseWheel;
+            mGlobalHook.MouseDragFinished -= ApmCalculator_MouseDragFinished;
+
+            mApmCalculatorSessionData = null;
+        }
+
         #endregion
 
         #region Subscribe/Unsubscribe Methods
@@ -101,6 +142,9 @@ namespace BlackSpiritHelper
             mGlobalHook.KeyDown -= MGlobalHook_KeyDown;
             mGlobalHook.KeyUp -= MGlobalHook_KeyUp;
 
+            // Make sure to unsubscribe special events
+            UnsubscribeApmCalculatorEvents();
+
             //It is recommened to dispose it
             mGlobalHook.Dispose();
         }
@@ -110,23 +154,66 @@ namespace BlackSpiritHelper
         #region Hook Methods
 
         /// <summary>
-        /// Key Up event handler.
+        /// Key Up event handler
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void MGlobalHook_KeyUp(object sender, KeyEventArgs e)
         {
+            //System.Console.WriteLine("KEYUP");
             ActionOverlaySetTransparent(sender, e);
         }
 
         /// <summary>
-        /// Key Down event handler.
+        /// Key Down event handler
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void MGlobalHook_KeyDown(object sender, KeyEventArgs e)
         {
+            //System.Console.WriteLine("KEYDOWN");
             ActionOverlayUnsetTransparent(sender, e);
+        }
+
+        /// <summary>
+        /// Key Up event handler
+        /// </summary>
+        private void ApmCalculator_KeyUp(object sender, KeyEventArgs e)
+        {
+            //System.Console.WriteLine("KEYUP");
+            ActionApmCalculatorCount();
+        }
+
+        /// <summary>
+        /// Mouse Click event handler
+        /// </summary>
+        private void ApmCalculator_MouseClick(object sender, MouseEventArgs e)
+        {
+            //System.Console.WriteLine("MOUSECLICK");
+            ActionApmCalculatorCount();
+        }
+
+        /// <summary>
+        /// Mouse Double Click event handler
+        /// </summary>
+        private void ApmCalculator_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            //System.Console.WriteLine("MOUSEDOUBLECLICK");
+            ActionApmCalculatorCount();
+        }
+
+        /// <summary>
+        /// Mouse Wheel event handler
+        /// </summary>
+        private void ApmCalculator_MouseWheel(object sender, MouseEventArgs e)
+        {
+            //System.Console.WriteLine("MOUSEWHEEL");
+            ActionApmCalculatorCount();
+        }
+
+        /// <summary>
+        /// Mouse Drag Finished event handler
+        /// </summary>
+        private void ApmCalculator_MouseDragFinished(object sender, MouseEventArgs e)
+        {
+            //System.Console.WriteLine("MOUSEDRAGFINISHED");
+            ActionApmCalculatorCount();
         }
 
         #endregion
@@ -170,6 +257,14 @@ namespace BlackSpiritHelper
             OverlayWindow.Window.UnsetWindowExTransparent();
         }
 
+        /// <summary>
+        /// Count APM process
+        /// </summary>
+        private void ActionApmCalculatorCount()
+        {
+            mApmCalculatorSessionData.CountAction();
+        }
+
         #endregion
 
         #region Helper Methods
@@ -194,7 +289,7 @@ namespace BlackSpiritHelper
                 result = e.Shift;
             else if (mOverlayInteractionKey == Keys.RShiftKey)
                 result = e.Shift;
-            
+
             return result;
         }
 

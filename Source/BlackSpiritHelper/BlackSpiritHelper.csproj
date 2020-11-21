@@ -34,10 +34,10 @@
     <TargetCulture>en</TargetCulture>
     <ProductName>Black Spirit Helper</ProductName>
     <PublisherName>Tomas Frixs</PublisherName>
-    <MinimumRequiredVersion>1.4.1.0</MinimumRequiredVersion>
+    <MinimumRequiredVersion>1.4.2.0</MinimumRequiredVersion>
     <AutorunEnabled>true</AutorunEnabled>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.4.1.%2a</ApplicationVersion>
+    <ApplicationVersion>1.4.2.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -169,6 +169,9 @@
     <Compile Include="Controls\Dialogs\NotificationWrapperDialogControl.xaml.cs">
       <DependentUpon>NotificationWrapperDialogControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Overlay\OverlayApmCalculatorSectionControl.xaml.cs">
+      <DependentUpon>OverlayApmCalculatorSectionControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Overlay\OverlayScheduleSectionControl.xaml.cs">
       <DependentUpon>OverlayScheduleSectionControl.xaml</DependentUpon>
     </Compile>
@@ -264,6 +267,7 @@
       <DependentUpon>TimerItemSettingsFormPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ValueConverters\BaseMultiValueConverter.cs" />
+    <Compile Include="ValueConverters\GreaterThanConverter.cs" />
     <Compile Include="ValueConverters\BooleanToContentConverter.cs" />
     <Compile Include="ValueConverters\ContainsLeadingCharConverter.cs" />
     <Compile Include="ValueConverters\EnumDescriptionConverter.cs" />
@@ -313,6 +317,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Dialogs\NotificationWrapperDialogControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Overlay\OverlayApmCalculatorSectionControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

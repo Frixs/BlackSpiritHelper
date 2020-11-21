@@ -1,7 +1,6 @@
 ﻿using BlackSpiritHelper.Core;
 using Composition.WindowsRuntimeHelpers;
 using System;
-using System.Diagnostics;
 using System.Numerics;
 using System.Windows;
 using System.Windows.Controls;
@@ -254,8 +253,6 @@ namespace BlackSpiritHelper
         /// Set Overlay content if there are no items.
         /// TODO:LATER: Think about changing this to automatic procedure. We do not want to add or update this check everytime, we change the condition in code or if we add a new section.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void OverlayContentWrapper_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             StackPanel val;
@@ -274,14 +271,24 @@ namespace BlackSpiritHelper
             // Timer section check.
             foreach (TimerGroupDataViewModel g in IoC.DataContent.TimerData.GroupList)
             {
-                foreach (TimerItemDataViewModel t in g.TimerList)
+                if (!g.IgnoreInOverlay)
                 {
-                    if (t.ShowInOverlay)
+                    foreach (TimerItemDataViewModel t in g.TimerList)
                     {
-                        val.Background = mOverlayBackgroundBrush;
-                        return;
+                        if (t.ShowInOverlay)
+                        {
+                            val.Background = mOverlayBackgroundBrush;
+                            return;
+                        }
                     }
                 }
+            }
+
+            // Apm Calculator section check.
+            if (IoC.DataContent.ApmCalculatorData.ShowInOverlay)
+            {
+                val.Background = mOverlayBackgroundBrush;
+                return;
             }
 
             // Schedule section check.

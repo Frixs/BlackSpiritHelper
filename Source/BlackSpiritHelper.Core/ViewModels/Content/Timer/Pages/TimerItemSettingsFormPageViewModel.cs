@@ -255,6 +255,9 @@ namespace BlackSpiritHelper.Core
                     return;
                 }
 
+                // Make sure it is updated
+                IoC.DataContent.TimerData.OnPropertyChanged(nameof(IoC.DataContent.TimerData.GroupList));
+
                 // Move back to the page.
                 GoBackCommandMethod();
 

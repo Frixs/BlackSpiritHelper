@@ -11,5 +11,16 @@ namespace BlackSpiritHelper.Core
         /// Set overlay interaction key according to ovelray key representation
         /// </summary>
         void SetOverlayInteractionKey(OverlayInteractionKey key);
+
+        /// <summary>
+        /// Subscribe APM Calculator events
+        /// </summary>
+        /// <param name="sessionData">The session data to start</param>
+        void SubscribeApmCalculatorEvents(ApmCalculatorSessionDataViewModel sessionData);
+
+        /// <summary>
+        /// Unsubscribe APM Calculator events
+        /// </summary>
+        void UnsubscribeApmCalculatorEvents();
     }
 }

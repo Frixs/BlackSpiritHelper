@@ -3,7 +3,7 @@
     /// <summary>
     /// Subclass for <see cref="IoC"/>. There you define all application data structures.
     /// F.e. Timer structure is a bit complex with its groups <see cref="TimerDataViewModel"/>. You have to bind the same view model to multiple views.
-    /// FOr this reason, you define these data structures here to easily access it as a singleton.
+    /// For this reason, you define these data structures here to easily access it as a singleton.
     /// </summary>
     public class ApplicationDataContent
     {
@@ -13,6 +13,11 @@
         /// Data structure for the preferences.
         /// </summary>
         public PreferencesDataViewModel PreferencesData { get; private set; }
+
+        /// <summary>
+        /// Data structure for APM Calculator.
+        /// </summary>
+        public ApmCalculatorDataViewModel ApmCalculatorData { get; private set; }
 
         /// <summary>
         /// Data structure for schedule.
@@ -49,6 +54,11 @@
         /// <summary>
         /// Option to load user data on application load in order you want.
         /// </summary>
+        /// <remarks>
+        ///     Try to get data of each section... 
+        ///     if the data cannot be loaded, create a new data instance with triggered <see cref="ADataContentBaseViewModel.SetDefaults"/> method.
+        ///     The method should be called only during initialization here!
+        /// </remarks>
         public void Setup()
         {
             // Preferences.
@@ -56,22 +66,27 @@
             PreferencesData.Init();
             PreferencesData.SetDefaults();
 
-            // Timer.
+            // APM Calculator
+            ApmCalculatorData = IoC.SettingsStorage.ApmCalculatorData ?? ApmCalculatorDataViewModel.NewDataInstance;
+            ApmCalculatorData.Init();
+            ApmCalculatorData.SetDefaults();
+
+            // Timer
             TimerData = IoC.SettingsStorage.TimerData ?? TimerDataViewModel.NewDataInstance;
             TimerData.Init();
             TimerData.SetDefaults();
 
-            // Schedule.
+            // Schedule
             ScheduleData = IoC.SettingsStorage.ScheduleData ?? ScheduleDataViewModel.NewDataInstance;
             ScheduleData.Init();
             ScheduleData.SetDefaults();
 
-            // Watchdog.
+            // Watchdog
             WatchdogData = IoC.SettingsStorage.WatchdogData ?? WatchdogDataViewModel.NewDataInstance;
             WatchdogData.Init();
             WatchdogData.SetDefaults();
 
-            // Overlay.
+            // Overlay
             OverlayData = IoC.SettingsStorage.OverlayData ?? OverlayDataViewModel.NewDataInstance;
             OverlayData.Init();
             OverlayData.SetDefaults();
@@ -85,6 +100,9 @@
         {
             // Preferences.
             PreferencesData.Dispose();
+
+            // APM Calculator.
+            ApmCalculatorData.Dispose();
 
             // Timer.
             TimerData.Dispose();
@@ -111,6 +129,7 @@
             // Clear previously saved data, first.
             ClearSavedAppData();
             ClearSavedPreferencesData();
+            ClearSavedApmCalculatorData();
             ClearSavedScheduleData();
             ClearSavedTimerData();
             ClearSavedWatchdogData();
@@ -122,6 +141,7 @@
             // Save new data.
             SaveNewAppData();
             SaveNewPreferencesData();
+            SaveNewApmCalculatorData();
             SaveNewScheduleData();
             SaveNewTimerData();
             SaveNewWatchdogData();
@@ -185,6 +205,28 @@
         {
             // Clear previous save.
             IoC.SettingsStorage.PreferencesData = null;
+        }
+
+        #endregion
+
+        #region APM Calculator
+
+        /// <summary>
+        /// Save new APM Calculator data.
+        /// </summary>
+        private void SaveNewApmCalculatorData()
+        {
+            // Save new data.
+            IoC.SettingsStorage.ApmCalculatorData = ApmCalculatorData;
+        }
+
+        /// <summary>
+        /// Clear saved APM Calculator data.
+        /// </summary>
+        private void ClearSavedApmCalculatorData()
+        {
+            // Clear previous save.
+            IoC.SettingsStorage.ApmCalculatorData = null;
         }
 
         #endregion

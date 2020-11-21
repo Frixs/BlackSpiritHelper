@@ -32,7 +32,7 @@
                         Source="{StaticResource logo_whiteDrawingImage}" />
 
                     <!--  Content presenter  -->
-                    <ContentPresenter />
+                    <ContentPresenter Margin="0,5,0,0" />
 
                 </StackPanel>
                 <!--  Window's Drop Shadow  -->

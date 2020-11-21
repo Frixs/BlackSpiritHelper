@@ -52,7 +52,7 @@
                                 Margin="0,0,0,10"
                                 HorizontalAlignment="Center"
                                 FontFamily="{StaticResource LatoHeavy}"
-                                FontSize="22"
+                                FontSize="24"
                                 Foreground="{StaticResource RedForegroundAltBrushKey}"
                                 Text="{Binding Title}" />
                             <!--  Message Wrapper  -->

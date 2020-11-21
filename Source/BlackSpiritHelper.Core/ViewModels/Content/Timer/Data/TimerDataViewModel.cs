@@ -118,6 +118,7 @@ namespace BlackSpiritHelper.Core
             CreateCommands();
         }
 
+        /// <inheritdoc/>
         protected override void InitRoutine(params object[] parameters)
         {
             // This is initialization setup after loading from user settings.
@@ -127,6 +128,7 @@ namespace BlackSpiritHelper.Core
                     t.Init();
         }
 
+        /// <inheritdoc/>
         protected override void SetDefaultsRoutine()
         {
             TimerGroupDataViewModel g = AddGroup("Default Group");
@@ -144,6 +146,7 @@ namespace BlackSpiritHelper.Core
             });
         }
 
+        /// <inheritdoc/>
         protected override void DisposeRoutine()
         {
         }

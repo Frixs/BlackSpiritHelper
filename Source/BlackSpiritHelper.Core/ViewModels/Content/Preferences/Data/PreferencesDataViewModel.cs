@@ -131,6 +131,7 @@ namespace BlackSpiritHelper.Core
             CreateCommands();
         }
 
+        /// <inheritdoc/>
         protected override void InitRoutine(params object[] parameters)
         {
             // Init after application start.
@@ -140,16 +141,12 @@ namespace BlackSpiritHelper.Core
             Connection.Init();
         }
 
-        /// <summary>
-        /// Set default values into this instance.
-        /// </summary>
+        /// <inheritdoc/>
         protected override void SetDefaultsRoutine()
         {
         }
 
-        /// <summary>
-        /// Anything you need to do before destroy.
-        /// </summary>
+        /// <inheritdoc/>
         protected override void DisposeRoutine()
         {
         }

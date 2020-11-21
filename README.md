@@ -23,6 +23,9 @@ Of course! Black Spirit Helper does **not** affect any game files. It does **not
 - **[Release History](#release-history)**
 
 ## Features
+### APM Section
+APM stands for "Action-Per-Minute" and this is the real-time calculator allowing you to measure your APM in your favorite games or simply in any desktop environment.  
+Customize the tracker to your game needs. Keyboard, mouse clicks, mouse dragging, and more. Select what you need to measure the APM the most precisely.
 ### Timer Section
 It offers you to create multiple groups with multiple timers in each. You can control each timer independently and you can also control multiple timers with group control.  
 Custom overlay time to set, in-game overlay control, and much more! You can find it useful in all kinds of games where you need to track self-buffs/food-buffs/potion-buffs at the proper time.
