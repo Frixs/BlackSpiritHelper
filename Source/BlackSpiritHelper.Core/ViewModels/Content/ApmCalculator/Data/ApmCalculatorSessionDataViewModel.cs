@@ -32,7 +32,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Current APM
         /// </summary>
-        public uint CurrentApm { get; set; }
+        public uint CurrentApm => (uint)mApmCounter.Count;
 
         /// <summary>
         /// Average APM
@@ -82,12 +82,12 @@ namespace BlackSpiritHelper.Core
             ++TotalActions;
             mApmCounter.Enqueue(DateTime.UtcNow);
 
-            // Set the current APM
-            CurrentApm = (uint)mApmCounter.Count;
-
             // Check for the highest APM...
-            if (CurrentApm > HighestApm)
-                HighestApm = CurrentApm;
+            if (mApmCounter.Count > HighestApm)
+                HighestApm = (uint)mApmCounter.Count;
+
+            // Let update the APM calculations
+            OnPropertyChanged(nameof(CurrentApm));
         }
 
         /// <summary>
@@ -104,7 +104,8 @@ namespace BlackSpiritHelper.Core
                     _ = mApmCounter.Dequeue();
             }
 
-            // Let update the average APM calculation
+            // Let update the APM calculations
+            OnPropertyChanged(nameof(CurrentApm));
             OnPropertyChanged(nameof(AverageApm));
         }
 

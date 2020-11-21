@@ -34,9 +34,9 @@
     <TargetCulture>en</TargetCulture>
     <ProductName>Black Spirit Helper</ProductName>
     <PublisherName>Tomas Frixs</PublisherName>
-    <MinimumRequiredVersion>1.4.2.0</MinimumRequiredVersion>
+    <MinimumRequiredVersion>1.4.2.1</MinimumRequiredVersion>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>1.4.2.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
