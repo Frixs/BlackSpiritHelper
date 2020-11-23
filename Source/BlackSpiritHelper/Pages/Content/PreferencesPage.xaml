@@ -349,7 +349,7 @@
                         FontFamily="{StaticResource LatoLight}"
                         FontSize="14"
                         Foreground="{StaticResource RedBrushKey}"
-                        Text="You cannot update this value if schedule runs."
+                        Text="You cannot update this value if the schedule is running."
                         Visibility="{Binding ApplicationDataContent.ScheduleData.IsRunning, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:BooleanToVisibilityGoneConverter}}" />
                     <xctk:RangeSlider
                         x:Name="ScheduleNotificationRangeSlider"
@@ -406,7 +406,7 @@
                         FontFamily="{StaticResource LatoLight}"
                         FontSize="14"
                         Foreground="{StaticResource RedBrushKey}"
-                        Text="You cannot update this value if any timer runs."
+                        Text="You cannot update this value if any of the existing timers are running."
                         Visibility="{Binding ApplicationDataContent.TimerData.IsRunning, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:BooleanToVisibilityGoneConverter}}" />
                     <xctk:RangeSlider
                         x:Name="TimerNotificationRangeSlider"

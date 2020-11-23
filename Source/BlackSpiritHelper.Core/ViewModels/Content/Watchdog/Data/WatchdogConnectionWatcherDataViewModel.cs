@@ -123,8 +123,6 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// On Tick timer event.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         protected override void CheckLoopTimerOnElapsed(object sender, ElapsedEventArgs e)
         {
             var datetime = DateTimeOffset.UtcNow.ToString("MM-dd HH:mm UTC");

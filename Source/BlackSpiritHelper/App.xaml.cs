@@ -20,6 +20,7 @@ namespace BlackSpiritHelper
     /// TODO:LATER:APP: more...
     ///     - Application user option to download/check updates.
     ///     - Auto manage length of log file. Cut the file if it is too large.
+    ///     - Entirely redo all timers - single thread worker + another for sending messages etc.
     ///     - !!! DataViewModel extends DataModel - Move business logic into Model with its fields.
     ///       Separate ViewModel's command logic from Model's business logic.
     ///       Make DataModels separate - each view (Page/Controls) should have unique VM that contains coresponding data.
