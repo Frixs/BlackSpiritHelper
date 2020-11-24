@@ -252,7 +252,7 @@ namespace BlackSpiritHelper
             {
                 // The user did not allow the application to run as administrator.
                 MessageBox.Show($"Sorry, {Assembly.GetExecutingAssembly().GetName().Name} must be run As Administrator in order to interact with the overlay while you are playing your game.{Environment.NewLine}Your computer is not allowing to start the application As Administrator.");
-                AddEarlyError("Process start error: " + ex.Message);
+                AddEarlyError($"Process start error: ({ex.GetType()}) {ex.Message}");
                 return false;
             }
 
@@ -366,8 +366,8 @@ namespace BlackSpiritHelper
         /// <returns>Was the update fired?</returns>
         private async Task<bool> OnUpdateSetupAsync()
         {
-            //if (Debugger.IsAttached)
-            //    return false;
+            if (Debugger.IsAttached)
+                return false;
 
             int userDelayMs = 500;
             bool procedureFailure = false;
@@ -379,9 +379,11 @@ namespace BlackSpiritHelper
             if (!Directory.Exists(Path.GetDirectoryName(filePath)))
                 Directory.CreateDirectory(Path.GetDirectoryName(filePath));
 
-            // If the file exists, do nothing.
+            // If the file exists, ignore update process
             if (File.Exists(filePath))
                 return false;
+
+            // ---
 
             // if the file does not exist, we need to run on update procedure.
             IoC.Logger.Log("Starting update procedure...", LogLevel.Info);
