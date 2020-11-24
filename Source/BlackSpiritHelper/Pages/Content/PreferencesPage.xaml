@@ -271,7 +271,7 @@
                         FontFamily="{StaticResource LatoRegular}"
                         FontSize="14"
                         Foreground="{StaticResource ForegroundBrushKey}"
-                        Text="Screen Capture Opacity" />
+                        Text="Screen Capture Transparency" />
                     <Grid HorizontalAlignment="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
