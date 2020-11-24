@@ -46,7 +46,7 @@ You can scale the overlay and make it transparent by your needs.
 
 ## Installation
 #### Requirements
-- **Windows 10**: 1903/.NET 4.7.2 and newer
+- **Windows 10**: .NET 4.7.2 and newer
 
 #### Installation process
 Follow the instructions **[here](https://github.com/Frixs/BlackSpiritHelper/wiki/Installation)**!

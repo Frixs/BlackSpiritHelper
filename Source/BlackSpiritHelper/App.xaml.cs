@@ -284,7 +284,7 @@ namespace BlackSpiritHelper
             // Bind AssemblyInfo version.
             IoC.Application.ApplicationVersion = ApplicationDeployment.IsNetworkDeployed
                 ? ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString()
-                : (args.ContainsKey(ApplicationArgument.Version.ToString()) ? args[ApplicationArgument.Version.ToString()] : FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion);
+                : (args.ContainsKey(ApplicationArgument.Version.ToString()) ? args[ApplicationArgument.Version.ToString()] : "THE APP NEEDS TO BE RESTARTED"); //FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion);
 
             // Bind AssemblyInfo copyright.
             IoC.Application.Copyright = FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).LegalCopyright;
