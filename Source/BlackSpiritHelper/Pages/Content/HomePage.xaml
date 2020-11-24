@@ -32,10 +32,10 @@
                     <TextBlock
                         MaxWidth="400"
                         Margin="0,0,0,5"
-                        FontFamily="{StaticResource LatoLightItalic}"
+                        FontFamily="{StaticResource LatoMediumItalic}"
                         FontSize="14"
                         Foreground="{StaticResource FormTitleForegroundAltBrushKey}"
-                        Text="Looks like everything is working. Now let's get to know me, you can use info links below to get started!"
+                        Text="Looks like everything is working. Now let's get to know me, you can use the info links below to get started!"
                         TextAlignment="Center"
                         TextWrapping="Wrap" />
 
@@ -46,7 +46,15 @@
                             Padding="10"
                             HorizontalAlignment="Center"
                             Command="{Binding GetStartedCommand}"
-                            Content="Wiki Resources"
+                            Content="WIKI"
+                            Style="{StaticResource RegularButton}" />
+                        <!--  FAQ Button  -->
+                        <Button
+                            Margin="10,0,0,0"
+                            Padding="10"
+                            HorizontalAlignment="Center"
+                            Command="{Binding FaqCommand}"
+                            Content="FAQ"
                             Style="{StaticResource RegularButton}" />
                         <!--  Import Settings Button  -->
                         <Button
@@ -54,7 +62,7 @@
                             Padding="10"
                             HorizontalAlignment="Center"
                             Command="{Binding ImportSettingsCommand}"
-                            Content="Import Settings"
+                            Content="IMPORT SETTINGS"
                             Style="{StaticResource RegularButton}" />
                         <!--  Export Settings Button  -->
                         <Button
@@ -62,7 +70,7 @@
                             Padding="10"
                             HorizontalAlignment="Center"
                             Command="{Binding ExportSettingsCommand}"
-                            Content="Export Settings"
+                            Content="EXPORT SETTINGS"
                             Style="{StaticResource RegularButton}" />
                     </StackPanel>
 

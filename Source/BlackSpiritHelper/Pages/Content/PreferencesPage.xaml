@@ -103,8 +103,10 @@
                         <Slider
                             Grid.Column="1"
                             VerticalAlignment="Center"
+                            IsSnapToTickEnabled="True"
                             Maximum="1.0"
                             Minimum="0.0"
+                            TickFrequency="0.05"
                             Value="{Binding Volume}" />
                     </Grid>
 
@@ -147,7 +149,7 @@
                         Padding="10"
                         HorizontalAlignment="Center"
                         Command="{Binding ExportLogFileCommand}"
-                        Content="Export Log File"
+                        Content="EXPORT LOG FILE"
                         Style="{StaticResource RegularButton}" />
 
                     <!--  Spacer  -->
@@ -323,7 +325,7 @@
                         Padding="10"
                         HorizontalAlignment="Center"
                         Command="{Binding ResetOverlayPositionCommand}"
-                        Content="Reset Overlay Position"
+                        Content="RESET OVERLAY POSITION"
                         Style="{StaticResource RegularButton}" />
 
                     <!--  Spacer  -->
@@ -355,6 +357,7 @@
                         x:Name="ScheduleNotificationRangeSlider"
                         Margin="0,0,0,5"
                         HigherValue="{Binding ApplicationDataContent.ScheduleData.TimerNotificationTime1Value, Mode=TwoWay, Source={x:Static local:ViewModelLocator.Instance}}"
+                        IsEnabled="{Binding ApplicationDataContent.ScheduleData.IsRunning, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:BooleanInvertConverter}}"
                         LowerValue="{Binding ApplicationDataContent.ScheduleData.TimerNotificationTime2Value, Mode=TwoWay, Source={x:Static local:ViewModelLocator.Instance}}"
                         Maximum="180"
                         Minimum="1"
@@ -412,6 +415,7 @@
                         x:Name="TimerNotificationRangeSlider"
                         Margin="0,0,0,5"
                         HigherValue="{Binding ApplicationDataContent.TimerData.TimerNotificationTime1Value, Mode=TwoWay, Source={x:Static local:ViewModelLocator.Instance}}"
+                        IsEnabled="{Binding ApplicationDataContent.TimerData.IsRunning, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:BooleanInvertConverter}}"
                         LowerValue="{Binding ApplicationDataContent.TimerData.TimerNotificationTime2Value, Mode=TwoWay, Source={x:Static local:ViewModelLocator.Instance}}"
                         Maximum="59"
                         Minimum="6"

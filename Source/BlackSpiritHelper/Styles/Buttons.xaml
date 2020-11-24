@@ -366,7 +366,7 @@
         <Setter Property="Foreground" Value="{StaticResource RegularButtonForegroundBrushKey}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="BorderBrush" Value="{StaticResource RegularButtonActionBrushKey}" />
-        <Setter Property="FontFamily" Value="{StaticResource LatoRegular}" />
+        <Setter Property="FontFamily" Value="{StaticResource LatoBoldItalic}" />
         <Setter Property="FontSize" Value="14" />
 
         <Setter Property="Template">
