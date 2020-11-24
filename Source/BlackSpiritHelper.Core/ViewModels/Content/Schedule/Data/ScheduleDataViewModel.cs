@@ -1370,7 +1370,7 @@ namespace BlackSpiritHelper.Core
                 if (SendMessage)
                 {
                     string message = $"{string.Join(", ", NextItemPresenterList.Select(o => o.Name))} - starts in {TimerNotificationTime1Value} minutes!";
-                    IoC.DataContent.PreferencesData.Connection.SendTextMessage(message);
+                    _ = IoC.DataContent.PreferencesData.Connection.SendTextMessageAsync(message);
                 }
             }
 
@@ -1392,7 +1392,7 @@ namespace BlackSpiritHelper.Core
                 if (SendMessage)
                 {
                     string message = $"{string.Join(", ", NextItemPresenterList.Select(o => o.Name))} - starts in {TimerNotificationTime2Value} minutes!";
-                    IoC.DataContent.PreferencesData.Connection.SendTextMessage(message);
+                    _ = IoC.DataContent.PreferencesData.Connection.SendTextMessageAsync(message);
                 }
             }
 
@@ -1415,7 +1415,7 @@ namespace BlackSpiritHelper.Core
                 if (SendMessage)
                 {
                     string message = $"{string.Join(", ", NextItemPresenterList.Select(o => o.Name))} - just started!";
-                    IoC.DataContent.PreferencesData.Connection.SendTextMessage(message);
+                    _ = IoC.DataContent.PreferencesData.Connection.SendTextMessageAsync(message);
                 }
             }
 

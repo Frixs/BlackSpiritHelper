@@ -98,8 +98,13 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Async version of <see cref="SendTextMessage(string)"/>.
         /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
+        /// <param name="message">Message to send</param>
+        /// <returns>
+        /// Status code:
+        ///     - 0 = OK
+        ///     - 1 = Unexpected error occurred - no internet connection
+        ///     - 2 = Not set active connection - No Check in this method !!!!! - This is subclass of this manager <see cref="PreferencesConnectionDataViewModel"/>
+        /// </returns>
         public abstract Task<int> SendTextMessageAsync(string message);
 
         /// <summary>

@@ -233,17 +233,17 @@ namespace BlackSpiritHelper.Core
             }
             catch (HttpRequestException e) // Internet connection issues.
             {
-                IoC.Logger.Log($"{e.GetType().ToString()}: {e.Message} (expected exception)", LogLevel.Verbose);
+                IoC.Logger.Log($"{e.GetType()}: {e.Message} (expected exception)", LogLevel.Verbose);
                 status = false;
             }
             catch (TaskCanceledException e) // Timeout.
             {
-                IoC.Logger.Log($"{e.GetType().ToString()}: {e.Message} (expected exception)", LogLevel.Debug);
+                IoC.Logger.Log($"{e.GetType()}: {e.Message} (expected exception)", LogLevel.Debug);
                 status = false;
             }
             catch (Exception e) // Unexpected.
             {
-                IoC.Logger.Log($"{e.GetType().ToString()}: {e.Message}", LogLevel.Fatal);
+                IoC.Logger.Log($"{e.GetType()}: {e.Message}", LogLevel.Fatal);
                 status = false;
             }
 

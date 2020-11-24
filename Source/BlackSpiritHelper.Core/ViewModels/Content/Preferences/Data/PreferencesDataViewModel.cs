@@ -197,9 +197,9 @@ namespace BlackSpiritHelper.Core
                 catch (Exception ex)
                 {
                     if (runOnStartup)
-                        IoC.Logger.Log($"Unable to set the application start on system startup: ({ex.GetType().ToString()}) {ex.Message}", LogLevel.Error);
+                        IoC.Logger.Log($"Unable to set the application start on system startup: ({ex.GetType()}) {ex.Message}", LogLevel.Error);
                     else
-                        IoC.Logger.Log($"Unable to unset the application start on system startup: ({ex.GetType().ToString()}) {ex.Message}", LogLevel.Error);
+                        IoC.Logger.Log($"Unable to unset the application start on system startup: ({ex.GetType()}) {ex.Message}", LogLevel.Error);
                 }
 
                 await Task.Delay(1);
