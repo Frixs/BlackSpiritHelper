@@ -33,9 +33,12 @@ namespace BlackSpiritHelper
         #region Private Members
 
         /// <summary>
-        /// Says if the application is going to restart in order to achieve administrator privileges.
+        /// Indicates if the elevated restart is requested
         /// </summary>
-        private bool mIsRestartingProcessFlag = false;
+        /// <remarks>
+        ///     We have to ignore exit process disposal... otherwise zombie process is released
+        /// </remarks>
+        private bool mElevatedRestart = false;
 
         /// <summary>
         /// Early error list is here to catch all error simple messages that we need to track while <see cref="IoC.Logger"/> is not available yet.
@@ -56,7 +59,7 @@ namespace BlackSpiritHelper
             // Log error.
             if (IoC.Logger != null)
             {
-                IoC.Logger.Log($"An unhandled exception occurred: ({e.GetType().ToString()}) {e.Exception.Message}", LogLevel.Fatal);
+                IoC.Logger.Log($"An unhandled exception occurred: ({e.GetType()}) {e.Exception.Message}", LogLevel.Fatal);
             }
             MessageBox.Show($"An unhandled exception just occurred: {e.Exception.Message}.{Environment.NewLine}Please, contact the developers to fix the issue.", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Warning);
 
@@ -81,7 +84,6 @@ namespace BlackSpiritHelper
         /// <summary>
         /// Custom startup so we load our IoC immediately before anything else.
         /// </summary>
-        /// <param name="e"></param>
         protected override void OnStartup(StartupEventArgs e)
         {
             // Let the base application do what it needs.
@@ -127,7 +129,7 @@ namespace BlackSpiritHelper
                 // Restart on new update.
                 if (bNewUpdate)
                 {
-                    IoC.Application.AppAssembly.Restart($"{ApplicationArgument.UpdateRestart.ToString()}=true");
+                    IoC.Application.AppAssembly.Restart($"{ApplicationArgument.UpdateRestart}=true");
                     return;
                 }
 
@@ -188,12 +190,10 @@ namespace BlackSpiritHelper
         /// <summary>
         /// Perform tasks at application exit.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void Application_Exit(object sender, ExitEventArgs e)
         {
-            // Do nothing if the application is going to restart immediately after start.
-            if (mIsRestartingProcessFlag)
+            // Ignore exit process on elevated request...
+            if (mElevatedRestart)
                 return;
 
             // All application windows are already closed here.
@@ -236,21 +236,23 @@ namespace BlackSpiritHelper
             processInfo.UseShellExecute = true;
             processInfo.Verb = "runas";
 
-            processInfo.Arguments = passedArguments + " " + ApplicationArgument.Version.ToString() + "=" + (ApplicationDeployment.IsNetworkDeployed
-                ? ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString()
-                : FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion);
+            // Add desired arguments
+            processInfo.Arguments = passedArguments;
+            // Add version information just for in case the version is not available while the process is elevated
+            if (IoC.Application.DeploymentVersion != null)
+                processInfo.Arguments += " " + ApplicationArgument.DeploymentVersion.ToString() + "=" + IoC.Application.DeploymentVersion;
 
             // Start the new process.
             try
             {
                 Process.Start(processInfo);
-                mIsRestartingProcessFlag = true;
+                mElevatedRestart = true;
             }
             catch (Exception ex)
             {
                 // The user did not allow the application to run as administrator.
                 MessageBox.Show($"Sorry, {Assembly.GetExecutingAssembly().GetName().Name} must be run As Administrator in order to interact with the overlay while you are playing your game.{Environment.NewLine}Your computer is not allowing to start the application As Administrator.");
-                AddEarlyError("Process start error: " + ex.Message);
+                AddEarlyError($"Process start error: ({ex.GetType()}) {ex.Message}");
                 return false;
             }
 
@@ -281,10 +283,12 @@ namespace BlackSpiritHelper
             // Bind Executing Assembly.
             IoC.Application.ExecutingAssembly = Assembly.GetExecutingAssembly();
 
-            // Bind AssemblyInfo version.
-            IoC.Application.ApplicationVersion = ApplicationDeployment.IsNetworkDeployed
+            // Bind deployment version
+            IoC.Application.DeploymentVersion = ApplicationDeployment.IsNetworkDeployed
                 ? ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString()
-                : (args.ContainsKey(ApplicationArgument.Version.ToString()) ? args[ApplicationArgument.Version.ToString()] : FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion);
+                : (args.ContainsKey(ApplicationArgument.DeploymentVersion.ToString()) ? args[ApplicationArgument.DeploymentVersion.ToString()] : null);
+            // Bind informational version
+            IoC.Application.InformationalVersion = FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion;
 
             // Bind AssemblyInfo copyright.
             IoC.Application.Copyright = FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).LegalCopyright;
@@ -369,15 +373,17 @@ namespace BlackSpiritHelper
             bool procedureFailure = false;
 
             // File relative to execution directory.
-            string filePath = "Version.check/" + IoC.Application.ApplicationVersion.Replace('.', '_');
+            string filePath = "Version.check/" + IoC.Application.InformationalVersion.Replace('.', '_');
 
             // To prevent possible exception.
             if (!Directory.Exists(Path.GetDirectoryName(filePath)))
                 Directory.CreateDirectory(Path.GetDirectoryName(filePath));
 
-            // If the file exists, do nothing.
+            // If the file exists, ignore update process
             if (File.Exists(filePath))
                 return false;
+
+            // ---
 
             // if the file does not exist, we need to run on update procedure.
             IoC.Logger.Log("Starting update procedure...", LogLevel.Info);

@@ -8,9 +8,10 @@
     {
         /// <summary>
         /// Contains version - ClickOnce AsAdministrator requirement to pass the version to the new process after restart
+        /// <see cref="ApplicationViewModel.DeploymentVersion"/>
         /// Type: string
         /// </summary>
-        Version,
+        DeploymentVersion,
 
         /// <summary>
         /// Indicates, the app is restarted after freshly after new updated deploy.

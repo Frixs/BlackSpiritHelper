@@ -22,7 +22,7 @@
                                 FontFamily="{StaticResource LatoMediumItalic}"
                                 FontSize="12"
                                 Foreground="{StaticResource WatchdogSubForegroundBrushKey}"
-                                Text="Method checks TCP/UDP state of chosen processes. If there is no connection, it will evaluate your process as inaccessible to the internet. It means, your process does not communicate to the internet. In meaning of games it can mean, your game is running, but your account is probably disconnected and your game is sitting in loading screen."
+                                Text="The method checks the TCP/UDP state of chosen processes. If there is no connection, it will evaluate your process as inaccessible to the internet. It means, your process does not communicate to the internet. In the meaning of games, it can mean, your game is running, but your account is probably disconnected and your game is sitting on a loading screen."
                                 TextWrapping="Wrap" />
 
                             <!--  Process List  -->

@@ -21,9 +21,14 @@ namespace BlackSpiritHelper.Core
         #region Command
 
         /// <summary>
-        /// The command to reset overlay position.
+        /// The command to open web page
         /// </summary>
         public ICommand GetStartedCommand { get; set; }
+
+        /// <summary>
+        /// The command to open web page
+        /// </summary>
+        public ICommand FaqCommand { get; set; }
 
         /// <summary>
         /// The command to import settings.
@@ -68,6 +73,7 @@ namespace BlackSpiritHelper.Core
         private void CreateCommands()
         {
             GetStartedCommand = new RelayCommand(async () => await GetStartedCommandMethodAsync());
+            FaqCommand = new RelayCommand(async () => await FaqCommandMethodAsync());
             ImportSettingsCommand = new RelayCommand(async () => await ImportSettingsAsync());
             ExportSettingsCommand = new RelayCommand(async () => await ExportSettingsAsync());
             AuthorWebpageLinkCommand = new RelayCommand(async () => await AuthorWebpageLinkMethodAsync());
@@ -77,13 +83,25 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Open webpage with the Get started info.
         /// </summary>
-        /// <returns></returns>
         private async Task GetStartedCommandMethodAsync()
         {
             await RunCommandAsync(() => mOpenWebLinkCommandFlag, async () =>
             {
                 // Open the webpage.
                 System.Diagnostics.Process.Start("https://github.com/Frixs/BlackSpiritHelper/wiki/GettingStarted");
+                await Task.Delay(1);
+            });
+        }
+
+        /// <summary>
+        /// Open webpage with the FAQ info.
+        /// </summary>
+        private async Task FaqCommandMethodAsync()
+        {
+            await RunCommandAsync(() => mOpenWebLinkCommandFlag, async () =>
+            {
+                // Open the webpage.
+                System.Diagnostics.Process.Start("https://github.com/Frixs/BlackSpiritHelper/wiki/FAQ");
                 await Task.Delay(1);
             });
         }

@@ -32,10 +32,10 @@
                     <TextBlock
                         MaxWidth="400"
                         Margin="0,0,0,5"
-                        FontFamily="{StaticResource LatoLightItalic}"
+                        FontFamily="{StaticResource LatoMediumItalic}"
                         FontSize="14"
                         Foreground="{StaticResource FormTitleForegroundAltBrushKey}"
-                        Text="Looks like everything is working. Now let's get to know me, you can use info links below to get started!"
+                        Text="Looks like everything is working. Now let's get to know me, you can use the info links below to get started!"
                         TextAlignment="Center"
                         TextWrapping="Wrap" />
 
@@ -46,7 +46,15 @@
                             Padding="10"
                             HorizontalAlignment="Center"
                             Command="{Binding GetStartedCommand}"
-                            Content="Wiki Resources"
+                            Content="WIKI"
+                            Style="{StaticResource RegularButton}" />
+                        <!--  FAQ Button  -->
+                        <Button
+                            Margin="10,0,0,0"
+                            Padding="10"
+                            HorizontalAlignment="Center"
+                            Command="{Binding FaqCommand}"
+                            Content="FAQ"
                             Style="{StaticResource RegularButton}" />
                         <!--  Import Settings Button  -->
                         <Button
@@ -54,7 +62,7 @@
                             Padding="10"
                             HorizontalAlignment="Center"
                             Command="{Binding ImportSettingsCommand}"
-                            Content="Import Settings"
+                            Content="IMPORT SETTINGS"
                             Style="{StaticResource RegularButton}" />
                         <!--  Export Settings Button  -->
                         <Button
@@ -62,7 +70,7 @@
                             Padding="10"
                             HorizontalAlignment="Center"
                             Command="{Binding ExportSettingsCommand}"
-                            Content="Export Settings"
+                            Content="EXPORT SETTINGS"
                             Style="{StaticResource RegularButton}" />
                     </StackPanel>
 
@@ -218,13 +226,33 @@
                         Style="{StaticResource FormSubtitle}"
                         Text="Version" />
 
-                    <!--  Application version  -->
+                    <!--  Informational version  -->
                     <TextBlock
-                        FontFamily="{StaticResource LatoRegular}"
+                        FontFamily="{StaticResource LatoHeavy}"
                         FontSize="14"
                         Foreground="{StaticResource FormTitleForegroundAltBrushKey}"
-                        Text="{Binding ApplicationViewModel.ApplicationVersion, Source={x:Static local:ViewModelLocator.Instance}}"
+                        Text="{Binding ApplicationViewModel.InformationalVersion, Source={x:Static local:ViewModelLocator.Instance}, Mode=OneTime}"
                         TextAlignment="Center" />
+                    <!--  Deployment version  -->
+                    <TextBlock
+                        FontFamily="{StaticResource LatoHeavy}"
+                        FontSize="10"
+                        Foreground="{StaticResource ForegroundLightBrushKey}"
+                        TextAlignment="Center"
+                        ToolTip="Deployment version">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ApplicationViewModel.DeploymentVersion, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:IsNullConverter}}" Value="False">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                        <Setter Property="Text" Value="{Binding ApplicationViewModel.DeploymentVersion, Source={x:Static local:ViewModelLocator.Instance}, StringFormat='({0})', Mode=OneTime}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+
                 </StackPanel>
             </Border>
 
