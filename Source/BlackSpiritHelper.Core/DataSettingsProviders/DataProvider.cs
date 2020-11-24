@@ -59,7 +59,7 @@ namespace BlackSpiritHelper.Core
                 // System.Net.WebException: The remote name could not be resolved: 'api.github.com'.
 
                 isDownloadOk = false;
-                IoC.Logger.Log($"Unexpected error occurred during downloading/updating files: ({ex.GetType().ToString()}) {ex.Message}", LogLevel.Error);
+                IoC.Logger.Log($"Unexpected error occurred during downloading/updating files: ({ex.GetType()}) {ex.Message}", LogLevel.Error);
             }
             finally
             {

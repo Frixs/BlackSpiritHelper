@@ -59,15 +59,15 @@ namespace BlackSpiritHelper
                 }
                 catch (HttpRequestException e) // Internet connection issues.
                 {
-                    IoC.Logger.Log($"{e.GetType().ToString()}: {e.Message} (expected exception)", LogLevel.Verbose);
+                    IoC.Logger.Log($"{e.GetType()}: {e.Message} (expected exception)", LogLevel.Verbose);
                 }
                 catch (TaskCanceledException e) // Timeout.
                 {
-                    IoC.Logger.Log($"{e.GetType().ToString()}: {e.Message} (expected exception)", LogLevel.Debug);
+                    IoC.Logger.Log($"{e.GetType()}: {e.Message} (expected exception)", LogLevel.Debug);
                 }
                 catch (Exception e) // Unexpected.
                 {
-                    IoC.Logger.Log($"{e.GetType().ToString()}: {e.Message}", LogLevel.Fatal);
+                    IoC.Logger.Log($"{e.GetType()}: {e.Message}", LogLevel.Fatal);
                 }
             });
         }

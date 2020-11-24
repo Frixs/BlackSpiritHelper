@@ -453,9 +453,9 @@ namespace BlackSpiritHelper
                     if (item != null)
                         mCaptureHandler.StartCaptureFromItem(item);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    IoC.Logger.Log($"Hwnd 0x{sch.handle.ToInt32():X8} is not valid for capture!", LogLevel.Warning);
+                    IoC.Logger.Log($"Hwnd 0x{sch.handle.ToInt32():X8} is not valid for capture! {ex.GetType()}: {ex.Message}", LogLevel.Warning);
                 }
             }
             // Monitor
@@ -467,9 +467,9 @@ namespace BlackSpiritHelper
                     if (item != null)
                         mCaptureHandler.StartCaptureFromItem(item);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    IoC.Logger.Log($"Hmon 0x{sch.handle.ToInt32():X8} is not valid for capture!", LogLevel.Warning);
+                    IoC.Logger.Log($"Hmon 0x{sch.handle.ToInt32():X8} is not valid for capture! {ex.GetType()}: {ex.Message}", LogLevel.Warning);
                 }
             }
         }
