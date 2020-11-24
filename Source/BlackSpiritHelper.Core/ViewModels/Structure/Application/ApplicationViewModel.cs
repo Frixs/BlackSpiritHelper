@@ -42,11 +42,24 @@ namespace BlackSpiritHelper.Core
         public Assembly ExecutingAssembly { get; set; } //;
 
         /// <summary>
-        /// Application version.
+        /// Deployment version (we want to match this with <see cref="InformationalVersion"/>) - based on deployment system (ClickOnce)
         /// ---
         /// Assembly set.
         /// </summary>
-        public string ApplicationVersion { get; set; } //;
+        /// <remarks>
+        ///     Can be null
+        /// </remarks>
+        public string DeploymentVersion { get; set; } //;
+
+        /// <summary>
+        /// Version we want to show to the user - the main version we follow in the development.
+        /// ---
+        /// Assembly set.
+        /// </summary>
+        /// <remarks>
+        ///     Can NOT be null !
+        /// </remarks>
+        public string InformationalVersion { get; set; } //;
 
         /// <summary>
         /// Copyright.

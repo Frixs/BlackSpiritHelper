@@ -113,7 +113,7 @@ namespace BlackSpiritHelper
                 catch (Exception ex)
                 {
                     MessageBox.Show($"An unexpected error occurred during restarting the application.{Environment.NewLine}Please, contact the developers to fix the issue.");
-                    IoC.Logger.Log($"An unexpected error occurred during restarting the application - {ex.GetType().ToString()}: {ex.Message}", LogLevel.Fatal);
+                    IoC.Logger.Log($"An unexpected error occurred during restarting the application - {ex.GetType()}: {ex.Message}", LogLevel.Fatal);
                 }
 
                 // Shutdown the current process.

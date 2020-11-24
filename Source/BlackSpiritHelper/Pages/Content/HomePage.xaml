@@ -226,13 +226,33 @@
                         Style="{StaticResource FormSubtitle}"
                         Text="Version" />
 
-                    <!--  Application version  -->
+                    <!--  Informational version  -->
                     <TextBlock
-                        FontFamily="{StaticResource LatoRegular}"
+                        FontFamily="{StaticResource LatoHeavy}"
                         FontSize="14"
                         Foreground="{StaticResource FormTitleForegroundAltBrushKey}"
-                        Text="{Binding ApplicationViewModel.ApplicationVersion, Source={x:Static local:ViewModelLocator.Instance}}"
+                        Text="{Binding ApplicationViewModel.InformationalVersion, Source={x:Static local:ViewModelLocator.Instance}, Mode=OneTime}"
                         TextAlignment="Center" />
+                    <!--  Deployment version  -->
+                    <TextBlock
+                        FontFamily="{StaticResource LatoHeavy}"
+                        FontSize="10"
+                        Foreground="{StaticResource ForegroundLightBrushKey}"
+                        TextAlignment="Center"
+                        ToolTip="Deployment version">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ApplicationViewModel.DeploymentVersion, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:IsNullConverter}}" Value="False">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                        <Setter Property="Text" Value="{Binding ApplicationViewModel.DeploymentVersion, Source={x:Static local:ViewModelLocator.Instance}, StringFormat='({0})', Mode=OneTime}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+
                 </StackPanel>
             </Border>
 
