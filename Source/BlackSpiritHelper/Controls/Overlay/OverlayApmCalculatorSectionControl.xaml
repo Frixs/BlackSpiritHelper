@@ -154,7 +154,10 @@
         </Grid>
 
         <!--  2nd BOX  -->
-        <Border Width="{Binding Path=DataContext.BaseOverlay.SizeValue, FallbackValue=50, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}" Height="{Binding Path=DataContext.BaseOverlay.SizeValue, FallbackValue=50, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}">
+        <Border
+            Width="{Binding Path=DataContext.BaseOverlay.SizeValue, FallbackValue=50, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}"
+            Height="{Binding Path=DataContext.BaseOverlay.SizeValue, FallbackValue=50, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}"
+            Visibility="{Binding IsRunning, Converter={local:BooleanToVisibilityGoneConverter}}">
             <Border.Style>
                 <Style TargetType="Border">
                     <Setter Property="Background" Value="{StaticResource ScheduleOverlayBackgroundBrushKey}" />
@@ -227,6 +230,84 @@
 
             </Grid>
         </Border>
+
+        <!--  3rd BOX  -->
+        <Grid Width="{Binding Path=DataContext.BaseOverlay.SizeValue, FallbackValue=50, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}" Height="{Binding Path=DataContext.BaseOverlay.SizeValue, FallbackValue=50, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Background" Value="{StaticResource ScheduleOverlayBackgroundBrushKey}" />
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsRunning}" Value="False" />
+                                <Condition Binding="{Binding CurrentSession.TotalActions, Converter={local:GreaterThanConverter}, ConverterParameter='0'}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Background" Value="{StaticResource WarningColorBrushKey}" />
+                            <Setter Property="Visibility" Value="Visible" />
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+
+            <!--  Control Button  -->
+            <Button
+                Margin="0"
+                Padding="0"
+                Panel.ZIndex="1"
+                Command="{Binding OpenResultsCommand}"
+                Content="{StaticResource FontAwesomeExternalLinkSquareAltIcon}"
+                Focusable="False"
+                FontFamily="{StaticResource FontAwesomeSolid}"
+                FontSize="18">
+                <Button.Style>
+                    <Style BasedOn="{StaticResource RegularButton}" TargetType="Button">
+                        <Setter Property="Opacity" Value="0" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.75" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <!--  BOX Content  -->
+            <Grid Margin="{Binding ApplicationDataContent.OverlayData.BaseOverlay.Size, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:BaseOverlaySizeMarginValueConverter}, FallbackValue=5}">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!--  1st row  -->
+                <Viewbox
+                    Grid.Row="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                    <TextBlock
+                        Padding="2"
+                        FontFamily="{StaticResource FontAwesomeSolid}"
+                        FontSize="14"
+                        Text="{StaticResource FontAwesomePollIcon}">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{StaticResource ScheduleOverlayForegroundBrushKey}" />
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsRunning}" Value="False" />
+                                            <Condition Binding="{Binding CurrentSession.TotalActions, Converter={local:GreaterThanConverter}, ConverterParameter='0'}" Value="True" />
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Foreground" Value="{StaticResource WarningForegroundBrushKey}" />
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Viewbox>
+
+            </Grid>
+        </Grid>
 
     </StackPanel>
 </UserControl>
