@@ -41,7 +41,8 @@
                     <Image
                         Grid.RowSpan="10"
                         Width="125"
-                        Margin="0,-48,0,0"
+                        Margin="0,87,0,0"
+                        VerticalAlignment="Top"
                         Opacity="0.1"
                         Source="/BlackSpiritHelper;component/Resources/Images/Logo/logo_red_text_512.png" />
 
@@ -146,7 +147,7 @@
                             <ColumnDefinition Width="2*" />
                         </Grid.ColumnDefinitions>
 
-                        <!--  Current APM  -->
+                        <!--  Average APM  -->
                         <Grid
                             Grid.Column="0"
                             MinWidth="225"
@@ -163,14 +164,14 @@
                                 FontFamily="{StaticResource LatoHeavy}"
                                 FontSize="32"
                                 Foreground="{StaticResource ForegroundBrushKey}"
-                                Text="{Binding CurrentSession.CurrentApm, StringFormat='{}{0:#,0.#}'}" />
+                                Text="{Binding CurrentSession.AverageApm, StringFormat='{}{0:#,0.#}'}" />
                             <TextBlock
                                 Grid.Row="1"
                                 HorizontalAlignment="Center"
                                 FontFamily="{StaticResource LatoHeavy}"
                                 FontSize="14"
                                 Foreground="{StaticResource ForegroundLightBrushKey}"
-                                Text="CURRENT APM" />
+                                Text="AVERAGE APM" />
                         </Grid>
 
                         <!--  Elapsed Time  -->
@@ -267,8 +268,8 @@
                     </Grid>
 
                     <!--  3rd Information Wrapper  -->
-                    <Grid Grid.Row="5">
-                        <!--  Average APM  -->
+                    <Grid Grid.Row="5" Visibility="{Binding IsRunning, Converter={local:BooleanToVisibilityGoneConverter}}">
+                        <!--  Current APM  -->
                         <Grid MinWidth="225" HorizontalAlignment="Center">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -281,14 +282,14 @@
                                 FontFamily="{StaticResource LatoHeavy}"
                                 FontSize="32"
                                 Foreground="{StaticResource ForegroundBrushKey}"
-                                Text="{Binding CurrentSession.AverageApm, StringFormat='{}{0:#,0.#}'}" />
+                                Text="{Binding CurrentSession.CurrentApm, StringFormat='{}{0:#,0.#}'}" />
                             <TextBlock
                                 Grid.Row="1"
                                 HorizontalAlignment="Center"
                                 FontFamily="{StaticResource LatoHeavy}"
                                 FontSize="14"
                                 Foreground="{StaticResource ForegroundLightBrushKey}"
-                                Text="AVERAGE APM" />
+                                Text="CURRENT APM" />
                         </Grid>
 
                     </Grid>

@@ -120,6 +120,8 @@ namespace BlackSpiritHelper.Core
 
         private bool mPlayStopCommandFlags { get; set; }
 
+        private bool mOpenResultsCommandFlags { get; set; }
+
         #endregion
 
         #region Commands
@@ -142,6 +144,12 @@ namespace BlackSpiritHelper.Core
         [XmlIgnore]
         public ICommand RestartCommand { get; set; }
 
+        /// <summary>
+        /// Command to open results
+        /// </summary>
+        [XmlIgnore]
+        public ICommand OpenResultsCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -154,6 +162,7 @@ namespace BlackSpiritHelper.Core
             PlayCommand = new RelayCommand(async () => await PlayCommandMethodAsync());
             StopCommand = new RelayCommand(async () => await StopCommandMethodAsync());
             RestartCommand = new RelayCommand(async () => await RestartCommandMethodAsync());
+            OpenResultsCommand = new RelayCommand(async () => await OpenResultsCommandMethodAsync());
         }
 
         /// <inheritdoc/>
@@ -205,6 +214,19 @@ namespace BlackSpiritHelper.Core
             await RunCommandAsync(() => mPlayStopCommandFlags, async () =>
             {
                 RestartSession();
+                await Task.Delay(1);
+            });
+        }
+
+        private async Task OpenResultsCommandMethodAsync()
+        {
+            await RunCommandAsync(() => mOpenResultsCommandFlags, async () =>
+            {
+                // Make sure the main app window is shown
+                IoC.UI.ShowMainWindow();
+                // Move to the APM page.
+                IoC.Application.GoToPage(ApplicationPage.ApmCalculator);
+
                 await Task.Delay(1);
             });
         }
