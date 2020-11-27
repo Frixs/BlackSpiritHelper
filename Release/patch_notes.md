@@ -10,7 +10,7 @@
 <!-- [text](url) : Can be anywhere in the text. Transform text into URL link. -->
 <!-- \ : escape formatting characters. -->
 <!-- -------------------------------------------------- -->
-## v1.4.3.0 (2020-11-21)
+## v1.4.3.0 (2020-11-27)
 **Pull: [#37](https://github.com/Frixs/BlackSpiritHelper/pull/37)**
 - APM section UX improvements
 <br/>
