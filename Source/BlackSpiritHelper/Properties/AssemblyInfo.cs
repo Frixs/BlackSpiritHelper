@@ -53,6 +53,6 @@ using System.Windows;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")] // Is used if below is omitted
 [assembly: AssemblyFileVersion("1.0.0.0")] // Is used if below is omitted
-[assembly: AssemblyInformationalVersion("1.4.2.3")] // End-user version display (it is not strict to contain only numbers)
+[assembly: AssemblyInformationalVersion("1.4.3.0")] // End-user version display (it is not strict to contain only numbers)
 [assembly: NeutralResourcesLanguage("en")]
 
