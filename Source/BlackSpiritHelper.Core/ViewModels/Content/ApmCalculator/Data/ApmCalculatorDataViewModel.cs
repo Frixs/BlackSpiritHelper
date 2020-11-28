@@ -273,12 +273,12 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
-        #region Public Methods
+        #region Private Methods
 
         /// <summary>
         /// Start APM calculation session
         /// </summary>
-        public void StartSession()
+        private void StartSession()
         {
             CurrentSession = new ApmCalculatorSessionDataViewModel()
             {
@@ -291,7 +291,6 @@ namespace BlackSpiritHelper.Core
 
             mTimerControl.Start();
             IoC.Get<IMouseKeyHook>().SubscribeApmCalculatorEvents(CurrentSession);
-
             OnPropertyChanged(nameof(IsRunning));
 
             IoC.Audio.Play(AudioSampleType.StartNotification1, AudioPriorityBracket.Sample);
@@ -300,12 +299,11 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Stop APM calculation session
         /// </summary>
-        public void StopSession()
+        private void StopSession()
         {
             mTimerControl.Stop();
-            IoC.Get<IMouseKeyHook>().UnsubscribeApmCalculatorEvents();
-
             OnPropertyChanged(nameof(IsRunning));
+            IoC.Get<IMouseKeyHook>().UnsubscribeApmCalculatorEvents();
 
             IoC.Audio.Play(AudioSampleType.StopNotification1, AudioPriorityBracket.Sample);
         }
@@ -313,10 +311,12 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Restart APM calculation session
         /// </summary>
-        public void RestartSession()
+        private void RestartSession()
         {
             LastSession = CurrentSession;
             CurrentSession = new ApmCalculatorSessionDataViewModel();
+
+            IoC.Audio.Play(AudioSampleType.PingNotification1, AudioPriorityBracket.Sample);
         }
 
         #endregion

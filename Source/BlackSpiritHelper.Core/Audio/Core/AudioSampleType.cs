@@ -59,5 +59,10 @@
         /// Stop notification #1
         /// </summary>
         StopNotification1 = 10,
+
+        /// <summary>
+        /// Ping notification #1
+        /// </summary>
+        PingNotification1 = 11,
     }
 }

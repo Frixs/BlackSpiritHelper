@@ -51,7 +51,12 @@ namespace BlackSpiritHelper.Core
         /// <remarks>
         ///     Hooking is set in preference page code-behind
         /// </remarks>
-        public OverlayInteractionKey OverlayInteractionKey { get; set; } = OverlayInteractionKey.LeftAlt;
+        public OverlayInteractionKey OverlayInteractionHotkey { get; set; } = OverlayInteractionKey.LeftAlt;
+
+        /// <summary>
+        /// Selected keybind to control APM start/stop events
+        /// </summary>
+        public string ApmCalculatorControlHotkey { get; set; } = null;
 
         /// <summary>
         /// RunOnStartup Flag for locking.
@@ -92,6 +97,13 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
+        #region Command Flags
+
+        [XmlIgnore]
+        public bool SetHotkeyApmCalculatorControlCommandFlag { get; set; }
+
+        #endregion
+
         #region Command
 
         /// <summary>
@@ -118,6 +130,12 @@ namespace BlackSpiritHelper.Core
         [XmlIgnore]
         public ICommand ExportLogFileCommand { get; set; }
 
+        /// <summary>
+        /// The command to set keybind to APM start/stop.
+        /// </summary>
+        [XmlIgnore]
+        public ICommand SetHotkeyApmCalculatorControlCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -136,6 +154,9 @@ namespace BlackSpiritHelper.Core
         {
             // Init after application start.
             ForceToRunAsAdministrator = IoC.Application.Cookies.ForceToRunAsAdministrator;
+
+            // Init the APM start/stop keybind
+            IoC.Get<IMouseKeyHook>().SetApmCalculatorControlHotkey(ApmCalculatorControlHotkey);
 
             // Init connection section.
             Connection.Init();
@@ -164,6 +185,7 @@ namespace BlackSpiritHelper.Core
             ForceToRunAsAdministratorCommand = new RelayCommand(async () => await ForceToRunAsAdministratorCommandMethodAsync());
             ResetOverlayPositionCommand = new RelayCommand(async () => await ResetOverlayPositionCommandMethodAsync());
             ExportLogFileCommand = new RelayCommand(async () => await ExportLogAsync());
+            SetHotkeyApmCalculatorControlCommand = new RelayCommand(async () => await SetHotkeyApmCalculatorControlCommandMethodAsync());
         }
 
         /// <summary>
@@ -238,6 +260,19 @@ namespace BlackSpiritHelper.Core
             IoC.DataContent.OverlayData.ScreenCaptureOverlay.PosY = 0;
 
             await Task.Delay(1);
+        }
+
+        /// <summary>
+        /// Set keybind to APM start/stop
+        /// </summary>
+        private async Task SetHotkeyApmCalculatorControlCommandMethodAsync()
+        {
+            await RunCommandAsync(() => SetHotkeyApmCalculatorControlCommandFlag, async () =>
+            {
+                string capture = await IoC.Get<IMouseKeyHook>().CaptureHotkeyAsync();
+                ApmCalculatorControlHotkey = capture;
+                IoC.Get<IMouseKeyHook>().SetApmCalculatorControlHotkey(ApmCalculatorControlHotkey);
+            });
         }
 
         #endregion

@@ -72,6 +72,12 @@
                 o.AddAudioFile(new AudioFile("StopNotification1_Sound_0.mp3"));
                 return o;
             });
+            // Sample
+            AddAudioSample(AudioSampleType.PingNotification1, o =>
+            {
+                o.AddAudioFile(new AudioFile("PingNotification1_Sound_0.mp3"));
+                return o;
+            });
         }
 
         #endregion

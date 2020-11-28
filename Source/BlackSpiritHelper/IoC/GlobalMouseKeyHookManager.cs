@@ -1,5 +1,7 @@
 ﻿using BlackSpiritHelper.Core;
 using Gma.System.MouseKeyHook;
+using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BlackSpiritHelper
@@ -23,7 +25,22 @@ namespace BlackSpiritHelper
         /// <summary>
         /// Interaction key for overlay
         /// </summary>
-        private Keys mOverlayInteractionKey = Keys.LMenu;
+        private Keys mOverlayInteractionHotkey = Keys.LMenu;
+
+        /// <summary>
+        /// Interaction key for APM Calculator start/stop
+        /// </summary>
+        private Keys mApmCalculatorStartStopHotkey = Keys.None;
+
+        /// <summary>
+        /// Indicates if any keybind is currently being captured
+        /// </summary>
+        private bool mCapturingHotkey = false;
+
+        /// <summary>
+        /// Indicates captured key (string representation) while capturing keybind
+        /// </summary>
+        private string mCapturedHotkey = null;
 
         /// <summary>
         /// APM Calculator session data reference that are currently subsbribed
@@ -55,38 +72,82 @@ namespace BlackSpiritHelper
         #region Interface Methods
 
         /// <inheritdoc/>
-        public void SetOverlayInteractionKey(OverlayInteractionKey key)
+        public void SetOverlayInteractionHotkey(OverlayInteractionKey key)
         {
             switch (key)
             {
                 case OverlayInteractionKey.LeftAlt:
-                    mOverlayInteractionKey = Keys.LMenu;
+                    mOverlayInteractionHotkey = Keys.LMenu;
                     break;
 
                 case OverlayInteractionKey.RightAlt:
-                    mOverlayInteractionKey = Keys.RMenu;
+                    mOverlayInteractionHotkey = Keys.RMenu;
                     break;
 
                 case OverlayInteractionKey.LeftControl:
-                    mOverlayInteractionKey = Keys.LControlKey;
+                    mOverlayInteractionHotkey = Keys.LControlKey;
                     break;
 
                 case OverlayInteractionKey.RightControl:
-                    mOverlayInteractionKey = Keys.RControlKey;
+                    mOverlayInteractionHotkey = Keys.RControlKey;
                     break;
 
                 case OverlayInteractionKey.LeftShift:
-                    mOverlayInteractionKey = Keys.LShiftKey;
+                    mOverlayInteractionHotkey = Keys.LShiftKey;
                     break;
 
                 case OverlayInteractionKey.RightShift:
-                    mOverlayInteractionKey = Keys.RShiftKey;
+                    mOverlayInteractionHotkey = Keys.RShiftKey;
                     break;
 
                 default:
                     IoC.Logger.Log("No key specified!", LogLevel.Warning);
                     break;
             }
+        }
+
+        /// <inheritdoc/>
+        public void SetApmCalculatorControlHotkey(string key)
+        {
+            if (key == null)
+                mApmCalculatorStartStopHotkey = Keys.None;
+
+            if (Enum.TryParse(key, out Keys theKey))
+                mApmCalculatorStartStopHotkey = theKey;
+            else
+                mApmCalculatorStartStopHotkey = Keys.None;
+        }
+
+        /// <inheritdoc/>
+        public async Task<string> CaptureHotkeyAsync()
+        {
+            // Do no allow more than 1 capturing at the time
+            if (mCapturingHotkey)
+                return null;
+            mCapturingHotkey = true;
+
+            string result = null;
+
+            // Hook the event for the capture
+            mGlobalHook.KeyUp += CaptureHotkey_KeyUp;
+
+            // Give a user some time to set a keybind (or continue once the keybind is set)
+            for (int i = 0; i < 200; ++i) // 100 = 10sec
+            {
+                if (mCapturedHotkey != null)
+                    break;
+                await Task.Delay(100);
+            }
+
+            if (!mCapturedHotkey.Equals(Keys.Escape.ToString())) // Escape is unset button
+                result = mCapturedHotkey;
+
+            // Dispose the capture process
+            mGlobalHook.KeyUp -= CaptureHotkey_KeyUp;
+            mCapturedHotkey = null;
+            mCapturingHotkey = false;
+
+            return result;
         }
 
         /// <inheritdoc/>
@@ -142,6 +203,8 @@ namespace BlackSpiritHelper
             mGlobalHook.KeyDown -= MGlobalHook_KeyDown;
             mGlobalHook.KeyUp -= MGlobalHook_KeyUp;
 
+            mGlobalHook.KeyUp -= CaptureHotkey_KeyUp;
+
             // Make sure to unsubscribe special events
             UnsubscribeApmCalculatorEvents();
 
@@ -160,6 +223,7 @@ namespace BlackSpiritHelper
         {
             //System.Console.WriteLine("KEYUP");
             ActionOverlaySetTransparent(sender, e);
+            ActionApmCalculatorControl(sender, e);
         }
 
         /// <summary>
@@ -169,6 +233,14 @@ namespace BlackSpiritHelper
         {
             //System.Console.WriteLine("KEYDOWN");
             ActionOverlayUnsetTransparent(sender, e);
+        }
+
+        /// <summary>
+        /// Keybind capture event
+        /// </summary>
+        private void CaptureHotkey_KeyUp(object sender, KeyEventArgs e)
+        {
+            mCapturedHotkey = e.KeyCode.ToString();
         }
 
         /// <summary>
@@ -225,7 +297,7 @@ namespace BlackSpiritHelper
         /// </summary>
         private void ActionOverlaySetTransparent(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode != mOverlayInteractionKey)
+            if (e.KeyCode != mOverlayInteractionHotkey)
                 return;
 
             // If the key was not pressed, it is not the action we are looking for to disable.
@@ -244,7 +316,7 @@ namespace BlackSpiritHelper
         /// </summary>
         private void ActionOverlayUnsetTransparent(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode != mOverlayInteractionKey)
+            if (e.KeyCode != mOverlayInteractionHotkey)
                 return;
 
             if (IsOverlayInteractionKeyPressed(e))
@@ -258,10 +330,34 @@ namespace BlackSpiritHelper
         }
 
         /// <summary>
+        /// APM Calculator start/stop event handler
+        /// </summary>
+        private void ActionApmCalculatorControl(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.None || e.KeyCode != mApmCalculatorStartStopHotkey)
+                return;
+
+            if (IoC.DataContent.ApmCalculatorData.IsRunning)
+            {
+                IoC.DataContent.ApmCalculatorData.StopCommand.Execute(null);
+            }
+            else 
+            {
+                if (IoC.DataContent.ApmCalculatorData.CurrentSession.TotalActions > 0)
+                    IoC.DataContent.ApmCalculatorData.RestartCommand.Execute(null);
+                else
+                    IoC.DataContent.ApmCalculatorData.PlayCommand.Execute(null);
+            }
+        }
+
+        /// <summary>
         /// Count APM process
         /// </summary>
         private void ActionApmCalculatorCount()
         {
+            if (mApmCalculatorSessionData == null)
+                return;
+
             mApmCalculatorSessionData.CountAction();
         }
 
@@ -277,17 +373,17 @@ namespace BlackSpiritHelper
         {
             bool result = false;
 
-            if (mOverlayInteractionKey == Keys.LMenu)
+            if (mOverlayInteractionHotkey == Keys.LMenu)
                 result = e.Alt;
-            else if (mOverlayInteractionKey == Keys.RMenu)
+            else if (mOverlayInteractionHotkey == Keys.RMenu)
                 result = e.Alt;
-            else if (mOverlayInteractionKey == Keys.LControlKey)
+            else if (mOverlayInteractionHotkey == Keys.LControlKey)
                 result = e.Control;
-            else if (mOverlayInteractionKey == Keys.RControlKey)
+            else if (mOverlayInteractionHotkey == Keys.RControlKey)
                 result = e.Control;
-            else if (mOverlayInteractionKey == Keys.LShiftKey)
+            else if (mOverlayInteractionHotkey == Keys.LShiftKey)
                 result = e.Shift;
-            else if (mOverlayInteractionKey == Keys.RShiftKey)
+            else if (mOverlayInteractionHotkey == Keys.RShiftKey)
                 result = e.Shift;
 
             return result;

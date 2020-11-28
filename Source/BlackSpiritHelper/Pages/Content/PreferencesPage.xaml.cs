@@ -18,7 +18,7 @@ namespace BlackSpiritHelper
         private void ComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             var val = (OverlayInteractionKey)e.AddedItems[0];
-            IoC.Get<IMouseKeyHook>().SetOverlayInteractionKey(val);
+            IoC.Get<IMouseKeyHook>().SetOverlayInteractionHotkey(val);
         }
     }
 }
