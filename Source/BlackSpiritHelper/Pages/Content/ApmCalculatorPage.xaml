@@ -7,7 +7,7 @@
     xmlns:local="clr-namespace:BlackSpiritHelper"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="ApmCalculatorPage"
-    d:DesignHeight="450"
+    d:DesignHeight="800"
     d:DesignStyle="{StaticResource WindowBackgroundControlStyle}"
     d:DesignWidth="800"
     x:TypeArguments="core:ApmCalculatorPageViewModel"
@@ -52,7 +52,7 @@
                             HorizontalAlignment="Center"
                             FontFamily="{StaticResource LatoHeavy}"
                             FontSize="32"
-                            Foreground="{StaticResource ForegroundBrushKey}">
+                            Foreground="{StaticResource FormTitleForegroundBrushKey}">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Text" Value="START NEW SESSION" />
@@ -82,51 +82,62 @@
 
                     <!--  Controls  -->
                     <Grid Grid.Row="1">
-                        <!--  Play Button  -->
+                        <!--  Control Button  -->
                         <Button
                             Width="40"
                             Height="40"
-                            Command="{Binding PlayCommand}"
-                            Content="{StaticResource FontAwesomePlayIcon}"
                             FontFamily="{StaticResource FontAwesomeSolid}"
                             FontSize="18">
                             <Button.Style>
                                 <Style BasedOn="{StaticResource RegularButtonNoColor}" TargetType="{x:Type Button}">
-                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Setter Property="Margin" Value="0" />
                                     <Style.Triggers>
+                                        <!--  Play Trigger  -->
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{Binding IsRunning}" Value="False" />
                                                 <Condition Binding="{Binding CurrentSession.TotalActions}" Value="0" />
                                             </MultiDataTrigger.Conditions>
-                                            <Setter Property="Visibility" Value="Visible" />
+                                            <Setter Property="Command" Value="{Binding PlayCommand}" />
+                                            <Setter Property="Content" Value="{StaticResource FontAwesomePlayIcon}" />
+                                        </MultiDataTrigger>
+                                        <!--  Stop Trigger  -->
+                                        <DataTrigger Binding="{Binding IsRunning}" Value="True">
+                                            <Setter Property="Command" Value="{Binding StopCommand}" />
+                                            <Setter Property="Content" Value="{StaticResource FontAwesomeStopIcon}" />
+                                        </DataTrigger>
+                                        <!--  Restart Trigger  -->
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding IsRunning}" Value="False" />
+                                                <Condition Binding="{Binding CurrentSession.TotalActions, Converter={local:GreaterThanConverter}, ConverterParameter='0'}" Value="True" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Margin" Value="0,0,75,0" />
+                                            <Setter Property="Command" Value="{Binding RestartCommand}" />
+                                            <Setter Property="Content" Value="{StaticResource FontAwesomeRestartIcon}" />
                                         </MultiDataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Button.Style>
                         </Button>
-                        <!--  Stop Button  -->
+
+                        <!--  Archivate Button  -->
                         <Button
                             Width="40"
                             Height="40"
-                            Command="{Binding StopCommand}"
-                            Content="{StaticResource FontAwesomeStopIcon}"
-                            FontFamily="{StaticResource FontAwesomeSolid}"
+                            Margin="75,0,0,0"
+                            Command="{Binding CurrentSession.ArchivateCommand}"
+                            FontFamily="{StaticResource FontAwesomeRegular}"
                             FontSize="18"
-                            Style="{StaticResource RegularButtonNoColor}"
-                            Visibility="{Binding IsRunning, Converter={local:BooleanToVisibilityConverter}, ConverterParameter=True}" />
-                        <!--  Restart Button  -->
-                        <Button
-                            Width="40"
-                            Height="40"
-                            Command="{Binding RestartCommand}"
-                            Content="{StaticResource FontAwesomeRestartIcon}"
-                            FontFamily="{StaticResource FontAwesomeSolid}"
-                            FontSize="18">
+                            ToolTipService.ShowOnDisabled="True">
                             <Button.Style>
                                 <Style BasedOn="{StaticResource RegularButtonNoColor}" TargetType="{x:Type Button}">
+                                    <Setter Property="Content" Value="{StaticResource FontAwesomeArchiveIcon}" />
+                                    <Setter Property="IsEnabled" Value="True" />
                                     <Setter Property="Visibility" Value="Collapsed" />
+                                    <Setter Property="ToolTip" Value="Archivate" />
                                     <Style.Triggers>
+                                        <!--  Restart Trigger  -->
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{Binding IsRunning}" Value="False" />
@@ -134,6 +145,11 @@
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="Visibility" Value="Visible" />
                                         </MultiDataTrigger>
+                                        <DataTrigger Binding="{Binding CurrentSession.IsArchived}" Value="True">
+                                            <Setter Property="ToolTip" Value="Archived" />
+                                            <Setter Property="IsEnabled" Value="False" />
+                                            <Setter Property="Content" Value="{StaticResource FontAwesomeCheckCircleIcon}" />
+                                        </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Button.Style>
@@ -529,7 +545,7 @@
                             HorizontalAlignment="Center"
                             FontFamily="{StaticResource LatoBold}"
                             FontSize="26"
-                            Foreground="{StaticResource ForegroundBrushKey}"
+                            Foreground="{StaticResource FormTitleForegroundBrushKey}"
                             Text="LAST SESSION" />
                     </Grid>
 
@@ -759,7 +775,10 @@
                 <Grid Grid.Row="4">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <!--  AsAdministrator warning  -->
@@ -793,6 +812,38 @@
                             Foreground="{StaticResource ForegroundLightBrushKey}"
                             Text="SHOW IN OVERLAY" />
                     </Grid>
+
+                    <!--  Spacer  -->
+                    <Border Grid.Row="2" Style="{StaticResource FormItemSpacer}" />
+
+                    <!--  Archive Control  -->
+                    <Grid Grid.Row="3">
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <!--  Export Archive BTN  -->
+                            <Button
+                                Padding="10"
+                                Command="{Binding ExportArchiveCommand}"
+                                Content="EXPORT ARCHIVE"
+                                Style="{StaticResource RegularButton}" />
+                            <!--  Reset Archive BTN  -->
+                            <Button
+                                Margin="10,0,0,0"
+                                Padding="10"
+                                Command="{Binding ResetArchiveCommand}"
+                                Content="RESET ARCHIVE"
+                                Style="{StaticResource RegularButtonRed}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <!--  Archive status message  -->
+                    <TextBlock
+                        Grid.Row="4"
+                        Margin="0,5,0,0"
+                        HorizontalAlignment="Center"
+                        FontFamily="{StaticResource LatoRegular}"
+                        FontSize="12"
+                        Foreground="{StaticResource ForegroundBrushKey}"
+                        Text="{Binding ArchiveRecordCount, StringFormat='Amount of records in the archive: 0'}" />
                 </Grid>
             </Grid>
         </Border>

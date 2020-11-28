@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace BlackSpiritHelper.Core
 {
@@ -18,6 +20,16 @@ namespace BlackSpiritHelper.Core
         #endregion
 
         #region Public Properties
+
+        /// <summary>
+        /// Indicates the start of the session
+        /// </summary>
+        public DateTime StartAt { get; }
+
+        /// <summary>
+        /// Indicates if the session has been already archived or not
+        /// </summary>
+        public bool IsArchived { get; private set; }
 
         /// <summary>
         /// Total actions of the session
@@ -68,6 +80,48 @@ namespace BlackSpiritHelper.Core
         /// Indicates if the session tracks mouse drag
         /// </summary>
         public bool TrackMouseDrag { get; set; }
+
+        #endregion
+
+        #region Command Flags
+
+        private bool mArchiveCommandFlags { get; set; }
+
+        #endregion
+
+        #region Commands
+
+        /// <summary>
+        /// Command to archivate
+        /// </summary>
+        public ICommand ArchivateCommand { get; set; }
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public ApmCalculatorSessionDataViewModel()
+        {
+            StartAt = DateTime.Now;
+
+            ArchivateCommand = new RelayCommand(async () => await ArchivateCommandMethodAsync());
+        }
+
+        #endregion
+
+        #region Command Methods
+
+        private async Task ArchivateCommandMethodAsync()
+        {
+            await RunCommandAsync(() => mArchiveCommandFlags, async () =>
+            {
+                IsArchived = true;
+                await Task.Delay(1);
+            });
+        }
 
         #endregion
 

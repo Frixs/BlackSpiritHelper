@@ -106,6 +106,12 @@ namespace BlackSpiritHelper.Core
         [XmlIgnore]
         public ApmCalculatorSessionDataViewModel LastSession { get; set; }
 
+        /// <summary>
+        /// Holds the amount of records in the archive - <see cref="CountArchiveRecords"/>
+        /// </summary>
+        [XmlIgnore]
+        public int ArchiveRecordCount { get; private set; }
+
         /// <inheritdoc/>
         [XmlIgnore]
         public override bool IsRunning 
@@ -121,6 +127,8 @@ namespace BlackSpiritHelper.Core
         private bool mPlayStopCommandFlags { get; set; }
 
         private bool mOpenResultsCommandFlags { get; set; }
+
+        private bool mArchiveCommandFlags { get; set; }
 
         #endregion
 
@@ -150,6 +158,18 @@ namespace BlackSpiritHelper.Core
         [XmlIgnore]
         public ICommand OpenResultsCommand { get; set; }
 
+        /// <summary>
+        /// Command to export archive
+        /// </summary>
+        [XmlIgnore]
+        public ICommand ExportArchiveCommand { get; set; }
+
+        /// <summary>
+        /// Command to reset archive
+        /// </summary>
+        [XmlIgnore]
+        public ICommand ResetArchiveCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -163,6 +183,8 @@ namespace BlackSpiritHelper.Core
             StopCommand = new RelayCommand(async () => await StopCommandMethodAsync());
             RestartCommand = new RelayCommand(async () => await RestartCommandMethodAsync());
             OpenResultsCommand = new RelayCommand(async () => await OpenResultsCommandMethodAsync());
+            ExportArchiveCommand = new RelayCommand(async () => await ExportArchiveCommandMethodAsync());
+            ResetArchiveCommand = new RelayCommand(async () => await ResetArchiveCommandMethodAsync());
         }
 
         /// <inheritdoc/>
@@ -180,6 +202,9 @@ namespace BlackSpiritHelper.Core
 
             // Init default current session
             CurrentSession = new ApmCalculatorSessionDataViewModel();
+
+            // Count the archive records
+            CountArchiveRecords();
         }
 
         /// <inheritdoc/>
@@ -227,6 +252,22 @@ namespace BlackSpiritHelper.Core
                 // Move to the APM page.
                 IoC.Application.GoToPage(ApplicationPage.ApmCalculator);
 
+                await Task.Delay(1);
+            });
+        }
+
+        private async Task ExportArchiveCommandMethodAsync()
+        {
+            await RunCommandAsync(() => mArchiveCommandFlags, async () =>
+            {
+                await Task.Delay(1);
+            });
+        }
+
+        private async Task ResetArchiveCommandMethodAsync()
+        {
+            await RunCommandAsync(() => mArchiveCommandFlags, async () =>
+            {
                 await Task.Delay(1);
             });
         }
@@ -317,6 +358,14 @@ namespace BlackSpiritHelper.Core
             CurrentSession = new ApmCalculatorSessionDataViewModel();
 
             IoC.Audio.Play(AudioSampleType.PingNotification1, AudioPriorityBracket.Sample);
+        }
+
+        /// <summary>
+        /// Count archive records and save it to the count holder-property
+        /// </summary>
+        private void CountArchiveRecords()
+        {
+            ArchiveRecordCount = 1;
         }
 
         #endregion
