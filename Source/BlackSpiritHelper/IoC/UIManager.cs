@@ -1,11 +1,10 @@
-﻿using System;
+﻿using BlackSpiritHelper.Core;
+using Microsoft.Win32;
+using System;
 using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Interop;
-using BlackSpiritHelper.Core;
-using Microsoft.Win32;
 
 namespace BlackSpiritHelper
 {

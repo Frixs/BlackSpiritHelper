@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Input;
@@ -59,7 +60,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Indication of tracking mouse click
         /// </summary>
-        public bool TrackMouseClick 
+        public bool TrackMouseClick
         {
             get => mTrackMouseClick;
             set
@@ -73,7 +74,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Indication of tracking mouse double click
         /// </summary>
-        public bool TrackMouseDoubleClick 
+        public bool TrackMouseDoubleClick
         {
             get => mTrackMouseDoubleClick;
             set
@@ -110,11 +111,11 @@ namespace BlackSpiritHelper.Core
         /// Holds the amount of records in the archive - <see cref="CountArchiveRecords"/>
         /// </summary>
         [XmlIgnore]
-        public int ArchiveRecordCount { get; private set; }
+        public long ArchiveRecordCount { get; private set; }
 
         /// <inheritdoc/>
         [XmlIgnore]
-        public override bool IsRunning 
+        public override bool IsRunning
         {
             get => mTimerControl.Enabled;
             protected set => throw new NotImplementedException();
@@ -170,6 +171,12 @@ namespace BlackSpiritHelper.Core
         [XmlIgnore]
         public ICommand ResetArchiveCommand { get; set; }
 
+        /// <summary>
+        /// Command to archivate
+        /// </summary>
+        [XmlIgnore]
+        public ICommand ArchivateCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -185,6 +192,7 @@ namespace BlackSpiritHelper.Core
             OpenResultsCommand = new RelayCommand(async () => await OpenResultsCommandMethodAsync());
             ExportArchiveCommand = new RelayCommand(async () => await ExportArchiveCommandMethodAsync());
             ResetArchiveCommand = new RelayCommand(async () => await ResetArchiveCommandMethodAsync());
+            ArchivateCommand = new RelayParameterizedCommand(async (parameter) => await ArchivateCommandMethodAsync(parameter));
         }
 
         /// <inheritdoc/>
@@ -260,8 +268,11 @@ namespace BlackSpiritHelper.Core
         {
             await RunCommandAsync(() => mArchiveCommandFlags, async () =>
             {
-                // TODO
-                await Task.Delay(1);
+                await IoC.UI.ShowFolderBrowserDialog((selectedPath) =>
+                {
+                    FileInfo f = new FileInfo(SettingsConfiguration.ApmCalculatorArchiveFilePath);
+                    f.CopyTo(Path.Combine(selectedPath, IoC.Application.ProductName.ToLower().Replace(' ', '_') + "_apm_archive.csv"), true);
+                });
             });
         }
 
@@ -269,8 +280,61 @@ namespace BlackSpiritHelper.Core
         {
             await RunCommandAsync(() => mArchiveCommandFlags, async () =>
             {
-                // TODO
-                await Task.Delay(1);
+                // Confirm dialog to restart the app.
+                await IoC.UI.ShowNotification(new NotificationBoxDialogViewModel()
+                {
+                    Title = "RESET THE ARCHIVE",
+                    Message = $"Are you sure you want to proceed?",
+                    Result = NotificationBoxResult.YesNo,
+                    YesAction = () =>
+                    {
+                        // If the file does exist...
+                        if (File.Exists(SettingsConfiguration.ApmCalculatorArchiveFilePath))
+                        {
+                            // Delete the file
+                            File.Delete(SettingsConfiguration.ApmCalculatorArchiveFilePath);
+                            // Recount
+                            CountArchiveRecords();
+                        }
+                    },
+                });
+            });
+        }
+
+        private async Task ArchivateCommandMethodAsync(object parameter)
+        {
+            if (parameter == null || parameter.GetType() != typeof(ApmCalculatorSessionDataViewModel))
+                return;
+
+            await RunCommandAsync(() => mArchiveCommandFlags, async () =>
+            {
+                ApmCalculatorSessionDataViewModel session = (ApmCalculatorSessionDataViewModel)parameter;
+
+                // To prevent possible exception, check if the data dir exists
+                if (!Directory.Exists(SettingsConfiguration.DataDirPath))
+                    Directory.CreateDirectory(SettingsConfiguration.DataDirPath);
+
+                // If the file does not exist...
+                if (!File.Exists(SettingsConfiguration.ApmCalculatorArchiveFilePath))
+                {
+                    // Create a new file with CSV header
+                    await IoC.File.WriteTextToFileAsync($@"START AT;ELAPSED TIME;AVERAGE APM;HIGHEST APM;TOTAL ACTIONS;KEYBOARD;MOUSE CLICK;MOUSE DOUBLE CLICK;MOUSE WHEEL;MOUSE DRAG{Environment.NewLine}",
+                        SettingsConfiguration.ApmCalculatorArchiveFilePath,
+                        false
+                        );
+                }
+
+                // Write down the session data
+                await IoC.File.WriteTextToFileAsync($@"{session.StartAt:yyyy-MM-dd HH:mm};{session.ElapsedTime};{session.AverageApm};{session.HighestApm};{session.TotalActions};{session.TrackKeyboard};{session.TrackMouseClick};{session.TrackMouseDoubleClick};{session.TrackMouseWheel};{session.TrackMouseDrag}{Environment.NewLine}",
+                    SettingsConfiguration.ApmCalculatorArchiveFilePath,
+                    true
+                    );
+
+                // Flag the session as archived
+                session.IsArchived = true;
+
+                // Recount
+                CountArchiveRecords();
             });
         }
 
@@ -367,7 +431,10 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void CountArchiveRecords()
         {
-            ArchiveRecordCount = 1;
+            if (File.Exists(SettingsConfiguration.ApmCalculatorArchiveFilePath))
+                ArchiveRecordCount = IoC.File.LineCount(SettingsConfiguration.ApmCalculatorArchiveFilePath) - 1; // -1 header
+            else
+                ArchiveRecordCount = 0;
         }
 
         #endregion

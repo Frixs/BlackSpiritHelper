@@ -126,7 +126,8 @@
                             Width="40"
                             Height="40"
                             Margin="75,0,0,0"
-                            Command="{Binding CurrentSession.ArchivateCommand}"
+                            Command="{Binding ArchivateCommand}"
+                            CommandParameter="{Binding CurrentSession}"
                             FontFamily="{StaticResource FontAwesomeRegular}"
                             FontSize="18"
                             ToolTipService.ShowOnDisabled="True">
@@ -553,7 +554,8 @@
                             Width="20"
                             Height="20"
                             Margin="230,1.5,0,0"
-                            Command="{Binding LastSession.ArchivateCommand}"
+                            Command="{Binding ArchivateCommand}"
+                            CommandParameter="{Binding LastSession}"
                             FontFamily="{StaticResource FontAwesomeRegular}"
                             FontSize="17"
                             ToolTipService.ShowOnDisabled="True">
@@ -803,7 +805,6 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <!--  AsAdministrator warning  -->
@@ -843,7 +844,25 @@
 
                     <!--  Archive Control  -->
                     <Grid Grid.Row="3">
-                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.Style>
+                            <Style TargetType="{x:Type Grid}">
+                                <Setter Property="Visibility" Value="Visible" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ArchiveRecordCount}" Value="0">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+
+                        <StackPanel
+                            Grid.Row="0"
+                            HorizontalAlignment="Center"
+                            Orientation="Horizontal">
                             <!--  Export Archive BTN  -->
                             <Button
                                 Padding="10"
@@ -858,17 +877,18 @@
                                 Content="RESET ARCHIVE"
                                 Style="{StaticResource RegularButtonRed}" />
                         </StackPanel>
+
+                        <!--  Archive status message  -->
+                        <TextBlock
+                            Grid.Row="1"
+                            Margin="0,5,0,0"
+                            HorizontalAlignment="Center"
+                            FontFamily="{StaticResource LatoRegular}"
+                            FontSize="12"
+                            Foreground="{StaticResource ForegroundBrushKey}"
+                            Text="{Binding ArchiveRecordCount, StringFormat='Amount of records in the archive: 0'}" />
                     </Grid>
 
-                    <!--  Archive status message  -->
-                    <TextBlock
-                        Grid.Row="4"
-                        Margin="0,5,0,0"
-                        HorizontalAlignment="Center"
-                        FontFamily="{StaticResource LatoRegular}"
-                        FontSize="12"
-                        Foreground="{StaticResource ForegroundBrushKey}"
-                        Text="{Binding ArchiveRecordCount, StringFormat='Amount of records in the archive: 0'}" />
                 </Grid>
             </Grid>
         </Border>

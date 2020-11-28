@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace BlackSpiritHelper.Core
 {
@@ -30,7 +27,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Indicates if the session has been already archived or not
         /// </summary>
-        public bool IsArchived { get; private set; }
+        public bool IsArchived { get; set; }
 
         /// <summary>
         /// Total actions of the session
@@ -84,21 +81,6 @@ namespace BlackSpiritHelper.Core
 
         #endregion
 
-        #region Command Flags
-
-        private bool mArchiveCommandFlags { get; set; }
-
-        #endregion
-
-        #region Commands
-
-        /// <summary>
-        /// Command to archivate
-        /// </summary>
-        public ICommand ArchivateCommand { get; set; }
-
-        #endregion
-
         #region Constructor
 
         /// <summary>
@@ -107,30 +89,6 @@ namespace BlackSpiritHelper.Core
         public ApmCalculatorSessionDataViewModel()
         {
             StartAt = DateTime.Now;
-
-            ArchivateCommand = new RelayCommand(async () => await ArchivateCommandMethodAsync());
-        }
-
-        #endregion
-
-        #region Command Methods
-
-        private async Task ArchivateCommandMethodAsync()
-        {
-            await RunCommandAsync(() => mArchiveCommandFlags, async () =>
-            {
-                // To prevent possible exception.
-                if (!Directory.Exists(SettingsConfiguration.DataDirPath))
-                    Directory.CreateDirectory(SettingsConfiguration.DataDirPath);
-
-                // If the file exists, ignore update process
-                if (!File.Exists(SettingsConfiguration.ApmCalculatorArchiveFilePath))
-                {
-                }
-
-                await IoC.File.WriteTextToFileAsync("", "", true);
-                IsArchived = true;
-            });
         }
 
         #endregion
