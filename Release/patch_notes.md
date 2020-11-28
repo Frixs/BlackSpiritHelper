@@ -14,7 +14,7 @@
 **Pull: [#38](https://github.com/Frixs/BlackSpiritHelper/pull/38)**
 - Added archive functionality into APM section
 - Added sound alerts to APM section controls
-- Added option to set hotkey to control the APM section
+- Added option to set a hotkey to control the APM section
 - Overlay hotkey has been reset to default settings to all users due to hotkeys optimization
 <br/>
 
@@ -58,7 +58,8 @@
 ## v1.3.1.1 (2020-01-20)
 **Pull: [#23](https://github.com/Frixs/BlackSpiritHelper/pull/23)**
 - Added anonymous active user counter (no personal data are kept)
-- The link shows number of users using the app within 24 hours: https://us-central1-blackspirithelper.cloudfunctions.net/collectNumOfConnections
+- The link shows number of users using the app within 24 hours: 
+https://us-central1-blackspirithelper.cloudfunctions.net/collectNumOfConnections
 - Added MainWindow button into the overlay
 - PatchNotes and News showing, bug fixed
 <br/>
