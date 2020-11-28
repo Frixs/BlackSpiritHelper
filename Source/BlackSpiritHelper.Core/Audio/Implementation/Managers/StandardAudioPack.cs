@@ -60,6 +60,18 @@
                 o.AddAudioFile(new AudioFile("Alert5_Sound_0.mp3"));
                 return o;
             });
+            // Sample
+            AddAudioSample(AudioSampleType.StartNotification1, o =>
+            {
+                o.AddAudioFile(new AudioFile("StartNotification1_Sound_0.mp3"));
+                return o;
+            });
+            // Sample
+            AddAudioSample(AudioSampleType.StopNotification1, o =>
+            {
+                o.AddAudioFile(new AudioFile("StopNotification1_Sound_0.mp3"));
+                return o;
+            });
         }
 
         #endregion

@@ -293,6 +293,8 @@ namespace BlackSpiritHelper.Core
             IoC.Get<IMouseKeyHook>().SubscribeApmCalculatorEvents(CurrentSession);
 
             OnPropertyChanged(nameof(IsRunning));
+
+            IoC.Audio.Play(AudioSampleType.StartNotification1, AudioPriorityBracket.Sample);
         }
 
         /// <summary>
@@ -304,6 +306,8 @@ namespace BlackSpiritHelper.Core
             IoC.Get<IMouseKeyHook>().UnsubscribeApmCalculatorEvents();
 
             OnPropertyChanged(nameof(IsRunning));
+
+            IoC.Audio.Play(AudioSampleType.StopNotification1, AudioPriorityBracket.Sample);
         }
 
         /// <summary>

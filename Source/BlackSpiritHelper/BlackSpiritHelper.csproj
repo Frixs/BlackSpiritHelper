@@ -532,6 +532,12 @@
     <Content Include="Resources\Sounds\AlertLongBefore_Sound_0.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\Sounds\StartNotification1_Sound_0.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sounds\StopNotification1_Sound_0.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Resources\Images\Logo\logo_red_512.png" />
     <Resource Include="icon_red.ico" />
     <Resource Include="icon_white.ico" />
