@@ -547,6 +547,31 @@
                             FontSize="26"
                             Foreground="{StaticResource FormTitleForegroundBrushKey}"
                             Text="LAST SESSION" />
+
+                        <!--  Archivate Button  -->
+                        <Button
+                            Width="20"
+                            Height="20"
+                            Margin="230,1.5,0,0"
+                            Command="{Binding LastSession.ArchivateCommand}"
+                            FontFamily="{StaticResource FontAwesomeRegular}"
+                            FontSize="17"
+                            ToolTipService.ShowOnDisabled="True">
+                            <Button.Style>
+                                <Style BasedOn="{StaticResource RegularButtonNoColor}" TargetType="{x:Type Button}">
+                                    <Setter Property="Content" Value="{StaticResource FontAwesomeArchiveIcon}" />
+                                    <Setter Property="IsEnabled" Value="True" />
+                                    <Setter Property="ToolTip" Value="Archivate" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding LastSession.IsArchived}" Value="True">
+                                            <Setter Property="ToolTip" Value="Archived" />
+                                            <Setter Property="IsEnabled" Value="False" />
+                                            <Setter Property="Content" Value="{StaticResource FontAwesomeCheckCircleIcon}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
                     </Grid>
 
                     <!--  Last Session Data  -->
