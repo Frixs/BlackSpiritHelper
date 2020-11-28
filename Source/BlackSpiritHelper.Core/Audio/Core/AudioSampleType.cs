@@ -49,5 +49,20 @@
         /// Alert of time ticking.
         /// </summary>
         AlertClockTicking = 8,
+
+        /// <summary>
+        /// Start notification #1
+        /// </summary>
+        StartNotification1 = 9,
+
+        /// <summary>
+        /// Stop notification #1
+        /// </summary>
+        StopNotification1 = 10,
+
+        /// <summary>
+        /// Ping notification #1
+        /// </summary>
+        PingNotification1 = 11,
     }
 }

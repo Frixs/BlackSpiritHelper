@@ -59,12 +59,14 @@
     <system:String x:Key="FontAwesomeTimesCircleIcon">&#xf057;</system:String>
     <system:String x:Key="FontAwesomeBoltIcon">&#xf0e7;</system:String>
     <system:String x:Key="FontAwesomeCheckDoubleIcon">&#xf560;</system:String>
+    <system:String x:Key="FontAwesomeCheckCircleIcon">&#xf058;</system:String>
     <system:String x:Key="FontAwesomeExternalLinkSquareAltIcon">&#xf360;</system:String>
     <system:String x:Key="FontAwesomeClipboardCheckIcon">&#xf46c;</system:String>
     <system:String x:Key="FontAwesomeWindowCloseIcon">&#xf410;</system:String>
     <system:String x:Key="FontAwesomeWindowRestoreIcon">&#xf2d2;</system:String>
     <system:String x:Key="FontAwesomeDesktopIcon">&#xf108;</system:String>
     <system:String x:Key="FontAwesomePollIcon">&#xf681;</system:String>
+    <system:String x:Key="FontAwesomeArchiveIcon">&#xf187;</system:String>
 
     <system:String x:Key="FontAwesomeGitHubIcon">&#xf09b;</system:String>
     <system:String x:Key="FontAwesomeDiscordIcon">&#xf392;</system:String>

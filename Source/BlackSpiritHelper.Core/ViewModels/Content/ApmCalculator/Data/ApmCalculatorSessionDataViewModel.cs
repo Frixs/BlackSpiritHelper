@@ -20,6 +20,16 @@ namespace BlackSpiritHelper.Core
         #region Public Properties
 
         /// <summary>
+        /// Indicates the start of the session
+        /// </summary>
+        public DateTime StartAt { get; }
+
+        /// <summary>
+        /// Indicates if the session has been already archived or not
+        /// </summary>
+        public bool IsArchived { get; set; }
+
+        /// <summary>
         /// Total actions of the session
         /// </summary>
         public uint TotalActions { get; set; }
@@ -68,6 +78,18 @@ namespace BlackSpiritHelper.Core
         /// Indicates if the session tracks mouse drag
         /// </summary>
         public bool TrackMouseDrag { get; set; }
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public ApmCalculatorSessionDataViewModel()
+        {
+            StartAt = DateTime.Now;
+        }
 
         #endregion
 

@@ -18,7 +18,7 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// The user settings (config) directory location path.
         /// </summary>
-        public static readonly string UserConfigDirPath = Path.Combine(
+        public static readonly string DataDirPath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
             ApplicationName.Split('.')[0]
             );
@@ -26,20 +26,28 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// The user settings (config) file path.
         /// </summary>
-        public static readonly string UserConfigPath = Path.Combine(
-            UserConfigDirPath,
+        public static readonly string UserConfigFilePath = Path.Combine(
+            DataDirPath,
             Debugger.IsAttached ? "user.debug.config" : "user.config"
             );
 
         /// <summary>
-        /// Application data directory location path.
+        /// The user APM Calculator section archive file path.
+        /// </summary>
+        public static readonly string ApmCalculatorArchiveFilePath = Path.Combine(
+            DataDirPath,
+            Debugger.IsAttached ? "apm_archive.debug.csv" : "apm_archive.csv"
+            );
+
+        /// <summary>
+        /// Application data directory location path (downloadable data)
         /// ---
         /// If we are in debug mode, we have relative path in execution directory.
         /// </summary>
         public static readonly string ApplicationDataDirPath = Debugger.IsAttached
             ? "Data/"
             : Path.Combine(
-                UserConfigDirPath,
+                DataDirPath,
                 "Data/"
                 );
 

@@ -307,13 +307,13 @@
                         FontFamily="{StaticResource LatoRegular}"
                         FontSize="14"
                         Foreground="{StaticResource ForegroundBrushKey}"
-                        Text="Interaction Key" />
+                        Text="Interaction Hotkey" />
                     <ComboBox
                         HorizontalAlignment="Center"
                         ItemsSource="{Binding OverlayInteractionKeyList}"
                         SelectionChanged="ComboBox_SelectionChanged">
                         <ComboBox.SelectedItem>
-                            <Binding Path="OverlayInteractionKey" UpdateSourceTrigger="PropertyChanged" />
+                            <Binding Path="OverlayInteractionHotkey" UpdateSourceTrigger="PropertyChanged" />
                         </ComboBox.SelectedItem>
                     </ComboBox>
 
@@ -327,6 +327,47 @@
                         Command="{Binding ResetOverlayPositionCommand}"
                         Content="RESET OVERLAY POSITION"
                         Style="{StaticResource RegularButton}" />
+
+                    <!--  Spacer  -->
+                    <Border Style="{StaticResource FormSectionSpacer}" />
+
+                    <!--  ==================================================  -->
+                    <!--  Form Subtitle - APM  -->
+                    <TextBlock Style="{StaticResource FormSubtitle}" Text="APM" />
+
+                    <!--  Spacer  -->
+                    <Border Style="{StaticResource FormInputVerSpacer}" />
+
+                    <!--  Set APM start/stop keybind  -->
+                    <TextBlock
+                        Margin="0,0,0,5"
+                        FontFamily="{StaticResource LatoRegular}"
+                        FontSize="14"
+                        Foreground="{StaticResource ForegroundBrushKey}"
+                        Text="Control Hotkey" />
+                    <Button
+                        MinWidth="55"
+                        Padding="7,3.5,7,2.5"
+                        HorizontalAlignment="Center"
+                        Command="{Binding SetHotkeyApmCalculatorControlCommand}"
+                        FontSize="12">
+                        <Button.Style>
+                            <Style BasedOn="{StaticResource RegularButtonYellow}" TargetType="{x:Type Button}">
+                                <Setter Property="Content" Value="{Binding ApmCalculatorControlHotkey}" />
+                                <Setter Property="FontFamily" Value="{StaticResource LatoHeavy}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ApmCalculatorControlHotkey}" Value="{x:Null}">
+                                        <Setter Property="Content" Value="NONE" />
+                                        <Setter Property="FontFamily" Value="{StaticResource LatoHeavyItalic}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding SetHotkeyApmCalculatorControlCommandFlag}" Value="True">
+                                        <Setter Property="Content" Value="PRESS ANY KEY" />
+                                        <Setter Property="FontFamily" Value="{StaticResource LatoHeavyItalic}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
 
                     <!--  Spacer  -->
                     <Border Style="{StaticResource FormSectionSpacer}" />

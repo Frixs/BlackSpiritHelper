@@ -144,7 +144,7 @@ namespace BlackSpiritHelper.Core
                 {
                     // Get file info
                     FileInfo fiNew = new FileInfo(selectedPath);
-                    FileInfo fiCurrent = new FileInfo(SettingsConfiguration.UserConfigPath);
+                    FileInfo fiCurrent = new FileInfo(SettingsConfiguration.UserConfigFilePath);
 
                     // Check InUse status
                     short timeoutCurrent = 10; // tries.
@@ -178,7 +178,7 @@ namespace BlackSpiritHelper.Core
                     }
 
                     // Copy a new settings file to the correct settings file location
-                    fiNew.CopyTo(SettingsConfiguration.UserConfigPath);
+                    fiNew.CopyTo(SettingsConfiguration.UserConfigFilePath);
 
                     // Confirm dialog to restart the app.
                     IoC.UI.ShowNotification(new NotificationBoxDialogViewModel()
@@ -206,7 +206,7 @@ namespace BlackSpiritHelper.Core
             {
                 await IoC.UI.ShowFolderBrowserDialog((selectedPath) =>
                 {
-                    FileInfo f = new FileInfo(SettingsConfiguration.UserConfigPath);
+                    FileInfo f = new FileInfo(SettingsConfiguration.UserConfigFilePath);
                     f.CopyTo(Path.Combine(selectedPath, IoC.Application.ProductName.ToLower().Replace(' ', '_') + ".config"), true);
                 });
             });

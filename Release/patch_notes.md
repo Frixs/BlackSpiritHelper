@@ -10,6 +10,14 @@
 <!-- [text](url) : Can be anywhere in the text. Transform text into URL link. -->
 <!-- \ : escape formatting characters. -->
 <!-- -------------------------------------------------- -->
+## v1.4.4.0 (2020-11-28)
+**Pull: [#38](https://github.com/Frixs/BlackSpiritHelper/pull/38)**
+- Added archive functionality into APM section
+- Added sound alerts to APM section controls
+- Added option to set hotkey to control the APM section
+- Overlay hotkey has been reset to default settings to all users due to hotkeys optimization
+<br/>
+
 ## v1.4.3.0 (2020-11-27)
 **Pull: [#37](https://github.com/Frixs/BlackSpiritHelper/pull/37)**
 - APM section UX improvements

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace BlackSpiritHelper.Core
 {
@@ -10,7 +11,18 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Set overlay interaction key according to ovelray key representation
         /// </summary>
-        void SetOverlayInteractionKey(OverlayInteractionKey key);
+        void SetOverlayInteractionHotkey(OverlayInteractionKey key);
+
+        /// <summary>
+        /// Set APM Calculator keybind
+        /// </summary>
+        void SetApmCalculatorControlHotkey(string key);
+
+        /// <summary>
+        /// Capture key procedure for keybind
+        /// </summary>
+        /// <returns>String representation of the selected keybind</returns>
+        Task<string> CaptureHotkeyAsync();
 
         /// <summary>
         /// Subscribe APM Calculator events

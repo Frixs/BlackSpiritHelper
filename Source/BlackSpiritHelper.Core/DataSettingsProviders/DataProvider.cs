@@ -113,10 +113,10 @@ namespace BlackSpiritHelper.Core
                     // Get local path where to place a new file.
                     var localPath = Path.Combine(
                         SettingsConfiguration.ApplicationDataDirPath,
-                        path.Length > SettingsConfiguration.RemoteDataDirRelPath.Length ? path.Substring(SettingsConfiguration.RemoteDataDirRelPath.Length) : path
+                        path.Length > SettingsConfiguration.RemoteDataDirRelPath.Length ? path.Substring(SettingsConfiguration.RemoteDataDirRelPath.Length) : path // just to make sure the path has enough length to be able to substring it
                         );
-
-                    // Create local directory.
+                    
+                    // Create local directory if does not exist (it is subdir of the documents data configpath - no need to check it)
                     if (!Directory.Exists(Path.GetDirectoryName(localPath)))
                     {
                         Directory.CreateDirectory(Path.GetDirectoryName(localPath));
