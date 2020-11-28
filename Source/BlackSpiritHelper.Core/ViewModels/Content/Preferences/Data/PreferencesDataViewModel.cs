@@ -93,7 +93,7 @@ namespace BlackSpiritHelper.Core
         /// Data directory of the app to show the user
         /// </summary>
         [XmlIgnore]
-        public string DataDirectory => SettingsConfiguration.UserConfigDirPath;
+        public string DataDirectory => SettingsConfiguration.DataDirPath;
 
         #endregion
 

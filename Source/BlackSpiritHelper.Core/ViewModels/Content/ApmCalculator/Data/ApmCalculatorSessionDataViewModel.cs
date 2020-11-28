@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -118,8 +119,17 @@ namespace BlackSpiritHelper.Core
         {
             await RunCommandAsync(() => mArchiveCommandFlags, async () =>
             {
+                // To prevent possible exception.
+                if (!Directory.Exists(SettingsConfiguration.DataDirPath))
+                    Directory.CreateDirectory(SettingsConfiguration.DataDirPath);
+
+                // If the file exists, ignore update process
+                if (!File.Exists(SettingsConfiguration.ApmCalculatorArchiveFilePath))
+                {
+                }
+
+                await IoC.File.WriteTextToFileAsync("", "", true);
                 IsArchived = true;
-                await Task.Delay(1);
             });
         }
 

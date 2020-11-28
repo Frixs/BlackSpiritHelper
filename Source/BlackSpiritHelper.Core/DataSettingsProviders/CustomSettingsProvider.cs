@@ -187,12 +187,12 @@ namespace BlackSpiritHelper.Core
         /// </summary>
         private void LoadValuesFromFile()
         {
-            if (!File.Exists(SettingsConfiguration.UserConfigPath))
+            if (!File.Exists(SettingsConfiguration.UserConfigFilePath))
                 // If the config file is not where it's supposed to be, create a new one.
                 CreateEmptyConfig();
 
             // Load the xml.
-            var configXml = XDocument.Load(SettingsConfiguration.UserConfigPath);
+            var configXml = XDocument.Load(SettingsConfiguration.UserConfigFilePath);
 
             // Get all of the <setting name="..." serializeAs="..."> elements.
             var settingElements = configXml.Element(CONFIG).Element(USER_SETTINGS).Element(typeof(Properties.Settings).FullName).Elements(SETTING);
@@ -263,7 +263,7 @@ namespace BlackSpiritHelper.Core
         private void SaveValuesToFile()
         {
             // Load the current xml from the file.
-            var import = XDocument.Load(SettingsConfiguration.UserConfigPath);
+            var import = XDocument.Load(SettingsConfiguration.UserConfigFilePath);
 
             // Get the settings group (e.g. <Company.Project.Desktop.Settings>).
             var settingsSection = import.Element(CONFIG).Element(USER_SETTINGS).Element(typeof(Properties.Settings).FullName);
@@ -321,7 +321,7 @@ namespace BlackSpiritHelper.Core
             }
 
             // Save to the file.
-            import.Save(SettingsConfiguration.UserConfigPath);
+            import.Save(SettingsConfiguration.UserConfigFilePath);
         }
 
         /// <summary>
@@ -338,8 +338,8 @@ namespace BlackSpiritHelper.Core
             config.Add(userSettings);
             doc.Add(config);
             doc.Declaration = declaration;
-            Directory.CreateDirectory(SettingsConfiguration.UserConfigDirPath);
-            doc.Save(SettingsConfiguration.UserConfigPath);
+            Directory.CreateDirectory(SettingsConfiguration.DataDirPath);
+            doc.Save(SettingsConfiguration.UserConfigFilePath);
         }
 
         #endregion
