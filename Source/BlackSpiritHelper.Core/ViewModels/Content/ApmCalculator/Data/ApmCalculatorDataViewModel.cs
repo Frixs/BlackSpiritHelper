@@ -273,6 +273,8 @@ namespace BlackSpiritHelper.Core
                     FileInfo f = new FileInfo(SettingsConfiguration.ApmCalculatorArchiveFilePath);
                     f.CopyTo(Path.Combine(selectedPath, IoC.Application.ProductName.ToLower().Replace(' ', '_') + "_apm_archive.csv"), true);
                 });
+                // Log it
+                IoC.Logger.Log("APM Calculator archive has been exported!", LogLevel.Info);
             });
         }
 
@@ -295,6 +297,13 @@ namespace BlackSpiritHelper.Core
                             File.Delete(SettingsConfiguration.ApmCalculatorArchiveFilePath);
                             // Recount
                             CountArchiveRecords();
+                            // Log it
+                            IoC.Logger.Log("APM Calculator archive has been reset!", LogLevel.Info);
+
+                            // Reset archived flags
+                            CurrentSession.IsArchived = false;
+                            if (LastSession != null)
+                                LastSession.IsArchived = false;
                         }
                     },
                 });
@@ -335,6 +344,9 @@ namespace BlackSpiritHelper.Core
 
                 // Recount
                 CountArchiveRecords();
+
+                // Log it
+                IoC.Logger.Log($"Archived APM session (Total Actions: {session.TotalActions}).", LogLevel.Info);
             });
         }
 
