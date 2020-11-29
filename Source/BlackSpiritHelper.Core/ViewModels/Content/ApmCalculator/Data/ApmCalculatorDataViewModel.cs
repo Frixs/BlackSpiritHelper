@@ -270,11 +270,19 @@ namespace BlackSpiritHelper.Core
             {
                 await IoC.UI.ShowFolderBrowserDialog((selectedPath) =>
                 {
-                    FileInfo f = new FileInfo(SettingsConfiguration.ApmCalculatorArchiveFilePath);
-                    f.CopyTo(Path.Combine(selectedPath, IoC.Application.ProductName.ToLower().Replace(' ', '_') + "_apm_archive.csv"), true);
+                    if (File.Exists(SettingsConfiguration.ApmCalculatorArchiveFilePath))
+                    {
+                        FileInfo f = new FileInfo(SettingsConfiguration.ApmCalculatorArchiveFilePath);
+                        f.CopyTo(Path.Combine(selectedPath, IoC.Application.ProductName.ToLower().Replace(' ', '_') + "_apm_archive.csv"), true);
+                        // Log it
+                        IoC.Logger.Log("APM Calculator archive has been exported!", LogLevel.Info);
+                    }
+                    else
+                    {
+                        // Log it
+                        IoC.Logger.Log("APM Calculator archive could not be exported due to missing file!", LogLevel.Warning);
+                    }
                 });
-                // Log it
-                IoC.Logger.Log("APM Calculator archive has been exported!", LogLevel.Info);
             });
         }
 
@@ -304,6 +312,11 @@ namespace BlackSpiritHelper.Core
                             CurrentSession.IsArchived = false;
                             if (LastSession != null)
                                 LastSession.IsArchived = false;
+                        }
+                        else
+                        {
+                            // Log it
+                            IoC.Logger.Log("APM Calculator archive could not be reset due to missing file!", LogLevel.Warning);
                         }
                     },
                 });
