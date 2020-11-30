@@ -4,16 +4,16 @@
     <img src="Resources/logo_red_text_512.png" alt="Logo Black Spirit Helper" width="256" style="text-align:center;">
 </p>
 
-**Are you tired of forgetting important tasks in a game such as... daily rewards, world boss spawns, buff activation at the proper time and so on?**  
-Or... are you finding hard to track all the tasks you want to do in-game?  
+**Are you tired of forgetting important tasks in your game such as... daily rewards pick-up, world boss spawns, buff activation while grinding, and so on?**  
+Or... are you finding it hard to track all the tasks you want to do in-game?  
   
 Black Spirit Helper can **solve your problem!** You can also set the application to start with your operating system to do not miss any task you want to do.  
 **Black Spirit Helper offers** several features that can manage these things with multiple types of adjustable timers.  
-Oh... I almost forgot to tell you, the application has **own overlay!** So, you can easily track your timers in-game without needs to switch to your desktop.
+Oh... I almost forgot to tell you, the application has **own overlay!** So, you can easily track your timers in-game without any needs to switch to your desktop.
 ### Overlay?!#
-Yes! Black Spirit Helper offers overlay! So, you do not need to switch to your desktop and then back to your game anymore! Enjoy your game comfortably without switching to system desktop.
+Yes! Black Spirit Helper offers overlay! So, you do not need to switch between your favorite game and system desktop back and forth anymore! Enjoy your game comfortably with BSH features simply accessible from within the game.
 ### Is it legal to use?
-Of course! Black Spirit Helper does **not** affect any game files. It does **not** track any screen events. It is just an advanced timer. I ask you... is Windows OS build-in timer illegal? It is in the same category as other software like [Discord](https://discordapp.com/), [TeamSpeak](https://www.teamspeak.com), etc. - For more info you can check [this](https://github.com/Frixs/BlackSpiritHelper/wiki/LegalUseProof) page!
+Of course, it is! Black Spirit Helper does not affect any game files. It does not track any screen events. It is just an advanced timer with many other useful features. The app falls into the same category as other software are - like [Discord](https://discordapp.com/), [TeamSpeak](https://www.teamspeak.com), etc. - For more info you can check [this](https://github.com/Frixs/BlackSpiritHelper/wiki/LegalUseProof) page!
 
 ## Table of Contents
 - **[Features](#features)**
@@ -38,9 +38,9 @@ This feature checks your internet connection and it also checks your game's proc
 It also offers manager to prioritize your game or kill unsuitable processes.  
 Everything just to avoid game disconnections overnight!  
 Based on what happens you can set events like send a message to your favorite platform to inform you about the situation or just simply shutdown/restart your computer.
-### Screen Capture
-The app allows you to select any opened window or simply the whole screen to capture it and display it in the app's overlay.  
-The overlay does not interrupt you from mouse movement in your game, so you can watch your favorite movie, for instance, inside your game on the overlay surface without any issue.  
+### Screen Display
+The app allows you to select any opened window or simply the entire screen to transfer it into the app's overlay and display it there.  
+The overlay does not interrupt you from mouse movement in your game, so you can watch your favorite movie inside your game on the overlay surface without any issue.  
 You can scale the overlay and make it transparent by your needs.
 
 
