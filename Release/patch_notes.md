@@ -10,6 +10,15 @@
 <!-- [text](url) : Can be anywhere in the text. Transform text into URL link. -->
 <!-- \ : escape formatting characters. -->
 <!-- -------------------------------------------------- -->
+## v1.4.4.1 (2020-12-26)
+**Pull: [#40](https://github.com/Frixs/BlackSpiritHelper/pull/40)**
+- Watchdog: NoProcessFound does not fire failure routine - bug fixed
+- File dialog window app-error throws fixed
+- Timespan field app-error modal dialog fixed
+- Timer group change does not work while a new group is created bug fixed
+- Localization update
+<br/>
+
 ## v1.4.4.0 (2020-11-28)
 **Pull: [#38](https://github.com/Frixs/BlackSpiritHelper/pull/38)**
 - Added archive functionality into APM section
