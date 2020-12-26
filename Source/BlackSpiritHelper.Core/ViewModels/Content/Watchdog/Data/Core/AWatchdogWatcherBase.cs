@@ -140,6 +140,9 @@ namespace BlackSpiritHelper.Core.Data.Interfaces
             IsRunning = true;
             IoC.DataContent.WatchdogData.OnPropertyChanged(nameof(IsRunning));
 
+            // Update flag about fired failure routine
+            mIsFailureRoutineFired = true; // Do not fire the failoure routine at the very start, let the check routine go green first.
+
             // Update interal first.
             UpdateTimerControlInterval(interval);
 
@@ -244,8 +247,6 @@ namespace BlackSpiritHelper.Core.Data.Interfaces
         /// <summary>
         /// On Tick timer event.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         protected abstract void CheckLoopTimerOnElapsed(object sender, ElapsedEventArgs e);
 
         #endregion

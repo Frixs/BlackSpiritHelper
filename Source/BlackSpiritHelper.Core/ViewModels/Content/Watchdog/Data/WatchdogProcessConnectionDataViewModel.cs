@@ -181,6 +181,7 @@ namespace BlackSpiritHelper.Core
                 if (p == null)
                 {
                     IoC.DataContent.WatchdogData.Log($"No process found under the name \"{mProcessList[i].Name}\"!");
+                    ret = false;
                     continue;
                 }
 

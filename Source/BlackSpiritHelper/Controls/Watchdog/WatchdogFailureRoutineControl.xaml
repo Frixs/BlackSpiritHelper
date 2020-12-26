@@ -22,7 +22,8 @@
                                 <Border
                                     Width="26"
                                     Height="26"
-                                    Background="{StaticResource WatchdogForegroundBrushKey}">
+                                    Background="{StaticResource WatchdogForegroundBrushKey}"
+                                    ToolTip="There is a fuse, if the testing routine fails right after starting, it will not fire the failure routine until the testing goes successful at least once.">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
