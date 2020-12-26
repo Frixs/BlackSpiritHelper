@@ -88,7 +88,7 @@ namespace BlackSpiritHelper
         {
             // Let the base application do what it needs.
             base.OnStartup(e);
-
+            
             // Initialize early error list.
             InitEarlyErrorList();
 
@@ -112,8 +112,14 @@ namespace BlackSpiritHelper
             // Configuration module setup.
             ApplicationModuleSetup();
 
+            // --- Now we have all modules loaded (like logger is) ---
+
             // Process early error list. We already have access to IoC.
             ProcessEarlyErrorList();
+
+            // Swap the default debug listener to our own
+            Debug.Listeners.Clear();
+            Debug.Listeners.Add(new ApplicationDebugListener());
 
             // Set application main window.
             Current.MainWindow = new MainWindow();

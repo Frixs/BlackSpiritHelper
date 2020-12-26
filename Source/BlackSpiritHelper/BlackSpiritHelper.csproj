@@ -232,6 +232,7 @@
     <Compile Include="Controls\Watchdog\WatchdogProcessConnectionControl.xaml.cs">
       <DependentUpon>WatchdogProcessConnectionControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Debug\ApplicationDebugListener.cs" />
     <Compile Include="IoC\AppAssembly.cs" />
     <Compile Include="IoC\UIManager.cs" />
     <Compile Include="IoC\GlobalMouseKeyHookManager.cs" />
