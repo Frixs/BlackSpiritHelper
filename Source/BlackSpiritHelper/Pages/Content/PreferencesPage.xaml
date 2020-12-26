@@ -239,7 +239,7 @@
                         FontFamily="{StaticResource LatoRegular}"
                         FontSize="14"
                         Foreground="{StaticResource ForegroundBrushKey}"
-                        Text="Screen Capture Scale" />
+                        Text="Screen Display Scale" />
                     <Grid HorizontalAlignment="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -273,7 +273,7 @@
                         FontFamily="{StaticResource LatoRegular}"
                         FontSize="14"
                         Foreground="{StaticResource ForegroundBrushKey}"
-                        Text="Screen Capture Opacity" />
+                        Text="Screen Display Opacity" />
                     <Grid HorizontalAlignment="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />

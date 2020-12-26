@@ -34,9 +34,9 @@
     <TargetCulture>en</TargetCulture>
     <ProductName>Black Spirit Helper</ProductName>
     <PublisherName>Tomas Frixs</PublisherName>
-    <MinimumRequiredVersion>1.4.4.0</MinimumRequiredVersion>
+    <MinimumRequiredVersion>1.4.4.1</MinimumRequiredVersion>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>1.4.4.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -232,6 +232,7 @@
     <Compile Include="Controls\Watchdog\WatchdogProcessConnectionControl.xaml.cs">
       <DependentUpon>WatchdogProcessConnectionControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Debug\ApplicationDebugListener.cs" />
     <Compile Include="IoC\AppAssembly.cs" />
     <Compile Include="IoC\UIManager.cs" />
     <Compile Include="IoC\GlobalMouseKeyHookManager.cs" />

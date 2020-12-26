@@ -198,13 +198,10 @@ namespace BlackSpiritHelper.Core
             if (!TimerGroupDataViewModel.ValidateInputs(itemTitle))
                 return null;
 
-            // Sort Groups by ID.
-            GroupList.OrderBy(o => o.ID);
-
             // Create a new item (Default Group).
             TimerGroupDataViewModel item = new TimerGroupDataViewModel
             {
-                ID = FindNewID(0, (sbyte)(GroupList.Count - 1)),
+                ID = FindNewGroupID(),
                 Title = itemTitle,
             };
 
@@ -290,24 +287,20 @@ namespace BlackSpiritHelper.Core
         /// <summary>
         /// Find the smallest missing key in the list as a new representation for a new group ID.
         /// </summary>
-        /// <param name="start">The start index of list.</param>
-        /// <param name="end">The end index of list.</param>
-        /// <returns></returns>
-        private sbyte FindNewID(sbyte start, sbyte end)
+        /// <returns>The new ID</returns>
+        private sbyte FindNewGroupID()
         {
-            if (start > end)
-                return (sbyte)(end + 1);
+            // Sort Groups by ID.
+            var sortedList = GroupList.OrderBy(o => o.ID);
+            sbyte idx = 0;
+            foreach (var g in sortedList)
+            {
+                if (g.ID != idx)
+                    return idx;
+                ++idx;
+            }
 
-            if (start != GroupList[start].ID)
-                return start;
-
-            sbyte mid = (sbyte)((start + end) / 2);
-
-            // Left half has all elements from 0 to mid 
-            if (GroupList[mid].ID == mid)
-                return FindNewID((sbyte)(mid + 1), end);
-
-            return FindNewID(start, mid);
+            return idx;
         }
 
         #endregion
