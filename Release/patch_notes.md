@@ -11,7 +11,7 @@
 <!-- \ : escape formatting characters. -->
 <!-- -------------------------------------------------- -->
 ## v1.4.4.1 (2020-12-26)
-**Pull: [#40](https://github.com/Frixs/BlackSpiritHelper/pull/40)**
+**Pull: [#41](https://github.com/Frixs/BlackSpiritHelper/pull/41)**
 - Watchdog: NoProcessFound does not fire failure routine - bug fixed
 - File dialog window app-error throws fixed
 - Timespan field app-error modal dialog fixed
